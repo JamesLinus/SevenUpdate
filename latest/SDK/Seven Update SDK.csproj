@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C0FEC90A-F8C6-4850-8EE5-92BC3B4033FE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SevenUpdate.SDK</RootNamespace>
+    <AssemblyName>Seven Update SDK</AssemblyName>
+    <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <StartupObject>SevenUpdate.SDK.Program</StartupObject>
+    <ApplicationIcon>sdk.ico</ApplicationIcon>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <Win32Resource>
+    </Win32Resource>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRules>
+    </CodeAnalysisRules>
+    <CodeAnalysisRuleSet>Migrated rules for Seven Update SDK.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SevenUpdate.Library, Version=9.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Seven Update Library\bin\Release\SevenUpdate.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Windows UI, Version=9.5.20.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\References\Windows UI\bin\release\Windows UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\HorizonalLine.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\HorizonalLine.designer.cs">
+      <DependentUpon>HorizonalLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\SDK.cs" />
+    <Compile Include="Pages\AppInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\AppInfo.Designer.cs">
+      <DependentUpon>AppInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SUAInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\SUAInfo.Designer.cs">
+      <DependentUpon>SUAInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UpdateMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\UpdateMenu.Designer.cs">
+      <DependentUpon>UpdateMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shortcuts.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\Shortcuts.Designer.cs">
+      <DependentUpon>Shortcuts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Registry.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\Registry.Designer.cs">
+      <DependentUpon>Registry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\UpdateInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\UpdateInfo.Designer.cs">
+      <DependentUpon>UpdateInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\About.designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WinForms\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WinForms\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Files.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Pages\Files.Designer.cs">
+      <DependentUpon>Files.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Pages\AppInfo.resx">
+      <DependentUpon>AppInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\UpdateMenu.resx">
+      <DependentUpon>UpdateMenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Shortcuts.resx">
+      <DependentUpon>Shortcuts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Registry.resx">
+      <DependentUpon>Registry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\UpdateInfo.resx">
+      <DependentUpon>UpdateInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIStrings.resx">
+      <LastGenOutput>UIStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WinForms\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\Files.resx">
+      <DependentUpon>Files.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\exe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\patcher.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\restorer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Registry.png" />
+    <None Include="Resources\shorcut.png" />
+    <EmbeddedResource Include="Pages\SUAInfo.resx">
+      <DependentUpon>SUAInfo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sdk.ico" />
+    <EmbeddedResource Include="WinForms\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

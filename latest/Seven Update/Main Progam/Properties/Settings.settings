@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SevenUpdate.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="windowWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">762</Value>
+    </Setting>
+    <Setting Name="windowHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">450</Value>
+    </Setting>
+    <Setting Name="lastUpdateCheck" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Never</Value>
+    </Setting>
+    <Setting Name="lastInstall" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Never</Value>
+    </Setting>
+    <Setting Name="infoPopUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="lastListUpdate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Never</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

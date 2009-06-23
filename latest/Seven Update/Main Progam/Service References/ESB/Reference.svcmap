@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="51e01051-1245-40a9-8e15-fc7cb2fd0449" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/SevenUpdate/Mex" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="EventService.wsdl" MetadataType="Wsdl" ID="f1113ac2-1d2d-4365-8d09-9162c52a64ed" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex" />
+    <MetadataFile FileName="Mex.xsd" MetadataType="Schema" ID="2c118ee0-54ee-4f17-b176-9726968343f2" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd1" />
+    <MetadataFile FileName="Mex1.xsd" MetadataType="Schema" ID="1729b2b9-db5f-4fd5-a433-baadf300f294" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
