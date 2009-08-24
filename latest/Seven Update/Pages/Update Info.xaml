@@ -1,0 +1,65 @@
+﻿<Page x:Class="SevenUpdate.Pages.UpdateInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+	Title="Update Information" MinWidth="850" MinHeight="500"  KeepAlive="True" Loaded="Page_Loaded">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="309*" MinHeight="300"  />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="44" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="650*" />
+            <ColumnDefinition Width="200*"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Name="rectangle1" Stroke="#FFA0A0A0" Grid.Row="6" />
+        <Image Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Name="imgSideDetails" Stretch="Fill" />
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
+        <ListView Grid.Row="1" Grid.RowSpan="5">
+            <ListView.Resources>
+                <DataTemplate x:Key="FirstCell">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Path=Enabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.Resources>
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource leftAlignHeader}">
+                    <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
+                    <GridViewColumn Header="Name" Width="300" />
+                    <GridViewColumn Header="Importance" Width="100" />
+                    <GridViewColumn Header="Size" Width="85" />
+                    <GridViewColumn Header="Status" Width="130" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlInfo_MouseDown" />
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlHelp_MouseDown" />
+        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" Margin="5,5,0,5">
+            <TextBlock FontWeight="Bold" Name="tbUpdateTitle" Padding="5" Text="" TextTrimming="CharacterEllipsis" MinWidth="190" />
+            <TextBlock Name="tbUpdateDescription" Text="" TextWrapping="Wrap" MinWidth="190" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="stackPanel3" VerticalAlignment="Top" Orientation="Horizontal">
+            <TextBlock FontWeight="Normal" Name="tb2" Padding="5" Text="Published:" MaxWidth="120" />
+            <TextBlock FontWeight="Normal" Name="tbPublishedDate" Padding="5" Text="" MaxWidth="90" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="6">
+            <Button Content="Install" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore" Padding="5,1" VerticalContentAlignment="Center" Click="btnRestore_Click" />
+            <Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" Click="btnCancel_Click" />
+        </StackPanel>
+    </Grid>
+</Page>
