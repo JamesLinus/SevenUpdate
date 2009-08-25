@@ -19,7 +19,7 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" GridViewColumnHeader.Click="OnColumnHeaderClick" Thumb.DragDelta="Thumb_DragDelta">
+        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" GridViewColumnHeader.Click="OnColumnHeaderClick" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="View Details" Click="MenuItem_MouseClick"/>
@@ -44,7 +44,7 @@
                     <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
                     <GridViewColumn DisplayMemberBinding= "{Binding Path=UpdateTitle, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Header="Name" Width="400" />
                     <GridViewColumn Header="Program" DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Width="250" />
-                    <GridViewColumn DisplayMemberBinding= "{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Header="Importance" Width="125" />
+                    <GridViewColumn DisplayMemberBinding= "{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Header="Importance" Width="125" />
                 </GridView>
             </ListView.View>
         </ListView>

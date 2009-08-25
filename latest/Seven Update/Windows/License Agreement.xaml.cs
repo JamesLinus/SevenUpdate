@@ -175,6 +175,7 @@ namespace SevenUpdate.Windows
             }
 
             rtbSLA.Cursor = Cursors.IBeam;
+            wc.Dispose();
         }
 
         #endregion

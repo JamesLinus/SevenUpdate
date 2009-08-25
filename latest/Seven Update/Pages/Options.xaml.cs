@@ -91,6 +91,7 @@ namespace SevenUpdate.Pages
             wc.DownloadFileCompleted += new System.ComponentModel.AsyncCompletedEventHandler(wc_DownloadFileCompleted);
 
             wc.DownloadFileAsync(suaLoc, Shared.userStore + @"list.sul");
+            wc.Dispose();
         }
 
         /// <summary>

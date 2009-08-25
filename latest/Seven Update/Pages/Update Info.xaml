@@ -29,14 +29,21 @@
         <Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Name="rectangle1" Stroke="#FFA0A0A0" Grid.Row="6" />
         <Image Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Name="imgSideDetails" Stretch="Fill" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
-        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged">
-            <ListView.Resources>
-                        <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem x:Name="cmiHideUpdate" Header="Hide Update" Click="MenuItem_MouseClick"/>
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" Foreground="Black">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="cmiHideUpdate" Header="Hide update" Click="MenuItem_MouseClick">
+                        <MenuItem.Icon>
+                            <Image Source="/Images/Shield.png" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.Resources>
+
                 <DataTemplate x:Key="FirstCell">
                     <StackPanel Orientation="Horizontal">
-                        <CheckBox IsChecked="{Binding Path=Updates/Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <CheckBox x:Name="checkBox" IsEnabled="{Binding Path=Foreground, Converter={StaticResource colorConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}" IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
                 </DataTemplate>
                 
@@ -44,15 +51,15 @@
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource leftAlignHeader}">
                     <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Updates/Title, Mode=OneWay, Converter={StaticResource localeStringConverter}}"  Width="300" />
-                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Updates/Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=Updates/Files, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="85" />
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Updates/Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="130" />
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Title, Mode=OneWay, Converter={StaticResource localeStringConverter}}"  Width="300" />
+                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=Files, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="85" />
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="130" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlInfo_MouseDown" Visibility="Hidden" />
-        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlHelp_MouseDown" Visibility="Hidden" />
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" />
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" />
         <StackPanel Grid.Column="1" Grid.Row="2" Name="stackPanel2" Margin="5,5,0,0">
             <TextBlock FontWeight="Bold" Name="tbUpdateTitle" Padding="5" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=stackPanel2}" Margin="0,0,5,0" />
             <TextBlock Name="tbUpdateDescription" Text="" MaxWidth="{Binding ActualWidth, ElementName=stackPanel2}" TextWrapping="Wrap" Margin="0,0,5,0" />

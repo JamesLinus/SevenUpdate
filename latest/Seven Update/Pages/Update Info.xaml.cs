@@ -27,13 +27,28 @@ namespace SevenUpdate.Pages
     /// </summary>
     public partial class UpdateInfo : Page
     {
-        #region Global Vars
+        #region Structs
 
-        ListViewItem lvi;
-
-        ObservableCollection<Application> selectedApps;
+        private struct Indexes
+        {
+            internal int appIndex { get; set; }
+            internal int updateIndex { get; set; }
+        }
 
         #endregion
+
+        #region Global Vars
+
+        ObservableCollection<Update> selectedUpdates;
+        Collection<Indexes> indexes;
+        #endregion
+
+        public UpdateInfo()
+        {
+            InitializeComponent();
+            if (App.IsAdmin())
+                cmiHideUpdate.Icon = null;
+        }
 
         #region Event Declarations
 
@@ -79,10 +94,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        public UpdateInfo()
-        {
-            InitializeComponent();
-        }
+        #region UI Events
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -91,8 +103,21 @@ namespace SevenUpdate.Pages
 
         private void btnInstall_Click(object sender, RoutedEventArgs e)
         {
-            App.Applications = selectedApps;
+            SaveUpdateSelection();
             SevenUpdate.Windows.MainWindow.ns.GoBack();
+        }
+
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = TextDecorations.Underline;
+
+        }
+
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = null;
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -103,79 +128,137 @@ namespace SevenUpdate.Pages
 
         private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            if (tbUrlInfo.Tag != null)
+                System.Diagnostics.Process.Start(tbUrlInfo.Tag.ToString());
         }
 
         private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
+            if (tbUrlHelp.Tag != null)
+                System.Diagnostics.Process.Start(tbUrlHelp.Tag.ToString());
         }
 
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            //int appIndex, updateIndex;
+            int updateIndex = listView.SelectedIndex;
+            int appIndex = indexes[updateIndex].appIndex;
 
-            //UpdateInformation hnh = new UpdateInformation();
+            UpdateInformation hnh = new UpdateInformation();
 
-            //hnh.ApplicationName = App.Applications[appIndex].Name;
+            hnh.ApplicationName = App.Applications[appIndex].Name;
 
-            //hnh.HelpUrl = App.Applications[appIndex].HelpUrl;
+            hnh.HelpUrl = App.Applications[appIndex].HelpUrl;
 
-            //hnh.InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
+            hnh.InfoUrl = selectedUpdates[updateIndex].InfoUrl;
 
-            //hnh.Publisher = App.Applications[appIndex].Publisher;
+            hnh.Publisher = App.Applications[appIndex].Publisher;
 
-            //hnh.PublisherUrl = App.Applications[appIndex].PublisherUrl;
+            hnh.PublisherUrl = App.Applications[appIndex].PublisherUrl;
 
-            //hnh.ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
+            hnh.ReleaseDate = selectedUpdates[updateIndex].ReleaseDate;
 
-            //hnh.Status = UpdateStatus.Hidden;
+            hnh.Status = UpdateStatus.Hidden;
 
-            //hnh.Importance = App.Applications[appIndex].Updates[updateIndex].Importance;
+            hnh.Size = App.GetUpdateSize(selectedUpdates[updateIndex].Files);
 
-            //hnh.Description = App.Applications[appIndex].Updates[updateIndex].Description;
+            hnh.Importance = selectedUpdates[updateIndex].Importance;
 
-            //hnh.UpdateTitle = App.Applications[appIndex].Updates[updateIndex].Title;
+            hnh.Description = selectedUpdates[updateIndex].Description;
 
-            //if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
-            //{
-            //    if (Client.HideUpdate(hnh))
-            //    {
-            //        cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
-            //        lvi.IsEnabled = false;
-                    
-            //    }
+            hnh.UpdateTitle = selectedUpdates[updateIndex].Title;
 
-            //}
-            //else
-            //{
-            //    if (Client.ShowUpdate(hnh))
-            //    {
-            //        cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
-            //        lvi.IsEnabled = true;
+            ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
 
-            //    }
-            //}
+            if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
+            {
+                if (SevenUpdate.WCF.Client.HideUpdate(hnh))
+                {
+                    cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
+                    item.Foreground = System.Windows.Media.Brushes.Gray;
+
+                }
+
+            }
+            else
+            {
+                if (SevenUpdate.WCF.Client.ShowUpdate(hnh))
+                {
+                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
+                    item.Foreground = System.Windows.Media.Brushes.Black;
+
+                }
+            }
         }
 
+        #endregion
+
         #region Methods
+
+        private void SaveUpdateSelection()
+        {
+            int[] count = new int[2];
+            ulong[] downloadSize = new ulong[2];
+            for (int x = 0; x < indexes.Count; x++)
+            {
+                App.Applications[indexes[x].appIndex].Updates[indexes[x].updateIndex].Selected = selectedUpdates[x].Selected;
+                if (selectedUpdates[x].Selected)
+                {
+                    switch (selectedUpdates[x].Importance)
+                    {
+                        case Importance.Important: count[0]++;
+                            downloadSize[0] = App.GetUpdateSize(selectedUpdates[x].Files, App.GetLocaleString(selectedUpdates[x].Title), App.GetLocaleString(App.Applications[indexes[x].appIndex].Name),
+                                App.Applications[indexes[x].appIndex].Directory, App.Applications[indexes[x].appIndex].Is64Bit);
+                            break;
+                        case Importance.Recommended:
+                            if (App.Settings.IncludeRecommended)
+                            {
+                                downloadSize[0] = App.GetUpdateSize(selectedUpdates[x].Files, App.GetLocaleString(selectedUpdates[x].Title), App.GetLocaleString(App.Applications[indexes[x].appIndex].Name),
+                                    App.Applications[indexes[x].appIndex].Directory, App.Applications[indexes[x].appIndex].Is64Bit);
+                                count[0]++;
+                            }
+                            else
+                            {
+                                downloadSize[1] = App.GetUpdateSize(selectedUpdates[x].Files, App.GetLocaleString(selectedUpdates[x].Title), App.GetLocaleString(App.Applications[indexes[x].appIndex].Name),
+                                     App.Applications[indexes[x].appIndex].Directory, App.Applications[indexes[x].appIndex].Is64Bit);
+                                count[1]++;
+                            }
+                            break;
+                        case Importance.Optional:
+                        case Importance.Locale:
+                            downloadSize[0] = App.GetUpdateSize(selectedUpdates[x].Files, App.GetLocaleString(selectedUpdates[x].Title), App.GetLocaleString(App.Applications[indexes[x].appIndex].Name),
+                                App.Applications[indexes[x].appIndex].Directory, App.Applications[indexes[x].appIndex].Is64Bit);
+                            count[1]++;
+                            break;
+                    }
+                }
+            }
+            if (UpdateSelectionChangedEventHandler != null)
+                UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+        }
 
         /// <summary>
         /// Adds the updates to the list
         /// </summary>
         void AddUpdates()
         {
-            selectedApps = App.Applications;
+            selectedUpdates = new ObservableCollection<Update>();
+            indexes = new Collection<Indexes>();
+            Indexes index = new Indexes();
+            for (int x = 0; x < App.Applications.Count; x++)
+            {
+                for (int y = 0; y < App.Applications[x].Updates.Count; y++)
+                {
+                    selectedUpdates.Add(App.Applications[x].Updates[y]);
+                    index.appIndex = x;
+                    index.updateIndex = y;
+                    indexes.Add(index);
+                }
+            }
             Binding items = new Binding();
-            items.Source = selectedApps;
+            items.Source = selectedUpdates;
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
         }
 
-        void LoadUpdateInfo()
-        {
-            
-
-        }
         /// <summary>
         /// Shows the update information in the sidebar
         /// </summary>
@@ -206,271 +289,20 @@ namespace SevenUpdate.Pages
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lvi = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
-            Application app = listView.SelectedItem as Application;
-
-
             if (listView.SelectedIndex == -1)
                 HideLabels();
-            else 
+            else
+            {
+                tbUpdateDescription.Text = App.GetLocaleString(selectedUpdates[listView.SelectedIndex].Description);
+                tbPublishedDate.Text = selectedUpdates[listView.SelectedIndex].ReleaseDate;
+                tbUpdateTitle.Text = App.GetLocaleString(selectedUpdates[listView.SelectedIndex].Title);
+                tbUrlHelp.Tag = App.Applications[indexes[listView.SelectedIndex].appIndex].HelpUrl;
+                tbUrlInfo.Tag = selectedUpdates[listView.SelectedIndex].InfoUrl;
+
                 ShowLabels();
+            }
 
         }
-
-    //    #region Methods
-
-    //    /// <summary>
-    //    /// Adds the updates to the list
-    //    /// </summary>
-    //    void AddUpdates()
-    //    {
-    //        ListViewItem item = null;
-
-    //        ListViewGroup group = null;
-
-    //        listView.Items.Clear();
-
-    //        listView.Groups.Clear();
-
-    //        foreach (Application app in Program.Applications)
-    //        {
-    //            foreach (Update update in app.Updates)
-    //            {
-    //                int index = CheckGroups(app.Name[0].Value);
-
-    //                if (index < 0)
-    //                {
-    //                    group = new ListViewGroup(app.Name[0].Value);
-
-    //                    listView.Groups.Add(group);
-
-    //                    item = new ListViewItem(group);
-    //                }
-    //                else
-    //                    item = new ListViewItem(listView.Groups[index]);
-
-    //                item.SubItems.Add(update.Title[0].Value);
-    //                if (update.Importance == Importance.Important)
-    //                    item.SubItems.Add(Program.RM.GetString("Important"));
-    //                else if (update.Importance == Importance.Optional)
-    //                    item.SubItems.Add(Program.RM.GetString("Optional"));
-    //                else if (update.Importance == Importance.Recommended)
-    //                    item.SubItems.Add(Program.RM.GetString("Recommended"));
-    //                else if (update.Importance == Importance.Locale)
-    //                    item.SubItems.Add(Program.RM.GetString("Locale"));
-
-    //                item.SubItems.Add(Shared.ConvertFileSize(Program.GetUpdateSize(update, app.Name[0].Value, app.Directory, app.Is64Bit, false)));
-
-    //                ulong size = Program.GetUpdateSize(Program.Applications[appIndex].Updates[updateIndex], Program.Applications[appIndex].Name[0].Value, Program.Applications[appIndex].Directory,
-    //Program.Applications[appIndex].Is64Bit, true);
-
-    //                if (size > 0)
-    //                    item.SubItems.Add(Program.RM.GetString("ReadyToDownload"));
-    //                else
-    //                    item.SubItems.Add(Program.RM.GetString("ReadyToInstall"));
-
-    //                if (app.Name[0].Value == Program.RM.GetString("SevenUpdate"))
-    //                    item.Checked = true;
-
-    //                if (update.Importance == Importance.Locale || update.Importance == Importance.Optional)
-    //                    item.Checked = false;
-
-    //                listView.Items.Add(item);
-    //            }
-    //        }
-
-    //        listView.Items[0].Selected = true;
-    //    }
-
-    //    void GetListCount()
-    //    {
-    //        int[] count = new int[2];
-    //        ulong[] fileSize = new ulong[2];
-    //        int a, b;
-
-    //        for (int x = 0; x < listView.CheckedItems.Count; x++)
-    //        {
-    //            a = listView.Groups.IndexOf(listView.CheckedItems[x].Group);
-
-    //            b = listView.CheckedItems[x].Group.Items.IndexOf(listView.CheckedItems[x]);
-
-
-    //            if (listView.CheckedItems[x].SubItems[2].Text == Program.RM.GetString("Important"))
-    //            {
-    //                count[0]++;
-
-    //                fileSize[0] += Program.GetUpdateSize(Program.Applications[a].Updates[b], Program.Applications[a].Name[0].Value, Program.Applications[a].Directory, Program.Applications[a].Is64Bit, true);
-    //            }
-
-    //            if (listView.CheckedItems[x].SubItems[2].Text == Program.RM.GetString("Recommended"))
-    //                if (App.Settings.Recommended)
-    //                {
-    //                    count[0]++;
-
-    //                    fileSize[0] += Program.GetUpdateSize(Program.Applications[a].Updates[b], Program.Applications[a].Name[0].Value, Program.Applications[a].Directory, Program.Applications[a].Is64Bit, true);
-    //                }
-    //                else
-    //                {
-    //                    count[1]++;
-
-    //                    fileSize[1] += Program.GetUpdateSize(Program.Applications[a].Updates[b], Program.Applications[a].Name[0].Value, Program.Applications[a].Directory, Program.Applications[a].Is64Bit, true);
-    //                }
-
-    //            if (listView.CheckedItems[x].SubItems[2].Text == Program.RM.GetString("Optional") || listView.CheckedItems[x].SubItems[2].Text == Program.RM.GetString("Locale"))
-    //            {
-    //                count[1]++;
-
-    //                fileSize[1] += Program.GetUpdateSize(Program.Applications[a].Updates[b], Program.Applications[a].Name[0].Value, Program.Applications[a].Directory, Program.Applications[a].Is64Bit, true);
-    //            }
-
-    //        }
-
-    //        if (UpdateSelectionChangedEventHandler != null)
-    //            UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], fileSize[0], fileSize[1]));
-    //    }
-
-    //    #endregion
-
-    //    #region UI Events
-
-    //    void AppUpdate_Load(object sender, EventArgs e)
-    //    {
-    //        AddUpdates();
-    //    }
-
-    //    #region Buttons
-
-    //    void btnCancel_Click(object sender, EventArgs e)
-    //    {
-    //        Visible = false;
-    //        SendToBack();
-    //    }
-
-    //    void btnOK_Click(object sender, EventArgs e)
-    //    {
-    //        GetListCount();
-    //        Visible = false;
-    //        SendToBack();
-    //    }
-
-    //    #endregion
-
-
-    //    #region Context Menu
-
-    //    /// <summary>
-    //    /// Hides an update
-    //    /// </summary>
-    //    /// <param name="sender"></param>
-    //    /// <param name="e"></param>
-    //    void cmsHideUpdate_Click(object sender, EventArgs e)
-    //    {
-
-    //    }
-
-    //    void cmsMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-    //    {
-    //        if (listView.SelectedItems.Count == 0)
-    //            e.Cancel = true;
-    //        else
-    //            listIndex = listView.SelectedItems[0].Index;
-
-    //    }
-
-    //    #endregion
-
-    //    #region ListView
-
-    //    /// <summary>
-    //    /// Sets the checkbox state and also grabs the 'Selected Updates' Count
-    //    /// </summary>
-    //    void listView_ItemChecked(object sender, ItemCheckedEventArgs e)
-    //    {
-    //        chkSelectAll.Enabled = true;
-
-    //        if (listView.CheckedItems.Count > 0)
-    //            lblSelected.Text = Program.RM.GetString("TotalSelected") + " " + listView.CheckedItems.Count + " " + Program.RM.GetString("Updates");
-    //        else
-    //            if (listView.CheckedItems.Count == 1)
-    //                lblSelected.Text = Program.RM.GetString("TotalSelected") + " 0 " + Program.RM.GetString("Update");
-    //            else
-    //                lblSelected.Text = Program.RM.GetString("TotalSelected") + " 0 " + Program.RM.GetString("Updates");
-
-    //        if (listView.Items.Count == listView.CheckedItems.Count)
-    //            chkSelectAll.CheckState = CheckState.Checked;
-    //        else
-    //            if (listView.CheckedItems.Count == 0)
-    //                chkSelectAll.CheckState = CheckState.Unchecked;
-    //            else
-    //                chkSelectAll.CheckState = CheckState.Indeterminate;
-
-    //        if (listView.CheckedItems.Count == 0)
-    //        {
-    //            int hidden = 0;
-
-    //            for (int x = 0; x < listView.Items.Count; x++)
-    //            {
-    //                if (listView.Items[x] != null)
-    //                    if (listView.Items[x].ForeColor == SystemColors.GrayText)
-    //                        hidden++;
-    //            }
-
-    //            if (hidden == listView.Items.Count)
-    //            {
-    //                chkSelectAll.Enabled = false;
-    //            }
-
-    //            chkSelectAll.CheckState = CheckState.Unchecked;
-
-    //        }
-
-    //    }
-
-    //    /// <summary>
-    //    /// If any item is not checked it will uncheck the 'Select all' checkbox
-    //    /// </summary>
-    //    void listView_ItemCheck(object sender, ItemCheckEventArgs e)
-    //    {
-    //        if (listView.Items[e.Index].ForeColor != SystemColors.WindowText)
-    //            e.NewValue = CheckState.Unchecked;
-    //    }
-
-    //    /// <summary>
-    //    /// Switches the Context menu text
-    //    /// </summary>
-    //    void listView_SelectedIndexChanged(object sender, EventArgs e)
-    //    {
-    //        if (listView.SelectedItems.Count > 0)
-    //        {
-    //            if (listView.SelectedItems[0].ForeColor == SystemColors.GrayText)
-    //                cmsHideUpdate.Text = Program.RM.GetString("ShowUpdate");
-    //            else
-    //                cmsHideUpdate.Text = Program.RM.GetString("HideUpdate");
-
-    //            if (listView.SelectedItems[0].Group != null)
-    //            {
-    //                updateIndex = listView.SelectedItems[0].Group.Items.IndexOf(listView.SelectedItems[0]);
-
-    //                appIndex = listView.Groups.IndexOf(listView.SelectedItems[0].Group);
-
-    //                sidebar.DisplayUpdateInfo(Program.Applications[appIndex].Updates[updateIndex].Title[0].Value, Program.Applications[appIndex].Updates[updateIndex].ReleaseDate,
-    //                Program.Applications[appIndex].Updates[updateIndex].Description[0].Value, Program.Applications[appIndex].Updates[updateIndex].InfoUrl, Program.Applications[appIndex].HelpUrl);
-
-    //                if (Program.Applications[appIndex].Name[0].Value == Program.RM.GetString("SevenUpdate") && Program.Applications[appIndex].Publisher[0].Value == Program.RM.GetString("SevenSoftware"))
-    //                    cmsHideUpdate.Enabled = false;
-    //                else
-    //                {
-    //                    cmsHideUpdate.Enabled = true;
-    //                }
-    //            }
-    //        }
-    //        else
-    //            sidebar.HideText();
-    //    }
-
-    //    #endregion
-
-    //    #endregion
 
         #endregion
     }

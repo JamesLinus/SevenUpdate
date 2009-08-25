@@ -251,12 +251,15 @@ namespace SevenUpdate.WCF
                 proc.Start();
                 if (wait)
                     proc.WaitForExit();
+                proc.Dispose();
                 return true;
             }
             catch (Exception)
             {
+                proc.Dispose();
                 return false;
             }
+            
         }
 
         /// <summary>

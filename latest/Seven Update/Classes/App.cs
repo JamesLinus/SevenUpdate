@@ -71,6 +71,11 @@ namespace SevenUpdate
         internal static ObservableCollection<Application> Applications { get; set; }
 
         /// <summary>
+        /// Indicates if an Auto Search was performed
+        /// </summary>
+        internal static bool AutoCheck { get; set; }
+
+        /// <summary>
         /// Specifies if Seven Update is allowed to check for updates
         /// </summary>
         internal static bool CanCheckForUpdates { get; set; }
@@ -120,27 +125,15 @@ namespace SevenUpdate
                 }
                 if (createdNew)
                 {
-                    if (args.Length < 1)
-                    {
-                        MainWindow mainWindow = new MainWindow();
-                        mainWindow = new SevenUpdate.Windows.MainWindow();
-                        mainWindow.Show();
-                        System.Windows.Application app = new System.Windows.Application();
-                        app.Run();
-                        
-                    }
-                    else
+                    if (args.Length > 1)
                     {
                         if (args[0] == "Auto")
                         {
-                            SevenUpdate.Pages.Main.AutoCheck = true;
-                            MainWindow mainWindow = new MainWindow();
-                            //main = new SevenUpdate.Windows.MainWindow();
-                            //main.Show();
-                            //System.Windows.Application app = new System.Windows.Application();
-                            //app.Run();
+                            AutoCheck = true;
                         }
                     }
+                    System.Windows.Application app = new System.Windows.Application();
+                    app.Run(new MainWindow());
                 }
 
                 try
@@ -149,6 +142,18 @@ namespace SevenUpdate
                 }
                 catch (Exception) { }
             }
+        }
+
+
+        internal static string GetLocaleString(ObservableCollection<LocaleString> localeStrings)
+        {
+
+            for (int x = 0; x < localeStrings.Count; x++)
+            {
+                if (localeStrings[x].lang == App.Locale)
+                    return localeStrings[x].Value;
+            }
+            return localeStrings[0].Value;
         }
 
         /// <summary>
@@ -172,6 +177,7 @@ namespace SevenUpdate
                     SevenUpdate.WCF.Client.AddSUA(sul);
                 }
             }
+            wc.Dispose();
 
         }
 

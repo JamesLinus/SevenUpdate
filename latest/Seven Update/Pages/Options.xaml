@@ -45,7 +45,7 @@
                     <TextBlock HorizontalAlignment="Left" Name="tbRefresh" Padding="5" Text="Refresh" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF0066CC" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbRefresh_MouseDown" />
                     <TextBlock HorizontalAlignment="Left" Name="textBlock3" Padding="5" Text="Select the programs that will be updated with Seven Update." VerticalAlignment="Center" Margin="10,0,0,0" />
                 <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Grid.Row="1">    
-                <ListView SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Name="listView" MinWidth="800" GridViewColumnHeader.Click="OnColumnHeaderClick" Thumb.DragDelta="Thumb_DragDelta">
+                <ListView SelectionMode="Single" Grid.Row="1" Grid.ColumnSpan="2" Name="listView" MinWidth="800" GridViewColumnHeader.Click="OnColumnHeaderClick" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black">
                         <ListView.Resources>
                             
                             <DataTemplate x:Key="FirstCell">

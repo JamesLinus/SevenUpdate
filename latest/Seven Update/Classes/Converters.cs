@@ -1,9 +1,31 @@
 ﻿using System;
 using System.Windows.Data;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 
 namespace SevenUpdate.Converters
 {
+    [ValueConversion(typeof(Brush), typeof(bool))]
+    public class BrushToBoolConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (((Brush)value) == Brushes.Black)
+                return true;
+            else
+                return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
     [ValueConversion(typeof(string), typeof(string))]
     public class StringToLocaleConverter : IValueConverter
     {

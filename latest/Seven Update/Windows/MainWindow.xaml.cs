@@ -78,10 +78,11 @@ namespace SevenUpdate.Windows
             Settings.Default.windowWidth = Width;
             Settings.Default.Save();
 
-            if (App.InstallInProgress || App.UpdatesFound)
+            if (App.InstallInProgress )
             {
                 e.Cancel = true;
                 ShowInTaskbar = false;
+                Hide();
                 App.taskbarIcon.Visible = true;
             }
         }

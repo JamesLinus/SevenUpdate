@@ -46,20 +46,10 @@ namespace SevenUpdate.Windows
             {
                 tbStatus.Text = updateInfo.Status.ToString() + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
             }
-            if (updateInfo.InfoUrl == null)
-            {
-                //tbMoreInfoURL.Text = App.RM.GetString("NotAvaliable");
-            }
-            else
+            if (updateInfo.InfoUrl != null)
                 tbMoreInfoURL.Text = updateInfo.InfoUrl;
-            if (updateInfo.HelpUrl == null)
-            {
-                //tbMoreHelpURL.Text = App.RM.GetString("NotAvaliable");
-            }
-            else
-            {
+            if (updateInfo.HelpUrl != null)
                 tbHelpURL.Text = updateInfo.HelpUrl;
-            }
 
            return base.ShowDialog();
         }
