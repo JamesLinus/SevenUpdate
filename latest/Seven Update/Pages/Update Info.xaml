@@ -1,0 +1,70 @@
+﻿<Page x:Class="SevenUpdate.Pages.UpdateInfo"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+	Title="Update Information" MinWidth="850" MinHeight="500"  KeepAlive="True" Loaded="Page_Loaded">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Resources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="309*" MinHeight="300"  />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="44" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="650*" />
+            <ColumnDefinition Width="200*" x:Name="side"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Name="rectangle1" Stroke="#FFA0A0A0" Grid.Row="6" />
+        <Image Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Name="imgSideDetails" Stretch="Fill" />
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged">
+            <ListView.Resources>
+                        <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem x:Name="cmiHideUpdate" Header="Hide Update" Click="MenuItem_MouseClick"/>
+                </ContextMenu>
+                <DataTemplate x:Key="FirstCell">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding Path=Updates/Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </DataTemplate>
+                
+            </ListView.Resources>
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource leftAlignHeader}">
+                    <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Updates/Title, Mode=OneWay, Converter={StaticResource localeStringConverter}}"  Width="300" />
+                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Updates/Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=Updates/Files, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="85" />
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Updates/Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="130" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlInfo_MouseDown" Visibility="Hidden" />
+        <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlHelp_MouseDown" Visibility="Hidden" />
+        <StackPanel Grid.Column="1" Grid.Row="2" Name="stackPanel2" Margin="5,5,0,0">
+            <TextBlock FontWeight="Bold" Name="tbUpdateTitle" Padding="5" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=stackPanel2}" Margin="0,0,5,0" />
+            <TextBlock Name="tbUpdateDescription" Text="" MaxWidth="{Binding ActualWidth, ElementName=stackPanel2}" TextWrapping="Wrap" Margin="0,0,5,0" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="stackPanel3" VerticalAlignment="Top" Orientation="Horizontal">
+            <TextBlock FontWeight="Normal" Name="tbPublishedLabel" Padding="5" Text="Published:" MaxWidth="120" Visibility="Hidden" />
+            <TextBlock FontWeight="Normal" Name="tbPublishedDate" Padding="5" Text="" MaxWidth="90" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="6">
+            <Button Content="Install" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnInstall" Padding="5,1" VerticalContentAlignment="Center" Click="btnInstall_Click" />
+            <Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" Click="btnCancel_Click" />
+        </StackPanel>
+        <Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
+    </Grid>
+</Page>
