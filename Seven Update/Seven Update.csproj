@@ -50,9 +50,9 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GrayscaleEffect, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AvalonLibrary, Version=9.8.26.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\GrayscaleEffect.dll</HintPath>
+      <HintPath>..\References\AvalonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="SevenUpdate.Library, Version=9.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,14 +66,12 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\App.cs" />
     <Compile Include="Classes\Client.cs" />
     <Compile Include="Classes\Converters.cs" />
-    <Compile Include="Classes\DataTemplate.cs" />
     <Compile Include="Classes\InvokeMethods.cs" />
     <Compile Include="Classes\ListViewExtensions.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
@@ -227,6 +225,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\BlueArrow.png" />
+    <Resource Include="Images\GreenArrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

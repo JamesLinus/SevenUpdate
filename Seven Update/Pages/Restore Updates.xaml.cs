@@ -36,14 +36,12 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-
         public RestoreUpdates()
         {
             InitializeComponent();
-            if (App.IsAdmin())
+            if (App.IsAdmin)
                 btnRestore.Content = App.RM.GetString("Restore");
             listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-
         }
 
         #region Event Declarations
@@ -136,14 +134,7 @@ namespace SevenUpdate.Pages
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            SevenUpdate.Classes.ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
-        }
-
-        private void OnColumnHeaderClick(object sender, RoutedEventArgs e)
-        {
-            if (e.OriginalSource.ToString().Contains("System.Windows.Controls.CheckBox"))
-                return;
-            SevenUpdate.Classes.ListViewExtensions.OnColumnHeaderClick(listView, e);
+            ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
         }
 
         #endregion
@@ -151,19 +142,14 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHiddenUpdates();
-            Main.LastPageVisited = "RestoreUpdates";
         }
 
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
             details.ShowDialog(HiddenUpdates[listView.SelectedIndex]);
-        }      
-  
+        }
+
         #endregion
-
-
-
-
     }
 }

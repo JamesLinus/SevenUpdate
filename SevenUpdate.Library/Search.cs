@@ -38,7 +38,7 @@ namespace SevenUpdate
         /// If true, Seven Update is currently installing updates.
         /// </summary>
         public static bool InstallInProgress { get; set; }
-        
+
         /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
@@ -89,18 +89,17 @@ namespace SevenUpdate
                     }
                 }
                 string file;
+                ulong size = 0;
                 for (int z = 0; z < app.Updates[y].Files.Count; z++)
                 {
                     file = Shared.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
 
                     if (File.Exists(file))
                     {
+                        #region File Exists
+
                         switch (app.Updates[y].Files[z].Action)
                         {
-                            case FileAction.Delete:
-                            case FileAction.ExecuteAndDelete: 
-                            case FileAction.UnregisterAndDelete: break;
-
                             case FileAction.Update:
                             case FileAction.UpdateAndExecute:
                             case FileAction.UpdateAndRegister:
@@ -115,36 +114,42 @@ namespace SevenUpdate
                                 break;
 
                         }
+
                     }
+                        #endregion
                     else
                     {
+                        #region File does not exist
+
                         switch (app.Updates[y].Files[z].Action)
                         {
-                            case FileAction.Delete: 
-                            case FileAction.UnregisterAndDelete: 
-                            app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                            if (app.Updates[y].Files.Count == 0)
-                                break;
-                            else
-                                z--;
-                                break;
-
-                            case FileAction.ExecuteAndDelete: break;
-
-                            case FileAction.Update:
-                            case FileAction.UpdateAndExecute:
-                            case FileAction.UpdateAndRegister: 
-                            if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
-                            {
+                            case FileAction.Delete:
+                            case FileAction.UnregisterAndDelete:
                                 app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                 if (app.Updates[y].Files.Count == 0)
                                     break;
                                 else
                                     z--;
-                            }
-                            break;
+                                break;
+
+                            case FileAction.Update:
+                            case FileAction.UpdateAndExecute:
+                            case FileAction.UpdateAndRegister:
+                                if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
+                                {
+                                    app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
+                                    if (app.Updates[y].Files.Count == 0)
+                                        break;
+                                    else
+                                        z--;
+                                }
+                                else
+                                    if (Shared.GetHash(Shared.appStore + @"downloads\" + app.Name + @"\" + app.Updates[y].Title + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                        size += app.Updates[y].Files[z].Size;
+                                break;
 
                         }
+                        #endregion
                     }
                 }
                 bool remove = true;
@@ -168,6 +173,8 @@ namespace SevenUpdate
                         y--;
                     continue;
                 }
+                else
+                    app.Updates[y].Size = size;
 
 
             }
@@ -252,6 +259,12 @@ namespace SevenUpdate
                 }
             }
             Directory.Delete(Shared.userStore + "temp", true);
+
+            for (int x = 0; x < applications.Count; x++)
+            {
+
+            }
+
             OnEvent(SearchDoneEventHandler, new SearchDoneEventArgs(applications));
         }
 

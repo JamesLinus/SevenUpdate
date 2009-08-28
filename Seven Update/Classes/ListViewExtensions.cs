@@ -20,12 +20,10 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace SevenUpdate.Classes
+namespace SevenUpdate
 {
-   static class ListViewExtensions
+    static class ListViewExtensions
     {
-        private static GridViewColumn lastColumnSorted;
-
         internal static void Thumb_DragDelta(object sender, Thumb e)
         {
             Thumb senderAsThumb = e;
@@ -41,47 +39,5 @@ namespace SevenUpdate.Classes
                 header.Column.Width = 25;
 
         }
-
-        internal static void OnColumnHeaderClick(ListView listView, RoutedEventArgs e)
-        {
-            try
-            {
-                GridViewColumn column = ((GridViewColumnHeader)e.OriginalSource).Column;
-                if (lastColumnSorted != null)
-                {
-                    lastColumnSorted.HeaderTemplate = null;
-                }
-                SortDescriptionCollection sorts = listView.Items.SortDescriptions;
-                RenderSort(listView, sorts, column, GetSortDirection(sorts, column));
-            }
-            catch (InvalidCastException) { }
-        }
-
-        private static ListSortDirection GetSortDirection(SortDescriptionCollection sorts, GridViewColumn column)
-        {
-            if (column == null)
-                return ListSortDirection.Ascending;
-            if (column == lastColumnSorted && sorts[0].Direction == ListSortDirection.Ascending)
-            {
-                return ListSortDirection.Descending;
-            }
-            return ListSortDirection.Ascending;
-        }
-
-        private static void RenderSort(ListView listView, SortDescriptionCollection sorts, GridViewColumn column, ListSortDirection direction)
-        {
-            if (column == null)
-                return;
-            column.HeaderTemplate = (DataTemplate)listView.FindResource("HeaderTemplate" + direction);
-
-            Binding columnBinding = column.DisplayMemberBinding as Binding;
-            if (columnBinding != null)
-            {
-                sorts.Clear();
-                sorts.Add(new SortDescription(columnBinding.Path.Path, direction));
-                lastColumnSorted = column;
-            }
-        }
-
     }
 }

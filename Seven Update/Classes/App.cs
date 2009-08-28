@@ -35,8 +35,12 @@ namespace SevenUpdate
 
         #region Global Vars
 
+        /// <summary>
+        /// The currently selected locale to use for language strings
+        /// </summary>
         internal static string Locale;
-        internal static System.Windows.Forms.NotifyIcon taskbarIcon;
+
+        internal static Avalon.Windows.Controls.NotifyIcon NotifyIcon;
 
         /// <summary>
         /// The UI Resource Strings
@@ -54,7 +58,7 @@ namespace SevenUpdate
         /// </summary>
         public static ObservableCollection<SUA> AppsToUpdate
         {
-            get {return Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul");}
+            get { return Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul"); }
         }
 
         /// <summary>
@@ -62,7 +66,7 @@ namespace SevenUpdate
         /// </summary>
         public static Config Settings
         {
-            get {return Shared.DeserializeStruct<Config>(Shared.appStore + "Settings.xml");}
+            get { return Shared.DeserializeStruct<Config>(Shared.appStore + "Settings.xml"); }
         }
 
         /// <summary>
@@ -107,13 +111,10 @@ namespace SevenUpdate
             // Makes sure only 1 copy of Seven Update is allowed to run
             using (Mutex mutex = new Mutex(true, "Seven Update", out createdNew))
             {
-
                 if (Locale == null)
                     Locale = "en";
                 else
                     Locale = Settings.Locale;
-
-
 
                 for (int x = 0; x < args.Length; x++)
                 {
@@ -143,7 +144,6 @@ namespace SevenUpdate
                 catch (Exception) { }
             }
         }
-
 
         internal static string GetLocaleString(ObservableCollection<LocaleString> localeStrings)
         {
@@ -198,29 +198,6 @@ namespace SevenUpdate
             return size;
         }
 
-        /// <summary>
-        /// Gets the download size of a single update
-        /// </summary>
-        /// <param name="files">The collection of files of an update</param>
-        /// <param name="appName">The name of the application that owns the update</param>
-        /// <param name="appDir">The application directory of the update</param>
-        /// <param name="Is64Bit">Specifies if the update/application is 64 bit.</param>
-        /// <returns>Returns a ulong value of the size of the download</returns>
-        internal static ulong GetUpdateSize(ObservableCollection<UpdateFile> files, string updateTitle, string appName, string appDir, bool Is64Bit)
-        {
-            ulong size = 0;
-
-            for (int x = 0; x < files.Count; x++)
-            {
-                if (Shared.GetHash(Shared.appStore + @"downloads\" + appName + @"\" + updateTitle + @"\" + Path.GetFileName(Shared.ConvertPath(files[x].Destination,
-                    appDir, Is64Bit))) != files[x].Hash)
-                    size += files[x].Size;
-                
-            }
-
-            return size;
-        }
-
         #endregion
 
         #region History Methods
@@ -247,17 +224,20 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Vista UI methods
+        #region UI methods
 
         /// <summary>
         /// Specifies if the current user running Seven Update is an administrator
         /// </summary>
         /// <returns></returns>
-        static internal bool IsAdmin()
+        static internal bool IsAdmin
         {
-            WindowsIdentity id = WindowsIdentity.GetCurrent();
-            WindowsPrincipal p = new WindowsPrincipal(id);
-            return p.IsInRole(WindowsBuiltInRole.Administrator);
+            get
+            {
+                WindowsIdentity id = WindowsIdentity.GetCurrent();
+                WindowsPrincipal p = new WindowsPrincipal(id);
+                return p.IsInRole(WindowsBuiltInRole.Administrator);
+            }
         }
 
         /// <summary>
@@ -292,7 +272,5 @@ namespace SevenUpdate
         }
 
         #endregion
-
-
     }
 }

@@ -29,13 +29,13 @@ namespace SevenUpdate.Windows
 
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             Version version = assembly.GetName().Version;
-            
+
             this.Title = this.Title + " " + assembly.GetName().Name;
 
             tbVersion.Text = version.ToString();
 
             tbCopyright.Text = "© " + System.DateTime.Now.Year + " " + App.RM.GetString("SevenSoftware");
-            tbLicense.Text = assembly.GetName().Name +" " + tbLicense.Text;
+            tbLicense.Text = assembly.GetName().Name + " " + tbLicense.Text;
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

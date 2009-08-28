@@ -25,6 +25,7 @@ using System.ServiceModel;
 using System.Threading;
 using Microsoft.Win32;
 using SevenUpdate.WCF;
+using System.Windows;
 
 namespace SevenUpdate
 {
@@ -57,15 +58,15 @@ namespace SevenUpdate
         /// Indicates if the current installation automatically started
         /// </summary>
         static bool AutoInstall { get; set; }
-        
-        internal static System.Windows.Forms.NotifyIcon NotifyIcon { get; set; }
+
+        internal static Avalon.Windows.Controls.NotifyIcon NotifyIcon { get; set; }
 
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(Program).Assembly);
         #endregion
-        
+
         #region Methods
         [STAThread]
         static void Main(string[] args)
@@ -78,7 +79,7 @@ namespace SevenUpdate
                     ServiceHost host = new ServiceHost(typeof(EventService));
                     host.Open();
                     host.Faulted += new EventHandler(host_Faulted);
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -237,7 +238,7 @@ namespace SevenUpdate
                                     AutoInstall = true;
                                     Search.SearchDoneEventHandler += new EventHandler<Search.SearchDoneEventArgs>(Search_SearchDoneEventHandler);
                                     Search.SearchForUpdates(AppsToUpdate);
-                                    System.Windows.Forms.Application.Run();
+                                    System.Windows.Application.Current.Run();
                                 }
                                 else
                                     Environment.Exit(0);
@@ -251,7 +252,7 @@ namespace SevenUpdate
                                     {
                                         EventService.ClientConnected += new EventService.CallbackDelegate(EventService_ClientConnected);
                                         EventService.ClientDisconnected += new EventService.CallbackDelegate(EventService_ClientDisconnected);
-                                        System.Windows.Forms.Application.Run();
+                                        System.Windows.Application.Current.Run();
                                     }
                                     catch (Exception e)
                                     {
@@ -264,14 +265,14 @@ namespace SevenUpdate
                                 break;
                             default:
                                 #region code
-                             //   Environment.Exit(1);
+                                //   Environment.Exit(1);
                                 #endregion
                                 break;
                         }
                     }
                     else
                     {
-                       Environment.Exit(1);
+                        Environment.Exit(1);
                     }
                 }
                 catch (Exception e)
@@ -321,16 +322,16 @@ namespace SevenUpdate
                 else
                 {
                     NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
-                    NotifyIcon.BalloonTipClicked +=new EventHandler(RunSevenUpdate);
-                    NotifyIcon.Click+=new EventHandler(RunSevenUpdate);
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), System.Windows.Forms.ToolTipIcon.Info);
+                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                 }
             }
             else
                 Environment.Exit(0);
         }
 
-        static void RunSevenUpdate(object sender, EventArgs e)
+        static void RunSevenUpdate(object sender, RoutedEventArgs e)
         {
             Process proc = new Process();
 
@@ -365,10 +366,10 @@ namespace SevenUpdate
                 }
                 else
                 {
-                    NotifyIcon.BalloonTipClicked +=new EventHandler(RunSevenUpdate);
-                    NotifyIcon.Click +=new EventHandler(RunSevenUpdate);
+                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
                     NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), System.Windows.Forms.ToolTipIcon.Info);
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                 }
             }
             else

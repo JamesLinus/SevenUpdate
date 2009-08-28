@@ -31,7 +31,7 @@ namespace SevenUpdate
         /// The all users application data location
         /// </summary>
         public static string appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Update\";
-        
+
         /// <summary>
         /// Specifies if a reboot is needed
         /// </summary>
@@ -63,7 +63,7 @@ namespace SevenUpdate
             path = Replace(path, "[DownloadDir]", ConvertPath(dir, true, Is64Bit));
             return ConvertPath(path, true, Is64Bit);
         }
-        
+
         /// <summary>
         /// Expands the system variables in a string
         /// </summary>
@@ -241,7 +241,7 @@ namespace SevenUpdate
             }
             else
                 return null;
-            
+
         }
 
         /// <summary>
@@ -339,10 +339,10 @@ namespace SevenUpdate
                         if (SerializationErrorEventHandler != null)
                             SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
                     }
-                    
+
                     finally { r.Close(); }
 
-                }  
+                }
             }
             return new ObservableCollection<T>();
         }
@@ -395,14 +395,14 @@ namespace SevenUpdate
             {
 
                 XmlSerializer s = new XmlSerializer(typeof(T));
-                
+
                 T temp;
                 using (TextReader r = new StreamReader(xmlFile))
                 {
                     try
                     {
                         temp = (T)s.Deserialize(r);
-                        
+
                         return temp;
                     }
                     catch (Exception e)
@@ -502,7 +502,7 @@ namespace SevenUpdate
 
         #region Event Handlers
 
-        public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler; 
+        public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
 
         public class SerializationErrorEventArgs : EventArgs
         {
@@ -515,7 +515,7 @@ namespace SevenUpdate
             /// <summary>
             /// A string describing the error
             /// </summary>
-            public string ErrorMessage{ get; set; }
+            public string ErrorMessage { get; set; }
 
             /// <summary>
             /// The file that caused the error message

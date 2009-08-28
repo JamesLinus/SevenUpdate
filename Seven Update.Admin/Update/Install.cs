@@ -53,7 +53,7 @@ namespace SevenUpdate
         /// Indicates if Seven Update is being updated
         /// </summary>
         static bool IsSevenUpdate;
-       
+
         /// <summary>
         /// Number of total updates to install
         /// </summary>
@@ -547,7 +547,7 @@ namespace SevenUpdate
 
                     MoveFileEx(DownloadedPath + Path.GetFileName(fileDest),
 
-                    fileDest,MoveOnReboot);
+                    fileDest, MoveOnReboot);
                 }
 
                 if (!File.Exists(Shared.appStore + "reboot.lock"))

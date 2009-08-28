@@ -80,12 +80,12 @@ namespace SevenUpdate
             manager.OnError += new EventHandler<System.Net.BITS.JobErrorEventArgs>(manager_OnError);
             manager.OnModfication += new EventHandler<System.Net.BITS.JobModificationEventArgs>(manager_OnModfication);
             manager.Jobs.Update();
-           
+
             for (int z = 0; z < manager.Jobs.Count; z++)
             {
                 if (manager.Jobs[z].DisplayName.StartsWith("Seven Update"))
                 {
-                    if (manager.Jobs[z].Files.Count < 1 || (manager.Jobs[z].State != System.Net.BITS.JobState.Transferring &&manager.Jobs[z].State != System.Net.BITS.JobState.Suspended))
+                    if (manager.Jobs[z].Files.Count < 1 || (manager.Jobs[z].State != System.Net.BITS.JobState.Transferring && manager.Jobs[z].State != System.Net.BITS.JobState.Suspended))
                     {
                         try
                         {
@@ -120,7 +120,7 @@ namespace SevenUpdate
             }
 
             System.Net.BITS.Job job = new System.Net.BITS.Job("Seven Update", System.Net.BITS.JobType.Download, System.Net.BITS.JobPriority.Foreground);
-            
+
             string fileDest;
 
             for (int x = 0; x < applications.Count; x++)
@@ -200,7 +200,7 @@ namespace SevenUpdate
             }
         }
 
-        #endregion 
+        #endregion
 
         #region Events
 

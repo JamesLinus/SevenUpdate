@@ -14,6 +14,8 @@ This file is part of Seven Update.
     You should have received a copy of the GNU General Public License
     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows;
 
 namespace SevenUpdate.Pages
 {
@@ -27,13 +29,14 @@ namespace SevenUpdate.Pages
             InitializeComponent();
         }
 
-        private void tbViewOptionalUpdates_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
             TextBlock textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = System.Windows.TextDecorations.Underline;
+            textBlock.TextDecorations = TextDecorations.Underline;
+
         }
 
-        private void tbViewOptionalUpdates_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
             TextBlock textBlock = ((TextBlock)sender);
             textBlock.TextDecorations = null;

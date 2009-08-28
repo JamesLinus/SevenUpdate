@@ -33,10 +33,14 @@ namespace SevenUpdate.Windows
         public MainWindow()
         {
             InitializeComponent();
+
             ns = this.NavigationService;
-            App.taskbarIcon = new System.Windows.Forms.NotifyIcon();
-            App.taskbarIcon.BalloonTipClicked += new EventHandler(taskbarIcon_BalloonTipClicked);
-            App.taskbarIcon.Click += new EventHandler(taskbarIcon_Click);
+
+            /// Make the NotifyIcon in the resources global and accessbile via the App Class
+            App.NotifyIcon = (Avalon.Windows.Controls.NotifyIcon)FindResource("NotifyIcon");
+ 
+            /// Set the notifyicon to the localized program name
+            App.NotifyIcon.Text = App.RM.GetString("SevenUpdate");
         }
 
         internal static NavigationService ns;
@@ -49,7 +53,7 @@ namespace SevenUpdate.Windows
             Width = Settings.Default.windowWidth;
         }
 
-        private void NavigationWindow_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void NavigationWindow_StateChanged(object sender, System.EventArgs e)
         {
             if (App.InstallInProgress)
             {
@@ -57,18 +61,12 @@ namespace SevenUpdate.Windows
                 if (this.WindowState == WindowState.Minimized)
                 {
                     ShowInTaskbar = false;
-                    App.taskbarIcon.Visible = true;
                 }
                 if (WindowState == WindowState.Normal)
                 {
                     ShowInTaskbar = true;
-                    App.taskbarIcon.Visible = false;
                 }
             }
-        }
-
-        private void NavigationWindow_StateChanged(object sender, System.EventArgs e)
-        {
 
         }
 
@@ -83,30 +81,31 @@ namespace SevenUpdate.Windows
                 e.Cancel = true;
                 ShowInTaskbar = false;
                 Hide();
-                App.taskbarIcon.Visible = true;
+                App.NotifyIcon.Visibility = Visibility.Visible;
             }
         }
 
         #region Notification Icon
-        void taskbarIcon_Click(object sender, EventArgs e)
+
+        void NotifyIcon_Click(object sender, RoutedEventArgs e)
         {
             this.Show();
             this.ShowInTaskbar = true;
             IsHidden = false;
-            App.taskbarIcon.Visible = false;
+            App.NotifyIcon.Visibility = Visibility.Hidden;
         }
 
-        void taskbarIcon_BalloonTipClicked(object sender, EventArgs e)
+        void NotifyIcon_BalloonTipClick(object sender, RoutedEventArgs e)
         {
             Settings.Default.infoPopUp = false;
             Settings.Default.Save();
             this.Show();
             this.ShowInTaskbar = true;
             IsHidden = false;
-            App.taskbarIcon.Visible = false; ;
-            if (App.taskbarIcon.Text.Contains(App.RM.GetString("DownloadAndInstallUpdates")))
+            App.NotifyIcon.Visibility = Visibility.Hidden; ;
+            if (App.NotifyIcon.Text.Contains(App.RM.GetString("DownloadAndInstallUpdates")))
             {
-                SevenUpdate.Windows.MainWindow.ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
+                ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
             }
         }
 

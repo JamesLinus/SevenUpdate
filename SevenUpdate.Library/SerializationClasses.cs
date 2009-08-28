@@ -73,7 +73,7 @@ namespace SevenUpdate
 
     [SerializableAttribute()]
     [XmlTypeAttribute(AnonymousType = true)]
-    public class LocaleString
+    public class LocaleString : System.Collections.IComparer
     {
         /// <summary>
         /// an ISO language code
@@ -87,6 +87,10 @@ namespace SevenUpdate
         [XmlAttribute()]
         public string Value { get; set; }
 
+        public int Compare(object x, object y)
+        {
+            return (((LocaleString)x).Value.CompareTo(((LocaleString)y)));
+        }
     }
 
     #endregion
@@ -313,12 +317,6 @@ namespace SevenUpdate
         /// </summary>
         [XmlAttribute("PublisherUrl")]
         public string PublisherUrl { get; set; }
-
-        /// <summary>
-        /// The total size of the update in bytes, not used by the SDK
-        /// </summary>
-        [XmlAttribute("Size")]
-        public ulong Size { get; set; }
 
         /// <summary>
         /// Gets or Sets the applications application
@@ -593,6 +591,12 @@ namespace SevenUpdate
         /// </summary>
         [XmlAttribute("Selected")]
         public bool Selected { get; set; }
+
+        /// <summary>
+        /// The download size of the update in bytes, not used by the SDK
+        /// </summary>
+        [XmlAttribute("Size")]
+        public ulong Size { get; set; }
 
         /// <summary>
         /// The shortcuts to create for the update

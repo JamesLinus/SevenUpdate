@@ -31,7 +31,7 @@ namespace SevenUpdate.WCF
         static ESB.EventSystemClient wcf;
 
         static Client client;
-        
+
         /// <summary>
         /// Connects to the Seven Update.Admin sub program
         /// </summary>
@@ -67,7 +67,7 @@ namespace SevenUpdate.WCF
             }
             catch (Exception) { }
         }
-        
+
         public void OnDownloadDone(bool ErrorOccurred)
         {
             OnEvent<DownloadDoneEventArgs>(DownloadDoneEventHandler, new DownloadDoneEventArgs(ErrorOccurred));
@@ -235,7 +235,7 @@ namespace SevenUpdate.WCF
 
             proc.StartInfo.FileName = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe";
 
-            if (!App.IsAdmin())
+            if (!App.IsAdmin)
                 proc.StartInfo.Verb = "runas";
 
             proc.StartInfo.UseShellExecute = true;
@@ -259,7 +259,7 @@ namespace SevenUpdate.WCF
                 proc.Dispose();
                 return false;
             }
-            
+
         }
 
         /// <summary>
@@ -290,9 +290,9 @@ namespace SevenUpdate.WCF
         /// <returns>returns true if sucessful</returns>
         internal static bool Install()
         {
-            Shared.SerializeCollection<Application>(App.Applications, Shared.appStore + "Update List.xml");
+            Shared.SerializeCollection<Application>(App.Applications, Shared.userStore + "Update List.xml");
             if (LaunchAdmin("Install") == false)
-                    return false;
+                return false;
             client = new Client();
             client.Connect();
             return true;

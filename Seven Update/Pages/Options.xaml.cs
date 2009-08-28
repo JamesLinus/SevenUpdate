@@ -47,7 +47,7 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-            if (App.IsAdmin())
+            if (App.IsAdmin)
                 btnSave.Content = App.RM.GetString("Save");
         }
 
@@ -73,7 +73,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         #endregion
-
 
         #region Methods
 
@@ -263,16 +262,42 @@ namespace SevenUpdate.Pages
 
         #region UI Events
 
+        #region TextBlocks
+
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = TextDecorations.Underline;
+
+        }
+
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            TextBlock textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = null;
+        }
+
         private void tbRefresh_MouseDown(object sender, MouseButtonEventArgs e)
         {
             DownloadSUL();
         }
+
+        #endregion
+
+        #region Buttons
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
             SevenUpdate.Windows.MainWindow.ns.GoBack();
         }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            SevenUpdate.Windows.MainWindow.ns.GoBack();
+        }
+
+        #endregion
 
         private void cbAutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -292,50 +317,18 @@ namespace SevenUpdate.Pages
             LoadSettings();
             tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate;
             LoadSUL();
-            Main.LastPageVisited = "Options";
 
-        }
-
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            TextBlock textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-
-        }
-
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            TextBlock textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = null;
-        }
-
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            SevenUpdate.Windows.MainWindow.ns.GoBack();
         }
 
         #region ListView Events
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            SevenUpdate.Classes.ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
-        }
-
-        private void OnColumnHeaderClick(object sender, RoutedEventArgs e)
-        {
-            if (e.OriginalSource.ToString().Contains("System.Windows.Controls.CheckBox"))
-                return;
-            SevenUpdate.Classes.ListViewExtensions.OnColumnHeaderClick(listView, e);
+            ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
         }
 
         #endregion
 
         #endregion
-
-        #region UI Methods
-
-
-        #endregion
-
     }
 }

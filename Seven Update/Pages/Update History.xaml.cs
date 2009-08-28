@@ -58,7 +58,6 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHistory();
-            Main.LastPageVisited = "UpdateHistory";
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -78,12 +77,12 @@ namespace SevenUpdate.Pages
 
         #region ListView
 
-        #endregion
-
         private void listView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
             details.ShowDialog(history[listView.SelectedIndex]);
         }
+
+        #endregion
     }
 }

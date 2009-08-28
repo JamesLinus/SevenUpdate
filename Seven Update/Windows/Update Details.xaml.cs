@@ -31,7 +31,7 @@ namespace SevenUpdate.Windows
             InitializeComponent();
         }
 
-       internal bool? ShowDialog(UpdateInformation updateInfo)
+        internal bool? ShowDialog(UpdateInformation updateInfo)
         {
             tbUpdateTitle.Text = updateInfo.UpdateTitle[0].Value;
             tbUpdateType.Text = updateInfo.Importance.ToString();
@@ -39,7 +39,7 @@ namespace SevenUpdate.Windows
 
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
-                tbStatusLabel.Text = App.RM.GetString("DownloadSize") +":";
+                tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
                 tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size).ToString();
             }
             else
@@ -51,7 +51,7 @@ namespace SevenUpdate.Windows
             if (updateInfo.HelpUrl != null)
                 tbHelpURL.Text = updateInfo.HelpUrl;
 
-           return base.ShowDialog();
+            return base.ShowDialog();
         }
         void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {

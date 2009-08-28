@@ -1,9 +1,9 @@
-﻿<Page x:Class="SevenUpdate.Pages.UpdateHistory"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
+﻿<Page x:Class="SevenUpdate.Pages.UpdateHistory" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,14 +17,18 @@
             <RowDefinition Height="415*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Review your update history" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <ListView Grid.Row="1" Name="listView" Foreground="Black">
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5"
+                Text="Review your update history" VerticalAlignment="Top" Margin="24,12,0,5" />
+        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                StrokeThickness="1" />
+        <local:SortListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0">
             <ListView.Resources>
                 <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
-                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Left" />
                 </Style>
                 <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="View Details"/>
+                    <MenuItem Header="View Details" />
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>
@@ -36,15 +40,29 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource hcs}">
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=UpdateTitle, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Width="250" />
-                    <GridViewColumn Header="Program" DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Width="200" />
-                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="125" />
-                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
-                    <GridViewColumn Header="Date Installed" DisplayMemberBinding="{Binding Path=InstallDate}" Width="125" />
+                    <local:SortListViewColumn Header="Name" SortStyle="HeaderTemplate"
+                            DisplayMemberBinding="{Binding Path=UpdateTitle, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                            Width="250" />
+                    <local:SortListViewColumn Header="Program" SortStyle="HeaderTemplate" SortProperty="ApplicationName"
+                            DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                            Width="200" />
+                    <local:SortListViewColumn Header="Status" SortStyle="HeaderTemplate" SortProperty="Status"
+                            DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
+                            Width="125" />
+                    <local:SortListViewColumn Header="Importance" SortStyle="HeaderTemplate" SortProperty="Importance"
+                            DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
+                            Width="100" />
+                    <local:SortListViewColumn Header="Date Installed" SortStyle="HeaderTemplate"
+                            SortProperty="InstallDate" DisplayMemberBinding="{Binding Path=InstallDate}" Width="125" />
                 </GridView>
             </ListView.View>
-        </ListView>
-        <Rectangle Fill="#FFF0F0F0" Name="rectangle1" Stroke="#FFA0A0A0" Grid.Row="2" />
-        <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True" Name="btnOK" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="btnOK_Click" />
+        </local:SortListView>
+        <Rectangle Fill="#FFF0F0F0" Name="rectangle1" Grid.Row="2" />
+        <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True"
+                Name="btnOK" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center"
+                Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="btnOK_Click" />
+        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                StrokeThickness="1" />
     </Grid>
 </Page>

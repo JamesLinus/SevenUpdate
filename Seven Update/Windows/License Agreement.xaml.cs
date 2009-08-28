@@ -166,7 +166,7 @@ namespace SevenUpdate.Windows
             WebClient wc = new WebClient();
 
             for (int x = 0; x < licenses.Count; x++)
-            { 
+            {
                 try
                 {
                     eulas[x] = wc.DownloadString(licenses[x].LicenseUrl);
@@ -196,7 +196,7 @@ namespace SevenUpdate.Windows
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
             this.Cursor = Cursors.Arrow;
-            if (licenses.Count == 1 && !App.IsAdmin())
+            if (licenses.Count == 1 && !App.IsAdmin)
                 App.AddShieldToButton(btnAction);
         }
 
@@ -239,7 +239,7 @@ namespace SevenUpdate.Windows
                     App.Applications.RemoveAt(licenses[index].AppIndex);
             }
             index++;
-            
+
             if (((string)btnAction.Content) == App.RM.GetString("Next"))
             {
                 tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenses[index].Title;
@@ -263,7 +263,7 @@ namespace SevenUpdate.Windows
             if (index == licenses.Count - 1)
             {
                 btnAction.Content = App.RM.GetString("Finish");
-                if (!App.IsAdmin() && App.Applications.Count > 0)
+                if (!App.IsAdmin && App.Applications.Count > 0)
                     App.AddShieldToButton(btnAction);
             }
         }

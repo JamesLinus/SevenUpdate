@@ -16,11 +16,11 @@ This file is part of Seven Update.
 using System.ServiceModel;
 namespace SevenUpdate.WCF
 {
-    [ServiceContract(SessionMode=SessionMode.Required,
-        CallbackContract=typeof(IEventSystemCallback))]
+    [ServiceContract(SessionMode = SessionMode.Required,
+        CallbackContract = typeof(IEventSystemCallback))]
     interface IEventSystem
     {
-        [OperationContract(IsOneWay=true)]
+        [OperationContract(IsOneWay = true)]
         void Subscribe();
 
         [OperationContract(IsOneWay = true)]

@@ -17,8 +17,8 @@ using System;
 using System.ServiceModel;
 namespace SevenUpdate.WCF
 {
-    [ServiceBehavior(InstanceContextMode=InstanceContextMode.Single)]
-    public sealed class EventService:IEventSystem
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public sealed class EventService : IEventSystem
     {
         #region Callback Delegates
 
