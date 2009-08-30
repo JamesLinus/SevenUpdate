@@ -199,8 +199,9 @@ namespace SevenUpdate.WCF
                 { Thread.CurrentThread.Join(500); }
                 wcf.Subscribe();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException e)
             {
+                Shared.ReportError(e.Message, Shared.userStore);
                 Thread.CurrentThread.Join(500);
                 Connect();
             }

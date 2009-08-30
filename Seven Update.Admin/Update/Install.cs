@@ -92,14 +92,7 @@ namespace SevenUpdate
                 }
                 else
                 {
-                    TextWriter tw = new StreamWriter(Shared.userStore + "error.log");
-
-                    tw.WriteLine(DateTime.Now.ToString() + ": " + fileDest + " not found");
-
-                    tw.Close();
-
                     return false;
-
                 }
             }
 

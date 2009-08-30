@@ -16,6 +16,7 @@ This file is part of Seven Update.
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using SharpBits.Base;
 
 namespace SevenUpdate
 {
@@ -33,7 +34,7 @@ namespace SevenUpdate
         /// <summary>
         /// Manager for Background Intelligent Transfer Service
         /// </summary>
-        static System.Net.BITS.Manager manager;
+        static BitsManager manager;
 
         #endregion
 
@@ -46,20 +47,14 @@ namespace SevenUpdate
         {
             if (manager != null)
             {
-                manager.Jobs.Update();
-
-                for (int z = 0; z < manager.Jobs.Count; z++)
+                foreach (BitsJob job in manager.Jobs.Values)
                 {
-                    if (manager.Jobs[z].DisplayName.Contains("Seven Update") && manager.Jobs[z].CanCancel)
+
+                    if (job.DisplayName == "Seven Update")
                     {
                         try
                         {
-                            manager.Jobs[z].Cancel();
-                        }
-                        catch (Exception) { }
-                        try
-                        {
-                            manager.Jobs.RemoveAt(z);
+                            job.Cancel();
                         }
                         catch (Exception) { }
 
@@ -74,28 +69,23 @@ namespace SevenUpdate
         internal static void DownloadUpdates(Collection<Application> applications)
         {
             updates = applications;
-            manager = new System.Net.BITS.Manager();
-            manager.OnTransferred += new EventHandler<System.Net.BITS.JobTransferredEventArgs>(manager_OnTransferred);
-            manager.OnError += new EventHandler<System.Net.BITS.JobErrorEventArgs>(manager_OnError);
-            manager.OnModfication += new EventHandler<System.Net.BITS.JobModificationEventArgs>(manager_OnModfication);
-            try
+            manager = new SharpBits.Base.BitsManager();
+            manager.OnJobTransferred += new EventHandler<NotificationEventArgs>(manager_OnJobTransferred);
+            manager.OnJobError += new EventHandler<ErrorNotificationEventArgs>(manager_OnJobError);
+            manager.OnJobModified += new EventHandler<NotificationEventArgs>(manager_OnJobModified);
+            manager.EnumJobs(JobOwner.AllUsers);
+            Shared.ReportError("Download Started", Shared.appStore);
+            foreach (BitsJob job in manager.Jobs.Values)
             {
-                manager.Jobs.Update();
-            }
-            catch (System.Net.BITS.BITSException) { }
 
-            for (int z = 0; z < manager.Jobs.Count; z++)
-            {
-                if (manager.Jobs[z].DisplayName.StartsWith("Seven Update"))
+                if (job.DisplayName == "Seven Update")
                 {
-                    if (manager.Jobs[z].Files.Count < 1 || (manager.Jobs[z].State != System.Net.BITS.JobState.Transferring && manager.Jobs[z].State != System.Net.BITS.JobState.Suspended))
+                    job.EnumFiles();
+                    if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
                     {
                         try
                         {
-                            if (manager.Jobs[z].CanCancel)
-                                manager.Jobs[z].Cancel();
-                            manager.Jobs.RemoveAt(z);
-                            z--;
+                            job.Cancel();
                         }
                         catch (Exception) { }
                     }
@@ -103,28 +93,25 @@ namespace SevenUpdate
                     {
                         try
                         {
-                            manager.Jobs[z].Resume();
-                            manager.Jobs[z].Activate();
+                            job.Resume();
                             return;
 
                         }
-                        catch (System.Net.BITS.BITSException)
+                        catch (Exception)
                         {
                             try
                             {
-                                if (manager.Jobs[z].CanCancel)
-                                    manager.Jobs[z].Cancel();
-                                manager.Jobs.RemoveAt(z);
-                                z--;
+                                job.Cancel();
                             }
                             catch (Exception) { }
                         }
                     }
+
                 }
             }
 
-            System.Net.BITS.Job job = new System.Net.BITS.Job("Seven Update" + new Random().Next(99), System.Net.BITS.JobType.Download, System.Net.BITS.JobPriority.Foreground);
-
+            BitsJob bitsJob = manager.CreateJob("Seven Update", JobType.Download);
+            bitsJob.NotificationFlags = NotificationFlags.JobErrorOccured | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
             string fileDest;
             string downloadDir;
             for (int x = 0; x < applications.Count; x++)
@@ -151,13 +138,12 @@ namespace SevenUpdate
                                     }
                                     catch (Exception) { }
                                     Uri url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadDirectory, applications[x].Is64Bit));
-                                    job.Files.Add(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDest));
+                                    bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDest));
                                 }
                                 catch (Exception e)
                                 {
                                     try
                                     {
-                                        manager.Jobs.CloseAllJobs();
                                         manager.Dispose();
                                         manager = null;
                                     }
@@ -176,29 +162,23 @@ namespace SevenUpdate
             }
             try
             {
-                if (job.Files.Count > 0)
+                bitsJob.EnumFiles();
+                if (bitsJob.Files.Count > 0)
                 {
-                    manager.Jobs.Add(job);
-                    if (manager.Jobs.Count > 0)
-                    {
-                        job.Resume();
-                    }
+                    bitsJob.Resume();
                 }
                 else
                 {
                     try
                     {
-                        manager.Jobs.CloseAllJobs();
                         manager.Dispose();
                         manager = null;
                     }
                     catch (Exception) { }
-
-                    if (DownloadDoneEventHandler != null)
-                        DownloadDoneEventHandler(null, new DownloadDoneEventArgs(false, applications));
+                    Install.InstallUpdates(updates);
                 }
             }
-            catch (System.Net.BITS.BITSException e)
+            catch (Exception e)
             {
                 Shared.ReportError(e.Message, Shared.appStore);
                 if (WCF.EventService.ErrorOccurred != null)
@@ -212,23 +192,16 @@ namespace SevenUpdate
         /// <summary>
         /// Returns the current state of the current BITS Job
         /// </summary>
-        internal static System.Net.BITS.JobState GetDownloadState
+        internal static SharpBits.Base.JobState GetDownloadState
         {
             get
             {
-                if (manager != null)
-                    try
-                    {
-                        for (int x = 0; x < manager.Jobs.Count; x++)
-                        {
-                            if (manager.Jobs[x].DisplayName.Contains("Seven Update"))
-                                return manager.Jobs[x].State;
-                        }
-                        return System.Net.BITS.JobState.Inactive;
-                    }
-                    catch { return System.Net.BITS.JobState.Transferred; }
-                else
-                    return System.Net.BITS.JobState.Inactive;
+                foreach (BitsJob job in manager.Jobs.Values)
+                {
+                    if (job.DisplayName == "Seven Update")
+                        return job.State;
+                }
+                return JobState.Transferred;
             }
         }
 
@@ -238,41 +211,11 @@ namespace SevenUpdate
 
         #region Event Handlers
 
-        /// <summary>
-        /// When an error occurs it adds it into the history, and starts the next one available.
-        /// </summary>
-        /// <param name="e">JobError EventArgs, contains error information</param>
-        static void manager_OnError(object sender, System.Net.BITS.JobErrorEventArgs e)
-        {
-            if (e.Job.DisplayName.Contains("Seven Update"))
-            {
-                manager.Jobs.Remove(e.Job.Id);
-
-                try
-                {
-                    manager.Jobs.CloseAllJobs();
-                    manager.Dispose();
-                    manager = null;
-                }
-                catch (Exception) { }
-                if (WCF.EventService.ErrorOccurred != null)
-                    WCF.EventService.ErrorOccurred(e.Job.Error.Description + " " + e.Error.File.RemoteFileName);
-
-                if (DownloadDoneEventHandler != null)
-                    DownloadDoneEventHandler(null, new DownloadDoneEventArgs(true, null));
-            }
-
-        }
-
-        /// <summary>
-        /// Calls the UpdateProgress event handler passing event args
-        /// </summary>
-        /// <param name="e">JobModification EventArgs, contains information about the job</param>
-        static void manager_OnModfication(object sender, System.Net.BITS.JobModificationEventArgs e)
+        static void manager_OnJobModified(object sender, NotificationEventArgs e)
         {
             if (Abort)
                 Environment.Exit(0);
-            if (e.Job.DisplayName.Contains("Seven Update") && e.Job.State == System.Net.BITS.JobState.Transferring)
+            if (e.Job.DisplayName == "Seven Update" && e.Job.State == JobState.Transferring)
             {
                 try
                 {
@@ -290,30 +233,45 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// When a job is complete, increment the counter and start the next one.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e">JobTransfered EventArgs, contains information about the job</param>
-        static void manager_OnTransferred(object sender, System.Net.BITS.JobTransferredEventArgs e)
+        static void manager_OnJobError(object sender, ErrorNotificationEventArgs e)
+        {
+            if (e.Job.DisplayName == "Seven Update")
+            {
+                e.Job.Cancel();
+
+                try
+                {
+                    manager.Dispose();
+                    manager = null;
+                }
+                catch (Exception) { }
+                if (WCF.EventService.ErrorOccurred != null)
+                    WCF.EventService.ErrorOccurred(e.Job.Error.Description + " " + e.Error.File.RemoteName);
+
+                if (DownloadDoneEventHandler != null)
+                    DownloadDoneEventHandler(null, new DownloadDoneEventArgs(true, null));
+            }
+
+        }
+
+        static void manager_OnJobTransferred(object sender, NotificationEventArgs e)
         {
             if (Abort)
                 Environment.Exit(0);
             try
             {
-                if (e.Job.DisplayName.Contains("Seven Update"))
+                if (e.Job.DisplayName == "Seven Update")
                 {
-                    if (e.Job.State == System.Net.BITS.JobState.Transferred)
+                    if (e.Job.State == JobState.Transferred)
                     {
                         e.Job.Complete();
 
-                        manager.OnTransferred -= new EventHandler<System.Net.BITS.JobTransferredEventArgs>(manager_OnTransferred);
-                        manager.OnError -= new EventHandler<System.Net.BITS.JobErrorEventArgs>(manager_OnError);
-                        manager.OnModfication -= new EventHandler<System.Net.BITS.JobModificationEventArgs>(manager_OnModfication);
+                        manager.OnJobTransferred -= manager_OnJobTransferred;
+                        manager.OnJobError -= manager_OnJobError;
+                        manager.OnJobModified -= manager_OnJobModified;
 
                         try
                         {
-                            manager.Jobs.CloseAllJobs();
                             manager.Dispose();
                             manager = null;
                         }
@@ -326,7 +284,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        manager.Jobs[manager.Jobs.IndexOf(e.Job)].Resume();
+                        e.Job.Resume();
                     }
                 }
             }

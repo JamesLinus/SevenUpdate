@@ -59,14 +59,6 @@ namespace SevenUpdate
         #region Global Vars
 
         /// <summary>
-        /// List of Application Seven Update can check for updates
-        /// </summary>
-        public static ObservableCollection<SUA> AppsToUpdate
-        {
-            get { return Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul"); }
-        }
-
-        /// <summary>
         /// The update settings for Seven Update
         /// </summary>
         public static Config Settings
@@ -270,9 +262,8 @@ namespace SevenUpdate
                                     EventService.ClientConnected -= EventService_ClientConnected;
                                     EventService.ClientDisconnected -= EventService_ClientDisconnected;
                                     Search.SearchDoneEventHandler += new EventHandler<Search.SearchDoneEventArgs>(Search_SearchDoneEventHandler);
-                                    Search.SearchForUpdates(AppsToUpdate);
-                                    app.Run();
-
+                                    Search.SearchForUpdates(Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul"));
+                                    app.Run(); 
                                 }
                                 else
                                     Environment.Exit(0);
@@ -312,6 +303,7 @@ namespace SevenUpdate
                     Shared.ReportError(e.Message, Shared.appStore);
                 }
             }
+            File.Delete(Shared.userStore + "Update List.xml");
         }
 
         internal static void UpdateNotifyIcon(string text)
@@ -421,7 +413,7 @@ namespace SevenUpdate
 
         static void EventService_ClientConnected()
         {
-            File.Delete(Shared.userStore + "Update List.xml");
+            Shared.ReportError("Client Connected", Shared.appStore);
             Download.DownloadDoneEventHandler +=new EventHandler<Download.DownloadDoneEventArgs>(Download_DownloadDoneEventHandler);
             Download.DownloadUpdates( Shared.DeserializeCollection<Application>(Shared.userStore + "Update List.xml"));
         }

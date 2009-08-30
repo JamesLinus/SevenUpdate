@@ -64,6 +64,9 @@ namespace SevenUpdate.Windows
                 if (this.WindowState == WindowState.Minimized)
                 {
                     ShowInTaskbar = false;
+                    IsHidden = true;
+                    Visibility = Visibility.Hidden;
+                    App.NotifyIcon.Visibility = Visibility.Visible;
                 }
                 if (WindowState == WindowState.Normal)
                 {
@@ -84,7 +87,7 @@ namespace SevenUpdate.Windows
                 e.Cancel = true;
                 ShowInTaskbar = false;
                 IsHidden = true;
-                Hide();
+                Visibility = Visibility.Hidden;
                 App.NotifyIcon.Visibility = Visibility.Visible;
             }
         }
@@ -93,20 +96,21 @@ namespace SevenUpdate.Windows
 
         void NotifyIcon_Click(object sender, RoutedEventArgs e)
         {
-            this.Show();
+            Visibility = Visibility.Visible;
             this.ShowInTaskbar = true;
             IsHidden = false;
             App.NotifyIcon.Visibility = Visibility.Hidden;
+            this.WindowState = WindowState.Normal;
         }
 
         void NotifyIcon_BalloonTipClick(object sender, RoutedEventArgs e)
         {
             Settings.Default.infoPopUp = false;
             Settings.Default.Save();
-            this.Show();
+            Visibility = Visibility.Visible;
             this.ShowInTaskbar = true;
             IsHidden = false;
-            App.NotifyIcon.Visibility = Visibility.Hidden; ;
+            App.NotifyIcon.Visibility = Visibility.Hidden;
             if (App.NotifyIcon.Text.Contains(App.RM.GetString("DownloadAndInstallUpdates")))
             {
                 ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
