@@ -41,6 +41,9 @@ namespace SevenUpdate.Windows
  
             /// Set the notifyicon to the localized program name
             App.NotifyIcon.Text = App.RM.GetString("SevenUpdate");
+
+            App.NotifyIcon.BalloonTipClick+=new RoutedEventHandler(NotifyIcon_BalloonTipClick);
+            App.NotifyIcon.Click+=new RoutedEventHandler(NotifyIcon_Click);
         }
 
         internal static NavigationService ns;
@@ -76,10 +79,11 @@ namespace SevenUpdate.Windows
             Settings.Default.windowWidth = Width;
             Settings.Default.Save();
 
-            if (App.InstallInProgress )
+            if (App.InstallInProgress)
             {
                 e.Cancel = true;
                 ShowInTaskbar = false;
+                IsHidden = true;
                 Hide();
                 App.NotifyIcon.Visibility = Visibility.Visible;
             }

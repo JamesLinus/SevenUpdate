@@ -184,7 +184,7 @@ namespace SevenUpdate.Pages
 
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
-                if (SevenUpdate.WCF.Client.HideUpdate(hnh))
+                if (SevenUpdate.WCF.Admin.HideUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
                     item.Foreground = System.Windows.Media.Brushes.Gray;
@@ -194,7 +194,7 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                if (SevenUpdate.WCF.Client.ShowUpdate(hnh))
+                if (SevenUpdate.WCF.Admin.ShowUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
                     item.Foreground = System.Windows.Media.Brushes.Black;
@@ -211,9 +211,9 @@ namespace SevenUpdate.Pages
                 HideLabels();
             else
             {
-                tbUpdateDescription.Text = App.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
+                tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
                 tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                tbUpdateTitle.Text = App.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Title);
+                tbUpdateTitle.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Title);
                 tbUrlHelp.Tag = App.Applications[appIndex].HelpUrl;
                 tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
@@ -337,7 +337,7 @@ namespace SevenUpdate.Pages
             tbUrlInfo.Visibility = Visibility.Visible;
             imgIcon.Visibility = Visibility.Hidden;
             imgArrow.Visibility = Visibility.Visible;
-            
+
         }
 
         /// <summary>

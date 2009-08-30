@@ -23,14 +23,39 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
+using System.Windows;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using SevenUpdate.WCF;
-using System.Windows;
 
 namespace SevenUpdate
 {
-    class Program
+    class App
     {
+        enum NotifyType
+        {
+            /// <summary>
+            /// Indicates searching is completed
+            /// </summary>
+            SearchComplete,
+            /// <summary>
+            /// Indicates the downloading of updates has started
+            /// </summary>
+            DownloadStarted,
+            /// <summary>
+            /// Indicates download has completed
+            /// </summary>
+            DownloadComplete,
+            /// <summary>
+            /// Indicates that the installation of updates has begun
+            /// </summary>
+            InstallStarted,
+            /// <summary>
+            /// Indicates Install has completed
+            /// </summary>
+            InstallComplete
+        }
+
         #region Global Vars
 
         /// <summary>
@@ -49,25 +74,24 @@ namespace SevenUpdate
             get { return Shared.DeserializeStruct<Config>(Shared.appStore + "Settings.xml"); }
         }
 
-        /// <summary>
-        /// Collection of updates and the program
-        /// </summary>
-        static Collection<Application> Applications { get; set; }
 
         /// <summary>
         /// Indicates if the current installation automatically started
         /// </summary>
         static bool AutoInstall { get; set; }
 
+        internal static System.Windows.Application app = new System.Windows.Application();
+
         internal static Avalon.Windows.Controls.NotifyIcon NotifyIcon { get; set; }
 
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(Program).Assembly);
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
         #endregion
 
         #region Methods
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -78,14 +102,21 @@ namespace SevenUpdate
                 {
                     ServiceHost host = new ServiceHost(typeof(EventService));
                     host.Open();
+                    EventService.ClientConnected += new EventService.CallbackDelegate(EventService_ClientConnected);
+                    EventService.ClientDisconnected += new EventService.CallbackDelegate(EventService_ClientDisconnected);
                     host.Faulted += new EventHandler(host_Faulted);
 
                 }
                 catch (Exception e)
                 {
-                    ReportError(e.Message);
+                    Shared.ReportError(e.Message, Shared.appStore);
                     Environment.Exit(0);
                 }
+                if (Shared.Locale == null)
+                    Shared.Locale = "en";
+                else
+                    Shared.Locale = Settings.Locale;
+
                 if (!Directory.Exists(Shared.appStore))
                     Directory.CreateDirectory(Shared.appStore);
                 try
@@ -127,7 +158,7 @@ namespace SevenUpdate
 
                                 if (Environment.OSVersion.Version.Major < 6)
                                 {
-                                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Environment.CurrentDirectory + @"\SU Helper.exe ");
+                                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Environment.CurrentDirectory + @"\Seven Update.Helper.exe ");
                                 }
                                 else
                                 {
@@ -231,14 +262,17 @@ namespace SevenUpdate
                                 #region code
                                 if (createdNew)
                                 {
-                                    //NotifyIcon = new System.Windows.Forms.NotifyIcon();
-                                    //NotifyIcon.Icon = SevenUpdate.Properties.Resources.icon;
-                                    //NotifyIcon.Visible = true;
-                                    //NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
+                                    NotifyIcon = new Avalon.Windows.Controls.NotifyIcon();
+                                    NotifyIcon.Icon = new BitmapImage(new Uri("icon.ico", UriKind.Relative));
+                                    NotifyIcon.Visibility = Visibility.Visible;
+                                    NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
                                     AutoInstall = true;
+                                    EventService.ClientConnected -= EventService_ClientConnected;
+                                    EventService.ClientDisconnected -= EventService_ClientDisconnected;
                                     Search.SearchDoneEventHandler += new EventHandler<Search.SearchDoneEventArgs>(Search_SearchDoneEventHandler);
                                     Search.SearchForUpdates(AppsToUpdate);
-                                    System.Windows.Application.Current.Run();
+                                    app.Run();
+
                                 }
                                 else
                                     Environment.Exit(0);
@@ -250,13 +284,11 @@ namespace SevenUpdate
                                 {
                                     try
                                     {
-                                        EventService.ClientConnected += new EventService.CallbackDelegate(EventService_ClientConnected);
-                                        EventService.ClientDisconnected += new EventService.CallbackDelegate(EventService_ClientDisconnected);
-                                        System.Windows.Application.Current.Run();
+                                        app.Run();
                                     }
                                     catch (Exception e)
                                     {
-                                        ReportError(e.Message);
+                                        Shared.ReportError(e.Message, Shared.appStore);
                                     }
                                 }
                                 else
@@ -277,54 +309,63 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    ReportError(e.Message);
+                    Shared.ReportError(e.Message, Shared.appStore);
                 }
             }
         }
 
-        internal static void ReportError(string message)
+        internal static void UpdateNotifyIcon(string text)
         {
-            TextWriter tw = new StreamWriter(Shared.appStore + "error.log");
+            NotifyIcon.Text = text;
+        }
 
-            tw.WriteLine(DateTime.Now.ToString() + ": " + message);
-
-            tw.Close();
+        static void UpdateNotifyIcon(NotifyType filter)
+        {
+            switch (filter)
+            {
+                case NotifyType.DownloadStarted:
+                    NotifyIcon.Text = RM.GetString("DownloadingUpdates") + "...";
+                    break;
+                case NotifyType.DownloadComplete:
+                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+                    break;
+                case NotifyType.InstallStarted: NotifyIcon.Text = RM.GetString("InstallingUpdates") + "..."; break;
+                case NotifyType.SearchComplete:
+                    NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
+                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+                    break;
+            }
         }
 
         static void host_Faulted(object sender, EventArgs e)
         {
-            TextWriter tw = new StreamWriter(Shared.appStore + "error.log");
-
-            tw.WriteLine(DateTime.Now.ToString() + ": " + "faulted");
-
-            tw.Close();
+            Shared.ReportError("Host Fault", Shared.appStore);
         }
 
         static void worker_DoWork(object sender, DoWorkEventArgs e)
         {
-
-            Applications = Shared.DeserializeCollection<Application>(Shared.appStore + "Update List.xml");
-            Download.DownloadDoneEventHandler += new EventHandler<EventArgs>(Download_DownloadDoneEventHandler);
-            Download.DownloadUpdates(Applications);
+            Download.DownloadDoneEventHandler +=new EventHandler<Download.DownloadDoneEventArgs>(Download_DownloadDoneEventHandler);
+            Download.DownloadUpdates(Shared.DeserializeCollection<Application>(Shared.userStore + "Update List.xml"));
         }
 
         static void Search_SearchDoneEventHandler(object sender, Search.SearchDoneEventArgs e)
         {
             if (e.Applications.Count > 0)
             {
-                Applications = e.Applications;
                 if ((Settings.AutoOption == AutoUpdateOption.Download || Settings.AutoOption == AutoUpdateOption.Install && AutoInstall == true) || AutoInstall == false)
                 {
-                    NotifyIcon.Text = RM.GetString("DownloadingUpdates") + "...";
-                    Download.DownloadDoneEventHandler += new EventHandler<EventArgs>(Download_DownloadDoneEventHandler);
+                    DispatcherObjectDelegates.BeginInvoke<NotifyType>(App.app.Dispatcher, UpdateNotifyIcon, NotifyType.DownloadStarted);
+                    Download.DownloadDoneEventHandler +=new EventHandler<Download.DownloadDoneEventArgs>(Download_DownloadDoneEventHandler);
                     Download.DownloadUpdates(e.Applications);
                 }
                 else
                 {
-                    NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
-                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
-                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+                    DispatcherObjectDelegates.BeginInvoke<NotifyType>(App.app.Dispatcher, UpdateNotifyIcon, NotifyType.SearchComplete);
                 }
             }
             else
@@ -351,25 +392,21 @@ namespace SevenUpdate
             Environment.Exit(0);
         }
 
-        static void Download_DownloadDoneEventHandler(object sender, EventArgs e)
+        static void Download_DownloadDoneEventHandler(object sender, SevenUpdate.Download.DownloadDoneEventArgs e)
         {
-            if (!Download.ErrorOccurred)
+            if (!e.ErrorOccurred)
             {
                 if ((Settings.AutoOption == AutoUpdateOption.Install && AutoInstall == true) || AutoInstall == false)
                 {
                     if (AutoInstall)
                     {
-                        NotifyIcon.Text = RM.GetString("InstallingUpdates") + "...";
+                        DispatcherObjectDelegates.BeginInvoke<NotifyType>(App.app.Dispatcher, UpdateNotifyIcon, NotifyType.InstallStarted);
                     }
-                    Install.InstallUpdates(Applications);
-
+                    Install.InstallUpdates(e.Applications);
                 }
                 else
                 {
-                    NotifyIcon.BalloonTipClick += new RoutedEventHandler(RunSevenUpdate);
-                    NotifyIcon.Click += new RoutedEventHandler(RunSevenUpdate);
-                    NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+                    DispatcherObjectDelegates.BeginInvoke<NotifyType>(App.app.Dispatcher, UpdateNotifyIcon, NotifyType.DownloadComplete);
                 }
             }
             else
@@ -384,9 +421,9 @@ namespace SevenUpdate
 
         static void EventService_ClientConnected()
         {
-            Applications = Shared.DeserializeCollection<Application>(Shared.appStore + "Update List.xml");
-            Download.DownloadDoneEventHandler += new EventHandler<EventArgs>(Download_DownloadDoneEventHandler);
-            Download.DownloadUpdates(Applications);
+            File.Delete(Shared.userStore + "Update List.xml");
+            Download.DownloadDoneEventHandler +=new EventHandler<Download.DownloadDoneEventArgs>(Download_DownloadDoneEventHandler);
+            Download.DownloadUpdates( Shared.DeserializeCollection<Application>(Shared.userStore + "Update List.xml"));
         }
 
         #region Security

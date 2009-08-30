@@ -32,13 +32,7 @@ namespace SevenUpdate
     /// </summary>
     public partial class App
     {
-
         #region Global Vars
-
-        /// <summary>
-        /// The currently selected locale to use for language strings
-        /// </summary>
-        internal static string Locale;
 
         internal static Avalon.Windows.Controls.NotifyIcon NotifyIcon;
 
@@ -111,10 +105,10 @@ namespace SevenUpdate
             // Makes sure only 1 copy of Seven Update is allowed to run
             using (Mutex mutex = new Mutex(true, "Seven Update", out createdNew))
             {
-                if (Locale == null)
-                    Locale = "en";
+                if (Shared.Locale == null)
+                    Shared.Locale = "en";
                 else
-                    Locale = Settings.Locale;
+                    Shared.Locale = Settings.Locale;
 
                 for (int x = 0; x < args.Length; x++)
                 {
@@ -145,17 +139,6 @@ namespace SevenUpdate
             }
         }
 
-        internal static string GetLocaleString(ObservableCollection<LocaleString> localeStrings)
-        {
-
-            for (int x = 0; x < localeStrings.Count; x++)
-            {
-                if (localeStrings[x].lang == App.Locale)
-                    return localeStrings[x].Value;
-            }
-            return localeStrings[0].Value;
-        }
-
         /// <summary>
         /// Adds an Application for use with Seven Update
         /// </summary>
@@ -174,7 +157,7 @@ namespace SevenUpdate
                 {
                     sul.Add(sua);
 
-                    SevenUpdate.WCF.Client.AddSUA(sul);
+                    SevenUpdate.WCF.Admin.AddSUA(sul);
                 }
             }
             wc.Dispose();
@@ -251,21 +234,6 @@ namespace SevenUpdate
                 try
                 {
 
-                }
-                catch (Exception) { }
-            }
-        }
-
-        /// <summary>
-        /// Removes a shield from a button
-        /// </summary>
-        /// <param name="b">The button object you want to remove the shield from</param>
-        static internal void RemoveShieldFromButton(Button b)
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                try
-                {
                 }
                 catch (Exception) { }
             }

@@ -112,7 +112,6 @@ namespace SevenUpdate
         internal static void InstallUpdates(Collection<Application> applications)
         {
             history = Shared.DeserializeCollection<UpdateInformation>(Shared.appStore + "Update History.xml");
-            File.Delete(Shared.appStore + "Update List.xml");
 
             bool inUse = false;
             int count = 0;
@@ -140,23 +139,23 @@ namespace SevenUpdate
 
                     for (int x = 0; x < app.Updates.Count; x++)
                     {
-                        DownloadedPath = Shared.appStore + @"downloads\" + app.Name + @"\" + app.Updates[x].Title + @"\";
+                        DownloadedPath = Shared.appStore + @"downloads\" + Shared.GetLocaleString(app.Name) + @"\" + Shared.GetLocaleString(app.Updates[x].Title) + @"\";
 
                         if (Abort)
                             break;
 
                         if (EventService.InstallProgressChanged != null)
-                            EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(1, 100, x + 1), curUpdate, totalUpdates);
-                        if (Program.NotifyIcon != null)
-                            Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                            EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(1, 100, x + 1), curUpdate, totalUpdates);
+                        if (App.NotifyIcon != null)
+                            DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
 
                         inUse = CheckFileInUse(app.Updates[x].Files, app.Directory, app.Is64Bit);
 
                         if (EventService.InstallProgressChanged != null)
-                            EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(3, 100, x + 1), curUpdate, totalUpdates);
-                        if (Program.NotifyIcon != null)
-                            Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                            EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(3, 100, x + 1), curUpdate, totalUpdates);
+                        if (App.NotifyIcon != null)
+                            DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
                         count++;
 
@@ -165,11 +164,11 @@ namespace SevenUpdate
                             AddHistory(app, app.Updates[x]);
 
                             if (EventService.InstallProgressChanged != null)
-                                EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(10, 100, x + 1), curUpdate, totalUpdates);
-                            if (Program.NotifyIcon != null)
-                                Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                                EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(10, 100, x + 1), curUpdate, totalUpdates);
+                            if (App.NotifyIcon != null)
+                                DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
-                            UpdateOnReboot(app.Updates[x], app.Name[0].Value, app.Directory, x, app.Is64Bit);
+                            UpdateOnReboot(app.Updates[x], Shared.GetLocaleString(app.Name), app.Directory, x, app.Is64Bit);
 
                         }
                         else
@@ -216,7 +215,7 @@ namespace SevenUpdate
                                     case FileAction.UpdateAndRegister:
                                         try
                                         {
-                                            InstallFile(app.Name[0].Value, fileDest, app.Updates[x].Title[0].Value);
+                                            InstallFile(Shared.GetLocaleString(app.Name), fileDest, Shared.GetLocaleString(app.Updates[x].Title));
 
                                             if (app.Updates[x].Files[y].Action == FileAction.UpdateAndExecute)
                                             {
@@ -243,27 +242,27 @@ namespace SevenUpdate
                                                 }
                                                 catch (Exception f)
                                                 {
-                                                    Program.ReportError(f.Message);
+                                                    Shared.ReportError(f.Message, Shared.appStore);
                                                 }
                                             }
                                         }
                                         catch (Exception e)
                                         {
-                                            Program.ReportError(e.Message);
+                                            Shared.ReportError(e.Message, Shared.appStore);
                                         }
 
                                         break;
                                 }
 
                                 if (EventService.InstallProgressChanged != null)
-                                    EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(y + 1, app.Updates[x].Files.Count, x + 1) - 10, curUpdate, totalUpdates);
+                                    EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(y + 1, app.Updates[x].Files.Count, x + 1) - 10, curUpdate, totalUpdates);
                             } //end foreach loop
                             #endregion
 
                             if (EventService.InstallProgressChanged != null)
-                                EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(90, 100, x + 1), curUpdate, totalUpdates);
-                            if (Program.NotifyIcon != null)
-                                Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                                EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(90, 100, x + 1), curUpdate, totalUpdates);
+                            if (App.NotifyIcon != null)
+                                DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
                             #region Registry
 
@@ -272,9 +271,9 @@ namespace SevenUpdate
                             #endregion
 
                             if (EventService.InstallProgressChanged != null)
-                                EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(95, 100, x + 1), curUpdate, totalUpdates);
-                            if (Program.NotifyIcon != null)
-                                Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                                EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(95, 100, x + 1), curUpdate, totalUpdates);
+                            if (App.NotifyIcon != null)
+                                DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
                             #region Shortcuts
 
@@ -283,16 +282,16 @@ namespace SevenUpdate
                             #endregion
 
                             if (EventService.InstallProgressChanged != null)
-                                EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(98, 100, x + 1), curUpdate, totalUpdates);
-                            if (Program.NotifyIcon != null)
-                                Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                                EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(98, 100, x + 1), curUpdate, totalUpdates);
+                            if (App.NotifyIcon != null)
+                                DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
                             AddHistory(app, app.Updates[x]);
 
                             if (EventService.InstallProgressChanged != null)
-                                EventService.InstallProgressChanged(app.Updates[x].Title[0].Value, Progress(100, 100, x + 1), curUpdate, totalUpdates);
-                            if (Program.NotifyIcon != null)
-                                Program.NotifyIcon.Text = Program.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + Program.RM.GetString("Complete");
+                                EventService.InstallProgressChanged(Shared.GetLocaleString(app.Updates[x].Title), Progress(100, 100, x + 1), curUpdate, totalUpdates);
+                            if (App.NotifyIcon != null)
+                                DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + Progress(1, 100, x + 1) + " " + App.RM.GetString("Complete"));
 
                             curUpdate++;
 
@@ -303,7 +302,7 @@ namespace SevenUpdate
                 }
                 catch (Exception f)
                 {
-                    Program.ReportError(f.Message);
+                    Shared.ReportError(f.Message, Shared.appStore);
                 }
             }
 
@@ -354,7 +353,7 @@ namespace SevenUpdate
 
             if (File.Exists(file))
             {
-                Program.SetFileSecurity(file);
+                App.SetFileSecurity(file);
 
                 try
                 {
@@ -370,7 +369,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Program.ReportError(e.Message);
+                    Shared.ReportError(e.Message, Shared.appStore);
                     MoveFileEx(file, destination, MoveOnReboot);
                 }
             }
@@ -458,7 +457,7 @@ namespace SevenUpdate
                     // Where the shortcut should point to
                     shortcut.TargetPath = Shared.ConvertPath(link.Target, appDir, Is64Bit);
                     // Description for the shortcut
-                    shortcut.Description = link.Description[0].Value;
+                    shortcut.Description = Shared.GetLocaleString(link.Description);
                     // Location for the shortcut's icon
                     shortcut.IconLocation = Shared.ConvertPath(link.Icon, appDir, Is64Bit); ;
                     // The arguments to be used for the shortcut
@@ -481,7 +480,7 @@ namespace SevenUpdate
         static void UpdateOnReboot(Update update, string appName, string appDir, int curUpdate, bool Is64Bit)
         {
             if (EventService.InstallProgressChanged != null)
-                EventService.InstallProgressChanged(update.Title[0].Value, Progress(20, 100, curUpdate + 1), curUpdate, totalUpdates);
+                EventService.InstallProgressChanged(Shared.GetLocaleString(update.Title), Progress(20, 100, curUpdate + 1), curUpdate, totalUpdates);
 
             #region Registry
 
@@ -490,7 +489,7 @@ namespace SevenUpdate
             #endregion
 
             if (EventService.InstallProgressChanged != null)
-                EventService.InstallProgressChanged(update.Title[0].Value, Progress(50, 100, curUpdate + 1), curUpdate, totalUpdates);
+                EventService.InstallProgressChanged(Shared.GetLocaleString(update.Title), Progress(50, 100, curUpdate + 1), curUpdate, totalUpdates);
 
             #region Shortcuts
 
@@ -499,7 +498,7 @@ namespace SevenUpdate
             #endregion
 
             if (EventService.InstallProgressChanged != null)
-                EventService.InstallProgressChanged(update.Title[0].Value, Progress(75, 100, curUpdate + 1), curUpdate, totalUpdates);
+                EventService.InstallProgressChanged(Shared.GetLocaleString(update.Title), Progress(75, 100, curUpdate + 1), curUpdate, totalUpdates);
 
             if (IsSevenUpdate)
             {
@@ -520,14 +519,14 @@ namespace SevenUpdate
                 }
                 Process proc = new Process();
 
-                proc.StartInfo.FileName = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\SU Helper.exe";
+                proc.StartInfo.FileName = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\Seven Update.Helper.exe";
 
-                if (!Program.IsAdmin())
+                if (!App.IsAdmin())
                     proc.StartInfo.Verb = "runas";
 
                 proc.StartInfo.UseShellExecute = true;
 
-                proc.StartInfo.Arguments = "\"" + update.Title + "\"";
+                proc.StartInfo.Arguments = "\"" + Shared.GetLocaleString(update.Title) + "\"";
 
                 proc.StartInfo.CreateNoWindow = true;
 
@@ -543,7 +542,7 @@ namespace SevenUpdate
                 {
                     fileDest = Shared.ConvertPath(update.Files[x].Destination, appDir, Is64Bit);
 
-                    Program.SetFileSecurity(DownloadedPath + Path.GetFileName(fileDest));
+                    App.SetFileSecurity(DownloadedPath + Path.GetFileName(fileDest));
 
                     MoveFileEx(DownloadedPath + Path.GetFileName(fileDest),
 
@@ -554,11 +553,11 @@ namespace SevenUpdate
                 {
                     File.Create(Shared.appStore + "reboot.lock").WriteByte(0);
 
-                    Program.SetFileSecurity(Shared.appStore + "reboot.lock");
+                    App.SetFileSecurity(Shared.appStore + "reboot.lock");
                 }
             }
             if (EventService.InstallProgressChanged != null)
-                EventService.InstallProgressChanged(update.Title[0].Value, Progress(100, 100, curUpdate + 1), curUpdate, totalUpdates);
+                EventService.InstallProgressChanged(Shared.GetLocaleString(update.Title), Progress(100, 100, curUpdate + 1), curUpdate, totalUpdates);
         }
 
         #endregion

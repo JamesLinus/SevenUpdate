@@ -28,14 +28,12 @@ namespace SevenUpdate
         /// </summary>
         internal static bool Abort { get; set; }
 
+        static Collection<Application> updates;
+
         /// <summary>
         /// Manager for Background Intelligent Transfer Service
         /// </summary>
         static System.Net.BITS.Manager manager;
-
-        static bool errorOccurred;
-
-        internal static bool ErrorOccurred { get { return errorOccurred; } }
 
         #endregion
 
@@ -52,7 +50,7 @@ namespace SevenUpdate
 
                 for (int z = 0; z < manager.Jobs.Count; z++)
                 {
-                    if (manager.Jobs[z].DisplayName == "Seven Update" && manager.Jobs[z].CanCancel)
+                    if (manager.Jobs[z].DisplayName.Contains("Seven Update") && manager.Jobs[z].CanCancel)
                     {
                         try
                         {
@@ -75,11 +73,16 @@ namespace SevenUpdate
 
         internal static void DownloadUpdates(Collection<Application> applications)
         {
+            updates = applications;
             manager = new System.Net.BITS.Manager();
             manager.OnTransferred += new EventHandler<System.Net.BITS.JobTransferredEventArgs>(manager_OnTransferred);
             manager.OnError += new EventHandler<System.Net.BITS.JobErrorEventArgs>(manager_OnError);
             manager.OnModfication += new EventHandler<System.Net.BITS.JobModificationEventArgs>(manager_OnModfication);
-            manager.Jobs.Update();
+            try
+            {
+                manager.Jobs.Update();
+            }
+            catch (System.Net.BITS.BITSException) { }
 
             for (int z = 0; z < manager.Jobs.Count; z++)
             {
@@ -101,6 +104,7 @@ namespace SevenUpdate
                         try
                         {
                             manager.Jobs[z].Resume();
+                            manager.Jobs[z].Activate();
                             return;
 
                         }
@@ -119,16 +123,17 @@ namespace SevenUpdate
                 }
             }
 
-            System.Net.BITS.Job job = new System.Net.BITS.Job("Seven Update", System.Net.BITS.JobType.Download, System.Net.BITS.JobPriority.Foreground);
+            System.Net.BITS.Job job = new System.Net.BITS.Job("Seven Update" + new Random().Next(99), System.Net.BITS.JobType.Download, System.Net.BITS.JobPriority.Foreground);
 
             string fileDest;
-
+            string downloadDir;
             for (int x = 0; x < applications.Count; x++)
             {
                 for (int y = 0; y < applications[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of appname and update title
-                    Directory.CreateDirectory(Shared.appStore + @"downloads\" + applications[x].Name + @"\" + applications[x].Updates[y].Title);
+                    downloadDir = Shared.appStore + @"downloads\" + Shared.GetLocaleString(applications[x].Name) + @"\" + Shared.GetLocaleString(applications[x].Updates[y].Title);
+                    Directory.CreateDirectory(downloadDir);
 
                     for (int z = 0; z < applications[x].Updates[y].Files.Count; z++)
                     {
@@ -136,18 +141,34 @@ namespace SevenUpdate
 
                         if (applications[x].Updates[y].Files[z].Action != FileAction.Delete && applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete)
                         {
-                            if (Shared.GetHash(Shared.appStore + @"downloads\" + applications[x].Name + @"\" + applications[x].Updates[y].Title + @"\" +
-                                Path.GetFileName(fileDest)) != applications[x].Updates[y].Files[z].Hash)
+                            if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDest)) != applications[x].Updates[y].Files[z].Hash)
                             {
                                 try
                                 {
-                                    File.Delete(Shared.appStore + @"downloads\" + applications[x].Name + @"\" + applications[x].Updates[y].Title + @"\" +
-                                    Path.GetFileName(fileDest));
+                                    try
+                                    {
+                                        File.Delete(downloadDir + @"\" + Path.GetFileName(fileDest));
+                                    }
+                                    catch (Exception) { }
                                     Uri url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadDirectory, applications[x].Is64Bit));
-                                    job.Files.Add(url.AbsoluteUri, Shared.appStore + @"downloads\" + applications[x].Name + @"\" +
-                                        applications[x].Updates[y].Title + @"\" + Path.GetFileName(fileDest));
+                                    job.Files.Add(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDest));
                                 }
-                                catch (Exception e) { if (WCF.EventService.ErrorOccurred != null) WCF.EventService.ErrorOccurred(e.Message); }
+                                catch (Exception e)
+                                {
+                                    try
+                                    {
+                                        manager.Jobs.CloseAllJobs();
+                                        manager.Dispose();
+                                        manager = null;
+                                    }
+                                    catch (Exception) { }
+
+                                    if (WCF.EventService.ErrorOccurred != null)
+                                        WCF.EventService.ErrorOccurred(e.Message);
+
+                                    if (DownloadDoneEventHandler != null)
+                                        DownloadDoneEventHandler(null, new DownloadDoneEventArgs(true, applications));
+                                }
                             }
                         }
                     }
@@ -158,22 +179,33 @@ namespace SevenUpdate
                 if (job.Files.Count > 0)
                 {
                     manager.Jobs.Add(job);
-                    manager.Jobs[manager.Jobs.Count - 1].Resume();
+                    if (manager.Jobs.Count > 0)
+                    {
+                        job.Resume();
+                    }
                 }
                 else
                 {
-                    manager = null;
+                    try
+                    {
+                        manager.Jobs.CloseAllJobs();
+                        manager.Dispose();
+                        manager = null;
+                    }
+                    catch (Exception) { }
 
                     if (DownloadDoneEventHandler != null)
-                        DownloadDoneEventHandler(null, new EventArgs());
-
-                    //if (WCF.EventService.DownloadDone != null)
-                    //    WCF.EventService.DownloadDone(ErrorOccurred);
+                        DownloadDoneEventHandler(null, new DownloadDoneEventArgs(false, applications));
                 }
             }
             catch (System.Net.BITS.BITSException e)
             {
-                Program.ReportError(e.Message);
+                Shared.ReportError(e.Message, Shared.appStore);
+                if (WCF.EventService.ErrorOccurred != null)
+                    WCF.EventService.ErrorOccurred(e.Message);
+
+                if (DownloadDoneEventHandler != null)
+                    DownloadDoneEventHandler(null, new DownloadDoneEventArgs(true, applications));
             }
         }
 
@@ -189,7 +221,7 @@ namespace SevenUpdate
                     {
                         for (int x = 0; x < manager.Jobs.Count; x++)
                         {
-                            if (manager.Jobs[x].DisplayName == "Seven Update")
+                            if (manager.Jobs[x].DisplayName.Contains("Seven Update"))
                                 return manager.Jobs[x].State;
                         }
                         return System.Net.BITS.JobState.Inactive;
@@ -212,15 +244,22 @@ namespace SevenUpdate
         /// <param name="e">JobError EventArgs, contains error information</param>
         static void manager_OnError(object sender, System.Net.BITS.JobErrorEventArgs e)
         {
-            if (e.Job.DisplayName == "Seven Update")
+            if (e.Job.DisplayName.Contains("Seven Update"))
             {
                 manager.Jobs.Remove(e.Job.Id);
-                errorOccurred = true;
+
+                try
+                {
+                    manager.Jobs.CloseAllJobs();
+                    manager.Dispose();
+                    manager = null;
+                }
+                catch (Exception) { }
                 if (WCF.EventService.ErrorOccurred != null)
                     WCF.EventService.ErrorOccurred(e.Job.Error.Description + " " + e.Error.File.RemoteFileName);
 
                 if (DownloadDoneEventHandler != null)
-                    DownloadDoneEventHandler(null, new EventArgs());
+                    DownloadDoneEventHandler(null, new DownloadDoneEventArgs(true, null));
             }
 
         }
@@ -233,17 +272,17 @@ namespace SevenUpdate
         {
             if (Abort)
                 Environment.Exit(0);
-            if (e.Job.DisplayName == "Seven Update")
+            if (e.Job.DisplayName.Contains("Seven Update") && e.Job.State == System.Net.BITS.JobState.Transferring)
             {
                 try
                 {
                     if (WCF.EventService.DownloadProgressChanged != null && e.Job.Progress.BytesTransferred > 0)
                         WCF.EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
 
-                    if (Program.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0)
+                    if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0)
                     {
-                        Program.NotifyIcon.Text = Program.RM.GetString("DownloadingUpdates") + " (" +
-                        Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " + (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + Program.RM.GetString("Complete") + ")";
+                        DispatcherObjectDelegates.BeginInvoke<string>(App.app.Dispatcher, App.UpdateNotifyIcon, App.RM.GetString("DownloadingUpdates") + " (" +
+                        Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " + (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
                     }
 
                 }
@@ -262,7 +301,7 @@ namespace SevenUpdate
                 Environment.Exit(0);
             try
             {
-                if (e.Job.DisplayName == "Seven Update")
+                if (e.Job.DisplayName.Contains("Seven Update"))
                 {
                     if (e.Job.State == System.Net.BITS.JobState.Transferred)
                     {
@@ -280,10 +319,10 @@ namespace SevenUpdate
                         }
                         catch (Exception) { }
                         if (DownloadDoneEventHandler != null)
-                            DownloadDoneEventHandler(null, new EventArgs());
+                            DownloadDoneEventHandler(null, new DownloadDoneEventArgs(false, updates));
 
                         if (WCF.EventService.DownloadDone != null)
-                            WCF.EventService.DownloadDone(ErrorOccurred);
+                            WCF.EventService.DownloadDone(false);
                     }
                     else
                     {
@@ -297,7 +336,30 @@ namespace SevenUpdate
         /// <summary>
         /// Raises an event when the downloading of updates have completed.
         /// </summary>
-        public static event EventHandler<EventArgs> DownloadDoneEventHandler;
+        public static event EventHandler<DownloadDoneEventArgs> DownloadDoneEventHandler;
+
+        #region EventArgs
+
+        public class DownloadDoneEventArgs : EventArgs
+        {
+            public DownloadDoneEventArgs(bool ErrorOccurred, Collection<Application> Applications)
+            {
+                this.ErrorOccurred = ErrorOccurred;
+                this.Applications = Applications;
+            }
+
+            /// <summary>
+            /// Indicates if error occurred
+            /// </summary>
+            public bool ErrorOccurred { get; set; }
+
+            /// <summary>
+            /// Specifies if a reboot is needed
+            /// </summary>
+            public Collection<Application> Applications { get; set; }
+        }
+
+        #endregion
 
         #endregion
 

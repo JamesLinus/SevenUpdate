@@ -85,7 +85,7 @@ namespace SevenUpdate.Pages
                     x--;
                 }
             }
-            if (Client.HideUpdates(HiddenUpdates))
+            if (Admin.HideUpdates(HiddenUpdates))
             {
                 if (RestoredHiddenUpdateEventHandler != null)
                     RestoredHiddenUpdateEventHandler(this, new EventArgs());

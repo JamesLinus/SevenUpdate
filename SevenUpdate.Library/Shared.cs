@@ -45,10 +45,21 @@ namespace SevenUpdate
         /// </summary>
         public static string userStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Update\";
 
+        public static string Locale { get; set; }
+
         #endregion
 
         #region Methods
 
+        public static string GetLocaleString(ObservableCollection<LocaleString> localeStrings)
+        {
+            for (int x = 0; x < localeStrings.Count; x++)
+            {
+                if (localeStrings[x].lang == Locale)
+                    return localeStrings[x].Value;
+            }
+            return localeStrings[0].Value;
+        }
 
         /// <summary>
         /// Expands the file location variables
@@ -289,6 +300,15 @@ namespace SevenUpdate
 
         }
 
+        public static void ReportError(string message, string directoryStore)
+        {
+            TextWriter tw = new StreamWriter(directoryStore + "error.log");
+
+            tw.WriteLine(DateTime.Now.ToString() + ": " + message);
+
+            tw.Close();
+        }
+
         /// <summary>
         /// Converts bytes into the proper increments depending on size
         /// </summary>
@@ -310,7 +330,6 @@ namespace SevenUpdate
         #endregion
 
         #region DeSerialize Methods
-
 
         /// <summary>
         /// DeSerializes a list of objects

@@ -23,84 +23,39 @@ using System.Threading;
 
 namespace SevenUpdate.WCF
 {
-    class Client : ESB.IEventSystemCallback
+
+    class AdminCallBack : ESB.IEventSystemCallback
     {
-        /// <summary>
-        /// The client of the ESB service
-        /// </summary>
-        static ESB.EventSystemClient wcf;
-
-        static Client client;
-
-        /// <summary>
-        /// Connects to the Seven Update.Admin sub program
-        /// </summary>
-        /// <returns>Returns true if sucessful</returns>
-        void Connect()
-        {
-            wcf = new SevenUpdate.ESB.EventSystemClient(new InstanceContext(this));
-            try
-            {
-                while (wcf.State != CommunicationState.Created)
-                { }
-                wcf.Subscribe();
-            }
-            catch (Exception)
-            {
-
-            }
-        }
-
         #region IEventSystemCallback Members
 
         public void OnErrorOccurred(string errorDescription)
         {
-            OnEvent<ErrorOccurredEventArgs>(ErrorOccurredEventHandler, new ErrorOccurredEventArgs(errorDescription));
+            if (ErrorOccurredEventHandler != null)
+                ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(errorDescription));
         }
 
         public void OnInstallDone(bool ErrorOccurred)
         {
-            OnEvent<InstallDoneEventArgs>(InstallDoneEventHandler, new InstallDoneEventArgs(ErrorOccurred, Shared.RebootNeeded));
-            try
-            {
-                wcf.Unsubscribe();
-            }
-            catch (Exception) { }
+            if (InstallDoneEventHandler != null)
+                InstallDoneEventHandler(this, new InstallDoneEventArgs(ErrorOccurred, Shared.RebootNeeded));
         }
 
         public void OnDownloadDone(bool ErrorOccurred)
         {
-            OnEvent<DownloadDoneEventArgs>(DownloadDoneEventHandler, new DownloadDoneEventArgs(ErrorOccurred));
+            if (DownloadDoneEventHandler != null)
+                DownloadDoneEventHandler(this, new DownloadDoneEventArgs(ErrorOccurred));
         }
 
         public void OnInstallProgressChanged(string updateTitle, int progress, int updatesComplete, int totalUpdates)
         {
-            OnEvent<InstallProgressChangedEventArgs>(InstallProgressChangedEventHandler, new InstallProgressChangedEventArgs(updateTitle, progress, updatesComplete, totalUpdates));
+            if (InstallProgressChangedEventHandler != null)
+                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateTitle, progress, updatesComplete, totalUpdates));
         }
 
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal)
         {
-            OnEvent<DownloadProgressChangedEventArgs>(DownloadProgressChangedEventHandler, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal));
-        }
-
-        static void OnEvent<T>(EventHandler<T> Event, T Args) where T : EventArgs
-        {
-            if (Event != null)
-            {
-                foreach (EventHandler<T> singleEvent in Event.GetInvocationList())
-                {
-                    if (singleEvent.Target != null && singleEvent.Target is ISynchronizeInvoke)
-                    {
-                        ISynchronizeInvoke target = (ISynchronizeInvoke)singleEvent.Target;
-                        if (target.InvokeRequired)
-                        {
-                            target.BeginInvoke(singleEvent, new object[] { "OnEvent", Args });
-                            continue;
-                        }
-                    }
-                    singleEvent("OnEvent", Args);
-                }
-            }
+            if (DownloadProgressChangedEventHandler != null)
+                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal));
         }
 
         #endregion
@@ -220,6 +175,45 @@ namespace SevenUpdate.WCF
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChangedEventHandler;
 
         #endregion
+    }
+
+
+    class Admin : AdminCallBack
+    {
+
+        /// <summary>
+        /// The client of the ESB service
+        /// </summary>
+        static ESB.EventSystemClient wcf;
+
+        /// <summary>
+        /// Connects to the Seven Update.Admin sub program
+        /// </summary>
+        /// <returns>Returns true if sucessful</returns>
+        internal static void Connect()
+        {
+            wcf = new SevenUpdate.ESB.EventSystemClient(new InstanceContext(new AdminCallBack()));
+            try
+            {
+                while (wcf.State != CommunicationState.Created)
+                { Thread.CurrentThread.Join(500); }
+                wcf.Subscribe();
+            }
+            catch (EndpointNotFoundException)
+            {
+                Thread.CurrentThread.Join(500);
+                Connect();
+            }
+            catch (Exception e)
+            {
+                Shared.ReportError(e.Message, Shared.userStore);
+            }
+        }
+
+        internal static void Disconnect()
+        {
+            wcf.Unsubscribe();
+        }
 
         #region Install Methods
 
@@ -254,8 +248,9 @@ namespace SevenUpdate.WCF
                 proc.Dispose();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Shared.ReportError(e.Message, Shared.userStore);
                 proc.Dispose();
                 return false;
             }
@@ -281,7 +276,7 @@ namespace SevenUpdate.WCF
             {
                 wcf.Unsubscribe();
             }
-            catch (Exception) { }
+            catch (Exception e) { Shared.ReportError(e.Message, Shared.userStore); }
         }
 
         /// <summary>
@@ -290,12 +285,7 @@ namespace SevenUpdate.WCF
         /// <returns>returns true if sucessful</returns>
         internal static bool Install()
         {
-            Shared.SerializeCollection<Application>(App.Applications, Shared.userStore + "Update List.xml");
-            if (LaunchAdmin("Install") == false)
-                return false;
-            client = new Client();
-            client.Connect();
-            return true;
+            return LaunchAdmin("Install");
         }
 
         /// <summary>
@@ -306,7 +296,7 @@ namespace SevenUpdate.WCF
         internal static bool HideUpdate(UpdateInformation hiddenUpdate)
         {
             Shared.Serialize<UpdateInformation>(hiddenUpdate, Shared.userStore + "HnH Update.xml");
-            if (!Client.LaunchAdmin("HideUpdate"))
+            if (!Admin.LaunchAdmin("HideUpdate"))
                 return false;
             else
             {
@@ -322,7 +312,7 @@ namespace SevenUpdate.WCF
         internal static bool HideUpdates(ObservableCollection<UpdateInformation> hiddenUpdates)
         {
             Shared.SerializeCollection<UpdateInformation>(hiddenUpdates, Shared.userStore + "Hidden Updates.xml");
-            if (!Client.LaunchAdmin("HideUpdates"))
+            if (!Admin.LaunchAdmin("HideUpdates"))
             {
                 System.IO.File.Delete(Shared.userStore + "Hidden Updates.xml");
                 return false;
@@ -338,7 +328,7 @@ namespace SevenUpdate.WCF
         /// <returns>Retirms true if successful</returns>
         internal static bool ShowUpdate(UpdateInformation hiddenUpdate)
         {
-            if (!Client.LaunchAdmin("ShowUpdate"))
+            if (!Admin.LaunchAdmin("ShowUpdate"))
                 return false;
             else
             {

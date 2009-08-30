@@ -196,10 +196,10 @@ namespace SevenUpdate.Pages
             {
                 options.AutoOption = AutoUpdateOption.Never;
 
-                Client.SaveSettings(false, options, userAppList);
+                Admin.SaveSettings(false, options, userAppList);
             }
             else
-                Client.SaveSettings(true, options, userAppList);
+                Admin.SaveSettings(true, options, userAppList);
 
 
             if (SettingsSavedEventHandler != null)

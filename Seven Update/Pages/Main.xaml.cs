@@ -126,9 +126,9 @@ namespace SevenUpdate.Pages
             {
                 CheckForUpdates(true);
             }
-
-            if (!Settings.Default.lastUpdateCheck.Contains(DateTime.Now.ToShortDateString()))
-                CheckForUpdates();
+            else
+                if (!Settings.Default.lastUpdateCheck.Contains(DateTime.Now.ToShortDateString()))
+                    CheckForUpdates();
         }
 
         #region UI Events
@@ -278,7 +278,7 @@ namespace SevenUpdate.Pages
             else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("CancelUpdates"))
             {
                 //Cancel installation of updates
-                Client.AbortInstall();
+                Admin.AbortInstall();
                 SetUI(UILayout.Canceled);
                 return;
             }
@@ -295,7 +295,7 @@ namespace SevenUpdate.Pages
 
         #region Update Event Methods
 
-        void InstallProgressChanged(Client.InstallProgressChangedEventArgs e)
+        void InstallProgressChanged(Admin.InstallProgressChangedEventArgs e)
         {
             if (e.CurrentProgress == -1)
                 infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall") + "...";
@@ -311,7 +311,7 @@ namespace SevenUpdate.Pages
             }
         }
 
-        void DownloadProgressChanged(Client.DownloadProgressChangedEventArgs e)
+        void DownloadProgressChanged(Admin.DownloadProgressChangedEventArgs e)
         {
             try
             {
@@ -325,10 +325,8 @@ namespace SevenUpdate.Pages
             }
         }
 
-        void InstallDone(Client.InstallDoneEventArgs e)
+        void InstallDone(Admin.InstallDoneEventArgs e)
         {
-            App.InstallInProgress = false;
-            App.UpdatesFound = false;
             if (!e.ErrorOccurred)
             {
                 Settings.Default.lastInstall = DateTime.Now.ToShortDateString() + " " + App.RM.GetString("At") + " " + DateTime.Now.ToShortTimeString();
@@ -352,7 +350,7 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.ErrorOccurred);
         }
 
-        void DownloadDone(Client.DownloadDoneEventArgs e)
+        void DownloadDone(Admin.DownloadDoneEventArgs e)
         {
             if (e.ErrorOccurred)
             {
@@ -449,21 +447,21 @@ namespace SevenUpdate.Pages
 
         #region Invoker Events
 
-        void Client_InstallProgressChangedEventHandler(object sender, Client.InstallProgressChangedEventArgs e)
+        void Admin_InstallProgressChangedEventHandler(object sender, Admin.InstallProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                DispatcherObjectDelegates.BeginInvoke<Client.InstallProgressChangedEventArgs>(this.Dispatcher, InstallProgressChanged, e);
+                DispatcherObjectDelegates.BeginInvoke<Admin.InstallProgressChangedEventArgs>(this.Dispatcher, InstallProgressChanged, e);
             }
             else
                 InstallProgressChanged(e);
         }
 
-        void Client_DownloadProgressChangedEventHandler(object sender, Client.DownloadProgressChangedEventArgs e)
+        void Admin_DownloadProgressChangedEventHandler(object sender, Admin.DownloadProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                DispatcherObjectDelegates.BeginInvoke<Client.DownloadProgressChangedEventArgs>(this.Dispatcher, DownloadProgressChanged, e);
+                DispatcherObjectDelegates.BeginInvoke<Admin.DownloadProgressChangedEventArgs>(this.Dispatcher, DownloadProgressChanged, e);
             }
             else
                 DownloadProgressChanged(e);
@@ -479,21 +477,21 @@ namespace SevenUpdate.Pages
                 SearchDone(e);
         }
 
-        void Client_InstallDoneEventHandler(object sender, Client.InstallDoneEventArgs e)
+        void Admin_InstallDoneEventHandler(object sender, Admin.InstallDoneEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                DispatcherObjectDelegates.BeginInvoke<Client.InstallDoneEventArgs>(this.Dispatcher, InstallDone, e);
+                DispatcherObjectDelegates.BeginInvoke<Admin.InstallDoneEventArgs>(this.Dispatcher, InstallDone, e);
             }
             else
                 InstallDone(e);
         }
 
-        void Client_DownloadDoneEventHandler(object sender, Client.DownloadDoneEventArgs e)
+        void Admin_DownloadDoneEventHandler(object sender, Admin.DownloadDoneEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                DispatcherObjectDelegates.BeginInvoke<Client.DownloadDoneEventArgs>(this.Dispatcher, DownloadDone, e);
+                DispatcherObjectDelegates.BeginInvoke<Admin.DownloadDoneEventArgs>(this.Dispatcher, DownloadDone, e);
             }
             else
                 DownloadDone(e);
@@ -501,7 +499,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        void Client_ErrorOccurredEventHandler(object sender, Client.ErrorOccurredEventArgs e)
+        void Admin_ErrorOccurredEventHandler(object sender, Admin.ErrorOccurredEventArgs e)
         {
             if (e.ErrorDescription == "Network Connection Error")
             {
@@ -509,6 +507,8 @@ namespace SevenUpdate.Pages
                 {
                     DispatcherObjectDelegates.BeginInvoke<UILayout, string>(this.Dispatcher, SetUI, UILayout.ErrorOccurred, App.RM.GetString("CheckConnection"));
                 }
+                else
+                    SetUI(UILayout.ErrorOccurred, App.RM.GetString("CheckConnection"));
             }
             else if (e.ErrorDescription == "Seven Update Server Error")
             {
@@ -516,6 +516,8 @@ namespace SevenUpdate.Pages
                 {
                     DispatcherObjectDelegates.BeginInvoke<UILayout, string>(this.Dispatcher, SetUI, UILayout.ErrorOccurred, App.RM.GetString("CouldNotConnect"));
                 }
+                else
+                    SetUI(UILayout.ErrorOccurred, App.RM.GetString("CouldNotConnect"));
             }
             else
             {
@@ -523,6 +525,8 @@ namespace SevenUpdate.Pages
                 {
                     DispatcherObjectDelegates.BeginInvoke<UILayout, string>(this.Dispatcher, SetUI, UILayout.ErrorOccurred, e.ErrorDescription);
                 }
+                else
+                    SetUI(UILayout.ErrorOccurred,e.ErrorDescription);
             }
             try
             {
@@ -534,10 +538,8 @@ namespace SevenUpdate.Pages
             }
             catch (Exception) { }
 
-            Client.AbortInstall();
-            TextWriter tw = new StreamWriter(Shared.userStore + "error.log");
-            tw.WriteLine(DateTime.Now.ToString() + ": " + e.ErrorDescription);
-            tw.Close();
+            Admin.AbortInstall();
+            Shared.ReportError(e.ErrorDescription, Shared.userStore);
 
         }
 
@@ -601,7 +603,7 @@ namespace SevenUpdate.Pages
         {
             for (int x = 0; x < App.Applications.Count; x++)
             {
-                for (int y =0; y < App.Applications[x].Updates.Count; y++)
+                for (int y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
                     if (App.Applications[x].Updates[y].Selected == false)
                     {
@@ -626,9 +628,10 @@ namespace SevenUpdate.Pages
                     return;
                 }
 
-                if (Client.Install())
+                if (Admin.Install())
                 {
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+                    Shared.SerializeCollection<Application>(App.Applications, Shared.userStore + "Update List.xml");
+                    Admin.Connect();
                     if (infoBar.tbHeading.Text == App.RM.GetString("DownloadAndInstallUpdates"))
                     {
                         SetUI(UILayout.Downloading);
@@ -683,11 +686,11 @@ namespace SevenUpdate.Pages
             infoBar.tbViewImportantUpdates.MouseDown += new MouseButtonEventHandler(tbViewImportantUpdates_MouseDown);
             infoBar.tbViewOptionalUpdates.MouseDown += new MouseButtonEventHandler(tbViewOptionalUpdates_MouseDown);
             Search.SearchDoneEventHandler += new EventHandler<Search.SearchDoneEventArgs>(Search_SearchDoneEventHandler);
-            Client.DownloadProgressChangedEventHandler += new EventHandler<Client.DownloadProgressChangedEventArgs>(Client_DownloadProgressChangedEventHandler);
-            Client.DownloadDoneEventHandler += new EventHandler<Client.DownloadDoneEventArgs>(Client_DownloadDoneEventHandler);
-            Client.InstallProgressChangedEventHandler += new EventHandler<Client.InstallProgressChangedEventArgs>(Client_InstallProgressChangedEventHandler);
-            Client.InstallDoneEventHandler += new EventHandler<Client.InstallDoneEventArgs>(Client_InstallDoneEventHandler);
-            Client.ErrorOccurredEventHandler += new EventHandler<Client.ErrorOccurredEventArgs>(Client_ErrorOccurredEventHandler);
+            Admin.DownloadProgressChangedEventHandler += new EventHandler<Admin.DownloadProgressChangedEventArgs>(Admin_DownloadProgressChangedEventHandler);
+            Admin.DownloadDoneEventHandler += new EventHandler<Admin.DownloadDoneEventArgs>(Admin_DownloadDoneEventHandler);
+            Admin.InstallProgressChangedEventHandler += new EventHandler<Admin.InstallProgressChangedEventArgs>(Admin_InstallProgressChangedEventHandler);
+            Admin.InstallDoneEventHandler += new EventHandler<Admin.InstallDoneEventArgs>(Admin_InstallDoneEventHandler);
+            Admin.ErrorOccurredEventHandler += new EventHandler<Admin.ErrorOccurredEventArgs>(Admin_ErrorOccurredEventHandler);
             RestoreUpdates.RestoredHiddenUpdateEventHandler += new EventHandler<EventArgs>(RestoreUpdates_RestoredHiddenUpdateEventHandler);
 
             #endregion
@@ -796,7 +799,7 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+
                     infoBar.imgShield.Source = App.yellowShield;
                     infoBar.imgSide.Source = yellowSide;
                     infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
@@ -835,7 +838,7 @@ namespace SevenUpdate.Pages
                     infoBar.imgSide.Source = yellowSide;
                     infoBar.line.Visibility = Visibility.Visible;
 
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+
 
                     #endregion
 
@@ -934,7 +937,7 @@ namespace SevenUpdate.Pages
 
                     infoBar.line.Visibility = Visibility.Collapsed;
 
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+
                     App.NotifyIcon.Text = App.RM.GetString("ErrorOccurred");
 
                     if (errorDescription != null)
@@ -971,7 +974,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("SaveAndReboot");
                     infoBar.line.Visibility = Visibility.Collapsed;
 
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+
                     App.NotifyIcon.Text = App.RM.GetString("RebootNeeded");
                     #endregion
 
@@ -999,7 +1002,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("UpdatesCanceled");
                     infoBar.tbStatus.Text = App.RM.GetString("CancelInstallation");
 
-                    App.RemoveShieldFromButton(infoBar.btnAction);
+
                     App.NotifyIcon.Text = App.RM.GetString("UpdatesCanceled");
 
                     #endregion

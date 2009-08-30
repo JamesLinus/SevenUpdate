@@ -70,7 +70,7 @@ namespace SevenUpdate.Converters
 
             for (int x = 0; x < localeStrings.Count; x++)
             {
-                if (localeStrings[x].lang == App.Locale)
+                if (localeStrings[x].lang == Shared.Locale)
                     return localeStrings[x].Value;
             }
 

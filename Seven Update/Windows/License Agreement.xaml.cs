@@ -171,7 +171,7 @@ namespace SevenUpdate.Windows
                 {
                     eulas[x] = wc.DownloadString(licenses[x].LicenseUrl);
                 }
-                catch (Exception) { eulas[x] = "Error Downloading License Agreement"; }
+                catch (Exception f) { Shared.ReportError(f.Message, Shared.userStore); eulas[x] = "Error Downloading License Agreement"; }
             }
 
             rtbSLA.Cursor = Cursors.IBeam;
