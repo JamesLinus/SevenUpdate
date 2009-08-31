@@ -73,7 +73,7 @@ namespace SevenUpdate
 
     [SerializableAttribute()]
     [XmlTypeAttribute(AnonymousType = true)]
-    public class LocaleString : System.Collections.IComparer
+    public class LocaleString
     {
         /// <summary>
         /// an ISO language code
@@ -86,11 +86,6 @@ namespace SevenUpdate
         /// </summary>
         [XmlAttribute()]
         public string Value { get; set; }
-
-        public int Compare(object x, object y)
-        {
-            return (((LocaleString)x).Value.CompareTo(((LocaleString)y)));
-        }
     }
 
     #endregion
@@ -130,7 +125,7 @@ namespace SevenUpdate
         /// <summary>
         /// Indicates if the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
-        [XmlAttribute("Enabled")]
+        [XmlIgnoreAttribute()] 
         public bool Enabled { get; set; }
 
         /// <summary>
@@ -269,7 +264,18 @@ namespace SevenUpdate
     /// </summary>
     public enum RegistryAction
     {
-        Add, DeleteKey, DeleteValue
+        /// <summary>
+        /// Adds a registry entry to the machine
+        /// </summary>
+        Add, 
+        /// <summary>
+        /// Deletes a registry key on the machine
+        /// </summary>
+        DeleteKey, 
+        /// <summary>
+        /// Deletes a value of a registry key on the machine
+        /// </summary>
+        DeleteValue
     }
 
     #endregion
@@ -283,22 +289,16 @@ namespace SevenUpdate
     public class Application : INotifyPropertyChanged
     {
         /// <summary>
-        /// Gets or Sets the application main directory, usually in Program Files
+        /// The application main directory, usually in Program Files
         /// </summary>
         [XmlAttribute("Directory")]
         public string Directory { get; set; }
 
         /// <summary>
-        /// Gets or Sets the help url of the update: Optional
+        /// The help url of the update: Optional
         /// </summary>
         [XmlAttribute("HelpUrl")]
         public string HelpUrl { get; set; }
-
-        /// <summary>
-        /// Gets or Sets the application name in which the update applies too
-        /// </summary>
-        [XmlElementAttribute("Name")]
-        public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         /// Specifies if the application is 64 bit
@@ -313,13 +313,13 @@ namespace SevenUpdate
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
-        /// The Website of the company or developer
+        /// The Wwebsite of the company or developer
         /// </summary>
         [XmlAttribute("PublisherUrl")]
         public string PublisherUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets the applications application
+        /// Collection of updates for the application
         /// </summary>
         [XmlElementAttribute("Update")]
         public ObservableCollection<Update> Updates { get; set; }
@@ -423,13 +423,13 @@ namespace SevenUpdate
         public string Data { get; set; }
 
         /// <summary>
-        /// The Hive of the current registry item
+        /// The hive of the current registry item
         /// </summary>
         [XmlAttribute("Hive")]
         public Microsoft.Win32.RegistryHive Hive { get; set; }
 
         /// <summary>
-        /// The KeyPath of the current registry item
+        /// The Keypath of the current registry item
         /// </summary>
         [XmlAttribute("Key")]
         public string Key { get; set; }
@@ -475,7 +475,7 @@ namespace SevenUpdate
     public class UpdateFile : INotifyPropertyChanged
     {
         /// <summary>
-        /// The action to do on a file
+        /// The action to perform on a file
         /// </summary>
         [XmlAttribute("Action")]
         public FileAction Action { get; set; }
@@ -487,7 +487,7 @@ namespace SevenUpdate
         public string Arguments { get; set; }
 
         /// <summary>
-        /// The destinationpath of the current file with the filename
+        /// The destination location of the current file with the filename
         /// </summary>
         [XmlAttribute("Destination")]
         public string Destination { get; set; }
@@ -505,7 +505,7 @@ namespace SevenUpdate
         public ulong Size { get; set; }
 
         /// <summary>
-        /// The sourcepath of the current file with the filename
+        /// The source location of the current file with the filename
         /// </summary>
         [XmlAttribute("Source")]
         public string Source { get; set; }
@@ -538,8 +538,9 @@ namespace SevenUpdate
     /// </summary>
     public class Update : INotifyPropertyChanged
     {
+
         /// <summary>
-        /// Gets or Sets release information about the update
+        /// Release information about the update
         /// </summary>
         [XmlElementAttribute("Description")]
         public ObservableCollection<LocaleString> Description { get; set; }
@@ -557,19 +558,19 @@ namespace SevenUpdate
         public ObservableCollection<UpdateFile> Files { get; set; }
 
         /// <summary>
-        /// Gets or Sets the update type of the update: Important, Recommended, Optional, Locale, Installation.
+        /// The update type of the update: Important, Recommended, Optional, Locale, Installation.
         /// </summary>
         [XmlAttribute("Importance")]
         public Importance Importance { get; set; }
 
         /// <summary>
-        /// Gets or Sets the information/changelog url of the update: Optional
+        /// The information/changelog url of the update: Optional
         /// </summary>
         [XmlAttribute("InfoUrl")]
         public string InfoUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets the Software License Agreement Url
+        /// The Software License Agreement Url
         /// </summary>
         [XmlAttribute("LicenseUrl")]
         public string LicenseUrl { get; set; }
@@ -581,7 +582,7 @@ namespace SevenUpdate
         public ObservableCollection<RegistryItem> RegistryItems { get; set; }
 
         /// <summary>
-        /// Gets or Sets the date when the update was released
+        /// The date when the update was released
         /// </summary>
         [XmlAttribute("ReleaseDate")]
         public string ReleaseDate { get; set; }
@@ -589,13 +590,13 @@ namespace SevenUpdate
         /// <summary>
         /// Indicates if the update is selected (not used in the SDK)
         /// </summary>
-        [XmlAttribute("Selected")]
+        [XmlIgnoreAttribute()]   
         public bool Selected { get; set; }
 
         /// <summary>
         /// The download size of the update in bytes, not used by the SDK
         /// </summary>
-        [XmlAttribute("Size")]
+        [XmlIgnoreAttribute()]
         public ulong Size { get; set; }
 
         /// <summary>
@@ -605,10 +606,10 @@ namespace SevenUpdate
         public ObservableCollection<Shortcut> Shortcuts { get; set; }
 
         /// <summary>
-        /// Gets or Sets the title or name of the update
+        /// The name of the update
         /// </summary>
-        [XmlElementAttribute("Title")]
-        public ObservableCollection<LocaleString> Title { get; set; }
+        [XmlElementAttribute("Name") ]
+        public ObservableCollection<LocaleString> Name { get; set; }
 
         #region INotifyPropertyChanged Members
 
@@ -645,37 +646,31 @@ namespace SevenUpdate
     public class UpdateInformation : INotifyPropertyChanged
     {
         /// <summary>
-        /// Gets or Sets the application name in which the update applies too
-        /// </summary>
-        [XmlElementAttribute("ApplicationName")]
-        public ObservableCollection<LocaleString> ApplicationName { get; set; }
-
-        /// <summary>
-        /// Gets or Sets release information about the update
+        /// A description of the update, usually list new features or changes the update brings.
         /// </summary>
         [XmlElementAttribute("Description")]
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
-        /// Gets or Sets the help url of the update: Optional
+        /// The help url of the update: Optional
         /// </summary>
         [XmlAttribute("HelpUrl")]
         public string HelpUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets the update type of the update: Critical, Recommended, Optional, Locale
+        /// The update type of the update: Critical, Recommended, Optional, Locale
         /// </summary>
         [XmlAttribute("Importance")]
         public Importance Importance { get; set; }
 
         /// <summary>
-        /// Gets or Sets the information/changelog url of the update: Optional
+        /// The information/changelog url of the update: Optional
         /// </summary>
         [XmlAttribute("InfoUrl")]
         public string InfoUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets the date when the update was installed
+        /// The date when the update was installed
         /// </summary>
         [XmlAttribute("InstallDate")]
         public string InstallDate { get; set; }
@@ -693,28 +688,28 @@ namespace SevenUpdate
         public string PublisherUrl { get; set; }
 
         /// <summary>
-        /// Gets or Sets the date when the update was released
+        /// The date when the update was released
         /// </summary>
         [XmlAttribute("ReleaseDate")]
         public string ReleaseDate { get; set; }
 
         /// <summary>
-        /// Gets or Sets the size of the update
+        /// The full size of the update
         /// </summary>
         [XmlAttribute("Size")]
         public ulong Size { get; set; }
 
         /// <summary>
-        /// Gets or Sets the status of the update
+        /// The current status of the update
         /// </summary>
         [XmlAttribute("Status")]
         public UpdateStatus Status { get; set; }
 
         /// <summary>
-        /// Gets or Sets the title or name of the update
+        /// The name of the update
         /// </summary>
-        [XmlElementAttribute("UpdateTitle")]
-        public ObservableCollection<LocaleString> UpdateTitle { get; set; }
+        [XmlElementAttribute("Name")]
+        public ObservableCollection<LocaleString> Name { get; set; }
 
         #region INotifyPropertyChanged Members
 

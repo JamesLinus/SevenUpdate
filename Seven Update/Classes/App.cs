@@ -34,15 +34,24 @@ namespace SevenUpdate
     {
         #region Global Vars
 
-        internal static Avalon.Windows.Controls.NotifyIcon NotifyIcon;
-
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
 
+        /// <summary>
+        /// The red shield image
+        /// </summary>
         internal static BitmapImage redShield = new BitmapImage(new Uri("/Images/RedShield.png", UriKind.Relative));
+
+        /// <summary>
+        /// The green shield image
+        /// </summary>
         internal static BitmapImage greenShield = new BitmapImage(new Uri("/Images/GreenShield.png", UriKind.Relative));
+
+        /// <summary>
+        /// The yellowshield image
+        /// </summary>
         internal static BitmapImage yellowShield = new BitmapImage(new Uri("/Images/YellowShield.png", UriKind.Relative));
 
         #region Properties
@@ -71,7 +80,7 @@ namespace SevenUpdate
         /// <summary>
         /// Indicates if an Auto Search was performed
         /// </summary>
-        internal static bool AutoCheck { get; set; }
+        internal static bool IsAutoCheck { get; set; }
 
         /// <summary>
         /// Specifies if Seven Update is allowed to check for updates
@@ -81,12 +90,17 @@ namespace SevenUpdate
         /// <summary>
         /// If true, Seven Update is currently installing updates.
         /// </summary>
-        internal static bool InstallInProgress { get; set; }
+        internal static bool IsInstallInProgress { get; set; }
+
+        /// <summary>
+        /// Indicates the installation was already running due to auto check.
+        /// </summary>
+        internal static bool IsReconnect { get; set; }
 
         /// <summary>
         /// Indicates if updates have been found
         /// </summary>
-        internal static bool UpdatesFound { get; set; }
+        internal static bool IsUpdatesAvailable { get; set; }
 
         #endregion
 
@@ -120,22 +134,24 @@ namespace SevenUpdate
                 }
                 if (createdNew)
                 {
+               
                     if (args.Length > 1)
                     {
                         if (args[0] == "Auto")
                         {
-                            AutoCheck = true;
+                            IsAutoCheck = true;
                         }
+                        if (args[0] == "Reconnect")
+                        {
+                            IsAutoCheck = false;
+                            IsInstallInProgress = true;
+                            IsReconnect = true;
+                        }
+
                     }
                     System.Windows.Application app = new System.Windows.Application();
                     app.Run(new MainWindow());
                 }
-
-                try
-                {
-                    Process.GetProcessesByName("Seven Update.Admin")[0].Kill();
-                }
-                catch (Exception) { }
             }
         }
 

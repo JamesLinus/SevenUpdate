@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
         Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Resources.xaml" />
+                <ResourceDictionary Source="/Resources/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -22,41 +22,38 @@
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1"
                 X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
-        <local:SortListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0">
+        <ListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0"
+                av:ListViewSorter.IsListviewSortable="True">
             <ListView.Resources>
                 <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
                 </Style>
                 <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="View Details" />
+                    <MenuItem Header="View Details" Click="MenuItem_MouseClick" />
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="MouseDoubleClick" Handler="listView_MouseRightButtonDown" />
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseRightButtonDown" />
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource hcs}">
-                    <local:SortListViewColumn Header="Name" SortStyle="HeaderTemplate"
-                            DisplayMemberBinding="{Binding Path=UpdateTitle, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
-                            Width="250" />
-                    <local:SortListViewColumn Header="Program" SortStyle="HeaderTemplate" SortProperty="ApplicationName"
-                            DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
-                            Width="200" />
-                    <local:SortListViewColumn Header="Status" SortStyle="HeaderTemplate" SortProperty="Status"
+                    <GridViewColumn Header="Name"
+                            DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                            Width="450" />
+                    <GridViewColumn Header="Status"
                             DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
                             Width="125" />
-                    <local:SortListViewColumn Header="Importance" SortStyle="HeaderTemplate" SortProperty="Importance"
+                    <GridViewColumn Header="Importance"
                             DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
                             Width="100" />
-                    <local:SortListViewColumn Header="Date Installed" SortStyle="HeaderTemplate"
-                            SortProperty="InstallDate" DisplayMemberBinding="{Binding Path=InstallDate}" Width="125" />
+                    <GridViewColumn Header="Date Installed" DisplayMemberBinding="{Binding Path=InstallDate}"
+                            Width="125" />
                 </GridView>
             </ListView.View>
-        </local:SortListView>
+        </ListView>
         <Rectangle Fill="#FFF0F0F0" Name="rectangle1" Grid.Row="2" />
         <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True"
                 Name="btnOK" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center"

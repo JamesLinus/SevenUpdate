@@ -33,7 +33,7 @@ namespace SevenUpdate.Windows
 
         internal bool? ShowDialog(UpdateInformation updateInfo)
         {
-            tbUpdateTitle.Text = updateInfo.UpdateTitle[0].Value;
+            tbUpdateName.Text = updateInfo.Name[0].Value;
             tbUpdateType.Text = updateInfo.Importance.ToString();
             tbUpdateDescription.Text = updateInfo.Description[0].Value;
 

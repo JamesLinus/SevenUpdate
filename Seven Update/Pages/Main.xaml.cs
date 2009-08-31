@@ -32,12 +32,6 @@ namespace SevenUpdate.Pages
     /// </summary>
     public partial class Main : Page
     {
-        #region Properties
-
-        //internal static string LastPageVisited { get; set; }
-
-        #endregion
-
         #region Global Vars
 
         BitmapImage yellowSide = new BitmapImage(new Uri("/Images/YellowSide.png", UriKind.Relative));
@@ -66,6 +60,11 @@ namespace SevenUpdate.Pages
             /// Checking for updates
             /// </summary>
             CheckingForUpdates,
+
+            /// <summary>
+            /// When connecting to the admin service
+            /// </summary>
+            ConnectingToService,
 
             /// <summary>
             /// When downloading of updates has been completed
@@ -122,13 +121,21 @@ namespace SevenUpdate.Pages
             LoadSettings();
             if (App.IsAdmin)
                 infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
-            if (App.AutoCheck)
+
+            if (App.IsInstallInProgress)
             {
-                CheckForUpdates(true);
+                SetUI(UILayout.ConnectingToService);
             }
             else
-                if (!Settings.Default.lastUpdateCheck.Contains(DateTime.Now.ToShortDateString()))
-                    CheckForUpdates();
+            {
+                if (App.IsAutoCheck)
+                {
+                    CheckForUpdates(true);
+                }
+                else
+                    if (!Settings.Default.lastUpdateCheck.Contains(DateTime.Now.ToShortDateString()))
+                        CheckForUpdates();
+            }
         }
 
         #region UI Events
@@ -232,17 +239,9 @@ namespace SevenUpdate.Pages
                 infoBar.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
 
             if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
-            {
                 infoBar.tbHeading.Text = App.RM.GetString("InstallUpdatesForPrograms");
-
-                App.NotifyIcon.Text = App.RM.GetString("InstallUpdatesForPrograms");
-            }
             else
-            {
                 infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
-
-                App.NotifyIcon.Text = App.RM.GetString("DownloadAndInstallUpdates");
-            }
 
             if (e.ImportantUpdates > 0 || e.OptionalUpdates > 0)
             {
@@ -275,7 +274,7 @@ namespace SevenUpdate.Pages
             {
                 DownloadInstallUpdates();
             }
-            else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("CancelUpdates"))
+            else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("StopDownload") || infoBar.btnAction.Content.ToString() == App.RM.GetString("StopInstallation"))
             {
                 //Cancel installation of updates
                 Admin.AbortInstall();
@@ -301,7 +300,7 @@ namespace SevenUpdate.Pages
                 infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall") + "...";
             else
             {
-                infoBar.tbStatus.Text = App.RM.GetString("Installing") + " " + e.UpdateTitle;
+                infoBar.tbStatus.Text = App.RM.GetString("Installing") + " " + e.UpdateName;
 
                 if (e.TotalUpdates > 1)
                     infoBar.tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + App.RM.GetString("OutOf") + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " + App.RM.GetString("Complete");
@@ -313,16 +312,8 @@ namespace SevenUpdate.Pages
 
         void DownloadProgressChanged(Admin.DownloadProgressChangedEventArgs e)
         {
-            try
-            {
-                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" +
-                    Shared.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
-                App.NotifyIcon.Text = infoBar.tbStatus.Text;
-
-            }
-            catch (NullReferenceException)
-            {
-            }
+            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" +
+                Shared.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
         }
 
         void InstallDone(Admin.InstallDoneEventArgs e)
@@ -358,9 +349,15 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                SetUI(UILayout.DownloadCompleted);
-                if (infoBar.tbSelectedUpdates.Text == App.RM.GetString("NoUpdatesSelected"))
-                    infoBar.btnAction.Visibility = Visibility.Collapsed;
+                if (App.IsAutoCheck)
+                {
+                    SetUI(UILayout.DownloadCompleted);
+                    if (infoBar.tbSelectedUpdates.Text == App.RM.GetString("NoUpdatesSelected"))
+                        infoBar.btnAction.Visibility = Visibility.Collapsed;
+                }
+                else
+                    SetUI(UILayout.Installing);
+
             }
         }
 
@@ -526,18 +523,8 @@ namespace SevenUpdate.Pages
                     DispatcherObjectDelegates.BeginInvoke<UILayout, string>(this.Dispatcher, SetUI, UILayout.ErrorOccurred, e.ErrorDescription);
                 }
                 else
-                    SetUI(UILayout.ErrorOccurred,e.ErrorDescription);
+                    SetUI(UILayout.ErrorOccurred, e.ErrorDescription);
             }
-            try
-            {
-                Process[] process = Process.GetProcessesByName("Seven Update.Admin");
-                for (int x = 0; x < process.Length; x++)
-                {
-                    process[x].Kill();
-                }
-            }
-            catch (Exception) { }
-
             Admin.AbortInstall();
             Shared.ReportError(e.ErrorDescription, Shared.userStore);
 
@@ -714,62 +701,35 @@ namespace SevenUpdate.Pages
         {
             switch (layout)
             {
-                case UILayout.UpdatesFound:
+
+                case UILayout.Canceled:
+
                     #region GUI Code
-                    infoBar.tbStatus.Visibility = Visibility.Collapsed;
-                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
-                    infoBar.imgSide.Source = yellowSide;
-                    infoBar.imgShield.Source = App.yellowShield;
-                    infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
-                    infoBar.spUpdateInfo.Visibility = Visibility.Visible;
-                    infoBar.tbSelectedUpdates.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Visibility = Visibility.Collapsed;
-                    infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
-                    infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;
-                    infoBar.line.Visibility = Visibility.Visible;
-                    App.NotifyIcon.Text = App.RM.GetString("DownloadAndInstallUpdates");
-
-                    #endregion
-
-                    #region Code
-
-                    App.UpdatesFound = true;
-                    App.InstallInProgress = false;
-                    App.CanCheckForUpdates = true;
-
-                    #endregion
-                    break;
-                case UILayout.NoUpdates:
-                    #region GUI Code
+                    infoBar.btnAction.Visibility = Visibility.Visible;
+                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
                     infoBar.tbStatus.Visibility = Visibility.Visible;
-                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
                     infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.tbHeading.Text = App.RM.GetString("ProgramsUpToDate");
-                    infoBar.imgSide.Source = greenSide;
-                    infoBar.imgShield.Source = App.greenShield;
-                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.tbStatus.Text = App.RM.GetString("NoNewUpdates");
+                    infoBar.imgShield.Source = App.redShield;
+                    infoBar.imgSide.Source = redSide;
                     infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
-                    infoBar.btnAction.Visibility = Visibility.Collapsed;
                     infoBar.line.Visibility = Visibility.Collapsed;
-
-                    App.NotifyIcon.Text = App.RM.GetString("NoNewUpdates");
-
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.tbHeading.Text = App.RM.GetString("UpdatesCanceled");
+                    infoBar.tbStatus.Text = App.RM.GetString("CancelInstallation");
                     #endregion
 
                     #region Code
-
-                    App.UpdatesFound = false;
-                    App.InstallInProgress = false;
                     App.CanCheckForUpdates = true;
-
+                    App.IsUpdatesAvailable = false;
+                    App.IsInstallInProgress = false;
                     #endregion
 
                     break;
                 case UILayout.CheckingForUpdates:
+
                     #region GUI Code
 
+                    tbRecentCheck.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
                     infoBar.tbSelectedUpdates.FontWeight = FontWeights.Normal;
                     infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
                     infoBar.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
@@ -779,26 +739,46 @@ namespace SevenUpdate.Pages
                     infoBar.imgShield.Source = suIcon;
                     infoBar.imgSide.Source = null;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
+                    #endregion
 
-                    App.NotifyIcon.Text = App.RM.GetString("CheckingForUpdates") + "...";
+                    #region Code
+
+                    App.IsInstallInProgress = false;
+
+                    App.CanCheckForUpdates = false;
+
+
+
+                    #endregion
+                    break;
+                case UILayout.ConnectingToService:
+
+                    #region GUI Code
+
+                    infoBar.imgShield.Source = App.yellowShield;
+                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
+                    infoBar.tbStatus.Visibility = Visibility.Visible;
+                    infoBar.pbProgressBar.Visibility = Visibility.Visible;
+                    infoBar.btnAction.Visibility = Visibility.Hidden;
+                    infoBar.tbStatus.Text = App.RM.GetString("GettingInstallationStatus");
+                    infoBar.tbHeading.Text = App.RM.GetString("ConnectingToService") + "...";
+                    infoBar.line.Visibility = Visibility.Collapsed;
 
                     #endregion
 
                     #region Code
-                    App.InstallInProgress = false;
-                    App.NotifyIcon.Text = App.RM.GetString("DownloadAndInstallUpdates");
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("DownloadAndInstallUpdates"), App.RM.GetString("UpdatesAvailable"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+
+                    App.IsInstallInProgress = false;
                     App.CanCheckForUpdates = false;
 
-                    tbRecentCheck.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
-
                     #endregion
+
                     break;
                 case UILayout.Downloading:
 
                     #region GUI Code
-
 
                     infoBar.imgShield.Source = App.yellowShield;
                     infoBar.imgSide.Source = yellowSide;
@@ -807,51 +787,78 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Visibility = Visibility.Visible;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
                     infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Content = App.RM.GetString("CancelUpdates");
+                    infoBar.btnAction.Content = App.RM.GetString("StopDownload");
                     infoBar.tbStatus.Text = App.RM.GetString("PreparingDownload");
                     infoBar.tbHeading.Text = App.RM.GetString("DownloadingUpdates") + "...";
                     infoBar.line.Visibility = Visibility.Collapsed;
-
                     #endregion
 
                     #region Code
-                    App.InstallInProgress = false;
-                    App.CanCheckForUpdates = false;
-                    App.NotifyIcon.Text = App.RM.GetString("DownloadingUpdatesBackground");
 
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("DownloadingUpdates"), App.RM.GetString("DownloadingUpdatesBackground"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
+                    App.IsInstallInProgress = false;
+                    App.CanCheckForUpdates = false;
+
                     #endregion
 
                     break;
                 case UILayout.DownloadCompleted:
+                    if (App.Settings.AutoOption == AutoUpdateOption.Download)
+                    {
+                        #region GUI Code
+                        infoBar.tbStatus.Visibility = Visibility.Collapsed;
+                        infoBar.tbSelectedUpdates.Visibility = Visibility.Visible;
+                        infoBar.tbStatus.Visibility = Visibility.Collapsed;
+                        infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
+                        infoBar.btnAction.Visibility = Visibility.Visible;
+                        infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
+                        infoBar.tbHeading.Text = App.RM.GetString("UpdatesReadyInstalled");
+                        infoBar.imgShield.Source = App.yellowShield;
+                        infoBar.imgSide.Source = yellowSide;
+                        infoBar.line.Visibility = Visibility.Visible;
+
+                        #endregion
+
+                        #region Code
+                        App.IsInstallInProgress = false;
+                        App.CanCheckForUpdates = true;
+
+                        #endregion
+                    }
+
+                    break;
+                case UILayout.ErrorOccurred:
 
                     #region GUI Code
-                    infoBar.tbStatus.Visibility = Visibility.Collapsed;
-                    infoBar.tbSelectedUpdates.Visibility = Visibility.Visible;
-                    infoBar.tbStatus.Visibility = Visibility.Collapsed;
-                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
-                    infoBar.tbHeading.Text = App.RM.GetString("UpdatesReadyInstalled");
-                    infoBar.imgShield.Source = App.yellowShield;
-                    infoBar.imgSide.Source = yellowSide;
-                    infoBar.line.Visibility = Visibility.Visible;
 
+                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
+                    infoBar.btnAction.Visibility = Visibility.Visible;
+                    infoBar.tbStatus.Visibility = Visibility.Visible;
+                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
+                    infoBar.imgSide.Source = redSide;
+                    infoBar.imgShield.Source = App.redShield;
+                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.tbHeading.Text = App.RM.GetString("ErrorOccurred");
+
+                    infoBar.line.Visibility = Visibility.Collapsed;
+
+                    if (errorDescription != null)
+                        infoBar.tbStatus.Text = errorDescription;
+                    else
+                        infoBar.tbStatus.Text = App.RM.GetString("UnknownErrorOccurred");
 
 
                     #endregion
 
                     #region Code
-                    App.InstallInProgress = false;
+
                     App.CanCheckForUpdates = true;
-                    App.NotifyIcon.Text = App.RM.GetString("UpdatesDownloaded");
+                    App.IsInstallInProgress = false;
+                    App.IsUpdatesAvailable = false;
 
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("UpdatesDownloaded"), App.RM.GetString("FinishedDownloading"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                     #endregion
-                    break;
 
+                    break;
                 case UILayout.Installing:
 
                     #region GUI Code
@@ -861,25 +868,20 @@ namespace SevenUpdate.Pages
                     infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
                     infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
                     infoBar.imgShield.Source = suIcon;
-                    infoBar.btnAction.Content = App.RM.GetString("CancelUpdates");
+                    infoBar.btnAction.Content = App.RM.GetString("StopInstallation");
                     infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall");
                     infoBar.tbHeading.Text = App.RM.GetString("InstallingUpdates") + "...";
-
                     infoBar.line.Visibility = Visibility.Collapsed;
 
                     #endregion
 
                     #region Code
-                    App.InstallInProgress = true;
+                    App.IsInstallInProgress = true;
                     App.CanCheckForUpdates = false;
-                    App.NotifyIcon.Text = App.RM.GetString("PreparingInstall");
 
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("InstallingUpdates"), App.RM.GetString("InstallingUpdatesBackground"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                     #endregion
 
                     break;
-
                 case UILayout.InstallationCompleted:
 
                     #region GUI Code
@@ -902,61 +904,49 @@ namespace SevenUpdate.Pages
 
                     App.AddShieldToButton(infoBar.btnAction);
 
-                    #endregion
-
-                    #region Code
-                    App.InstallInProgress = false;
-                    App.UpdatesFound = false;
-                    App.CanCheckForUpdates = true;
-
                     tbUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
 
                     Settings.Default.lastInstall = DateTime.Now.ToShortDateString() + " " + App.RM.GetString("At") + " " + DateTime.Now.ToShortTimeString();
                     Settings.Default.lastInstall = DateTime.Now.ToShortDateString() + " " + App.RM.GetString("At") + " " + DateTime.Now.ToShortTimeString();
 
-                    App.NotifyIcon.Text = App.RM.GetString("ProgramsUpToDate");
-
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("UpdatesComplete"), App.RM.GetString("CompletedInstallingUpdates"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
-                    #endregion
-                    break;
-
-                case UILayout.ErrorOccurred:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.tbStatus.Visibility = Visibility.Visible;
-                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.imgSide.Source = redSide;
-                    infoBar.imgShield.Source = App.redShield;
-                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
-                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
-                    infoBar.tbHeading.Text = App.RM.GetString("ErrorOccurred");
-
-                    infoBar.line.Visibility = Visibility.Collapsed;
-
-
-                    App.NotifyIcon.Text = App.RM.GetString("ErrorOccurred");
-
-                    if (errorDescription != null)
-                        infoBar.tbStatus.Text = errorDescription;
-                    else
-                        infoBar.tbStatus.Text = App.RM.GetString("UnknownErrorOccurred");
 
                     #endregion
 
                     #region Code
+
+                    App.IsInstallInProgress = false;
+                    App.IsUpdatesAvailable = false;
                     App.CanCheckForUpdates = true;
-                    App.InstallInProgress = false;
-                    App.UpdatesFound = false;
 
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("ErrorOccurred"), App.RM.GetString("ErrorOccurred"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                     #endregion
-                    break;
 
+                    break;
+                case UILayout.NoUpdates:
+
+                    #region GUI Code
+                    infoBar.tbStatus.Visibility = Visibility.Visible;
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
+                    infoBar.tbHeading.Text = App.RM.GetString("ProgramsUpToDate");
+                    infoBar.imgSide.Source = greenSide;
+                    infoBar.imgShield.Source = App.greenShield;
+                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
+                    infoBar.tbStatus.Text = App.RM.GetString("NoNewUpdates");
+                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
+                    infoBar.btnAction.Visibility = Visibility.Collapsed;
+                    infoBar.line.Visibility = Visibility.Collapsed;
+
+                    #endregion
+
+                    #region Code
+
+                    App.IsUpdatesAvailable = false;
+                    App.IsInstallInProgress = false;
+                    App.CanCheckForUpdates = true;
+
+                    #endregion
+
+                    break;
                 case UILayout.RebootNeeded:
 
                     #region GUI Code
@@ -974,55 +964,43 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("SaveAndReboot");
                     infoBar.line.Visibility = Visibility.Collapsed;
 
-
-                    App.NotifyIcon.Text = App.RM.GetString("RebootNeeded");
                     #endregion
 
                     #region Code
                     App.CanCheckForUpdates = false;
-                    App.NotifyIcon.Text = App.RM.GetString("RebootNeeded");
 
-                    if (SevenUpdate.Windows.MainWindow.IsHidden)
-                        App.NotifyIcon.ShowBalloonTip(5000, App.RM.GetString("UpdatesComplete"), App.RM.GetString("RebootNeeded"), Avalon.Windows.Controls.NotifyBalloonIcon.Info);
                     #endregion
+
                     break;
 
-                case UILayout.Canceled:
+                case UILayout.UpdatesFound:
+
                     #region GUI Code
 
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
-                    infoBar.tbStatus.Visibility = Visibility.Visible;
+                    infoBar.tbStatus.Visibility = Visibility.Collapsed;
                     infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.imgShield.Source = App.redShield;
-                    infoBar.imgSide.Source = redSide;
-                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
-                    infoBar.line.Visibility = Visibility.Collapsed;
-                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
-                    infoBar.tbHeading.Text = App.RM.GetString("UpdatesCanceled");
-                    infoBar.tbStatus.Text = App.RM.GetString("CancelInstallation");
-
-
-                    App.NotifyIcon.Text = App.RM.GetString("UpdatesCanceled");
+                    infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
+                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.imgShield.Source = App.yellowShield;
+                    infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
+                    infoBar.spUpdateInfo.Visibility = Visibility.Visible;
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Visible;
+                    infoBar.btnAction.Visibility = Visibility.Collapsed;
+                    infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
+                    infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;
+                    infoBar.line.Visibility = Visibility.Visible;
 
                     #endregion
 
                     #region Code
-                    try
-                    {
-                        Process[] process = Process.GetProcessesByName("Seven Update.Admin");
-                        for (int x = 0; x < process.Length; x++)
-                        {
-                            process[x].Kill();
-                        }
-                    }
-                    catch (Exception) { }
-                    App.NotifyIcon.Text = App.RM.GetString("UpdatesCanceled");
+
+                    App.IsUpdatesAvailable = true;
+                    App.IsInstallInProgress = false;
                     App.CanCheckForUpdates = true;
-                    App.UpdatesFound = false;
-                    App.InstallInProgress = false;
+
                     #endregion
                     break;
+
             }
         }
 

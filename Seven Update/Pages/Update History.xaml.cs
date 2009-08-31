@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Data;
 
 namespace SevenUpdate.Pages
 {
@@ -31,7 +32,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The list of history items
         /// </summary>
-        Collection<UpdateInformation> history;
+        ObservableCollection<UpdateInformation> history;
 
         #endregion
 
@@ -50,10 +51,35 @@ namespace SevenUpdate.Pages
             history = App.GetHistory();
             listView.ItemsSource = history;
 
+            history.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(history_CollectionChanged);
+            AddSortBinding();
+        }
 
+
+
+        void AddSortBinding()
+        {
+
+            GridView gv = (GridView)listView.View;
+
+            GridViewColumn col = gv.Columns[0];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
+
+            col = gv.Columns[1];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Status"));
+
+            col = gv.Columns[2];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
+
+            col = gv.Columns[3];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
+
+            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.UpdateInformationSorter());
         }
 
         #endregion
+
+        #region UI Events
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -65,23 +91,35 @@ namespace SevenUpdate.Pages
             SevenUpdate.Windows.MainWindow.ns.GoBack();
         }
 
-        #region Context Menu
+        #region ListView
+
+        void history_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
+        }
 
         void cmsMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (listView.SelectedItems.Count == 0)
+            if (listView.SelectedIndex == -1)
                 e.Cancel = true;
         }
 
-        #endregion
+        private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && listView.SelectedIndex != -1)
+            {
+                SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
+                details.ShowDialog(history[listView.SelectedIndex]);
+            }
+        }
 
-        #region ListView
-
-        private void listView_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
             details.ShowDialog(history[listView.SelectedIndex]);
         }
+
+        #endregion
 
         #endregion
     }

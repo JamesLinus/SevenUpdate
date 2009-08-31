@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d" Title="Options"
+        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d" Title="Options"
         MinHeight="500" MinWidth="850" ShowsNavigationUI="False" d:DesignWidth="850" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Resources.xaml" />
+                <ResourceDictionary Source="/Resources/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -50,7 +50,7 @@
                 X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" Grid.ColumnSpan="4" />
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="4" Grid.Row="9" Grid.RowSpan="1">
-            <local:SortListView SelectionMode="Single" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta"
+            <ListView SelectionMode="Single" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" av:ListViewSorter.IsListviewSortable="True"
                     Foreground="Black" BorderThickness="0">
                 <ListView.Resources>
 
@@ -64,14 +64,13 @@
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
                         <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-                        <local:SortListViewColumn SortProperty="ApplicationName/Value" SortStyle="HeaderTemplate"
+                        <GridViewColumn
                                 DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
                                 Header="Program" Width="350" />
-                        <local:SortListViewColumn SortProperty="Publisher/Value" SortStyle="HeaderTemplate"
+                        <GridViewColumn
                                 DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
                                 Header="Publisher" Width="250" />
-                        <local:SortListViewColumn Header="Architecture" Width="100" SortProperty="Architecture"
-                                SortStyle="HeaderTemplate"
+                        <GridViewColumn Header="Architecture" Width="100"
                                 DisplayMemberBinding="{Binding Path=Is64Bit, Mode=OneWay, Converter={StaticResource is64BitConverter}}" />
 
                     </GridView>
@@ -82,7 +81,7 @@
                                 Value="{Binding Path=Description, Converter={StaticResource localeStringConverter}}" />
                     </Style>
                 </ListView.ItemContainerStyle>
-            </local:SortListView >
+            </ListView>
         </ScrollViewer>
         <TextBlock HorizontalAlignment="Left" Name="tbLastUpdated" Padding="5" Text="Last Updated:"
                 VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" />

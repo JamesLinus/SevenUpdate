@@ -151,14 +151,19 @@ namespace SevenUpdate.Pages
             AddUpdates();
         }
 
+        #region listview
+
+        void selectedUpdates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
+        }
+
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             int updateIndex = indexes[listView.SelectedIndex].updateIndex;
             int appIndex = indexes[listView.SelectedIndex].appIndex;
 
             UpdateInformation hnh = new UpdateInformation();
-
-            hnh.ApplicationName = App.Applications[appIndex].Name;
 
             hnh.HelpUrl = App.Applications[appIndex].HelpUrl;
 
@@ -178,7 +183,7 @@ namespace SevenUpdate.Pages
 
             hnh.Description = App.Applications[appIndex].Updates[updateIndex].Description;
 
-            hnh.UpdateTitle = App.Applications[appIndex].Updates[updateIndex].Title;
+            hnh.Name = App.Applications[appIndex].Updates[updateIndex].Name;
 
             ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
 
@@ -213,7 +218,7 @@ namespace SevenUpdate.Pages
             {
                 tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
                 tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                tbUpdateTitle.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Title);
+                tbUpdateName.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
                 tbUrlHelp.Tag = App.Applications[appIndex].HelpUrl;
                 tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
@@ -231,6 +236,7 @@ namespace SevenUpdate.Pages
 
         }
 
+        #endregion
 
         #endregion
 
@@ -321,6 +327,25 @@ namespace SevenUpdate.Pages
             Binding items = new Binding();
             items.Source = selectedUpdates;
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
+            selectedUpdates.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(selectedUpdates_CollectionChanged);
+            AddSortBinding();
+        }
+
+        void AddSortBinding()
+        {
+
+            GridView gv = (GridView)listView.View;
+
+            GridViewColumn col = gv.Columns[1];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
+
+            col = gv.Columns[2];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
+
+            col = gv.Columns[3];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
+
+            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.UpdateSorter());
         }
 
         /// <summary>
@@ -332,7 +357,7 @@ namespace SevenUpdate.Pages
             tbPublishedDate.Visibility = Visibility.Visible;
             tbPublishedLabel.Visibility = Visibility.Visible;
             tbUpdateDescription.Visibility = Visibility.Visible;
-            tbUpdateTitle.Visibility = Visibility.Visible;
+            tbUpdateName.Visibility = Visibility.Visible;
             tbUrlHelp.Visibility = Visibility.Visible;
             tbUrlInfo.Visibility = Visibility.Visible;
             imgIcon.Visibility = Visibility.Hidden;
@@ -349,7 +374,7 @@ namespace SevenUpdate.Pages
             tbPublishedDate.Visibility = Visibility.Hidden;
             tbPublishedLabel.Visibility = Visibility.Hidden;
             tbUpdateDescription.Visibility = Visibility.Hidden;
-            tbUpdateTitle.Visibility = Visibility.Hidden;
+            tbUpdateName.Visibility = Visibility.Hidden;
             tbUrlHelp.Visibility = Visibility.Hidden;
             tbUrlInfo.Visibility = Visibility.Hidden;
             imgIcon.Visibility = Visibility.Visible;

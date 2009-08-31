@@ -12,7 +12,7 @@
         Width="600">
     <StackPanel>
         <TextBlock FontWeight="Bold"
-                   Name="tbUpdateTitle"
+                   Name="tbUpdateName"
                    Padding="5"
                    Text="Title of the update"
                    Grid.Column="1"

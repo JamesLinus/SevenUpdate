@@ -38,7 +38,7 @@ namespace SevenUpdate.ESB {
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnInstallProgressChanged")]
-        void OnInstallProgressChanged(string updateTitle, int progress, int updatesComplete, int totalUpdates);
+        void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]

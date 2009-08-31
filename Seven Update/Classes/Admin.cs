@@ -46,10 +46,10 @@ namespace SevenUpdate.WCF
                 DownloadDoneEventHandler(this, new DownloadDoneEventArgs(ErrorOccurred));
         }
 
-        public void OnInstallProgressChanged(string updateTitle, int progress, int updatesComplete, int totalUpdates)
+        public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
             if (InstallProgressChangedEventHandler != null)
-                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateTitle, progress, updatesComplete, totalUpdates));
+                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
         }
 
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal)
@@ -109,12 +109,12 @@ namespace SevenUpdate.WCF
 
         public class InstallProgressChangedEventArgs : EventArgs
         {
-            public InstallProgressChangedEventArgs(string updateTitle, int progress, int updatesComplete, int totalUpdates)
+            public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
             {
                 this.CurrentProgress = progress;
                 this.TotalUpdates = totalUpdates;
                 this.UpdatesComplete = updatesComplete;
-                this.UpdateTitle = updateTitle;
+                this.UpdateName = updateName;
             }
 
             /// <summary>
@@ -135,7 +135,7 @@ namespace SevenUpdate.WCF
             /// <summary>
             /// The title of the current update being installed
             /// </summary>
-            public string UpdateTitle { get; set; }
+            public string UpdateName { get; set; }
         }
 
         public class DownloadProgressChangedEventArgs : EventArgs

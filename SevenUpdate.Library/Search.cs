@@ -25,26 +25,9 @@ namespace SevenUpdate
         #region Global Vars
 
         /// <summary>
-        /// List of Applications
-        /// </summary>
-        static ObservableCollection<Application> applications { get; set; }
-
-        /// <summary>
-        /// Indicates if an erorr occurred
-        /// </summary>
-        static bool ErrorOccurred { get; set; }
-
-        /// <summary>
-        /// If true, Seven Update is currently installing updates.
-        /// </summary>
-        public static bool InstallInProgress { get; set; }
-
-        /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
         const string SUSUI = @"http://ittakestime.org/su/Seven Update.sui";
-
-
 
         #endregion
 
@@ -56,10 +39,8 @@ namespace SevenUpdate
         /// <param name="suiFile">The SUI file location</param>
         /// <param name="hidden">List of hidden updates</param>
         /// <returns>Returns true if found updates</returns>
-        static bool CheckForUpdates(string suiFile, ObservableCollection<UpdateInformation> hidden)
+        static bool CheckForUpdates(ref Application app, ObservableCollection<UpdateInformation> hidden)
         {
-            Application app = Shared.Deserialize<Application>(suiFile);
-
             if (!Directory.Exists(Shared.ConvertPath(app.Directory, true, app.Is64Bit)))
                 return false;
             bool isHidden = false;
@@ -69,7 +50,7 @@ namespace SevenUpdate
                 {
                     for (int z = 0; z < hidden.Count; z++)
                     {
-                        if (hidden[z].ReleaseDate == app.Updates[y].ReleaseDate && hidden[z].ApplicationName[0].Value == app.Name[0].Value && hidden[z].UpdateTitle[0].Value == app.Updates[y].Title[0].Value)
+                        if (hidden[z].ReleaseDate == app.Updates[y].ReleaseDate && hidden[z].Name[0].Value == app.Updates[y].Name[0].Value)
                         {
                             isHidden = true;
                             break;
@@ -94,6 +75,7 @@ namespace SevenUpdate
                 {
                     file = Shared.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
 
+                    /// Checks to see if the file needs updated, if it doesn't it removes it from the list.
                     if (File.Exists(file))
                     {
                         #region File Exists
@@ -111,6 +93,9 @@ namespace SevenUpdate
                                     else
                                         z--;
                                 }
+                                else
+                                    if (Shared.GetHash(Shared.appStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                        size += app.Updates[y].Files[z].Size;
                                 break;
 
                         }
@@ -144,7 +129,7 @@ namespace SevenUpdate
                                         z--;
                                 }
                                 else
-                                    if (Shared.GetHash(Shared.appStore + @"downloads\" + app.Name + @"\" + app.Updates[y].Title + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                    if (Shared.GetHash(Shared.appStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
                                         size += app.Updates[y].Files[z].Size;
                                 break;
 
@@ -152,18 +137,26 @@ namespace SevenUpdate
                         #endregion
                     }
                 }
+
                 bool remove = true;
+
+                /// Checks to see if the update only contains execute and delete actions
+                /// 
                 if (app.Updates[y].Files.Count > 0)
                 {
                     for (int z = 0; z < app.Updates[y].Files.Count; z++)
                     {
+                        /// If the update has a file that isn't an execute and delete, let's indicate not to remove the update
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteAndDelete)
                         {
+
                             remove = false;
                         }
                     }
 
                 }
+
+                /// If the update does not have any files or if the update only contains execute and delete, then let's remove the update.
                 if (app.Updates[y].Files.Count == 0 || remove)
                 {
                     app.Updates.Remove(app.Updates[y]);
@@ -174,17 +167,20 @@ namespace SevenUpdate
                     continue;
                 }
                 else
+                    /// adds the download size to the update
                     app.Updates[y].Size = size;
 
 
             }
             if (app.Updates.Count == 0)
             {
+                app = null;
+                /// No updates, let's return
                 return false;
             }
             else
             {
-                applications.Add(app);
+                /// Found updates, return
                 return true;
             }
         }
@@ -204,41 +200,53 @@ namespace SevenUpdate
 
             var web = new WebClient();
 
-            applications = new ObservableCollection<Application>();
+            ObservableCollection<Application> applications = new ObservableCollection<Application>();
 
             try
             {
+                /// Downloads the Seven Update SUI
                 web.DownloadFile(SUSUI, Shared.userStore + @"temp\Seven Update.sui");
             }
             catch (WebException)
             {
+                /// Server Error! If that happens then i am the only one to blame LOL
                 OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs("Seven Update Server Error"));
                 return;
             }
 
             if (Directory.GetFiles(Shared.userStore + "temp").Length == 0)
             {
-                // Call the Event with a Network Connection Error
+                // Call the Event with a Network Connection Error if no SUI's can be download, assuming a network error is the cause.
                 OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs("Network Connection Error"));
                 return;
             }
 
-            if (!CheckForUpdates(Shared.userStore + @"temp\Seven Update.sui", null))
+            /// Load the Seven Update SUI
+            var app = Shared.Deserialize<Application>(Shared.userStore + @"temp\Seven Update.sui");
+
+            /// Checks to see if there are any updates for Seven Update
+            if (CheckForUpdates(ref app, null))
             {
-                if (apps != null)
+                /// If there are updates add it to the collection
+                applications.Add(app);
+            }
+            else
+            {
+                /// If there are no updates for Seven Update, let's download and load the SUI's from the User config.
+                for (int x = 0; x < apps.Count; x++)
                 {
-                    foreach (SUA sua in apps)
+                    try
                     {
-                        try
-                        {
-                            web.DownloadFile(sua.Source, Shared.userStore + @"temp\" + sua.ApplicationName[0].Value + ".sui");
-                        }
-                        catch (WebException e)
-                        {
-                            OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs(e.Message));
-                        }
+                        /// Download the SUI
+                        web.DownloadFile(apps[x].Source, Shared.userStore + @"temp\" + apps[x].ApplicationName[0].Value + ".sui");
+                    }
+                    catch (WebException e)
+                    {
+                        /// Notify that there was an error that occurred.
+                        OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs(e.Message));
                     }
                 }
+
                 if (Directory.GetFiles(Shared.userStore + "temp").Length == 0)
                 {
                     // Call the Event with a special code, meaning it was a Network Connection Error
@@ -247,24 +255,34 @@ namespace SevenUpdate
                 }
                 else
                 {
+                    /// Delete the SUI, it's been loaded, no longer needed on filesystem
                     File.Delete(Shared.userStore + @"temp\Seven Update.sui");
+
                     web.Dispose();
                     web = null;
-                    FileInfo[] dir = new DirectoryInfo(Shared.userStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
-                    ObservableCollection<UpdateInformation> hidden = Shared.DeserializeCollection<UpdateInformation>(Shared.appStore + "Hidden Updates.xml");
+
+                    /// Get the rest of the SUI's in the directory and load them
+                    var dir = new DirectoryInfo(Shared.userStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
+
+                    /// Gets the hidden updates from settings
+                    var hidden = Shared.DeserializeCollection<UpdateInformation>(Shared.appStore + "Hidden Updates.xml");
+
                     for (int x = 0; x < dir.Length; x++)
                     {
-                        CheckForUpdates(dir[x].FullName, hidden);
+                        /// Loads a SUI that was downloaded
+                        app = Shared.Deserialize<Application>(dir[x].FullName);
+
+                        /// Check to see if any updates are avalible and exclude hidden updates
+                        if (CheckForUpdates(ref app, hidden))
+                            /// If there is an update avaliable, add it.
+                            applications.Add(app);
                     }
                 }
             }
+            /// Delete the temp directory, we are done with it.
             Directory.Delete(Shared.userStore + "temp", true);
 
-            for (int x = 0; x < applications.Count; x++)
-            {
-
-            }
-
+            /// Search is complete!
             OnEvent(SearchDoneEventHandler, new SearchDoneEventArgs(applications));
         }
 

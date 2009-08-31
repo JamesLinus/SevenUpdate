@@ -35,20 +35,9 @@ namespace SevenUpdate.Windows
             InitializeComponent();
 
             ns = this.NavigationService;
-
-            /// Make the NotifyIcon in the resources global and accessbile via the App Class
-            App.NotifyIcon = (Avalon.Windows.Controls.NotifyIcon)FindResource("NotifyIcon");
- 
-            /// Set the notifyicon to the localized program name
-            App.NotifyIcon.Text = App.RM.GetString("SevenUpdate");
-
-            App.NotifyIcon.BalloonTipClick+=new RoutedEventHandler(NotifyIcon_BalloonTipClick);
-            App.NotifyIcon.Click+=new RoutedEventHandler(NotifyIcon_Click);
         }
 
         internal static NavigationService ns;
-
-        internal static bool IsHidden { get; set; }
 
         private void NavigationWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -56,67 +45,12 @@ namespace SevenUpdate.Windows
             Width = Settings.Default.windowWidth;
         }
 
-        private void NavigationWindow_StateChanged(object sender, System.EventArgs e)
-        {
-            if (App.InstallInProgress)
-            {
-
-                if (this.WindowState == WindowState.Minimized)
-                {
-                    ShowInTaskbar = false;
-                    IsHidden = true;
-                    Visibility = Visibility.Hidden;
-                    App.NotifyIcon.Visibility = Visibility.Visible;
-                }
-                if (WindowState == WindowState.Normal)
-                {
-                    ShowInTaskbar = true;
-                }
-            }
-
-        }
-
         private void NavigationWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Settings.Default.windowHeight = Height;
             Settings.Default.windowWidth = Width;
             Settings.Default.Save();
-
-            if (App.InstallInProgress)
-            {
-                e.Cancel = true;
-                ShowInTaskbar = false;
-                IsHidden = true;
-                Visibility = Visibility.Hidden;
-                App.NotifyIcon.Visibility = Visibility.Visible;
-            }
+            Environment.Exit(0);
         }
-
-        #region Notification Icon
-
-        void NotifyIcon_Click(object sender, RoutedEventArgs e)
-        {
-            Visibility = Visibility.Visible;
-            this.ShowInTaskbar = true;
-            IsHidden = false;
-            App.NotifyIcon.Visibility = Visibility.Hidden;
-            this.WindowState = WindowState.Normal;
-        }
-
-        void NotifyIcon_BalloonTipClick(object sender, RoutedEventArgs e)
-        {
-            Settings.Default.infoPopUp = false;
-            Settings.Default.Save();
-            Visibility = Visibility.Visible;
-            this.ShowInTaskbar = true;
-            IsHidden = false;
-            App.NotifyIcon.Visibility = Visibility.Hidden;
-            if (App.NotifyIcon.Text.Contains(App.RM.GetString("DownloadAndInstallUpdates")))
-            {
-                ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
-            }
-        }
-
-        #endregion
     }
 }

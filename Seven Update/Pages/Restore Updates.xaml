@@ -3,12 +3,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:effects="clr-namespace:Avalon.Windows.Media.Effects;assembly=AvalonLibrary"
-        xmlns:local="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
         Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Resources.xaml" />
+                <ResourceDictionary Source="/Resources/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -23,8 +23,8 @@
                 StrokeThickness="1" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5"
                 Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <local:SortListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800"
-                Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0">
+        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" av:ListViewSorter.IsListviewSortable="True"
+                Foreground="Black" BorderThickness="0">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="View Details" Click="MenuItem_MouseClick" />
@@ -42,24 +42,25 @@
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
-                    <local:SortListViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-                    <local:SortListViewColumn SortProperty="UpdateTitle" SortStyle="HeaderTemplate"
-                            DisplayMemberBinding="{Binding Path=UpdateTitle, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                    <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
+                    <GridViewColumn
+                            DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
                             Header="Name" Width="400" />
-                    <local:SortListViewColumn Header="Program" SortProperty="ApplicationName" SortStyle="HeaderTemplate"
-                            DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
-                            Width="250" />
-                    <local:SortListViewColumn SortProperty="Importance" SortStyle="HeaderTemplate"
+                    <GridViewColumn
                             DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
                             Header="Importance" Width="125" />
+                    <GridViewColumn Header="Size"
+                            DisplayMemberBinding="{Binding Path=ApplicationName, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                            Width="100" />
                 </GridView>
             </ListView.View>
-        </local:SortListView>
+        </ListView>
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
         <StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center"
                 Grid.Row="2" Margin="0,0,10,0">

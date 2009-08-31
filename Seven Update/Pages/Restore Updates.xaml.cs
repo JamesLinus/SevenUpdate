@@ -32,7 +32,7 @@ namespace SevenUpdate.Pages
     {
         #region Global Vars
 
-        ObservableCollection<UpdateInformation> HiddenUpdates { get; set; }
+        ObservableCollection<UpdateInformation> hiddenUpdates;
 
         #endregion
 
@@ -57,12 +57,32 @@ namespace SevenUpdate.Pages
         /// </summary>
         void GetHiddenUpdates()
         {
-            HiddenUpdates = App.GetHiddenUpdates();
+            hiddenUpdates = App.GetHiddenUpdates();
 
-            listView.ItemsSource = HiddenUpdates;
-
-
+            listView.ItemsSource = hiddenUpdates;
+            hiddenUpdates.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(HiddenUpdates_CollectionChanged);
+            AddSortBinding();
         }
+
+
+
+        void AddSortBinding()
+        {
+
+            GridView gv = (GridView)listView.View;
+
+            GridViewColumn col = gv.Columns[1];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
+
+            col = gv.Columns[2];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
+
+            col = gv.Columns[3];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
+
+            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.UpdateInformationSorter());
+        }
+
 
         #endregion
 
@@ -77,15 +97,15 @@ namespace SevenUpdate.Pages
 
         private void btnRestore_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            for (int x = 0; x < HiddenUpdates.Count; x++)
+            for (int x = 0; x < hiddenUpdates.Count; x++)
             {
-                if (HiddenUpdates[x].Status == UpdateStatus.Visible)
+                if (hiddenUpdates[x].Status == UpdateStatus.Visible)
                 {
-                    HiddenUpdates.RemoveAt(x);
+                    hiddenUpdates.RemoveAt(x);
                     x--;
                 }
             }
-            if (Admin.HideUpdates(HiddenUpdates))
+            if (Admin.HideUpdates(hiddenUpdates))
             {
                 if (RestoredHiddenUpdateEventHandler != null)
                     RestoredHiddenUpdateEventHandler(this, new EventArgs());
@@ -95,20 +115,25 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        void cmsMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        #region ListView Events
+
+        void HiddenUpdates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (listView.SelectedItems.Count == 0)
-                e.Cancel = true;
+            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
         }
 
-        #region ListView Events
+        void cmsMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (listView.SelectedIndex == -1)
+                e.Cancel = true;
+        }
 
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             int checkedCount = 0;
-            for (int x = 0; x < HiddenUpdates.Count; x++)
+            for (int x = 0; x < hiddenUpdates.Count; x++)
             {
-                if (HiddenUpdates[x].Status == UpdateStatus.Visible)
+                if (hiddenUpdates[x].Status == UpdateStatus.Visible)
                 {
                     checkedCount++;
                 }
@@ -137,17 +162,26 @@ namespace SevenUpdate.Pages
             ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
         }
 
+        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
+        {
+            SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
+            details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
+        }
+
+        private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && listView.SelectedIndex != -1)
+            {
+                SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
+                details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
+            }
+        }
+
         #endregion
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHiddenUpdates();
-        }
-
-        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
-        {
-            SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
-            details.ShowDialog(HiddenUpdates[listView.SelectedIndex]);
         }
 
         #endregion

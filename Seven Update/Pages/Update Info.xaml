@@ -2,12 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
         Title="Update Information" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/Resources.xaml" />
+                <ResourceDictionary Source="/Resources/Dictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -29,7 +29,7 @@
         <Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2"
                 Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
 
-        <local:SortListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged"
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" av:ListViewSorter.IsListviewSortable="True"
                 Foreground="Black" BorderThickness="0">
             <ListView.ContextMenu>
                 <ContextMenu>
@@ -54,21 +54,21 @@
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
                     <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-                    <local:SortListViewColumn Header="Name" SortProperty="Title" SortStyle="HeaderTemplate"
-                            DisplayMemberBinding="{Binding Path=Title, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
+                    <GridViewColumn Header="Name"
+                            DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
                             Width="400" />
-                    <local:SortListViewColumn Header="Importance" SortProperty="Importance" SortStyle="HeaderTemplate"
+                    <GridViewColumn Header="Importance"
                             DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
                             Width="100" />
-                    <local:SortListViewColumn Header="Size" SortProperty="Size" SortStyle="HeaderTemplate"
+                    <GridViewColumn Header="Size"
                             DisplayMemberBinding="{Binding Path=Files, Mode=OneWay, Converter={StaticResource fileSizeConverter}}"
                             Width="85" />
                 </GridView>
             </ListView.View>
-        </local:SortListView>
+        </ListView>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Name="spSide" Margin="5,0,0,0">
-            <TextBlock FontWeight="Bold" Name="tbUpdateTitle" Padding="5" Text="" TextWrapping="Wrap"
+            <TextBlock FontWeight="Bold" Name="tbUpdateName" Padding="5" Text="" TextWrapping="Wrap"
                     MaxWidth="{Binding ActualWidth, ElementName=stackPanel2}" Margin="0,0,5,0" />
             <TextBlock Name="tbUpdateDescription" Text="" MaxWidth="{Binding ActualWidth, ElementName=spSide}"
                     TextWrapping="Wrap" Margin="0,0,5,0" />

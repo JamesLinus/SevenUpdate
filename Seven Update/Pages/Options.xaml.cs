@@ -167,7 +167,26 @@ namespace SevenUpdate.Pages
                     }
                 }
                 listView.ItemsSource = userAppList;
+                userAppList.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(userAppList_CollectionChanged);
+                AddSortBinding();
             }
+        }
+
+        void AddSortBinding()
+        {
+
+            GridView gv = (GridView)listView.View;
+
+            GridViewColumn col = gv.Columns[1];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("ApplicationName"));
+
+            col = gv.Columns[2];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Publisher"));
+
+            col = gv.Columns[3];
+            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Architecture"));
+
+            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.SUASorter());
         }
 
         /// <summary>
@@ -243,7 +262,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        #region SUL list Methods
+        #region UI Events
 
         void wc_DownloadFileCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
         {
@@ -257,10 +276,6 @@ namespace SevenUpdate.Pages
 
             listView.Cursor = Cursors.Arrow;
         }
-
-        #endregion
-
-        #region UI Events
 
         #region TextBlocks
 
@@ -321,6 +336,11 @@ namespace SevenUpdate.Pages
         }
 
         #region ListView Events
+
+        void userAppList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
+        }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {

@@ -122,7 +122,7 @@ namespace SevenUpdate.Windows
 
                             sla.LicenseUrl = App.Applications[x].Updates[y].LicenseUrl;
 
-                            sla.Title = App.Applications[x].Updates[y].Title[0].Value;
+                            sla.Title = App.Applications[x].Updates[y].Name[0].Value;
 
                             sla.AppIndex = x;
 
