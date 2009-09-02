@@ -20,40 +20,46 @@
 
 #region
 
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 #endregion
 
-namespace SevenUpdate.Pages
+namespace SevenUpdate.Controls
 {
-    /// <summary>
-    /// Interaction logic for InfoBar.xaml
-    /// </summary>
-    public partial class InfoBar : UserControl
+    public abstract class ListViewCustomComparer : IComparer
     {
-        public InfoBar()
+        protected Dictionary<string, ListSortDirection> SortColumns = new Dictionary<string, ListSortDirection>();
+
+        #region IComparer Members
+
+        public abstract int Compare(object x, object y);
+
+        #endregion
+
+        public void AddSort(string sortColumn, ListSortDirection dir)
         {
-            InitializeComponent();
+            ClearSort();
+
+            SortColumns.Add(sortColumn, dir);
         }
 
-        /// <summary>
-        /// Underlines the text when mouse is over the TextBlock
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        public void ClearSort()
         {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
+            SortColumns.Clear();
         }
 
-        /// <summary>
-        /// Removes the Underlined text when mouse is leaves the TextBlock
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        protected List<string> GetSortColumnList()
         {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = null;
+            var result = new List<string>();
+            var temp = new Stack<string>();
+
+            foreach (var col in SortColumns.Keys) temp.Push(col);
+
+            while (temp.Count > 0) result.Add(temp.Pop());
+
+            return result;
         }
     }
 }

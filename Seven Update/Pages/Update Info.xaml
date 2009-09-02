@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d"
         Title="Update Information" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
@@ -29,7 +29,7 @@
         <Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2"
                 Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" av:ListViewSorter.IsListviewSortable="True"
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" Controls:ListViewSorter.IsListviewSortable="True"
                 Foreground="Black" BorderThickness="0">
             <ListView.ContextMenu>
                 <ContextMenu>

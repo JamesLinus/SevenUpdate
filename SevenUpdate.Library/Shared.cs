@@ -1,49 +1,100 @@
-﻿/*Copyright 2007, 2008 Robert Baker, aka Seven ALive.
-This file is part of Seven Update.
+﻿#region GNU Public License v3
 
-    Seven Update is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+// 
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
-    Seven Update is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#endregion
 
-    You should have received a copy of the GNU General Public License
-    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
+#region
+
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml.Serialization;
+using System.Xml;
+using Microsoft.Win32;
+
+#endregion
 
 namespace SevenUpdate
 {
-    public class Shared
+    public enum ErrorType
+    {
+        /// <summary>
+        /// An error that occurred while trying to download updates
+        /// </summary>
+        DownloadError,
+        /// <summary>
+        /// An error that occurred while trying to install updates
+        /// </summary>
+        InstallationError,
+        /// <summary>
+        /// A general network connection error
+        /// </summary>
+        FatalNetworkError,
+        /// <summary>
+        /// An unspecified error, non fatal
+        /// </summary>
+        GeneralErrorNonFatal,
+        /// <summary>
+        /// An unspecified error that prevents Seven Update from continuing
+        /// </summary>
+        FatalError,
+        /// <summary>
+        /// An error that occurs while searching for updates
+        /// </summary>
+        SearchError
+    }
+
+    public static class Shared
     {
         #region Global Vars
 
         /// <summary>
         /// The all users application data location
         /// </summary>
-        public static string appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Update\";
+        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Update\";
 
         /// <summary>
-        /// Specifies if a reboot is needed
+        /// The location of the list of applications Seven Update can update
         /// </summary>
-        public static bool RebootNeeded
-        {
-            get { return File.Exists(appStore + @"reboot.lock"); }
-        }
+        public static readonly string AppsFile = AllUserStore + "Apps.sul";
+
+        /// <summary>
+        /// The location of the application settings file
+        /// </summary>
+        public static readonly string ConfigFile = AllUserStore + "App.config";
+
+        /// <summary>
+        /// The location of the hidden updates file
+        /// </summary>
+        public static readonly string HiddenFile = AllUserStore + "Hidden.sua";
 
         /// <summary>
         /// The user application data location
         /// </summary>
-        public static string userStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Update\";
+        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Update\";
+
+        /// <summary>
+        /// Specifies if a reboot is needed
+        /// </summary>
+        public static bool RebootNeeded { get { return File.Exists(AllUserStore + @"reboot.lock"); } }
 
         public static string Locale { get; set; }
 
@@ -51,13 +102,9 @@ namespace SevenUpdate
 
         #region Methods
 
-        public static string GetLocaleString(ObservableCollection<LocaleString> localeStrings)
+        public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
-            for (int x = 0; x < localeStrings.Count; x++)
-            {
-                if (localeStrings[x].lang == Locale)
-                    return localeStrings[x].Value;
-            }
+            for (var x = 0; x < localeStrings.Count; x++) if (localeStrings[x].lang == Locale) return localeStrings[x].Value;
             return localeStrings[0].Value;
         }
 
@@ -66,13 +113,13 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="path">A string that contains a file path</param>
         /// <param name="dir">a string that contains a directory</param>
-        /// <param name="Is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>Returns the converted string expanded</returns>
-        public static string ConvertPath(string path, string dir, bool Is64Bit)
+        public static string ConvertPath(string path, string dir, bool is64Bit)
         {
-            path = Replace(path, "[AppDir]", ConvertPath(dir, true, Is64Bit));
-            path = Replace(path, "[DownloadDir]", ConvertPath(dir, true, Is64Bit));
-            return ConvertPath(path, true, Is64Bit);
+            path = Replace(path, "[AppDir]", ConvertPath(dir, true, is64Bit));
+            path = Replace(path, "[DownloadDir]", ConvertPath(dir, true, is64Bit));
+            return ConvertPath(path, true, is64Bit);
         }
 
         /// <summary>
@@ -80,30 +127,29 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="path">A string that contains a file path</param>
         /// <param name="expand">True to expand system variable, false to converts paths into system variables</param>
-        /// <param name="Is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>Returns the converted string expanded</returns>
-        public static string ConvertPath(string path, bool expand, bool Is64Bit)
+        public static string ConvertPath(string path, bool expand, bool is64Bit)
         {
             if (path != null)
             {
                 if (path.StartsWith("HKEY", StringComparison.OrdinalIgnoreCase))
                 {
-                    char[] split = { '|' };
-                    string key = path.Split(split)[0];
-                    string value = path.Split(split)[1];
-                    path = Microsoft.Win32.Registry.GetValue(key, value, null).ToString();
+                    char[] split = {'|'};
+                    var key = path.Split(split)[0];
+                    var value = path.Split(split)[1];
+                    path = Registry.GetValue(key, value, null).ToString();
                 }
                 else
                 {
-
                     if (expand == false)
                     {
-                        StringBuilder path2 = new StringBuilder(260);
-                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FSLocation.CSIDL_COMMON_PROGRAMS, false);
+                        var path2 = new StringBuilder(260);
+                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
                         path = Replace(path, path2.ToString(), "%ALLUSERSSTARTMENUPROGRAMS%");
 
                         path2 = new StringBuilder(260);
-                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FSLocation.CSIDL_COMMON_STARTMENU, false);
+                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_STARTMENU, false);
                         path = Replace(path, path2.ToString(), "%ALLUSERSSTARTMENU%");
 
                         path = Replace(path, Environment.GetFolderPath(Environment.SpecialFolder.Programs), "%STARTMENUPROGRAMS%");
@@ -117,7 +163,7 @@ namespace SevenUpdate
                             path = Replace(path, Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%");
                             path = Replace(path, Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%");
 
-                            if (Is64Bit)
+                            if (is64Bit)
                             {
                                 path = Replace(path, Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%");
                                 path = Replace(path, Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%");
@@ -131,7 +177,6 @@ namespace SevenUpdate
                                 path = Replace(path, Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%");
                                 path = Replace(path, Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%");
                             }
-
                         }
                         else
                         {
@@ -159,15 +204,15 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        StringBuilder path2 = new StringBuilder(260);
+                        var path2 = new StringBuilder(260);
 
-                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FSLocation.CSIDL_COMMON_PROGRAMS, false);
+                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
 
                         path = Replace(path, "%ALLUSERSSTARTMENUPROGRAMS%", path2.ToString());
 
                         path2 = new StringBuilder(260);
 
-                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FSLocation.CSIDL_COMMON_STARTMENU, false);
+                        NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_STARTMENU, false);
 
                         path = Replace(path, "%ALLUSERSSTARTMENU%", path2.ToString());
                         path = Replace(path, "%STARTMENUPROGRAMS%", Environment.GetFolderPath(Environment.SpecialFolder.Programs));
@@ -180,7 +225,7 @@ namespace SevenUpdate
                         {
                             path = Replace(path, "%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"));
                             path = Replace(path, "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"));
-                            if (Is64Bit)
+                            if (is64Bit)
                             {
                                 path = Replace(path, "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"));
                                 path = Replace(path, "%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"));
@@ -197,7 +242,6 @@ namespace SevenUpdate
                             path = Replace(path, "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles"));
                             path = Replace(path, "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"));
                             path = Replace(path, "%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"));
-
                         }
 
                         path = Replace(path, "%APPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
@@ -221,7 +265,6 @@ namespace SevenUpdate
                 }
             }
             return path;
-
         }
 
         /// <summary>
@@ -231,28 +274,19 @@ namespace SevenUpdate
         /// <returns>returns the SHA1 hash value</returns>
         public static string GetHash(string fileLoc)
         {
-            if (File.Exists(fileLoc))
-            {
-                FileStream stream = new FileStream(fileLoc,
-                FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+            if (!File.Exists(fileLoc)) return null;
+            var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
 
-                SHA1CryptoServiceProvider sha1 = new SHA1CryptoServiceProvider();
+            var sha1 = new SHA1CryptoServiceProvider();
 
-                sha1.ComputeHash(stream);
+            sha1.ComputeHash(stream);
 
-                stream.Close();
+            stream.Close();
 
-                StringBuilder buff = new StringBuilder();
+            var buff = new StringBuilder();
 
-                foreach (byte hashByte in sha1.Hash)
-                {
-                    buff.Append(String.Format("{0:X1}", hashByte));
-                }
-                return buff.ToString();
-            }
-            else
-                return null;
-
+            foreach (var hashByte in sha1.Hash) buff.Append(String.Format("{0:X1}", hashByte));
+            return buff.ToString();
         }
 
         /// <summary>
@@ -265,17 +299,16 @@ namespace SevenUpdate
         public static string Replace(string complete, string find, string replace)
         {
             // Get input string length
-            int exprLen = complete.Length;
+            var exprLen = complete.Length;
 
-            int findLen = find.Length;
+            var findLen = find.Length;
 
             // Check inputs
-            if (0 == exprLen || 0 == findLen || findLen > exprLen)
-                return complete;
+            if (0 == exprLen || 0 == findLen || findLen > exprLen) return complete;
 
-            StringBuilder sbRet = new StringBuilder(exprLen);
+            var sbRet = new StringBuilder(exprLen);
 
-            int pos = 0;
+            var pos = 0;
 
             while (pos + findLen <= exprLen)
             {
@@ -297,14 +330,13 @@ namespace SevenUpdate
             sbRet.Append(complete, pos, exprLen - pos);
             // Return string
             return sbRet.ToString();
-
         }
 
         public static void ReportError(string message, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log");
 
-            tw.WriteLine(DateTime.Now.ToString() + ": " + message);
+            tw.WriteLine(DateTime.Now + ": " + message);
 
             tw.Close();
         }
@@ -312,18 +344,14 @@ namespace SevenUpdate
         /// <summary>
         /// Converts bytes into the proper increments depending on size
         /// </summary>
-        /// <param name="fileSize">The fileSize is bytes</param>
+        /// <param name="bytes">The fileSize in bytes</param>
         /// <returns>Returns formatted string of converted bytes</returns>
-        public static string ConvertFileSize(ulong byteCount)
+        public static string ConvertFileSize(ulong bytes)
         {
-            if (byteCount >= 1073741824)
-                return String.Format("{0:##.##}", byteCount / 1073741824) + " GB";
-            else if (byteCount >= 1048576)
-                return String.Format("{0:##.##}", byteCount / 1048576) + " MB";
-            else if (byteCount >= 1024)
-                return String.Format("{0:##.##}", byteCount / 1024) + " KB";
-            else if (byteCount < 1024)
-                return byteCount.ToString() + " Bytes";
+            if (bytes >= 1073741824) return String.Format("{0:##.##}", bytes/1073741824) + " GB";
+            if (bytes >= 1048576) return String.Format("{0:##.##}", bytes/1048576) + " MB";
+            if (bytes >= 1024) return String.Format("{0:##.##}", bytes/1024) + " KB";
+            if (bytes < 1024) return bytes + " Bytes";
             return "0 Bytes";
         }
 
@@ -332,72 +360,37 @@ namespace SevenUpdate
         #region DeSerialize Methods
 
         /// <summary>
-        /// DeSerializes a list of objects
-        /// </summary>
-        /// <typeparam name="T">The object to DeSerialize</typeparam>
-        /// <param name="xmlFile">he xml file to DeSerialize</param>
-        /// <returns>Returns the list of objects</returns>
-        public static ObservableCollection<T> DeserializeCollection<T>(string xmlFile) where T : class
-        {
-            if (File.Exists(xmlFile))
-            {
-                XmlSerializer s = new XmlSerializer(typeof(ObservableCollection<T>));
-
-                ObservableCollection<T> temp;
-
-                using (TextReader r = new StreamReader(xmlFile))
-                {
-                    try
-                    {
-                        temp = (ObservableCollection<T>)s.Deserialize(r);
-
-                        return temp;
-                    }
-                    catch (Exception e)
-                    {
-                        if (SerializationErrorEventHandler != null)
-                            SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
-                    }
-
-                    finally { r.Close(); }
-
-                }
-            }
-            return new ObservableCollection<T>();
-        }
-
-        /// <summary>
         /// DeSerializes an object
         /// </summary>
         /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
+        /// <param name="file">The file that contains the object to DeSerialize</param>
         /// <returns>Returns the object</returns>
-        public static T DeserializeStruct<T>(string xmlFile) where T : struct
+        public static T DeserializeStruct<T>(string file) where T : struct
         {
-            if (File.Exists(xmlFile))
+            if (File.Exists(file))
             {
-
-                XmlSerializer s = new XmlSerializer(typeof(T));
-
-                T temp;
-                using (TextReader r = new StreamReader(xmlFile))
+                FileStream fs = null;
+                XmlDictionaryReader reader = null;
+                // Deserialize the data and read it from the instance.
+                T t;
+                try
                 {
-                    try
-                    {
-                        temp = (T)s.Deserialize(r);
-
-                        return temp;
-                    }
-                    catch (Exception e)
-                    {
-                        if (SerializationErrorEventHandler != null)
-                            SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
-                    }
-                    finally
-                    {
-                        r.Close();
-                    }
+                    fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+                    reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+                    var ser = new DataContractSerializer(typeof (T));
+                    t = (T) ser.ReadObject(reader, true);
                 }
+                catch (Exception e)
+                {
+                    t = new T();
+                    if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                }
+                finally
+                {
+                    if (reader != null) reader.Close();
+                    if (fs != null) fs.Close();
+                }
+                return t;
             }
             return new T();
         }
@@ -406,34 +399,34 @@ namespace SevenUpdate
         /// DeSerializes an object
         /// </summary>
         /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
+        /// <param name="file">The file that contains the object to DeSerialize</param>
         /// <returns>Returns the object</returns>
-        public static T Deserialize<T>(string xmlFile) where T : class
+        public static T Deserialize<T>(string file) where T : class
         {
-            if (File.Exists(xmlFile))
+            if (File.Exists(file))
             {
-
-                XmlSerializer s = new XmlSerializer(typeof(T));
-
-                T temp;
-                using (TextReader r = new StreamReader(xmlFile))
+                FileStream fs = null;
+                XmlDictionaryReader reader = null;
+                // Deserialize the data and read it from the instance.
+                T t;
+                try
                 {
-                    try
-                    {
-                        temp = (T)s.Deserialize(r);
-
-                        return temp;
-                    }
-                    catch (Exception e)
-                    {
-                        if (SerializationErrorEventHandler != null)
-                            SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
-                    }
-                    finally
-                    {
-                        r.Close();
-                    }
+                    fs = new FileStream(file, FileMode.Open, FileAccess.Read);
+                    reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
+                    var ser = new DataContractSerializer(typeof (T));
+                    t = (T) ser.ReadObject(reader, true);
                 }
+                catch (Exception e)
+                {
+                    t = null;
+                    if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                }
+                finally
+                {
+                    if (reader != null) reader.Close();
+                    if (fs != null) fs.Close();
+                }
+                return t;
             }
             return null;
         }
@@ -443,27 +436,28 @@ namespace SevenUpdate
         #region Serialize Methods
 
         /// <summary>
-        /// Serializes a list of objects into an xml file
+        /// Serializes an object into a file
         /// </summary>
         /// <typeparam name="T">The object</typeparam>
-        /// <param name="list">The list of an object</param>
-        /// <param name="xmlFile">The location of a file that will be serialized</param>
-        public static void SerializeCollection<T>(ObservableCollection<T> list, string xmlFile) where T : class
+        /// <param name="item">The object to serialize</param>
+        /// <param name="file">The location of a file that will be serialized</param>
+        public static void Serialize<T>(T item, string file) where T : class
         {
+            FileStream writer = null;
             try
             {
-                XmlSerializer s = new XmlSerializer(typeof(ObservableCollection<T>));
-
-                TextWriter w = new StreamWriter(xmlFile);
-
-                s.Serialize(w, list);
-
-                w.Close();
+                writer = new FileStream(file, FileMode.Create);
+                var ser = new DataContractSerializer(typeof (T));
+                ser.WriteObject(writer, item);
+                writer.Close();
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
+                if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+            }
+            finally
+            {
+                if (writer != null) writer.Close();
             }
         }
 
@@ -472,48 +466,24 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name="T">The object</typeparam>
         /// <param name="item">The object to serialize</param>
-        /// <param name="xmlFile">The location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, string xmlFile) where T : class
+        /// <param name="file">The location of a file that will be serialized</param>
+        public static void SerializeStruct<T>(T item, string file) where T : struct
         {
+            FileStream writer = null;
             try
             {
-                XmlSerializer s = new XmlSerializer(typeof(T));
-
-                TextWriter w = new StreamWriter(xmlFile);
-
-                s.Serialize(w, item);
-
-                w.Close();
+                writer = new FileStream(file, FileMode.Create);
+                var ser = new DataContractSerializer(typeof (T));
+                ser.WriteObject(writer, item);
+                writer.Close();
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
+                if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
             }
-        }
-
-        /// <summary>
-        /// Serializes an object into a file
-        /// </summary>
-        /// <typeparam name="T">The object</typeparam>
-        /// <param name="item">The object to serialize</param>
-        /// <param name="xmlFile">The location of a file that will be serialized</param>
-        public static void SerializeStruct<T>(T item, string xmlFile) where T : struct
-        {
-            try
+            finally
             {
-                XmlSerializer s = new XmlSerializer(typeof(T));
-
-                TextWriter w = new StreamWriter(xmlFile);
-
-                s.Serialize(w, item);
-
-                w.Close();
-            }
-            catch (Exception e)
-            {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, xmlFile));
+                if (writer != null) writer.Close();
             }
         }
 
@@ -528,7 +498,7 @@ namespace SevenUpdate
             public SerializationErrorEventArgs(string errorMessage, string file)
             {
                 ErrorMessage = errorMessage;
-                this.File = file;
+                File = file;
             }
 
             /// <summary>
@@ -541,13 +511,15 @@ namespace SevenUpdate
             /// </summary>
             public string File { get; set; }
         }
+
         #endregion
     }
 
-    static class NativeMethods
+    internal static class NativeMethods
     {
-        [DllImport("shell32.dll")]
-        internal static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner,
-           [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
+        [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
+        internal static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
+
+        // ReSharper restore InconsistentNaming
     }
 }

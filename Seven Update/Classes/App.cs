@@ -1,106 +1,95 @@
-﻿/*Copyright 2007-09 Robert Baker, aka Seven ALive.
-This file is part of Seven Update.
+﻿#region GNU Public License v3
 
-    Seven Update is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+// 
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
-    Seven Update is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#endregion
 
-    You should have received a copy of the GNU General Public License
-    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
+#region
+
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Resources;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using SevenUpdate.WCF;
 using SevenUpdate.Windows;
+
+#endregion
+
 namespace SevenUpdate
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public sealed class App
     {
         #region Global Vars
 
         /// <summary>
-        /// The UI Resource Strings
+        /// The green shield image
         /// </summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
+        internal static readonly BitmapImage GreenShield = new BitmapImage(new Uri("/Images/GreenShield.png", UriKind.Relative));
 
         /// <summary>
         /// The red shield image
         /// </summary>
-        internal static BitmapImage redShield = new BitmapImage(new Uri("/Images/RedShield.png", UriKind.Relative));
+        internal static readonly BitmapImage RedShield = new BitmapImage(new Uri("/Images/RedShield.png", UriKind.Relative));
 
         /// <summary>
-        /// The green shield image
+        /// The UI Resource Strings
         /// </summary>
-        internal static BitmapImage greenShield = new BitmapImage(new Uri("/Images/GreenShield.png", UriKind.Relative));
+        internal static readonly ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
 
         /// <summary>
         /// The yellowshield image
         /// </summary>
-        internal static BitmapImage yellowShield = new BitmapImage(new Uri("/Images/YellowShield.png", UriKind.Relative));
+        internal static readonly BitmapImage YellowShield = new BitmapImage(new Uri("/Images/YellowShield.png", UriKind.Relative));
 
         #region Properties
 
         /// <summary>
         /// List of Application Seven Update can check for updates
         /// </summary>
-        public static ObservableCollection<SUA> AppsToUpdate
-        {
-            get { return Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul"); }
-        }
+        public static Collection<SUA> AppsToUpdate { get { return Shared.Deserialize<Collection<SUA>>(Shared.AppsFile); } }
 
         /// <summary>
         /// The update settings for Seven Update
         /// </summary>
-        public static Config Settings
-        {
-            get { return Shared.DeserializeStruct<Config>(Shared.appStore + "Settings.xml"); }
-        }
+        public static Config Settings { get { return Shared.DeserializeStruct<Config>(Shared.ConfigFile); } }
 
         /// <summary>
-        /// List of Applications
+        /// Collection of applications to update
         /// </summary>
-        internal static ObservableCollection<Application> Applications { get; set; }
+        internal static Collection<SUI> Applications { get; set; }
 
         /// <summary>
         /// Indicates if an Auto Search was performed
         /// </summary>
-        internal static bool IsAutoCheck { get; set; }
+        internal static bool IsAutoCheck { get; private set; }
 
-        /// <summary>
-        /// Specifies if Seven Update is allowed to check for updates
-        /// </summary>
-        internal static bool CanCheckForUpdates { get; set; }
 
         /// <summary>
         /// If true, Seven Update is currently installing updates.
         /// </summary>
         internal static bool IsInstallInProgress { get; set; }
-
-        /// <summary>
-        /// Indicates the installation was already running due to auto check.
-        /// </summary>
-        internal static bool IsReconnect { get; set; }
-
-        /// <summary>
-        /// Indicates if updates have been found
-        /// </summary>
-        internal static bool IsUpdatesAvailable { get; set; }
 
         #endregion
 
@@ -113,71 +102,69 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="args">Command line args</param>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            bool createdNew = true;
+            bool createdNew;
             // Makes sure only 1 copy of Seven Update is allowed to run
-            using (Mutex mutex = new Mutex(true, "Seven Update", out createdNew))
+            using (new Mutex(true, "Seven Update", out createdNew))
             {
-                if (Shared.Locale == null)
-                    Shared.Locale = "en";
-                else
-                    Shared.Locale = Settings.Locale;
-
-                for (int x = 0; x < args.Length; x++)
+                Shared.Locale = Shared.Locale == null ? "en" : Settings.Locale;
+                Shared.SerializationErrorEventHandler += Shared_SerializationErrorEventHandler;
+                for (var x = 0; x < args.Length; x++)
                 {
-                    if (args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase))
+                    if (!args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)) continue;
+                    AddSUA(args[x]);
+                    return;
+                }
+                if (!createdNew) return;
+                var id = WindowsIdentity.GetCurrent();
+                if (id != null)
+                {
+                    var p = new WindowsPrincipal(id);
+                    IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
+                }
+                if (args.Length > 1)
+                {
+                    if (args[0] == "Auto") IsAutoCheck = true;
+                    if (args[0] == "Reconnect")
                     {
-                        AddSUA(args[x]);
-                        return;
+                        IsAutoCheck = false;
+                        IsInstallInProgress = true;
                     }
                 }
-                if (createdNew)
-                {
-               
-                    if (args.Length > 1)
-                    {
-                        if (args[0] == "Auto")
-                        {
-                            IsAutoCheck = true;
-                        }
-                        if (args[0] == "Reconnect")
-                        {
-                            IsAutoCheck = false;
-                            IsInstallInProgress = true;
-                            IsReconnect = true;
-                        }
-
-                    }
-                    System.Windows.Application app = new System.Windows.Application();
-                    app.Run(new MainWindow());
-                }
+                var app = new Application();
+                app.Run(new MainWindow());
             }
+        }
+
+        private static void Shared_SerializationErrorEventHandler(object sender, Shared.SerializationErrorEventArgs e)
+        {
+            MessageBox.Show(e.File + e.ErrorMessage);
         }
 
         /// <summary>
         /// Adds an Application for use with Seven Update
         /// </summary>
         /// <param name="suaLoc">The location of the SUA file</param>
-        static void AddSUA(string suaLoc)
+        private static void AddSUA(string suaLoc)
         {
-            WebClient wc = new WebClient();
-            wc.DownloadFile(suaLoc, Shared.userStore + "add.sua");
-            SUA sua = Shared.Deserialize<SUA>(Shared.userStore + "add.sua");
-            ObservableCollection<SUA> sul = Shared.DeserializeCollection<SUA>(Shared.appStore + "SUApps.sul");
-            File.Delete(Shared.userStore + "add.sua");
-            int index = sul.IndexOf(sua);
+            var wc = new WebClient();
+            wc.DownloadFile(suaLoc, Shared.UserStore + "add.sua");
+            var sua = Shared.Deserialize<SUA>(Shared.UserStore + "add.sua");
+            var sul = Shared.Deserialize<Collection<SUA>>(Shared.AppsFile);
+            File.Delete(Shared.UserStore + "add.sua");
+            var index = sul.IndexOf(sua);
             if (index < 0)
             {
-                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + sua.ApplicationName[0].Value + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + sua.ApplicationName[0].Value + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                    MessageBoxResult.Yes)
                 {
                     sul.Add(sua);
 
-                    SevenUpdate.WCF.Admin.AddSUA(sul);
+                    Admin.AddSUA(sul);
                 }
             }
             wc.Dispose();
-
         }
 
         #region Recount Methods
@@ -187,36 +174,11 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="files">The collection of files of an update</param>
         /// <returns>Returns a ulong value of the size of the update</returns>
-        internal static ulong GetUpdateSize(ObservableCollection<UpdateFile> files)
+        internal static ulong GetUpdateSize(Collection<UpdateFile> files)
         {
             ulong size = 0;
-            for (int x = 0; x < files.Count; x++)
-            {
-                size += files[x].Size;
-            }
+            for (var x = 0; x < files.Count; x++) size += files[x].Size;
             return size;
-        }
-
-        #endregion
-
-        #region History Methods
-
-        /// <summary>
-        /// Gets Hidden Updates
-        /// </summary>
-        /// <returns>Returns the list of hidden updates</returns>
-        internal static ObservableCollection<UpdateInformation> GetHiddenUpdates()
-        {
-            return Shared.DeserializeCollection<UpdateInformation>(Shared.appStore + "Hidden Updates.xml");
-        }
-
-        /// <summary>
-        /// Gets the update history
-        /// </summary>
-        /// <returns>Returns a list of updates installed</returns>
-        internal static ObservableCollection<UpdateInformation> GetHistory()
-        {
-            return Shared.DeserializeCollection<UpdateInformation>(Shared.appStore + "Update History.xml");
         }
 
         #endregion
@@ -226,34 +188,10 @@ namespace SevenUpdate
         #region UI methods
 
         /// <summary>
-        /// Specifies if the current user running Seven Update is an administrator
+        /// Gets a value indicating if the current user is running on admin privledges
         /// </summary>
-        /// <returns></returns>
-        static internal bool IsAdmin
-        {
-            get
-            {
-                WindowsIdentity id = WindowsIdentity.GetCurrent();
-                WindowsPrincipal p = new WindowsPrincipal(id);
-                return p.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-        }
-
-        /// <summary>
-        /// Adds a shield to a button
-        /// </summary>
-        /// <param name="b">The button object you want to add a shield to</param>
-        static internal void AddShieldToButton(Button b)
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                try
-                {
-
-                }
-                catch (Exception) { }
-            }
-        }
+        /// <returns>True if the current user is an admin, otherwise false</returns>
+        internal static bool IsAdmin { get; private set; }
 
         #endregion
     }

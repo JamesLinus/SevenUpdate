@@ -51,20 +51,16 @@
     <OutputPath>bin\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AvalonLibrary, Version=9.8.26.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\References\AvalonLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="SevenUpdate.Library, Version=9.8.24.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\SevenUpdate.Library\bin\Release\SevenUpdate.Library.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -78,7 +74,7 @@
     <Compile Include="Classes\App.cs" />
     <Compile Include="Classes\Admin.cs" />
     <Compile Include="Classes\Converters.cs" />
-    <Compile Include="Classes\ListViewExtensions.cs" />
+    <Compile Include="Controls\ListViewExtensions.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
       <DependentUpon>InfoBar.xaml</DependentUpon>
     </Compile>
@@ -87,11 +83,6 @@
     </Compile>
     <Compile Include="Pages\Update Info.xaml.cs">
       <DependentUpon>Update Info.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ESB\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Windows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
@@ -157,6 +148,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ListViewCustomComparer.cs" />
+    <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Pages\Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
@@ -173,6 +166,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Service References\WCF\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -181,35 +179,19 @@
     <None Include="app.config" />
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\ESB\EventService.wsdl" />
-    <None Include="Service References\ESB\Mex.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\ESB\Mex1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\ESB\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ESB\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ESB\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Service References\ESB\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <None Include="Service References\WCF\EventService.wsdl" />
+    <None Include="Service References\WCF\Mex.xsd" />
+    <None Include="Service References\WCF\Mex1.xsd" />
+    <None Include="Service References\WCF\Mex2.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\GreenShield.png" />
@@ -220,8 +202,6 @@
     <Resource Include="Images\Shield.png" />
     <Resource Include="Images\SideBar.jpg" />
     <Resource Include="Images\SideBar2.jpg" />
-    <Resource Include="Images\SmallGreenShield.png" />
-    <Resource Include="Images\SmallRedShield.png" />
     <Resource Include="Images\YellowShield.png" />
     <Resource Include="Images\YellowSide.png" />
   </ItemGroup>
@@ -234,6 +214,30 @@
   <ItemGroup>
     <Resource Include="Images\BlueArrow.png" />
     <Resource Include="Images\GreenArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WCF\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WCF\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SevenUpdate.Library\SevenUpdate.Library.csproj">
+      <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
+      <Name>SevenUpdate.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShieldDisabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

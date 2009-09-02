@@ -1,34 +1,49 @@
-﻿/*Copyright 2007-09 Robert Baker, aka Seven ALive.
-This file is part of Seven Update.
+﻿#region GNU Public License v3
 
-    Seven Update is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+// 
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
-    Seven Update is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#endregion
 
-    You should have received a copy of the GNU General Public License
-    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
+#region
+
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Collections;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SevenUpdate.Controls;
+using SevenUpdate.WCF;
+using SevenUpdate.Windows;
+
+#endregion
 
 namespace SevenUpdate.Pages
 {
     /// <summary>
     /// Interaction logic for Update_Info.xaml
     /// </summary>
-    public partial class UpdateInfo : Page
+    public sealed partial class UpdateInfo : Page
     {
         #region Structs
 
@@ -42,18 +57,16 @@ namespace SevenUpdate.Pages
 
         #region Global Vars
 
-        Collection<Indexes> indexes;
-
-        BitmapImage greenArrow = new BitmapImage(new Uri("/Images/GreenArrow.png", UriKind.Relative));
-        BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
+        private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
+        private readonly BitmapImage greenArrow = new BitmapImage(new Uri("/Images/GreenArrow.png", UriKind.Relative));
+        private List<Indexes> indexes;
 
         #endregion
 
         public UpdateInfo()
         {
             InitializeComponent();
-            if (App.IsAdmin)
-                cmiHideUpdate.Icon = null;
+            if (App.IsAdmin) cmiHideUpdate.Icon = null;
         }
 
         #region Event Declarations
@@ -62,38 +75,38 @@ namespace SevenUpdate.Pages
 
         #region EventArgs
 
-        internal class UpdateSelectionChangedEventArgs : EventArgs
+        internal sealed class UpdateSelectionChangedEventArgs : EventArgs
         {
             public UpdateSelectionChangedEventArgs(int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
             {
-                this.ImportantUpdates = importantUpdates;
+                ImportantUpdates = importantUpdates;
 
-                this.OptionalUpdates = optionalUpdates;
+                OptionalUpdates = optionalUpdates;
 
-                this.ImportantDownloadSize = importantDownloadSize;
+                ImportantDownloadSize = importantDownloadSize;
 
-                this.OptionalDownloadSize = optionalDownloadSize;
+                OptionalDownloadSize = optionalDownloadSize;
             }
 
             /// <summary>
             /// Number of Important Updates selected
             /// </summary>
-            internal int ImportantUpdates { get; set; }
+            internal int ImportantUpdates { get; private set; }
 
             /// <summary>
             /// Number of Optional Updates selected
             /// </summary>
-            internal int OptionalUpdates { get; set; }
+            internal int OptionalUpdates { get; private set; }
 
             /// <summary>
             /// The total download size in bytes of the important updates
             /// </summary>
-            internal ulong ImportantDownloadSize { get; set; }
+            internal ulong ImportantDownloadSize { get; private set; }
 
             /// <summary>
             /// The total download size in bytes of the optional updates
             /// </summary>
-            internal ulong OptionalDownloadSize { get; set; }
+            internal ulong OptionalDownloadSize { get; private set; }
         }
 
         #endregion
@@ -106,13 +119,13 @@ namespace SevenUpdate.Pages
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            SevenUpdate.Windows.MainWindow.ns.GoBack();
+            MainWindow.NavService.GoBack();
         }
 
         private void btnInstall_Click(object sender, RoutedEventArgs e)
         {
             SaveUpdateSelection();
-            SevenUpdate.Windows.MainWindow.ns.GoBack();
+            MainWindow.NavService.GoBack();
         }
 
         #endregion
@@ -121,27 +134,24 @@ namespace SevenUpdate.Pages
 
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            TextBlock textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
-
         }
 
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            TextBlock textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
         }
 
         private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbUrlInfo.Tag != null)
-                System.Diagnostics.Process.Start(tbUrlInfo.Tag.ToString());
+            if (tbUrlInfo.Tag != null) Process.Start(tbUrlInfo.Tag.ToString());
         }
 
         private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbUrlHelp.Tag != null)
-                System.Diagnostics.Process.Start(tbUrlHelp.Tag.ToString());
+            if (tbUrlHelp.Tag != null) Process.Start(tbUrlHelp.Tag.ToString());
         }
 
         #endregion
@@ -153,67 +163,58 @@ namespace SevenUpdate.Pages
 
         #region listview
 
-        void selectedUpdates_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
+            // update the view when item change is NOT caused by replacement
+            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            dataView.Refresh();
         }
 
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            int updateIndex = indexes[listView.SelectedIndex].updateIndex;
-            int appIndex = indexes[listView.SelectedIndex].appIndex;
+            var updateIndex = indexes[listView.SelectedIndex].updateIndex;
+            var appIndex = indexes[listView.SelectedIndex].appIndex;
 
-            UpdateInformation hnh = new UpdateInformation();
+            var hnh = new SUH
+                          {
+                              HelpUrl = App.Applications[appIndex].HelpUrl,
+                              InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
+                              Publisher = App.Applications[appIndex].Publisher,
+                              PublisherUrl = App.Applications[appIndex].PublisherUrl,
+                              ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
+                              Status = UpdateStatus.Hidden,
+                              Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
+                              Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
+                              Description = App.Applications[appIndex].Updates[updateIndex].Description,
+                              Name = App.Applications[appIndex].Updates[updateIndex].Name
+                          };
 
-            hnh.HelpUrl = App.Applications[appIndex].HelpUrl;
-
-            hnh.InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
-
-            hnh.Publisher = App.Applications[appIndex].Publisher;
-
-            hnh.PublisherUrl = App.Applications[appIndex].PublisherUrl;
-
-            hnh.ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-
-            hnh.Status = UpdateStatus.Hidden;
-
-            hnh.Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files);
-
-            hnh.Importance = App.Applications[appIndex].Updates[updateIndex].Importance;
-
-            hnh.Description = App.Applications[appIndex].Updates[updateIndex].Description;
-
-            hnh.Name = App.Applications[appIndex].Updates[updateIndex].Name;
-
-            ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+            var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
 
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
-                if (SevenUpdate.WCF.Admin.HideUpdate(hnh))
+                if (Admin.HideUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
-                    item.Foreground = System.Windows.Media.Brushes.Gray;
-
+                    item.Foreground = Brushes.Gray;
                 }
-
             }
             else
             {
-                if (SevenUpdate.WCF.Admin.ShowUpdate(hnh))
+                if (Admin.ShowUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
-                    item.Foreground = System.Windows.Media.Brushes.Black;
-
+                    item.Foreground = Brushes.Black;
                 }
             }
         }
 
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            int appIndex = indexes[listView.SelectedIndex].appIndex;
-            int updateIndex = indexes[listView.SelectedIndex].updateIndex;
-            if (listView.SelectedIndex == -1)
-                HideLabels();
+            var appIndex = indexes[listView.SelectedIndex].appIndex;
+            var updateIndex = indexes[listView.SelectedIndex].updateIndex;
+            if (listView.SelectedIndex == -1) HideLabels();
             else
             {
                 tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
@@ -233,7 +234,6 @@ namespace SevenUpdate.Pages
                 }
                 ShowLabels();
             }
-
         }
 
         #endregion
@@ -242,44 +242,41 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        void IterateVisualChild(DependencyObject element)
+        private static void IterateVisualChild(DependencyObject element)
         {
-            try
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
-                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+                if (VisualTreeHelper.GetChild(element, i) is CheckBox)
                 {
-                    if (VisualTreeHelper.GetChild(element, i) is System.Windows.Controls.CheckBox)
+                    var cb = VisualTreeHelper.GetChild(element, i) as CheckBox;
+                    if (cb != null)
                     {
-                        System.Windows.Controls.CheckBox cb = VisualTreeHelper.GetChild(element, i) as System.Windows.Controls.CheckBox;
-                        BindingExpression bindexp = cb.GetBindingExpression(CheckBox.IsCheckedProperty);
-                        bindexp.UpdateSource();
-                        continue;
+                        var bindexp = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
+                        if (bindexp != null) bindexp.UpdateSource();
                     }
-                    IterateVisualChild(VisualTreeHelper.GetChild(element, i));
+                    continue;
                 }
-            }
-            catch (Exception)
-            {
+                IterateVisualChild(VisualTreeHelper.GetChild(element, i));
             }
         }
 
         private void SaveUpdateSelection()
         {
-            int[] count = new int[2];
-            ulong[] downloadSize = new ulong[2];
-
-            int appIndex = 0, updateIndex = 0;
+            var count = new int[2];
+            var downloadSize = new ulong[2];
 
             IterateVisualChild(listView);
-            for (int x = 0; x < indexes.Count; x++)
+            for (var x = 0; x < indexes.Count; x++)
             {
-                updateIndex = indexes[x].updateIndex;
-                appIndex = indexes[x].appIndex;
-                if (App.Applications[appIndex].Updates[updateIndex].Selected == true)
+                var updateIndex = indexes[x].updateIndex;
+                var appIndex = indexes[x].appIndex;
+                if (!App.Applications[appIndex].Updates[updateIndex].Selected) {}
+                else
                 {
                     switch (App.Applications[indexes[x].appIndex].Updates[indexes[x].updateIndex].Importance)
                     {
-                        case Importance.Important: count[0]++;
+                        case Importance.Important:
+                            count[0]++;
                             downloadSize[0] = App.Applications[appIndex].Updates[updateIndex].Size;
                             break;
                         case Importance.Recommended:
@@ -302,21 +299,21 @@ namespace SevenUpdate.Pages
                     }
                 }
             }
-            if (UpdateSelectionChangedEventHandler != null)
-                UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+            if (UpdateSelectionChangedEventHandler != null) UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
         }
 
         /// <summary>
         /// Adds the updates to the list
         /// </summary>
-        void AddUpdates()
+        private void AddUpdates()
         {
-            ObservableCollection<Update> selectedUpdates = new ObservableCollection<Update>();
-            indexes = new Collection<Indexes>();
-            Indexes index = new Indexes();
-            for (int x = 0; x < App.Applications.Count; x++)
+            var selectedUpdates = new ObservableCollection<Update>();
+            indexes = new List<Indexes>();
+            var index = new Indexes();
+
+            for (var x = 0; x < App.Applications.Count; x++)
             {
-                for (int y = 0; y < App.Applications[x].Updates.Count; y++)
+                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
                     selectedUpdates.Add(App.Applications[x].Updates[y]);
                     index.appIndex = x;
@@ -324,34 +321,32 @@ namespace SevenUpdate.Pages
                     indexes.Add(index);
                 }
             }
-            Binding items = new Binding();
-            items.Source = selectedUpdates;
+            var items = new Binding {Source = selectedUpdates};
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
-            selectedUpdates.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(selectedUpdates_CollectionChanged);
+            selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
             AddSortBinding();
         }
 
-        void AddSortBinding()
+        private void AddSortBinding()
         {
+            var gv = (GridView) listView.View;
 
-            GridView gv = (GridView)listView.View;
-
-            GridViewColumn col = gv.Columns[1];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
+            var col = gv.Columns[1];
+            ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
 
             col = gv.Columns[2];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
+            ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
 
             col = gv.Columns[3];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
+            ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.UpdateSorter());
+            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.UpdateSorter());
         }
 
         /// <summary>
         /// Shows the update information in the sidebar
         /// </summary>
-        void ShowLabels()
+        private void ShowLabels()
         {
             tbStatus.Visibility = Visibility.Visible;
             tbPublishedDate.Visibility = Visibility.Visible;
@@ -362,13 +357,12 @@ namespace SevenUpdate.Pages
             tbUrlInfo.Visibility = Visibility.Visible;
             imgIcon.Visibility = Visibility.Hidden;
             imgArrow.Visibility = Visibility.Visible;
-
         }
 
         /// <summary>
         /// Hides the update information in the sidebar
         /// </summary>
-        void HideLabels()
+        private void HideLabels()
         {
             tbStatus.Visibility = Visibility.Hidden;
             tbPublishedDate.Visibility = Visibility.Hidden;
@@ -383,6 +377,4 @@ namespace SevenUpdate.Pages
 
         #endregion
     }
-
-
 }

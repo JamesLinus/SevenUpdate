@@ -318,9 +318,6 @@
   <data name="UpdatesReadyInstalled" xml:space="preserve">
     <value>Updates are ready to be installed</value>
   </data>
-  <data name="WarnOnExit" xml:space="preserve">
-    <value>Seven Update is currently installing updates. It is highly recommended that you wait until installation is finished. If you would like to still exit, the installation will be aborted and then Seven Update will close.</value>
-  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
@@ -362,5 +359,8 @@
   </data>
   <data name="StopInstallation" xml:space="preserve">
     <value>Stop installation</value>
+  </data>
+  <data name="UpdatesInstalled" xml:space="preserve">
+    <value>The updates were successfully installed</value>
   </data>
 </root>

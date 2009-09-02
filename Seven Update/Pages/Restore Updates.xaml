@@ -2,8 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:effects="clr-namespace:Avalon.Windows.Media.Effects;assembly=AvalonLibrary"
-        xmlns:av="clr-namespace:Avalon.Windows.Controls;assembly=AvalonLibrary" mc:Ignorable="d"
+        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d"
         Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
@@ -23,7 +22,7 @@
                 StrokeThickness="1" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5"
                 Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" av:ListViewSorter.IsListviewSortable="True"
+        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Controls:ListViewSorter.IsListviewSortable="True"
                 Foreground="Black" BorderThickness="0">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
@@ -67,13 +66,9 @@
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore"
                     Padding="5,1" VerticalContentAlignment="Center" Click="btnRestore_Click" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,./Images/Shield.png" Stretch="None" Margin="0,0,2,0"
-                            IsEnabled="True">
-                        <Image.Effect>
-                            <effects:GrayscaleEffect
-                                    DesaturationFactor="{Binding RelativeSource={RelativeSource AncestorType={x:Type Button}, AncestorLevel=1}, Path=IsEnabled}" />
-                        </Image.Effect>
-
+                    <Image Source="pack://application:,,,./Images/ShieldDisabled.png" Stretch="None" Margin="0,0,2,0"
+                            IsEnabled="True" Width="16" Height="16" VerticalAlignment="Center"
+                            HorizontalAlignment="Center" Name="imgShield">
                     </Image>
                     <TextBlock Text="Restore"></TextBlock>
                 </StackPanel>

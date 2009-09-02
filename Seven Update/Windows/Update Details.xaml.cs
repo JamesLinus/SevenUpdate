@@ -1,22 +1,30 @@
-﻿/*Copyright 2007-09 Robert Baker, aka Seven ALive.
-This file is part of Seven Update.
+﻿#region GNU Public License v3
 
-    Seven Update is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+// 
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
-    Seven Update is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#endregion
 
-    You should have received a copy of the GNU General Public License
-    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
+#region
+
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+
+#endregion
 
 namespace SevenUpdate.Windows
 {
@@ -25,13 +33,12 @@ namespace SevenUpdate.Windows
     /// </summary>
     public partial class UpdateDetails : Window
     {
-
         public UpdateDetails()
         {
             InitializeComponent();
         }
 
-        internal bool? ShowDialog(UpdateInformation updateInfo)
+        internal bool? ShowDialog(SUH updateInfo)
         {
             tbUpdateName.Text = updateInfo.Name[0].Value;
             tbUpdateType.Text = updateInfo.Importance.ToString();
@@ -40,41 +47,23 @@ namespace SevenUpdate.Windows
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
-                tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size).ToString();
+                tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size);
             }
-            else
-            {
-                tbStatus.Text = updateInfo.Status.ToString() + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
-            }
-            if (updateInfo.InfoUrl != null)
-                tbMoreInfoURL.Text = updateInfo.InfoUrl;
-            if (updateInfo.HelpUrl != null)
-                tbHelpURL.Text = updateInfo.HelpUrl;
+            else tbStatus.Text = updateInfo.Status + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
+            if (updateInfo.InfoUrl != null) tbMoreInfoURL.Text = updateInfo.InfoUrl;
+            if (updateInfo.HelpUrl != null) tbHelpURL.Text = updateInfo.HelpUrl;
 
-            return base.ShowDialog();
-        }
-        void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            TextBlock textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            TextBlock textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = null;
+            return ShowDialog();
         }
 
         private void tbMoreInfoURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbMoreInfoURL.Text != null)
-                Process.Start(tbMoreInfoURL.Text);
+            if (tbMoreInfoURL.Text != null) Process.Start(tbMoreInfoURL.Text);
         }
 
         private void tbHelpURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbHelpURL.Text != null)
-                Process.Start(tbHelpURL.Text);
+            if (tbHelpURL.Text != null) Process.Start(tbHelpURL.Text);
         }
     }
 }

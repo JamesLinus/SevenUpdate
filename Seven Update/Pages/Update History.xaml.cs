@@ -1,24 +1,35 @@
-﻿/*Copyright 2007-09 Robert Baker, aka Seven ALive.
-This file is part of Seven Update.
+﻿#region GNU Public License v3
 
-    Seven Update is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+// 
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// 
+//    You should have received a copy of the GNU General Public License
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
-    Seven Update is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+#endregion
 
-    You should have received a copy of the GNU General Public License
-    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.*/
-using System;
+#region
+
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Data;
+using System.Windows.Input;
+using SevenUpdate.Controls;
+using SevenUpdate.Windows;
+
+#endregion
 
 namespace SevenUpdate.Pages
 {
@@ -30,9 +41,14 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
+        /// The location of the update history file
+        /// </summary>
+        public static readonly string HistoryFile = Shared.AllUserStore + "History.suh";
+
+        /// <summary>
         /// The list of history items
         /// </summary>
-        ObservableCollection<UpdateInformation> history;
+        private ObservableCollection<SUH> history;
 
         #endregion
 
@@ -46,35 +62,33 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Gets the update history and loads it to the listView
         /// </summary>
-        void GetHistory()
+        private void GetHistory()
         {
-            history = App.GetHistory();
-            listView.ItemsSource = history;
+            history = Shared.Deserialize<ObservableCollection<SUH>>(HistoryFile);
+            if (history == null) return;
 
-            history.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(history_CollectionChanged);
+            listView.ItemsSource = history;
+            history.CollectionChanged += History_CollectionChanged;
             AddSortBinding();
         }
 
-
-
-        void AddSortBinding()
+        private void AddSortBinding()
         {
+            var gv = (GridView) listView.View;
 
-            GridView gv = (GridView)listView.View;
-
-            GridViewColumn col = gv.Columns[0];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
+            var col = gv.Columns[0];
+            ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
 
             col = gv.Columns[1];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Status"));
+            ListViewSorter.SetSortBindingMember(col, new Binding("Status"));
 
             col = gv.Columns[2];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
+            ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
 
             col = gv.Columns[3];
-            Avalon.Windows.Controls.ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
+            ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
 
-            Avalon.Windows.Controls.ListViewSorter.SetCustomSorter(listView, new SevenUpdate.ListViewExtensions.UpdateInformationSorter());
+            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SUHSorter());
         }
 
         #endregion
@@ -88,34 +102,29 @@ namespace SevenUpdate.Pages
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            SevenUpdate.Windows.MainWindow.ns.GoBack();
+            MainWindow.NavService.GoBack();
         }
 
         #region ListView
 
-        void history_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            ListViewExtensions.OnCollectionChanged(e.Action, listView.ItemsSource);
-        }
-
-        void cmsMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (listView.SelectedIndex == -1)
-                e.Cancel = true;
+            // update the view when item change is NOT caused by replacement
+            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            dataView.Refresh();
         }
 
         private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2 && listView.SelectedIndex != -1)
-            {
-                SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
-                details.ShowDialog(history[listView.SelectedIndex]);
-            }
+            if (e.ClickCount != 2 || listView.SelectedIndex == -1) return;
+            var details = new UpdateDetails();
+            details.ShowDialog(history[listView.SelectedIndex]);
         }
 
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            SevenUpdate.Windows.UpdateDetails details = new SevenUpdate.Windows.UpdateDetails();
+            var details = new UpdateDetails();
             details.ShowDialog(history[listView.SelectedIndex]);
         }
 
