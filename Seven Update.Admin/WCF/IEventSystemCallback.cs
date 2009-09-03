@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.ServiceModel;
 
 #endregion
@@ -35,7 +36,7 @@ namespace SevenUpdate.WCF
         void OnInstallDone(int updatesInstalled, int updatesFailed);
 
         [OperationContract(IsOneWay = true)]
-        void OnErrorOccurred(string description, ErrorType type);
+        void OnErrorOccurred(Exception e, ErrorType type);
 
         [OperationContract(IsOneWay = true)]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);

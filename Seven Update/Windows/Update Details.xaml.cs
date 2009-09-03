@@ -40,30 +40,35 @@ namespace SevenUpdate.Windows
 
         internal bool? ShowDialog(SUH updateInfo)
         {
-            tbUpdateName.Text = updateInfo.Name[0].Value;
+            tbUpdateName.Text = Shared.GetLocaleString(updateInfo.Name);
             tbUpdateType.Text = updateInfo.Importance.ToString();
-            tbUpdateDescription.Text = updateInfo.Description[0].Value;
+            tbUpdateDescription.Text = Shared.GetLocaleString(updateInfo.Description);
 
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
                 tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size);
             }
-            else tbStatus.Text = updateInfo.Status + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
-            if (updateInfo.InfoUrl != null) tbMoreInfoURL.Text = updateInfo.InfoUrl;
-            if (updateInfo.HelpUrl != null) tbHelpURL.Text = updateInfo.HelpUrl;
+            else
+                tbStatus.Text = updateInfo.Status + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
+            if (updateInfo.InfoUrl != null)
+                tbMoreInfoURL.Text = updateInfo.InfoUrl;
+            if (updateInfo.HelpUrl != null)
+                tbHelpURL.Text = updateInfo.HelpUrl;
 
             return ShowDialog();
         }
 
         private void tbMoreInfoURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbMoreInfoURL.Text != null) Process.Start(tbMoreInfoURL.Text);
+            if (tbMoreInfoURL.Text != null)
+                Process.Start(tbMoreInfoURL.Text);
         }
 
         private void tbHelpURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbHelpURL.Text != null) Process.Start(tbHelpURL.Text);
+            if (tbHelpURL.Text != null)
+                Process.Start(tbHelpURL.Text);
         }
     }
 }

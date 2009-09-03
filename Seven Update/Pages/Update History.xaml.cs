@@ -65,7 +65,8 @@ namespace SevenUpdate.Pages
         private void GetHistory()
         {
             history = Shared.Deserialize<ObservableCollection<SUH>>(HistoryFile);
-            if (history == null) return;
+            if (history == null)
+                return;
 
             listView.ItemsSource = history;
             history.CollectionChanged += History_CollectionChanged;
@@ -110,14 +111,16 @@ namespace SevenUpdate.Pages
         private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            if (e.Action != NotifyCollectionChangedAction.Replace)
+                return;
             var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             dataView.Refresh();
         }
 
         private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount != 2 || listView.SelectedIndex == -1) return;
+            if (e.ClickCount != 2 || listView.SelectedIndex == -1)
+                return;
             var details = new UpdateDetails();
             details.ShowDialog(history[listView.SelectedIndex]);
         }

@@ -34,7 +34,7 @@ using Microsoft.Win32;
 using SevenUpdate.Properties;
 using SevenUpdate.WCF;
 using SharpBits.Base;
-using Application=System.Windows.Application;
+using Application = System.Windows.Application;
 
 #endregion
 
@@ -80,7 +80,7 @@ namespace SevenUpdate
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
 
         /// <summary>
         /// The update settings for Seven Update
@@ -100,7 +100,7 @@ namespace SevenUpdate
         private static void Main(string[] args)
         {
             bool createdNew;
-            var host = new ServiceHost(typeof (EventService));
+            var host = new ServiceHost(typeof(EventService));
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
                 try
@@ -120,7 +120,8 @@ namespace SevenUpdate
 
                 Shared.Locale = Shared.Locale == null ? "en" : Settings.Locale;
 
-                if (!Directory.Exists(Shared.AllUserStore)) Directory.CreateDirectory(Shared.AllUserStore);
+                if (!Directory.Exists(Shared.AllUserStore))
+                    Directory.CreateDirectory(Shared.AllUserStore);
 
                 NotifyIcon.Icon = Resources.icon;
                 NotifyIcon.Visible = false;
@@ -216,7 +217,7 @@ namespace SevenUpdate
                                 }
                                 if (Environment.OSVersion.Version.Major < 6)
                                 {
-// ReSharper disable PossibleNullReferenceException
+                                    // ReSharper disable PossibleNullReferenceException
                                     Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue( // ReSharper restore PossibleNullReferenceException
                                         "Seven Update Automatic Checking", false);
                                 }
@@ -268,8 +269,10 @@ namespace SevenUpdate
 
                                 File.Delete(Shared.UserStore + "HnH Update.xml");
 
-                                if (show.Count == 0) File.Delete(Shared.HiddenFile);
-                                else Shared.Serialize(show, Shared.HiddenFile);
+                                if (show.Count == 0)
+                                    File.Delete(Shared.HiddenFile);
+                                else
+                                    Shared.Serialize(show, Shared.HiddenFile);
 
                                 #endregion
 
@@ -300,7 +303,8 @@ namespace SevenUpdate
                                     var app = new Application();
                                     app.Run();
                                 }
-                                else Environment.Exit(0);
+                                else
+                                    Environment.Exit(0);
 
                                 #endregion
 
@@ -321,7 +325,8 @@ namespace SevenUpdate
                                         Shared.ReportError(e.Message, Shared.AllUserStore);
                                     }
                                 }
-                                else Environment.Exit(0);
+                                else
+                                    Environment.Exit(0);
 
                                 #endregion
 
@@ -357,7 +362,8 @@ namespace SevenUpdate
         /// <param name="filter">Indicates how to update the icon depending on the event that happened</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
-            if (!NotifyIcon.Visible) return;
+            if (!NotifyIcon.Visible)
+                return;
             switch (filter)
             {
                 case NotifyType.DownloadStarted:
@@ -369,7 +375,7 @@ namespace SevenUpdate
                     NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
                     NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), // ReSharper disable AssignNullToNotNullAttribute
                                               RM.GetString("UpdatesDownloadedViewThem"), ToolTipIcon.Info);
-// ReSharper restore AssignNullToNotNullAttribute
+                    // ReSharper restore AssignNullToNotNullAttribute
                     break;
                 case NotifyType.InstallStarted:
                     NotifyIcon.Text = RM.GetString("InstallingUpdates") + "...";
@@ -380,7 +386,7 @@ namespace SevenUpdate
                     NotifyIcon.Click += RunSevenUpdate;
                     NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), // ReSharper disable AssignNullToNotNullAttribute
                                               RM.GetString("UpdatesFoundViewThem"), ToolTipIcon.Info);
-// ReSharper restore AssignNullToNotNullAttribute
+                    // ReSharper restore AssignNullToNotNullAttribute
                     break;
             }
         }
@@ -443,7 +449,7 @@ namespace SevenUpdate
 
                     fs.AddAccessRule(new FileSystemAccessRule(users, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
                 }
-                catch {}
+                catch { }
 
                 fs.PurgeAccessRules(user);
 
@@ -451,9 +457,9 @@ namespace SevenUpdate
                 {
                     File.SetAccessControl(file, fs);
                 }
-                catch {}
+                catch { }
             }
-            catch {}
+            catch { }
         }
 
         #endregion
@@ -501,14 +507,16 @@ namespace SevenUpdate
         {
             if (e.Applications.Count > 0)
             {
-                if (Settings.AutoOption == AutoUpdateOption.Notify) Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
+                if (Settings.AutoOption == AutoUpdateOption.Notify)
+                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
                     Download.DownloadUpdates(e.Applications, JobPriority.Normal);
                 }
             }
-            else Environment.Exit(0);
+            else
+                Environment.Exit(0);
         }
 
         #endregion

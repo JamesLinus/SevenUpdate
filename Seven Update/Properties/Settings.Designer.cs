@@ -25,10 +25,9 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Never")]
-        public string lastUpdateCheck {
+        public global::System.DateTime lastUpdateCheck {
             get {
-                return ((string)(this["lastUpdateCheck"]));
+                return ((global::System.DateTime)(this["lastUpdateCheck"]));
             }
             set {
                 this["lastUpdateCheck"] = value;
@@ -37,10 +36,9 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Never")]
-        public string lastInstall {
+        public global::System.DateTime lastInstall {
             get {
-                return ((string)(this["lastInstall"]));
+                return ((global::System.DateTime)(this["lastInstall"]));
             }
             set {
                 this["lastInstall"] = value;
@@ -61,10 +59,9 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Never")]
-        public string lastListUpdate {
+        public global::System.DateTime lastListUpdate {
             get {
-                return ((string)(this["lastListUpdate"]));
+                return ((global::System.DateTime)(this["lastListUpdate"]));
             }
             set {
                 this["lastListUpdate"] = value;

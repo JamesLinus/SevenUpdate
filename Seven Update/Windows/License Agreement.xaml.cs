@@ -112,14 +112,17 @@ namespace SevenUpdate.Windows
         {
             licenses = new Collection<EULA>();
 
-            if (App.Applications == null) return;
+            if (App.Applications == null)
+                return;
             for (var x = 0; x < App.Applications.Count; x++)
             {
                 for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
-                    if (App.Applications[x].Updates[y].LicenseUrl == null) continue;
-                    if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0) continue;
-                    var sla = new EULA {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = App.Applications[x].Updates[y].Name[0].Value, AppIndex = x, UpdateIndex = y};
+                    if (App.Applications[x].Updates[y].LicenseUrl == null)
+                        continue;
+                    if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
+                        continue;
+                    var sla = new EULA {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
 
                     licenses.Add(sla);
                 }
@@ -134,8 +137,10 @@ namespace SevenUpdate.Windows
         {
             GetLicenseAgreements();
 
-            if (licenses.Count < 1 || licenses == null) return true;
-            if (licenses.Count > 1) tbAction.Text = App.RM.GetString("Next");
+            if (licenses.Count < 1 || licenses == null)
+                return true;
+            if (licenses.Count > 1)
+                tbAction.Text = App.RM.GetString("Next");
 
             return ShowDialog();
         }
@@ -186,7 +191,8 @@ namespace SevenUpdate.Windows
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
             Cursor = Cursors.Arrow;
-            if (licenses.Count == 1 && !App.IsAdmin) imgAdminShield.Visibility = Visibility.Visible;
+            if (licenses.Count == 1 && !App.IsAdmin)
+                imgAdminShield.Visibility = Visibility.Visible;
         }
 
         #region Buttons
@@ -204,13 +210,16 @@ namespace SevenUpdate.Windows
 
         private void radioAccept_Checked(object sender, RoutedEventArgs e)
         {
-            if (rbAccept.IsChecked == true || rbDecline.IsChecked == true) btnAction.IsEnabled = true;
-            else btnAction.IsEnabled = false;
+            if (rbAccept.IsChecked == true || rbDecline.IsChecked == true)
+                btnAction.IsEnabled = true;
+            else
+                btnAction.IsEnabled = false;
         }
 
         private void rbDecline_Checked(object sender, RoutedEventArgs e)
         {
-            if (App.Applications.Count != 1) return;
+            if (App.Applications.Count != 1)
+                return;
             btnAction.IsEnabled = rbDecline.IsChecked != true;
         }
 
@@ -219,7 +228,8 @@ namespace SevenUpdate.Windows
             if (rbDecline.IsChecked == true)
             {
                 App.Applications[licenses[index].AppIndex].Updates.RemoveAt(licenses[index].UpdateIndex);
-                if (App.Applications[licenses[index].AppIndex].Updates.Count == 0) App.Applications.RemoveAt(licenses[index].AppIndex);
+                if (App.Applications[licenses[index].AppIndex].Updates.Count == 0)
+                    App.Applications.RemoveAt(licenses[index].AppIndex);
             }
             index++;
 
@@ -240,9 +250,11 @@ namespace SevenUpdate.Windows
                 DialogResult = App.Applications.Count > 0;
                 Close();
             }
-            if (index != licenses.Count - 1) return;
+            if (index != licenses.Count - 1)
+                return;
             tbAction.Text = App.RM.GetString("Finish");
-            if (!App.IsAdmin && App.Applications.Count > 0) imgAdminShield.Visibility = Visibility.Visible;
+            if (!App.IsAdmin && App.Applications.Count > 0)
+                imgAdminShield.Visibility = Visibility.Visible;
         }
 
         #endregion

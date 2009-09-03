@@ -65,7 +65,7 @@
                 Grid.Row="2" Margin="0,0,10,0">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore"
                     Padding="5,1" VerticalContentAlignment="Center" Click="btnRestore_Click" IsEnabled="False">
-                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,./Images/ShieldDisabled.png" Stretch="None" Margin="0,0,2,0"
                             IsEnabled="True" Width="16" Height="16" VerticalAlignment="Center"
                             HorizontalAlignment="Center" Name="imgShield">

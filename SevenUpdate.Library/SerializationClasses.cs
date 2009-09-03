@@ -20,10 +20,9 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using Microsoft.Win32;
 
 #endregion
@@ -38,24 +37,27 @@ namespace SevenUpdate
     /// <summary>
     /// Configuration options
     /// </summary>
-    [DataContract(Name = "Config", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (AutoUpdateOption))]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot("settings", Namespace = "http://sevenupdate.sourceforge.net")]
     public struct Config
     {
         /// <summary>
         /// Specifies which update setting Seven Update should use
         /// </summary>
-        [DataMember(Name = "Auto")] public AutoUpdateOption AutoOption { get; set; }
+        [XmlElement("auto")]
+        public AutoUpdateOption AutoOption { get; set; }
 
         /// <summary>
         /// Specifes if recommended updates should be included when download/install
         /// </summary>\
-        [DataMember(Name = "IncludeRecommended")] public bool IncludeRecommended { get; set; }
+        [XmlElement("includeRecommended")]
+        public bool IncludeRecommended { get; set; }
 
         /// <summary>
         /// Specifies the langauge Seven Update uses
         /// </summary>
-        [DataMember(Name = "Locale")] public string Locale { get; set; }
+        [XmlElement("locale")]
+        public string Locale { get; set; }
     }
 
     #endregion
@@ -65,28 +67,27 @@ namespace SevenUpdate
     /// <summary>
     /// Automatic Update option Seven Update can use
     /// </summary>
-    [DataContract(Name = "Auto", Namespace = "http://sevenupdate.sourceforge.net")]
     public enum AutoUpdateOption
     {
         /// <summary>
         /// Download and Installs updates automatically
         /// </summary>
-        [EnumMember] Install,
+        Install,
 
         /// <summary>
         /// Downloads Updates automatically
         /// </summary>
-        [EnumMember] Download,
+        Download,
 
         /// <summary>
         /// Only checks and notifies the user of updates
         /// </summary>
-        [EnumMember] Notify,
+        Notify,
 
         /// <summary>
         /// No automatic checking
         /// </summary>
-        [EnumMember] Never
+        Never
     }
 
     #endregion
@@ -95,18 +96,33 @@ namespace SevenUpdate
 
     #region Locale Classes
 
-    [DataContract(Namespace = "http://sevenupdate.sourceforge.net")]
-    public class LocaleString
+    public class LocaleString : INotifyPropertyChanged
     {
         /// <summary>
         /// an ISO language code
         /// </summary>
-        [DataMember(IsRequired = true)] public string lang { get; set; }
+        [XmlAttribute("lang", Namespace = "")]
+        public string Lang { get; set; }
 
         /// <summary>
         /// The value of the string
         /// </summary>
-        [DataMember(IsRequired = true)] public string Value { get; set; }
+        [XmlAttribute("value", Namespace = "")]
+        public string Value { get; set; }
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
 
     #endregion
@@ -116,71 +132,65 @@ namespace SevenUpdate
     /// <summary>
     /// Seven Update Application information
     /// </summary>
-    [DataContract(Name = "Application", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (LocaleString))]
+    [XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUA : INotifyPropertyChanged
     {
         /// <summary>
         /// The application name
         /// </summary>
-        [DataMember(Name = "ApplicationName", IsRequired = true)] public ObservableCollection<LocaleString> ApplicationName { get; set; }
+        [XmlElement("name")]
+        public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         /// Gets or Sets release information about the update
         /// </summary>
-        [DataMember(Name = "Description")] public ObservableCollection<LocaleString> Description { get; set; }
+        [XmlElement("description")]
+        public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The directory where the application is installed
         /// </summary>
-        [DataMember(Name = "Directory", IsRequired = true)] public string Directory { get; set; }
-
-        /// <summary>
-        /// Indicates if the SUA is enabled with Seven Update (SDK does not use this value)
-        /// </summary>
-        [DataMember(Name = "IsEnabled")]
-        public bool Enabled { get; set; }
+        [XmlAttribute("directory")]
+        public string Directory { get; set; }
 
         /// <summary>
         /// Specifies if the application is 64 bit
         /// </summary>
-        [DataMember(Name = "Is64Bit")] public bool Is64Bit { get; set; }
+        [XmlAttribute("is64Bit")]
+        public bool Is64Bit { get; set; }
+
+        /// <summary>
+        /// Indicates if the SUA is enabled with Seven Update (SDK does not use this value)
+        /// </summary>
+        [XmlAttribute("isEnabled")]
+        public bool IsEnabled { get; set; }
 
         /// <summary>
         /// <summary>
         /// The publisher of the application
         /// </summary>
-        [DataMember(Name = "Publisher")] public ObservableCollection<LocaleString> Publisher { get; set; }
+        [XmlElement("publisher")]
+        public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         /// The SUI file of the application
         /// </summary>
-        [DataMember(Name = "Source", IsRequired = true)] public string Source { get; set; }
+        [XmlAttribute("source")]
+        public string Source { get; set; }
 
-        #region INotifyPropertyChanged Members
+        #region Implementation of INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        //[OnDeserialized]
-        //internal void OnDeserializedMethod(StreamingContext context)
-        //{
-        //    if (Publisher != null) Publisher = Publisher.ToList();
-
-        //    if (Description != null) Description = Description.ToList();
-
-        //    if (ApplicationName != null) ApplicationName = ApplicationName.ToList();
-        //}
-
-        // Create the OnPropertyChanged method to raise the event
 
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
         }
+
+        #endregion
     }
 
     #endregion
@@ -192,112 +202,108 @@ namespace SevenUpdate
     /// <summary>
     /// The action to perform on the file
     /// </summary>
-    [DataContract(Name = "Action", Namespace = "http://sevenupdate.sourceforge.net")]
     public enum FileAction
     {
         /// <summary>
         /// Update the file
         /// </summary>
-        [EnumMember] Update,
+        Update,
 
         /// <summary>
         /// Updates and executes the file
         /// </summary>
-        [EnumMember] UpdateAndExecute,
+        UpdateAndExecute,
 
         /// <summary>
         /// Updates and registers the file
         /// </summary>
-        [EnumMember] UpdateAndRegister,
+        UpdateAndRegister,
 
         /// <summary>
         /// Unregisters dll and deletes the file
         /// </summary>
-        [EnumMember] UnregisterAndDelete,
+        UnregisterAndDelete,
 
         /// <summary>
         /// Executes then deletes the file
         /// </summary>
-        [EnumMember] ExecuteAndDelete,
+        ExecuteAndDelete,
 
         /// <summary>
         /// Deletes the file
         /// </summary>
-        [EnumMember] Delete
+        Delete
     }
 
     /// <summary>
     /// Contains the UpdateType of the update
     /// </summary>
-    [DataContract(Name = "Importance", Namespace = "http://sevenupdate.sourceforge.net")]
     public enum Importance
     {
         /// <summary>
         /// Important update
         /// </summary>
-        [EnumMember] Important,
+        Important,
 
         /// <summary>
         /// Locale or language
         /// </summary>
-        [EnumMember] Locale,
+        Locale,
 
         /// <summary>
         /// Optional update
         /// </summary>
-        [EnumMember] Optional,
+        Optional,
 
         /// <summary>
         /// Recommended update
         /// </summary>
-        [EnumMember] Recommended
+        Recommended
     }
 
     /// <summary>
     /// The current status of the update
     /// </summary>
-    [DataContract(Name = "Status", Namespace = "http://sevenupdate.sourceforge.net")]
     public enum UpdateStatus
     {
         /// <summary>
         /// Indicates that the update installation failed
         /// </summary>
-        [EnumMember] Failed,
+        Failed,
 
         /// <summary>
         /// Indicates that the update is hidden
         /// </summary>
-        [EnumMember] Hidden,
+        Hidden,
 
         /// <summary>
         /// Indicates that the update is visible
         /// </summary>
-        [NonSerialized] Visible,
+        Visible,
 
         /// <summary>
         /// Indicates that the update installation succeeded
         /// </summary>
-        [EnumMember] Successful
+        Successful
     }
 
     /// <summary>
     /// Contains the Actions you can perform to the registry
     /// </summary>
-    [DataContract(Name = "Action", Namespace = "http://sevenupdate.sourceforge.net")]
     public enum RegistryAction
     {
         /// <summary>
         /// Adds a registry entry to the machine
         /// </summary>
-        [EnumMember] Add,
+        Add,
         /// <summary>
         /// Deletes a registry key on the machine
         /// </summary>
-        [EnumMember] DeleteKey,
+        DeleteKey,
         /// <summary>
         /// Deletes a value of a registry key on the machine
         /// </summary>
-        [EnumMember] DeleteValue
+        DeleteValue
     }
 
     #endregion
@@ -307,320 +313,367 @@ namespace SevenUpdate
     /// <summary>
     /// Application info
     /// </summary>
-    [DataContract(Name = "Application", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (LocaleString))]
-    [KnownType(typeof (Update))]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUI : INotifyPropertyChanged
     {
+        #region Required Properties
+
         /// <summary>
         /// The application main directory, usually in Program Files
         /// </summary>
-        [DataMember(Name = "Directory", IsRequired = true)] public string Directory { get; set; }
-
-        /// <summary>
-        /// The help url of the update: Optional
-        /// </summary>
-        [DataMember(Name = "HelpUrl")] public string HelpUrl { get; set; }
+        [XmlAttribute("directory")]
+        public string Directory { get; set; }
 
         /// <summary>
         /// Specifies if the application is 64 bit
         /// </summary>
-        [DataMember(Name = "Is64Bit")] public bool Is64Bit { get; set; }
+        [XmlAttribute("is64Bit")]
+        public bool Is64Bit { get; set; }
 
         /// <summary>
         /// The company or developer of the Application
         /// </summary>
-        [DataMember(Name = "Publisher")] public ObservableCollection<LocaleString> Publisher { get; set; }
+        [XmlElement("publisher")]
+        public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         /// The Wwebsite of the company or developer
         /// </summary>
-        [DataMember(Name = "PublisherUrl")] public string PublisherUrl { get; set; }
+        [XmlAttribute("publisherUrl")]
+        public string PublisherUrl { get; set; }
 
         /// <summary>
-        /// ObservableCollection of updates for the application
+        /// The help url of the update: Optional
         /// </summary>
-        [DataMember(Name = "Update", IsRequired = true)] public ObservableCollection<Update> Updates { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        [XmlAttribute("helpUrl")]
+        public string HelpUrl { get; set; }
 
         #endregion
 
-        //[OnDeserialized] internal void OnDeserializedMethod(StreamingContext context)
-        //{
-        //    if (Publisher != null) Publisher = Publisher.ToList();
+        #region Required Sub-Properties
 
-        //    if (Updates != null) Updates = Updates.ToList();
-        //}
+        /// <summary>
+        /// Collection of updates for the application
+        /// </summary>
+        [XmlElement("update")]
+        public ObservableCollection<Update> Updates { get; set; }
 
-        // Create the OnPropertyChanged method to raise the event
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
         }
-    }
-
-    /// <summary>
-    /// A shortcut to be created within an update
-    /// </summary>
-    [DataContract(Name = "Shortcut", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (LocaleString))]
-    public class Shortcut : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Any arguments to be used with the shortcut
-        /// </summary>
-        [DataMember(Name = "Arguments")] public string Arguments { get; set; }
-
-        /// <summary>
-        /// Description of the shortcut
-        /// </summary>
-        [DataMember(Name = "Description")] public ObservableCollection<LocaleString> Description { get; set; }
-
-        /// <summary>
-        /// The fullpath to the icon or exe containing an icon
-        /// </summary>
-        [DataMember(Name = "Icon")] public string Icon { get; set; }
-
-        /// <summary>
-        /// The location of where the shortcut is to be stored.
-        /// </summary>
-        [DataMember(Name = "Location", IsRequired = true)] public string Location { get; set; }
-
-        /// <summary>
-        /// The fullpath of the target to the shortcut.
-        /// </summary>
-        [DataMember(Name = "Target", IsRequired = true)] public string Target { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-
-        //[OnDeserialized] internal void OnDeserializedMethod(StreamingContext context)
-        //{
-        //    if (Description != null) Description = Description.ToList();
-        //}
-
-        // Create the OnPropertyChanged method to raise the event
-
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
-        }
-    }
-
-    /// <summary>
-    /// A registry entry within an update
-    /// </summary>
-    [DataContract(Name = "RegistryItem", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (RegistryAction))]
-    public class RegistryItem : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// The action to perform to the registry item
-        /// </summary>
-        [DataMember(Name = "Action", IsRequired = true)] public RegistryAction Action { get; set; }
-
-        /// <summary>
-        ///  The data of the value in the specified key
-        /// </summary>
-        [DataMember(Name = "Data")] public string Data { get; set; }
-
-        /// <summary>
-        /// The hive of the current registry item
-        /// </summary>
-        [DataMember(Name = "Hive")] public RegistryHive Hive { get; set; }
-
-        /// <summary>
-        /// The Keypath of the current registry item
-        /// </summary>
-        [DataMember(Name = "Key", IsRequired = true)] public string Key { get; set; }
-
-        /// <summary>
-        /// The ValueKind of the value in the specified key
-        /// </summary>
-        [DataMember(Name = "ValueKind")] public RegistryValueKind ValueKind { get; set; }
-
-        /// <summary>
-        /// Name of the Value in the specified key
-        /// </summary>
-        [DataMember(Name = "KeyValue")] public string KeyValue { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        // Create the OnPropertyChanged method to raise the event
-
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
-        }
-    }
-
-    /// <summary>
-    /// Information about a file within an update
-    /// </summary>
-    [DataContract(Name = "File", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (FileAction))]
-    public class UpdateFile : INotifyPropertyChanged
-    {
-        /// <summary>
-        /// The action to perform on a file
-        /// </summary>
-        [DataMember(Name = "Action", IsRequired = true)] public FileAction Action { get; set; }
-
-        /// <summary>
-        /// Commandline arguments for the file
-        /// </summary>
-        [DataMember(Name = "Arguments")] public string Arguments { get; set; }
-
-        /// <summary>
-        /// The destination location of the current file with the filename
-        /// </summary>
-        [DataMember(Name = "Destination", IsRequired = true)] public string Destination { get; set; }
-
-        /// <summary>
-        /// The SHA1 hash of the current file
-        /// </summary>
-        [DataMember(Name = "Hash", IsRequired = true)] public string Hash { get; set; }
-
-        /// <summary>
-        /// File size in bytes
-        /// </summary>
-        [DataMember(Name = "Size")] public ulong Size { get; set; }
-
-        /// <summary>
-        /// The source location of the current file with the filename
-        /// </summary>
-        [DataMember(Name = "Source", IsRequired = true)] public string Source { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        // Create the OnPropertyChanged method to raise the event
-
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
-        }
     }
 
     /// <summary>
     /// Information on how to install a program update
     /// </summary>
-    [DataContract(Name = "Update", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (LocaleString))]
-    [KnownType(typeof (UpdateFile))]
-    [KnownType(typeof (Importance))]
+    [XmlType("update", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
     public class Update : INotifyPropertyChanged
     {
+        #region Required Properties
+
+        /// <summary>
+        /// The name of the update
+        /// </summary>
+        [XmlElement("name")]
+        public ObservableCollection<LocaleString> Name { get; set; }
+
         /// <summary>
         /// Release information about the update
         /// </summary>
-        [DataMember(Name = "Description")] public ObservableCollection<LocaleString> Description { get; set; }
+        [XmlElement("description")]
+        public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The default download directory where the updates files are stored
         /// </summary>
-        [DataMember(Name = "DownloadDirectory", IsRequired = true)] public string DownloadDirectory { get; set; }
-
-        /// <summary>
-        /// The files of the current update
-        /// </summary>
-        [DataMember(Name = "File")] public ObservableCollection<UpdateFile> Files { get; set; }
+        [XmlAttribute("downloadUrl")]
+        public string DownloadUrl { get; set; }
 
         /// <summary>
         /// The update type of the update: Important, Recommended, Optional, Locale, Installation.
         /// </summary>
-        [DataMember(Name = "Importance", IsRequired = true)] public Importance Importance { get; set; }
-
-        /// <summary>
-        /// The information/changelog url of the update: Optional
-        /// </summary>
-        [DataMember(Name = "InfoUrl")] public string InfoUrl { get; set; }
-
-        /// <summary>
-        /// The Software License Agreement Url
-        /// </summary>
-        [DataMember(Name = "LicenseUrl")] public string LicenseUrl { get; set; }
-
-        /// <summary>
-        /// The registry entries of the current update
-        /// </summary>
-        [DataMember(Name = "RegistryItem")] public ObservableCollection<RegistryItem> RegistryItems { get; set; }
+        [XmlAttribute("importance")]
+        public Importance Importance { get; set; }
 
         /// <summary>
         /// The date when the update was released
         /// </summary>
-        [DataMember(Name = "ReleaseDate", IsRequired = true)] public string ReleaseDate { get; set; }
+        [XmlAttribute("releaseDate")]
+        public string ReleaseDate { get; set; }
+
+        #endregion
+
+        #region Optional Properties
+
+        /// <summary>
+        /// The information/changelog url of the update: Optional
+        /// </summary>
+        [XmlAttribute("infoUrl")]
+        public string InfoUrl { get; set; }
+
+        /// <summary>
+        /// The Software License Agreement Url
+        /// </summary>
+        [XmlAttribute("licenseUrl")]
+        public string LicenseUrl { get; set; }
+
+        #endregion
+
+        #region Optional SubProperties
+
+        /// <summary>
+        /// The files of the current update
+        /// </summary>
+        [XmlElement("file")]
+        public ObservableCollection<UpdateFile> Files { get; set; }
+
+        /// <summary>
+        /// The registry entries of the current update
+        /// </summary>
+        [XmlElement("registryItem")]
+        public ObservableCollection<RegistryItem> RegistryItems { get; set; }
+
+        /// <summary>
+        /// The shortcuts to create for the update
+        /// </summary>
+        [XmlElement("shortcut")]
+        public ObservableCollection<Shortcut> Shortcuts { get; set; }
+
+        #endregion
+
+        #region UI Properties
 
         /// <summary>
         /// Indicates if the update is selected (not used in the SDK)
         /// </summary>
+        [XmlIgnore]
         public bool Selected { get; set; }
 
         /// <summary>
         /// The download size of the update in bytes, not used by the SDK
         /// </summary>
+        [XmlIgnore]
         public ulong Size { get; set; }
-
-        /// <summary>
-        /// The name of the update
-        /// </summary>
-        [DataMember(Name = "Name", IsRequired = true)] public ObservableCollection<LocaleString> Name { get; set; }
-
-        /// <summary>
-        /// The shortcuts to create for the update
-        /// </summary>
-        [DataMember(Name = "Shortcut")] public ObservableCollection<Shortcut> Shortcuts { get; set; }
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        //[OnDeserialized] 
-        //internal void OnDeserializedMethod(StreamingContext context)
-        //{
-        //    if (RegistryItems != null) RegistryItems = RegistryItems.ToList();
+        #region Implementation of INotifyPropertyChanged
 
-        //    if (Shortcuts != null) Shortcuts = Shortcuts.ToList();
-
-        //    if (Files != null) Files = Files.ToList();
-
-        //    if (Description != null) Description = Description.ToList();
-
-        //    if (Name != null) Name = Name.ToList();
-        //}
-
-        // Create the OnPropertyChanged method to raise the event
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
         }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Information about a file within an update
+    /// </summary>
+    [XmlType("file", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    public class UpdateFile : INotifyPropertyChanged
+    {
+        #region Required Properties
+
+        /// <summary>
+        /// The action to perform on a file
+        /// </summary>
+        [XmlAttribute("action")]
+        public FileAction Action { get; set; }
+
+        /// <summary>
+        /// The source location of the current file with the filename
+        /// </summary>
+        [XmlAttribute("source")]
+        public string Source { get; set; }
+
+        /// <summary>
+        /// The destination location of the current file with the filename
+        /// </summary>
+        [XmlAttribute("destination")]
+        public string Destination { get; set; }
+
+        /// <summary>
+        /// The SHA1 hash of the current file
+        /// </summary>
+        [XmlAttribute("hash")]
+        public string Hash { get; set; }
+
+        /// <summary>
+        /// File size in bytes
+        /// </summary>
+        [XmlAttribute("size")]
+        public ulong Size { get; set; }
+
+        #endregion
+
+        #region Optional Properties
+
+        /// <summary>
+        /// Commandline arguments for the file
+        /// </summary>
+        [XmlAttribute("args")]
+        public string Args { get; set; }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
+    }
+
+
+    /// <summary>
+    /// A registry entry within an update
+    /// </summary>
+    [XmlType("registryItem", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    public class RegistryItem : INotifyPropertyChanged
+    {
+        #region Required Properties
+
+        /// <summary>
+        /// The action to perform to the registry item
+        /// </summary>
+        [XmlAttribute("action")]
+        public RegistryAction Action { get; set; }
+
+        /// <summary>
+        /// The hive of the current registry item
+        /// </summary>
+        [XmlAttribute("hive")]
+        public RegistryHive Hive { get; set; }
+
+        /// <summary>
+        /// The Keypath of the current registry item
+        /// </summary>
+        [XmlAttribute("key")]
+        public string Key { get; set; }
+
+        #endregion
+
+        #region Optional Properties
+
+        /// <summary>
+        /// Name of the Value in the specified key
+        /// </summary>
+        [XmlAttribute("keyValue")]
+        public string KeyValue { get; set; }
+
+        /// <summary>
+        /// The ValueKind of the value in the specified key
+        /// </summary>
+        [XmlAttribute("valueKind")]
+        public RegistryValueKind ValueKind { get; set; }
+
+        /// <summary>
+        ///  The data of the value in the specified key
+        /// </summary>
+        [XmlAttribute("data")]
+        public string Data { get; set; }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
+    }
+
+
+    /// <summary>
+    /// A shortcut to be created within an update
+    /// </summary>
+    [XmlType("shortcut", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    public class Shortcut : INotifyPropertyChanged
+    {
+        #region Required Properties
+
+        /// <summary>
+        /// The location of where the shortcut is to be stored.
+        /// </summary>
+        [XmlAttribute("location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// The fullpath of the target to the shortcut.
+        /// </summary>
+        [XmlAttribute("target")]
+        public string Target { get; set; }
+
+        #endregion
+
+        #region Optional Properties
+
+        /// <summary>
+        /// Any arguments to be used with the shortcut
+        /// </summary>
+        [XmlAttribute("arguments")]
+        public string Arguments { get; set; }
+
+        /// <summary>
+        /// Description of the shortcut
+        /// </summary>
+        [XmlElement("description")]
+        public ObservableCollection<LocaleString> Description { get; set; }
+
+        /// <summary>
+        /// The fullpath to the icon or exe containing an icon
+        /// </summary>
+        [XmlAttribute("icon")]
+        public string Icon { get; set; }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
 
     #endregion
@@ -632,90 +685,97 @@ namespace SevenUpdate
     /// <summary>
     /// Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [DataContract(Name = "Update", Namespace = "http://sevenupdate.sourceforge.net")]
-    [KnownType(typeof (Importance))]
-    [KnownType(typeof (LocaleString))]
-    [KnownType(typeof (UpdateStatus))]
+    [XmlType(AnonymousType = true)]
+    [XmlRoot("update", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUH : INotifyPropertyChanged
     {
-        /// <summary>
-        /// A description of the update, usually list new features or changes the update brings.
-        /// </summary>
-        [DataMember(Name = "Description")] public ObservableCollection<LocaleString> Description { get; set; }
-
-        /// <summary>
-        /// The help url of the update: Optional
-        /// </summary>
-        [DataMember(Name = "HelpUrl")] public string HelpUrl { get; set; }
-
-        /// <summary>
-        /// The update type of the update: Critical, Recommended, Optional, Locale
-        /// </summary>
-        [DataMember(Name = "Importance", IsRequired = true)] public Importance Importance { get; set; }
-
-        /// <summary>
-        /// The information/changelog url of the update: Optional
-        /// </summary>
-        [DataMember(Name = "InfoUrl")] public string InfoUrl { get; set; }
-
-        /// <summary>
-        /// The date when the update was installed
-        /// </summary>
-        [DataMember(Name = "InstallDate")] public string InstallDate { get; set; }
-
-        /// <summary>
-        /// The Publisher of the update/application
-        /// </summary>
-        [DataMember(Name = "Publisher")] public ObservableCollection<LocaleString> Publisher { get; set; }
-
-        /// <summary>
-        /// The website of the publisher
-        /// </summary>
-        [DataMember(Name = "PublisherUrl")] public string PublisherUrl { get; set; }
-
-        /// <summary>
-        /// The date when the update was released
-        /// </summary>
-        [DataMember(Name = "ReleaseDate", IsRequired = true)] public string ReleaseDate { get; set; }
-
-        /// <summary>
-        /// The full size of the update
-        /// </summary>
-        [DataMember(Name = "Size")] public ulong Size { get; set; }
-
-        /// <summary>
-        /// The current status of the update
-        /// </summary>
-        [DataMember(Name = "Status", IsRequired = true)] public UpdateStatus Status { get; set; }
+        #region Required Properties
 
         /// <summary>
         /// The name of the update
         /// </summary>
-        [DataMember(Name = "Name", IsRequired = true)] public ObservableCollection<LocaleString> Name { get; set; }
+        [XmlElement("name")]
+        public ObservableCollection<LocaleString> Name { get; set; }
 
-        #region INotifyPropertyChanged Members
+        /// <summary>
+        /// A description of the update, usually list new features or changes the update brings.
+        /// </summary>
+        [XmlElement("description")]
+        public ObservableCollection<LocaleString> Description { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// The update type of the update: Critical, Recommended, Optional, Locale
+        /// </summary>
+        [XmlAttribute("importance")]
+        public Importance Importance { get; set; }
+
+        /// <summary>
+        /// The current status of the update
+        /// </summary>
+        [XmlAttribute("status")]
+        public UpdateStatus Status { get; set; }
+
+        /// <summary>
+        /// The date when the update was released
+        /// </summary>
+        [XmlAttribute("releaseDate")]
+        public string ReleaseDate { get; set; }
+
+        /// <summary>
+        /// The full size of the update
+        /// </summary>
+        [XmlAttribute("size")]
+        public ulong Size { get; set; }
+
+        /// <summary>
+        /// The Publisher of the update/application
+        /// </summary>
+        [XmlElement("publisher")]
+        public ObservableCollection<LocaleString> Publisher { get; set; }
+
+        /// <summary>
+        /// The website of the publisher
+        /// </summary>
+        [XmlAttribute("publisherUrl")]
+        public string PublisherUrl { get; set; }
 
         #endregion
 
-        //[OnDeserialized] internal void OnDeserializedMethod(StreamingContext context)
-        //{
-        //    if (Publisher != null) Publisher = Publisher.ToList();
+        #region Optional Properties
 
-        //    if (Description != null) Description = Description.ToList();
+        /// <summary>
+        /// The help url of the update: Optional
+        /// </summary>
+        [XmlAttribute("helpUrl")]
+        public string HelpUrl { get; set; }
 
-        //    if (Name != null) Name = Name.ToList();
-        //}
+        /// <summary>
+        /// The information/changelog url of the update: Optional
+        /// </summary>
+        [XmlAttribute("infoUrl")]
+        public string InfoUrl { get; set; }
 
-        // Create the OnPropertyChanged method to raise the event
+        /// <summary>
+        /// The date when the update was installed
+        /// </summary>
+        [XmlAttribute("installDate")]
+        public string InstallDate { get; set; }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
-            if (handler != null) handler(this, new PropertyChangedEventArgs(name));
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
         }
+
+        #endregion
     }
 
     #endregion

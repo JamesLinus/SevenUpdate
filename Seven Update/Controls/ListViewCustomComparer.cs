@@ -55,9 +55,11 @@ namespace SevenUpdate.Controls
             var result = new List<string>();
             var temp = new Stack<string>();
 
-            foreach (var col in SortColumns.Keys) temp.Push(col);
+            foreach (var col in SortColumns.Keys)
+                temp.Push(col);
 
-            while (temp.Count > 0) result.Add(temp.Pop());
+            while (temp.Count > 0)
+                result.Add(temp.Pop());
 
             return result;
         }

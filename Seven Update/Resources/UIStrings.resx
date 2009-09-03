@@ -363,4 +363,7 @@
   <data name="UpdatesInstalled" xml:space="preserve">
     <value>The updates were successfully installed</value>
   </data>
+  <data name="Never" xml:space="preserve">
+    <value>Never</value>
+  </data>
 </root>

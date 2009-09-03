@@ -32,6 +32,16 @@ namespace SevenUpdate
         /// <summary>
         /// Invokes a Method to run on the UI thread
         /// </summary>
+        /// <param name="dispatcher">the dispatcher object</param>
+        /// <param name="method">The method to invoke</param>
+        public static void BeginInvoke(this Dispatcher dispatcher, Action method)
+        {
+            dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
+        }
+
+        /// <summary>
+        /// Invokes a Method to run on the UI thread
+        /// </summary>
         /// <typeparam name="T">The parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>
         /// <param name="method">The method to invoke</param>

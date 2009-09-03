@@ -30,7 +30,7 @@ using System.Windows.Media;
 
 namespace SevenUpdate.Converters
 {
-    [ValueConversion(typeof (Brush), typeof (bool))]
+    [ValueConversion(typeof(Brush), typeof(bool))]
     public class BrushToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -51,7 +51,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a string to a localized string
     /// </summary>
-    [ValueConversion(typeof (string), typeof (string))]
+    [ValueConversion(typeof(string), typeof(string))]
     public class StringToLocaleConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -73,7 +73,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a LocaleString to a localized string
     /// </summary>
-    [ValueConversion(typeof (LocaleString), typeof (string))]
+    [ValueConversion(typeof(LocaleString), typeof(string))]
     public class LocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -88,7 +88,8 @@ namespace SevenUpdate.Converters
                 for (var x = 0; x < localeStrings.Count; x++)
                 {
                     /// If a string is available in the locale specified in the settings, return it
-                    if (localeStrings[x].lang != Shared.Locale) continue;
+                    if (localeStrings[x].Lang != Shared.Locale)
+                        continue;
                     return localeStrings[x].Value;
                 }
 
@@ -109,7 +110,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a collection of UpdateFiles to a string representing the size
     /// </summary>
-    [ValueConversion(typeof (UpdateFile), typeof (string))]
+    [ValueConversion(typeof(UpdateFile), typeof(string))]
     public class FileSizeConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -132,7 +133,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts an Enum to a bool value
     /// </summary>
-    [ValueConversion(typeof (UpdateStatus), typeof (bool))]
+    [ValueConversion(typeof(UpdateStatus), typeof(bool))]
     public class EnumToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -140,12 +141,12 @@ namespace SevenUpdate.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             /// If the UpdateStatus is hidden return False, otherwise return true
-            return ((UpdateStatus) value) != UpdateStatus.Hidden;
+            return ((UpdateStatus)value) != UpdateStatus.Hidden;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool) value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
+            return ((bool)value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
         }
 
         #endregion
@@ -154,7 +155,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a Bool to a readable string
     /// </summary>
-    [ValueConversion(typeof (bool), typeof (string))]
+    [ValueConversion(typeof(bool), typeof(string))]
     public class BoolToStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -162,7 +163,8 @@ namespace SevenUpdate.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             /// If Is64Bit
-            if (((bool) value)) return "x64";
+            if (((bool)value))
+                return "x64";
             return "x86";
         }
 

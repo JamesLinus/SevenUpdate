@@ -24,10 +24,10 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 using Microsoft.Win32;
 
 #endregion
@@ -104,7 +104,11 @@ namespace SevenUpdate
 
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
-            for (var x = 0; x < localeStrings.Count; x++) if (localeStrings[x].lang == Locale) return localeStrings[x].Value;
+            for (var x = 0; x < localeStrings.Count; x++)
+            {
+                if (localeStrings[x].Lang == Locale)
+                    return localeStrings[x].Value;
+            }
             return localeStrings[0].Value;
         }
 
@@ -135,7 +139,7 @@ namespace SevenUpdate
             {
                 if (path.StartsWith("HKEY", StringComparison.OrdinalIgnoreCase))
                 {
-                    char[] split = {'|'};
+                    char[] split = { '|' };
                     var key = path.Split(split)[0];
                     var value = path.Split(split)[1];
                     path = Registry.GetValue(key, value, null).ToString();
@@ -274,7 +278,8 @@ namespace SevenUpdate
         /// <returns>returns the SHA1 hash value</returns>
         public static string GetHash(string fileLoc)
         {
-            if (!File.Exists(fileLoc)) return null;
+            if (!File.Exists(fileLoc))
+                return null;
             var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
 
             var sha1 = new SHA1CryptoServiceProvider();
@@ -285,7 +290,8 @@ namespace SevenUpdate
 
             var buff = new StringBuilder();
 
-            foreach (var hashByte in sha1.Hash) buff.Append(String.Format("{0:X1}", hashByte));
+            foreach (var hashByte in sha1.Hash)
+                buff.Append(String.Format("{0:X1}", hashByte));
             return buff.ToString();
         }
 
@@ -304,7 +310,8 @@ namespace SevenUpdate
             var findLen = find.Length;
 
             // Check inputs
-            if (0 == exprLen || 0 == findLen || findLen > exprLen) return complete;
+            if (0 == exprLen || 0 == findLen || findLen > exprLen)
+                return complete;
 
             var sbRet = new StringBuilder(exprLen);
 
@@ -348,10 +355,14 @@ namespace SevenUpdate
         /// <returns>Returns formatted string of converted bytes</returns>
         public static string ConvertFileSize(ulong bytes)
         {
-            if (bytes >= 1073741824) return String.Format("{0:##.##}", bytes/1073741824) + " GB";
-            if (bytes >= 1048576) return String.Format("{0:##.##}", bytes/1048576) + " MB";
-            if (bytes >= 1024) return String.Format("{0:##.##}", bytes/1024) + " KB";
-            if (bytes < 1024) return bytes + " Bytes";
+            if (bytes >= 1073741824)
+                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
+            if (bytes >= 1048576)
+                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
+            if (bytes >= 1024)
+                return String.Format("{0:##.##}", bytes / 1024) + " KB";
+            if (bytes < 1024)
+                return bytes + " Bytes";
             return "0 Bytes";
         }
 
@@ -363,35 +374,34 @@ namespace SevenUpdate
         /// DeSerializes an object
         /// </summary>
         /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="file">The file that contains the object to DeSerialize</param>
+        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
         /// <returns>Returns the object</returns>
-        public static T DeserializeStruct<T>(string file) where T : struct
+        public static T DeserializeStruct<T>(string xmlFile) where T : struct
         {
-            if (File.Exists(file))
+            if (File.Exists(xmlFile))
             {
-                FileStream fs = null;
-                XmlDictionaryReader reader = null;
-                // Deserialize the data and read it from the instance.
-                T t;
+                XmlSerializer s;
+                TextReader r = null;
                 try
                 {
-                    fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-                    reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-                    var ser = new DataContractSerializer(typeof (T));
-                    t = (T) ser.ReadObject(reader, true);
+                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                    r = new StreamReader(xmlFile);
+                    var temp = (T)s.Deserialize(r);
+                    r.Close();
+                    return temp;
                 }
                 catch (Exception e)
                 {
-                    t = new T();
-                    if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                    if (SerializationErrorEventHandler != null)
+                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
                 }
                 finally
                 {
-                    if (reader != null) reader.Close();
-                    if (fs != null) fs.Close();
+                    if (r != null)
+                        r.Close();
                 }
-                return t;
             }
+
             return new T();
         }
 
@@ -399,35 +409,34 @@ namespace SevenUpdate
         /// DeSerializes an object
         /// </summary>
         /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="file">The file that contains the object to DeSerialize</param>
+        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
         /// <returns>Returns the object</returns>
-        public static T Deserialize<T>(string file) where T : class
+        public static T Deserialize<T>(string xmlFile) where T : class
         {
-            if (File.Exists(file))
+            if (File.Exists(xmlFile))
             {
-                FileStream fs = null;
-                XmlDictionaryReader reader = null;
-                // Deserialize the data and read it from the instance.
-                T t;
+                XmlSerializer s;
+                TextReader r = null;
                 try
                 {
-                    fs = new FileStream(file, FileMode.Open, FileAccess.Read);
-                    reader = XmlDictionaryReader.CreateTextReader(fs, new XmlDictionaryReaderQuotas());
-                    var ser = new DataContractSerializer(typeof (T));
-                    t = (T) ser.ReadObject(reader, true);
+                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                    r = new StreamReader(xmlFile);
+                    var temp = (T)s.Deserialize(r);
+                    r.Close();
+                    return temp;
                 }
                 catch (Exception e)
                 {
-                    t = null;
-                    if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                    if (SerializationErrorEventHandler != null)
+                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
                 }
                 finally
                 {
-                    if (reader != null) reader.Close();
-                    if (fs != null) fs.Close();
+                    if (r != null)
+                        r.Close();
                 }
-                return t;
             }
+
             return null;
         }
 
@@ -440,24 +449,33 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name="T">The object</typeparam>
         /// <param name="item">The object to serialize</param>
-        /// <param name="file">The location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, string file) where T : class
+        /// <param name="xmlFile">The location of a file that will be serialized</param>
+        public static void Serialize<T>(T item, string xmlFile) where T : class
         {
-            FileStream writer = null;
+            XmlSerializer s;
+            XmlWriter w = null;
             try
             {
-                writer = new FileStream(file, FileMode.Create);
-                var ser = new DataContractSerializer(typeof (T));
-                ser.WriteObject(writer, item);
-                writer.Close();
+                var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
+                var ns = new XmlSerializerNamespaces();
+                ns.Add("", "http://sevenupdate.sourceforge.net");
+                s = new XmlSerializer(typeof(T));
+                w = XmlWriter.Create(xmlFile, xs);
+                if (w != null)
+                {
+                    s.Serialize(w, item, ns);
+                    w.Close();
+                }
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                if (SerializationErrorEventHandler != null)
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
             }
             finally
             {
-                if (writer != null) writer.Close();
+                if (w != null)
+                    w.Close();
             }
         }
 
@@ -466,24 +484,33 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name="T">The object</typeparam>
         /// <param name="item">The object to serialize</param>
-        /// <param name="file">The location of a file that will be serialized</param>
-        public static void SerializeStruct<T>(T item, string file) where T : struct
+        /// <param name="xmlFile">The location of a file that will be serialized</param>
+        public static void SerializeStruct<T>(T item, string xmlFile) where T : struct
         {
-            FileStream writer = null;
+            XmlSerializer s;
+            XmlWriter w = null;
             try
             {
-                writer = new FileStream(file, FileMode.Create);
-                var ser = new DataContractSerializer(typeof (T));
-                ser.WriteObject(writer, item);
-                writer.Close();
+                var xs = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true };
+                var ns = new XmlSerializerNamespaces();
+                ns.Add("", "http://sevenupdate.sourceforge.net");
+                s = new XmlSerializer(typeof(T));
+                w = XmlWriter.Create(xmlFile, xs);
+                if (w != null)
+                {
+                    s.Serialize(w, item, ns);
+                    w.Close();
+                }
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null) SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e.Message, file));
+                if (SerializationErrorEventHandler != null)
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
             }
             finally
             {
-                if (writer != null) writer.Close();
+                if (w != null)
+                    w.Close();
             }
         }
 
@@ -495,16 +522,16 @@ namespace SevenUpdate
 
         public class SerializationErrorEventArgs : EventArgs
         {
-            public SerializationErrorEventArgs(string errorMessage, string file)
+            public SerializationErrorEventArgs(Exception e, string file)
             {
-                ErrorMessage = errorMessage;
+                Exception = e;
                 File = file;
             }
 
             /// <summary>
             /// A string describing the error
             /// </summary>
-            public string ErrorMessage { get; set; }
+            public Exception Exception { get; set; }
 
             /// <summary>
             /// The file that caused the error message

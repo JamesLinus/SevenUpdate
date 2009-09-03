@@ -56,7 +56,7 @@ namespace SevenUpdate
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
-        internal static readonly ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
+        internal static readonly ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
 
         /// <summary>
         /// The yellowshield image
@@ -112,11 +112,13 @@ namespace SevenUpdate
                 Shared.SerializationErrorEventHandler += Shared_SerializationErrorEventHandler;
                 for (var x = 0; x < args.Length; x++)
                 {
-                    if (!args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase))
+                        continue;
                     AddSUA(args[x]);
                     return;
                 }
-                if (!createdNew) return;
+                if (!createdNew)
+                    return;
                 var id = WindowsIdentity.GetCurrent();
                 if (id != null)
                 {
@@ -125,7 +127,8 @@ namespace SevenUpdate
                 }
                 if (args.Length > 1)
                 {
-                    if (args[0] == "Auto") IsAutoCheck = true;
+                    if (args[0] == "Auto")
+                        IsAutoCheck = true;
                     if (args[0] == "Reconnect")
                     {
                         IsAutoCheck = false;
@@ -139,7 +142,7 @@ namespace SevenUpdate
 
         private static void Shared_SerializationErrorEventHandler(object sender, Shared.SerializationErrorEventArgs e)
         {
-            MessageBox.Show(e.File + e.ErrorMessage);
+            // MessageBox.Show(e.File + e.Exception);
         }
 
         /// <summary>
@@ -156,11 +159,10 @@ namespace SevenUpdate
             var index = sul.IndexOf(sua);
             if (index < 0)
             {
-                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + sua.ApplicationName[0].Value + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                     MessageBoxResult.Yes)
                 {
                     sul.Add(sua);
-
                     Admin.AddSUA(sul);
                 }
             }
@@ -177,7 +179,8 @@ namespace SevenUpdate
         internal static ulong GetUpdateSize(Collection<UpdateFile> files)
         {
             ulong size = 0;
-            for (var x = 0; x < files.Count; x++) size += files[x].Size;
+            for (var x = 0; x < files.Count; x++)
+                size += files[x].Size;
             return size;
         }
 

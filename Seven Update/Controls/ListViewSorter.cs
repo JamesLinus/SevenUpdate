@@ -38,10 +38,11 @@ namespace SevenUpdate.Controls
                                                                                                                    new FrameworkPropertyMetadata(false,
                                                                                                                                                  new PropertyChangedCallback(OnRegisterSortableGrid)));
 
+        public static DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached("CustomSorter", typeof (IComparer), typeof (ListViewSorter));
+
         private static ListSortDirection lastDirection = ListSortDirection.Ascending;
         private static GridViewColumnHeader lastHeaderClicked;
 
-        public static DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached("CustomSorter", typeof (IComparer), typeof (ListViewSorter));
         private static ListView lv;
         public static DependencyProperty SortBindingMemberProperty = DependencyProperty.RegisterAttached("SortBindingMember", typeof (BindingBase), typeof (ListViewSorter));
 
@@ -79,29 +80,32 @@ namespace SevenUpdate.Controls
         private static void OnRegisterSortableGrid(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var grid = obj as ListView;
-            if (grid == null) return;
+            if (grid == null)
+                return;
             lv = grid;
             RegisterSortableGridView(grid, args);
         }
 
         private static void RegisterSortableGridView(IInputElement grid, DependencyPropertyChangedEventArgs args)
         {
-            if (args.NewValue is Boolean && (Boolean) args.NewValue) grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
-            else grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
+            if (args.NewValue is Boolean && (Boolean) args.NewValue)
+                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
+            else
+                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
         }
 
         private static void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
             var headerClicked = e.OriginalSource as GridViewColumnHeader;
 
-            if (headerClicked == null) return;
+            if (headerClicked == null)
+                return;
             ListSortDirection direction;
-            if (headerClicked != lastHeaderClicked) direction = ListSortDirection.Ascending;
+            if (headerClicked != lastHeaderClicked)
+                direction = ListSortDirection.Ascending;
 
             else
-            {
                 direction = lastDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
-            }
 
             var header = String.Empty;
 
@@ -109,11 +113,10 @@ namespace SevenUpdate.Controls
             {
                 header = ((Binding) GetSortBindingMember(headerClicked.Column)).Path.Path;
             }
-            catch (Exception)
-            {
-            }
+            catch (Exception) {}
 
-            if (header == String.Empty) return;
+            if (header == String.Empty)
+                return;
 
             Sort(header, direction);
 
@@ -138,7 +141,8 @@ namespace SevenUpdate.Controls
             }
 
             tmpTemplate = lv.TryFindResource(resourceTemplateName) as DataTemplate;
-            if (tmpTemplate != null) headerClicked.Column.HeaderTemplate = tmpTemplate;
+            if (tmpTemplate != null)
+                headerClicked.Column.HeaderTemplate = tmpTemplate;
 
             lastHeaderClicked = headerClicked;
             lastDirection = direction;
@@ -171,9 +175,7 @@ namespace SevenUpdate.Controls
                         lv.Items.Refresh();
                     }
                 }
-                catch (Exception)
-                {
-                }
+                catch (Exception) {}
             }
         }
     }

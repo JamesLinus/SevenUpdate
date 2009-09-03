@@ -46,7 +46,8 @@ namespace SevenUpdate.WCF
         /// <param name="type">The type of error that occurred</param>
         public void OnErrorOccurred(string description, ErrorType type)
         {
-            if (ErrorOccurredEventHandler == null) return;
+            if (ErrorOccurredEventHandler == null)
+                return;
             ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(description, type));
         }
 
@@ -57,7 +58,8 @@ namespace SevenUpdate.WCF
         /// <param name="failedUpdates">The number of failed updates</param>
         public void OnInstallDone(int installedUpdates, int failedUpdates)
         {
-            if (InstallDoneEventHandler != null) InstallDoneEventHandler(this, new InstallDoneEventArgs(installedUpdates, failedUpdates));
+            if (InstallDoneEventHandler != null)
+                InstallDoneEventHandler(this, new InstallDoneEventArgs(installedUpdates, failedUpdates));
         }
 
         /// <summary>
@@ -66,7 +68,8 @@ namespace SevenUpdate.WCF
         /// <param name="errorOccurred">True is an error occurred, otherwise false</param>
         public void OnDownloadDone(bool errorOccurred)
         {
-            if (DownloadDoneEventHandler != null) DownloadDoneEventHandler(this, new DownloadDoneEventArgs(errorOccurred));
+            if (DownloadDoneEventHandler != null)
+                DownloadDoneEventHandler(this, new DownloadDoneEventArgs(errorOccurred));
         }
 
         /// <summary>
@@ -78,7 +81,8 @@ namespace SevenUpdate.WCF
         /// <param name="totalUpdates">The total number of updates being installed</param>
         public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
-            if (InstallProgressChangedEventHandler != null) InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
+            if (InstallProgressChangedEventHandler != null)
+                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
         }
 
         /// <summary>
@@ -88,7 +92,8 @@ namespace SevenUpdate.WCF
         /// <param name="bytesTotal">The total number of bytes to download</param>
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal)
         {
-            if (DownloadProgressChangedEventHandler != null) DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal));
+            if (DownloadProgressChangedEventHandler != null)
+                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal));
         }
 
         #endregion
@@ -293,7 +298,8 @@ namespace SevenUpdate.WCF
             wcf = new EventSystemClient(new InstanceContext(new AdminCallBack()));
             try
             {
-                while (wcf.State != CommunicationState.Created) Thread.CurrentThread.Join(500);
+                while (wcf.State != CommunicationState.Created)
+                    Thread.CurrentThread.Join(500);
                 wcf.Subscribe();
             }
             catch (EndpointNotFoundException e)
@@ -328,7 +334,8 @@ namespace SevenUpdate.WCF
         {
             var proc = new Process {StartInfo = {FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe"}};
 
-            if (!App.IsAdmin) proc.StartInfo.Verb = "runas";
+            if (!App.IsAdmin)
+                proc.StartInfo.Verb = "runas";
 
             proc.StartInfo.UseShellExecute = true;
 
@@ -341,7 +348,8 @@ namespace SevenUpdate.WCF
             try
             {
                 proc.Start();
-                if (wait) proc.WaitForExit();
+                if (wait)
+                    proc.WaitForExit();
                 proc.Dispose();
                 return true;
             }
@@ -406,7 +414,8 @@ namespace SevenUpdate.WCF
         internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
         {
             Shared.Serialize(hiddenUpdates, Shared.UserStore + "Hidden Updates.xml");
-            if (LaunchAdmin("HideUpdates")) return true;
+            if (LaunchAdmin("HideUpdates"))
+                return true;
             File.Delete(Shared.UserStore + "Hidden Updates.xml");
             return false;
         }
@@ -418,7 +427,8 @@ namespace SevenUpdate.WCF
         /// <returns>Retirms true if successful</returns>
         internal static bool ShowUpdate(SUH hiddenUpdate)
         {
-            if (!LaunchAdmin("ShowUpdate")) return false;
+            if (!LaunchAdmin("ShowUpdate"))
+                return false;
             Shared.Serialize(hiddenUpdate, Shared.UserStore + "HnH Update.xml");
             return true;
         }

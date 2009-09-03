@@ -58,12 +58,13 @@ namespace SevenUpdate
             {
                 foreach (var job in manager.Jobs.Values)
                 {
-                    if (job.DisplayName != "Seven Update") continue;
+                    if (job.DisplayName != "Seven Update")
+                        continue;
                     try
                     {
                         job.Cancel();
                     }
-                    catch (Exception) {}
+                    catch (Exception) { }
 
                     return true;
                 }
@@ -98,7 +99,8 @@ namespace SevenUpdate
             ///Loops through the jobs, if a Seven Update job is found, try to resume, if not 
             foreach (var job in manager.Jobs.Values)
             {
-                if (job.DisplayName != "Seven Update") continue;
+                if (job.DisplayName != "Seven Update")
+                    continue;
                 job.EnumFiles();
                 if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
                 {
@@ -106,7 +108,7 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch (Exception) {}
+                    catch (Exception) { }
                 }
                 else
                 {
@@ -121,7 +123,7 @@ namespace SevenUpdate
                         {
                             job.Cancel();
                         }
-                        catch (Exception) {}
+                        catch (Exception) { }
                     }
                 }
             }
@@ -141,7 +143,7 @@ namespace SevenUpdate
                     {
                         var fileDest = Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
 
-                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete) {}
+                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete) { }
                         else
                         {
                             if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDest)) != applications[x].Updates[y].Files[z].Hash)
@@ -152,13 +154,14 @@ namespace SevenUpdate
                                     {
                                         File.Delete(downloadDir + @"\" + Path.GetFileName(fileDest));
                                     }
-                                    catch (Exception) {}
-                                    var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadDirectory, applications[x].Is64Bit));
+                                    catch (Exception) { }
+                                    var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
                                     bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDest));
                                 }
                                 catch (Exception e)
                                 {
-                                    if (EventService.ErrorOccurred != null && App.IsClientConnected) EventService.ErrorOccurred(e.Message, ErrorType.DownloadError);
+                                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                                        EventService.ErrorOccurred(e, ErrorType.DownloadError);
                                     Shared.ReportError(e.Message, Shared.AllUserStore);
                                 }
                             }
@@ -176,7 +179,8 @@ namespace SevenUpdate
                 catch (Exception e)
                 {
                     Shared.ReportError(e.Message, Shared.AllUserStore);
-                    if (EventService.ErrorOccurred != null && App.IsClientConnected) EventService.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                        EventService.ErrorOccurred(e, ErrorType.FatalError);
                     Environment.Exit(0);
                 }
             }
@@ -196,20 +200,23 @@ namespace SevenUpdate
 
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
-            if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring || e.Job.Progress.BytesTransferred <= 0) return;
-            if (EventService.DownloadProgressChanged != null && e.Job.Progress.BytesTransferred > 0 && App.IsClientConnected) EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
+            if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring || e.Job.Progress.BytesTransferred <= 0)
+                return;
+            if (EventService.DownloadProgressChanged != null && e.Job.Progress.BytesTransferred > 0 && App.IsClientConnected)
+                EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
 
             if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0)
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                            App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                                                           (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
             }
         }
 
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
-            if (e.Job.DisplayName != "Seven Update") return;
+            if (e.Job.DisplayName != "Seven Update")
+                return;
             e.Job.Cancel();
 
             try
@@ -217,8 +224,10 @@ namespace SevenUpdate
                 manager.Dispose();
                 manager = null;
             }
-            catch (Exception) {}
-            if (EventService.ErrorOccurred != null && App.IsClientConnected) EventService.ErrorOccurred(e.Job.Error.Description + " " + e.Error.File.RemoteName, ErrorType.DownloadError);
+            catch (Exception) { }
+            Shared.ReportError(e.Error.File + " - " + e.Error.File, Shared.AllUserStore);
+            if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.File), ErrorType.DownloadError);
 
             Environment.Exit(0);
         }
@@ -239,18 +248,21 @@ namespace SevenUpdate
                         manager.Dispose();
                         manager = null;
                     }
-                    catch (Exception) {}
+                    catch (Exception) { }
 
                     if (App.Settings.AutoOption == AutoUpdateOption.Install || Environment.GetCommandLineArgs()[0] == "Install")
                     {
-                        if (EventService.DownloadDone != null && App.IsClientConnected) EventService.DownloadDone(false);
+                        if (EventService.DownloadDone != null && App.IsClientConnected)
+                            EventService.DownloadDone(false);
                         Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
                         Install.InstallUpdates(updates);
                     }
-                    else Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);
+                    else
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);
                 }
             }
-            else e.Job.Resume();
+            else
+                e.Job.Resume();
         }
 
         #region EventArgs

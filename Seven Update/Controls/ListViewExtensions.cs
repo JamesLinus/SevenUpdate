@@ -24,7 +24,6 @@ using System;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using SevenUpdate.Controls;
 
 #endregion
 
@@ -39,12 +38,15 @@ namespace SevenUpdate.Controls
         {
             var senderAsThumb = e;
             var header = senderAsThumb.TemplatedParent as GridViewColumnHeader;
-            if (header == null) return;
+            if (header == null)
+                return;
             if (!string.IsNullOrEmpty(((string) header.Column.Header)))
             {
-                if (header.Column.ActualWidth < 125) header.Column.Width = 125;
+                if (header.Column.ActualWidth < 125)
+                    header.Column.Width = 125;
             }
-            else header.Column.Width = 25;
+            else
+                header.Column.Width = 25;
         }
 
         /// <summary>
@@ -116,8 +118,8 @@ namespace SevenUpdate.Controls
                         {
                             case "ApplicationName":
 
-                                valx = Shared.GetLocaleString(xc.ApplicationName);
-                                valy = Shared.GetLocaleString(yc.ApplicationName);
+                                valx = Shared.GetLocaleString(xc.Name);
+                                valy = Shared.GetLocaleString(yc.Name);
                                 break;
 
                             case "Publisher":
@@ -131,10 +133,13 @@ namespace SevenUpdate.Controls
                                 break;
                         }
 
-                        if (SortColumns[sortColumn] == ListSortDirection.Ascending) result = String.Compare(valx, valy);
-                        else result = (-1)*String.Compare(valx, valy);
+                        if (SortColumns[sortColumn] == ListSortDirection.Ascending)
+                            result = String.Compare(valx, valy);
+                        else
+                            result = (-1)*String.Compare(valx, valy);
 
-                        if (result != 0) break;
+                        if (result != 0)
+                            break;
                         continue;
                     }
 
@@ -186,23 +191,31 @@ namespace SevenUpdate.Controls
                                 result = CompareImportance(xc.Importance, yc.Importance);
                                 break;
                             case "Status":
-                                if (xc.Status == yc.Status) result = 0;
-                                else if (xc.Status == UpdateStatus.Successful) result = 1;
-                                else result = -1;
+                                if (xc.Status == yc.Status)
+                                    result = 0;
+                                else if (xc.Status == UpdateStatus.Successful)
+                                    result = 1;
+                                else
+                                    result = -1;
                                 break;
                             case "Size":
-                                if (xc.Size > yc.Size) result = 1;
-                                else if (xc.Size == yc.Size) result = 0;
-                                else result = -1;
+                                if (xc.Size > yc.Size)
+                                    result = 1;
+                                else if (xc.Size == yc.Size)
+                                    result = 0;
+                                else
+                                    result = -1;
                                 break;
                             default:
                                 result = String.Compare(valx, valy);
                                 break;
                         }
 
-                        if (SortColumns[sortColumn] == ListSortDirection.Descending) result = (-1)*result;
+                        if (SortColumns[sortColumn] == ListSortDirection.Descending)
+                            result = (-1)*result;
 
-                        if (result != 0) break;
+                        if (result != 0)
+                            break;
                         continue;
                     }
 
@@ -251,18 +264,23 @@ namespace SevenUpdate.Controls
                                 result = CompareImportance(xc.Importance, yc.Importance);
                                 break;
                             case "Size":
-                                if (xc.Size > yc.Size) result = 1;
-                                else if (xc.Size == yc.Size) result = 0;
-                                else result = -1;
+                                if (xc.Size > yc.Size)
+                                    result = 1;
+                                else if (xc.Size == yc.Size)
+                                    result = 0;
+                                else
+                                    result = -1;
                                 break;
                             default:
                                 result = String.Compare(valx, valy);
                                 break;
                         }
 
-                        if (SortColumns[sortColumn] == ListSortDirection.Descending) result = (-1)*result;
+                        if (SortColumns[sortColumn] == ListSortDirection.Descending)
+                            result = (-1)*result;
 
-                        if (result != 0) break;
+                        if (result != 0)
+                            break;
                         continue;
                     }
 

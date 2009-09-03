@@ -50,7 +50,7 @@ namespace SevenUpdate.WCF
         public static CallbackDelegate<bool> DownloadDone;
 
         public static CallbackDelegate<ulong, ulong> DownloadProgressChanged;
-        public static CallbackDelegate<string, ErrorType> ErrorOccurred;
+        public static CallbackDelegate<Exception, ErrorType> ErrorOccurred;
 
         /// <summary>
         /// Raises an event when the installation is completed
@@ -75,7 +75,7 @@ namespace SevenUpdate.WCF
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
             DownloadDone += callback.OnDownloadDone;
             ErrorOccurred += callback.OnErrorOccurred;
-            var obj = (ICommunicationObject) callback;
+            var obj = (ICommunicationObject)callback;
             obj.Closed += EventService_Closed;
             ClientConnected();
         }
@@ -105,6 +105,6 @@ namespace SevenUpdate.WCF
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
-        private static void EventService_Closed(object sender, EventArgs e) {}
+        private static void EventService_Closed(object sender, EventArgs e) { }
     }
 }

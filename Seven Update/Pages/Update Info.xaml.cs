@@ -66,7 +66,8 @@ namespace SevenUpdate.Pages
         public UpdateInfo()
         {
             InitializeComponent();
-            if (App.IsAdmin) cmiHideUpdate.Icon = null;
+            if (App.IsAdmin)
+                cmiHideUpdate.Icon = null;
         }
 
         #region Event Declarations
@@ -146,12 +147,14 @@ namespace SevenUpdate.Pages
 
         private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbUrlInfo.Tag != null) Process.Start(tbUrlInfo.Tag.ToString());
+            if (tbUrlInfo.Tag != null)
+                Process.Start(tbUrlInfo.Tag.ToString());
         }
 
         private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbUrlHelp.Tag != null) Process.Start(tbUrlHelp.Tag.ToString());
+            if (tbUrlHelp.Tag != null)
+                Process.Start(tbUrlHelp.Tag.ToString());
         }
 
         #endregion
@@ -166,7 +169,8 @@ namespace SevenUpdate.Pages
         private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            if (e.Action != NotifyCollectionChangedAction.Replace)
+                return;
             var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             dataView.Refresh();
         }
@@ -214,7 +218,8 @@ namespace SevenUpdate.Pages
         {
             var appIndex = indexes[listView.SelectedIndex].appIndex;
             var updateIndex = indexes[listView.SelectedIndex].updateIndex;
-            if (listView.SelectedIndex == -1) HideLabels();
+            if (listView.SelectedIndex == -1)
+                HideLabels();
             else
             {
                 tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
@@ -252,7 +257,8 @@ namespace SevenUpdate.Pages
                     if (cb != null)
                     {
                         var bindexp = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
-                        if (bindexp != null) bindexp.UpdateSource();
+                        if (bindexp != null)
+                            bindexp.UpdateSource();
                     }
                     continue;
                 }
@@ -299,7 +305,8 @@ namespace SevenUpdate.Pages
                     }
                 }
             }
-            if (UpdateSelectionChangedEventHandler != null) UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+            if (UpdateSelectionChangedEventHandler != null)
+                UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
         }
 
         /// <summary>

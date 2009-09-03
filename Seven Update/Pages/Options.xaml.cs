@@ -26,11 +26,13 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using SevenUpdate.Controls;
 using SevenUpdate.Properties;
 using SevenUpdate.WCF;
@@ -60,7 +62,8 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-            if (App.IsAdmin) btnSave.Content = App.RM.GetString("Save");
+            if (App.IsAdmin)
+                btnSave.Content = App.RM.GetString("Save");
         }
 
         #region Methods
@@ -78,8 +81,6 @@ namespace SevenUpdate.Pages
             {
                 return;
             }
-
-            listView.Cursor = Cursors.Wait;
             var wc = new WebClient();
 
             wc.DownloadFileCompleted += WcDownloadFileCompleted;
@@ -112,6 +113,8 @@ namespace SevenUpdate.Pages
             }
 
             chkRecommendedUpdates.IsChecked = App.Settings.IncludeRecommended;
+            //tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+            //                     Settings.Default.lastListUpdate.ToShortTimeString();
         }
 
         /// <summary>
@@ -119,56 +122,76 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void LoadSUL()
         {
-            if (!File.Exists(Shared.UserStore + @"Apps.sul")) DownloadSUL();
-            else
+            ObservableCollection<SUA> officalAppList = null;
+            if (File.Exists(Shared.UserStore + @"Apps.sul"))
+                officalAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.UserStore + @"Apps.sul");
+            userAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.AppsFile);
+
+            if (officalAppList != null)
             {
-                var officalAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.UserStore + @"Apps.sul");
-                userAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.AppsFile);
-
-                if (officalAppList != null)
+                for (var x = 0; x < officalAppList.Count; x++)
                 {
-                    for (var x = 0; x < officalAppList.Count; x++)
-                    {
-                        if (Directory.Exists(Shared.ConvertPath(officalAppList[x].Directory, true, officalAppList[x].Is64Bit))) continue;
-                        officalAppList.RemoveAt(x);
-                        x--;
-                    }
-                    if (userAppList == null) userAppList = officalAppList;
-                }
-
-                if (userAppList != null)
-                {
-                    for (var x = 0; x < userAppList.Count; x++)
-                    {
-                        if (!Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
-                        {
-                            userAppList.RemoveAt(x);
-                            x--;
-                        }
-                        if (officalAppList == null) {}
-                        else
-                        {
-                            for (var y = 0; y < officalAppList.Count; y++)
-                            {
-                                //if (officalAppList[y].Directory == userAppList[x].Directory && officalAppList[y].Source == userAppList[x].Source)
-                                //{
-                                //    userAppList[y].Enabled = true;
-                                //    break;
-                                //}
-                                if (!Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit))) userAppList[x].Enabled = false;
-                            }
-                        }
-                    }
-                    listView.ItemsSource = userAppList;
-                    userAppList.CollectionChanged += UserAppList_CollectionChanged;
-                    AddSortBinding();
+                    if (Directory.Exists(Shared.ConvertPath(officalAppList[x].Directory, true, officalAppList[x].Is64Bit)))
+                        continue;
+                    officalAppList.RemoveAt(x);
+                    x--;
                 }
             }
+
+            if (userAppList != null)
+            {
+                for (var x = 0; x < userAppList.Count; x++)
+                {
+                    if (!Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
+                    {
+                        userAppList.RemoveAt(x);
+                        x--;
+                        continue;
+                    }
+                    if (officalAppList == null)
+                        continue;
+                    for (var y = 0; y < officalAppList.Count; y++)
+                    {
+                        if (officalAppList[y].Source != userAppList[x].Source)
+                            continue;
+                        officalAppList[y].IsEnabled = userAppList[x].IsEnabled;
+                        userAppList[x] = officalAppList[y];
+                    }
+                }
+                if (userAppList == null && officalAppList != null)
+                    userAppList = officalAppList;
+
+
+            }
+
+            Dispatcher.BeginInvoke(InvokeList);
         }
 
+        private void InvokeList()
+        {
+            if (userAppList != null)
+            {
+                listView.ItemsSource = userAppList;
+                userAppList.CollectionChanged += UserAppList_CollectionChanged;
+                AddSortBinding();
+                tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+                                     Settings.Default.lastListUpdate.ToShortTimeString();
+
+            }
+            else
+            {
+                tbLastUpdated.Text = App.RM.GetString("CouldNotConnect");
+                listView.Cursor = Cursors.Arrow;
+            }
+
+        }
+
+        /// <summary>
+        /// Enables the listview columns to be sorted
+        /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView)listView.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("ApplicationName"));
@@ -189,15 +212,19 @@ namespace SevenUpdate.Pages
         {
             var options = new Config();
 
-            if (cbAutoUpdateMethod.SelectedIndex == 0) options.AutoOption = AutoUpdateOption.Install;
+            if (cbAutoUpdateMethod.SelectedIndex == 0)
+                options.AutoOption = AutoUpdateOption.Install;
 
-            if (cbAutoUpdateMethod.SelectedIndex == 1) options.AutoOption = AutoUpdateOption.Download;
+            if (cbAutoUpdateMethod.SelectedIndex == 1)
+                options.AutoOption = AutoUpdateOption.Download;
 
-            if (cbAutoUpdateMethod.SelectedIndex == 2) options.AutoOption = AutoUpdateOption.Notify;
+            if (cbAutoUpdateMethod.SelectedIndex == 2)
+                options.AutoOption = AutoUpdateOption.Notify;
 
-            if (cbAutoUpdateMethod.SelectedIndex == 3) options.AutoOption = AutoUpdateOption.Never;
+            if (cbAutoUpdateMethod.SelectedIndex == 3)
+                options.AutoOption = AutoUpdateOption.Never;
 
-            options.IncludeRecommended = ((bool) chkRecommendedUpdates.IsChecked);
+            options.IncludeRecommended = ((bool)chkRecommendedUpdates.IsChecked);
 
 
             if (cbAutoUpdateMethod.SelectedIndex == 3)
@@ -206,7 +233,8 @@ namespace SevenUpdate.Pages
 
                 Admin.SaveSettings(false, options, userAppList);
             }
-            else Admin.SaveSettings(true, options, userAppList);
+            else
+                Admin.SaveSettings(true, options, userAppList);
         }
 
         #endregion
@@ -215,19 +243,13 @@ namespace SevenUpdate.Pages
 
         private void WcDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            if (e.Error == null)
-            {
-                Settings.Default.lastListUpdate = DateTime.Now.ToShortDateString() + " " + App.RM.GetString("At") + " " + DateTime.Now.ToShortTimeString();
+            if (e.Error != null)
+                return;
+            Settings.Default.lastListUpdate = DateTime.Now;
 
-                Settings.Default.Save();
+            Settings.Default.Save();
 
-                tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate;
-
-                LoadSUL();
-            }
-            else tbLastUpdated.Text = App.RM.GetString("CouldNotConnect");
-
-            listView.Cursor = Cursors.Arrow;
+            LoadSUL();
         }
 
         private void cbAutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -251,9 +273,19 @@ namespace SevenUpdate.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            listView.Cursor = Cursors.Wait;
             LoadSettings();
-            tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate;
-            LoadSUL();
+
+            if (!Settings.Default.lastListUpdate.Date.Equals(DateTime.Now.Date) || !File.Exists(Shared.AppsFile))
+            {
+                var thread = new Thread(DownloadSUL);
+                thread.Start();
+            }
+            else
+            {
+                var thread = new Thread(LoadSUL);
+                thread.Start();
+            }
         }
 
         #region ListView Events
@@ -261,14 +293,15 @@ namespace SevenUpdate.Pages
         private void UserAppList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            if (e.Action != NotifyCollectionChangedAction.Replace)
+                return;
             var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             dataView.Refresh();
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ListViewExtensions.Thumb_DragDelta(sender, ((Thumb) e.OriginalSource));
+            ListViewExtensions.Thumb_DragDelta(sender, ((Thumb)e.OriginalSource));
         }
 
         #endregion
@@ -277,19 +310,21 @@ namespace SevenUpdate.Pages
 
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock) sender);
+            var textBlock = ((TextBlock)sender);
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock) sender);
+            var textBlock = ((TextBlock)sender);
             textBlock.TextDecorations = null;
         }
 
         private void tbRefresh_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DownloadSUL();
+            listView.Cursor = Cursors.Wait;
+            var thread = new Thread(LoadSUL);
+            thread.Start();
         }
 
         #endregion

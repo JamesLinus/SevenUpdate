@@ -61,7 +61,8 @@ namespace SevenUpdate.Pages
         public RestoreUpdates()
         {
             InitializeComponent();
-            if (App.IsAdmin) imgShield.Visibility = Visibility.Collapsed;
+            if (App.IsAdmin)
+                imgShield.Visibility = Visibility.Collapsed;
             listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
         }
 
@@ -79,7 +80,8 @@ namespace SevenUpdate.Pages
         private void GetHiddenUpdates()
         {
             hiddenUpdates = Shared.Deserialize<ObservableCollection<SUH>>(Shared.HiddenFile);
-            if (hiddenUpdates == null) return;
+            if (hiddenUpdates == null)
+                return;
             listView.ItemsSource = hiddenUpdates;
             hiddenUpdates.CollectionChanged += HiddenUpdates_CollectionChanged;
             AddSortBinding();
@@ -116,11 +118,16 @@ namespace SevenUpdate.Pages
         {
             for (var x = 0; x < hiddenUpdates.Count; x++)
             {
-                if (hiddenUpdates[x].Status != UpdateStatus.Visible) continue;
+                if (hiddenUpdates[x].Status != UpdateStatus.Visible)
+                    continue;
                 hiddenUpdates.RemoveAt(x);
                 x--;
             }
-            if (Admin.HideUpdates(hiddenUpdates)) if (RestoredHiddenUpdateEventHandler != null) RestoredHiddenUpdateEventHandler(this, new EventArgs());
+            if (Admin.HideUpdates(hiddenUpdates))
+            {
+                if (RestoredHiddenUpdateEventHandler != null)
+                    RestoredHiddenUpdateEventHandler(this, new EventArgs());
+            }
             MainWindow.NavService.GoBack();
         }
 
@@ -131,7 +138,8 @@ namespace SevenUpdate.Pages
         private void HiddenUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace) return;
+            if (e.Action != NotifyCollectionChangedAction.Replace)
+                return;
             var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
             dataView.Refresh();
         }
@@ -139,7 +147,11 @@ namespace SevenUpdate.Pages
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             var checkedCount = 0;
-            for (var x = 0; x < hiddenUpdates.Count; x++) if (hiddenUpdates[x].Status == UpdateStatus.Visible) checkedCount++;
+            for (var x = 0; x < hiddenUpdates.Count; x++)
+            {
+                if (hiddenUpdates[x].Status == UpdateStatus.Visible)
+                    checkedCount++;
+            }
 
             tbSelected.Text = App.RM.GetString("TotalSelected") + " " + checkedCount + " ";
             if (checkedCount > 0)
@@ -169,7 +181,8 @@ namespace SevenUpdate.Pages
 
         private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount != 2 || listView.SelectedIndex == -1) return;
+            if (e.ClickCount != 2 || listView.SelectedIndex == -1)
+                return;
             var details = new UpdateDetails();
             details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
         }

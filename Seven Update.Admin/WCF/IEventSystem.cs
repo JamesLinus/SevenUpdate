@@ -26,7 +26,7 @@ using System.ServiceModel;
 
 namespace SevenUpdate.WCF
 {
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof (IEventSystemCallback))]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IEventSystemCallback))]
     internal interface IEventSystem
     {
         [OperationContract(IsOneWay = true)]

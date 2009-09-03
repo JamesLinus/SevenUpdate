@@ -51,7 +51,8 @@ namespace SevenUpdate
         /// <returns>Returns true if found updates, otherwise false</returns>
         private static bool CheckForUpdates(ref SUI app, Collection<SUH> hidden)
         {
-            if (!Directory.Exists(Shared.ConvertPath(app.Directory, true, app.Is64Bit))) return false;
+            if (!Directory.Exists(Shared.ConvertPath(app.Directory, true, app.Is64Bit)))
+                return false;
             var isHidden = false;
             for (var y = 0; y < app.Updates.Count; y++)
             {
@@ -70,7 +71,8 @@ namespace SevenUpdate
                     {
                         app.Updates.Remove(app.Updates[y]);
 
-                        if (app.Updates.Count == 0) break;
+                        if (app.Updates.Count == 0)
+                            break;
                         y--;
                         continue;
                     }
@@ -93,10 +95,12 @@ namespace SevenUpdate
                                 if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                    if (app.Updates[y].Files.Count == 0) break;
+                                    if (app.Updates[y].Files.Count == 0)
+                                        break;
                                     z--;
                                 }
-                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash) size += app.Updates[y].Files[z].Size;
+                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                    size += app.Updates[y].Files[z].Size;
                                 break;
                         }
                     }
@@ -111,7 +115,8 @@ namespace SevenUpdate
                             case FileAction.Delete:
                             case FileAction.UnregisterAndDelete:
                                 app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                if (app.Updates[y].Files.Count == 0) break;
+                                if (app.Updates[y].Files.Count == 0)
+                                    break;
                                 z--;
                                 break;
 
@@ -121,10 +126,12 @@ namespace SevenUpdate
                                 if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                    if (app.Updates[y].Files.Count == 0) break;
+                                    if (app.Updates[y].Files.Count == 0)
+                                        break;
                                     z--;
                                 }
-                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash) size += app.Updates[y].Files[z].Size;
+                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                    size += app.Updates[y].Files[z].Size;
                                 break;
                         }
 
@@ -141,7 +148,8 @@ namespace SevenUpdate
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
                         /// If the update has a file that isn't an execute and delete, let's indicate not to remove the update
-                        if (app.Updates[y].Files[z].Action != FileAction.ExecuteAndDelete) remove = false;
+                        if (app.Updates[y].Files[z].Action != FileAction.ExecuteAndDelete)
+                            remove = false;
                     }
                 }
 
@@ -149,7 +157,8 @@ namespace SevenUpdate
                 if (app.Updates[y].Files.Count == 0 || remove)
                 {
                     app.Updates.Remove(app.Updates[y]);
-                    if (app.Updates.Count == 0) break;
+                    if (app.Updates.Count == 0)
+                        break;
                     y--;
                     continue;
                 }
@@ -172,7 +181,8 @@ namespace SevenUpdate
         public static void SearchForUpdates(Collection<SUA> apps)
         {
             // delete the temp directory housing the sui files
-            if (Directory.Exists(Shared.UserStore + "temp")) Directory.Delete(Shared.UserStore + "temp", true);
+            if (Directory.Exists(Shared.UserStore + "temp"))
+                Directory.Delete(Shared.UserStore + "temp", true);
 
             // create the temp directory for housing the sui files
             Directory.CreateDirectory(Shared.UserStore + "temp");
@@ -219,7 +229,7 @@ namespace SevenUpdate
                         try
                         {
                             /// Download the SUI
-                            web.DownloadFile(apps[x].Source, Shared.UserStore + @"temp\" + apps[x].ApplicationName[0].Value + ".sui");
+                            web.DownloadFile(apps[x].Source, Shared.UserStore + @"temp\" + apps[x].Name[0].Value + ".sui");
                         }
                         catch (WebException e)
                         {
@@ -301,7 +311,8 @@ namespace SevenUpdate
 
         private static void OnEvent<T>(EventHandler<T> @event, T args) where T : EventArgs
         {
-            if (@event == null) return;
+            if (@event == null)
+                return;
             foreach (EventHandler<T> singleEvent in @event.GetInvocationList())
             {
                 if (singleEvent.Target != null && singleEvent.Target is ISynchronizeInvoke)
