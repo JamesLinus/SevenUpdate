@@ -83,8 +83,25 @@ namespace SevenUpdate
         /// <param name="priority">the Priority of the download</param>
         internal static void DownloadUpdates(Collection<SUI> applications, JobPriority priority)
         {
+            if (applications == null)
+            {
+                if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                    EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
+                Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                Environment.Exit(0);
+            }
+            else
+            {
+                if (applications.Count < 1)
+                {
+                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                        EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
+                    Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                    Environment.Exit(0);
+                }
+            }
             // When done with the temp list
-            File.Delete(Shared.UserStore + "Update List.xml");
+            File.Delete(Shared.UserStore + "Apps.sui");
             // Makes the passed applicaytion collection global
             updates = applications;
 
@@ -146,28 +163,25 @@ namespace SevenUpdate
                     {
                         var fileDestination = Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
 
-                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete) {}
-                        else
+                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete)
+                            continue;
+                        if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == applications[x].Updates[y].Files[z].Hash)
+                            continue;
+                        try
                         {
-                            if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) != applications[x].Updates[y].Files[z].Hash)
+                            try
                             {
-                                try
-                                {
-                                    try
-                                    {
-                                        File.Delete(downloadDir + @"\" + Path.GetFileName(fileDestination));
-                                    }
-                                    catch (Exception) {}
-                                    var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
-                                    bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
-                                }
-                                catch (Exception e)
-                                {
-                                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                                        EventService.ErrorOccurred(e, ErrorType.DownloadError);
-                                    Shared.ReportError(e.Message, Shared.AllUserStore);
-                                }
+                                File.Delete(downloadDir + @"\" + Path.GetFileName(fileDestination));
                             }
+                            catch (Exception) {}
+                            var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
+                            bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
+                        }
+                        catch (Exception e)
+                        {
+                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                                EventService.ErrorOccurred(e, ErrorType.DownloadError);
+                            Shared.ReportError(e.Message, Shared.AllUserStore);
                         }
                     }
                 }

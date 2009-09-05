@@ -40,8 +40,8 @@
   <wsdl:message name="IEventSystem_Subscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Subscribe" />
   </wsdl:message>
-  <wsdl:message name="IEventSystem_Unsubscribe_InputMessage">
-    <wsdl:part name="parameters" element="tns:Unsubscribe" />
+  <wsdl:message name="IEventSystem_UnSubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:UnSubscribe" />
   </wsdl:message>
   <wsdl:message name="IEventSystem_OnDownloadCompleted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnDownloadCompleted" />
@@ -62,8 +62,8 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Subscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/Subscribe" message="tns:IEventSystem_Subscribe_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Unsubscribe">
-      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/Unsubscribe" message="tns:IEventSystem_Unsubscribe_InputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UnSubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/UnSubscribe" message="tns:IEventSystem_UnSubscribe_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadCompleted">
       <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnDownloadCompleted" message="tns:IEventSystem_OnDownloadCompleted_OutputCallbackMessage" />
@@ -90,8 +90,8 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="Unsubscribe">
-      <soap12:operation soapAction="http://tempuri.org/IEventSystem/Unsubscribe" style="document" />
+    <wsdl:operation name="UnSubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/UnSubscribe" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

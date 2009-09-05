@@ -89,7 +89,12 @@ namespace SevenUpdate
         /// <summary>
         /// The location of the hidden updates file
         /// </summary>
-        public static readonly string HiddenFile = AllUserStore + "Hidden.sua";
+        public static readonly string HiddenFile = AllUserStore + "Hidden.suh";
+
+        /// <summary>
+        /// The location of the update history file
+        /// </summary>
+        public static readonly string HistoryFile = AllUserStore + "History.suh";
 
         /// <summary>
         /// The user application data location
@@ -402,7 +407,7 @@ namespace SevenUpdate
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
                     r = new StreamReader(xmlFile);
                     var temp = (T) s.Deserialize(r);
                     r.Close();
@@ -477,7 +482,7 @@ namespace SevenUpdate
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof (T));
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {
@@ -512,7 +517,7 @@ namespace SevenUpdate
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof (T));
+                s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {

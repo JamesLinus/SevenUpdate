@@ -113,20 +113,26 @@ namespace SevenUpdate
         private static void Main(string[] args)
         {
             bool createdNew;
-            var host = new ServiceHost(typeof (EventService));
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
+                ServiceHost host = null;
                 try
-                {
-                    host.Open();
-                    EventService.ClientConnected += EventService_ClientConnected;
-                    EventService.ClientDisconnected += EventService_ClientDisconnected;
-                    host.Faulted += HostFaulted;
-                    SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+                { 
+                    if (createdNew)
+                    {
+                        host = new ServiceHost(typeof (EventService));
+                        host.Open();
+                        EventService.ClientConnected += EventService_ClientConnected;
+                        EventService.ClientDisconnected += EventService_ClientDisconnected;
+                        host.Faulted += HostFaulted;
+                        SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+                    }
                 }
                 catch (Exception e)
                 {
-                    host.Close();
+                    if (host != null)
+                        host.Close();
+                    SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Shared.ReportError(e.Message, Shared.AllUserStore);
                     Environment.Exit(0);
                 }
@@ -296,7 +302,7 @@ namespace SevenUpdate
 
                                 File.Delete(Shared.HiddenFile);
 
-                                File.Move(Shared.UserStore + "Hidden Updates.xml", Shared.HiddenFile);
+                                File.Move(Shared.UserStore + "Hidden.suh", Shared.HiddenFile);
 
                                 SetFileSecurity(Shared.HiddenFile);
 
@@ -309,11 +315,11 @@ namespace SevenUpdate
 
                                 if (createdNew)
                                 {
+                                    var app = new Application();
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
                                     Search.SearchForUpdates(Shared.Deserialize<Collection<SUA>>(Shared.AppsFile));
-                                    var app = new Application();
                                     app.Run();
                                 }
                                 else
@@ -354,7 +360,6 @@ namespace SevenUpdate
 
                 #endregion
             }
-            host.Close();
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
         }
 
@@ -494,7 +499,7 @@ namespace SevenUpdate
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
-            Download.DownloadUpdates(Shared.Deserialize<Collection<SUI>>(Shared.UserStore + "Update List.xml"), JobPriority.ForeGround);
+            Download.DownloadUpdates(Shared.Deserialize<Collection<SUI>>(Shared.UserStore + "Apps.sui"), JobPriority.ForeGround);
         }
 
         /// <summary>
@@ -503,6 +508,7 @@ namespace SevenUpdate
         private static void EventService_ClientDisconnected()
         {
             IsClientConnected = false;
+            IsInstallAborted = true;
         }
 
         /// <summary>

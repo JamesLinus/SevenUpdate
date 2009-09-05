@@ -18,8 +18,8 @@ namespace SevenUpdate.WCF {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/Subscribe")]
         void Subscribe();
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/Unsubscribe")]
-        void Unsubscribe();
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/UnSubscribe")]
+        void UnSubscribe();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -32,13 +32,13 @@ namespace SevenUpdate.WCF {
         void OnInstallCompleted(int updatesInstalled, int updatesFailed);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnErrorOccurred")]
-        void OnErrorOccurred(System.Exception e, SevenUpdate.ErrorType type);
+        void OnErrorOccurred(System.Exception exception, SevenUpdate.ErrorType type);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnDownloadProgressChanged")]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnInstallProgressChanged")]
-        void OnInstallProgressChanged(string updateTitle, int progress, int updatesComplete, int totalUpdates);
+        void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
@@ -73,8 +73,8 @@ namespace SevenUpdate.WCF {
             base.Channel.Subscribe();
         }
         
-        public void Unsubscribe() {
-            base.Channel.Unsubscribe();
+        public void UnSubscribe() {
+            base.Channel.UnSubscribe();
         }
     }
 }

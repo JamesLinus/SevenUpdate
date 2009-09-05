@@ -315,6 +315,7 @@ namespace SevenUpdate.WCF
             {
                 while (wcf.State != CommunicationState.Created)
                     Thread.CurrentThread.Join(500);
+                Shared.Serialize(App.Applications, Shared.UserStore + "Apps.sui");
                 wcf.Subscribe();
             }
             catch (EndpointNotFoundException e)
@@ -334,7 +335,7 @@ namespace SevenUpdate.WCF
         /// </summary>
         internal static void Disconnect()
         {
-            wcf.Unsubscribe();
+            wcf.UnSubscribe();
         }
 
         #region Install & Config Methods
@@ -393,7 +394,7 @@ namespace SevenUpdate.WCF
         {
             try
             {
-                wcf.Unsubscribe();
+                wcf.UnSubscribe();
             }
             catch (Exception e)
             {
@@ -428,10 +429,10 @@ namespace SevenUpdate.WCF
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
         {
-            Shared.Serialize(hiddenUpdates, Shared.UserStore + "Hidden Updates.xml");
+            Shared.Serialize(hiddenUpdates, Shared.UserStore + "Hidden.suh");
             if (LaunchAdmin("HideUpdates"))
                 return true;
-            File.Delete(Shared.UserStore + "Hidden Updates.xml");
+            File.Delete(Shared.UserStore + "Hidden.suh");
             return false;
         }
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="V0ica5vHRwwbMTzQZ4uHqlLZwSY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="8dA4LTZ8+tLNrT/UFNlERp9L6x8=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="netNamedPipeBinding" name="NetNamedPipeBinding_IEventSystem1">
+    <bindingConfiguration bindingType="netNamedPipeBinding" name="NetNamedPipeBinding_IEventSystem">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IEventSystem1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IEventSystem</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>00:01:00</serializedValue>
@@ -76,7 +76,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetNamedPipeBinding_IEventSystem1" contract="WCF.IEventSystem" bindingType="netNamedPipeBinding" address="net.pipe://localhost/SevenUpdate/" bindingConfiguration="NetNamedPipeBinding_IEventSystem1">
+    <endpoint name="NetNamedPipeBinding_IEventSystem" contract="WCF.IEventSystem" bindingType="netNamedPipeBinding" address="net.pipe://localhost/SevenUpdate/" bindingConfiguration="NetNamedPipeBinding_IEventSystem">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>net.pipe://localhost/SevenUpdate/</serializedValue>
@@ -88,7 +88,7 @@
           <serializedValue>netNamedPipeBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IEventSystem1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IEventSystem</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>WCF.IEventSystem</serializedValue>
@@ -151,7 +151,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IEventSystem1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IEventSystem</serializedValue>
         </property>
       </properties>
     </endpoint>

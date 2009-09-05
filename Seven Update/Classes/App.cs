@@ -146,7 +146,7 @@ namespace SevenUpdate
         /// </summary>
         private static void Shared_SerializationErrorEventHandler(object sender, Shared.SerializationErrorEventArgs e)
         {
-            // MessageBox.Show(e.File + e.Exception);
+            MessageBox.Show(e.File + e.Exception);
         }
 
         /// <summary>

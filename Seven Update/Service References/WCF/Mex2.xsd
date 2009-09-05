@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="Exception">
-    <xs:sequence>
-      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##local" processContents="skip" />
-    </xs:sequence>
-    <xs:attribute ref="ser:FactoryType" />
-  </xs:complexType>
-  <xs:element name="Exception" nillable="true" type="tns:Exception" />
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SevenUpdate" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SevenUpdate" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="ErrorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DownloadError" />
+      <xs:enumeration value="InstallationError" />
+      <xs:enumeration value="FatalNetworkError" />
+      <xs:enumeration value="GeneralErrorNonFatal" />
+      <xs:enumeration value="FatalError" />
+      <xs:enumeration value="SearchError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorType" nillable="true" type="tns:ErrorType" />
 </xs:schema>

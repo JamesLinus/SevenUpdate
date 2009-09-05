@@ -366,4 +366,7 @@
   <data name="Never" xml:space="preserve">
     <value>Never</value>
   </data>
+  <data name="InstalledOn" xml:space="preserve">
+    <value>installed on</value>
+  </data>
 </root>

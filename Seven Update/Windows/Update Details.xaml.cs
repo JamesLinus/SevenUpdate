@@ -58,7 +58,7 @@ namespace SevenUpdate.Windows
                 tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size);
             }
             else
-                tbStatus.Text = updateInfo.Status + " " + App.RM.GetString("On") + " " + updateInfo.InstallDate;
+                tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;
             if (updateInfo.InfoUrl != null)
                 tbMoreInfoURL.Text = updateInfo.InfoUrl;
             if (updateInfo.HelpUrl != null)

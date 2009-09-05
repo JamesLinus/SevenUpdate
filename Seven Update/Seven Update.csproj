@@ -175,8 +175,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UIStrings.resx" />
-    <None Include="app.config" />
+    <EmbeddedResource Include="Resources\UIStrings.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -192,6 +194,7 @@
     <None Include="Service References\WCF\Mex.xsd" />
     <None Include="Service References\WCF\Mex1.xsd" />
     <None Include="Service References\WCF\Mex2.xsd" />
+    <None Include="Service References\WCF\Mex3.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\GreenShield.png" />
@@ -216,6 +219,15 @@
     <Resource Include="Images\GreenArrow.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SevenUpdate.Library\SevenUpdate.Library.csproj">
+      <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
+      <Name>SevenUpdate.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShieldDisabled.png" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\WCF\" />
   </ItemGroup>
   <ItemGroup>
@@ -225,20 +237,10 @@
     <None Include="Service References\WCF\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WCF\Mex3.xsd" />
     <None Include="Service References\WCF\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SevenUpdate.Library\SevenUpdate.Library.csproj">
-      <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
-      <Name>SevenUpdate.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ShieldDisabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -78,9 +78,27 @@ namespace SevenUpdate
         /// </summary>
         internal static void InstallUpdates(Collection<SUI> applications)
         {
+            if (applications == null)
+            {
+                if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                    EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
+                Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                Environment.Exit(0);
+            }
+            else
+            {
+                if (applications.Count < 1)
+                {
+                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                        EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
+                    Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                    Environment.Exit(0);
+                }
+            }
+
             #region variables
 
-            int currentUpdate = 0, totalUpdates = 0;
+            int currentUpdate = 0, totalUpdates = 0, completedUpdates = 0, failedUpdates = 0;
             var errorOccurred = false;
             string currentUpdateTitle = null;
 
@@ -164,9 +182,15 @@ namespace SevenUpdate
                     #endregion
 
                     if (errorOccurred)
+                    {
+                        failedUpdates++;
                         AddHistory(applications[x], applications[x].Updates[y]);
+                    }
                     else
+                    {
+                        completedUpdates++;
                         AddHistory(applications[x], applications[x].Updates[y]);
+                    }
 
                     #region If Seven Update
 
@@ -219,8 +243,6 @@ namespace SevenUpdate
                     #endregion
 
                     currentUpdate++;
-
-                    applications[x].Updates.RemoveAt(y);
                 }
             }
 
@@ -257,7 +279,7 @@ namespace SevenUpdate
                     }
                 }
             }
-            EventService.InstallCompleted(currentUpdate, totalUpdates);
+            EventService.InstallCompleted(completedUpdates, failedUpdates);
 
             Environment.Exit(0);
         }
@@ -275,7 +297,7 @@ namespace SevenUpdate
             {
                 var percent = (currentProgress*100)/totalUpdates;
 
-                var updProgress = percent/currentUpdate;
+                var updProgress = percent/(currentUpdate + 1);
 
                 return updProgress/totalUpdates;
             }
@@ -549,8 +571,7 @@ namespace SevenUpdate
         /// <param name="appInfo">the application information</param>
         private static void AddHistory(SUI appInfo, Update updateInfo, bool failed)
         {
-            var history = Shared.Deserialize<Collection<SUH>>(Shared.AllUserStore + "Update History.xml");
-
+            var history = Shared.Deserialize<Collection<SUH>>(Shared.HistoryFile) ?? new Collection<SUH>();
             var hist = new SUH
                            {
                                HelpUrl = appInfo.HelpUrl,
@@ -568,7 +589,7 @@ namespace SevenUpdate
 
             history.Add(hist);
 
-            Shared.Serialize(history, Shared.AllUserStore + "Update History.xml");
+            Shared.Serialize(history, Shared.HistoryFile);
         }
 
         /// <summary>

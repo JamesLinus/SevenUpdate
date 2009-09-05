@@ -35,7 +35,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when the download has completed
         /// </summary>
-        /// <param name="errorOccurred"></param>
+        /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         [OperationContract(IsOneWay = true)]
         void OnDownloadCompleted(bool errorOccurred);
 
@@ -50,10 +50,10 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when an error occurs
         /// </summary>
-        /// <param name="e">The exception data</param>
+        /// <param name="exception">The exception data</param>
         /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
         [OperationContract(IsOneWay = true)]
-        void OnErrorOccurred(Exception e, ErrorType type);
+        void OnErrorOccurred(Exception exception, ErrorType type);
 
         /// <summary>
         /// Occurs when the download progress has changed

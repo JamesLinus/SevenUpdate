@@ -41,7 +41,7 @@ namespace SevenUpdate
         /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
-        private const string SEVENUPDATESUI = @"http://ittakestime.org/su/Seven Update.sui";
+        private const string SEVENUPDATESUI = @"http://ittakestime.org/su/apps/Seven Update.sui";
 
         #endregion
 
@@ -168,7 +168,7 @@ namespace SevenUpdate
                 }
                 app.Updates[y].Size = size;
             }
-            if (app.Updates.Count != 0)
+            if (app.Updates.Count > 0)
             {
                 /// Found updates, return
                 return true;
@@ -184,6 +184,8 @@ namespace SevenUpdate
         /// <param name="apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(Collection<SUA> apps)
         {
+            if (apps == null)
+                return;
             // delete the temp directory housing the sui files
             if (Directory.Exists(Shared.UserStore + "temp"))
                 Directory.Delete(Shared.UserStore + "temp", true);
@@ -258,7 +260,7 @@ namespace SevenUpdate
                     var dir = new DirectoryInfo(Shared.UserStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
 
                     /// Gets the hidden updates from settings
-                    var hidden = Shared.Deserialize<Collection<SUH>>(Shared.AllUserStore + "Hidden Updates.xml");
+                    var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
 
                     for (var x = 0; x < dir.Length; x++)
                     {

@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterOwner"
         Icon="/icon.ico"
         Width="600">
-    <StackPanel>
+    <StackPanel Margin="10">
         <TextBlock FontWeight="Bold"
                    Name="tbUpdateName"
                    Padding="5"

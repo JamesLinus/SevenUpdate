@@ -141,10 +141,11 @@ namespace SevenUpdate.Pages
                     officialAppList.RemoveAt(x);
                     x--;
                 }
+                if (userAppList == null)
+                    userAppList = officialAppList;
             }
 
             if (userAppList != null)
-            {
                 for (var x = 0; x < userAppList.Count; x++)
                 {
                     if (!Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
@@ -163,9 +164,8 @@ namespace SevenUpdate.Pages
                         userAppList[x] = officialAppList[y];
                     }
                 }
-                if (userAppList == null && officialAppList != null)
-                    userAppList = officialAppList;
-            }
+            if (userAppList == null && officialAppList != null)
+                userAppList = officialAppList;
 
             Dispatcher.BeginInvoke(UpdateList);
         }
@@ -175,6 +175,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void UpdateList()
         {
+            listView.Cursor = Cursors.Arrow;
             if (userAppList != null)
             {
                 listView.ItemsSource = userAppList;
@@ -186,7 +187,6 @@ namespace SevenUpdate.Pages
             else
             {
                 tbLastUpdated.Text = App.RM.GetString("CouldNotConnect");
-                listView.Cursor = Cursors.Arrow;
             }
         }
 

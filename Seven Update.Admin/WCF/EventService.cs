@@ -36,36 +36,36 @@ namespace SevenUpdate.WCF
         #region Delegates
 
         /// <summary>
-        /// A callback Delegate for a WCF Event
+        /// A callback delegate for a WCF Event
         /// </summary>
         public delegate void CallbackDelegate();
 
         /// <summary>
-        /// A callback Delegate for a WCF Event
+        /// A callback delegate for the <see cref="DownloadCompleted"/> event
         /// </summary>
-        /// <typeparam name="T">The argument Type</typeparam>
-        /// <param name="t">An argument</param>
-        public delegate void CallbackDelegate<T>(T t);
+        /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>
-        /// 
+        /// A callback delegate for the <see cref="DownloadProgressChanged"/> event
         /// </summary>
-        /// <typeparam name="T">The argument Type</typeparam>
-        /// <typeparam name="TY">The argument Type</typeparam>
-        /// <param name="t">An argument</param>
-        /// <param name="y">An argument</param>
-        public delegate void CallbackDelegate<T, TY>(T t, TY y);
+        /// <param name="bytesTransferred">The number of bytes downloaded</param>
+        /// <param name="bytesTotal">The total number of bytes to download</param>
+        public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal);
 
         /// <summary>
-        /// 
+        /// A callback delegate for the <see cref="DownloadProgressChanged"/> event
         /// </summary>
-        /// <typeparam name="T">The argument Type</typeparam>
-        /// <typeparam name="TY">The argument Type</typeparam>
-        /// <typeparam name="TZ">The argument Type</typeparam>
-        /// <param name="t">An argument</param>
-        /// <param name="y">An argument</param>
-        /// <param name="z">An argument</param>
-        public delegate void CallbackDelegate<T, TY, TZ>(T t, TY y, TZ z);
+        /// <param name="exception">The exception data</param>
+        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
+        public delegate void ErrorOccurredCallbackDelegate(Exception exception, ErrorType type);
+
+        /// <summary>
+        /// A callback delegate for the <see cref="InstallCompleted"/> event
+        /// </summary>
+        /// <param name="updatesInstalled">The number of updates installed</param>
+        /// <param name="updatesFailed">The number of failed updates</param>
+        public delegate void InstallCompletedCallbackDelegate(int updatesInstalled, int updatesFailed);
 
         /// <summary>
         /// A callback Delegate for a WCF Event
@@ -81,22 +81,22 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when the download of updates has completed
         /// </summary>
-        public static CallbackDelegate<bool> DownloadCompleted;
+        public static DownloadCompletedCallbackDelegate DownloadCompleted;
 
         /// <summary>
         /// Occurs when the install progress has changed
         /// </summary>
-        public static CallbackDelegate<ulong, ulong> DownloadProgressChanged;
+        public static DownloadProgressChangedCallbackDelegate DownloadProgressChanged;
 
         /// <summary>
         /// Occurs when a error occurs when downloading or installing updates
         /// </summary>
-        public static CallbackDelegate<Exception, ErrorType> ErrorOccurred;
+        public static ErrorOccurredCallbackDelegate ErrorOccurred;
 
         /// <summary>
         /// Occurs when the installation of updates has completed
         /// </summary>
-        public static CallbackDelegate<int, int> InstallCompleted;
+        public static InstallCompletedCallbackDelegate InstallCompleted;
 
         /// <summary>
         /// Occurs when the install progress has changed
