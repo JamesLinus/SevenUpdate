@@ -47,7 +47,7 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("true")]
         public bool infoPopUp {
             get {
                 return ((bool)(this["infoPopUp"]));

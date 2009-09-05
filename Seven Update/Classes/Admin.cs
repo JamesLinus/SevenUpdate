@@ -40,45 +40,45 @@ namespace SevenUpdate.WCF
         #region IEventSystemCallback Members
 
         /// <summary>
-        /// An error occured when downloading or installing updates
+        /// Occurs when a error occurs when downloading or installing updates
         /// </summary>
-        /// <param name="description">The description of the error</param>
-        /// <param name="type">The type of error that occurred</param>
-        public void OnErrorOccurred(string description, ErrorType type)
+        /// <param name="exception">the exception that occurred</param>
+        /// <param name="type">the type of error that occurred</param>
+        public void OnErrorOccurred(Exception exception, ErrorType type)
         {
             if (ErrorOccurredEventHandler == null)
                 return;
-            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(description, type));
+            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(exception, type));
         }
 
         /// <summary>
         /// Occurs when the installation of updates has completed
         /// </summary>
-        /// <param name="installedUpdates">The number of updates installed</param>
-        /// <param name="failedUpdates">The number of failed updates</param>
-        public void OnInstallDone(int installedUpdates, int failedUpdates)
+        /// <param name="installedUpdates">the number of updates installed</param>
+        /// <param name="failedUpdates">the number of failed updates</param>
+        public void OnInstallCompleted(int installedUpdates, int failedUpdates)
         {
             if (InstallDoneEventHandler != null)
-                InstallDoneEventHandler(this, new InstallDoneEventArgs(installedUpdates, failedUpdates));
+                InstallDoneEventHandler(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
         }
 
         /// <summary>
         /// Occurs when the download of updates has completed
         /// </summary>
-        /// <param name="errorOccurred">True is an error occurred, otherwise false</param>
-        public void OnDownloadDone(bool errorOccurred)
+        /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        public void OnDownloadCompleted(bool errorOccurred)
         {
             if (DownloadDoneEventHandler != null)
-                DownloadDoneEventHandler(this, new DownloadDoneEventArgs(errorOccurred));
+                DownloadDoneEventHandler(this, new DownloadCompletedEventArgs(errorOccurred));
         }
 
         /// <summary>
         /// Occurs when the install progress has changed
         /// </summary>
-        /// <param name="updateName">The name of the update being installed</param>
-        /// <param name="progress">The progress percentage completion</param>
-        /// <param name="updatesComplete">Number of updates that have already been installed</param>
-        /// <param name="totalUpdates">The total number of updates being installed</param>
+        /// <param name="updateName">the name of the update being installed</param>
+        /// <param name="progress">the progress percentage completion</param>
+        /// <param name="updatesComplete">the number of updates that have already been installed</param>
+        /// <param name="totalUpdates">the total number of updates being installed</param>
         public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
             if (InstallProgressChangedEventHandler != null)
@@ -88,8 +88,8 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when the download progress has changed
         /// </summary>
-        /// <param name="bytesTransferred">The number of bytes downloaded</param>
-        /// <param name="bytesTotal">The total number of bytes to download</param>
+        /// <param name="bytesTransferred">the number of bytes downloaded</param>
+        /// <param name="bytesTotal">the total number of bytes to download</param>
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal)
         {
             if (DownloadProgressChangedEventHandler != null)
@@ -102,36 +102,42 @@ namespace SevenUpdate.WCF
 
         #region Event Args
 
-        #region Nested type: DownloadDoneEventArgs
+        #region Nested type: DownloadCompletedEventArgs
 
-        public class DownloadDoneEventArgs : EventArgs
+        /// <summary>
+        /// Provides event data for the DownloadCompleted event
+        /// </summary>
+        public class DownloadCompletedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="errorOccurred">True is an error occurred, otherwise false</param>
-            public DownloadDoneEventArgs(bool errorOccurred)
+            /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c></param>
+            public DownloadCompletedEventArgs(bool errorOccurred)
             {
                 ErrorOccurred = errorOccurred;
             }
 
             /// <summary>
-            /// True is an error occurred, otherwise false
+            /// <c>true</c> if an error occurred, otherwise <c>false</c>
             /// </summary>
-            internal bool ErrorOccurred { get; set; }
+            internal bool ErrorOccurred { get; private set; }
         }
 
         #endregion
 
         #region Nested type: DownloadProgressChangedEventArgs
 
+        /// <summary>
+        /// Provides event data for the DownloadProgressChanged event
+        /// </summary>
         public class DownloadProgressChangedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="bytesTransferred">The number of bytes transferred</param>
-            /// <param name="bytesTotal">The total number of bytes to download</param>
+            /// <param name="bytesTransferred">the number of bytes transferred</param>
+            /// <param name="bytesTotal">the total number of bytes to download</param>
             public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal)
             {
                 BytesTotal = bytesTotal;
@@ -139,85 +145,94 @@ namespace SevenUpdate.WCF
             }
 
             /// <summary>
-            /// The number of bytes transferred
+            /// Gets the number of bytes transferred
             /// </summary>
-            public ulong BytesTransferred { get; set; }
+            public ulong BytesTransferred { get; private set; }
 
             /// <summary>
-            /// The total number of bytes to download
+            /// Gets the total number of bytes to download
             /// </summary>
-            public ulong BytesTotal { get; set; }
+            public ulong BytesTotal { get; private set; }
         }
 
         #endregion
 
         #region Nested type: ErrorOccurredEventArgs
 
+        /// <summary>
+        /// Provides event data for the ErrorOccurred event
+        /// </summary>
         public class ErrorOccurredEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="description">A description of the error that occurred</param>
-            /// <param name="type">The type of error that occurred</param>
-            public ErrorOccurredEventArgs(string description, ErrorType type)
+            /// <param name="exception">the exception that occurred</param>
+            /// <param name="type">the type of error that occurred</param>
+            public ErrorOccurredEventArgs(Exception exception, ErrorType type)
             {
-                Description = description;
+                Exception = exception;
                 Type = type;
             }
 
             /// <summary>
-            /// A description of the error that occurred
+            /// Gets the Exception information of the error that occurred
             /// </summary>
-            public string Description { get; set; }
+            public Exception Exception { get; private set; }
 
             /// <summary>
-            /// The type of error that occurred
+            /// Gets the <see cref="ErrorType"/> of the error that occurred
             /// </summary>
-            public ErrorType Type { get; set; }
+            public ErrorType Type { get; private set; }
         }
 
         #endregion
 
-        #region Nested type: InstallDoneEventArgs
+        #region Nested type: InstallCompletedEventArgs
 
-        public class InstallDoneEventArgs : EventArgs
+        /// <summary>
+        /// Provides event data for the InstallCompleted event
+        /// </summary>
+        public class InstallCompletedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="updatesInstalled"></param>
-            /// <param name="updatesFailed"></param>
-            public InstallDoneEventArgs(int updatesInstalled, int updatesFailed)
+            /// <param name="updatesInstalled">the number of updates installed</param>
+            /// <param name="updatesFailed">the number of updates that failed</param>
+            public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
             {
                 UpdatesInstalled = updatesInstalled;
                 UpdatesFailed = updatesFailed;
             }
 
             /// <summary>
-            /// The number of updates that have been installed
+            /// Gets the number of updates that have been installed
             /// </summary>
-            public int UpdatesInstalled { get; set; }
+            public int UpdatesInstalled { get; private set; }
 
             /// <summary>
-            /// The number of updates that failed.
+            /// Gets the number of updates that failed.
             /// </summary>
-            public int UpdatesFailed { get; set; }
+            public int UpdatesFailed { get; private set; }
         }
 
         #endregion
 
         #region Nested type: InstallProgressChangedEventArgs
 
+        /// <summary>
+        /// Provides event data for the InstallProgressChanged event
+        /// </summary>
         public class InstallProgressChangedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="updateName">The name of the update currently being installed</param>
-            /// <param name="progress">The progress percetage of the installation</param>
-            /// <param name="updatesComplete">The number of updates that have been installed so far</param>
-            /// <param name="totalUpdates">The total number of updates to install</param>
+            /// <param name="updateName">the name of the update currently being installed</param>
+            /// <param name="progress">the progress percentage of the installation</param>
+            /// <param name="updatesComplete">the number of updates that have been installed so far</param>
+            /// <param name="totalUpdates">the total number of updates to install</param>
             public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
             {
                 CurrentProgress = progress;
@@ -229,22 +244,22 @@ namespace SevenUpdate.WCF
             /// <summary>
             /// The progress percentage of the installation
             /// </summary>
-            public int CurrentProgress { get; set; }
+            public int CurrentProgress { get; private set; }
 
             /// <summary>
             /// The total number of updates to install
             /// </summary>
-            public int TotalUpdates { get; set; }
+            public int TotalUpdates { get; private set; }
 
             /// <summary>
             /// The number of updates that have been installed so far
             /// </summary>
-            public int UpdatesComplete { get; set; }
+            public int UpdatesComplete { get; private set; }
 
             /// <summary>
             /// The name of the current update being installed
             /// </summary>
-            public string UpdateName { get; set; }
+            public string UpdateName { get; private set; }
         }
 
         #endregion
@@ -259,7 +274,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when the installation completed.
         /// </summary>
-        public static event EventHandler<InstallDoneEventArgs> InstallDoneEventHandler;
+        public static event EventHandler<InstallCompletedEventArgs> InstallDoneEventHandler;
 
         /// <summary>
         /// Occurs when the installation progress changed
@@ -269,7 +284,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when the download completed.
         /// </summary>
-        public static event EventHandler<DownloadDoneEventArgs> DownloadDoneEventHandler;
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadDoneEventHandler;
 
         /// <summary>
         /// Occurs when the download progress changed
@@ -292,7 +307,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Connects to the Seven Update.Admin sub program
         /// </summary>
-        /// <returns>Returns true if sucessful</returns>
+        /// <returns>returns <c>true</c> if successful</returns>
         internal static void Connect()
         {
             wcf = new EventSystemClient(new InstanceContext(new AdminCallBack()));
@@ -328,8 +343,8 @@ namespace SevenUpdate.WCF
         /// Launches the Seven Update.Admin Module
         /// </summary>
         /// <param name="arguments">a string of arguments to be passed to admin module</param>
-        /// <param name="wait">a boolen indicating if the current thread will wait for the admin process to exit</param>
-        /// <returns>Returns a bool specifying if the admin module executed</returns>
+        /// <param name="wait">a boolean indicating if the current thread will wait for the admin process to exit</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         private static bool LaunchAdmin(string arguments, bool wait)
         {
             var proc = new Process {StartInfo = {FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe"}};
@@ -365,7 +380,7 @@ namespace SevenUpdate.WCF
         /// Launches the Seven Update.Admin Module
         /// </summary>
         /// <param name="arguments">a string of arguments to be passed to admin module</param>
-        /// <returns>True if successful, false otherwise</returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         private static bool LaunchAdmin(string arguments)
         {
             return LaunchAdmin(arguments, false);
@@ -389,7 +404,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Installs selected updates
         /// </summary>
-        /// <returns>returns true if sucessful</returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
             return LaunchAdmin("Install");
@@ -398,19 +413,19 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Hides an update
         /// </summary>
-        /// <param name="hiddenUpdate">The update to hide</param>
-        /// <returns>True if sucessful, otherwise false</returns>
+        /// <param name="hiddenUpdate">the update to hide</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdate(SUH hiddenUpdate)
         {
-            Shared.Serialize(hiddenUpdate, Shared.UserStore + "HnH Update.xml");
+            Shared.Serialize(hiddenUpdate, Shared.UserStore + "Update.suh");
             return LaunchAdmin("HideUpdate");
         }
 
         /// <summary>
         /// Hides multiple updates
         /// </summary>
-        /// <param name="hiddenUpdates">The list of updates to hide</param>
-        /// <returns>Returns true if sucessful</returns>
+        /// <param name="hiddenUpdates">the list of updates to hide</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
         {
             Shared.Serialize(hiddenUpdates, Shared.UserStore + "Hidden Updates.xml");
@@ -421,23 +436,23 @@ namespace SevenUpdate.WCF
         }
 
         /// <summary>
-        /// UnHides an update
+        /// Unhides an update
         /// </summary>
-        /// <param name="hiddenUpdate">The Hidden Update to unhide</param>
-        /// <returns>Retirms true if successful</returns>
+        /// <param name="hiddenUpdate">the hidden update to unhide</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(SUH hiddenUpdate)
         {
             if (!LaunchAdmin("ShowUpdate"))
                 return false;
-            Shared.Serialize(hiddenUpdate, Shared.UserStore + "HnH Update.xml");
+            Shared.Serialize(hiddenUpdate, Shared.UserStore + "Update.suh");
             return true;
         }
 
         /// <summary>
         /// Adds an application to Seven Update
         /// </summary>
-        /// <param name="sul">The list of applications to update</param>
-        /// <returns>True if successful, otherwise false</returns>
+        /// <param name="sul">the list of applications to update</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool AddSUA(Collection<SUA> sul)
         {
             Shared.Serialize(sul, Shared.UserStore + "Apps.sul");
@@ -447,10 +462,10 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Save the settings and call Seven Update.Admin to commit them.
         /// </summary>
-        /// <param name="autoOn">True if auto updates is enabled, otherwise false</param>
-        /// <param name="options">The options to save</param>
-        /// <param name="sul">The list of application to update to save</param>
-        /// <returns>True if successful, otherwise false</returns>
+        /// <param name="autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
+        /// <param name="options">the options to save</param>
+        /// <param name="sul">the list of application to update to save</param>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<SUA> sul)
         {
             /// Save the application settings and applications to update in the user store

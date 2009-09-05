@@ -48,12 +48,22 @@ namespace SevenUpdate.Windows
             NavService = NavigationService;
         }
 
+        /// <summary>
+        /// Sets the Height and Width of the window from the settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NavigationWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Height = Settings.Default.windowHeight;
             Width = Settings.Default.windowWidth;
         }
 
+        /// <summary>
+        /// When Seven Update is closing, save the Window Width and Height in the settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NavigationWindow_Closing(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = Height;

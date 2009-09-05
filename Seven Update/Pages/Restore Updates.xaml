@@ -22,7 +22,7 @@
                 StrokeThickness="1" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5"
                 Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Controls:ListViewSorter.IsListviewSortable="True"
+        <ListView SelectionMode="Single" Grid.Row="1" Name="listView" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Controls:ListViewSorter.IsListViewSortable="True"
                 Foreground="Black" BorderThickness="0">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">

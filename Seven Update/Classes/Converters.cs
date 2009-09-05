@@ -30,6 +30,9 @@ using System.Windows.Media;
 
 namespace SevenUpdate.Converters
 {
+    /// <summary>
+    /// Converts a Brush to bool
+    /// </summary>
     [ValueConversion(typeof(Brush), typeof(bool))]
     public class BrushToBoolConverter : IValueConverter
     {
@@ -71,7 +74,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a LocaleString to a localized string
+    /// Converts a <see cref="LocaleString"/> to a localized string
     /// </summary>
     [ValueConversion(typeof(LocaleString), typeof(string))]
     public class LocaleStringConverter : IValueConverter

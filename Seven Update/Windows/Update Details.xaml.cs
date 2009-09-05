@@ -33,11 +33,19 @@ namespace SevenUpdate.Windows
     /// </summary>
     public partial class UpdateDetails : Window
     {
+        /// <summary>
+        /// Constructor for the Update Details window
+        /// </summary>
         public UpdateDetails()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Shows the window and displays the update information
+        /// </summary>
+        /// <param name="updateInfo">The update information to display</param>
+        /// <returns><c>true</c></returns>
         internal bool? ShowDialog(SUH updateInfo)
         {
             tbUpdateName.Text = Shared.GetLocaleString(updateInfo.Name);
@@ -59,12 +67,18 @@ namespace SevenUpdate.Windows
             return ShowDialog();
         }
 
+        /// <summary>
+        /// Launches the More Information Url
+        /// </summary>
         private void tbMoreInfoURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbMoreInfoURL.Text != null)
                 Process.Start(tbMoreInfoURL.Text);
         }
 
+        /// <summary>
+        /// Launches the Help Url
+        /// </summary>
         private void tbHelpURL_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbHelpURL.Text != null)

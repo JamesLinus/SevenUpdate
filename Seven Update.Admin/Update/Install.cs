@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -30,21 +31,41 @@ using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using SevenUpdate.WCF;
-using File = System.IO.File;
+using File=System.IO.File;
 
 #endregion
 
 namespace SevenUpdate
 {
+    /// <summary>
+    /// Class containing methods to install updates
+    /// </summary>
     internal class Install
     {
         #region Global Vars
 
-        internal const int MoveOnReboot = 5;
+        /// <summary>
+        /// Gets an int that indicates to move a file on reboot
+        /// </summary>
+        internal const int MOVEONREBOOT = 5;
 
+        /// <summary>
+        /// Gets or Sets a value indicating an installation is in progress
+        /// </summary>
         private static int installProgress;
+
+        /// <summary>
+        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
+        /// </summary>
         internal static bool Abort { get; set; }
 
+        /// <summary>
+        /// Moves or deletes a file on reboot
+        /// </summary>
+        /// <param name="lpExistingFileName">The source filename</param>
+        /// <param name="lpNewFileName">The destination filename</param>
+        /// <param name="dwFlags">A int indicating the move operation to perform</param>
+        /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
         [DllImport("kernel32.dll")]
         internal static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
@@ -153,7 +174,7 @@ namespace SevenUpdate
                     {
                         for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                         {
-                            if (applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete && applications[x].Updates[y].Files[z].Action != FileAction.Delete) { }
+                            if (applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete && applications[x].Updates[y].Files[z].Action != FileAction.Delete) {}
                             else
                             {
                                 try
@@ -162,7 +183,7 @@ namespace SevenUpdate
                                 }
                                 catch (Exception)
                                 {
-                                    MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null, MoveOnReboot);
+                                    MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null, MOVEONREBOOT);
                                 }
                             }
                         }
@@ -216,10 +237,10 @@ namespace SevenUpdate
 
             if (Shared.RebootNeeded)
             {
-                MoveFileEx(Shared.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                MoveFileEx(Shared.AllUserStore + "reboot.lock", null, MOVEONREBOOT);
 
                 if (Directory.Exists(Shared.AllUserStore + "downloads"))
-                    MoveFileEx(Shared.AllUserStore + "downloads", null, MoveOnReboot);
+                    MoveFileEx(Shared.AllUserStore + "downloads", null, MOVEONREBOOT);
             }
             else
             {
@@ -232,11 +253,11 @@ namespace SevenUpdate
                         {
                             Directory.Delete(Shared.AllUserStore + "downloads", true);
                         }
-                        catch (Exception) { }
+                        catch (Exception) {}
                     }
                 }
             }
-            EventService.InstallDone(currentUpdate, totalUpdates);
+            EventService.InstallCompleted(currentUpdate, totalUpdates);
 
             Environment.Exit(0);
         }
@@ -244,19 +265,19 @@ namespace SevenUpdate
         /// <summary>
         /// The current progress of the installation
         /// </summary>
-        /// <param name="currentProgress">The progress of the current update</param>
-        /// <param name="currentUpdate">The current index of the update</param>
-        /// <param name="totalUpdates">The total number of updates being installed</param>
-        /// <returns>Returns the progress percentage of the update</returns>
+        /// <param name="currentProgress">the progress of the current update</param>
+        /// <param name="currentUpdate">the current index of the update</param>
+        /// <param name="totalUpdates">the total number of updates being installed</param>
+        /// <returns>returns the progress percentage of the update</returns>
         private static int GetProgress(int currentProgress, int currentUpdate, int totalUpdates)
         {
             try
             {
-                var percent = (currentProgress * 100) / totalUpdates;
+                var percent = (currentProgress*100)/totalUpdates;
 
-                var updProgress = percent / currentUpdate;
+                var updProgress = percent/currentUpdate;
 
-                return updProgress / totalUpdates;
+                return updProgress/totalUpdates;
             }
             catch (Exception)
             {
@@ -267,7 +288,7 @@ namespace SevenUpdate
         /// <summary>
         /// Sets the registry items of an update
         /// </summary>
-        /// <param name="update">The update to use to set the registry items</param>
+        /// <param name="update">the update to use to set the registry items</param>
         private static bool SetRegistryItems(Update update)
         {
             RegistryKey key;
@@ -339,9 +360,9 @@ namespace SevenUpdate
         /// <summary>
         /// Installs the shortcuts of an update
         /// </summary>
-        /// <param name="update">The update to use to install shortcuts</param>
-        /// <param name="applicationDirectory">The directory where the application is installed</param>
-        /// <param name="is64Bit">True if the application is 64 bit, otherwise false</param>
+        /// <param name="update">the update to use to install shortcuts</param>
+        /// <param name="applicationDirectory">the directory where the application is installed</param>
+        /// <param name="is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
         private static void SetShortcuts(Update update, string applicationDirectory, bool is64Bit)
         {
             if (update.Shortcuts == null)
@@ -355,7 +376,7 @@ namespace SevenUpdate
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(Shared.ConvertPath(link.Location, true, is64Bit)));
                     File.Delete(Shared.ConvertPath(link.Location, true, is64Bit));
-                    shortcut = (IWshShortcut)ws.CreateShortcut(Shared.ConvertPath(link.Location, true, is64Bit));
+                    shortcut = (IWshShortcut) ws.CreateShortcut(Shared.ConvertPath(link.Location, true, is64Bit));
                     // Where the shortcut should point to
                     shortcut.TargetPath = Shared.ConvertPath(link.Target, applicationDirectory, is64Bit);
                     // Description for the shortcut
@@ -380,15 +401,15 @@ namespace SevenUpdate
         /// <summary>
         /// Installs the files in the update
         /// </summary>
-        /// <param name="files">The collection of files to update</param>
-        /// <param name="downloadDirectory">The path to the download folder where the update files are located</param>
-        /// <param name="appDirectory">The application directory</param>
-        /// <param name="is64Bit">Secifies if the application is 64Bit</param>
-        /// <param name="currentUpdateTitle">The name of the current update</param>
-        /// <param name="currentUpdate">The index of the current update in relation to the total number of updates</param>
-        /// <param name="totalUpdates">The total number of updates to install</param>
-        /// <returns>True if updated all files without errors, otherwise false</returns>
-        private static bool UpdateFiles(Collection<UpdateFile> files, string downloadDirectory, string appDirectory, bool is64Bit, string currentUpdateTitle, int currentUpdate, int totalUpdates)
+        /// <param name="files">the collection of files to update</param>
+        /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
+        /// <param name="appDirectory">the application directory</param>
+        /// <param name="is64Bit">Indicates if an application is 64-bit, <c>true</c> if 64-bit, otherwise <c>false</c></param>
+        /// <param name="currentUpdateTitle">the name of the current update</param>
+        /// <param name="currentUpdate">the index of the current update in relation to the total number of updates</param>
+        /// <param name="totalUpdates">the total number of updates to install</param>
+        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
+        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory, string appDirectory, bool is64Bit, string currentUpdateTitle, int currentUpdate, int totalUpdates)
         {
             var error = false;
             for (var x = 0; x < files.Count; x++)
@@ -408,7 +429,7 @@ namespace SevenUpdate
 
                 switch (files[x].Action)
                 {
-                    #region Delete file
+                        #region Delete file
 
                     case FileAction.ExecuteAndDelete:
                     case FileAction.UnregisterAndDelete:
@@ -417,7 +438,7 @@ namespace SevenUpdate
                         {
                             if (File.Exists(sourceFile))
                             {
-                                var proc = new Process { StartInfo = { FileName = sourceFile, Arguments = files[x].Args } };
+                                var proc = new Process {StartInfo = {FileName = sourceFile, Arguments = files[x].Args}};
                                 proc.Start();
                                 proc.WaitForExit();
                             }
@@ -432,14 +453,14 @@ namespace SevenUpdate
                         }
                         catch (Exception)
                         {
-                            MoveFileEx(destinationFile, null, MoveOnReboot);
+                            MoveFileEx(destinationFile, null, MOVEONREBOOT);
                         }
 
                         break;
 
-                    #endregion
+                        #endregion
 
-                    #region Update file
+                        #region Update file
 
                     case FileAction.Update:
                     case FileAction.UpdateAndExecute:
@@ -469,7 +490,7 @@ namespace SevenUpdate
                                     App.SetFileSecurity(Shared.AllUserStore + "reboot.lock");
                                 }
 
-                                MoveFileEx(sourceFile, destinationFile, MoveOnReboot);
+                                MoveFileEx(sourceFile, destinationFile, MOVEONREBOOT);
                                 File.Delete(destinationFile + ".bak");
                             }
                         }
@@ -497,12 +518,12 @@ namespace SevenUpdate
                             Process.Start("regsvc32", "/s " + destinationFile);
                         break;
 
-                    #endregion
+                        #endregion
                 }
 
                 #region Report Progress
 
-                installProgress = (x * 100) / files.Count;
+                installProgress = (x*100)/files.Count;
                 if (installProgress > 90)
                     installProgress -= 15;
 
@@ -523,9 +544,9 @@ namespace SevenUpdate
         /// <summary>
         /// Adds an update to the update history
         /// </summary>
-        /// <param name="updateInfo">The update information</param>
-        /// <param name="failed">True if the update failed, otherwise false</param>
-        /// <param name="appInfo">The application information</param>
+        /// <param name="updateInfo">the update information</param>
+        /// <param name="failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
+        /// <param name="appInfo">the application information</param>
         private static void AddHistory(SUI appInfo, Update updateInfo, bool failed)
         {
             var history = Shared.Deserialize<Collection<SUH>>(Shared.AllUserStore + "Update History.xml");
@@ -553,8 +574,8 @@ namespace SevenUpdate
         /// <summary>
         /// Adds an update to the update history
         /// </summary>
-        /// <param name="app">The application info</param>
-        /// <param name="info">The update to add</param>
+        /// <param name="app">the application info</param>
+        /// <param name="info">the update to add</param>
         private static void AddHistory(SUI app, Update info)
         {
             AddHistory(app, info, false);

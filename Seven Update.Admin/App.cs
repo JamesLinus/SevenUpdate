@@ -34,16 +34,22 @@ using Microsoft.Win32;
 using SevenUpdate.Properties;
 using SevenUpdate.WCF;
 using SharpBits.Base;
-using Application = System.Windows.Application;
+using Application=System.Windows.Application;
 
 #endregion
 
 namespace SevenUpdate
 {
+    /// <summary>
+    /// The main class of the application
+    /// </summary>
     internal class App
     {
         #region Enums
 
+        /// <summary>
+        /// Defines constants for the notification type, such has SearchComplete
+        /// </summary>
         internal enum NotifyType
         {
             /// <summary>
@@ -80,7 +86,7 @@ namespace SevenUpdate
         /// <summary>
         /// The UI Resource Strings
         /// </summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof(App).Assembly);
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
 
         /// <summary>
         /// The update settings for Seven Update
@@ -88,19 +94,26 @@ namespace SevenUpdate
         public static Config Settings { get { return Shared.DeserializeStruct<Config>(Shared.ConfigFile); } }
 
         /// <summary>
-        /// Indicates if the Seven Update UI is currently connected.
+        /// Gets or sets a bool value indicating Seven Update UI is currently connected.
         /// </summary>
         internal static bool IsClientConnected { get; set; }
 
+        /// <summary>
+        /// Gets or sets a 
+        /// </summary>
         internal static bool IsInstallAborted { get; set; }
 
         #endregion
 
+        /// <summary>
+        /// The main execution path
+        /// </summary>
+        /// <param name="args">A string[] of command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
             bool createdNew;
-            var host = new ServiceHost(typeof(EventService));
+            var host = new ServiceHost(typeof (EventService));
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
                 try
@@ -248,9 +261,9 @@ namespace SevenUpdate
 
                                 var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
 
-                                hidden.Add(Shared.Deserialize<SUH>(Shared.UserStore + "HnH Update.xml"));
+                                hidden.Add(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
-                                File.Delete(Shared.UserStore + "HnH Update.xml");
+                                File.Delete(Shared.UserStore + "Update.suh");
 
                                 Shared.Serialize(hidden, Shared.HiddenFile);
 
@@ -265,9 +278,9 @@ namespace SevenUpdate
 
                                 var show = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
 
-                                show.Remove(Shared.Deserialize<SUH>(Shared.UserStore + "HnH Update.xml"));
+                                show.Remove(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
-                                File.Delete(Shared.UserStore + "HnH Update.xml");
+                                File.Delete(Shared.UserStore + "Update.suh");
 
                                 if (show.Count == 0)
                                     File.Delete(Shared.HiddenFile);
@@ -350,7 +363,7 @@ namespace SevenUpdate
         /// <summary>
         /// Updates the notify icon text
         /// </summary>
-        /// <param name="text">A string to set the notifyIcon text</param>
+        /// <param name="text">The string to set the notifyIcon text</param>
         internal static void UpdateNotifyIcon(string text)
         {
             NotifyIcon.Text = text;
@@ -359,7 +372,7 @@ namespace SevenUpdate
         /// <summary>
         /// Updates the notifyIcon state
         /// </summary>
-        /// <param name="filter">Indicates how to update the icon depending on the event that happened</param>
+        /// <param name="filter">The <see cref="NotifyType"/> to set the notifyIcon to.</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
             if (!NotifyIcon.Visible)
@@ -394,8 +407,6 @@ namespace SevenUpdate
         /// <summary>
         /// Starts Seven Update UI
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             var proc = new Process();
@@ -449,7 +460,7 @@ namespace SevenUpdate
 
                     fs.AddAccessRule(new FileSystemAccessRule(users, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
                 }
-                catch { }
+                catch {}
 
                 fs.PurgeAccessRules(user);
 
@@ -457,9 +468,9 @@ namespace SevenUpdate
                 {
                     File.SetAccessControl(file, fs);
                 }
-                catch { }
+                catch {}
             }
-            catch { }
+            catch {}
         }
 
         #endregion
@@ -468,6 +479,9 @@ namespace SevenUpdate
 
         #region Event Methods
 
+        /// <summary>
+        /// Prevents the system from shutting down until the installation is safely stopped
+        /// </summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             Install.Abort = true;
@@ -492,7 +506,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Errror Event when the .NetPipe binding faults
+        /// Error Event when the .NetPipe binding faults
         /// </summary>
         private static void HostFaulted(object sender, EventArgs e)
         {
@@ -501,9 +515,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Runs when the search for updates has completed for an autoupdate
+        /// Runs when the search for updates has completed for an auto update
         /// </summary>
-        private static void Search_SearchDoneEventHandler(object sender, Search.SearchDoneEventArgs e)
+        private static void Search_SearchDoneEventHandler(object sender, Search.SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
             {

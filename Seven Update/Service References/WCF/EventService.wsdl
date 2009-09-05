@@ -33,7 +33,8 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IEventSystem_Subscribe_InputMessage">
@@ -42,11 +43,11 @@
   <wsdl:message name="IEventSystem_Unsubscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:Unsubscribe" />
   </wsdl:message>
-  <wsdl:message name="IEventSystem_OnDownloadDone_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnDownloadDone" />
+  <wsdl:message name="IEventSystem_OnDownloadCompleted_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnDownloadCompleted" />
   </wsdl:message>
-  <wsdl:message name="IEventSystem_OnInstallDone_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnInstallDone" />
+  <wsdl:message name="IEventSystem_OnInstallCompleted_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnInstallCompleted" />
   </wsdl:message>
   <wsdl:message name="IEventSystem_OnErrorOccurred_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnErrorOccurred" />
@@ -64,11 +65,11 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Unsubscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/Unsubscribe" message="tns:IEventSystem_Unsubscribe_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadDone">
-      <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnDownloadDone" message="tns:IEventSystem_OnDownloadDone_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadCompleted">
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnDownloadCompleted" message="tns:IEventSystem_OnDownloadCompleted_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnInstallDone">
-      <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnInstallDone" message="tns:IEventSystem_OnInstallDone_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnInstallCompleted">
+      <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnInstallCompleted" message="tns:IEventSystem_OnInstallCompleted_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnErrorOccurred">
       <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnErrorOccurred" message="tns:IEventSystem_OnErrorOccurred_OutputCallbackMessage" />
@@ -95,14 +96,14 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="OnDownloadDone">
-      <soap12:operation soapAction="http://tempuri.org/IEventSystem/OnDownloadDone" style="document" />
+    <wsdl:operation name="OnDownloadCompleted">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/OnDownloadCompleted" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnInstallDone">
-      <soap12:operation soapAction="http://tempuri.org/IEventSystem/OnInstallDone" style="document" />
+    <wsdl:operation name="OnInstallCompleted">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/OnInstallCompleted" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>

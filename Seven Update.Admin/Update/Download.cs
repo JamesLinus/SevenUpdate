@@ -31,6 +31,9 @@ using SharpBits.Base;
 
 namespace SevenUpdate
 {
+    /// <summary>
+    ///  A class containing methods to download updates
+    /// </summary>
     internal class Download
     {
         #region Global Vars
@@ -64,7 +67,7 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch (Exception) { }
+                    catch (Exception) {}
 
                     return true;
                 }
@@ -76,8 +79,8 @@ namespace SevenUpdate
         /// <summary>
         /// Downloads the updates using BITS
         /// </summary>
-        /// <param name="applications">The Collection of applications and updates</param>
-        /// <param name="priority">The Priority of the download</param>
+        /// <param name="applications">the Collection of applications and updates</param>
+        /// <param name="priority">the Priority of the download</param>
         internal static void DownloadUpdates(Collection<SUI> applications, JobPriority priority)
         {
             // When done with the temp list
@@ -108,7 +111,7 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch (Exception) { }
+                    catch (Exception) {}
                 }
                 else
                 {
@@ -123,7 +126,7 @@ namespace SevenUpdate
                         {
                             job.Cancel();
                         }
-                        catch (Exception) { }
+                        catch (Exception) {}
                     }
                 }
             }
@@ -141,22 +144,22 @@ namespace SevenUpdate
 
                     for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                     {
-                        var fileDest = Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
+                        var fileDestination = Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
 
-                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete) { }
+                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete) {}
                         else
                         {
-                            if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDest)) != applications[x].Updates[y].Files[z].Hash)
+                            if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) != applications[x].Updates[y].Files[z].Hash)
                             {
                                 try
                                 {
                                     try
                                     {
-                                        File.Delete(downloadDir + @"\" + Path.GetFileName(fileDest));
+                                        File.Delete(downloadDir + @"\" + Path.GetFileName(fileDestination));
                                     }
-                                    catch (Exception) { }
+                                    catch (Exception) {}
                                     var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
-                                    bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDest));
+                                    bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                                 }
                                 catch (Exception e)
                                 {
@@ -198,6 +201,9 @@ namespace SevenUpdate
 
         #region Event Handlers
 
+        /// <summary>
+        /// Calls the DownloadProgressChanged Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when the job progress has changed
+        /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
             if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring || e.Job.Progress.BytesTransferred <= 0)
@@ -209,10 +215,13 @@ namespace SevenUpdate
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                            App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                           (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
             }
         }
 
+        /// <summary>
+        /// Calls the ErrorOccurred Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when an error occurs
+        /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job.DisplayName != "Seven Update")
@@ -224,7 +233,7 @@ namespace SevenUpdate
                 manager.Dispose();
                 manager = null;
             }
-            catch (Exception) { }
+            catch (Exception) {}
             Shared.ReportError(e.Error.File + " - " + e.Error.File, Shared.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                 EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.File), ErrorType.DownloadError);
@@ -232,6 +241,8 @@ namespace SevenUpdate
             Environment.Exit(0);
         }
 
+        /// Calls the DownloadComplete Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when the job has been downloaded or Calls the InstallUpdates Method
+        /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {
             if (e.Job.DisplayName == "Seven Update")
@@ -248,12 +259,12 @@ namespace SevenUpdate
                         manager.Dispose();
                         manager = null;
                     }
-                    catch (Exception) { }
+                    catch (Exception) {}
 
                     if (App.Settings.AutoOption == AutoUpdateOption.Install || Environment.GetCommandLineArgs()[0] == "Install")
                     {
-                        if (EventService.DownloadDone != null && App.IsClientConnected)
-                            EventService.DownloadDone(false);
+                        if (EventService.DownloadCompleted != null && App.IsClientConnected)
+                            EventService.DownloadCompleted(false);
                         Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
                         Install.InstallUpdates(updates);
                     }
@@ -267,23 +278,31 @@ namespace SevenUpdate
 
         #region EventArgs
 
-        public class DownloadDoneEventArgs : EventArgs
+        /// <summary>
+        ///Provides event data for the DownloadCompleted event
+        /// </summary>
+        public class DownloadCompletedEventArgs : EventArgs
         {
-            public DownloadDoneEventArgs(bool errorOccurred, Collection<SUI> applications)
+            /// <summary>
+            /// Contains event data associated with this event
+            /// </summary>
+            /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</param>
+            /// <param name="applications">A collection of Applications that were downloaded</param>
+            public DownloadCompletedEventArgs(bool errorOccurred, Collection<SUI> applications)
             {
                 ErrorOccurred = errorOccurred;
                 Applications = applications;
             }
 
             /// <summary>
-            /// True is an error occurred, otherwise false
+            /// <c>true</c> is an error occurred, otherwise <c>false
             /// </summary>
-            public bool ErrorOccurred { get; set; }
+            public bool ErrorOccurred { get; private set; }
 
             /// <summary>
-            /// Specifies if a reboot is needed
+            /// A collection of Applications that were downloaded
             /// </summary>
-            public Collection<SUI> Applications { get; set; }
+            public Collection<SUI> Applications { get; private set; }
         }
 
         #endregion

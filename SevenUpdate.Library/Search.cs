@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -30,6 +31,9 @@ using System.Net;
 
 namespace SevenUpdate
 {
+    /// <summary>
+    /// Contains methods to search for updates
+    /// </summary>
     public static class Search
     {
         #region Global Vars
@@ -37,7 +41,7 @@ namespace SevenUpdate
         /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
-        private const string SevenUpdateSUI = @"http://ittakestime.org/su/Seven Update.sui";
+        private const string SEVENUPDATESUI = @"http://ittakestime.org/su/Seven Update.sui";
 
         #endregion
 
@@ -46,10 +50,10 @@ namespace SevenUpdate
         /// <summary>
         /// Checks for updates
         /// </summary>
-        /// <param name="app">A collection of applications to check for updates</param>
-        /// <param name="hidden">A collection of hidden updates</param>
-        /// <returns>Returns true if found updates, otherwise false</returns>
-        private static bool CheckForUpdates(ref SUI app, Collection<SUH> hidden)
+        /// <param name="app">a collection of applications to check for updates</param>
+        /// <param name="hidden">a collection of hidden updates</param>
+        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
+        private static bool CheckForUpdates(ref SUI app, IList<SUH> hidden)
         {
             if (!Directory.Exists(Shared.ConvertPath(app.Directory, true, app.Is64Bit)))
                 return false;
@@ -175,9 +179,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Seaches for updates while blocking the calling thread
+        /// Searches for updates while blocking the calling thread
         /// </summary>
-        /// <param name="apps">The list of applications to check for updates</param>
+        /// <param name="apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(Collection<SUA> apps)
         {
             // delete the temp directory housing the sui files
@@ -194,19 +198,20 @@ namespace SevenUpdate
             try
             {
                 /// Downloads the Seven Update SUI
-                web.DownloadFile(SevenUpdateSUI, Shared.UserStore + @"temp\Seven Update.sui");
+                web.DownloadFile(SEVENUPDATESUI, Shared.UserStore + @"temp\Seven Update.sui");
             }
             catch (WebException e)
             {
                 /// Server Error! If that happens then i am the only one to blame LOL
-                OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                if (ErrorOccurredEventHandler != null)
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                 return;
             }
 
             if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
             {
                 // Call the Event with a Network Connection Error if no SUI's can be download, assuming a network error is the cause.
-                OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
+                ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
                 return;
             }
 
@@ -234,14 +239,14 @@ namespace SevenUpdate
                         catch (WebException e)
                         {
                             /// Notify that there was an error that occurred.
-                            OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                         }
                     }
 
                     if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
                     {
                         // Call the Event with a special code, meaning it was a Network Connection Error
-                        OnEvent(ErrorOccurredEventHandler, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
+                        ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
                         return;
                     }
                     /// Delete the SUI, it's been loaded, no longer needed on filesystem
@@ -270,13 +275,14 @@ namespace SevenUpdate
             Directory.Delete(Shared.UserStore + "temp", true);
 
             /// Search is complete!
-            OnEvent(SearchDoneEventHandler, new SearchDoneEventArgs(applications));
+            if (SearchDoneEventHandler != null)
+                SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
         }
 
         /// <summary>
         /// Searches for files without blocking the calling thread
         /// </summary>
-        /// <param name="apps">The list of Seven Update Admin.applications to check for updates</param>
+        /// <param name="apps">the list of Seven Update Admin.applications to check for updates</param>
         public static void SearchForUpdatesAync(Collection<SUA> apps)
         {
             var worker = new BackgroundWorker();
@@ -305,38 +311,22 @@ namespace SevenUpdate
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
 
         /// <summary>
-        /// Occurs when the seaching of updates has completed.
+        /// Occurs when the searching of updates has completed.
         /// </summary>
-        public static event EventHandler<SearchDoneEventArgs> SearchDoneEventHandler;
-
-        private static void OnEvent<T>(EventHandler<T> @event, T args) where T : EventArgs
-        {
-            if (@event == null)
-                return;
-            foreach (EventHandler<T> singleEvent in @event.GetInvocationList())
-            {
-                if (singleEvent.Target != null && singleEvent.Target is ISynchronizeInvoke)
-                {
-                    var target = (ISynchronizeInvoke) singleEvent.Target;
-                    if (target.InvokeRequired)
-                    {
-                        target.BeginInvoke(singleEvent, new object[] {"OnEvent", args});
-                        continue;
-                    }
-                }
-                singleEvent("OnEvent", args);
-            }
-        }
+        public static event EventHandler<SearchCompletedEventArgs> SearchDoneEventHandler;
 
         #region Nested type: ErrorOccurredEventArgs
 
+        /// <summary>
+        /// Provides event data for the ErrorOccurred event
+        /// </summary>
         public class ErrorOccurredEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
             /// <param name="description">The description of the error</param>
-            /// <param name="type">The type of error that occurred</param>
+            /// <param name="type">The <see cref="ErrorType"/> of error that occurred</param>
             public ErrorOccurredEventArgs(string description, ErrorType type)
             {
                 Description = description;
@@ -346,30 +336,36 @@ namespace SevenUpdate
             /// <summary>
             /// A string describing the error
             /// </summary>
-            public string Description { get; set; }
+            public string Description { get; private set; }
 
-            public ErrorType Type { get; set; }
+            /// <summary>
+            /// The <see cref="ErrorType"/> of the error that occurred
+            /// </summary>
+            public ErrorType Type { get; private set; }
         }
 
         #endregion
 
-        #region Nested type: SearchDoneEventArgs
+        #region Nested type: SearchCompletedEventArgs
 
-        public class SearchDoneEventArgs : EventArgs
+        /// <summary>
+        /// Provides event data for the SearchCompleted event
+        /// </summary>
+        public class SearchCompletedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
             /// <param name="applications">The collection of applications to update</param>
-            public SearchDoneEventArgs(Collection<SUI> applications)
+            public SearchCompletedEventArgs(Collection<SUI> applications)
             {
                 Applications = applications;
             }
 
             /// <summary>
-            /// A collection of applications that contain updates to install
+            /// Gets a collection of applications that contain updates to install
             /// </summary>
-            public Collection<SUI> Applications { get; set; }
+            public Collection<SUI> Applications { get; private set; }
         }
 
         #endregion

@@ -27,21 +27,50 @@ using System.ServiceModel;
 
 namespace SevenUpdate.WCF
 {
+    /// <summary>
+    /// Callback methods for the WCF Service
+    /// </summary>
     internal interface IEventSystemCallback
     {
+        /// <summary>
+        /// Occurs when the download has completed
+        /// </summary>
+        /// <param name="errorOccurred"></param>
         [OperationContract(IsOneWay = true)]
-        void OnDownloadDone(bool errorOccurred);
+        void OnDownloadCompleted(bool errorOccurred);
 
+        /// <summary>
+        /// Occurs when the installation of updates has completed
+        /// </summary>
+        /// <param name="updatesInstalled">The number of updates installed</param>
+        /// <param name="updatesFailed">The number of failed updates</param>
         [OperationContract(IsOneWay = true)]
-        void OnInstallDone(int updatesInstalled, int updatesFailed);
+        void OnInstallCompleted(int updatesInstalled, int updatesFailed);
 
+        /// <summary>
+        /// Occurs when an error occurs
+        /// </summary>
+        /// <param name="e">The exception data</param>
+        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
         [OperationContract(IsOneWay = true)]
         void OnErrorOccurred(Exception e, ErrorType type);
 
+        /// <summary>
+        /// Occurs when the download progress has changed
+        /// </summary>
+        /// <param name="bytesTransferred">The number of bytes downloaded</param>
+        /// <param name="bytesTotal">The total number of bytes to download</param>
         [OperationContract(IsOneWay = true)]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);
 
+        /// <summary>
+        /// Occurs when the installation progress has changed
+        /// </summary>
+        /// <param name="updateName">The name of the update that is being installed</param>
+        /// <param name="progress"></param>
+        /// <param name="updatesComplete"></param>
+        /// <param name="totalUpdates"></param>
         [OperationContract(IsOneWay = true)]
-        void OnInstallProgressChanged(string updateTitle, int progress, int updatesComplete, int totalUpdates);
+        void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
 }

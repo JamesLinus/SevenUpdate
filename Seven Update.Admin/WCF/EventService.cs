@@ -27,38 +27,79 @@ using System.ServiceModel;
 
 namespace SevenUpdate.WCF
 {
+    /// <summary>
+    /// Class containing events and delegates for the EventService
+    /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public sealed class EventService : IEventSystem
     {
         #region Delegates
 
+        /// <summary>
+        /// A callback Delegate for a WCF Event
+        /// </summary>
         public delegate void CallbackDelegate();
 
+        /// <summary>
+        /// A callback Delegate for a WCF Event
+        /// </summary>
+        /// <typeparam name="T">The argument Type</typeparam>
+        /// <param name="t">An argument</param>
         public delegate void CallbackDelegate<T>(T t);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">The argument Type</typeparam>
+        /// <typeparam name="TY">The argument Type</typeparam>
+        /// <param name="t">An argument</param>
+        /// <param name="y">An argument</param>
         public delegate void CallbackDelegate<T, TY>(T t, TY y);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">The argument Type</typeparam>
+        /// <typeparam name="TY">The argument Type</typeparam>
+        /// <typeparam name="TZ">The argument Type</typeparam>
+        /// <param name="t">An argument</param>
+        /// <param name="y">An argument</param>
+        /// <param name="z">An argument</param>
         public delegate void CallbackDelegate<T, TY, TZ>(T t, TY y, TZ z);
 
-        public delegate void InstallProgressCallbackDelegate(string updateTitle, int progress, int updatesCompleted, int totalUpdates);
+        /// <summary>
+        /// A callback Delegate for a WCF Event
+        /// </summary>
+        /// <param name="updateName">The name of the update being installed</param>
+        /// <param name="progress">The progress of the update being installed</param>
+        /// <param name="updatesCompleted">The number of updates completed</param>
+        /// <param name="totalUpdates">The total number of updates being installed</param>
+        public delegate void InstallProgressCallbackDelegate(string updateName, int progress, int updatesCompleted, int totalUpdates);
 
         #endregion
 
         /// <summary>
-        /// Raises an event when the download is completed
+        /// Occurs when the download of updates has completed
         /// </summary>
-        public static CallbackDelegate<bool> DownloadDone;
+        public static CallbackDelegate<bool> DownloadCompleted;
 
+        /// <summary>
+        /// Occurs when the install progress has changed
+        /// </summary>
         public static CallbackDelegate<ulong, ulong> DownloadProgressChanged;
+
+        /// <summary>
+        /// Occurs when a error occurs when downloading or installing updates
+        /// </summary>
         public static CallbackDelegate<Exception, ErrorType> ErrorOccurred;
 
         /// <summary>
-        /// Raises an event when the installation is completed
+        /// Occurs when the installation of updates has completed
         /// </summary>
-        public static CallbackDelegate<int, int> InstallDone;
+        public static CallbackDelegate<int, int> InstallCompleted;
 
         /// <summary>
-        /// Raises an event when the installation progress changes
+        /// Occurs when the install progress has changed
         /// </summary>
         public static InstallProgressCallbackDelegate InstallProgressChanged;
 
@@ -70,25 +111,25 @@ namespace SevenUpdate.WCF
         public void Subscribe()
         {
             var callback = OperationContext.Current.GetCallbackChannel<IEventSystemCallback>();
-            InstallDone += callback.OnInstallDone;
+            InstallCompleted += callback.OnInstallCompleted;
             InstallProgressChanged += callback.OnInstallProgressChanged;
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
-            DownloadDone += callback.OnDownloadDone;
+            DownloadCompleted += callback.OnDownloadCompleted;
             ErrorOccurred += callback.OnErrorOccurred;
-            var obj = (ICommunicationObject)callback;
+            var obj = (ICommunicationObject) callback;
             obj.Closed += EventService_Closed;
             ClientConnected();
         }
 
         /// <summary>
-        /// Unsubscribes from the client
+        /// unsubscribes from the client
         /// </summary>
-        public void Unsubscribe()
+        public void UnSubscribe()
         {
             var callback = OperationContext.Current.GetCallbackChannel<IEventSystemCallback>();
-            InstallDone -= callback.OnInstallDone;
+            InstallCompleted -= callback.OnInstallCompleted;
             InstallProgressChanged -= callback.OnInstallProgressChanged;
-            DownloadDone -= callback.OnDownloadDone;
+            DownloadCompleted -= callback.OnDownloadCompleted;
             DownloadProgressChanged -= callback.OnDownloadProgressChanged;
             ClientDisconnected();
         }
@@ -105,6 +146,11 @@ namespace SevenUpdate.WCF
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
-        private static void EventService_Closed(object sender, EventArgs e) { }
+        /// <summary>
+        /// Occurs when the <see cref="EventService"/> had closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private static void EventService_Closed(object sender, EventArgs e) {}
     }
 }

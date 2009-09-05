@@ -51,6 +51,9 @@ namespace SevenUpdate.Windows
             tbLicense.Text = assembly.GetName().Name + " " + tbLicense.Text;
         }
 
+        /// <summary>
+        /// Closes the About window
+        /// </summary>
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();

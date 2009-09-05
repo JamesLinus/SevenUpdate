@@ -48,13 +48,13 @@ namespace SevenUpdate
         public AutoUpdateOption AutoOption { get; set; }
 
         /// <summary>
-        /// Specifes if recommended updates should be included when download/install
+        /// Gets or Sets a value indicating if Seven Update is to included recommended updates when automatically downloading updates
         /// </summary>\
         [XmlElement("includeRecommended")]
         public bool IncludeRecommended { get; set; }
 
         /// <summary>
-        /// Specifies the langauge Seven Update uses
+        /// Specifies the language Seven Update uses
         /// </summary>
         [XmlElement("locale")]
         public string Locale { get; set; }
@@ -96,6 +96,9 @@ namespace SevenUpdate
 
     #region Locale Classes
 
+    /// <summary>
+    /// Contains a string indicating the language and a value
+    /// </summary>
     public class LocaleString : INotifyPropertyChanged
     {
         /// <summary>
@@ -112,8 +115,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -180,8 +190,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -338,7 +355,7 @@ namespace SevenUpdate
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
-        /// The Wwebsite of the company or developer
+        /// The url of the company or developer
         /// </summary>
         [XmlAttribute("publisherUrl")]
         public string PublisherUrl { get; set; }
@@ -363,8 +380,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -419,7 +443,7 @@ namespace SevenUpdate
         #region Optional Properties
 
         /// <summary>
-        /// The information/changelog url of the update: Optional
+        /// The information/change log url of the update: Optional
         /// </summary>
         [XmlAttribute("infoUrl")]
         public string InfoUrl { get; set; }
@@ -472,8 +496,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -528,7 +559,7 @@ namespace SevenUpdate
         #region Optional Properties
 
         /// <summary>
-        /// Commandline arguments for the file
+        /// Command line arguments for the file
         /// </summary>
         [XmlAttribute("args")]
         public string Args { get; set; }
@@ -537,8 +568,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -572,7 +610,7 @@ namespace SevenUpdate
         public RegistryHive Hive { get; set; }
 
         /// <summary>
-        /// The Keypath of the current registry item
+        /// The Key path of the current registry item
         /// </summary>
         [XmlAttribute("key")]
         public string Key { get; set; }
@@ -603,8 +641,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -632,7 +677,7 @@ namespace SevenUpdate
         public string Location { get; set; }
 
         /// <summary>
-        /// The fullpath of the target to the shortcut.
+        /// The full path of the target to the shortcut.
         /// </summary>
         [XmlAttribute("target")]
         public string Target { get; set; }
@@ -654,7 +699,7 @@ namespace SevenUpdate
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
-        /// The fullpath to the icon or exe containing an icon
+        /// The full path to the icon or exe containing an icon
         /// </summary>
         [XmlAttribute("icon")]
         public string Icon { get; set; }
@@ -663,8 +708,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -750,7 +802,7 @@ namespace SevenUpdate
         public string HelpUrl { get; set; }
 
         /// <summary>
-        /// The information/changelog url of the update: Optional
+        /// The information/change log url of the update: Optional
         /// </summary>
         [XmlAttribute("infoUrl")]
         public string InfoUrl { get; set; }
@@ -765,8 +817,15 @@ namespace SevenUpdate
 
         #region Implementation of INotifyPropertyChanged
 
+        /// <summary>
+        /// Occurs when a property has changed
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// </summary>
+        /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;

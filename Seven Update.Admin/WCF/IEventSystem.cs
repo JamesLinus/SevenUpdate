@@ -26,13 +26,22 @@ using System.ServiceModel;
 
 namespace SevenUpdate.WCF
 {
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IEventSystemCallback))]
+    /// <summary>
+    /// Methods for the Event Service
+    /// </summary>
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof (IEventSystemCallback))]
     internal interface IEventSystem
     {
+        /// <summary>
+        /// Subscribes to the event service
+        /// </summary>
         [OperationContract(IsOneWay = true)]
         void Subscribe();
 
+        /// <summary>
+        /// UnSubscribes
+        /// </summary>
         [OperationContract(IsOneWay = true)]
-        void Unsubscribe();
+        void UnSubscribe();
     }
 }

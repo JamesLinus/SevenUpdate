@@ -42,22 +42,22 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
-        ///  The green side image
+        ///  Gets a green side image
         /// </summary>
         private readonly BitmapImage greenSide = new BitmapImage(new Uri("/Images/GreenSide.png", UriKind.Relative));
 
         /// <summary>
-        /// The red side image
+        /// Gets a red side image
         /// </summary>
         private readonly BitmapImage redSide = new BitmapImage(new Uri("/Images/RedSide.png", UriKind.Relative));
 
         /// <summary>
-        /// The Seven Update 48x48 icon image
+        /// Gets the Seven Update icon
         /// </summary>
         private readonly BitmapImage suIcon = new BitmapImage(new Uri("/Images/Icon.png", UriKind.Relative));
 
         /// <summary>
-        /// The yellow side image
+        /// Gets a yellow side image
         /// </summary>
         private readonly BitmapImage yellowSide = new BitmapImage(new Uri("/Images/YellowSide.png", UriKind.Relative));
 
@@ -128,6 +128,9 @@ namespace SevenUpdate.Pages
 
         #endregion
 
+        /// <summary>
+        /// The constructor for the Main page
+        /// </summary>
         public Main()
         {
             InitializeComponent();
@@ -150,7 +153,7 @@ namespace SevenUpdate.Pages
         #region TextBlock
 
         /// <summary>
-        /// Underlines the text when mouse is over the TextBlock
+        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -159,7 +162,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the TextBlock
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -167,27 +170,42 @@ namespace SevenUpdate.Pages
             textBlock.TextDecorations = null;
         }
 
+        /// <summary>
+        /// Navigates to the Options page
+        /// </summary>
         private void tbChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Checks for updates
+        /// </summary>
         private void tbCheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             CheckForUpdates();
             // SevenUpdate.Windows.MainWindow.ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigates to the Update History page
+        /// </summary>
         private void tbViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Update History.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigates to the Restore Updates page
+        /// </summary>
         private void tbRestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Restore Updates.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Shows the About Dialog window
+        /// </summary>
         private void tbAbout_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
@@ -200,13 +218,17 @@ namespace SevenUpdate.Pages
             ud.ShowDialog();
         }
 
-
+        /// <summary>
+        /// Navigates to the Update Info page
+        /// </summary>
         private static void TbViewOptionalUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
         }
 
-
+        /// <summary>
+        /// Navigates to the Update Info page
+        /// </summary>
         private static void TbViewImportantUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
@@ -303,6 +325,10 @@ namespace SevenUpdate.Pages
 
         #region Update Event Methods
 
+        /// <summary>
+        /// Updates the UI when the installation progress has changed
+        /// </summary>
+        /// <param name="e">The InstallProgress data</param>
         private void InstallProgressChanged(AdminCallBack.InstallProgressChangedEventArgs e)
         {
             if (e.CurrentProgress == -1)
@@ -319,13 +345,21 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        /// Updates the UI when the download progress has changed
+        /// </summary>
+        /// <param name="e">The DownloadProgress data</param>
         private void DownloadProgressChanged(AdminCallBack.DownloadProgressChangedEventArgs e)
         {
             infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
                                     App.RM.GetString("Complete") + ")";
         }
 
-        private void InstallDone(AdminCallBack.InstallDoneEventArgs e)
+        /// <summary>
+        /// Updates the UI when the installation has completed
+        /// </summary>
+        /// <param name="e">The InstallCompleted data</param>
+        private void InstallCompleted(AdminCallBack.InstallCompletedEventArgs e)
         {
             Settings.Default.lastInstall = DateTime.Now;
             tbUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
@@ -336,7 +370,11 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.RebootNeeded);
         }
 
-        private void DownloadDone(AdminCallBack.DownloadDoneEventArgs e)
+        /// <summary>
+        /// Updates the UI when the downloading of updates has completed
+        /// </summary>
+        /// <param name="e">The DownloadCompleted data</param>
+        private void DownloadCompleted(AdminCallBack.DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
                 SetUI(UILayout.ErrorOccurred);
@@ -349,7 +387,11 @@ namespace SevenUpdate.Pages
             }
         }
 
-        private void SearchDone(Search.SearchDoneEventArgs e)
+        /// <summary>
+        /// Updates the UI the search for updates has completed
+        /// </summary>
+        /// <param name="e">The SearchComplete data</param>
+        private void SearchCompleted(Search.SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
             {
@@ -389,9 +431,9 @@ namespace SevenUpdate.Pages
                     infoBar.tbSelectedUpdates.Text = App.RM.GetString("NoUpdatesSelected");
 
                     if (count[0] == 1)
-                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdateAvaliable") + " ";
+                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdateAvailable") + " ";
                     else
-                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdatesAvaliable");
+                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdatesAvailable");
 
                     if (count[0] < 1)
                         infoBar.tbViewImportantUpdates.Text = App.RM.GetString("NoImportantUpdates");
@@ -399,9 +441,9 @@ namespace SevenUpdate.Pages
                     if (count[1] > 0)
                     {
                         if (count[1] == 1)
-                            infoBar.tbViewOptionalUpdates.Text = count[1] + " " + App.RM.GetString("OptionalUpdateAvaliable");
+                            infoBar.tbViewOptionalUpdates.Text = count[1] + " " + App.RM.GetString("OptionalUpdateAvailable");
                         else
-                            infoBar.tbViewOptionalUpdates.Text = count[1] + " " + App.RM.GetString("OptionalUpdatesAvaliable");
+                            infoBar.tbViewOptionalUpdates.Text = count[1] + " " + App.RM.GetString("OptionalUpdatesAvailable");
 
                         infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -421,6 +463,9 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        /// Sets the UI when an error occurs
+        /// </summary>
         private void Admin_ErrorOccurredEventHandler(object sender, AdminCallBack.ErrorOccurredEventArgs e)
         {
             switch (e.Type)
@@ -445,10 +490,9 @@ namespace SevenUpdate.Pages
                     break;
                 case ErrorType.FatalError:
                     if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Description);
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
                     else
-                        SetUI(UILayout.ErrorOccurred, e.Description);
-
+                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
 
                     break;
             }
@@ -456,7 +500,10 @@ namespace SevenUpdate.Pages
 
         #region Invoker Events
 
-        private void Admin_InstallProgressChangedEventHandler(object sender, AdminCallBack.InstallProgressChangedEventArgs e)
+        /// <summary>
+        /// Sets the UI when the install progress has changed
+        /// </summary>
+        private void InstallProgressChangedEventHandler(object sender, AdminCallBack.InstallProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallProgressChanged, e);
@@ -464,7 +511,10 @@ namespace SevenUpdate.Pages
                 InstallProgressChanged(e);
         }
 
-        private void Admin_DownloadProgressChangedEventHandler(object sender, AdminCallBack.DownloadProgressChangedEventArgs e)
+        /// <summary>
+        /// Sets the UI when the download progress has changed
+        /// </summary>
+        private void DownloadProgressChangedEventHandler(object sender, AdminCallBack.DownloadProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadProgressChanged, e);
@@ -472,28 +522,37 @@ namespace SevenUpdate.Pages
                 DownloadProgressChanged(e);
         }
 
-        internal void Search_SearchDoneEventHandler(object sender, Search.SearchDoneEventArgs e)
+        /// <summary>
+        /// Sets the UI when the search for updates has completed
+        /// </summary>
+        internal void SearchCompletedEventHandler(object sender, Search.SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
-                Dispatcher.BeginInvoke(SearchDone, e);
+                Dispatcher.BeginInvoke(SearchCompleted, e);
             else
-                SearchDone(e);
+                SearchCompleted(e);
         }
 
-        private void Admin_InstallDoneEventHandler(object sender, AdminCallBack.InstallDoneEventArgs e)
+        /// <summary>
+        /// Sets the UI when the installation of updates has completed
+        /// </summary>
+        private void InstallCompletedEventHandler(object sender, AdminCallBack.InstallCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
-                Dispatcher.BeginInvoke(InstallDone, e);
+                Dispatcher.BeginInvoke(InstallCompleted, e);
             else
-                InstallDone(e);
+                InstallCompleted(e);
         }
 
-        private void Admin_DownloadDoneEventHandler(object sender, AdminCallBack.DownloadDoneEventArgs e)
+        /// <summary>
+        /// Sets the UI when the downloading of updates has completed
+        /// </summary>
+        private void DownloadCompletedEventHandler(object sender, AdminCallBack.DownloadCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
-                Dispatcher.BeginInvoke(DownloadDone, e);
+                Dispatcher.BeginInvoke(DownloadCompleted, e);
             else
-                DownloadDone(e);
+                DownloadCompleted(e);
         }
 
         #endregion
@@ -505,7 +564,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Checks for updates
         /// </summary>
-        /// <param name="auto">Indicates if it's an auto function, if it is it disables the warning messages</param>
+        /// <param name="auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c></param>
         private void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -625,11 +684,11 @@ namespace SevenUpdate.Pages
             infoBar.btnAction.Click += BtnActionClick;
             infoBar.tbViewImportantUpdates.MouseDown += TbViewImportantUpdatesMouseDown;
             infoBar.tbViewOptionalUpdates.MouseDown += TbViewOptionalUpdatesMouseDown;
-            Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
-            AdminCallBack.DownloadProgressChangedEventHandler += Admin_DownloadProgressChangedEventHandler;
-            AdminCallBack.DownloadDoneEventHandler += Admin_DownloadDoneEventHandler;
-            AdminCallBack.InstallProgressChangedEventHandler += Admin_InstallProgressChangedEventHandler;
-            AdminCallBack.InstallDoneEventHandler += Admin_InstallDoneEventHandler;
+            Search.SearchDoneEventHandler += SearchCompletedEventHandler;
+            AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChangedEventHandler;
+            AdminCallBack.DownloadDoneEventHandler += DownloadCompletedEventHandler;
+            AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChangedEventHandler;
+            AdminCallBack.InstallDoneEventHandler += InstallCompletedEventHandler;
             AdminCallBack.ErrorOccurredEventHandler += Admin_ErrorOccurredEventHandler;
             RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoreUpdates_RestoredHiddenUpdateEventHandler;
 
@@ -639,27 +698,40 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the Main Page UI
         /// </summary>
-        /// <param name="layout">Type of layout to set</param>
+        /// <param name="layout">type of layout to set</param>
         private void SetUI(UILayout layout)
         {
             SetUI(layout, null);
         }
 
         /// <summary>
-        /// Sets the Main Page UI
+        /// Sets the Main Page and <see cref="InfoBar"/> UI
         /// </summary>
-        /// <param name="layout">Type of layout to set</param>
-        /// <param name="errorDescription">Description of error that occurred</param>
+        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="errorDescription">The description of the error that occurred</param>
         private void SetUI(UILayout layout, string errorDescription)
         {
             SetUI(layout, errorDescription, 0, 0);
         }
 
+        /// <summary>
+        /// Sets the Main Page and <see cref="InfoBar"/> UI
+        /// </summary>
+        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="updatesInstalled">The number of updates installed</param>
+        /// <param name="updatesFailed">The number of updates failed</param>
         private void SetUI(UILayout layout, int updatesInstalled, int updatesFailed)
         {
             SetUI(layout, null, updatesInstalled, updatesFailed);
         }
 
+        /// <summary>
+        /// Sets the Main Page and <see cref="InfoBar"/> UI
+        /// </summary>
+        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="errorDescription">The description of the error that occurred</param>
+        /// <param name="updatesInstalled">The number of updates installed</param>
+        /// <param name="updatesFailed">The number of updates failed</param>
         private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
         {
             switch (layout)

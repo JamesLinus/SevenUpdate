@@ -23,7 +23,7 @@
                 X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
         <ListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0"
-                Controls:ListViewSorter.IsListviewSortable="True">
+                Controls:ListViewSorter.IsListViewSortable="True">
             <ListView.Resources>
                 <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />

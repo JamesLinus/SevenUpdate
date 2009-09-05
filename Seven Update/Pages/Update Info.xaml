@@ -29,7 +29,7 @@
         <Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2"
                 Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" Controls:ListViewSorter.IsListviewSortable="True"
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" Controls:ListViewSorter.IsListViewSortable="True"
                 Foreground="Black" BorderThickness="0">
             <ListView.ContextMenu>
                 <ContextMenu>

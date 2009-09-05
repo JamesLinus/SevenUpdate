@@ -47,22 +47,46 @@ namespace SevenUpdate.Pages
     {
         #region Structs
 
-        private struct Indexes
+        /// <summary>
+        /// The indices of an update
+        /// </summary>
+        private struct Indices
         {
-            internal int appIndex { get; set; }
-            internal int updateIndex { get; set; }
+            /// <summary>
+            /// An int that indicates the position of the Application information of an update
+            /// </summary>
+            internal int AppIndex { get; set; }
+
+            /// <summary>
+            /// An int that indicates the position of the update information within the Application information of an update
+            /// </summary>
+            internal int UpdateIndex { get; set; }
         }
 
         #endregion
 
         #region Global Vars
 
+        /// <summary>
+        /// Gets an image of a blue arrow
+        /// </summary>
         private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
+
+        /// <summary>
+        /// Gets an image of a green arrow
+        /// </summary>
         private readonly BitmapImage greenArrow = new BitmapImage(new Uri("/Images/GreenArrow.png", UriKind.Relative));
-        private List<Indexes> indexes;
+
+        /// <summary>
+        /// Gets or Sets a list of indices relating to the current Update Collection
+        /// </summary>
+        private List<Indices> indices;
 
         #endregion
 
+        /// <summary>
+        /// Constructor for the Update Info Page
+        /// </summary>
         public UpdateInfo()
         {
             InitializeComponent();
@@ -72,12 +96,25 @@ namespace SevenUpdate.Pages
 
         #region Event Declarations
 
+        /// <summary>
+        /// Occurs when the update selection has changed
+        /// </summary>
         internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChangedEventHandler;
 
         #region EventArgs
 
+        /// <summary>
+        /// Provides event data for the UpdateSelection event
+        /// </summary>
         internal sealed class UpdateSelectionChangedEventArgs : EventArgs
         {
+            /// <summary>
+            /// Contains event data associated with this event
+            /// </summary>
+            /// <param name="importantUpdates">The number of Important updates selected</param>
+            /// <param name="optionalUpdates">The number of Optional updates selected</param>
+            /// <param name="importantDownloadSize">A value indicating the download size of the Important updates</param>
+            /// <param name="optionalDownloadSize">A value indicating the download size of the Optional updates</param>
             public UpdateSelectionChangedEventArgs(int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
             {
                 ImportantUpdates = importantUpdates;
@@ -90,22 +127,22 @@ namespace SevenUpdate.Pages
             }
 
             /// <summary>
-            /// Number of Important Updates selected
+            /// Gets the number of Important Updates selected
             /// </summary>
             internal int ImportantUpdates { get; private set; }
 
             /// <summary>
-            /// Number of Optional Updates selected
+            /// Gets the number of Optional Updates selected
             /// </summary>
             internal int OptionalUpdates { get; private set; }
 
             /// <summary>
-            /// The total download size in bytes of the important updates
+            /// Gets the total download size in bytes of the important updates
             /// </summary>
             internal ulong ImportantDownloadSize { get; private set; }
 
             /// <summary>
-            /// The total download size in bytes of the optional updates
+            /// Gets the total download size in bytes of the optional updates
             /// </summary>
             internal ulong OptionalDownloadSize { get; private set; }
         }
@@ -118,11 +155,17 @@ namespace SevenUpdate.Pages
 
         #region Buttons
 
+        /// <summary>
+        /// Navigates back to the Main page
+        /// </summary>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }
 
+        /// <summary>
+        /// Saves the selection of updates and navigates back to the Main page
+        /// </summary>
         private void btnInstall_Click(object sender, RoutedEventArgs e)
         {
             SaveUpdateSelection();
@@ -133,24 +176,36 @@ namespace SevenUpdate.Pages
 
         #region TextBlocks
 
+        /// <summary>
+        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
+        /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
             var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
+        /// <summary>
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
+        /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
             var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
         }
 
+        /// <summary>
+        /// Launches the More Information Url of the update
+        /// </summary>
         private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbUrlInfo.Tag != null)
                 Process.Start(tbUrlInfo.Tag.ToString());
         }
 
+        /// <summary>
+        /// Launches the Help Url of the update
+        /// </summary>
         private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbUrlHelp.Tag != null)
@@ -159,6 +214,9 @@ namespace SevenUpdate.Pages
 
         #endregion
 
+        /// <summary>
+        /// Loads the updates found into the UI
+        /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddUpdates();
@@ -166,6 +224,9 @@ namespace SevenUpdate.Pages
 
         #region listview
 
+        /// <summary>
+        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// </summary>
         private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -175,10 +236,13 @@ namespace SevenUpdate.Pages
             dataView.Refresh();
         }
 
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            var updateIndex = indexes[listView.SelectedIndex].updateIndex;
-            var appIndex = indexes[listView.SelectedIndex].appIndex;
+            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
+            var appIndex = indices[listView.SelectedIndex].AppIndex;
 
             var hnh = new SUH
                           {
@@ -214,10 +278,13 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        /// Shows the selected update details in the sidebar when the selection changes
+        /// </summary>
         private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var appIndex = indexes[listView.SelectedIndex].appIndex;
-            var updateIndex = indexes[listView.SelectedIndex].updateIndex;
+            var appIndex = indices[listView.SelectedIndex].AppIndex;
+            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
             if (listView.SelectedIndex == -1)
                 HideLabels();
             else
@@ -247,6 +314,10 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
+        /// <summary>
+        /// Loops through the <see cref="ListView"/> and updates the source when the update selection has been saved
+        /// </summary>
+        /// <param name="element">The <see cref="DependencyObject"/></param>
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -256,9 +327,9 @@ namespace SevenUpdate.Pages
                     var cb = VisualTreeHelper.GetChild(element, i) as CheckBox;
                     if (cb != null)
                     {
-                        var bindexp = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
-                        if (bindexp != null)
-                            bindexp.UpdateSource();
+                        var bindingExpression = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
+                        if (bindingExpression != null)
+                            bindingExpression.UpdateSource();
                     }
                     continue;
                 }
@@ -266,20 +337,23 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        /// Saves the update selection
+        /// </summary>
         private void SaveUpdateSelection()
         {
             var count = new int[2];
             var downloadSize = new ulong[2];
 
             IterateVisualChild(listView);
-            for (var x = 0; x < indexes.Count; x++)
+            for (var x = 0; x < indices.Count; x++)
             {
-                var updateIndex = indexes[x].updateIndex;
-                var appIndex = indexes[x].appIndex;
+                var updateIndex = indices[x].UpdateIndex;
+                var appIndex = indices[x].AppIndex;
                 if (!App.Applications[appIndex].Updates[updateIndex].Selected) {}
                 else
                 {
-                    switch (App.Applications[indexes[x].appIndex].Updates[indexes[x].updateIndex].Importance)
+                    switch (App.Applications[indices[x].AppIndex].Updates[indices[x].UpdateIndex].Importance)
                     {
                         case Importance.Important:
                             count[0]++;
@@ -315,17 +389,17 @@ namespace SevenUpdate.Pages
         private void AddUpdates()
         {
             var selectedUpdates = new ObservableCollection<Update>();
-            indexes = new List<Indexes>();
-            var index = new Indexes();
+            indices = new List<Indices>();
+            var index = new Indices();
 
             for (var x = 0; x < App.Applications.Count; x++)
             {
                 for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
                     selectedUpdates.Add(App.Applications[x].Updates[y]);
-                    index.appIndex = x;
-                    index.updateIndex = y;
-                    indexes.Add(index);
+                    index.AppIndex = x;
+                    index.UpdateIndex = y;
+                    indices.Add(index);
                 }
             }
             var items = new Binding {Source = selectedUpdates};
@@ -334,6 +408,9 @@ namespace SevenUpdate.Pages
             AddSortBinding();
         }
 
+        /// <summary>
+        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// </summary>
         private void AddSortBinding()
         {
             var gv = (GridView) listView.View;

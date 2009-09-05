@@ -42,7 +42,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// An array of the text of the licenses
         /// </summary>
-        private string[] eulas;
+        private string[] licenseSources;
 
         /// <summary>
         /// Current index
@@ -55,7 +55,7 @@ namespace SevenUpdate.Windows
         private Collection<EULA> licenses;
 
         /// <summary>
-        /// Information containing the update's EULA
+        /// Data containing the update's license agreement
         /// </summary>
         private struct EULA
         {
@@ -82,6 +82,9 @@ namespace SevenUpdate.Windows
 
         #endregion
 
+        /// <summary>
+        /// Constructor for the License Agreement page
+        /// </summary>
         public LicenseAgreement()
         {
             InitializeComponent();
@@ -146,13 +149,13 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Downloads the text of the EULA's
+        /// Downloads the license agreements of the updates
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void WorkerDoWork(object sender, DoWorkEventArgs e)
         {
-            eulas = new string[licenses.Count];
+            licenseSources = new string[licenses.Count];
 
             var wc = new WebClient();
 
@@ -160,12 +163,12 @@ namespace SevenUpdate.Windows
             {
                 try
                 {
-                    eulas[x] = wc.DownloadString(licenses[x].LicenseUrl);
+                    licenseSources[x] = wc.DownloadString(licenses[x].LicenseUrl);
                 }
                 catch (Exception f)
                 {
                     Shared.ReportError(f.Message, Shared.UserStore);
-                    eulas[x] = "Error Downloading License Agreement";
+                    licenseSources[x] = "Error Downloading License Agreement";
                 }
             }
 
@@ -177,11 +180,14 @@ namespace SevenUpdate.Windows
 
         #region UI Events
 
+        /// <summary>
+        /// Updates the UI when the downloading the license agreements has completed
+        /// </summary>
         private void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             var mcFlowDoc = new FlowDocument();
             var para = new Paragraph();
-            var r = new Run(eulas[0]);
+            var r = new Run(licenseSources[0]);
             para.Inlines.Add(r);
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
@@ -197,17 +203,28 @@ namespace SevenUpdate.Windows
 
         #region Buttons
 
+        /// <summary>
+        /// Closes the window, declining all EULA's
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
 
+        /// <summary>
+        /// Downloads the EULA's when the window is loaded
+        /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DownloadLicenses();
         }
 
+        /// <summary>
+        /// Sets the IsEnabled property of btnAction depending if Accept is selected
+        /// </summary>
         private void radioAccept_Checked(object sender, RoutedEventArgs e)
         {
             if (rbAccept.IsChecked == true || rbDecline.IsChecked == true)
@@ -216,6 +233,9 @@ namespace SevenUpdate.Windows
                 btnAction.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Sets the IsEnabled property of btnAction depending if Decline selected
+        /// </summary>
         private void rbDecline_Checked(object sender, RoutedEventArgs e)
         {
             if (App.Applications.Count != 1)
@@ -223,6 +243,9 @@ namespace SevenUpdate.Windows
             btnAction.IsEnabled = rbDecline.IsChecked != true;
         }
 
+        /// <summary>
+        /// Displays the next license agreement or returns
+        /// </summary>
         private void btnAction_Click(object sender, RoutedEventArgs e)
         {
             if (rbDecline.IsChecked == true)

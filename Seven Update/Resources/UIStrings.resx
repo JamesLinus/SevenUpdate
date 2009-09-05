@@ -183,10 +183,10 @@
   <data name="HideUpdate" xml:space="preserve">
     <value>Hide update</value>
   </data>
-  <data name="ImportantUpdateAvaliable" xml:space="preserve">
+  <data name="ImportantUpdateAvailable" xml:space="preserve">
     <value>important update available</value>
   </data>
-  <data name="ImportantUpdatesAvaliable" xml:space="preserve">
+  <data name="ImportantUpdatesAvailable" xml:space="preserve">
     <value>important updates are available</value>
   </data>
   <data name="ImportantUpdateSelected" xml:space="preserve">
@@ -228,10 +228,10 @@
   <data name="NoUpdatesSelected" xml:space="preserve">
     <value>No updates are currently selected.</value>
   </data>
-  <data name="OptionalUpdateAvaliable" xml:space="preserve">
+  <data name="OptionalUpdateAvailable" xml:space="preserve">
     <value>optional update available</value>
   </data>
-  <data name="OptionalUpdatesAvaliable" xml:space="preserve">
+  <data name="OptionalUpdatesAvailable" xml:space="preserve">
     <value>optional update are available</value>
   </data>
   <data name="OptionalUpdateSelected" xml:space="preserve">

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate" />
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate" />
   <xs:element name="Subscribe">
     <xs:complexType>
       <xs:sequence />
@@ -11,14 +12,14 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="OnDownloadDone">
+  <xs:element name="OnDownloadCompleted">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="errorOccurred" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="OnInstallDone">
+  <xs:element name="OnInstallCompleted">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="updatesInstalled" type="xs:int" />
@@ -29,8 +30,8 @@
   <xs:element name="OnErrorOccurred">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="description" nillable="true" type="xs:string" />
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/SevenUpdate" minOccurs="0" name="type" type="q1:ErrorType" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="e" nillable="true" type="q1:Exception" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SevenUpdate" minOccurs="0" name="type" type="q2:ErrorType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

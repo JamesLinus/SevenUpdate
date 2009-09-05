@@ -27,13 +27,16 @@ using System.Windows.Threading;
 
 namespace SevenUpdate
 {
+    /// <summary>
+    /// Extension Methods for Dispatcher.BeginInvoke
+    /// </summary>
     public static class DispatcherObjectDelegates
     {
         /// <summary>
         /// Invokes a Method to run on the UI thread
         /// </summary>
         /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">The method to invoke</param>
+        /// <param name="method">the method to invoke</param>
         public static void BeginInvoke(this Dispatcher dispatcher, Action method)
         {
             dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
@@ -42,10 +45,10 @@ namespace SevenUpdate
         /// <summary>
         /// Invokes a Method to run on the UI thread
         /// </summary>
-        /// <typeparam name="T">The parameter type</typeparam>
+        /// <typeparam name="T">the parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">The method to invoke</param>
-        /// <param name="parameter">The parameter to pass to the method</param>
+        /// <param name="method">the method to invoke</param>
+        /// <param name="parameter">the parameter to pass to the method</param>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, T parameter)
         {
             dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter);
@@ -54,11 +57,11 @@ namespace SevenUpdate
         /// <summary>
         /// Invokes a Method to run on the UI thread
         /// </summary>
-        /// <typeparam name="T">The parameter type</typeparam>
+        /// <typeparam name="T">the parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">The method to invoke</param>
-        /// <param name="priority">Prioirty it should run</param>
-        /// <param name="parameter">The parameter to pass to the method</param>
+        /// <param name="method">the method to invoke</param>
+        /// <param name="priority">priority it should run</param>
+        /// <param name="parameter">the parameter to pass to the method</param>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, DispatcherPriority priority, T parameter)
         {
             dispatcher.BeginInvoke(method, priority, parameter);
@@ -67,12 +70,12 @@ namespace SevenUpdate
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T1">A parameter type</typeparam>
-        /// <typeparam name="T2">A parameter type</typeparam>
+        /// <typeparam name="T1">a parameter type</typeparam>
+        /// <typeparam name="T2">a parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">The method to invoke</param>
-        /// <param name="parameter2">A parameter to pass to the method</param>
-        /// <param name="parameter1">A parameter to pass to the method</param>
+        /// <param name="method">the method to invoke</param>
+        /// <param name="parameter2">a parameter to pass to the method</param>
+        /// <param name="parameter1">a parameter to pass to the method</param>
         public static void BeginInvoke<T1, T2>(this Dispatcher dispatcher, Action<T1, T2> method, T1 parameter1, T2 parameter2)
         {
             dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter1, parameter2);
@@ -81,13 +84,13 @@ namespace SevenUpdate
         /// <summary>
         /// 
         /// </summary>
-        /// <typeparam name="T1">A parameter type</typeparam>
-        /// <typeparam name="T2">A parameter type</typeparam>
+        /// <typeparam name="T1">a parameter type</typeparam>
+        /// <typeparam name="T2">a parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">The method to invoke</param>
-        /// <param name="priority">Prioirty it should run</param>
-        /// <param name="parameter1">A parameter to pass to the method</param>
-        /// <param name="parameter2">A parameter to pass to the method</param>
+        /// <param name="method">the method to invoke</param>
+        /// <param name="priority">Priority it should run</param>
+        /// <param name="parameter1">a parameter to pass to the method</param>
+        /// <param name="parameter2">a parameter to pass to the method</param>
         public static void BeginInvoke<T1, T2>(this Dispatcher dispatcher, Action<T1, T2> method, DispatcherPriority priority, T1 parameter1, T2 parameter2)
         {
             dispatcher.BeginInvoke(method, priority, parameter1, parameter2);

@@ -50,14 +50,20 @@ namespace SevenUpdate.Pages
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
         /// <summary>
-        ///  The uac shield
+        ///  The UAC shield
         /// </summary>
         private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
+        /// <summary>
+        /// Gets or Sets a collection of SUH items
+        /// </summary>
         private ObservableCollection<SUH> hiddenUpdates;
 
         #endregion
 
+        /// <summary>
+        /// The constructor for Restore Updates page
+        /// </summary>
         public RestoreUpdates()
         {
             InitializeComponent();
@@ -68,6 +74,9 @@ namespace SevenUpdate.Pages
 
         #region Event Declarations
 
+        /// <summary>
+        /// Occurs when one or more hidden updates have been restored
+        /// </summary>
         public static event EventHandler<EventArgs> RestoredHiddenUpdateEventHandler;
 
         #endregion
@@ -87,6 +96,9 @@ namespace SevenUpdate.Pages
             AddSortBinding();
         }
 
+        /// <summary>
+        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// </summary>
         private void AddSortBinding()
         {
             var gv = (GridView) listView.View;
@@ -109,11 +121,17 @@ namespace SevenUpdate.Pages
 
         #region Buttons
 
+        /// <summary>
+        /// Navigates to the Main page
+        /// </summary>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }
 
+        /// <summary>
+        /// Unhides one or more updates and navigates to the Main page
+        /// </summary>
         private void btnRestore_Click(object sender, RoutedEventArgs e)
         {
             for (var x = 0; x < hiddenUpdates.Count; x++)
@@ -135,6 +153,11 @@ namespace SevenUpdate.Pages
 
         #region ListView Events
 
+        /// <summary>
+        /// Updates the <see cref="CollectionView"/> when the <c>hiddenUpdates</c> collection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void HiddenUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -144,6 +167,9 @@ namespace SevenUpdate.Pages
             dataView.Refresh();
         }
 
+        /// <summary>
+        /// Updates the UI when an update check box is clicked
+        /// </summary>
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             var checkedCount = 0;
@@ -168,17 +194,26 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        /// Limit the size of the <see cref="GridViewColumn"/> when it's being resized
+        /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ListViewExtensions.Thumb_DragDelta(sender, ((Thumb) e.OriginalSource));
+            ListViewExtensions.LimitColumnSize(((Thumb) e.OriginalSource));
         }
 
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
         }
 
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
         private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || listView.SelectedIndex == -1)
@@ -189,6 +224,11 @@ namespace SevenUpdate.Pages
 
         #endregion
 
+        /// <summary>
+        /// Loads the collection of hidden updates when the page is loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHiddenUpdates();

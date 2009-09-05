@@ -46,12 +46,15 @@ namespace SevenUpdate.Pages
         public static readonly string HistoryFile = Shared.AllUserStore + "History.suh";
 
         /// <summary>
-        /// The list of history items
+        /// Gets or Sets a collection of SUH items
         /// </summary>
-        private ObservableCollection<SUH> history;
+        private ObservableCollection<SUH> updateHistory;
 
         #endregion
 
+        /// <summary>
+        /// The constructor for the Update History page
+        /// </summary>
         public UpdateHistory()
         {
             InitializeComponent();
@@ -64,15 +67,18 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHistory()
         {
-            history = Shared.Deserialize<ObservableCollection<SUH>>(HistoryFile);
-            if (history == null)
+            updateHistory = Shared.Deserialize<ObservableCollection<SUH>>(HistoryFile);
+            if (updateHistory == null)
                 return;
 
-            listView.ItemsSource = history;
-            history.CollectionChanged += History_CollectionChanged;
+            listView.ItemsSource = updateHistory;
+            updateHistory.CollectionChanged += History_CollectionChanged;
             AddSortBinding();
         }
 
+        /// <summary>
+        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// </summary>
         private void AddSortBinding()
         {
             var gv = (GridView) listView.View;
@@ -96,11 +102,17 @@ namespace SevenUpdate.Pages
 
         #region UI Events
 
+        /// <summary>
+        /// Loads the update history when the page is loaded
+        /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHistory();
         }
 
+        /// <summary>
+        /// Navigates back to the Main page
+        /// </summary>
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
@@ -108,6 +120,9 @@ namespace SevenUpdate.Pages
 
         #region ListView
 
+        /// <summary>
+        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// </summary>
         private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -117,18 +132,24 @@ namespace SevenUpdate.Pages
             dataView.Refresh();
         }
 
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
         private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || listView.SelectedIndex == -1)
                 return;
             var details = new UpdateDetails();
-            details.ShowDialog(history[listView.SelectedIndex]);
+            details.ShowDialog(updateHistory[listView.SelectedIndex]);
         }
 
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
-            details.ShowDialog(history[listView.SelectedIndex]);
+            details.ShowDialog(updateHistory[listView.SelectedIndex]);
         }
 
         #endregion

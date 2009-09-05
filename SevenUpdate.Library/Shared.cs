@@ -23,7 +23,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
@@ -34,6 +33,9 @@ using Microsoft.Win32;
 
 namespace SevenUpdate
 {
+    /// <summary>
+    /// Indicates a type of error that can occur
+    /// </summary>
     public enum ErrorType
     {
         /// <summary>
@@ -62,6 +64,9 @@ namespace SevenUpdate
         SearchError
     }
 
+    /// <summary>
+    /// Methods that are shared between other classes
+    /// </summary>
     public static class Shared
     {
         #region Global Vars
@@ -96,12 +101,20 @@ namespace SevenUpdate
         /// </summary>
         public static bool RebootNeeded { get { return File.Exists(AllUserStore + @"reboot.lock"); } }
 
+        /// <summary>
+        /// Gets or Sets the ISO language code
+        /// </summary>
         public static string Locale { get; set; }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Gets the preferred localized string from a collection of localized strings
+        /// </summary>
+        /// <param name="localeStrings">A collection of <see cref="LocaleString"/>'s</param>
+        /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
             for (var x = 0; x < localeStrings.Count; x++)
@@ -115,10 +128,10 @@ namespace SevenUpdate
         /// <summary>
         /// Expands the file location variables
         /// </summary>
-        /// <param name="path">A string that contains a file path</param>
+        /// <param name="path">a string that contains a file path</param>
         /// <param name="dir">a string that contains a directory</param>
         /// <param name="is64Bit">Specifies if the application is 64 bit</param>
-        /// <returns>Returns the converted string expanded</returns>
+        /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string dir, bool is64Bit)
         {
             path = Replace(path, "[AppDir]", ConvertPath(dir, true, is64Bit));
@@ -129,17 +142,17 @@ namespace SevenUpdate
         /// <summary>
         /// Expands the system variables in a string
         /// </summary>
-        /// <param name="path">A string that contains a file path</param>
-        /// <param name="expand">True to expand system variable, false to converts paths into system variables</param>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="expand"><c>true</c> to expand system variable, <c>false</c> to converts paths into system variables</param>
         /// <param name="is64Bit">Specifies if the application is 64 bit</param>
-        /// <returns>Returns the converted string expanded</returns>
+        /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
         {
             if (path != null)
             {
                 if (path.StartsWith("HKEY", StringComparison.OrdinalIgnoreCase))
                 {
-                    char[] split = { '|' };
+                    char[] split = {'|'};
                     var key = path.Split(split)[0];
                     var value = path.Split(split)[1];
                     path = Registry.GetValue(key, value, null).ToString();
@@ -274,8 +287,8 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the SHA1 Hash of a file
         /// </summary>
-        /// <param name="fileLoc">The fullpath to the file to get the hash from</param>
-        /// <returns>returns the SHA1 hash value</returns>
+        /// <param name="fileLoc">the full path to the file to get the hash from</param>
+        /// <returns>a SHA1 value</returns>
         public static string GetHash(string fileLoc)
         {
             if (!File.Exists(fileLoc))
@@ -298,33 +311,33 @@ namespace SevenUpdate
         /// <summary>
         /// Replaces a string within a string
         /// </summary>
-        /// <param name="complete">The string that will be searched</param>
-        /// <param name="find">A string to find in the complete string</param>
-        /// <param name="replace">A string to use to replace the find string in the complete string</param>
-        /// <returns>Returns the new string</returns>
+        /// <param name="complete">the string that will be searched</param>
+        /// <param name="find">a string to find in the complete string</param>
+        /// <param name="replace">a string to use to replace the find string in the complete string</param>
+        /// <returns>a string that has the find value replace by the new value</returns>
         public static string Replace(string complete, string find, string replace)
         {
             // Get input string length
-            var exprLen = complete.Length;
+            var expressionLength = complete.Length;
 
-            var findLen = find.Length;
+            var findLength = find.Length;
 
             // Check inputs
-            if (0 == exprLen || 0 == findLen || findLen > exprLen)
+            if (0 == expressionLength || 0 == findLength || findLength > expressionLength)
                 return complete;
 
-            var sbRet = new StringBuilder(exprLen);
+            var sbRet = new StringBuilder(expressionLength);
 
             var pos = 0;
 
-            while (pos + findLen <= exprLen)
+            while (pos + findLength <= expressionLength)
             {
-                if (0 == string.Compare(complete, pos, find, 0, findLen, true))
+                if (0 == string.Compare(complete, pos, find, 0, findLength, true))
                 {
                     // Add the replaced string
                     sbRet.Append(replace);
 
-                    pos += findLen;
+                    pos += findLength;
 
                     continue;
                 }
@@ -334,11 +347,16 @@ namespace SevenUpdate
             }
 
             // Append remaining characters
-            sbRet.Append(complete, pos, exprLen - pos);
+            sbRet.Append(complete, pos, expressionLength - pos);
             // Return string
             return sbRet.ToString();
         }
 
+        /// <summary>
+        /// Reports the error that occurred to a log file
+        /// </summary>
+        /// <param name="message">The message to write in the log</param>
+        /// <param name="directoryStore">The directory to store the log</param>
         public static void ReportError(string message, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log");
@@ -351,16 +369,16 @@ namespace SevenUpdate
         /// <summary>
         /// Converts bytes into the proper increments depending on size
         /// </summary>
-        /// <param name="bytes">The fileSize in bytes</param>
-        /// <returns>Returns formatted string of converted bytes</returns>
+        /// <param name="bytes">the fileSize in bytes</param>
+        /// <returns>returns formatted string of converted bytes</returns>
         public static string ConvertFileSize(ulong bytes)
         {
             if (bytes >= 1073741824)
-                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
+                return String.Format("{0:##.##}", bytes/1073741824) + " GB";
             if (bytes >= 1048576)
-                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
+                return String.Format("{0:##.##}", bytes/1048576) + " MB";
             if (bytes >= 1024)
-                return String.Format("{0:##.##}", bytes / 1024) + " KB";
+                return String.Format("{0:##.##}", bytes/1024) + " KB";
             if (bytes < 1024)
                 return bytes + " Bytes";
             return "0 Bytes";
@@ -373,9 +391,9 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
-        /// <returns>Returns the object</returns>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="xmlFile">the file that contains the object to DeSerialize</param>
+        /// <returns>returns the object</returns>
         public static T DeserializeStruct<T>(string xmlFile) where T : struct
         {
             if (File.Exists(xmlFile))
@@ -384,9 +402,9 @@ namespace SevenUpdate
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                     r = new StreamReader(xmlFile);
-                    var temp = (T)s.Deserialize(r);
+                    var temp = (T) s.Deserialize(r);
                     r.Close();
                     return temp;
                 }
@@ -408,9 +426,9 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">The object to deserialize</typeparam>
-        /// <param name="xmlFile">The file that contains the object to DeSerialize</param>
-        /// <returns>Returns the object</returns>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="xmlFile">the file that contains the object to DeSerialize</param>
+        /// <returns>returns the object</returns>
         public static T Deserialize<T>(string xmlFile) where T : class
         {
             if (File.Exists(xmlFile))
@@ -419,9 +437,9 @@ namespace SevenUpdate
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                     r = new StreamReader(xmlFile);
-                    var temp = (T)s.Deserialize(r);
+                    var temp = (T) s.Deserialize(r);
                     r.Close();
                     return temp;
                 }
@@ -447,9 +465,9 @@ namespace SevenUpdate
         /// <summary>
         /// Serializes an object into a file
         /// </summary>
-        /// <typeparam name="T">The object</typeparam>
-        /// <param name="item">The object to serialize</param>
-        /// <param name="xmlFile">The location of a file that will be serialized</param>
+        /// <typeparam name="T">the object</typeparam>
+        /// <param name="item">the object to serialize</param>
+        /// <param name="xmlFile">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string xmlFile) where T : class
         {
             XmlSerializer s;
@@ -459,7 +477,7 @@ namespace SevenUpdate
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof(T));
+                s = new XmlSerializer(typeof (T));
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {
@@ -482,19 +500,19 @@ namespace SevenUpdate
         /// <summary>
         /// Serializes an object into a file
         /// </summary>
-        /// <typeparam name="T">The object</typeparam>
-        /// <param name="item">The object to serialize</param>
-        /// <param name="xmlFile">The location of a file that will be serialized</param>
+        /// <typeparam name="T">the object</typeparam>
+        /// <param name="item">the object to serialize</param>
+        /// <param name="xmlFile">the location of a file that will be serialized</param>
         public static void SerializeStruct<T>(T item, string xmlFile) where T : struct
         {
             XmlSerializer s;
             XmlWriter w = null;
             try
             {
-                var xs = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true };
+                var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof(T));
+                s = new XmlSerializer(typeof (T));
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {
@@ -518,10 +536,21 @@ namespace SevenUpdate
 
         #region Event Handlers
 
+        /// <summary>
+        /// Occurs when an error occurs while serializing or deserializing a object/file
+        /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
 
+        /// <summary>
+        /// Provides event data for the SerializationError event
+        /// </summary>
         public class SerializationErrorEventArgs : EventArgs
         {
+            /// <summary>
+            /// Contains event data associated with this event
+            /// </summary>
+            /// <param name="e">The exception data</param>
+            /// <param name="file">The full path of the file</param>
             public SerializationErrorEventArgs(Exception e, string file)
             {
                 Exception = e;
@@ -529,24 +558,16 @@ namespace SevenUpdate
             }
 
             /// <summary>
-            /// A string describing the error
+            /// Gets the exception data
             /// </summary>
-            public Exception Exception { get; set; }
+            public Exception Exception { get; private set; }
 
             /// <summary>
-            /// The file that caused the error message
+            /// Gets the full path of the file
             /// </summary>
-            public string File { get; set; }
+            public string File { get; private set; }
         }
 
         #endregion
-    }
-
-    internal static class NativeMethods
-    {
-        [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
-        internal static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
-
-        // ReSharper restore InconsistentNaming
     }
 }

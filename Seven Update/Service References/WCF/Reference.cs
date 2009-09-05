@@ -25,14 +25,14 @@ namespace SevenUpdate.WCF {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "3.0.0.0")]
     public interface IEventSystemCallback {
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnDownloadDone")]
-        void OnDownloadDone(bool errorOccurred);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnDownloadCompleted")]
+        void OnDownloadCompleted(bool errorOccurred);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnInstallDone")]
-        void OnInstallDone(int updatesInstalled, int updatesFailed);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnInstallCompleted")]
+        void OnInstallCompleted(int updatesInstalled, int updatesFailed);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnErrorOccurred")]
-        void OnErrorOccurred(string description, SevenUpdate.ErrorType type);
+        void OnErrorOccurred(System.Exception e, SevenUpdate.ErrorType type);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnDownloadProgressChanged")]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);
