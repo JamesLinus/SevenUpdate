@@ -45,7 +45,7 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
-        /// The red side image
+        /// The disabled shield image
         /// </summary>
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
@@ -151,7 +151,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        #region ListView Events
+        #region ListView Related
 
         /// <summary>
         /// Updates the <see cref="CollectionView"/> when the <c>hiddenUpdates</c> collection changes

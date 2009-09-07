@@ -24,25 +24,42 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows.Media;
 
 #endregion
 
 namespace SevenUpdate.Converters
 {
     /// <summary>
-    /// Converts a Brush to bool
+    /// Converts Importance to a localized string
     /// </summary>
-    [ValueConversion(typeof(Brush), typeof(bool))]
-    public class BrushToBoolConverter : IValueConverter
+    [ValueConversion(typeof (Importance), typeof (string))]
+    public class ImportanceGroupConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value == Brushes.Black;
+            var imp = ((Importance) value);
+
+            if (imp == Importance.Recommended)
+            {
+                if (App.Settings.IncludeRecommended)
+                    imp = Importance.Important;
+            }
+            if (imp == Importance.Locale)
+                imp = Importance.Optional;
+
+            return App.RM.GetString(imp.ToString());
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
@@ -54,17 +71,25 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a string to a localized string
     /// </summary>
-    [ValueConversion(typeof(string), typeof(string))]
+    [ValueConversion(typeof (string), typeof (string))]
     public class StringToLocaleConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             /// Returns the localized string found in the resource dictionary
             return App.RM.GetString(value.ToString());
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
@@ -76,11 +101,15 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a <see cref="LocaleString"/> to a localized string
     /// </summary>
-    [ValueConversion(typeof(LocaleString), typeof(string))]
+    [ValueConversion(typeof (LocaleString), typeof (string))]
     public class LocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var localeStrings = value as Collection<LocaleString>;
@@ -102,6 +131,10 @@ namespace SevenUpdate.Converters
             return App.RM.GetString("NotAvailable");
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
@@ -113,11 +146,15 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a collection of UpdateFiles to a string representing the size
     /// </summary>
-    [ValueConversion(typeof(UpdateFile), typeof(string))]
+    [ValueConversion(typeof (UpdateFile), typeof (string))]
     public class FileSizeConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var files = value as Collection<UpdateFile>;
@@ -125,6 +162,10 @@ namespace SevenUpdate.Converters
             return Shared.ConvertFileSize(App.GetUpdateSize(files));
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
@@ -136,20 +177,28 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts an Enum to a bool value
     /// </summary>
-    [ValueConversion(typeof(UpdateStatus), typeof(bool))]
+    [ValueConversion(typeof (UpdateStatus), typeof (bool))]
     public class EnumToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             /// If the UpdateStatus is hidden return False, otherwise return true
-            return ((UpdateStatus)value) != UpdateStatus.Hidden;
+            return ((UpdateStatus) value) != UpdateStatus.Hidden;
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool)value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
+            return ((bool) value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
         }
 
         #endregion
@@ -158,19 +207,27 @@ namespace SevenUpdate.Converters
     /// <summary>
     /// Converts a Bool to a readable string
     /// </summary>
-    [ValueConversion(typeof(bool), typeof(string))]
+    [ValueConversion(typeof (bool), typeof (string))]
     public class BoolToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
+        /// <summary>
+        /// Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             /// If Is64Bit
-            if (((bool)value))
+            if (((bool) value))
                 return "x64";
             return "x86";
         }
 
+        /// <summary>
+        /// Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();

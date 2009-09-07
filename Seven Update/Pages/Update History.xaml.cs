@@ -118,7 +118,7 @@ namespace SevenUpdate.Pages
             MainWindow.NavService.GoBack();
         }
 
-        #region ListView
+        #region ListView Related
 
         /// <summary>
         /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes

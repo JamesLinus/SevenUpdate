@@ -45,8 +45,8 @@
                     VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" Margin="0,5,2,0" DockPanel.Dock="Top" />
         </DockPanel>
         <Line X1="0" Grid.Column="2" StrokeThickness="1" Stroke="LightGray"
-                Y1="{Binding Path=ActualHeight, ElementName=spUpdateInfo}" HorizontalAlignment="Center"
-                VerticalAlignment="Top" Grid.Row="1" Name="line" Visibility="Hidden" Margin="0,5,0,0" />
+                Y1="50" HorizontalAlignment="Center"
+                VerticalAlignment="Top" Grid.Row="1" Name="line" Visibility="Hidden" Margin="0,5" />
         <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Name="spUpdateInfo" VerticalAlignment="Top"
                 Margin="0,5,0,0">
             <TextBlock Name="tbViewImportantUpdates" Padding="5" Text="{}{99} important updates are available"

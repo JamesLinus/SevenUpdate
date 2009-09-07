@@ -184,14 +184,17 @@ namespace SevenUpdate
         /// <param name="apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(Collection<SUA> apps)
         {
-            if (apps == null)
-                return;
             // delete the temp directory housing the sui files
-            if (Directory.Exists(Shared.UserStore + "temp"))
-                Directory.Delete(Shared.UserStore + "temp", true);
+            try
+            {
+                if (Directory.Exists(Shared.UserStore + "temp"))
+                    Directory.Delete(Shared.UserStore + "temp", true);
 
-            // create the temp directory for housing the sui files
-            Directory.CreateDirectory(Shared.UserStore + "temp");
+
+                // create the temp directory for housing the sui files
+                Directory.CreateDirectory(Shared.UserStore + "temp");
+            }
+            catch {}
 
             var web = new WebClient();
 
@@ -230,46 +233,49 @@ namespace SevenUpdate
                 }
                 else
                 {
-                    /// If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-                    for (var x = 0; x < apps.Count; x++)
+                    if (apps != null)
                     {
-                        try
+                        /// If there are no updates for Seven Update, let's download and load the SUI's from the User config.
+                        for (var x = 0; x < apps.Count; x++)
                         {
-                            /// Download the SUI
-                            web.DownloadFile(apps[x].Source, Shared.UserStore + @"temp\" + apps[x].Name[0].Value + ".sui");
+                            try
+                            {
+                                /// Download the SUI
+                                web.DownloadFile(apps[x].Source, Shared.UserStore + @"temp\" + apps[x].Name[0].Value + ".sui");
+                            }
+                            catch (WebException e)
+                            {
+                                /// Notify that there was an error that occurred.
+                                ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                            }
                         }
-                        catch (WebException e)
+
+                        if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
                         {
-                            /// Notify that there was an error that occurred.
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                            // Call the Event with a special code, meaning it was a Network Connection Error
+                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
+                            return;
                         }
-                    }
+                        /// Delete the SUI, it's been loaded, no longer needed on filesystem
+                        File.Delete(Shared.UserStore + @"temp\Seven Update.sui");
 
-                    if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
-                    {
-                        // Call the Event with a special code, meaning it was a Network Connection Error
-                        ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
-                        return;
-                    }
-                    /// Delete the SUI, it's been loaded, no longer needed on filesystem
-                    File.Delete(Shared.UserStore + @"temp\Seven Update.sui");
+                        web.Dispose();
 
-                    web.Dispose();
+                        /// Get the rest of the SUI's in the directory and load them
+                        var dir = new DirectoryInfo(Shared.UserStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
 
-                    /// Get the rest of the SUI's in the directory and load them
-                    var dir = new DirectoryInfo(Shared.UserStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
+                        /// Gets the hidden updates from settings
+                        var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
 
-                    /// Gets the hidden updates from settings
-                    var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
+                        for (var x = 0; x < dir.Length; x++)
+                        {
+                            /// Loads a SUI that was downloaded
+                            app = Shared.Deserialize<SUI>(dir[x].FullName);
 
-                    for (var x = 0; x < dir.Length; x++)
-                    {
-                        /// Loads a SUI that was downloaded
-                        app = Shared.Deserialize<SUI>(dir[x].FullName);
-
-                        /// Check to see if any updates are avalible and exclude hidden updates
-                        if (CheckForUpdates(ref app, hidden)) /// If there is an update avaliable, add it.
-                            applications.Add(app);
+                            /// Check to see if any updates are avalible and exclude hidden updates
+                            if (CheckForUpdates(ref app, hidden)) /// If there is an update avaliable, add it.
+                                applications.Add(app);
+                        }
                     }
                 }
             }

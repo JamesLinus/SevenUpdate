@@ -148,181 +148,6 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #region UI Events
-
-        #region TextBlock
-
-        /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = null;
-        }
-
-        /// <summary>
-        /// Navigates to the Options page
-        /// </summary>
-        private void tbChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Checks for updates
-        /// </summary>
-        private void tbCheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            CheckForUpdates();
-            // SevenUpdate.Windows.MainWindow.ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Navigates to the Update History page
-        /// </summary>
-        private void tbViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Update History.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Navigates to the Restore Updates page
-        /// </summary>
-        private void tbRestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Restore Updates.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Shows the About Dialog window
-        /// </summary>
-        private void tbAbout_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var about = new About();
-            about.ShowDialog();
-
-            var la = new LicenseAgreement();
-            la.LoadLicenses();
-
-            var ud = new UpdateDetails();
-            ud.ShowDialog();
-        }
-
-        /// <summary>
-        /// Navigates to the Update Info page
-        /// </summary>
-        private static void TbViewOptionalUpdatesMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Navigates to the Update Info page
-        /// </summary>
-        private static void TbViewImportantUpdatesMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Updates the UI after the user selects updates to install
-        /// </summary>
-        private void UpdateInfo_UpdateSelectionChangedEventHandler(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
-        {
-            #region GUI Updating
-
-            if (e.ImportantUpdates > 0)
-            {
-                if (e.ImportantUpdates == 1)
-                    infoBar.tbSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdateSelected");
-                else
-                    infoBar.tbSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdatesSelected");
-
-                if (e.ImportantDownloadSize > 0)
-                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.ImportantDownloadSize);
-            }
-            if (e.OptionalUpdates > 0)
-            {
-                if (e.ImportantUpdates == 0)
-                {
-                    if (e.OptionalUpdates == 1)
-                        infoBar.tbSelectedUpdates.Text = e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdateSelected");
-                    else
-                        infoBar.tbSelectedUpdates.Text = e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
-                }
-                else if (e.OptionalUpdates == 1)
-                    infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdateSelected");
-                else
-                    infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
-
-                if (e.OptionalDownloadSize > 0)
-                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.OptionalDownloadSize);
-            }
-            else
-                infoBar.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
-
-            if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
-                infoBar.tbHeading.Text = App.RM.GetString("InstallUpdatesForPrograms");
-            else
-                infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
-
-            if (e.ImportantUpdates > 0 || e.OptionalUpdates > 0)
-            {
-                infoBar.btnAction.Visibility = Visibility.Visible;
-                infoBar.tbSelectedUpdates.FontWeight = FontWeights.Bold;
-            }
-            else
-            {
-                infoBar.tbSelectedUpdates.Text = App.RM.GetString("NoUpdatesSelected");
-                infoBar.tbSelectedUpdates.FontWeight = FontWeights.Normal;
-                infoBar.btnAction.Visibility = Visibility.Collapsed;
-            }
-
-            #endregion
-        }
-
-        /// <summary>
-        /// Checks for updates after hidden updates have been restored
-        /// </summary>
-        private void RestoreUpdates_RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
-        {
-            CheckForUpdates(true);
-        }
-
-        /// <summary>
-        /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
-        /// </summary>
-        private void BtnActionClick(object sender, RoutedEventArgs e)
-        {
-            if (infoBar.tbAction.Text == App.RM.GetString("InstallUpdates"))
-                DownloadInstallUpdates();
-            else if (infoBar.tbAction.Text == App.RM.GetString("StopDownload") || infoBar.tbAction.Text == App.RM.GetString("StopInstallation"))
-            {
-                //Cancel installation of updates
-                Admin.AbortInstall();
-                SetUI(UILayout.Canceled);
-                return;
-            }
-            else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
-                CheckForUpdates();
-            else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
-                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\shutdown.exe", "-r -t 00");
-        }
-
-        #endregion
-
         #region Update Event Methods
 
         /// <summary>
@@ -680,9 +505,9 @@ namespace SevenUpdate.Pages
             #region Event Handler Declarations
 
             UpdateInfo.UpdateSelectionChangedEventHandler += UpdateInfo_UpdateSelectionChangedEventHandler;
-            infoBar.btnAction.Click += BtnActionClick;
-            infoBar.tbViewImportantUpdates.MouseDown += TbViewImportantUpdatesMouseDown;
-            infoBar.tbViewOptionalUpdates.MouseDown += TbViewOptionalUpdatesMouseDown;
+            infoBar.btnAction.Click += btnAction_Click;
+            infoBar.tbViewImportantUpdates.MouseDown += tbViewImportantUpdates_MouseDown;
+            infoBar.tbViewOptionalUpdates.MouseDown += tbViewOptionalUpdates_MouseDown;
             Search.SearchDoneEventHandler += SearchCompletedEventHandler;
             AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChangedEventHandler;
             AdminCallBack.DownloadDoneEventHandler += DownloadCompletedEventHandler;
@@ -1042,6 +867,185 @@ namespace SevenUpdate.Pages
 
                     break;
             }
+        }
+
+        #endregion
+
+        #region UI Events
+
+        #region TextBlock
+
+        /// <summary>
+        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
+        /// </summary>
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = TextDecorations.Underline;
+        }
+
+        /// <summary>
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
+        /// </summary>
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = null;
+        }
+
+        /// <summary>
+        /// Navigates to the Options page
+        /// </summary>
+        private void tbChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Checks for updates
+        /// </summary>
+        private void tbCheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            CheckForUpdates();
+            // SevenUpdate.Windows.MainWindow.ns.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Navigates to the Update History page
+        /// </summary>
+        private void tbViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Update History.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Navigates to the Restore Updates page
+        /// </summary>
+        private void tbRestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Restore Updates.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Shows the About Dialog window
+        /// </summary>
+        private void tbAbout_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var about = new About();
+            about.ShowDialog();
+        }
+
+// ReSharper disable InconsistentNaming
+
+        /// <summary>
+        /// Navigates to the Update Info page
+        /// </summary>
+        private static void tbViewOptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = true;
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Navigates to the Update Info page
+        /// </summary>
+        private static void tbViewImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = false;
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
+        }
+
+// ReSharper restore InconsistentNaming
+
+        #endregion
+
+        /// <summary>
+        /// Updates the UI after the user selects updates to install
+        /// </summary>
+        private void UpdateInfo_UpdateSelectionChangedEventHandler(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
+        {
+            #region GUI Updating
+
+            if (e.ImportantUpdates > 0)
+            {
+                if (e.ImportantUpdates == 1)
+                    infoBar.tbSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdateSelected");
+                else
+                    infoBar.tbSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdatesSelected");
+
+                if (e.ImportantDownloadSize > 0)
+                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.ImportantDownloadSize);
+            }
+
+            if (e.OptionalUpdates > 0)
+            {
+                if (e.ImportantUpdates == 0)
+                {
+                    if (e.OptionalUpdates == 1)
+                        infoBar.tbSelectedUpdates.Text = e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdateSelected");
+                    else
+                        infoBar.tbSelectedUpdates.Text = e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
+                }
+                else
+                    if (e.OptionalUpdates == 1)
+                        infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdateSelected");
+                    else
+                        infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
+
+                if (e.OptionalDownloadSize > 0)
+                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.OptionalDownloadSize);
+            }
+
+            if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
+                infoBar.tbHeading.Text = App.RM.GetString("InstallUpdatesForPrograms");
+            else
+                infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
+
+            if (e.ImportantUpdates > 0 || e.OptionalUpdates > 0)
+            {
+                infoBar.btnAction.Visibility = Visibility.Visible;
+                infoBar.tbSelectedUpdates.FontWeight = FontWeights.Bold;
+            }
+            else
+            {
+                infoBar.tbSelectedUpdates.Text = App.RM.GetString("NoUpdatesSelected");
+                infoBar.tbSelectedUpdates.FontWeight = FontWeights.Normal;
+                infoBar.btnAction.Visibility = Visibility.Collapsed;
+            }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Checks for updates after hidden updates have been restored
+        /// </summary>
+        private void RestoreUpdates_RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
+        {
+            CheckForUpdates(true);
+        }
+
+        // ReSharper disable InconsistentNaming
+        
+        /// <summary>
+        /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
+        /// </summary>
+        private void btnAction_Click(object sender, RoutedEventArgs e)
+            
+        // ReSharper restore InconsistentNaming
+        {
+            if (infoBar.tbAction.Text == App.RM.GetString("InstallUpdates"))
+                DownloadInstallUpdates();
+            else if (infoBar.tbAction.Text == App.RM.GetString("StopDownload") || infoBar.tbAction.Text == App.RM.GetString("StopInstallation"))
+            {
+                //Cancel installation of updates
+                Admin.AbortInstall();
+                SetUI(UILayout.Canceled);
+                return;
+            }
+            else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
+                CheckForUpdates();
+            else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\shutdown.exe", "-r -t 00");
         }
 
         #endregion

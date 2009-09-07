@@ -14,7 +14,7 @@
 //     GNU General Public License for more details.
 // 
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//     along with Seven Update.  If not, see <http://www.gnu.org/licenseInformation/>.
 
 #endregion
 
@@ -27,6 +27,7 @@ using System.Net;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 #endregion
 
@@ -40,9 +41,19 @@ namespace SevenUpdate.Windows
         #region Global Vars
 
         /// <summary>
-        /// An array of the text of the licenses
+        /// The disabled shield image
         /// </summary>
-        private string[] licenseSources;
+        private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
+
+        /// <summary>
+        ///  The UAC shield
+        /// </summary>
+        private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
+
+        /// <summary>
+        /// An array of the strings that consist of the software licenses
+        /// </summary>
+        private string[] licenseText;
 
         /// <summary>
         /// Current index
@@ -52,7 +63,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// List of updates that have EULAS
         /// </summary>
-        private Collection<EULA> licenses;
+        private Collection<EULA> licenseInformation;
 
         /// <summary>
         /// Data containing the update's license agreement
@@ -93,9 +104,9 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>
-        /// Downloads the licenses
+        /// Downloads the licenseInformation
         /// </summary>
-        private void DownloadLicenses()
+        private void DownloadLicenseInformation()
         {
             var worker = new BackgroundWorker();
 
@@ -113,7 +124,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void GetLicenseAgreements()
         {
-            licenses = new Collection<EULA>();
+            licenseInformation = new Collection<EULA>();
 
             if (App.Applications == null)
                 return;
@@ -125,24 +136,24 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new EULA {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
+                    var sla = new EULA { LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
 
-                    licenses.Add(sla);
+                    licenseInformation.Add(sla);
                 }
             }
         }
 
         /// <summary>
-        /// Loads the licenses and shows the form
+        /// Loads the licenseInformation and shows the form
         /// </summary>
         /// <returns></returns>
         internal bool? LoadLicenses()
         {
             GetLicenseAgreements();
 
-            if (licenses.Count < 1 || licenses == null)
+            if (licenseInformation.Count < 1 || licenseInformation == null)
                 return true;
-            if (licenses.Count > 1)
+            if (licenseInformation.Count > 1)
                 tbAction.Text = App.RM.GetString("Next");
 
             return ShowDialog();
@@ -155,24 +166,22 @@ namespace SevenUpdate.Windows
         /// <param name="e"></param>
         private void WorkerDoWork(object sender, DoWorkEventArgs e)
         {
-            licenseSources = new string[licenses.Count];
+            licenseText = new string[licenseInformation.Count];
 
             var wc = new WebClient();
 
-            for (var x = 0; x < licenses.Count; x++)
+            for (var x = 0; x < licenseInformation.Count; x++)
             {
                 try
                 {
-                    licenseSources[x] = wc.DownloadString(licenses[x].LicenseUrl);
+                    licenseText[x] = wc.DownloadString(licenseInformation[x].LicenseUrl);
                 }
                 catch (Exception f)
                 {
                     Shared.ReportError(f.Message, Shared.UserStore);
-                    licenseSources[x] = "Error Downloading License Agreement";
+                    licenseText[x] = "Error Downloading License Agreement";
                 }
             }
-
-            rtbSLA.Cursor = Cursors.IBeam;
             wc.Dispose();
         }
 
@@ -185,20 +194,23 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            rtbSLA.Cursor = Cursors.IBeam;
             var mcFlowDoc = new FlowDocument();
             var para = new Paragraph();
-            var r = new Run(licenseSources[0]);
+            var r = new Run(licenseText[0]);
             para.Inlines.Add(r);
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
 
-            tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenses[0].Title;
+            tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[0].Title;
             rbAccept.IsEnabled = true;
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
             Cursor = Cursors.Arrow;
-            if (licenses.Count == 1 && !App.IsAdmin)
+            if (licenseInformation.Count == 1 && !App.IsAdmin)
                 imgAdminShield.Visibility = Visibility.Visible;
+            else
+                imgAdminShield.Visibility = Visibility.Collapsed;
         }
 
         #region Buttons
@@ -219,7 +231,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DownloadLicenses();
+            DownloadLicenseInformation();
         }
 
         /// <summary>
@@ -227,10 +239,8 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void radioAccept_Checked(object sender, RoutedEventArgs e)
         {
-            if (rbAccept.IsChecked == true || rbDecline.IsChecked == true)
-                btnAction.IsEnabled = true;
-            else
-                btnAction.IsEnabled = false;
+            btnAction.IsEnabled = true;
+            imgAdminShield.Source = shield;
         }
 
         /// <summary>
@@ -239,8 +249,15 @@ namespace SevenUpdate.Windows
         private void rbDecline_Checked(object sender, RoutedEventArgs e)
         {
             if (App.Applications.Count != 1)
-                return;
-            btnAction.IsEnabled = rbDecline.IsChecked != true;
+            {
+                btnAction.IsEnabled = true;
+                imgAdminShield.Source = shield;
+            }
+            else
+            {
+                btnAction.IsEnabled = false;
+                imgAdminShield.Source = disabledShield;
+            }
         }
 
         /// <summary>
@@ -250,18 +267,18 @@ namespace SevenUpdate.Windows
         {
             if (rbDecline.IsChecked == true)
             {
-                App.Applications[licenses[index].AppIndex].Updates.RemoveAt(licenses[index].UpdateIndex);
-                if (App.Applications[licenses[index].AppIndex].Updates.Count == 0)
-                    App.Applications.RemoveAt(licenses[index].AppIndex);
+                App.Applications[licenseInformation[index].AppIndex].Updates.RemoveAt(licenseInformation[index].UpdateIndex);
+                if (App.Applications[licenseInformation[index].AppIndex].Updates.Count == 0)
+                    App.Applications.RemoveAt(licenseInformation[index].AppIndex);
             }
             index++;
 
             if ((tbAction.Text) == App.RM.GetString("Next"))
             {
-                tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenses[index].Title;
+                tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[index].Title;
                 var mcFlowDoc = new FlowDocument();
                 var para = new Paragraph();
-                var r = new Run(licenses[index].LicenseUrl);
+                var r = new Run(licenseText[index]);
                 para.Inlines.Add(r);
                 mcFlowDoc.Blocks.Add(para);
                 rtbSLA.Document = mcFlowDoc;
@@ -273,7 +290,7 @@ namespace SevenUpdate.Windows
                 DialogResult = App.Applications.Count > 0;
                 Close();
             }
-            if (index != licenses.Count - 1)
+            if (index != licenseInformation.Count - 1)
                 return;
             tbAction.Text = App.RM.GetString("Finish");
             if (!App.IsAdmin && App.Applications.Count > 0)

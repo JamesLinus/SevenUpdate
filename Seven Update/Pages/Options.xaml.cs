@@ -88,7 +88,7 @@ namespace SevenUpdate.Pages
             }
             var wc = new WebClient();
 
-            wc.DownloadFileCompleted += WcDownloadFileCompleted;
+            wc.DownloadFileCompleted += DownloadFileCompleted;
 
             wc.DownloadFileAsync(SUALocation, Shared.UserStore + @"Apps.sul");
         }
@@ -248,7 +248,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Loads the SUA list after the download has completed
         /// </summary>
-        private void WcDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (e.Error != null)
                 return;
@@ -303,7 +303,7 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #region ListView Events
+        #region ListView Related
 
         /// <summary>
         /// Updates the <see cref="CollectionView"/> when the <c>userAppList</c> collection changes

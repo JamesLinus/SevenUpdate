@@ -33,6 +33,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using SevenUpdate.Controls;
+using SevenUpdate.Converters;
 using SevenUpdate.WCF;
 using SevenUpdate.Windows;
 
@@ -81,6 +82,11 @@ namespace SevenUpdate.Pages
         /// Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<Indices> indices;
+
+        /// <summary>
+        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
+        /// </summary>
+        internal static bool DisplayOptionalUpdates { get; set; }
 
         #endregion
 
@@ -151,167 +157,6 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        #region UI Events
-
-        #region Buttons
-
-        /// <summary>
-        /// Navigates back to the Main page
-        /// </summary>
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.GoBack();
-        }
-
-        /// <summary>
-        /// Saves the selection of updates and navigates back to the Main page
-        /// </summary>
-        private void btnInstall_Click(object sender, RoutedEventArgs e)
-        {
-            SaveUpdateSelection();
-            MainWindow.NavService.GoBack();
-        }
-
-        #endregion
-
-        #region TextBlocks
-
-        /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = null;
-        }
-
-        /// <summary>
-        /// Launches the More Information Url of the update
-        /// </summary>
-        private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (tbUrlInfo.Tag != null)
-                Process.Start(tbUrlInfo.Tag.ToString());
-        }
-
-        /// <summary>
-        /// Launches the Help Url of the update
-        /// </summary>
-        private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (tbUrlHelp.Tag != null)
-                Process.Start(tbUrlHelp.Tag.ToString());
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Loads the updates found into the UI
-        /// </summary>
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            AddUpdates();
-        }
-
-        #region listview
-
-        /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
-        /// </summary>
-        private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace)
-                return;
-            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
-            dataView.Refresh();
-        }
-
-        /// <summary>
-        /// Shows the selected update details
-        /// </summary>
-        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
-        {
-            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
-            var appIndex = indices[listView.SelectedIndex].AppIndex;
-
-            var hnh = new SUH
-                          {
-                              HelpUrl = App.Applications[appIndex].HelpUrl,
-                              InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
-                              Publisher = App.Applications[appIndex].Publisher,
-                              PublisherUrl = App.Applications[appIndex].PublisherUrl,
-                              ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
-                              Status = UpdateStatus.Hidden,
-                              Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
-                              Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
-                              Description = App.Applications[appIndex].Updates[updateIndex].Description,
-                              Name = App.Applications[appIndex].Updates[updateIndex].Name
-                          };
-
-            var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
-
-            if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
-            {
-                if (Admin.HideUpdate(hnh))
-                {
-                    cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
-                    item.Foreground = Brushes.Gray;
-                }
-            }
-            else
-            {
-                if (Admin.ShowUpdate(hnh))
-                {
-                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
-                    item.Foreground = Brushes.Black;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Shows the selected update details in the sidebar when the selection changes
-        /// </summary>
-        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var appIndex = indices[listView.SelectedIndex].AppIndex;
-            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
-            if (listView.SelectedIndex == -1)
-                HideLabels();
-            else
-            {
-                tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
-                tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                tbUpdateName.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
-                tbUrlHelp.Tag = App.Applications[appIndex].HelpUrl;
-                tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
-                if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
-                {
-                    tbStatus.Text = App.RM.GetString("ReadyToDownload");
-                    imgArrow.Source = blueArrow;
-                }
-                else
-                {
-                    tbStatus.Text = App.RM.GetString("ReadyToInstall");
-                    imgArrow.Source = greenArrow;
-                }
-                ShowLabels();
-            }
-        }
-
-        #endregion
-
-        #endregion
-
         #region Methods
 
         /// <summary>
@@ -333,6 +178,7 @@ namespace SevenUpdate.Pages
                     }
                     continue;
                 }
+
                 IterateVisualChild(VisualTreeHelper.GetChild(element, i));
             }
         }
@@ -350,7 +196,7 @@ namespace SevenUpdate.Pages
             {
                 var updateIndex = indices[x].UpdateIndex;
                 var appIndex = indices[x].AppIndex;
-                if (!App.Applications[appIndex].Updates[updateIndex].Selected) {}
+                if (!App.Applications[appIndex].Updates[updateIndex].Selected) { }
                 else
                 {
                     switch (App.Applications[indices[x].AppIndex].Updates[indices[x].UpdateIndex].Importance)
@@ -373,7 +219,7 @@ namespace SevenUpdate.Pages
                             break;
                         case Importance.Optional:
                         case Importance.Locale:
-                            downloadSize[0] = App.Applications[appIndex].Updates[updateIndex].Size;
+                            downloadSize[1] = App.Applications[appIndex].Updates[updateIndex].Size;
                             count[1]++;
                             break;
                     }
@@ -402,9 +248,14 @@ namespace SevenUpdate.Pages
                     indices.Add(index);
                 }
             }
-            var items = new Binding {Source = selectedUpdates};
+
+            var items = new Binding { Source = selectedUpdates };
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
+            var myView = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
+            myView.GroupDescriptions.Add(groupDescription);
+
             AddSortBinding();
         }
 
@@ -413,7 +264,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView)listView.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -458,6 +309,208 @@ namespace SevenUpdate.Pages
             imgIcon.Visibility = Visibility.Visible;
             imgArrow.Visibility = Visibility.Hidden;
         }
+
+        #endregion
+
+        #region UI Events
+
+        #region Buttons
+
+        /// <summary>
+        /// Navigates back to the Main page
+        /// </summary>
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.GoBack();
+        }
+
+        /// <summary>
+        /// Saves the selection of updates and navigates back to the Main page
+        /// </summary>
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            SaveUpdateSelection();
+            MainWindow.NavService.GoBack();
+        }
+
+        #endregion
+
+        #region TextBlocks
+
+        /// <summary>
+        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
+        /// </summary>
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = TextDecorations.Underline;
+        }
+
+        /// <summary>
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
+        /// </summary>
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = null;
+        }
+
+        /// <summary>
+        /// Launches the More Information <c>Url</c> of the update
+        /// </summary>
+        private void tbUrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Process.Start(tbUrlInfo.Tag.ToString());
+            }
+            catch { }
+        }
+
+        /// <summary>
+        /// Launches the Help <c>Url</c> of the update
+        /// </summary>
+        private void tbUrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                Process.Start(tbUrlHelp.Tag.ToString());
+            }
+            catch { }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Loads the updates found into the UI
+        /// </summary>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            AddUpdates();
+        }
+
+        #region ListView Related
+
+        /// <summary>
+        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// </summary>
+        private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            // update the view when item change is NOT caused by replacement
+            if (e.Action != NotifyCollectionChangedAction.Replace)
+                return;
+            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            dataView.Refresh();
+        }
+
+        /// <summary>
+        /// Shows the selected update details
+        /// </summary>
+        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
+        {
+            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
+            var appIndex = indices[listView.SelectedIndex].AppIndex;
+
+            var hnh = new SUH
+            {
+                HelpUrl = App.Applications[appIndex].HelpUrl,
+                InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
+                Publisher = App.Applications[appIndex].Publisher,
+                PublisherUrl = App.Applications[appIndex].PublisherUrl,
+                ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
+                Status = UpdateStatus.Hidden,
+                Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
+                Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
+                Description = App.Applications[appIndex].Updates[updateIndex].Description,
+                Name = App.Applications[appIndex].Updates[updateIndex].Name
+            };
+
+            var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+
+            if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
+            {
+                if (Admin.HideUpdate(hnh))
+                {
+                    cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
+                    item.Foreground = Brushes.Gray;
+                    item.Tag = false;
+                }
+            }
+            else
+            {
+                if (Admin.ShowUpdate(hnh))
+                {
+                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
+                    item.Foreground = Brushes.Black;
+                    item.Tag = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Shows the selected update details in the sidebar when the selection changes
+        /// </summary>
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listView.SelectedIndex == -1)
+                HideLabels();
+            else
+            {
+                var appIndex = indices[listView.SelectedIndex].AppIndex;
+                var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
+                tbUpdateDescription.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
+                tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
+                tbUpdateName.Text = Shared.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
+                if (string.IsNullOrEmpty(App.Applications[appIndex].HelpUrl))
+                    tbUrlHelp.Visibility = Visibility.Collapsed;
+                else
+                {
+                    tbUrlHelp.Visibility = Visibility.Visible;
+                    tbUrlHelp.Tag = App.Applications[appIndex].HelpUrl;
+                }
+                if (string.IsNullOrEmpty(App.Applications[appIndex].Updates[updateIndex].InfoUrl))
+                    tbUrlInfo.Visibility = Visibility.Collapsed;
+                else
+                {
+                    tbUrlInfo.Visibility = Visibility.Visible;
+                    tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
+                }
+                var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+
+                if (item.Tag != null)
+                    cmiHideUpdate.Header = ((bool)item.Tag) ? App.RM.GetString("HideUpdate") : App.RM.GetString("ShowUpdate");
+                else
+                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
+
+                if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
+                {
+                    tbStatus.Text = App.RM.GetString("ReadyToDownload");
+                    imgArrow.Source = blueArrow;
+                }
+                else
+                {
+                    tbStatus.Text = App.RM.GetString("ReadyToInstall");
+                    imgArrow.Source = greenArrow;
+                }
+                ShowLabels();
+            }
+        }
+
+        /// <summary>
+        /// Expands the group expander based on the which link was clicked from the main page
+        /// </summary>
+        private void Expander_Loaded(object sender, RoutedEventArgs e)
+        {
+            var expander = e.Source as Expander;
+            if (expander == null)
+                return;
+            if (DisplayOptionalUpdates)
+                expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Optional");
+            else
+                expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Important");
+        }
+
+        #endregion
 
         #endregion
     }

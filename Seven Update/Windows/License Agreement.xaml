@@ -21,10 +21,10 @@
         <StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center"
                 Grid.Column="1" Grid.Row="3">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75"
-                    Name="btnAction" Padding="5,1" VerticalContentAlignment="Center" Click="btnAction_Click">
+                    Name="btnAction" Padding="5,1" VerticalContentAlignment="Center" Click="btnAction_Click" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
-                    <Image Name="imgAdminShield" Source="pack://application:,,,./Images/Shield.png" Stretch="None"
-                            Margin="0,0,2,0" IsEnabled="True" />
+                    <Image Name="imgAdminShield" Source="pack://application:,,,./Images/ShieldDisabled.png" Stretch="None"
+                            Margin="0,0,2,0" IsEnabled="True" Visibility="Collapsed" />
                     <TextBlock Name="tbAction" Text="Finish"></TextBlock>
                 </StackPanel>
             </Button>
