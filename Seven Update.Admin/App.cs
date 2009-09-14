@@ -266,7 +266,8 @@ namespace SevenUpdate
                                 #region code
 
                                 var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
-
+                                if (hidden == null)
+                                    hidden = new Collection<SUH>();
                                 hidden.Add(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
                                 File.Delete(Shared.UserStore + "Update.suh");
@@ -283,7 +284,8 @@ namespace SevenUpdate
                                 #region code
 
                                 var show = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
-
+                                if (show == null)
+                                    show = new Collection<SUH>();
                                 show.Remove(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
                                 File.Delete(Shared.UserStore + "Update.suh");

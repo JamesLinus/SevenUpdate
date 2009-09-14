@@ -101,7 +101,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView)listView.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -199,7 +199,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ListViewExtensions.LimitColumnSize(((Thumb) e.OriginalSource));
+            ListViewExtensions.LimitColumnSize(((Thumb)e.OriginalSource));
         }
 
         /// <summary>

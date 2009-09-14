@@ -443,9 +443,10 @@ namespace SevenUpdate.WCF
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(SUH hiddenUpdate)
         {
-            if (!LaunchAdmin("ShowUpdate"))
-                return false;
             Shared.Serialize(hiddenUpdate, Shared.UserStore + "Update.suh");
+            if (LaunchAdmin("ShowUpdate"))
+                return true;
+            File.Delete(Shared.UserStore + "Update.suh");
             return true;
         }
 

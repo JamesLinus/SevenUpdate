@@ -253,18 +253,31 @@ namespace SevenUpdate.Pages
                 if (count[0] > 0 || count[1] > 0)
                 {
                     SetUI(UILayout.UpdatesFound);
+
+                    if (count[0] > 0 && count[1] > 0)
+                        infoBar.line.Y1 = 50;
+
                     infoBar.tbSelectedUpdates.Text = App.RM.GetString("NoUpdatesSelected");
 
-                    if (count[0] == 1)
-                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdateAvailable") + " ";
+                    if (count[0] > 0)
+                    {
+                        if (count[0] == 1)
+                            infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdateAvailable") + " ";
+                        else
+                            infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdatesAvailable");
+                    }
                     else
-                        infoBar.tbViewImportantUpdates.Text = count[0] + " " + App.RM.GetString("ImportantUpdatesAvailable");
-
-                    if (count[0] < 1)
-                        infoBar.tbViewImportantUpdates.Text = App.RM.GetString("NoImportantUpdates");
+                        infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
 
                     if (count[1] > 0)
                     {
+                        if (count[0] == 0)
+                        {
+                            infoBar.imgSide.Source = greenSide;
+                            infoBar.imgShield.Source = App.GreenShield;
+                            infoBar.tbHeading.Text = App.RM.GetString("NoImportantUpdates");
+                        }
+
                         if (count[1] == 1)
                             infoBar.tbViewOptionalUpdates.Text = count[1] + " " + App.RM.GetString("OptionalUpdateAvailable");
                         else
@@ -394,7 +407,7 @@ namespace SevenUpdate.Pages
         {
             if (auto)
             {
-                if (Process.GetProcessesByName("Seven Update.Admin").Length < 1 && Shared.RebootNeeded == false)
+                if (!App.IsInstallInProgress && !Shared.RebootNeeded)
                     CheckForUpdates();
             }
             else
@@ -406,7 +419,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void CheckForUpdates()
         {
-            if (Process.GetProcessesByName("Seven Update.Admin").Length < 1)
+            if (!App.IsInstallInProgress)
             {
                 if (Shared.RebootNeeded == false)
                 {
@@ -503,8 +516,8 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.NoUpdates);
 
             #region Event Handler Declarations
-
-            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateInfo_UpdateSelectionChangedEventHandler;
+            UpdateInfo.CanceledSelectionEventHandler += new EventHandler(CanceledSelectionEventHandler);
+            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChangedEventHandler;
             infoBar.btnAction.Click += btnAction_Click;
             infoBar.tbViewImportantUpdates.MouseDown += tbViewImportantUpdates_MouseDown;
             infoBar.tbViewOptionalUpdates.MouseDown += tbViewOptionalUpdates_MouseDown;
@@ -514,7 +527,7 @@ namespace SevenUpdate.Pages
             AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChangedEventHandler;
             AdminCallBack.InstallDoneEventHandler += InstallCompletedEventHandler;
             AdminCallBack.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
-            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoreUpdates_RestoredHiddenUpdateEventHandler;
+            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdateEventHandler;
 
             #endregion
         }
@@ -606,7 +619,7 @@ namespace SevenUpdate.Pages
 
                     #region Code
 
-                    App.IsInstallInProgress = false;
+                    App.IsInstallInProgress = true;
 
                     #endregion
 
@@ -621,7 +634,7 @@ namespace SevenUpdate.Pages
                     infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
                     infoBar.tbStatus.Visibility = Visibility.Visible;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Visibility = Visibility.Hidden;
+                    infoBar.btnAction.Visibility = Visibility.Collapsed;
                     infoBar.tbStatus.Text = App.RM.GetString("GettingInstallationStatus");
                     infoBar.tbHeading.Text = App.RM.GetString("ConnectingToService") + "...";
                     infoBar.line.Visibility = Visibility.Collapsed;
@@ -671,7 +684,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbSelectedUpdates.Visibility = Visibility.Visible;
                     infoBar.tbStatus.Visibility = Visibility.Collapsed;
                     infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-                    infoBar.btnAction.Visibility = Visibility.Hidden;
+                    infoBar.btnAction.Visibility = Visibility.Collapsed;
                     if (!App.IsAdmin)
                         infoBar.imgAdminShield.Visibility = Visibility.Visible;
                     infoBar.tbAction.Text = App.RM.GetString("InstallUpdates");
@@ -856,6 +869,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;
                     infoBar.line.Visibility = Visibility.Visible;
+                    infoBar.line.Y1 = 25;
 
                     #endregion
 
@@ -935,7 +949,7 @@ namespace SevenUpdate.Pages
             about.ShowDialog();
         }
 
-// ReSharper disable InconsistentNaming
+        // ReSharper disable InconsistentNaming
 
         /// <summary>
         /// Navigates to the Update Info page
@@ -955,15 +969,64 @@ namespace SevenUpdate.Pages
             MainWindow.NavService.Navigate(new Uri(@"Pages\Update Info.xaml", UriKind.Relative));
         }
 
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
 
         #endregion
 
         /// <summary>
+        /// When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
+        /// </summary>
+        void CanceledSelectionEventHandler(object sender, EventArgs e)
+        {
+            CheckForUpdates();
+        }
+
+        /// <summary>
         /// Updates the UI after the user selects updates to install
         /// </summary>
-        private void UpdateInfo_UpdateSelectionChangedEventHandler(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
+        private void UpdateSelectionChangedEventHandler(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
         {
+            if (App.Applications.Count == 0)
+            {
+                CheckForUpdates();
+                return;
+            }
+
+            infoBar.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
+            infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
+
+            for (var x = 0; x < App.Applications.Count; x++)
+            {
+                if (infoBar.tbViewImportantUpdates.Visibility == Visibility.Visible && infoBar.tbViewOptionalUpdates.Visibility == Visibility.Visible)
+                    break;
+                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
+                {
+                    if (infoBar.tbViewImportantUpdates.Visibility == Visibility.Visible && infoBar.tbViewOptionalUpdates.Visibility == Visibility.Visible)
+                        break;
+                    switch (App.Applications[x].Updates[y].Importance)
+                    {
+                        case Importance.Important:
+                            infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;
+                            break;
+                        case Importance.Locale:
+                        case Importance.Optional:
+                            infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
+                            break;
+                        case Importance.Recommended:
+                            if (App.Settings.IncludeRecommended)
+                                infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;
+                            else
+                                infoBar.tbViewOptionalUpdates.Visibility = Visibility.Visible;
+                            break;
+                    }
+                }
+            }
+
+            if (infoBar.tbViewOptionalUpdates.Visibility == Visibility.Collapsed || infoBar.tbViewImportantUpdates.Visibility == Visibility.Collapsed)
+                infoBar.line.Y1 = 25;
+            else
+                infoBar.line.Y1 = 50;
+
             #region GUI Updating
 
             if (e.ImportantUpdates > 0)
@@ -987,10 +1050,12 @@ namespace SevenUpdate.Pages
                         infoBar.tbSelectedUpdates.Text = e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
                 }
                 else
+                {
                     if (e.OptionalUpdates == 1)
                         infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdateSelected");
                     else
                         infoBar.tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + App.RM.GetString("OptionalUpdatesSelected");
+                }
 
                 if (e.OptionalDownloadSize > 0)
                     infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.OptionalDownloadSize);
@@ -1019,19 +1084,18 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Checks for updates after hidden updates have been restored
         /// </summary>
-        private void RestoreUpdates_RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
+        private void RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
         {
+            System.Threading.Thread.CurrentThread.Join(500);
             CheckForUpdates(true);
         }
 
         // ReSharper disable InconsistentNaming
-        
+
         /// <summary>
         /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
         /// </summary>
         private void btnAction_Click(object sender, RoutedEventArgs e)
-            
-        // ReSharper restore InconsistentNaming
         {
             if (infoBar.tbAction.Text == App.RM.GetString("InstallUpdates"))
                 DownloadInstallUpdates();
@@ -1047,6 +1111,8 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
                 Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\shutdown.exe", "-r -t 00");
         }
+
+        // ReSharper restore InconsistentNaming
 
         #endregion
     }

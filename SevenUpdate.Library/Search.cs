@@ -190,7 +190,6 @@ namespace SevenUpdate
                 if (Directory.Exists(Shared.UserStore + "temp"))
                     Directory.Delete(Shared.UserStore + "temp", true);
 
-
                 // create the temp directory for housing the sui files
                 Directory.CreateDirectory(Shared.UserStore + "temp");
             }
@@ -238,6 +237,8 @@ namespace SevenUpdate
                         /// If there are no updates for Seven Update, let's download and load the SUI's from the User config.
                         for (var x = 0; x < apps.Count; x++)
                         {
+                            if (!apps[x].IsEnabled)
+                                continue;
                             try
                             {
                                 /// Download the SUI
@@ -273,8 +274,11 @@ namespace SevenUpdate
                             app = Shared.Deserialize<SUI>(dir[x].FullName);
 
                             /// Check to see if any updates are avalible and exclude hidden updates
-                            if (CheckForUpdates(ref app, hidden)) /// If there is an update avaliable, add it.
+                            /// If there is an update avaliable, add it.
+                            if (CheckForUpdates(ref app, hidden))
+                            {
                                 applications.Add(app);
+                            }
                         }
                     }
                 }

@@ -1,9 +1,6 @@
-﻿<Page x:Class="SevenUpdate.Pages.UpdateHistory" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d"
-        Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
+﻿<Page x:Class="SevenUpdate.Pages.UpdateHistory" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d" Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -17,13 +14,11 @@
             <RowDefinition Height="415*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5"
-                Text="Review your update history" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Review your update history" VerticalAlignment="Top"
+                Margin="24,12,0,5" />
+        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
-        <ListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0"
-                Controls:ListViewSorter.IsListViewSortable="True">
+        <ListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0" Controls:ListViewSorter.IsListViewSortable="True">
             <ListView.Resources>
                 <Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
                     <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -40,26 +35,17 @@
             </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource hcs}">
-                    <GridViewColumn Header="Name"
-                            DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}"
-                            Width="450" />
-                    <GridViewColumn Header="Status"
-                            DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
-                            Width="125" />
-                    <GridViewColumn Header="Importance"
-                            DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}"
-                            Width="100" />
-                    <GridViewColumn Header="Date Installed" DisplayMemberBinding="{Binding Path=InstallDate}"
-                            Width="125" />
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Width="450" />
+                    <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="125" />
+                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
+                    <GridViewColumn Header="Date Installed" DisplayMemberBinding="{Binding Path=InstallDate}" Width="125" />
                 </GridView>
             </ListView.View>
         </ListView>
         <Rectangle Fill="#FFF0F0F0" Name="rectangle1" Grid.Row="2" />
-        <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True"
-                Name="btnOK" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center"
-                Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="btnOK_Click" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+        <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True" Name="btnOK" Padding="5,1" VerticalAlignment="Center"
+                VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="btnOK_Click" />
+        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
     </Grid>
 </Page>

@@ -170,7 +170,7 @@ namespace SevenUpdate
         public bool Is64Bit { get; set; }
 
         /// <summary>
-        /// Indicates if the SUA is enabled with Seven Update (SDK does not use this value)
+        /// Gets or Sets a value Indicating if the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
         [XmlAttribute("isEnabled")]
         public bool IsEnabled { get; set; }
@@ -401,7 +401,7 @@ namespace SevenUpdate
     }
 
     /// <summary>
-    /// Information on how to install a program update
+    /// Information on how to install a software update
     /// </summary>
     [XmlType("update", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
     public class Update : INotifyPropertyChanged
@@ -481,7 +481,7 @@ namespace SevenUpdate
         #region UI Properties
 
         /// <summary>
-        /// Indicates if the update is selected (not used in the SDK)
+        /// Gets or Sets a value Indicating if the update is selected (not used in the SDK)
         /// </summary>
         [XmlIgnore]
         public bool Selected { get; set; }

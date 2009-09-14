@@ -54,12 +54,12 @@ namespace SevenUpdate.Pages
         private struct Indices
         {
             /// <summary>
-            /// An int that indicates the position of the Application information of an update
+            /// Gets or Sets the position of the Application information of an update
             /// </summary>
             internal int AppIndex { get; set; }
 
             /// <summary>
-            /// An int that indicates the position of the update information within the Application information of an update
+            ///  Gets or Sets the position of the update information within the Application information of an update
             /// </summary>
             internal int UpdateIndex { get; set; }
         }
@@ -67,11 +67,20 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region Global Vars
+        /// <summary>
+        /// Gets or Sets a value indicating if one or more updates were hidden
+        /// </summary>
+        private bool AreHiddenUpdates { get; set; }
 
         /// <summary>
         /// Gets an image of a blue arrow
         /// </summary>
         private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
+
+        /// <summary>
+        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
+        /// </summary>
+        internal static bool DisplayOptionalUpdates { get; set; }
 
         /// <summary>
         /// Gets an image of a green arrow
@@ -82,11 +91,6 @@ namespace SevenUpdate.Pages
         /// Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<Indices> indices;
-
-        /// <summary>
-        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
-        /// </summary>
-        internal static bool DisplayOptionalUpdates { get; set; }
 
         #endregion
 
@@ -106,6 +110,11 @@ namespace SevenUpdate.Pages
         /// Occurs when the update selection has changed
         /// </summary>
         internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChangedEventHandler;
+
+        /// <summary>
+        /// Occurs when the user cancels their update selection
+        /// </summary>
+        internal static event EventHandler CanceledSelectionEventHandler;
 
         #region EventArgs
 
@@ -190,41 +199,57 @@ namespace SevenUpdate.Pages
         {
             var count = new int[2];
             var downloadSize = new ulong[2];
-
-            IterateVisualChild(listView);
-            for (var x = 0; x < indices.Count; x++)
+            var updIndex = -1;
+            for (var x = 0; x < App.Applications.Count; x++)
             {
-                var updateIndex = indices[x].UpdateIndex;
-                var appIndex = indices[x].AppIndex;
-                if (!App.Applications[appIndex].Updates[updateIndex].Selected) { }
-                else
+                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
-                    switch (App.Applications[indices[x].AppIndex].Updates[indices[x].UpdateIndex].Importance)
+                    updIndex++;
+                    var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.Items[updIndex]);
+                    if (item.Tag != null)
+                        if (!(bool)item.Tag)
+                        {
+                            App.Applications[x].Updates.RemoveAt(y);
+                            y--;
+                            continue;
+                        }
+
+                    if (!App.Applications[x].Updates[y].Selected)
+                        continue;
+
+                    switch (App.Applications[x].Updates[y].Importance)
                     {
                         case Importance.Important:
                             count[0]++;
-                            downloadSize[0] = App.Applications[appIndex].Updates[updateIndex].Size;
+                            downloadSize[0] = App.Applications[x].Updates[y].Size;
                             break;
                         case Importance.Recommended:
                             if (App.Settings.IncludeRecommended)
                             {
-                                downloadSize[0] = App.Applications[appIndex].Updates[updateIndex].Size;
+                                downloadSize[0] = App.Applications[x].Updates[y].Size;
                                 count[0]++;
                             }
                             else
                             {
-                                downloadSize[1] = App.Applications[appIndex].Updates[updateIndex].Size;
+                                downloadSize[1] = App.Applications[x].Updates[y].Size;
                                 count[1]++;
                             }
                             break;
                         case Importance.Optional:
                         case Importance.Locale:
-                            downloadSize[1] = App.Applications[appIndex].Updates[updateIndex].Size;
+                            downloadSize[1] = App.Applications[x].Updates[y].Size;
                             count[1]++;
                             break;
                     }
                 }
+
+                if (App.Applications[x].Updates.Count == 0)
+                {
+                    App.Applications.RemoveAt(x);
+                    x--;
+                }
             }
+
             if (UpdateSelectionChangedEventHandler != null)
                 UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
         }
@@ -321,6 +346,8 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            if (CanceledSelectionEventHandler != null && AreHiddenUpdates)
+                CanceledSelectionEventHandler(this, new EventArgs());
             MainWindow.NavService.GoBack();
         }
 
@@ -329,6 +356,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            IterateVisualChild(listView);
             SaveUpdateSelection();
             MainWindow.NavService.GoBack();
         }
@@ -426,7 +454,6 @@ namespace SevenUpdate.Pages
             };
 
             var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
-
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
                 if (Admin.HideUpdate(hnh))
@@ -508,6 +535,17 @@ namespace SevenUpdate.Pages
                 expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Optional");
             else
                 expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Important");
+        }
+
+        private void checkBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (((bool)e.NewValue) == false)
+            {
+                CheckBox chkbox = sender as CheckBox;
+                chkbox.IsChecked = false;
+                chkbox.GetBindingExpression(ToggleButton.IsCheckedProperty).UpdateSource();
+                AreHiddenUpdates = true;
+            }
         }
 
         #endregion
