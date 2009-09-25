@@ -1086,7 +1086,6 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
         {
-            System.Threading.Thread.CurrentThread.Join(500);
             CheckForUpdates(true);
         }
 

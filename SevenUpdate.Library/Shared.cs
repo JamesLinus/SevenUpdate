@@ -463,6 +463,38 @@ namespace SevenUpdate
             return null;
         }
 
+        /// <summary>
+        /// DeSerializes an object
+        /// </summary>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="stream">The Stream to deserialize</param>
+        /// <returns>returns the object</returns>
+        public static T Deserialize<T>(Stream stream) where T : class
+        {
+            XmlSerializer s;
+            TextReader r = null;
+            try
+            {
+                s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                r = new StreamReader(stream);
+                var temp = (T)s.Deserialize(r);
+                r.Close();
+                return temp;
+            }
+            catch (Exception e)
+            {
+                if (SerializationErrorEventHandler != null)
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, "SUI file"));
+            }
+            finally
+            {
+                if (r != null)
+                    r.Close();
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Serialize Methods

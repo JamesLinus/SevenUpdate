@@ -430,7 +430,7 @@ namespace SevenUpdate.WCF
         internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
         {
             Shared.Serialize(hiddenUpdates, Shared.UserStore + "Hidden.suh");
-            if (LaunchAdmin("HideUpdates"))
+            if (LaunchAdmin("HideUpdates", true))
                 return true;
             File.Delete(Shared.UserStore + "Hidden.suh");
             return false;

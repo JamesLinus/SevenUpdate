@@ -184,43 +184,26 @@ namespace SevenUpdate
         /// <param name="apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(Collection<SUA> apps)
         {
-            // delete the temp directory housing the sui files
-            try
-            {
-                if (Directory.Exists(Shared.UserStore + "temp"))
-                    Directory.Delete(Shared.UserStore + "temp", true);
-
-                // create the temp directory for housing the sui files
-                Directory.CreateDirectory(Shared.UserStore + "temp");
-            }
-            catch {}
-
-            var web = new WebClient();
 
             var applications = new Collection<SUI>();
 
+            var hwr = (HttpWebRequest)WebRequest.Create(SEVENUPDATESUI);
+            HttpWebResponse response;
+
             try
             {
-                /// Downloads the Seven Update SUI
-                web.DownloadFile(SEVENUPDATESUI, Shared.UserStore + @"temp\Seven Update.sui");
+                response = (HttpWebResponse)hwr.GetResponse();
             }
             catch (WebException e)
             {
                 /// Server Error! If that happens then i am the only one to blame LOL
                 if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
-                return;
-            }
-
-            if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
-            {
-                // Call the Event with a Network Connection Error if no SUI's can be download, assuming a network error is the cause.
-                ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
                 return;
             }
 
             /// Load the Seven Update SUI
-            var app = Shared.Deserialize<SUI>(Shared.UserStore + @"temp\Seven Update.sui");
+            var app = Shared.Deserialize<SUI>(response.GetResponseStream());
 
             /// Checks to see if there are any updates for Seven Update
             if (app != null)
@@ -234,6 +217,9 @@ namespace SevenUpdate
                 {
                     if (apps != null)
                     {
+                        /// Gets the hidden updates from settings
+                        var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
+
                         /// If there are no updates for Seven Update, let's download and load the SUI's from the User config.
                         for (var x = 0; x < apps.Count; x++)
                         {
@@ -242,49 +228,35 @@ namespace SevenUpdate
                             try
                             {
                                 /// Download the SUI
-                                web.DownloadFile(apps[x].Source, Shared.UserStore + @"temp\" + apps[x].Name[0].Value + ".sui");
+                                hwr = (HttpWebRequest)WebRequest.Create(apps[x].Source);
+                                response = (HttpWebResponse)hwr.GetResponse();
+
+                                /// Loads a SUI that was downloaded
+                                app = Shared.Deserialize<SUI>(response.GetResponseStream());
+
+                                /// Check to see if any updates are avalible and exclude hidden updates
+                                /// If there is an update avaliable, add it.
+                                if (CheckForUpdates(ref app, hidden))
+                                {
+                                    applications.Add(app);
+                                }
+
                             }
                             catch (WebException e)
                             {
                                 /// Notify that there was an error that occurred.
-                                ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                                if (ErrorOccurredEventHandler != null)
+                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                             }
-                        }
-
-                        if (Directory.GetFiles(Shared.UserStore + "temp").Length == 0)
-                        {
-                            // Call the Event with a special code, meaning it was a Network Connection Error
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs("Network Connection Error", ErrorType.FatalNetworkError));
-                            return;
-                        }
-                        /// Delete the SUI, it's been loaded, no longer needed on filesystem
-                        File.Delete(Shared.UserStore + @"temp\Seven Update.sui");
-
-                        web.Dispose();
-
-                        /// Get the rest of the SUI's in the directory and load them
-                        var dir = new DirectoryInfo(Shared.UserStore + @"temp").GetFiles("*.sui", SearchOption.TopDirectoryOnly);
-
-                        /// Gets the hidden updates from settings
-                        var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
-
-                        for (var x = 0; x < dir.Length; x++)
-                        {
-                            /// Loads a SUI that was downloaded
-                            app = Shared.Deserialize<SUI>(dir[x].FullName);
-
-                            /// Check to see if any updates are avalible and exclude hidden updates
-                            /// If there is an update avaliable, add it.
-                            if (CheckForUpdates(ref app, hidden))
-                            {
-                                applications.Add(app);
+                            catch (Exception e)
+                            {                                /// Notify that there was an error that occurred.
+                                if (ErrorOccurredEventHandler != null)
+                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                             }
                         }
                     }
                 }
             }
-            /// Delete the temp directory, we are done with it.
-            Directory.Delete(Shared.UserStore + "temp", true);
 
             /// Search is complete!
             if (SearchDoneEventHandler != null)
