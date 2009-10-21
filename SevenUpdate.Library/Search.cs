@@ -198,7 +198,7 @@ namespace SevenUpdate
             {
                 /// Server Error! If that happens then i am the only one to blame LOL
                 if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
+                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
                 return;
             }
 
@@ -246,12 +246,12 @@ namespace SevenUpdate
                             {
                                 /// Notify that there was an error that occurred.
                                 if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.SearchError));
                             }
                             catch (Exception e)
                             {                                /// Notify that there was an error that occurred.
                                 if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.SearchError));
                             }
                         }
                     }
@@ -292,43 +292,12 @@ namespace SevenUpdate
         /// <summary>
         /// Occurs if an error occurred
         /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
+        public static event EventHandler<Shared.ErrorOccurredEventArgs> ErrorOccurredEventHandler;
 
         /// <summary>
         /// Occurs when the searching of updates has completed.
         /// </summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchDoneEventHandler;
-
-        #region Nested type: ErrorOccurredEventArgs
-
-        /// <summary>
-        /// Provides event data for the ErrorOccurred event
-        /// </summary>
-        public class ErrorOccurredEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="description">The description of the error</param>
-            /// <param name="type">The <see cref="ErrorType"/> of error that occurred</param>
-            public ErrorOccurredEventArgs(string description, ErrorType type)
-            {
-                Description = description;
-                Type = type;
-            }
-
-            /// <summary>
-            /// A string describing the error
-            /// </summary>
-            public string Description { get; private set; }
-
-            /// <summary>
-            /// The <see cref="ErrorType"/> of the error that occurred
-            /// </summary>
-            public ErrorType Type { get; private set; }
-        }
-
-        #endregion
 
         #region Nested type: SearchCompletedEventArgs
 

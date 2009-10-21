@@ -18,7 +18,7 @@
             <ProgressBar Height="15" IsIndeterminate="True" Name="pbProgressBar" VerticalAlignment="Top" Visibility="Collapsed" HorizontalAlignment="Left" Width="250"
                     Margin="0,5,0,0" />
             <TextBlock Name="tbStatus" Padding="5" Text="No new updates are avaliable for your programs" Visibility="Visible" MaxWidth="400" MinWidth="350"
-                    HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" />
         </StackPanel>
 
         <TextBlock FontSize="16" Foreground="#FF003399" Name="tbHeading" Text="Your programs are up to date" VerticalAlignment="Top" Grid.Column="2" Margin="0,15,2.46,0" />

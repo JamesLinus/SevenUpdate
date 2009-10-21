@@ -166,7 +166,7 @@
     <value>Download updates but let me choose whether to install them (Recommended)</value>
   </data>
   <data name="ErrorOccurred" xml:space="preserve">
-    <value>An error occurred while installing updates.</value>
+    <value>An error occurred while searching, downloading, or installing updates.</value>
   </data>
   <data name="ExitConfirm" xml:space="preserve">
     <value>Are you sure you would like to exit?</value>

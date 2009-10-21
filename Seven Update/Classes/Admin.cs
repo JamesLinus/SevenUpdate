@@ -48,7 +48,7 @@ namespace SevenUpdate.WCF
         {
             if (ErrorOccurredEventHandler == null)
                 return;
-            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(exception, type));
+            ErrorOccurredEventHandler(this, new Shared.ErrorOccurredEventArgs(exception, type));
         }
 
         /// <summary>
@@ -159,33 +159,6 @@ namespace SevenUpdate.WCF
 
         #region Nested type: ErrorOccurredEventArgs
 
-        /// <summary>
-        /// Provides event data for the ErrorOccurred event
-        /// </summary>
-        public class ErrorOccurredEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="exception">the exception that occurred</param>
-            /// <param name="type">the type of error that occurred</param>
-            public ErrorOccurredEventArgs(Exception exception, ErrorType type)
-            {
-                Exception = exception;
-                Type = type;
-            }
-
-            /// <summary>
-            /// Gets the Exception information of the error that occurred
-            /// </summary>
-            public Exception Exception { get; private set; }
-
-            /// <summary>
-            /// Gets the <see cref="ErrorType"/> of the error that occurred
-            /// </summary>
-            public ErrorType Type { get; private set; }
-        }
-
         #endregion
 
         #region Nested type: InstallCompletedEventArgs
@@ -269,7 +242,7 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Occurs when an error has occurred when downloading or installing updates
         /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
+        public static event EventHandler<Shared.ErrorOccurredEventArgs> ErrorOccurredEventHandler;
 
         /// <summary>
         /// Occurs when the installation completed.

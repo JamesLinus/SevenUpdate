@@ -68,7 +68,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// 
+        /// Invokes a Method to run on the UI thread
         /// </summary>
         /// <typeparam name="T1">a parameter type</typeparam>
         /// <typeparam name="T2">a parameter type</typeparam>
@@ -82,7 +82,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// 
+        /// Invokes a Method to run on the UI thread
         /// </summary>
         /// <typeparam name="T1">a parameter type</typeparam>
         /// <typeparam name="T2">a parameter type</typeparam>

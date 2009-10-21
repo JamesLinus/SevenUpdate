@@ -304,7 +304,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when an error occurs
         /// </summary>
-        private void ErrorOccurredEventHandler(object sender, AdminCallBack.ErrorOccurredEventArgs e)
+        private void ErrorOccurredEventHandler(object sender, Shared.ErrorOccurredEventArgs e)
         {
             switch (e.Type)
             {
@@ -522,6 +522,7 @@ namespace SevenUpdate.Pages
             infoBar.tbViewImportantUpdates.MouseDown += tbViewImportantUpdates_MouseDown;
             infoBar.tbViewOptionalUpdates.MouseDown += tbViewOptionalUpdates_MouseDown;
             Search.SearchDoneEventHandler += SearchCompletedEventHandler;
+            Search.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
             AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChangedEventHandler;
             AdminCallBack.DownloadDoneEventHandler += DownloadCompletedEventHandler;
             AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChangedEventHandler;
