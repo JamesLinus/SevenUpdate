@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -25,13 +25,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
 using SevenUpdate.WCF;
-using File=System.IO.File;
+using File = System.IO.File;
 
 #endregion
 
@@ -55,11 +56,6 @@ namespace SevenUpdate
         private static int installProgress;
 
         /// <summary>
-        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
-        /// </summary>
-        internal static bool Abort { get; set; }
-
-        /// <summary>
         /// Moves or deletes a file on reboot
         /// </summary>
         /// <param name="lpExistingFileName">The source filename</param>
@@ -73,9 +69,7 @@ namespace SevenUpdate
 
         #region Update Installation
 
-        /// <summary>
-        /// Installs updates
-        /// </summary>
+        /// <summary>Installs updates</summary>
         internal static void InstallUpdates(Collection<SUI> applications)
         {
             if (applications == null)
@@ -98,14 +92,13 @@ namespace SevenUpdate
 
             #region variables
 
-            int currentUpdate = 0, totalUpdates = 0, completedUpdates = 0, failedUpdates = 0;
+            int currentUpdate = 0, completedUpdates = 0, failedUpdates = 0;
             var errorOccurred = false;
             string currentUpdateTitle = null;
 
             #endregion
 
-            for (var x = 0; x < applications.Count; x++)
-                totalUpdates += applications[x].Updates.Count;
+            int totalUpdates = applications.Sum(t => t.Updates.Count);
 
             #region Report Progress
 
@@ -122,7 +115,7 @@ namespace SevenUpdate
             {
                 for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
-                    if (Abort)
+                    if (App.Abort)
                         Environment.Exit(0);
 
                     currentUpdateTitle = Shared.GetLocaleString(applications[x].Updates[y].Name);
@@ -134,7 +127,8 @@ namespace SevenUpdate
                     if (EventService.InstallProgressChanged != null && App.IsClientConnected)
                         EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
                     if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                                   App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
 
                     #endregion
 
@@ -153,14 +147,15 @@ namespace SevenUpdate
                     if (EventService.InstallProgressChanged != null && App.IsClientConnected)
                         EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
                     if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                                   App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
 
                     #endregion
 
                     #region Files
 
-                    errorOccurred = UpdateFiles(applications[x].Updates[y].Files, Shared.AllUserStore + @"downloads\" + currentUpdateTitle + @"\", applications[x].Directory, applications[x].Is64Bit,
-                                                currentUpdateTitle, currentUpdate, totalUpdates);
+                    errorOccurred = UpdateFiles(applications[x].Updates[y].Files, Shared.AllUserStore + @"downloads\" + currentUpdateTitle + @"\", applications[x].Directory,
+                                                applications[x].Is64Bit, currentUpdateTitle, currentUpdate, totalUpdates);
 
                     #endregion
 
@@ -177,7 +172,8 @@ namespace SevenUpdate
                     if (EventService.InstallProgressChanged != null && App.IsClientConnected)
                         EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
                     if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                                   App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
 
                     #endregion
 
@@ -198,7 +194,9 @@ namespace SevenUpdate
                     {
                         for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                         {
-                            if (applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete && applications[x].Updates[y].Files[z].Action != FileAction.Delete) {}
+                            if (applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete && applications[x].Updates[y].Files[z].Action != FileAction.Delete)
+                            {
+                            }
                             else
                             {
                                 try
@@ -207,7 +205,8 @@ namespace SevenUpdate
                                 }
                                 catch (Exception)
                                 {
-                                    MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null, MOVEONREBOOT);
+                                    MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null,
+                                               MOVEONREBOOT);
                                 }
                             }
                         }
@@ -238,7 +237,8 @@ namespace SevenUpdate
                     if (EventService.InstallProgressChanged != null && App.IsClientConnected)
                         EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
                     if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                                   App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
 
                     #endregion
 
@@ -275,11 +275,14 @@ namespace SevenUpdate
                         {
                             Directory.Delete(Shared.AllUserStore + "downloads", true);
                         }
-                        catch (Exception) {}
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
             }
-            EventService.InstallCompleted(completedUpdates, failedUpdates);
+            if (EventService.InstallCompleted != null)
+                EventService.InstallCompleted(completedUpdates, failedUpdates);
 
             Environment.Exit(0);
         }
@@ -390,7 +393,6 @@ namespace SevenUpdate
             if (update.Shortcuts == null)
                 return;
             var ws = new WshShell();
-            IWshShortcut shortcut;
             // Choose the path for the shortcut
             foreach (var link in update.Shortcuts)
             {
@@ -398,7 +400,7 @@ namespace SevenUpdate
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(Shared.ConvertPath(link.Location, true, is64Bit)));
                     File.Delete(Shared.ConvertPath(link.Location, true, is64Bit));
-                    shortcut = (IWshShortcut) ws.CreateShortcut(Shared.ConvertPath(link.Location, true, is64Bit));
+                    var shortcut = (IWshShortcut) ws.CreateShortcut(Shared.ConvertPath(link.Location, true, is64Bit));
                     // Where the shortcut should point to
                     shortcut.TargetPath = Shared.ConvertPath(link.Target, applicationDirectory, is64Bit);
                     // Description for the shortcut
@@ -427,11 +429,12 @@ namespace SevenUpdate
         /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
         /// <param name="appDirectory">the application directory</param>
         /// <param name="is64Bit">Indicates if an application is 64-bit, <c>true</c> if 64-bit, otherwise <c>false</c></param>
-        /// <param name="currentUpdateTitle">the name of the current update</param>
+        /// <param name="currentUpdateTitle">the name of the current update </param>
         /// <param name="currentUpdate">the index of the current update in relation to the total number of updates</param>
         /// <param name="totalUpdates">the total number of updates to install</param>
         /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
-        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory, string appDirectory, bool is64Bit, string currentUpdateTitle, int currentUpdate, int totalUpdates)
+        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory, string appDirectory, bool is64Bit, string currentUpdateTitle, int currentUpdate,
+                                        int totalUpdates)
         {
             var error = false;
             for (var x = 0; x < files.Count; x++)
@@ -552,7 +555,8 @@ namespace SevenUpdate
                 if (EventService.InstallProgressChanged != null && App.IsClientConnected)
                     EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
                 if (App.NotifyIcon != null)
-                    Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                    Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                               App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
 
                 #endregion
             }
@@ -568,8 +572,8 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="updateInfo">the update information</param>
         /// <param name="failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
-        /// <param name="appInfo">the application information</param>
-        private static void AddHistory(SUI appInfo, Update updateInfo, bool failed)
+        /// <param name="appInfo"> the application information</param>
+        private static void AddHistory(SUI appInfo, Update updateInfo, bool failed = false)
         {
             var history = Shared.Deserialize<Collection<SUH>>(Shared.HistoryFile) ?? new Collection<SUH>();
             var hist = new SUH
@@ -590,16 +594,6 @@ namespace SevenUpdate
             history.Add(hist);
 
             Shared.Serialize(history, Shared.HistoryFile);
-        }
-
-        /// <summary>
-        /// Adds an update to the update history
-        /// </summary>
-        /// <param name="app">the application info</param>
-        /// <param name="info">the update to add</param>
-        private static void AddHistory(SUI app, Update info)
-        {
-            AddHistory(app, info, false);
         }
 
         #endregion

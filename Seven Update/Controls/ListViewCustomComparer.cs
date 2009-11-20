@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -40,7 +40,7 @@ namespace SevenUpdate.Controls
 
 
         /// <summary>
-        /// Adds a column to the <see cref="SortColumns"/>
+        /// Adds a column to the <see cref="SortColumns" />
         /// </summary>
         /// <param name="sortColumn">a string representing a column to be sorted</param>
         /// <param name="direction">the direction to sort</param>
@@ -80,21 +80,12 @@ namespace SevenUpdate.Controls
         #region Implementation of IComparer
 
         /// <summary>
-        /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the
-        /// other.
+        /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        /// <returns>
-        /// Value  Condition  Less than zero 
-        /// <paramref name="x"/> is less than <paramref name="y"/>.  Zero 
-        /// <paramref name="x"/> equals <paramref name="y"/>.  Greater than zero 
-        /// <paramref name="x"/> is greater than <paramref name="y"/>. 
-        /// </returns>
-        /// <param name="x">The first object to compare. 
-        /// </param><param name="y">The second object to compare. 
-        /// </param><exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor 
-        /// <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface. -or- 
-        ///  <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
-        /// </exception><filterpriority>2</filterpriority>
+        /// <returns>Value  Condition  Less than zero<paramref name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />.
+        /// Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
+        /// <param name="x">The first object to compare.</param>
+        /// <param name="y">The second object to compare.</param>
         public abstract int Compare(object x, object y);
 
         #endregion

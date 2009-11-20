@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -34,43 +34,29 @@ using Microsoft.Win32;
 using SevenUpdate.Properties;
 using SevenUpdate.WCF;
 using SharpBits.Base;
-using Application=System.Windows.Application;
+using Application = System.Windows.Application;
 
 #endregion
 
 namespace SevenUpdate
 {
-    /// <summary>
-    /// The main class of the application
-    /// </summary>
+    /// <summary>The main class of the application</summary>
     internal class App
     {
         #region Enums
 
-        /// <summary>
-        /// Defines constants for the notification type, such has SearchComplete
-        /// </summary>
+        /// <summary>Defines constants for the notification type, such has SearchComplete</summary>
         internal enum NotifyType
         {
-            /// <summary>
-            /// Indicates searching is completed
-            /// </summary>
+            /// <summary>Indicates searching is completed</summary>
             SearchComplete,
-            /// <summary>
-            /// Indicates the downloading of updates has started
-            /// </summary>
+            /// <summary>Indicates the downloading of updates has started</summary>
             DownloadStarted,
-            /// <summary>
-            /// Indicates download has completed
-            /// </summary>
+            /// <summary>Indicates download has completed</summary>
             DownloadComplete,
-            /// <summary>
-            /// Indicates that the installation of updates has begun
-            /// </summary>
+            /// <summary>Indicates that the installation of updates has begun</summary>
             InstallStarted,
-            /// <summary>
-            /// Indicates Install has completed
-            /// </summary>
+            /// <summary>Indicates Install has completed</summary>
             InstallComplete
         }
 
@@ -79,35 +65,25 @@ namespace SevenUpdate
         #region Global Vars
 
         /// <summary>
-        /// The notifyIcon used only when Auto Updating
+        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
         /// </summary>
+        internal static bool Abort { get; set; }
+
+        /// <summary>The notifyIcon used only when Auto Updating</summary>
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
-        /// <summary>
-        /// The UI Resource Strings
-        /// </summary>
+        /// <summary>The UI Resource Strings</summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
 
-        /// <summary>
-        /// The update settings for Seven Update
-        /// </summary>
+        /// <summary>The update settings for Seven Update</summary>
         public static Config Settings { get { return Shared.DeserializeStruct<Config>(Shared.ConfigFile); } }
 
-        /// <summary>
-        /// Gets or sets a bool value indicating Seven Update UI is currently connected.
-        /// </summary>
+        /// <summary>Gets or sets a bool value indicating Seven Update UI is currently connected.</summary>
         internal static bool IsClientConnected { get; set; }
-
-        /// <summary>
-        /// Gets or sets a 
-        /// </summary>
-        internal static bool IsInstallAborted { get; set; }
 
         #endregion
 
-        /// <summary>
-        /// The main execution path
-        /// </summary>
+        /// <summary>The main execution path</summary>
         /// <param name="args">A string[] of command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
@@ -117,7 +93,7 @@ namespace SevenUpdate
             {
                 ServiceHost host = null;
                 try
-                { 
+                {
                     if (createdNew)
                     {
                         host = new ServiceHost(typeof (EventService));
@@ -265,9 +241,7 @@ namespace SevenUpdate
 
                                 #region code
 
-                                var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
-                                if (hidden == null)
-                                    hidden = new Collection<SUH>();
+                                var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile) ?? new Collection<SUH>();
                                 hidden.Add(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
                                 File.Delete(Shared.UserStore + "Update.suh");
@@ -283,9 +257,7 @@ namespace SevenUpdate
 
                                 #region code
 
-                                var show = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
-                                if (show == null)
-                                    show = new Collection<SUH>();
+                                var show = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile) ?? new Collection<SUH>();
                                 show.Remove(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
 
                                 File.Delete(Shared.UserStore + "Update.suh");
@@ -367,9 +339,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// Updates the notify icon text
-        /// </summary>
+        /// <summary>Updates the notify icon text</summary>
         /// <param name="text">The string to set the notifyIcon text</param>
         internal static void UpdateNotifyIcon(string text)
         {
@@ -379,7 +349,7 @@ namespace SevenUpdate
         /// <summary>
         /// Updates the notifyIcon state
         /// </summary>
-        /// <param name="filter">The <see cref="NotifyType"/> to set the notifyIcon to.</param>
+        /// <param name="filter">The <see cref="NotifyType" /> to set the notifyIcon to.</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
             if (!NotifyIcon.Visible)
@@ -393,9 +363,7 @@ namespace SevenUpdate
                     NotifyIcon.BalloonTipClicked += RunSevenUpdate;
                     NotifyIcon.Click += RunSevenUpdate;
                     NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), // ReSharper disable AssignNullToNotNullAttribute
-                                              RM.GetString("UpdatesDownloadedViewThem"), ToolTipIcon.Info);
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), ToolTipIcon.Info);
                     break;
                 case NotifyType.InstallStarted:
                     NotifyIcon.Text = RM.GetString("InstallingUpdates") + "...";
@@ -404,16 +372,12 @@ namespace SevenUpdate
                     NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
                     NotifyIcon.BalloonTipClicked += RunSevenUpdate;
                     NotifyIcon.Click += RunSevenUpdate;
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), // ReSharper disable AssignNullToNotNullAttribute
-                                              RM.GetString("UpdatesFoundViewThem"), ToolTipIcon.Info);
-                    // ReSharper restore AssignNullToNotNullAttribute
+                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), ToolTipIcon.Info);
                     break;
             }
         }
 
-        /// <summary>
-        /// Starts Seven Update UI
-        /// </summary>
+        /// <summary>Starts Seven Update UI</summary>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             var proc = new Process();
@@ -445,9 +409,7 @@ namespace SevenUpdate
 
         #region Security
 
-        /// <summary>
-        /// Sets the ACLS of a file, removes the current user and sets the owner as the Administrators group
-        /// </summary>
+        /// <summary>Sets the ACLS of a file, removes the current user and sets the owner as the Administrators group</summary>
         /// <param name="file">The complete path to the file</param>
         internal static void SetFileSecurity(string file)
         {
@@ -467,7 +429,9 @@ namespace SevenUpdate
 
                     fs.AddAccessRule(new FileSystemAccessRule(users, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
                 }
-                catch {}
+                catch (Exception)
+                {
+                }
 
                 fs.PurgeAccessRules(user);
 
@@ -475,9 +439,13 @@ namespace SevenUpdate
                 {
                     File.SetAccessControl(file, fs);
                 }
-                catch {}
+                catch (Exception)
+                {
+                }
             }
-            catch {}
+            catch (Exception)
+            {
+            }
         }
 
         #endregion
@@ -486,45 +454,35 @@ namespace SevenUpdate
 
         #region Event Methods
 
-        /// <summary>
-        /// Prevents the system from shutting down until the installation is safely stopped
-        /// </summary>
+        /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            Install.Abort = true;
+            Abort = true;
             e.Cancel = true;
         }
 
-        /// <summary>
-        /// Occurs when Seven Update UI connects to the admin process
-        /// </summary>
+        /// <summary>Occurs when Seven Update UI connects to the admin process</summary>
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
             Download.DownloadUpdates(Shared.Deserialize<Collection<SUI>>(Shared.UserStore + "Apps.sui"), JobPriority.ForeGround);
         }
 
-        /// <summary>
-        /// Occurs when the Seven Update UI disconnected
-        /// </summary>
+        /// <summary>Occurs when the Seven Update UI disconnected</summary>
         private static void EventService_ClientDisconnected()
         {
             IsClientConnected = false;
-            IsInstallAborted = true;
+            Abort = true;
         }
 
-        /// <summary>
-        /// Error Event when the .NetPipe binding faults
-        /// </summary>
+        /// <summary>Error Event when the .NetPipe binding faults</summary>
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
             Shared.ReportError("Host Fault", Shared.AllUserStore);
         }
 
-        /// <summary>
-        /// Runs when the search for updates has completed for an auto update
-        /// </summary>
+        /// <summary>Runs when the search for updates has completed for an auto update</summary>
         private static void Search_SearchDoneEventHandler(object sender, Search.SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)

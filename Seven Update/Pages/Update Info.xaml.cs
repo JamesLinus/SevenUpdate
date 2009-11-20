@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -59,7 +59,7 @@ namespace SevenUpdate.Pages
             internal int AppIndex { get; set; }
 
             /// <summary>
-            ///  Gets or Sets the position of the update information within the Application information of an update
+            /// Gets or Sets the position of the update information within the Application information of an update
             /// </summary>
             internal int UpdateIndex { get; set; }
         }
@@ -67,20 +67,11 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region Global Vars
-        /// <summary>
-        /// Gets or Sets a value indicating if one or more updates were hidden
-        /// </summary>
-        private bool AreHiddenUpdates { get; set; }
 
         /// <summary>
         /// Gets an image of a blue arrow
         /// </summary>
         private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
-
-        /// <summary>
-        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
-        /// </summary>
-        internal static bool DisplayOptionalUpdates { get; set; }
 
         /// <summary>
         /// Gets an image of a green arrow
@@ -91,6 +82,16 @@ namespace SevenUpdate.Pages
         /// Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<Indices> indices;
+
+        /// <summary>
+        /// Gets or Sets a value indicating if one or more updates were hidden
+        /// </summary>
+        private bool AreHiddenUpdates { get; set; }
+
+        /// <summary>
+        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
+        /// </summary>
+        internal static bool DisplayOptionalUpdates { get; set; }
 
         #endregion
 
@@ -169,9 +170,9 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        /// Loops through the <see cref="ListView"/> and updates the source when the update selection has been saved
+        /// Loops through the <see cref="ListView" /> and updates the source when the update selection has been saved
         /// </summary>
-        /// <param name="element">The <see cref="DependencyObject"/></param>
+        /// <param name="element">The <see cref="DependencyObject" /></param>
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -205,9 +206,9 @@ namespace SevenUpdate.Pages
                 for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
                     updIndex++;
-                    var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.Items[updIndex]);
+                    var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.Items[updIndex]);
                     if (item.Tag != null)
-                        if (!(bool)item.Tag)
+                        if (!(bool) item.Tag)
                         {
                             App.Applications[x].Updates.RemoveAt(y);
                             y--;
@@ -274,10 +275,10 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            var items = new Binding { Source = selectedUpdates };
+            var items = new Binding {Source = selectedUpdates};
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
-            var myView = (CollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var myView = (CollectionView) CollectionViewSource.GetDefaultView(listView.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
             myView.GroupDescriptions.Add(groupDescription);
 
@@ -285,11 +286,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView)listView.View;
+            var gv = (GridView) listView.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -366,20 +367,20 @@ namespace SevenUpdate.Pages
         #region TextBlocks
 
         /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
+        /// Underlines the text when mouse is over the <see cref="TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
         }
 
@@ -392,7 +393,9 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(tbUrlInfo.Tag.ToString());
             }
-            catch { }
+            catch (Exception)
+            {
+            }
         }
 
         /// <summary>
@@ -404,7 +407,9 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(tbUrlHelp.Tag.ToString());
             }
-            catch { }
+            catch (Exception)
+            {
+            }
         }
 
         #endregion
@@ -420,7 +425,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// Updates the <see cref="CollectionView" /> when the <c>updateHistory</c> collection changes
         /// </summary>
         private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -440,20 +445,20 @@ namespace SevenUpdate.Pages
             var appIndex = indices[listView.SelectedIndex].AppIndex;
 
             var hnh = new SUH
-            {
-                HelpUrl = App.Applications[appIndex].HelpUrl,
-                InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
-                Publisher = App.Applications[appIndex].Publisher,
-                PublisherUrl = App.Applications[appIndex].PublisherUrl,
-                ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
-                Status = UpdateStatus.Hidden,
-                Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
-                Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
-                Description = App.Applications[appIndex].Updates[updateIndex].Description,
-                Name = App.Applications[appIndex].Updates[updateIndex].Name
-            };
+                          {
+                              HelpUrl = App.Applications[appIndex].HelpUrl,
+                              InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
+                              Publisher = App.Applications[appIndex].Publisher,
+                              PublisherUrl = App.Applications[appIndex].PublisherUrl,
+                              ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
+                              Status = UpdateStatus.Hidden,
+                              Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
+                              Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
+                              Description = App.Applications[appIndex].Updates[updateIndex].Description,
+                              Name = App.Applications[appIndex].Updates[updateIndex].Name
+                          };
 
-            var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+            var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
                 if (Admin.HideUpdate(hnh))
@@ -502,10 +507,10 @@ namespace SevenUpdate.Pages
                     tbUrlInfo.Visibility = Visibility.Visible;
                     tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 }
-                var item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+                var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
 
                 if (item.Tag != null)
-                    cmiHideUpdate.Header = ((bool)item.Tag) ? App.RM.GetString("HideUpdate") : App.RM.GetString("ShowUpdate");
+                    cmiHideUpdate.Header = ((bool) item.Tag) ? App.RM.GetString("HideUpdate") : App.RM.GetString("ShowUpdate");
                 else
                     cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
 
@@ -539,9 +544,9 @@ namespace SevenUpdate.Pages
 
         private void checkBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (((bool)e.NewValue) == false)
+            if (((bool) e.NewValue) == false)
             {
-                CheckBox chkbox = sender as CheckBox;
+                var chkbox = sender as CheckBox;
                 chkbox.IsChecked = false;
                 chkbox.GetBindingExpression(ToggleButton.IsCheckedProperty).UpdateSource();
                 AreHiddenUpdates = true;

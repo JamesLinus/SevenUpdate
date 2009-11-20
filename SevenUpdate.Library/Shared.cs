@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
@@ -122,10 +123,9 @@ namespace SevenUpdate
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
-            for (var x = 0; x < localeStrings.Count; x++)
+            foreach (LocaleString t in localeStrings.Where(t => t.Lang == Locale))
             {
-                if (localeStrings[x].Lang == Locale)
-                    return localeStrings[x].Value;
+                return t.Value;
             }
             return localeStrings[0].Value;
         }
@@ -407,7 +407,7 @@ namespace SevenUpdate
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                     r = new StreamReader(xmlFile);
                     var temp = (T) s.Deserialize(r);
                     r.Close();
@@ -475,9 +475,9 @@ namespace SevenUpdate
             TextReader r = null;
             try
             {
-                s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                 r = new StreamReader(stream);
-                var temp = (T)s.Deserialize(r);
+                var temp = (T) s.Deserialize(r);
                 r.Close();
                 return temp;
             }
@@ -549,7 +549,7 @@ namespace SevenUpdate
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
                 ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof(T), "http://sevenupdate.sourceforge.net");
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {
@@ -578,32 +578,7 @@ namespace SevenUpdate
         /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
 
-        /// <summary>
-        /// Provides event data for the SerializationError event
-        /// </summary>
-        public class SerializationErrorEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="e">The exception data</param>
-            /// <param name="file">The full path of the file</param>
-            public SerializationErrorEventArgs(Exception e, string file)
-            {
-                Exception = e;
-                File = file;
-            }
-
-            /// <summary>
-            /// Gets the exception data
-            /// </summary>
-            public Exception Exception { get; private set; }
-
-            /// <summary>
-            /// Gets the full path of the file
-            /// </summary>
-            public string File { get; private set; }
-        }
+        #region Nested type: ErrorOccurredEventArgs
 
         /// <summary>
         /// Provides event data for the ErrorOccurred event
@@ -631,6 +606,39 @@ namespace SevenUpdate
             /// </summary>
             public ErrorType Type { get; private set; }
         }
+
+        #endregion
+
+        #region Nested type: SerializationErrorEventArgs
+
+        /// <summary>
+        /// Provides event data for the SerializationError event
+        /// </summary>
+        public class SerializationErrorEventArgs : EventArgs
+        {
+            /// <summary>
+            /// Contains event data associated with this event
+            /// </summary>
+            /// <param name="e">The exception data</param>
+            /// <param name="file">The full path of the file</param>
+            public SerializationErrorEventArgs(Exception e, string file)
+            {
+                Exception = e;
+                File = file;
+            }
+
+            /// <summary>
+            /// Gets the exception data
+            /// </summary>
+            public Exception Exception { get; private set; }
+
+            /// <summary>
+            /// Gets the full path of the file
+            /// </summary>
+            public string File { get; private set; }
+        }
+
+        #endregion
 
         #endregion
     }

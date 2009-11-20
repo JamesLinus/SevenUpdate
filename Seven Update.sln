@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seven Update", "Seven Update\Seven Update.csproj", "{2E657E42-F85A-49C4-AB26-8EC9488B8BCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seven Update.Admin", "Seven Update.Admin\Seven Update.Admin.csproj", "{762D246E-1DF7-4C49-8169-413AD897F8BD}"

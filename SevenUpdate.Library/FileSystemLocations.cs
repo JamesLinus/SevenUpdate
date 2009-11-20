@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,15 +12,19 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
+
+#region
 
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+
+#endregion
 
 namespace SevenUpdate
 {
@@ -32,8 +36,6 @@ namespace SevenUpdate
         /// <returns>a string of the path with expanded system variables</returns>
         [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
         internal static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
-
-        // ReSharper restore InconsistentNaming
     }
 
     /// <summary>
@@ -82,7 +84,7 @@ namespace SevenUpdate
         public const int CSIDL_COMMON_APPDATA = 0x0023;
 
         /// <summary>
-        ///  %ALLUSERS%\Desktop
+        /// %ALLUSERS%\Desktop
         /// </summary>
         public const int CSIDL_COMMON_DESKTOPDIRECTORY = 0x0019;
 
@@ -91,9 +93,7 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_COMMON_DOCUMENTS = 0x002e;
 
-        /// <summary>
-        /// 
-        /// </summary>
+        /// <summary></summary>
         public const int CSIDL_COMMON_FAVORITES = 0x001f;
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace SevenUpdate
         public const int CSIDL_COMMON_VIDEO = 0x0037;
 
         /// <summary>
-        ///  Computers Near Me (computers from Work group membership)
+        /// Computers Near Me (computers from Work group membership)
         /// </summary>
         public const int CSIDL_COMPUTERSNEARME = 0x003d;
 
@@ -146,23 +146,19 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_CONTROLS = 0x0003;
 
-        /// <summary>
-        /// %DESKTOP%
-        /// </summary>
+        /// <summary>%DESKTOP%</summary>
         public const int CSIDL_DESKTOP = 0x0000;
 
         /// <summary>
-        ///  %USERNAME%\Desktop
+        /// %USERNAME%\Desktop
         /// </summary>
         public const int CSIDL_DESKTOPDIRECTORY = 0x0010;
 
-        /// <summary>
-        /// My Computer
-        /// </summary>
+        /// <summary>My Computer</summary>
         public const int CSIDL_DRIVES = 0x0011;
 
         /// <summary>
-        ///  %USERNAME%\Favorites
+        /// %USERNAME%\Favorites
         /// </summary>
         public const int CSIDL_FAVORITES = 0x0006;
 
@@ -174,10 +170,10 @@ namespace SevenUpdate
         /// <summary>
         /// combine with CSIDL_ value to avoid un-expanding environment variables
         /// </summary>
-        /// <summary>
         public const int CSIDL_FLAG_DONT_UNEXPAND = 0x2000;
 
-        ///  combine with CSIDL_ value to return an unverified folder path
+        /// <summary>
+        /// combine with CSIDL_ value to return an unverified folder path
         /// </summary>
         public const int CSIDL_FLAG_DONT_VERIFY = 0x4000;
 
@@ -191,9 +187,7 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_FLAG_PER_USER_INIT = 0x0800;
 
-        /// <summary>
-        /// windows\fonts
-        /// </summary>
+        /// <summary>windows\fonts</summary>
         public const int CSIDL_FONTS = 0x0014;
 
         /// <summary>
@@ -201,9 +195,7 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_INTERNET = 0x0001;
 
-        /// <summary>
-        /// %tmp%
-        /// </summary>
+        /// <summary>%tmp%</summary>
         public const int CSIDL_INTERNET_CACHE = 0x0020;
 
         /// <summary>
@@ -212,7 +204,7 @@ namespace SevenUpdate
         public const int CSIDL_LOCAL_APPDATA = 0x001c;
 
         /// <summary>
-        ///  Personal was just a silly name for My Documents
+        /// Personal was just a silly name for My Documents
         /// </summary>
         public const int CSIDL_MYDOCUMENTS = CSIDL_PERSONAL;
 
@@ -256,14 +248,10 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_PRINTHOOD = 0x001b;
 
-        /// <summary>
-        /// %USERPROFILE%
-        /// </summary>
+        /// <summary>%USERPROFILE%</summary>
         public const int CSIDL_PROFILE = 0x0028;
 
-        /// <summary>
-        /// %PROGRAMFILES%
-        /// </summary>
+        /// <summary>%PROGRAMFILES%</summary>
         public const int CSIDL_PROGRAM_FILES = 0x0026;
 
         /// <summary>
@@ -307,7 +295,7 @@ namespace SevenUpdate
         public const int CSIDL_STARTUP = 0x0007;
 
         /// <summary>
-        ///  GetSystemDirectory()
+        /// GetSystemDirectory()
         /// </summary>
         public const int CSIDL_SYSTEM = 0x0025;
 
@@ -321,9 +309,7 @@ namespace SevenUpdate
         /// </summary>
         public const int CSIDL_TEMPLATES = 0x0015;
 
-        /// <summary>
-        /// %WINDOWS%
-        /// </summary>
+        /// <summary>%WINDOWS%</summary>
         public const int CSIDL_WINDOWS = 0x0024;
     }
 }

@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -30,14 +30,14 @@ using System.Windows.Controls.Primitives;
 namespace SevenUpdate.Controls
 {
     /// <summary>
-    /// Contains methods that extend the <see cref="ListView"/> control
+    /// Contains methods that extend the <see cref="ListView" /> control
     /// </summary>
     internal static class ListViewExtensions
     {
         /// <summary>
-        /// Limits resizing of a <see cref="GridViewColumn"/>
+        /// Limits resizing of a <see cref="GridViewColumn" />
         /// </summary>
-        /// <param name="e">The Thumb object of the <see cref="GridViewColumn"/> to limit it's size</param>
+        /// <param name="e">The Thumb object of the <see cref="GridViewColumn" /> to limit it's size</param>
         internal static void LimitColumnSize(Thumb e)
         {
             var senderAsThumb = e;
@@ -107,21 +107,12 @@ namespace SevenUpdate.Controls
         internal class SUASorter : ListViewCustomComparer
         {
             /// <summary>
-            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the
-            /// other.
+            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>
-            /// Value  Condition  Less than zero 
-            /// <paramref name="x"/> is less than <paramref name="y"/>.  Zero 
-            /// <paramref name="x"/> equals <paramref name="y"/>.  Greater than zero 
-            /// <paramref name="x"/> is greater than <paramref name="y"/>. 
-            /// </returns>
-            /// <param name="x">The first object to compare. 
-            /// </param><param name="y">The second object to compare. 
-            /// </param><exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor 
-            /// <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface. -or- 
-            ///  <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
-            /// </exception><filterpriority>2</filterpriority>
+            /// <returns>Value  Condition  Less than zero<paramref name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />.
+            /// Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
+            /// <param name="x">The first object to compare.</param>
+            /// <param name="y">The second object to compare.</param>
             public override int Compare(object x, object y)
             {
                 try
@@ -182,21 +173,12 @@ namespace SevenUpdate.Controls
         internal class SUHSorter : ListViewCustomComparer
         {
             /// <summary>
-            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the
-            /// other.
+            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>
-            /// Value  Condition  Less than zero 
-            /// <paramref name="x"/> is less than <paramref name="y"/>.  Zero 
-            /// <paramref name="x"/> equals <paramref name="y"/>.  Greater than zero 
-            /// <paramref name="x"/> is greater than <paramref name="y"/>. 
-            /// </returns>
-            /// <param name="x">The first object to compare. 
-            /// </param><param name="y">The second object to compare. 
-            /// </param><exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor 
-            /// <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface. -or- 
-            ///  <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
-            /// </exception><filterpriority>2</filterpriority>
+            /// <returns>Value  Condition  Less than zero<paramref name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />.
+            /// Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
+            /// <param name="x">The first object to compare.</param>
+            /// <param name="y">The second object to compare.</param>
             public override int Compare(object x, object y)
             {
                 try
@@ -274,21 +256,12 @@ namespace SevenUpdate.Controls
         internal class UpdateSorter : ListViewCustomComparer
         {
             /// <summary>
-            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the
-            /// other.
+            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>
-            /// Value  Condition  Less than zero 
-            /// <paramref name="x"/> is less than <paramref name="y"/>.  Zero 
-            /// <paramref name="x"/> equals <paramref name="y"/>.  Greater than zero 
-            /// <paramref name="x"/> is greater than <paramref name="y"/>. 
-            /// </returns>
-            /// <param name="x">The first object to compare. 
-            /// </param><param name="y">The second object to compare. 
-            /// </param><exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor 
-            /// <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface. -or- 
-            ///  <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
-            /// </exception><filterpriority>2</filterpriority>
+            /// <returns>Value  Condition  Less than zero<paramref name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />.
+            /// Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
+            /// <param name="x">The first object to compare.</param>
+            /// <param name="y">The second object to compare.</param>
             public override int Compare(object x, object y)
             {
                 try

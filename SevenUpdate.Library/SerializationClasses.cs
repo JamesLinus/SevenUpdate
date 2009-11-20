@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -34,11 +34,8 @@ namespace SevenUpdate
 
     #region Struct
 
-    /// <summary>
-    /// Configuration options
-    /// </summary>
-    [XmlType(AnonymousType = true)]
-    [XmlRoot("settings", Namespace = "http://sevenupdate.sourceforge.net")]
+    /// <summary>Configuration options</summary>
+    [XmlType(AnonymousType = true), XmlRoot("settings", Namespace = "http://sevenupdate.sourceforge.net")]
     public struct Config
     {
         /// <summary>
@@ -49,7 +46,7 @@ namespace SevenUpdate
 
         /// <summary>
         /// Gets or Sets a value indicating if Seven Update is to included recommended updates when automatically downloading updates
-        /// </summary>\
+        /// </summary>
         [XmlElement("includeRecommended")]
         public bool IncludeRecommended { get; set; }
 
@@ -84,9 +81,7 @@ namespace SevenUpdate
         /// </summary>
         Notify,
 
-        /// <summary>
-        /// No automatic checking
-        /// </summary>
+        /// <summary>No automatic checking</summary>
         Never
     }
 
@@ -101,15 +96,11 @@ namespace SevenUpdate
     /// </summary>
     public class LocaleString : INotifyPropertyChanged
     {
-        /// <summary>
-        /// an ISO language code
-        /// </summary>
+        /// <summary>an ISO language code</summary>
         [XmlAttribute("lang", Namespace = "")]
         public string Lang { get; set; }
 
-        /// <summary>
-        /// The value of the string
-        /// </summary>
+        /// <summary>The value of the string</summary>
         [XmlAttribute("value", Namespace = "")]
         public string Value { get; set; }
 
@@ -121,7 +112,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -145,9 +136,7 @@ namespace SevenUpdate
     [XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUA : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The application name
-        /// </summary>
+        /// <summary>The application name</summary>
         [XmlElement("name")]
         public ObservableCollection<LocaleString> Name { get; set; }
 
@@ -175,7 +164,7 @@ namespace SevenUpdate
         [XmlAttribute("isEnabled")]
         public bool IsEnabled { get; set; }
 
-        /// <summary>
+        /// 
         /// <summary>
         /// The publisher of the application
         /// </summary>
@@ -196,7 +185,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -221,9 +210,7 @@ namespace SevenUpdate
     /// </summary>
     public enum FileAction
     {
-        /// <summary>
-        /// Update the file
-        /// </summary>
+        /// <summary>Update the file</summary>
         Update,
 
         /// <summary>
@@ -246,9 +233,7 @@ namespace SevenUpdate
         /// </summary>
         ExecuteAndDelete,
 
-        /// <summary>
-        /// Deletes the file
-        /// </summary>
+        /// <summary>Deletes the file</summary>
         Delete
     }
 
@@ -257,24 +242,16 @@ namespace SevenUpdate
     /// </summary>
     public enum Importance
     {
-        /// <summary>
-        /// Important update
-        /// </summary>
+        /// <summary>Important update</summary>
         Important,
 
-        /// <summary>
-        /// Locale or language
-        /// </summary>
+        /// <summary>Locale or language</summary>
         Locale,
 
-        /// <summary>
-        /// Optional update
-        /// </summary>
+        /// <summary>Optional update</summary>
         Optional,
 
-        /// <summary>
-        /// Recommended update
-        /// </summary>
+        /// <summary>Recommended update</summary>
         Recommended
     }
 
@@ -327,11 +304,8 @@ namespace SevenUpdate
 
     #region Classes
 
-    /// <summary>
-    /// Application info
-    /// </summary>
-    [XmlType(AnonymousType = true)]
-    [XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
+    /// <summary>Application info</summary>
+    [XmlType(AnonymousType = true), XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUI : INotifyPropertyChanged
     {
         #region Required Properties
@@ -386,7 +360,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -408,9 +382,7 @@ namespace SevenUpdate
     {
         #region Required Properties
 
-        /// <summary>
-        /// The name of the update
-        /// </summary>
+        /// <summary>The name of the update</summary>
         [XmlElement("name")]
         public ObservableCollection<LocaleString> Name { get; set; }
 
@@ -502,7 +474,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -548,9 +520,7 @@ namespace SevenUpdate
         [XmlAttribute("hash")]
         public string Hash { get; set; }
 
-        /// <summary>
-        /// File size in bytes
-        /// </summary>
+        /// <summary>File size in bytes</summary>
         [XmlAttribute("size")]
         public ulong Size { get; set; }
 
@@ -574,7 +544,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -632,7 +602,7 @@ namespace SevenUpdate
         public RegistryValueKind ValueKind { get; set; }
 
         /// <summary>
-        ///  The data of the value in the specified key
+        /// The data of the value in the specified key
         /// </summary>
         [XmlAttribute("data")]
         public string Data { get; set; }
@@ -647,7 +617,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -714,7 +684,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)
@@ -737,15 +707,12 @@ namespace SevenUpdate
     /// <summary>
     /// Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [XmlType(AnonymousType = true)]
-    [XmlRoot("update", Namespace = "http://sevenupdate.sourceforge.net")]
+    [XmlType(AnonymousType = true), XmlRoot("update", Namespace = "http://sevenupdate.sourceforge.net")]
     public class SUH : INotifyPropertyChanged
     {
         #region Required Properties
 
-        /// <summary>
-        /// The name of the update
-        /// </summary>
+        /// <summary>The name of the update</summary>
         [XmlElement("name")]
         public ObservableCollection<LocaleString> Name { get; set; }
 
@@ -823,7 +790,7 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
+        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
         /// </summary>
         /// <param name="name"></param>
         protected void OnPropertyChanged(string name)

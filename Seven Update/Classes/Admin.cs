@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -154,10 +154,6 @@ namespace SevenUpdate.WCF
             /// </summary>
             public ulong BytesTotal { get; private set; }
         }
-
-        #endregion
-
-        #region Nested type: ErrorOccurredEventArgs
 
         #endregion
 
@@ -319,7 +315,7 @@ namespace SevenUpdate.WCF
         /// <param name="arguments">a string of arguments to be passed to admin module</param>
         /// <param name="wait">a boolean indicating if the current thread will wait for the admin process to exit</param>
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        private static bool LaunchAdmin(string arguments, bool wait)
+        private static bool LaunchAdmin(string arguments, bool wait = false)
         {
             var proc = new Process {StartInfo = {FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe"}};
 
@@ -351,16 +347,6 @@ namespace SevenUpdate.WCF
         }
 
         /// <summary>
-        /// Launches the Seven Update.Admin Module
-        /// </summary>
-        /// <param name="arguments">a string of arguments to be passed to admin module</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        private static bool LaunchAdmin(string arguments)
-        {
-            return LaunchAdmin(arguments, false);
-        }
-
-        /// <summary>
         /// Aborts the installation of updates
         /// </summary>
         internal static void AbortInstall()
@@ -378,15 +364,13 @@ namespace SevenUpdate.WCF
         /// <summary>
         /// Installs selected updates
         /// </summary>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
+        /// <returns> <c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
             return LaunchAdmin("Install");
         }
 
-        /// <summary>
-        /// Hides an update
-        /// </summary>
+        /// <summary>Hides an update</summary>
         /// <param name="hiddenUpdate">the update to hide</param>
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdate(SUH hiddenUpdate)
@@ -443,11 +427,11 @@ namespace SevenUpdate.WCF
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<SUA> sul)
         {
-            /// Save the application settings and applications to update in the user store
+            // Save the application settings and applications to update in the user store
             Shared.SerializeStruct(options, Shared.UserStore + "App.config");
             Shared.Serialize(sul, Shared.UserStore + "Apps.sul");
 
-            /// Launch Seven Update.Admin to save the settings to the AppStore.
+            // Launch Seven Update.Admin to save the settings to the AppStore.
             return autoOn ? LaunchAdmin("Options-On", true) : LaunchAdmin("Options-Off", true);
         }
 

@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using SevenUpdate.WCF;
 using SharpBits.Base;
@@ -32,7 +33,7 @@ using SharpBits.Base;
 namespace SevenUpdate
 {
     /// <summary>
-    ///  A class containing methods to download updates
+    /// A class containing methods to download updates
     /// </summary>
     internal class Download
     {
@@ -59,15 +60,15 @@ namespace SevenUpdate
         {
             if (manager != null)
             {
-                foreach (var job in manager.Jobs.Values)
+                foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "Seven Update"))
                 {
-                    if (job.DisplayName != "Seven Update")
-                        continue;
                     try
                     {
                         job.Cancel();
                     }
-                    catch (Exception) {}
+                    catch (Exception)
+                    {
+                    }
 
                     return true;
                 }
@@ -87,6 +88,7 @@ namespace SevenUpdate
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
+
                 Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
                 Environment.Exit(0);
             }
@@ -96,31 +98,32 @@ namespace SevenUpdate
                 {
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
+
                     Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
                     Environment.Exit(0);
                 }
             }
+
             // When done with the temp list
             File.Delete(Shared.UserStore + "Apps.sui");
+
             // Makes the passed applicaytion collection global
             updates = applications;
 
             // It's a new manager class
             manager = new BitsManager();
 
-            /// Assign the event handlers
+            // Assign the event handlers
             manager.OnJobTransferred += ManagerOnJobTransferred;
             manager.OnJobError += ManagerOnJobError;
             manager.OnJobModified += ManagerOnJobModified;
 
-            ///Load the BITS Jobs for the entire machine
+            // Load the BITS Jobs for the entire machine
             manager.EnumJobs(JobOwner.AllUsers);
 
-            ///Loops through the jobs, if a Seven Update job is found, try to resume, if not 
-            foreach (var job in manager.Jobs.Values)
+            // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
+            foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "Seven Update"))
             {
-                if (job.DisplayName != "Seven Update")
-                    continue;
                 job.EnumFiles();
                 if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
                 {
@@ -128,7 +131,9 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch (Exception) {}
+                    catch (Exception)
+                    {
+                    }
                 }
                 else
                 {
@@ -143,7 +148,9 @@ namespace SevenUpdate
                         {
                             job.Cancel();
                         }
-                        catch (Exception) {}
+                        catch (Exception)
+                        {
+                        }
                     }
                 }
             }
@@ -157,6 +164,7 @@ namespace SevenUpdate
                 {
                     // Create download directory consisting of appname and update title
                     var downloadDir = Shared.AllUserStore + @"downloads\" + applications[x].Updates[y].Name[0].Value;
+
                     Directory.CreateDirectory(downloadDir);
 
                     for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
@@ -173,7 +181,9 @@ namespace SevenUpdate
                             {
                                 File.Delete(downloadDir + @"\" + Path.GetFileName(fileDestination));
                             }
-                            catch (Exception) {}
+                            catch (Exception)
+                            {
+                            }
                             var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                         }
@@ -186,7 +196,9 @@ namespace SevenUpdate
                     }
                 }
             }
+
             bitsJob.EnumFiles();
+            
             if (bitsJob.Files.Count > 0)
             {
                 try
@@ -216,13 +228,19 @@ namespace SevenUpdate
         #region Event Handlers
 
         /// <summary>
-        /// Calls the DownloadProgressChanged Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when the job progress has changed
+        /// Calls the DownloadProgressChanged Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when the job progress has changed
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
-            if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring || e.Job.Progress.BytesTransferred <= 0)
+            if (App.Abort)
+                Environment.Exit(0);
+            if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
                 return;
-            if (EventService.DownloadProgressChanged != null && e.Job.Progress.BytesTransferred > 0 && App.IsClientConnected)
+
+            if (e.Job.Progress.BytesTransferred <= 0)
+                return;
+
+            if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
                 EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
 
             if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0)
@@ -234,20 +252,24 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Calls the ErrorOccurred Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when an error occurs
+        /// Calls the ErrorOccurred Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when an error occurs
         /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
+            if (App.Abort)
+                Environment.Exit(0);
             if (e.Job.DisplayName != "Seven Update")
                 return;
-            e.Job.Cancel();
-
+           
             try
             {
+                e.Job.Cancel();
                 manager.Dispose();
                 manager = null;
             }
-            catch (Exception) {}
+            catch (Exception)
+            {
+            }
             Shared.ReportError(e.Error.File + " - " + e.Error.File, Shared.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                 EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.File), ErrorType.DownloadError);
@@ -255,10 +277,13 @@ namespace SevenUpdate
             Environment.Exit(0);
         }
 
-        /// Calls the DownloadComplete Event and updates the <see cref="System.Windows.Forms.NotifyIcon"/> when the job has been downloaded or Calls the InstallUpdates Method
+        /// <summary>
+        /// Calls the DownloadComplete Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when the job has been downloaded or Calls the InstallUpdates Method
         /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {
+            if (App.Abort)
+                Environment.Exit(0);
             if (e.Job.DisplayName == "Seven Update")
             {
                 if (e.Job.State == JobState.Transferred)
@@ -273,7 +298,9 @@ namespace SevenUpdate
                         manager.Dispose();
                         manager = null;
                     }
-                    catch (Exception) {}
+                    catch (Exception)
+                    {
+                    }
 
                     if (App.Settings.AutoOption == AutoUpdateOption.Install || Environment.GetCommandLineArgs()[0] == "Install")
                     {
@@ -293,15 +320,15 @@ namespace SevenUpdate
         #region EventArgs
 
         /// <summary>
-        ///Provides event data for the DownloadCompleted event
+        /// Provides event data for the DownloadCompleted event
         /// </summary>
         public class DownloadCompletedEventArgs : EventArgs
         {
             /// <summary>
             /// Contains event data associated with this event
             /// </summary>
-            /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</param>
-            /// <param name="applications">A collection of Applications that were downloaded</param>
+            /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c> </param>
+            /// <param name="applications"> A collection of Applications that were downloaded</param>
             public DownloadCompletedEventArgs(bool errorOccurred, Collection<SUI> applications)
             {
                 ErrorOccurred = errorOccurred;
@@ -309,7 +336,7 @@ namespace SevenUpdate
             }
 
             /// <summary>
-            /// <c>true</c> is an error occurred, otherwise <c>false
+            /// <c>true</c> is an error occurred, otherwise <c>false</c>
             /// </summary>
             public bool ErrorOccurred { get; private set; }
 

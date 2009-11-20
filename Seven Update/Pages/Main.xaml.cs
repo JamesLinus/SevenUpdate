@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -22,6 +22,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -42,7 +43,7 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
-        ///  Gets a green side image
+        /// Gets a green side image
         /// </summary>
         private readonly BitmapImage greenSide = new BitmapImage(new Uri("/Images/GreenSide.png", UriKind.Relative));
 
@@ -70,9 +71,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private enum UILayout
         {
-            /// <summary>
-            /// Canceled Updates
-            /// </summary>
+            /// <summary>Canceled Updates</summary>
             Canceled,
 
             /// <summary>
@@ -176,8 +175,8 @@ namespace SevenUpdate.Pages
         /// <param name="e">The DownloadProgress data</param>
         private void DownloadProgressChanged(AdminCallBack.DownloadProgressChangedEventArgs e)
         {
-            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
-                                    App.RM.GetString("Complete") + ")";
+           infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.BytesTotal) + ", " +
+                               (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
         }
 
         /// <summary>
@@ -205,10 +204,7 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.ErrorOccurred);
             else
             {
-                if (App.IsAutoCheck)
-                    SetUI(UILayout.DownloadCompleted);
-                else
-                    SetUI(UILayout.Installing);
+                SetUI(App.IsAutoCheck ? UILayout.DownloadCompleted : UILayout.Installing);
             }
         }
 
@@ -224,27 +220,24 @@ namespace SevenUpdate.Pages
 
                 var count = new int[2];
 
-                for (var x = 0; x < e.Applications.Count; x++)
+                foreach (Update t1 in e.Applications.SelectMany(t => t.Updates))
                 {
-                    for (var y = 0; y < e.Applications[x].Updates.Count; y++)
+                    switch (t1.Importance)
                     {
-                        switch (e.Applications[x].Updates[y].Importance)
-                        {
-                            case Importance.Important:
-                                count[0]++;
-                                break;
-                            case Importance.Locale:
-                            case Importance.Optional:
+                        case Importance.Important:
+                            count[0]++;
+                            break;
+                        case Importance.Locale:
+                        case Importance.Optional:
 
+                            count[1]++;
+                            break;
+                        case Importance.Recommended:
+                            if (App.Settings.IncludeRecommended)
+                                count[0]++;
+                            else
                                 count[1]++;
-                                break;
-                            case Importance.Recommended:
-                                if (App.Settings.IncludeRecommended)
-                                    count[0]++;
-                                else
-                                    count[1]++;
-                                break;
-                        }
+                            break;
                     }
                 }
 
@@ -469,10 +462,7 @@ namespace SevenUpdate.Pages
                 if (Admin.Install())
                 {
                     Admin.Connect();
-                    if (infoBar.tbHeading.Text == App.RM.GetString("DownloadAndInstallUpdates"))
-                        SetUI(UILayout.Downloading);
-                    else
-                        SetUI(UILayout.Installing);
+                    SetUI(infoBar.tbHeading.Text == App.RM.GetString("DownloadAndInstallUpdates") ? UILayout.Downloading : UILayout.Installing);
                 }
                 else
                     SetUI(UILayout.Canceled);
@@ -495,7 +485,8 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
                     tbRecentCheck.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
                 else
-                    tbRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
+                    tbRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+                                         Settings.Default.lastUpdateCheck.ToShortTimeString();
             }
             else
                 tbRecentCheck.Text = App.RM.GetString("Never");
@@ -505,18 +496,17 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastInstall.Equals(DateTime.Now))
                     tbUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastInstall.ToShortTimeString();
                 else
-                    tbUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastInstall.ToShortTimeString();
+                    tbUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+                                              Settings.Default.lastInstall.ToShortTimeString();
             }
             else
                 tbUpdatesInstalled.Text = App.RM.GetString("Never");
 
-            if (Shared.RebootNeeded)
-                SetUI(UILayout.RebootNeeded);
-            else
-                SetUI(UILayout.NoUpdates);
+            SetUI(Shared.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
 
             #region Event Handler Declarations
-            UpdateInfo.CanceledSelectionEventHandler += new EventHandler(CanceledSelectionEventHandler);
+
+            UpdateInfo.CanceledSelectionEventHandler += CanceledSelectionEventHandler;
             UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChangedEventHandler;
             infoBar.btnAction.Click += btnAction_Click;
             infoBar.tbViewImportantUpdates.MouseDown += tbViewImportantUpdates_MouseDown;
@@ -543,9 +533,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar"/> UI
+        /// Sets the Main Page and <see cref="InfoBar" /> UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
         /// <param name="errorDescription">The description of the error that occurred</param>
         private void SetUI(UILayout layout, string errorDescription)
         {
@@ -553,9 +543,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar"/> UI
+        /// Sets the Main Page and <see cref="InfoBar" /> UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
         /// <param name="updatesInstalled">The number of updates installed</param>
         /// <param name="updatesFailed">The number of updates failed</param>
         private void SetUI(UILayout layout, int updatesInstalled, int updatesFailed)
@@ -564,9 +554,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar"/> UI
+        /// Sets the Main Page and <see cref="InfoBar" /> UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout"/> to set the UI to</param>
+        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
         /// <param name="errorDescription">The description of the error that occurred</param>
         /// <param name="updatesInstalled">The number of updates installed</param>
         /// <param name="updatesFailed">The number of updates failed</param>
@@ -891,20 +881,20 @@ namespace SevenUpdate.Pages
         #region TextBlock
 
         /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock"/>
+        /// Underlines the text when mouse is over the <see cref="TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock"/>
+        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
         }
 
@@ -977,7 +967,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
         /// </summary>
-        void CanceledSelectionEventHandler(object sender, EventArgs e)
+        private void CanceledSelectionEventHandler(object sender, EventArgs e)
         {
             CheckForUpdates();
         }
@@ -996,15 +986,14 @@ namespace SevenUpdate.Pages
             infoBar.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
             infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
 
-            for (var x = 0; x < App.Applications.Count; x++)
+            foreach (SUI t in App.Applications)
             {
                 if (infoBar.tbViewImportantUpdates.Visibility == Visibility.Visible && infoBar.tbViewOptionalUpdates.Visibility == Visibility.Visible)
                     break;
-                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
+                foreach (Update t1 in
+                    t.Updates.TakeWhile(t1 => infoBar.tbViewImportantUpdates.Visibility != Visibility.Visible || infoBar.tbViewOptionalUpdates.Visibility != Visibility.Visible))
                 {
-                    if (infoBar.tbViewImportantUpdates.Visibility == Visibility.Visible && infoBar.tbViewOptionalUpdates.Visibility == Visibility.Visible)
-                        break;
-                    switch (App.Applications[x].Updates[y].Importance)
+                    switch (t1.Importance)
                     {
                         case Importance.Important:
                             infoBar.tbViewImportantUpdates.Visibility = Visibility.Visible;

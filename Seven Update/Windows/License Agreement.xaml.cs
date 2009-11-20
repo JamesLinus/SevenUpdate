@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenseInformation/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -45,25 +45,21 @@ namespace SevenUpdate.Windows
         /// </summary>
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
-        /// <summary>
-        ///  The UAC shield
-        /// </summary>
+        /// <summary>The UAC shield</summary>
         private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
-        /// <summary>
-        /// An array of the strings that consist of the software licenses
-        /// </summary>
-        private string[] licenseText;
-
-        /// <summary>
-        /// Current index
-        /// </summary>
+        /// <summary>Current index</summary>
         private int index;
 
         /// <summary>
         /// List of updates that have EULAS
         /// </summary>
         private Collection<EULA> licenseInformation;
+
+        /// <summary>
+        /// An array of the strings that consist of the software licenses
+        /// </summary>
+        private string[] licenseText;
 
         /// <summary>
         /// Data containing the update's license agreement
@@ -80,9 +76,7 @@ namespace SevenUpdate.Windows
             /// </summary>
             internal string LicenseUrl { get; set; }
 
-            /// <summary>
-            /// The update title
-            /// </summary>
+            /// <summary>The update title</summary>
             internal string Title { get; set; }
 
             /// <summary>
@@ -136,7 +130,13 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new EULA { LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
+                    var sla = new EULA
+                                  {
+                                      LicenseUrl = App.Applications[x].Updates[y].LicenseUrl,
+                                      Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name),
+                                      AppIndex = x,
+                                      UpdateIndex = y
+                                  };
 
                     licenseInformation.Add(sla);
                 }

@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -51,7 +51,7 @@ namespace SevenUpdate.WCF
         /// Occurs when an error occurs
         /// </summary>
         /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
+        /// <param name="type">The <see cref="ErrorType" /> of the error that occurred</param>
         [OperationContract(IsOneWay = true)]
         void OnErrorOccurred(Exception exception, ErrorType type);
 
@@ -67,9 +67,9 @@ namespace SevenUpdate.WCF
         /// Occurs when the installation progress has changed
         /// </summary>
         /// <param name="updateName">The name of the update that is being installed</param>
-        /// <param name="progress"></param>
-        /// <param name="updatesComplete"></param>
-        /// <param name="totalUpdates"></param>
+        /// <param name="progress">The current update progress</param>
+        /// <param name="updatesComplete">The number of updates that have completed</param>
+        /// <param name="totalUpdates">The total number of updates</param>
         [OperationContract(IsOneWay = true)]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }

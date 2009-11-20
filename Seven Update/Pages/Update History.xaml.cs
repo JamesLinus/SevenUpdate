@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -77,7 +77,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -121,7 +121,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// Updates the <see cref="CollectionView" /> when the <c>updateHistory</c> collection changes
         /// </summary>
         private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

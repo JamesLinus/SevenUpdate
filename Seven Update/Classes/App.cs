@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Resources;
 using System.Security.Principal;
@@ -108,14 +109,13 @@ namespace SevenUpdate
             // Makes sure only 1 copy of Seven Update is allowed to run
             using (new Mutex(true, "Seven Update", out createdNew))
             {
+                Directory.CreateDirectory(Shared.UserStore);
                 RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
                 Shared.Locale = Shared.Locale == null ? "en" : Settings.Locale;
                 Shared.SerializationErrorEventHandler += Shared_SerializationErrorEventHandler;
-                for (var x = 0; x < args.Length; x++)
+                foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (!args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase))
-                        continue;
-                    AddSUA(args[x]);
+                    AddSUA(t);
                     return;
                 }
                 if (!createdNew)
@@ -163,8 +163,9 @@ namespace SevenUpdate
             var index = sul.IndexOf(sua);
             if (index < 0)
             {
-                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
-                    MessageBoxResult.Yes)
+                if (
+                    MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     sul.Add(sua);
                     Admin.AddSUA(sul);
@@ -182,10 +183,7 @@ namespace SevenUpdate
         /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(Collection<UpdateFile> files)
         {
-            ulong size = 0;
-            for (var x = 0; x < files.Count; x++)
-                size += files[x].Size;
-            return size;
+            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.Size);
         }
 
         #endregion

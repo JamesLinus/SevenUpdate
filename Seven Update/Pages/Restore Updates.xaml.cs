@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -49,9 +50,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
-        /// <summary>
-        ///  The UAC shield
-        /// </summary>
+        /// <summary>The UAC shield</summary>
         private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
         /// <summary>
@@ -97,11 +96,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn"/>'s of the <see cref="ListView"/> to be sorted
+        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView)listView.View;
+            var gv = (GridView) listView.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -154,7 +153,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the <c>hiddenUpdates</c> collection changes
+        /// Updates the <see cref="CollectionView" /> when the <c>hiddenUpdates</c> collection changes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -172,12 +171,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
-            var checkedCount = 0;
-            for (var x = 0; x < hiddenUpdates.Count; x++)
-            {
-                if (hiddenUpdates[x].Status == UpdateStatus.Visible)
-                    checkedCount++;
-            }
+            var checkedCount = hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
             tbSelected.Text = App.RM.GetString("TotalSelected") + " " + checkedCount + " ";
             if (checkedCount > 0)
@@ -195,11 +189,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Limit the size of the <see cref="GridViewColumn"/> when it's being resized
+        /// Limit the size of the <see cref="GridViewColumn" /> when it's being resized
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ListViewExtensions.LimitColumnSize(((Thumb)e.OriginalSource));
+            ListViewExtensions.LimitColumnSize(((Thumb) e.OriginalSource));
         }
 
         /// <summary>

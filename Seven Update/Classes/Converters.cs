@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 #endregion
@@ -82,8 +83,8 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            /// Returns the localized string found in the resource dictionary
-            return App.RM.GetString(value.ToString());
+            // Returns the localized string found in the resource dictionary
+            return value == null ? null : App.RM.GetString(value.ToString());
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a <see cref="LocaleString"/> to a localized string
+    /// Converts a <see cref="LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
     public class LocaleStringConverter : IValueConverter
@@ -114,18 +115,15 @@ namespace SevenUpdate.Converters
         {
             var localeStrings = value as Collection<LocaleString>;
 
-            /// Loops through the collection of LocaleStrings
+            // Loops through the collection of LocaleStrings
             if (localeStrings != null)
             {
-                for (var x = 0; x < localeStrings.Count; x++)
+                foreach (LocaleString t in localeStrings.Where(t => t.Lang == Shared.Locale))
                 {
-                    /// If a string is available in the locale specified in the settings, return it
-                    if (localeStrings[x].Lang != Shared.Locale)
-                        continue;
-                    return localeStrings[x].Value;
+                    return t.Value;
                 }
 
-                /// Returns an english string if the specified locale is not avaliable
+                // Returns an english string if the specified locale is not avaliable
                 return localeStrings[0].Value;
             }
             return App.RM.GetString("NotAvailable");
@@ -158,7 +156,7 @@ namespace SevenUpdate.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var files = value as Collection<UpdateFile>;
-            /// Gets the full size of the update then converts it into a string format
+            // Gets the full size of the update then converts it into a string format
             return Shared.ConvertFileSize(App.GetUpdateSize(files));
         }
 
@@ -188,7 +186,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            /// If the UpdateStatus is hidden return False, otherwise return true
+            // If the UpdateStatus is hidden return False, otherwise return true
             return ((UpdateStatus) value) != UpdateStatus.Hidden;
         }
 
@@ -218,7 +216,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            /// If Is64Bit
+            // If Is64Bit
             if (((bool) value))
                 return "x64";
             return "x86";

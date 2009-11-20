@@ -2,7 +2,7 @@
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
-// 
+//  
 //     Seven Update is free software: you can redistribute it and/or modify
 //     it under the terms of the GNU General Public License as published by
 //     the Free Software Foundation, either version 3 of the License, or
@@ -12,9 +12,9 @@
 //     but WITHOUT ANY WARRANTY; without even the implied warranty of
 //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //     GNU General Public License for more details.
-// 
+//  
 //    You should have received a copy of the GNU General Public License
-//     along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -41,27 +41,27 @@ namespace SevenUpdate.WCF
         public delegate void CallbackDelegate();
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadCompleted"/> event
+        /// A callback delegate for the <see cref="DownloadCompleted" /> event
         /// </summary>
         /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadProgressChanged"/> event
+        /// A callback delegate for the <see cref="DownloadProgressChanged" /> event
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes downloaded</param>
         /// <param name="bytesTotal">The total number of bytes to download</param>
         public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal);
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadProgressChanged"/> event
+        /// A callback delegate for the <see cref="DownloadProgressChanged" /> event
         /// </summary>
         /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
+        /// <param name="type">The <see cref="ErrorType" /> of the error that occurred</param>
         public delegate void ErrorOccurredCallbackDelegate(Exception exception, ErrorType type);
 
         /// <summary>
-        /// A callback delegate for the <see cref="InstallCompleted"/> event
+        /// A callback delegate for the<see cref="InstallCompleted" /> event
         /// </summary>
         /// <param name="updatesInstalled">The number of updates installed</param>
         /// <param name="updatesFailed">The number of failed updates</param>
@@ -147,10 +147,12 @@ namespace SevenUpdate.WCF
         public static event CallbackDelegate ClientDisconnected;
 
         /// <summary>
-        /// Occurs when the <see cref="EventService"/> had closed
+        /// Occurs when the <see cref="EventService" /> had closed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static void EventService_Closed(object sender, EventArgs e) {}
+        private static void EventService_Closed(object sender, EventArgs e)
+        {
+        }
     }
 }

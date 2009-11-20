@@ -1,28 +1,24 @@
-﻿<Window x:Class="SevenUpdate.Windows.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="About"
-        ResizeMode="NoResize" MinWidth="435" MinHeight="150" WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight" ShowInTaskbar="False">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="16" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="229.323*" />
-            <ColumnDefinition Width="85.677" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="25.96*" />
-        </Grid.RowDefinitions>
-        <Button Content="Close" HorizontalAlignment="Left" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnClose" Padding="5,1"
-                VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="3" Click="btnClose_Click" />
-        <TextBlock HorizontalAlignment="Left" Name="textBlock2" Padding="5" Text="Version:" VerticalAlignment="Top" Grid.Column="1" />
-        <TextBlock HorizontalAlignment="Left" Name="textBlock1" Padding="5" Text="Copyright:" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" />
-        <TextBlock HorizontalAlignment="Left" Name="textBlock3" Padding="5" Text="Support:" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" />
-        <TextBlock Name="tbVersion" Padding="5" Text="1.0.0.0" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
-        <TextBlock Grid.Row="1" Name="tbCopyright" Padding="5" Text="Seven Software" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
-        <TextBlock Grid.Row="2" Name="tbSupport" Padding="5" Text="http://sevenupdate.sourceforge.net" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left"
-                Foreground="#FF0066CC" />
-        <TextBlock Foreground="#FF0066CC" HorizontalAlignment="Left" Name="tbLicense" Padding="5" Text="is licensed under the GPL" VerticalAlignment="Center" Grid.Column="1"
-                Grid.Row="3" Grid.ColumnSpan="2" />
-    </Grid>
+﻿<Window x:Class="SevenUpdate.Windows.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="About" ResizeMode="NoResize" MinWidth="435" MinHeight="150" WindowStartupLocation="CenterOwner" SizeToContent="WidthAndHeight" ShowInTaskbar="False">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="16" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="229.323*" />
+			<ColumnDefinition Width="85.677" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="25.96*" />
+		</Grid.RowDefinitions>
+		<Button Content="Close" HorizontalAlignment="Left" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnClose" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center" Grid.Row="3" Grid.Column="3" Click="btnClose_Click" />
+		<TextBlock HorizontalAlignment="Left" Name="textBlock2" Padding="5" Text="Version:" VerticalAlignment="Top" Grid.Column="1" />
+		<TextBlock HorizontalAlignment="Left" Name="textBlock1" Padding="5" Text="Copyright:" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" />
+		<TextBlock HorizontalAlignment="Left" Name="textBlock3" Padding="5" Text="Support:" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" />
+		<TextBlock Name="tbVersion" Padding="5" Text="1.0.0.0" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
+		<TextBlock Grid.Row="1" Name="tbCopyright" Padding="5" Text="Seven Software" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
+		<TextBlock Grid.Row="2" Name="tbSupport" Padding="5" Text="http://sevenupdate.sourceforge.net" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" Foreground="#FF0066CC" />
+		<TextBlock Foreground="#FF0066CC" HorizontalAlignment="Left" Name="tbLicense" Padding="5" Text="is licensed under the GPL" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" />
+	</Grid>
 </Window>
