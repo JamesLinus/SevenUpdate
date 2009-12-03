@@ -235,9 +235,9 @@
     <Resource Include="Images\GreenArrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SevenUpdate.Library\SevenUpdate.Library.csproj">
+    <ProjectReference Include="..\SevenUpdate.Library\Seven Update.Library.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
-      <Name>SevenUpdate.Library</Name>
+      <Name>Seven Update.Library</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

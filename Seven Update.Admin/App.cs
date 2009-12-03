@@ -212,9 +212,7 @@ namespace SevenUpdate
                                 }
                                 if (Environment.OSVersion.Version.Major < 6)
                                 {
-                                    // ReSharper disable PossibleNullReferenceException
-                                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue( // ReSharper restore PossibleNullReferenceException
-                                        "Seven Update Automatic Checking", false);
+                                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
                                 }
                                 else
                                 {

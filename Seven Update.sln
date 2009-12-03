@@ -5,7 +5,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seven Update", "Seven Updat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seven Update.Admin", "Seven Update.Admin\Seven Update.Admin.csproj", "{762D246E-1DF7-4C49-8169-413AD897F8BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate.Library", "SevenUpdate.Library\SevenUpdate.Library.csproj", "{918773CA-2A8D-4825-9516-DD1B4AFB8B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seven Update.Library", "SevenUpdate.Library\Seven Update.Library.csproj", "{918773CA-2A8D-4825-9516-DD1B4AFB8B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
