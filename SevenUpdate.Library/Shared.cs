@@ -75,7 +75,7 @@ namespace SevenUpdate
         /// <summary>
         /// The all users application data location
         /// </summary>
-        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Update\";
+        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
 
         /// <summary>
         /// The location of the list of applications Seven Update can update
@@ -100,7 +100,7 @@ namespace SevenUpdate
         /// <summary>
         /// The user application data location
         /// </summary>
-        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Update\";
+        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
 
         /// <summary>
         /// Specifies if a reboot is needed
