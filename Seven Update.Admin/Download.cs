@@ -243,7 +243,7 @@ namespace SevenUpdate
             if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
                 EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
 
-            if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0)
+            if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0 && e.Job.Progress.BytesTotal > 0)
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                            App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
@@ -256,8 +256,7 @@ namespace SevenUpdate
         /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
-            if (App.Abort)
-                Environment.Exit(0);
+
             if (e.Job.DisplayName != "Seven Update")
                 return;
            
@@ -273,7 +272,6 @@ namespace SevenUpdate
             Shared.ReportError(e.Error.File + " - " + e.Error.File, Shared.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                 EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.File), ErrorType.DownloadError);
-
             Environment.Exit(0);
         }
 

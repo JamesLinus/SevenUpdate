@@ -6,10 +6,6 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-/* Replace the values of the two defines below to your application's window class and window title, respectivelly. */
-!define WNDCLASS "Seven Update"
-!define WNDTITLE "Seven Update"
-
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
 !include "x64.nsh"
@@ -48,22 +44,84 @@ InstallDir "$PROGRAMFILES64\Seven Software\Seven Update"
 ShowInstDetails show
 ShowUnInstDetails show
 RequestExecutionLevel admin
- 
-  Function .onInit
+
+Function CloseSevenUpdate
+
+Push $5
+
+loop:
+	push "Seven Update.exe"
+  processwork::existsprocess
+  pop $5
+	IntCmp $5 0 CheckAdmin
+	Goto prompt
+prompt:
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update must be closed before installation can begin.$\r$\nPress "Retry" to automatically close Seven Update and continue or cancel the installation.'  IDCANCEL BailOut
+  push "Seven Update.exe"
+  processwork::KillProcess
+	push "Seven Update.Admin.exe"
+  processwork::KillProcess
+  Sleep 1000
+Goto loop
+
+BailOut:
+  Abort
+
+CheckAdmin:
+push "Seven Update.Admin.exe"
+processwork::existsprocess
+pop $5
+IntCmp $5 0 done
+Goto prompt
+done:
+Pop $5
+
+FunctionEnd
+
+Function un.CloseSevenUpdate
+
+Push $5
+
+loop:
+	push "Seven Update.exe"
+  processwork::existsprocess
+  pop $5
+	IntCmp $5 0 CheckAdmin
+	Goto prompt
+prompt:
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update must be closed before you can uninstall it.$\r$\nPress "Retry" to automatically close Seven Update and continue or cancel the uninstallation.'  IDCANCEL BailOut
+  push "Seven Update.exe"
+  processwork::KillProcess
+	push "Seven Update.Admin.exe"
+  processwork::KillProcess
+  Sleep 1000
+Goto loop
+
+BailOut:
+  Abort
+
+CheckAdmin:
+push "Seven Update.Admin.exe"
+processwork::existsprocess
+pop $5
+IntCmp $5 0 done
+Goto prompt
+done:
+Pop $5
+
+FunctionEnd
+
+Function .onInit
 	${If} ${RunningX64}
 		StrCpy $INSTDIR "$PROGRAMFILES64\Seven Software\Seven Update"
 	${Else}
 		StrCpy $INSTDIR "$PROGRAMFILES\Seven Software\Seven Update"
 	${EndIf}
 	
-	FindWindow $0 "${WNDCLASS}" "${WNDTITLE}"
-  StrCmp $0 0 continueInstall
-    MessageBox MB_ICONSTOP|MB_OK "The application you are trying to reinstall is running. Close it and try again."
-    Abort
-  continueInstall:
- FunctionEnd
- 
- 
+	Call CloseSevenUpdate
+	
+FunctionEnd
+	 
  Function ConnectInternet
 
   Push $R0
@@ -222,12 +280,7 @@ FunctionEnd
 Function un.onInit
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure you want to completely remove $(^Name) and all of its components?" IDYES +2
   Abort
-	
-	FindWindow $0 "${WNDCLASS}" "${WNDTITLE}"
-  StrCmp $0 0 continueInstall
-    MessageBox MB_ICONSTOP|MB_OK "The application you are trying to remove is running. Close it and try again."
-    Abort
-  continueInstall:
+	Call un.CloseSevenUpdate
 FunctionEnd
 
 Section Uninstall
