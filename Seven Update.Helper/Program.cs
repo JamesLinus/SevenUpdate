@@ -46,17 +46,17 @@ namespace SevenUpdate.Helper
                 {
                     FileInfo[] files = new DirectoryInfo(downloadDir).GetFiles();
 
-                    for (int x = 0; x < files.Length; x++)
+                    foreach (FileInfo t in files)
                     {
                         try
                         {
-                            File.Copy(files[x].FullName, appDir + files[x].Name, true);
-                            SetFileSecurity(appDir + files[x].Name);
-                            File.Delete(files[x].FullName);
+                            File.Copy(t.FullName, appDir + t.Name, true);
+                            SetFileSecurity(appDir + t.Name);
+                            File.Delete(t.FullName);
                         }
                         catch (Exception)
                         {
-                            MoveFileEx(files[x].FullName, appDir + files[x].Name, MoveOnReboot);
+                            MoveFileEx(t.FullName, appDir + t.Name, MoveOnReboot);
 
                             if (!File.Exists(appStore + "reboot.lock"))
                                 File.Create(appStore + "reboot.lock").WriteByte(0);
@@ -86,9 +86,9 @@ namespace SevenUpdate.Helper
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    System.Timers.Timer aTimer = new System.Timers.Timer();
+                    var aTimer = new System.Timers.Timer();
 
-                    aTimer.Elapsed += new System.Timers.ElapsedEventHandler(aTimer_Elapsed);
+                    aTimer.Elapsed += ATimerElapsed;
                     aTimer.Interval = 7200000;
                     aTimer.Enabled = true;
                     System.Windows.Forms.Application.Run();
@@ -112,7 +112,7 @@ namespace SevenUpdate.Helper
 
                 IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName);
 
-                FileSecurity fs = new FileSecurity(file, AccessControlSections.All);
+                var fs = new FileSecurity(file, AccessControlSections.All);
 
                 fs.SetOwner(userAdmin);
 
@@ -135,7 +135,7 @@ namespace SevenUpdate.Helper
             catch (Exception) { }
         }
 
-        static void aTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        static void ATimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
            // Process.Start(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\Seven Update Admin.exe", "Auto");
         }
