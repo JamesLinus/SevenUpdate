@@ -217,14 +217,14 @@ Section "Main Section" SEC01
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
-	${If} ${AtMostWinXP}
-		StrCpy $0 "$TEMP\Seven Update.Helper.exe"
-		NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Helper.exe" $0
-		Pop $R0 ;Get the return value
-		StrCmp $R0 "success" +3
-		MessageBox MB_OK "Download failed: $R0"
-		Quit
+	StrCpy $0 "$INSTDIR\Seven Update.Helper.exe"
+	NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Helper.exe $0
+	Pop $R0 ;Get the return value
+	StrCmp $R0 "success" +3
+	MessageBox MB_OK "Download failed: $R0"
+	Quit
 		
+	${If} ${AtMostWinXP}
 		WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\Seven Update.Helper.exe'
 		
 	${Else}
@@ -242,9 +242,12 @@ Section "Main Section" SEC01
 		StrCmp $R0 "success" +3
 		MessageBox MB_OK "Download failed: $R0"
 		Quit
+		
 		nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\Seven Update.xml" /TN "Seven Update"'
 		nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\Seven Update.Admin.xml" /TN "Seven Update.Admin"'
 	${EndIf}
+	
+	File "D:\Documents\Software Development\Install Files\Seven Shared\sua.ico"
 	
 	SetShellVarContext current
 	CreateDirectory "$APPDATA\Seven Software\Seven Update"
@@ -253,6 +256,17 @@ Section "Main Section" SEC01
 	CreateDirectory "$SMPROGRAMS\Seven Software"
 	
   CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\Seven Update.exe"
+	
+	WriteRegStr HKCR "sevenupdate" "" "URL:Seven Update Protocol"
+	WriteRegStr HKCR "sevenupdate" "URL Protocol" ""
+	WriteRegStr HKCR "sevenupdate\DefaultIcon" "" "Seven Update.exe,0"
+	WriteRegStr HKCR "sevenupdate\shell\open\command" "" '"$INSTDIR\Seven Update.exe" "%1"'
+	
+	
+	WriteRegStr HKCR ".sua" "" "SevenUpdate.sua"
+	WriteRegStr HKCR "SevenUpdate.sua" "" "Seven Update Application Information"
+	WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\sua.ico"
+	WriteRegStr HKCR "SevenUpdate.sua\shell\open\command" "" '"$INSTDIR\Seven Update.exe" "%1"'
 	
 SectionEnd
 
@@ -319,5 +333,7 @@ Section Uninstall
   
 	DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
+	DeleteRegKey HKCR ".sua"
+	DeleteRegKey HKCR "SevenUpdate.sua"
   SetAutoClose true
 SectionEnd

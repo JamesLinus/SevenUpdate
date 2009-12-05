@@ -118,8 +118,6 @@ namespace SevenUpdate.Pages
             }
 
             chkRecommendedUpdates.IsChecked = App.Settings.IncludeRecommended;
-            //tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate.ToShortDateString() + " " + App.RM.GetString("At") + " " +
-            //                     Settings.Default.lastListUpdate.ToShortTimeString();
         }
 
         /// <summary>

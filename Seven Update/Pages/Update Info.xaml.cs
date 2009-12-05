@@ -420,6 +420,7 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddUpdates();
+            listView.SelectedIndex = 0;
         }
 
         #region ListView Related

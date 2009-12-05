@@ -190,24 +190,26 @@ namespace SevenUpdate
 
                     #region If Seven Update
 
-                    if (applications[x].Directory == Shared.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Shared.RebootNeeded)
+                    if (applications[x].Directory == @"%PROGRAMFILES%\Seven Software\Seven Update" && Shared.RebootNeeded)
                     {
                         for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                         {
-                            if (applications[x].Updates[y].Files[z].Action != FileAction.UnregisterAndDelete && applications[x].Updates[y].Files[z].Action != FileAction.Delete)
+                            switch (applications[x].Updates[y].Files[z].Action)
                             {
-                            }
-                            else
-                            {
-                                try
-                                {
-                                    File.Delete(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true));
-                                }
-                                catch (Exception)
-                                {
-                                    MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null,
-                                               MOVEONREBOOT);
-                                }
+                                case FileAction.Delete:
+                                case FileAction.UnregisterAndDelete:
+                                    try
+                                    {
+                                        File.Delete(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true));
+                                    }
+                                    catch (Exception)
+                                    {
+                                        MoveFileEx(Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null,
+                                                   MOVEONREBOOT);
+                                    }
+                                    break;
+                                default:
+                                    break;
                             }
                         }
 

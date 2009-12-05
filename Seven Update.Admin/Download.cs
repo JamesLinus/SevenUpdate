@@ -232,22 +232,29 @@ namespace SevenUpdate
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
-            if (App.Abort)
-                Environment.Exit(0);
-            if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
-                return;
-
-            if (e.Job.Progress.BytesTransferred <= 0)
-                return;
-
-            if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
-                EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
-
-            if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0 && e.Job.Progress.BytesTotal > 0)
+            try
             {
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                if (App.Abort)
+                    Environment.Exit(0);
+                if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
+                    return;
+
+                if (e.Job.Progress.BytesTransferred <= 0)
+                    return;
+
+                if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
+                    EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
+
+                if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0 && e.Job.Progress.BytesTotal > 0)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                               App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                               (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") +
+                                                               ")");
+                }
+            }
+            catch
+            {
             }
         }
 

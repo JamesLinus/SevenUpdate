@@ -20,6 +20,13 @@ namespace SevenUpdate.Helper
         {
             if (args.Length > 0)
             {
+
+                var appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+
+                var appDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%") + @"\Seven Software\Seven Update\";
+
+                var downloadDir = appStore + @"downloads\" + args[0] + @"\";
+
                 try
                 {
                     Process.GetProcessesByName("Seven Update")[0].CloseMainWindow();
@@ -30,17 +37,20 @@ namespace SevenUpdate.Helper
 
                 try
                 {
-                    Process.GetProcessesByName("Seven Update Admin")[0].Kill();
+                    Process.GetProcessesByName("Seven Update.Admin")[0].Kill();
                 }
                 catch (Exception) { }
 
+                try
+                {
+                    if (File.Exists(appStore + "reboot.lock"))
+                        File.Delete(appStore + "reboot.lock");
+                }
+                catch
+                {
+                }
+
                 System.Threading.Thread.Sleep(1000);
-
-                string appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Update\";
-
-                string appDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%") + @"\Seven Software\Seven Update\";
-
-                string downloadDir = appStore + @"downloads\Seven Update\" + args[0] + @"\";
 
                 try
                 {
@@ -52,7 +62,7 @@ namespace SevenUpdate.Helper
                         {
                             File.Copy(t.FullName, appDir + t.Name, true);
                             SetFileSecurity(appDir + t.Name);
-                            File.Delete(t.FullName);
+                            
                         }
                         catch (Exception)
                         {
@@ -60,6 +70,13 @@ namespace SevenUpdate.Helper
 
                             if (!File.Exists(appStore + "reboot.lock"))
                                 File.Create(appStore + "reboot.lock").WriteByte(0);
+                        }
+                        try 
+                        { 
+                            File.Delete(t.FullName); 
+                        }
+                        catch
+                        {
                         }
                     }
                 }
@@ -80,6 +97,7 @@ namespace SevenUpdate.Helper
                         MoveFileEx(appStore + "reboot.lock", null, MoveOnReboot);
                 }
                 catch (Exception) { }
+                Process.Start(appDir + "Seven Update.exe");
                 Environment.Exit(0);
             }
             else

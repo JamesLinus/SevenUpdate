@@ -155,23 +155,38 @@ namespace SevenUpdate
         /// <param name="suaLoc">the location of the SUA file</param>
         private static void AddSUA(string suaLoc)
         {
-            var wc = new WebClient();
-            wc.DownloadFile(suaLoc, Shared.UserStore + "add.sua");
-            var sua = Shared.Deserialize<SUA>(Shared.UserStore + "add.sua");
-            var sul = Shared.Deserialize<Collection<SUA>>(Shared.AppsFile);
-            File.Delete(Shared.UserStore + "add.sua");
-            var index = sul.IndexOf(sua);
-            if (index < 0)
+            try
             {
-                if (
-                    MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
-                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
+                suaLoc = suaLoc.Replace("sevenupdate://", null);
+                var hwr = (HttpWebRequest)WebRequest.Create(suaLoc);
+                HttpWebResponse response;
+
+                try
                 {
-                    sul.Add(sua);
-                    Admin.AddSUA(sul);
+                    response = (HttpWebResponse)hwr.GetResponse();
+                }
+                catch (WebException)
+                {
+                    return;
+                }
+                var sua = Shared.Deserialize<SUA>(response.GetResponseStream());
+                var sul = Shared.Deserialize<Collection<SUA>>(Shared.AppsFile);
+                File.Delete(Shared.UserStore + "add.sua");
+                var index = sul.IndexOf(sua);
+                if (index < 0)
+                {
+                    if (
+                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        sul.Add(sua);
+                        Admin.AddSUA(sul);
+                    }
                 }
             }
-            wc.Dispose();
+            catch
+            {
+            }
         }
 
         #region Recount Methods
