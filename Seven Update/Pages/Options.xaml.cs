@@ -23,7 +23,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -51,7 +50,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The Seven Update list location
         /// </summary>
-        private static readonly Uri SUALocation = new Uri("http://ittakestime.org/su/Apps.sul");
+        private static readonly Uri SULLocation = new Uri("http://ittakestime.org/su/Apps.sul");
 
         /// <summary>
         /// A collection of SUA's that Seven Update can update
@@ -78,19 +77,17 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void DownloadSUL()
         {
+            var hwr = (HttpWebRequest)WebRequest.Create(SULLocation);
+            HttpWebResponse response;
             try
             {
-                if (File.Exists(Shared.UserStore + @"Apps.sul"))
-                    File.Delete(Shared.UserStore + @"Apps.sul");
+                response = (HttpWebResponse)hwr.GetResponse();
+                LoadSUL(Shared.Deserialize<ObservableCollection<SUA>>(response.GetResponseStream()));
             }
-            catch
+            catch (WebException)
             {
-                return;
+                LoadSUL();
             }
-            var wc = new WebClient();
-
-            wc.DownloadFileCompleted += DownloadFileCompleted;
-            wc.DownloadFileAsync(SUALocation, Shared.UserStore + @"Apps.sul");
         }
 
         /// <summary>
@@ -121,50 +118,56 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Loads the list of Seven Update applications and sets the UI
+        /// Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
         /// </summary>
-        private void LoadSUL()
+        private void LoadSUL(ObservableCollection<SUA> officialAppList = null)
         {
-            ObservableCollection<SUA> officialAppList = null;
-            if (File.Exists(Shared.UserStore + @"Apps.sul"))
-                officialAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.UserStore + @"Apps.sul");
             userAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.AppsFile);
+
+            if (userAppList != null)
+                for (var x = 0; x < userAppList.Count; x++)
+                {
+                    if (Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
+                        continue;
+                    userAppList.RemoveAt(x);
+                    x--;
+                }
+
 
             if (officialAppList != null)
             {
                 for (var x = 0; x < officialAppList.Count; x++)
                 {
-                    if (Directory.Exists(Shared.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
-                        continue;
-                    officialAppList.RemoveAt(x);
-                    x--;
+                    if (!Directory.Exists(Shared.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
+                    {
+                        officialAppList.RemoveAt(x);
+                        x--;
+                    }
+                    else
+                    {
+                        if (userAppList == null)
+                            continue;
+                        for (var y = 0; y < userAppList.Count; y++)
+                        {
+                            if (officialAppList[x].Source != userAppList[y].Source)
+                                continue;
+                            officialAppList[x].IsEnabled = userAppList[y].IsEnabled;
+                            userAppList.RemoveAt(y);
+                            y--;
+                            break;
+                        }
+                    }
                 }
-                if (userAppList == null)
-                    userAppList = officialAppList;
+                if (userAppList != null)
+                    for (var x = 0; x < userAppList.Count; x++)
+                    {
+                        officialAppList.Add(userAppList[x]);
+                    }
+
             }
 
-            if (userAppList != null)
-                for (var x = 0; x < userAppList.Count; x++)
-                {
-                    if (!Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
-                    {
-                        userAppList.RemoveAt(x);
-                        x--;
-                        continue;
-                    }
-                    if (officialAppList == null)
-                        continue;
-                    for (var y = 0; y < officialAppList.Count; y++)
-                    {
-                        if (officialAppList[y].Source != userAppList[x].Source)
-                            continue;
-                        officialAppList[y].IsEnabled = userAppList[x].IsEnabled;
-                        userAppList[x] = officialAppList[y];
-                    }
-                }
-            if (userAppList == null && officialAppList != null)
+            if (officialAppList != null)
                 userAppList = officialAppList;
-
             Dispatcher.BeginInvoke(UpdateList);
         }
 
@@ -179,12 +182,11 @@ namespace SevenUpdate.Pages
                 listView.ItemsSource = userAppList;
                 userAppList.CollectionChanged += UserAppList_CollectionChanged;
                 AddSortBinding();
-                tbLastUpdated.Text = App.RM.GetString("LastUpdated") + " " + Settings.Default.lastListUpdate.ToShortDateString() + " " + App.RM.GetString("At") + " " +
-                                     Settings.Default.lastListUpdate.ToShortTimeString();
+                tbListStatus.Text = null;
             }
             else
             {
-                tbLastUpdated.Text = App.RM.GetString("CouldNotConnect");
+                tbListStatus.Text = App.RM.GetString("CouldNotConnect");
             }
         }
 
@@ -244,20 +246,6 @@ namespace SevenUpdate.Pages
         #region UI Events
 
         /// <summary>
-        /// Loads the SUA list after the download has completed
-        /// </summary>
-        private void DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            if (e.Error != null)
-                return;
-            Settings.Default.lastListUpdate = DateTime.Now;
-
-            Settings.Default.Save();
-
-            LoadSUL();
-        }
-
-        /// <summary>
         /// When the AutoUpdate selection changes update the shield image
         /// </summary>
         /// <param name="sender"></param>
@@ -288,17 +276,7 @@ namespace SevenUpdate.Pages
         {
             listView.Cursor = Cursors.Wait;
             LoadSettings();
-
-            if (!Settings.Default.lastListUpdate.Date.Equals(DateTime.Now.Date) || !File.Exists(Shared.AppsFile))
-            {
-                var thread = new Thread(DownloadSUL);
-                thread.Start();
-            }
-            else
-            {
-                var thread = new Thread(LoadSUL);
-                thread.Start();
-            }
+            new Thread(DownloadSUL).Start();
         }
 
         #region ListView Related
@@ -351,8 +329,7 @@ namespace SevenUpdate.Pages
         private void tbRefresh_MouseDown(object sender, MouseButtonEventArgs e)
         {
             listView.Cursor = Cursors.Wait;
-            var thread = new Thread(DownloadSUL);
-            thread.Start();
+            new Thread(DownloadSUL).Start();
         }
 
         #endregion

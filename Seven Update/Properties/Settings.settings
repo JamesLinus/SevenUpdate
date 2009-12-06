@@ -11,9 +11,6 @@
     <Setting Name="infoPopUp" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="lastListUpdate" Type="System.DateTime" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="windowHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">550</Value>
     </Setting>

@@ -27,6 +27,7 @@ using System.IO;
 using System.Reflection;
 using System.ServiceModel;
 using System.Threading;
+using SevenUpdate.Properties;
 
 #endregion
 

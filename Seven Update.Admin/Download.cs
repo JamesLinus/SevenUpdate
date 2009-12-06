@@ -198,7 +198,7 @@ namespace SevenUpdate
             }
 
             bitsJob.EnumFiles();
-            
+
             if (bitsJob.Files.Count > 0)
             {
                 try
@@ -232,12 +232,29 @@ namespace SevenUpdate
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
+            if (App.Abort)
+                Environment.Exit(0);
             try
             {
-                if (App.Abort)
-                    Environment.Exit(0);
                 if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
-                    return;
+                    if (e.Job.State == JobState.Error || e.Job.State == JobState.TransientError)
+                    {
+                        try
+                        {
+                            e.Job.Cancel();
+                            manager.Dispose();
+                            manager = null;
+                        }
+                        catch (Exception)
+                        {
+                        }
+
+                        Shared.ReportError(e.Job.Error.File + " - " + e.Job.Error.Description, Shared.AllUserStore);
+                        if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                            EventService.ErrorOccurred(new Exception(e.Job.Error.File + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+                        return;
+                    }
+
 
                 if (e.Job.Progress.BytesTransferred <= 0)
                     return;
@@ -249,8 +266,7 @@ namespace SevenUpdate
                 {
                     Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                                App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                               (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") +
-                                                               ")");
+                                                               (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
                 }
             }
             catch
@@ -263,10 +279,9 @@ namespace SevenUpdate
         /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
-
             if (e.Job.DisplayName != "Seven Update")
                 return;
-           
+
             try
             {
                 e.Job.Cancel();
@@ -276,9 +291,9 @@ namespace SevenUpdate
             catch (Exception)
             {
             }
-            Shared.ReportError(e.Error.File + " - " + e.Error.File, Shared.AllUserStore);
+            Shared.ReportError(e.Error.File + " - " + e.Error.Description, Shared.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.File), ErrorType.DownloadError);
+                EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.Description), ErrorType.DownloadError);
             Environment.Exit(0);
         }
 

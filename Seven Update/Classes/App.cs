@@ -126,7 +126,7 @@ namespace SevenUpdate
                     var p = new WindowsPrincipal(id);
                     IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
                 }
-                if (args.Length > 1)
+                if (args.Length > 0)
                 {
                     if (args[0] == "Auto")
                         IsAutoCheck = true;
@@ -158,12 +158,12 @@ namespace SevenUpdate
             try
             {
                 suaLoc = suaLoc.Replace("sevenupdate://", null);
-                var hwr = (HttpWebRequest)WebRequest.Create(suaLoc);
+                var hwr = (HttpWebRequest) WebRequest.Create(suaLoc);
                 HttpWebResponse response;
 
                 try
                 {
-                    response = (HttpWebResponse)hwr.GetResponse();
+                    response = (HttpWebResponse) hwr.GetResponse();
                 }
                 catch (WebException)
                 {
@@ -175,9 +175,8 @@ namespace SevenUpdate
                 var index = sul.IndexOf(sua);
                 if (index < 0)
                 {
-                    if (
-                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
-                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                        MessageBoxResult.Yes)
                     {
                         sul.Add(sua);
                         Admin.AddSUA(sul);

@@ -160,7 +160,17 @@ namespace SevenUpdate
                     char[] split = {'|'};
                     var key = path.Split(split)[0];
                     var value = path.Split(split)[1];
-                    path = Registry.GetValue(key, value, null).ToString();
+                    try
+                    {
+                        if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+                            if (!is64Bit && key.ToUpper().Contains(@"SOFTWARE\") && !key.ToUpper().Contains(@"SOFTWARE\WOW6432NODE"))
+                               key = key.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\");
+                        path = Registry.GetValue(key, value, null).ToString();
+                    }
+                    catch 
+                    {
+                        path = null; 
+                    }
                 }
                 else
                 {

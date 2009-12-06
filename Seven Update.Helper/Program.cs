@@ -97,7 +97,7 @@ namespace SevenUpdate.Helper
                         MoveFileEx(appStore + "reboot.lock", null, MoveOnReboot);
                 }
                 catch (Exception) { }
-                Process.Start(appDir + "Seven Update.exe");
+                Process.Start(appDir + "Seven Update.exe", "Auto");
                 Environment.Exit(0);
             }
             else
