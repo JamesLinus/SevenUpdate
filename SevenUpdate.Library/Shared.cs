@@ -165,6 +165,8 @@ namespace SevenUpdate
                         if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                             if (!is64Bit && key.ToUpper().Contains(@"SOFTWARE\") && !key.ToUpper().Contains(@"SOFTWARE\WOW6432NODE"))
                                key = key.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\");
+                        if (value == "@")
+                            value = "";
                         path = Registry.GetValue(key, value, null).ToString();
                     }
                     catch 
