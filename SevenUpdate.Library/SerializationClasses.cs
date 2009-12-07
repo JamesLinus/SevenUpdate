@@ -206,10 +206,31 @@ namespace SevenUpdate
     #region Enum
 
     /// <summary>
+    /// The action to preform on the shortcut
+    /// </summary>
+    public enum ShortcutAction
+    {
+        /// <summary>
+        /// Adds or updates a shortcut
+        /// </summary>
+        Add,
+
+        /// <summary>
+        /// Deletes a shortcut
+        /// </summary>
+        Delete
+
+    }
+    /// <summary>
     /// The action to perform on the file
     /// </summary>
     public enum FileAction
     {
+        /// <summary>
+        /// Compares information only, does not update the file
+        /// </summary>
+        Compare,
+
         /// <summary>Update the file</summary>
         Update,
 
@@ -534,6 +555,12 @@ namespace SevenUpdate
         [XmlAttribute("args")]
         public string Args { get; set; }
 
+        /// <summary>
+        /// Specifies if the file is optional, will get updated if installed on system, otherwise it's ignored.
+        /// </summary>
+        [XmlAttribute("optional")]
+        public bool Optional { get; set; }
+
         #endregion
 
         #region Implementation of INotifyPropertyChanged
@@ -647,10 +674,10 @@ namespace SevenUpdate
         public string Location { get; set; }
 
         /// <summary>
-        /// The full path of the target to the shortcut.
+        /// The action to peform on the shortcut
         /// </summary>
-        [XmlAttribute("target")]
-        public string Target { get; set; }
+        [XmlAttribute("action")]
+        public ShortcutAction Action { get; set; }
 
         #endregion
 
@@ -673,6 +700,12 @@ namespace SevenUpdate
         /// </summary>
         [XmlAttribute("icon")]
         public string Icon { get; set; }
+
+        /// <summary>
+        /// The full path of the target to the shortcut.
+        /// </summary>
+        [XmlAttribute("target")]
+        public string Target { get; set; }
 
         #endregion
 

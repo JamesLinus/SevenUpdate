@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 
@@ -47,7 +48,7 @@ namespace SevenUpdate.Windows
 
             tbVersion.Text = version.ToString();
 
-            tbCopyright.Text = "© " + DateTime.Now.Year + " " + App.RM.GetString("SevenSoftware");
+            tbCopyright.Text = "© " + "2007 - " + DateTime.Now.Year + " " + App.RM.GetString("SevenSoftware");
             tbLicense.Text = assembly.GetName().Name + " " + tbLicense.Text;
         }
 
@@ -57,6 +58,17 @@ namespace SevenUpdate.Windows
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void tbSupport_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start(tbSupport.Text);
+        }
+
+        private void tbLicense_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start("http://www.gnu.org/licenses/gpl-3.0.txt");
+
         }
     }
 }
