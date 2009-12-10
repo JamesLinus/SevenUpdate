@@ -22,10 +22,11 @@
 
 using System;
 using System.ServiceModel;
+using SevenUpdate.Base;
 
 #endregion
 
-namespace SevenUpdate.WCF
+namespace SevenUpdate.Admin.WCF
 {
     /// <summary>
     /// Callback methods for the WCF Service

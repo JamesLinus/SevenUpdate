@@ -1,4 +1,4 @@
-﻿#region GNU Public License v3
+#region GNU Public License v3
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
@@ -30,8 +30,33 @@ using System.Net;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Base
 {
+
+    #region Event Args
+
+    /// <summary>
+    /// Provides event data for the SearchCompleted event
+    /// </summary>
+    public class SearchCompletedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Contains event data associated with this event
+        /// </summary>
+        /// <param name="applications">The collection of applications to update</param>
+        public SearchCompletedEventArgs(Collection<SUI> applications)
+        {
+            Applications = applications;
+        }
+
+        /// <summary>
+        /// Gets a collection of applications that contain updates to install
+        /// </summary>
+        public Collection<SUI> Applications { get; private set; }
+    }
+
+    #endregion
+
     /// <summary>
     /// Contains methods to search for updates
     /// </summary>
@@ -56,7 +81,7 @@ namespace SevenUpdate
         /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
         private static bool CheckForUpdates(ref SUI app, IEnumerable<SUH> hidden)
         {
-            if (!Directory.Exists(Shared.ConvertPath(app.Directory, true, app.Is64Bit)))
+            if (!Directory.Exists(Base.ConvertPath(app.Directory, true, app.Is64Bit)))
                 return false;
             var isHidden = false;
             for (var y = 0; y < app.Updates.Count; y++)
@@ -85,7 +110,7 @@ namespace SevenUpdate
                 ulong size = 0;
                 for (var z = 0; z < app.Updates[y].Files.Count; z++)
                 {
-                    var file = Shared.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
+                    var file = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
 
                     // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                     if (File.Exists(file))
@@ -97,15 +122,14 @@ namespace SevenUpdate
                             case FileAction.Update:
                             case FileAction.UpdateAndExecute:
                             case FileAction.UpdateAndRegister:
-                                if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
+                                if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
                                         break;
                                     z--;
                                 }
-                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) !=
-                                         app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
                                     size += app.Updates[y].Files[z].Size;
                                 break;
                         }
@@ -129,15 +153,14 @@ namespace SevenUpdate
                             case FileAction.Update:
                             case FileAction.UpdateAndExecute:
                             case FileAction.UpdateAndRegister:
-                                if (Shared.GetHash(file) == app.Updates[y].Files[z].Hash)
+                                if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
                                         break;
                                     z--;
                                 }
-                                else if (Shared.GetHash(Shared.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) !=
-                                         app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
                                     size += app.Updates[y].Files[z].Size;
                                 break;
                         }
@@ -199,12 +222,12 @@ namespace SevenUpdate
             {
                 // Server Error! If that happens then i am the only one to blame LOL
                 if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
                 return;
             }
 
             // Load the Seven Update SUI
-            var app = Shared.Deserialize<SUI>(response.GetResponseStream());
+            var app = Base.Deserialize<SUI>(response.GetResponseStream());
 
             // Checks to see if there are any updates for Seven Update
             if (app != null)
@@ -219,7 +242,7 @@ namespace SevenUpdate
                     if (apps != null)
                     {
                         // Gets the hidden updates from settings
-                        var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile);
+                        var hidden = Base.Deserialize<Collection<SUH>>(Base.HiddenFile);
 
                         // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
                         foreach (SUA t in apps.Where(t => t.IsEnabled))
@@ -231,7 +254,7 @@ namespace SevenUpdate
                                 response = (HttpWebResponse) hwr.GetResponse();
 
                                 // Loads a SUI that was downloaded
-                                app = Shared.Deserialize<SUI>(response.GetResponseStream());
+                                app = Base.Deserialize<SUI>(response.GetResponseStream());
 
                                 // Check to see if any updates are avalible and exclude hidden updates
                                 // If there is an update avaliable, add it.
@@ -244,13 +267,13 @@ namespace SevenUpdate
                             {
                                 // Notify that there was an error that occurred.
                                 if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
                             }
                             catch (Exception e)
                             {
                                 // Notify that there was an error that occurred.
                                 if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new Shared.ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
                             }
                         }
                     }
@@ -291,32 +314,12 @@ namespace SevenUpdate
         /// <summary>
         /// Occurs if an error occurred
         /// </summary>
-        public static event EventHandler<Shared.ErrorOccurredEventArgs> ErrorOccurredEventHandler;
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
 
         /// <summary>
         /// Occurs when the searching of updates has completed.
         /// </summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchDoneEventHandler;
-
-        /// <summary>
-        /// Provides event data for the SearchCompleted event
-        /// </summary>
-        public class SearchCompletedEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="applications">The collection of applications to update</param>
-            public SearchCompletedEventArgs(Collection<SUI> applications)
-            {
-                Applications = applications;
-            }
-
-            /// <summary>
-            /// Gets a collection of applications that contain updates to install
-            /// </summary>
-            public Collection<SUI> Applications { get; private set; }
-        }
 
         #endregion
     }

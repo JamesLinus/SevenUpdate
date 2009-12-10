@@ -30,8 +30,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using SevenUpdate.Base;
 using SevenUpdate.Controls;
-using SevenUpdate.WCF;
 using SevenUpdate.Windows;
 
 #endregion
@@ -87,7 +87,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHiddenUpdates()
         {
-            hiddenUpdates = Shared.Deserialize<ObservableCollection<SUH>>(Shared.HiddenFile);
+            hiddenUpdates = Base.Base.Deserialize<ObservableCollection<SUH>>(Base.Base.HiddenFile);
             if (hiddenUpdates == null)
                 return;
             listView.ItemsSource = hiddenUpdates;

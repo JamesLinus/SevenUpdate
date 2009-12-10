@@ -42,8 +42,7 @@ namespace SevenUpdate.Controls
         /// </summary>
         public static readonly DependencyProperty IsListviewSortableProperty = DependencyProperty.RegisterAttached("IsListViewSortable", typeof (Boolean), typeof (ListViewSorter),
                                                                                                                    new FrameworkPropertyMetadata(false,
-                                                                                                                                                 new PropertyChangedCallback(
-                                                                                                                                                     OnRegisterSortableGrid)));
+                                                                                                                                                 new PropertyChangedCallback(OnRegisterSortableGrid)));
 
         /// <summary>
         /// A string indicating what to sort the colum by

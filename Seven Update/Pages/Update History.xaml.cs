@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using SevenUpdate.Base;
 using SevenUpdate.Controls;
 using SevenUpdate.Windows;
 
@@ -43,7 +44,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The location of the update history file
         /// </summary>
-        public static readonly string HistoryFile = Shared.AllUserStore + "History.suh";
+        public static readonly string HistoryFile = Base.Base.AllUserStore + "History.suh";
 
         /// <summary>
         /// Gets or Sets a collection of SUH items
@@ -67,7 +68,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHistory()
         {
-            updateHistory = Shared.Deserialize<ObservableCollection<SUH>>(HistoryFile);
+            updateHistory = Base.Base.Deserialize<ObservableCollection<SUH>>(HistoryFile);
             if (updateHistory == null)
                 return;
 

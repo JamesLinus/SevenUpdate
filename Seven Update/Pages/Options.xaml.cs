@@ -1,4 +1,4 @@
-﻿#region GNU Public License v3
+#region GNU Public License v3
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
@@ -31,9 +31,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using SevenUpdate.Base;
 using SevenUpdate.Controls;
-using SevenUpdate.Properties;
-using SevenUpdate.WCF;
 using SevenUpdate.Windows;
 
 #endregion
@@ -77,12 +76,12 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void DownloadSUL()
         {
-            var hwr = (HttpWebRequest)WebRequest.Create(SULLocation);
+            var hwr = (HttpWebRequest) WebRequest.Create(SULLocation);
             HttpWebResponse response;
             try
             {
-                response = (HttpWebResponse)hwr.GetResponse();
-                LoadSUL(Shared.Deserialize<ObservableCollection<SUA>>(response.GetResponseStream()));
+                response = (HttpWebResponse) hwr.GetResponse();
+                LoadSUL(Base.Base.Deserialize<ObservableCollection<SUA>>(response.GetResponseStream()));
             }
             catch (WebException)
             {
@@ -122,12 +121,12 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void LoadSUL(ObservableCollection<SUA> officialAppList = null)
         {
-            userAppList = Shared.Deserialize<ObservableCollection<SUA>>(Shared.AppsFile);
+            userAppList = Base.Base.Deserialize<ObservableCollection<SUA>>(Base.Base.AppsFile);
 
             if (userAppList != null)
                 for (var x = 0; x < userAppList.Count; x++)
                 {
-                    if (Directory.Exists(Shared.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
+                    if (Directory.Exists(Base.Base.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
                         continue;
                     userAppList.RemoveAt(x);
                     x--;
@@ -138,7 +137,7 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialAppList.Count; x++)
                 {
-                    if (!Directory.Exists(Shared.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
+                    if (!Directory.Exists(Base.Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
                     {
                         officialAppList.RemoveAt(x);
                         x--;
@@ -163,7 +162,6 @@ namespace SevenUpdate.Pages
                     {
                         officialAppList.Add(userAppList[x]);
                     }
-
             }
 
             if (officialAppList != null)

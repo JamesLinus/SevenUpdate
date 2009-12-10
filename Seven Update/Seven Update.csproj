@@ -87,10 +87,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\App.cs" />
-    <Compile Include="Classes\Admin.cs" />
-    <Compile Include="Classes\Converters.cs" />
+    <Compile Include="Admin.cs" />
+    <Compile Include="App.cs" />
     <Compile Include="Controls\ListViewExtensions.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
       <DependentUpon>InfoBar.xaml</DependentUpon>
     </Compile>
@@ -232,12 +232,6 @@
     <Resource Include="Images\GreenArrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SevenUpdate.Library\Seven Update.Library.csproj">
-      <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
-      <Name>Seven Update.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\ShieldDisabled.png" />
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +271,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\wicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Seven Update.Base\Seven Update.Base.csproj">
+      <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
+      <Name>Seven Update.Base</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SevenUpdate.Properties {
+namespace SevenUpdate.Base.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

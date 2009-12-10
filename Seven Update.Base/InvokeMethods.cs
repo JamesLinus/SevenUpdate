@@ -25,7 +25,7 @@ using System.Windows.Threading;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Base
 {
     /// <summary>
     /// Extension Methods for Dispatcher.BeginInvoke

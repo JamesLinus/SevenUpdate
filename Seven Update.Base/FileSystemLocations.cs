@@ -26,7 +26,7 @@ using System.Text;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Base
 {
     internal static class NativeMethods
     {

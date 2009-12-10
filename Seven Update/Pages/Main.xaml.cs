@@ -1,4 +1,4 @@
-﻿#region GNU Public License v3
+#region GNU Public License v3
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
@@ -27,8 +27,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using SevenUpdate.Base;
 using SevenUpdate.Properties;
-using SevenUpdate.WCF;
 using SevenUpdate.Windows;
 
 #endregion
@@ -153,7 +153,7 @@ namespace SevenUpdate.Pages
         /// Updates the UI when the installation progress has changed
         /// </summary>
         /// <param name="e">The InstallProgress data</param>
-        private void InstallProgressChanged(AdminCallBack.InstallProgressChangedEventArgs e)
+        private void InstallProgressChanged(InstallProgressChangedEventArgs e)
         {
             if (e.CurrentProgress == -1)
                 infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall") + "...";
@@ -173,9 +173,9 @@ namespace SevenUpdate.Pages
         /// Updates the UI when the download progress has changed
         /// </summary>
         /// <param name="e">The DownloadProgress data</param>
-        private void DownloadProgressChanged(AdminCallBack.DownloadProgressChangedEventArgs e)
+        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
         {
-            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
+            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
                                     App.RM.GetString("Complete") + ")";
         }
 
@@ -183,12 +183,12 @@ namespace SevenUpdate.Pages
         /// Updates the UI when the installation has completed
         /// </summary>
         /// <param name="e">The InstallCompleted data</param>
-        private void InstallCompleted(AdminCallBack.InstallCompletedEventArgs e)
+        private void InstallCompleted(InstallCompletedEventArgs e)
         {
             Settings.Default.lastInstall = DateTime.Now;
             tbUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
             // if a reboot is needed lets say it
-            if (!Shared.RebootNeeded)
+            if (!Base.Base.RebootNeeded)
                 SetUI(UILayout.InstallationCompleted, e.UpdatesInstalled, e.UpdatesFailed);
             else
                 SetUI(UILayout.RebootNeeded);
@@ -198,7 +198,7 @@ namespace SevenUpdate.Pages
         /// Updates the UI when the downloading of updates has completed
         /// </summary>
         /// <param name="e">The DownloadCompleted data</param>
-        private void DownloadCompleted(AdminCallBack.DownloadCompletedEventArgs e)
+        private void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
                 SetUI(UILayout.ErrorOccurred);
@@ -212,7 +212,7 @@ namespace SevenUpdate.Pages
         /// Updates the UI the search for updates has completed
         /// </summary>
         /// <param name="e">The SearchComplete data</param>
-        private void SearchCompleted(Search.SearchCompletedEventArgs e)
+        private void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
             {
@@ -297,7 +297,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when an error occurs
         /// </summary>
-        private void ErrorOccurredEventHandler(object sender, Shared.ErrorOccurredEventArgs e)
+        private void ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e)
         {
             switch (e.Type)
             {
@@ -334,7 +334,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the install progress has changed
         /// </summary>
-        private void InstallProgressChangedEventHandler(object sender, AdminCallBack.InstallProgressChangedEventArgs e)
+        private void InstallProgressChangedEventHandler(object sender, InstallProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallProgressChanged, e);
@@ -345,7 +345,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the download progress has changed
         /// </summary>
-        private void DownloadProgressChangedEventHandler(object sender, AdminCallBack.DownloadProgressChangedEventArgs e)
+        private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadProgressChanged, e);
@@ -356,7 +356,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the search for updates has completed
         /// </summary>
-        internal void SearchCompletedEventHandler(object sender, Search.SearchCompletedEventArgs e)
+        internal void SearchCompletedEventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);
@@ -367,7 +367,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the installation of updates has completed
         /// </summary>
-        private void InstallCompletedEventHandler(object sender, AdminCallBack.InstallCompletedEventArgs e)
+        private void InstallCompletedEventHandler(object sender, InstallCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallCompleted, e);
@@ -378,7 +378,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the downloading of updates has completed
         /// </summary>
-        private void DownloadCompletedEventHandler(object sender, AdminCallBack.DownloadCompletedEventArgs e)
+        private void DownloadCompletedEventHandler(object sender, DownloadCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadCompleted, e);
@@ -400,7 +400,7 @@ namespace SevenUpdate.Pages
         {
             if (auto)
             {
-                if (!App.IsInstallInProgress && !Shared.RebootNeeded)
+                if (!App.IsInstallInProgress && !Base.Base.RebootNeeded)
                     CheckForUpdates();
             }
             else
@@ -414,7 +414,7 @@ namespace SevenUpdate.Pages
         {
             if (!App.IsInstallInProgress)
             {
-                if (Shared.RebootNeeded == false)
+                if (Base.Base.RebootNeeded == false)
                 {
                     SetUI(UILayout.CheckingForUpdates);
                     Settings.Default.lastUpdateCheck = DateTime.Now;
@@ -500,7 +500,7 @@ namespace SevenUpdate.Pages
             else
                 tbUpdatesInstalled.Text = App.RM.GetString("Never");
 
-            SetUI(Shared.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
+            SetUI(Base.Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
 
             #region Event Handler Declarations
 
@@ -913,7 +913,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
         }
 
@@ -922,7 +922,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
-            var textBlock = ((TextBlock)sender);
+            var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
         }
 
@@ -1003,7 +1003,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Updates the UI after the user selects updates to install
         /// </summary>
-        private void UpdateSelectionChangedEventHandler(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
+        private void UpdateSelectionChangedEventHandler(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (App.Applications.Count == 0)
             {
@@ -1055,7 +1055,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdatesSelected");
 
                 if (e.ImportantDownloadSize > 0)
-                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.ImportantDownloadSize);
+                    infoBar.tbSelectedUpdates.Text += ", " + Base.Base.ConvertFileSize(e.ImportantDownloadSize);
             }
 
             if (e.OptionalUpdates > 0)
@@ -1076,7 +1076,7 @@ namespace SevenUpdate.Pages
                 }
 
                 if (e.OptionalDownloadSize > 0)
-                    infoBar.tbSelectedUpdates.Text += ", " + Shared.ConvertFileSize(e.OptionalDownloadSize);
+                    infoBar.tbSelectedUpdates.Text += ", " + Base.Base.ConvertFileSize(e.OptionalDownloadSize);
             }
 
             if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)

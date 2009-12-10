@@ -23,6 +23,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using SevenUpdate.Base;
 
 #endregion
 
@@ -48,14 +49,14 @@ namespace SevenUpdate.Windows
         /// <returns><c>true</c></returns>
         internal bool? ShowDialog(SUH updateInfo)
         {
-            tbUpdateName.Text = Shared.GetLocaleString(updateInfo.Name);
+            tbUpdateName.Text = Base.Base.GetLocaleString(updateInfo.Name);
             tbUpdateType.Text = updateInfo.Importance.ToString();
-            tbUpdateDescription.Text = Shared.GetLocaleString(updateInfo.Description);
+            tbUpdateDescription.Text = Base.Base.GetLocaleString(updateInfo.Description);
 
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
-                tbStatus.Text = Shared.ConvertFileSize(updateInfo.Size);
+                tbStatus.Text = Base.Base.ConvertFileSize(updateInfo.Size);
             }
             else
                 tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;

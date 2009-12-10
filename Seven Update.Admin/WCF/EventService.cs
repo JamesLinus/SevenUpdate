@@ -22,10 +22,11 @@
 
 using System;
 using System.ServiceModel;
+using SevenUpdate.Base;
 
 #endregion
 
-namespace SevenUpdate.WCF
+namespace SevenUpdate.Admin.WCF
 {
     /// <summary>
     /// Class containing events and delegates for the EventService
@@ -78,6 +79,8 @@ namespace SevenUpdate.WCF
 
         #endregion
 
+        #region Callbacks
+
         /// <summary>
         /// Occurs when the download of updates has completed
         /// </summary>
@@ -102,6 +105,18 @@ namespace SevenUpdate.WCF
         /// Occurs when the install progress has changed
         /// </summary>
         public static InstallProgressCallbackDelegate InstallProgressChanged;
+
+        /// <summary>
+        /// Raises an event when the client is connected
+        /// </summary>
+        public static event CallbackDelegate ClientConnected;
+
+        /// <summary>
+        /// Raises an event when the client disconnects
+        /// </summary>
+        public static event CallbackDelegate ClientDisconnected;
+
+        #endregion
 
         #region IEventSystem Members
 
@@ -135,16 +150,6 @@ namespace SevenUpdate.WCF
         }
 
         #endregion
-
-        /// <summary>
-        /// Raises an event when the client is connected
-        /// </summary>
-        public static event CallbackDelegate ClientConnected;
-
-        /// <summary>
-        /// Raises an event when the client disconnects
-        /// </summary>
-        public static event CallbackDelegate ClientDisconnected;
 
         /// <summary>
         /// Occurs when the <see cref="EventService" /> had closed

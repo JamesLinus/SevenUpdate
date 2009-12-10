@@ -1,4 +1,4 @@
-﻿#region GNU Public License v3
+#region GNU Public License v3
 
 // Copyright 2007, 2008 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
@@ -130,13 +130,7 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new EULA
-                                  {
-                                      LicenseUrl = App.Applications[x].Updates[y].LicenseUrl,
-                                      Title = Shared.GetLocaleString(App.Applications[x].Updates[y].Name),
-                                      AppIndex = x,
-                                      UpdateIndex = y
-                                  };
+                    var sla = new EULA {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
 
                     licenseInformation.Add(sla);
                 }
@@ -178,7 +172,7 @@ namespace SevenUpdate.Windows
                 }
                 catch (Exception f)
                 {
-                    Shared.ReportError(f.Message, Shared.UserStore);
+                    Base.Base.ReportError(f.Message, Base.Base.UserStore);
                     licenseText[x] = "Error Downloading License Agreement";
                 }
             }

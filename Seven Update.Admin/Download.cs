@@ -25,13 +25,45 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using SevenUpdate.WCF;
+using SevenUpdate.Admin.WCF;
+using SevenUpdate.Base;
 using SharpBits.Base;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Admin
 {
+    #region EventArgs
+
+    /// <summary>
+    /// Provides event data for the DownloadCompleted event
+    /// </summary>
+    public class DownloadCompletedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Contains event data associated with this event
+        /// </summary>
+        /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c> </param>
+        /// <param name="applications"> A collection of Applications that were downloaded</param>
+        public DownloadCompletedEventArgs(bool errorOccurred, Collection<SUI> applications)
+        {
+            ErrorOccurred = errorOccurred;
+            Applications = applications;
+        }
+
+        /// <summary>
+        /// <c>true</c> is an error occurred, otherwise <c>false</c>
+        /// </summary>
+        public bool ErrorOccurred { get; private set; }
+
+        /// <summary>
+        /// A collection of Applications that were downloaded
+        /// </summary>
+        public Collection<SUI> Applications { get; private set; }
+    }
+
+    #endregion
+
     /// <summary>
     /// A class containing methods to download updates
     /// </summary>
@@ -89,7 +121,7 @@ namespace SevenUpdate
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
 
-                Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
                 Environment.Exit(0);
             }
             else
@@ -99,13 +131,13 @@ namespace SevenUpdate
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
 
-                    Shared.ReportError("Applications file could not be found", Shared.AllUserStore);
+                    Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
                     Environment.Exit(0);
                 }
             }
 
             // When done with the temp list
-            File.Delete(Shared.UserStore + "Apps.sui");
+            File.Delete(Base.Base.UserStore + "Apps.sui");
 
             // Makes the passed applicaytion collection global
             updates = applications;
@@ -163,17 +195,17 @@ namespace SevenUpdate
                 for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of appname and update title
-                    var downloadDir = Shared.AllUserStore + @"downloads\" + applications[x].Updates[y].Name[0].Value;
+                    var downloadDir = Base.Base.AllUserStore + @"downloads\" + applications[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
 
                     for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                     {
-                        var fileDestination = Shared.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
+                        var fileDestination = Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
 
                         if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete)
                             continue;
-                        if (Shared.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == applications[x].Updates[y].Files[z].Hash)
+                        if (Base.Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == applications[x].Updates[y].Files[z].Hash)
                             continue;
                         try
                         {
@@ -184,14 +216,14 @@ namespace SevenUpdate
                             catch (Exception)
                             {
                             }
-                            var url = new Uri(Shared.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
+                            var url = new Uri(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                         }
                         catch (Exception e)
                         {
                             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                                 EventService.ErrorOccurred(e, ErrorType.DownloadError);
-                            Shared.ReportError(e.Message, Shared.AllUserStore);
+                            Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
                         }
                     }
                 }
@@ -207,7 +239,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Shared.ReportError(e.Message, Shared.AllUserStore);
+                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(e, ErrorType.FatalError);
                     Environment.Exit(0);
@@ -249,7 +281,7 @@ namespace SevenUpdate
                         {
                         }
 
-                        Shared.ReportError(e.Job.Error.File + " - " + e.Job.Error.Description, Shared.AllUserStore);
+                        Base.Base.ReportError(e.Job.Error.File + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
                         if (EventService.ErrorOccurred != null && App.IsClientConnected)
                             EventService.ErrorOccurred(new Exception(e.Job.Error.File + " - " + e.Job.Error.Description), ErrorType.DownloadError);
                         return;
@@ -265,7 +297,7 @@ namespace SevenUpdate
                 if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0 && e.Job.Progress.BytesTotal > 0)
                 {
                     Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                               App.RM.GetString("DownloadingUpdates") + " (" + Shared.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                               App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
                                                                (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
                 }
             }
@@ -291,7 +323,7 @@ namespace SevenUpdate
             catch (Exception)
             {
             }
-            Shared.ReportError(e.Error.File + " - " + e.Error.Description, Shared.AllUserStore);
+            Base.Base.ReportError(e.Error.File + " - " + e.Error.Description, Base.Base.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                 EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.Description), ErrorType.DownloadError);
             Environment.Exit(0);
@@ -336,37 +368,6 @@ namespace SevenUpdate
             else
                 e.Job.Resume();
         }
-
-        #region EventArgs
-
-        /// <summary>
-        /// Provides event data for the DownloadCompleted event
-        /// </summary>
-        public class DownloadCompletedEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c> </param>
-            /// <param name="applications"> A collection of Applications that were downloaded</param>
-            public DownloadCompletedEventArgs(bool errorOccurred, Collection<SUI> applications)
-            {
-                ErrorOccurred = errorOccurred;
-                Applications = applications;
-            }
-
-            /// <summary>
-            /// <c>true</c> is an error occurred, otherwise <c>false</c>
-            /// </summary>
-            public bool ErrorOccurred { get; private set; }
-
-            /// <summary>
-            /// A collection of Applications that were downloaded
-            /// </summary>
-            public Collection<SUI> Applications { get; private set; }
-        }
-
-        #endregion
 
         #endregion
 

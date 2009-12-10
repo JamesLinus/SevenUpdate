@@ -31,14 +31,15 @@ using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using SevenUpdate.Properties;
-using SevenUpdate.WCF;
+using SevenUpdate.Admin.Properties;
+using SevenUpdate.Admin.WCF;
+using SevenUpdate.Base;
 using SharpBits.Base;
 using Application = System.Windows.Application;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Admin
 {
     /// <summary>The main class of the application</summary>
     internal class App
@@ -64,19 +65,19 @@ namespace SevenUpdate
 
         #region Global Vars
 
-        /// <summary>
-        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
-        /// </summary>
-        internal static bool Abort { get; set; }
-
         /// <summary>The notifyIcon used only when Auto Updating</summary>
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
         /// <summary>The UI Resource Strings</summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
 
+        /// <summary>
+        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
+        /// </summary>
+        internal static bool Abort { get; set; }
+
         /// <summary>The update settings for Seven Update</summary>
-        public static Config Settings { get { return Shared.DeserializeStruct<Config>(Shared.ConfigFile); } }
+        public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
 
         /// <summary>Gets or sets a bool value indicating Seven Update UI is currently connected.</summary>
         internal static bool IsClientConnected { get; set; }
@@ -109,14 +110,14 @@ namespace SevenUpdate
                     if (host != null)
                         host.Close();
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Shared.ReportError(e.Message, Shared.AllUserStore);
+                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
                     Environment.Exit(0);
                 }
 
-                Shared.Locale = Shared.Locale == null ? "en" : Settings.Locale;
+                Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
 
-                if (!Directory.Exists(Shared.AllUserStore))
-                    Directory.CreateDirectory(Shared.AllUserStore);
+                if (!Directory.Exists(Base.Base.AllUserStore))
+                    Directory.CreateDirectory(Base.Base.AllUserStore);
 
                 NotifyIcon.Icon = Resources.icon;
                 NotifyIcon.Visible = false;
@@ -133,13 +134,13 @@ namespace SevenUpdate
 
                                 #region code
 
-                                if (File.Exists(Shared.UserStore + "Apps.sul"))
+                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
                                 {
-                                    File.Delete(Shared.AppsFile);
+                                    File.Delete(Base.Base.AppsFile);
 
-                                    File.Move(Shared.UserStore + "Apps.sul", Shared.AppsFile);
+                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
 
-                                    SetFileSecurity(Shared.AppsFile);
+                                    SetFileSecurity(Base.Base.AppsFile);
                                 }
 
                                 #endregion
@@ -149,22 +150,22 @@ namespace SevenUpdate
 
                                 #region code
 
-                                if (File.Exists(Shared.UserStore + "App.config"))
+                                if (File.Exists(Base.Base.UserStore + "App.config"))
                                 {
-                                    File.Delete(Shared.ConfigFile);
+                                    File.Delete(Base.Base.ConfigFile);
 
-                                    File.Move(Shared.UserStore + "App.config", Shared.ConfigFile);
+                                    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
 
-                                    SetFileSecurity(Shared.ConfigFile);
+                                    SetFileSecurity(Base.Base.ConfigFile);
                                 }
 
-                                if (File.Exists(Shared.UserStore + "Apps.sul"))
+                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
                                 {
-                                    File.Delete(Shared.AppsFile);
-                                    File.Move(Shared.UserStore + "Apps.sul", Shared.AppsFile);
+                                    File.Delete(Base.Base.AppsFile);
+                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
                                 }
 
-                                SetFileSecurity(Shared.AppsFile);
+                                SetFileSecurity(Base.Base.AppsFile);
 
                                 if (Environment.OSVersion.Version.Major < 6)
                                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
@@ -175,7 +176,7 @@ namespace SevenUpdate
                                                    {
                                                        StartInfo =
                                                            {
-                                                               FileName = Shared.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
+                                                               FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
                                                                Verb = "runas",
                                                                UseShellExecute = true,
                                                                Arguments = "/Change /Enable /TN \"Seven Update.Admin\"",
@@ -194,21 +195,21 @@ namespace SevenUpdate
 
                                 #region code
 
-                                if (File.Exists(Shared.UserStore + "App.config"))
+                                if (File.Exists(Base.Base.UserStore + "App.config"))
                                 {
-                                    File.Delete(Shared.ConfigFile);
+                                    File.Delete(Base.Base.ConfigFile);
 
-                                    File.Move(Shared.UserStore + "App.config", Shared.ConfigFile);
+                                    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
 
-                                    SetFileSecurity(Shared.ConfigFile);
+                                    SetFileSecurity(Base.Base.ConfigFile);
                                 }
-                                if (File.Exists(Shared.UserStore + "Apps.sul"))
+                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
                                 {
-                                    File.Delete(Shared.AppsFile);
+                                    File.Delete(Base.Base.AppsFile);
 
-                                    File.Move(Shared.UserStore + "Apps.sul", Shared.AppsFile);
+                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
 
-                                    SetFileSecurity(Shared.AppsFile);
+                                    SetFileSecurity(Base.Base.AppsFile);
                                 }
                                 if (Environment.OSVersion.Version.Major < 6)
                                 {
@@ -220,7 +221,7 @@ namespace SevenUpdate
                                                    {
                                                        StartInfo =
                                                            {
-                                                               FileName = Shared.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
+                                                               FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
                                                                Verb = "runas",
                                                                UseShellExecute = true,
                                                                Arguments = "/Change /Disable /TN \"Seven Update.Admin\"",
@@ -239,14 +240,14 @@ namespace SevenUpdate
 
                                 #region code
 
-                                var hidden = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile) ?? new Collection<SUH>();
-                                hidden.Add(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
+                                var hidden = Base.Base.Deserialize<Collection<SUH>>(Base.Base.HiddenFile) ?? new Collection<SUH>();
+                                hidden.Add(Base.Base.Deserialize<SUH>(Base.Base.UserStore + "Update.suh"));
 
-                                File.Delete(Shared.UserStore + "Update.suh");
+                                File.Delete(Base.Base.UserStore + "Update.suh");
 
-                                Shared.Serialize(hidden, Shared.HiddenFile);
+                                Base.Base.Serialize(hidden, Base.Base.HiddenFile);
 
-                                SetFileSecurity(Shared.HiddenFile);
+                                SetFileSecurity(Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -255,15 +256,15 @@ namespace SevenUpdate
 
                                 #region code
 
-                                var show = Shared.Deserialize<Collection<SUH>>(Shared.HiddenFile) ?? new Collection<SUH>();
-                                show.Remove(Shared.Deserialize<SUH>(Shared.UserStore + "Update.suh"));
+                                var show = Base.Base.Deserialize<Collection<SUH>>(Base.Base.HiddenFile) ?? new Collection<SUH>();
+                                show.Remove(Base.Base.Deserialize<SUH>(Base.Base.UserStore + "Update.suh"));
 
-                                File.Delete(Shared.UserStore + "Update.suh");
+                                File.Delete(Base.Base.UserStore + "Update.suh");
 
                                 if (show.Count == 0)
-                                    File.Delete(Shared.HiddenFile);
+                                    File.Delete(Base.Base.HiddenFile);
                                 else
-                                    Shared.Serialize(show, Shared.HiddenFile);
+                                    Base.Base.Serialize(show, Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -272,11 +273,11 @@ namespace SevenUpdate
 
                                 #region code
 
-                                File.Delete(Shared.HiddenFile);
+                                File.Delete(Base.Base.HiddenFile);
 
-                                File.Move(Shared.UserStore + "Hidden.suh", Shared.HiddenFile);
+                                File.Move(Base.Base.UserStore + "Hidden.suh", Base.Base.HiddenFile);
 
-                                SetFileSecurity(Shared.HiddenFile);
+                                SetFileSecurity(Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -291,7 +292,7 @@ namespace SevenUpdate
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
-                                    Search.SearchForUpdates(Shared.Deserialize<Collection<SUA>>(Shared.AppsFile));
+                                    Search.SearchForUpdates(Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile));
                                     app.Run();
                                 }
                                 else
@@ -313,7 +314,7 @@ namespace SevenUpdate
                                     }
                                     catch (Exception e)
                                     {
-                                        Shared.ReportError(e.Message, Shared.AllUserStore);
+                                        Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
                                     }
                                 }
                                 else
@@ -327,7 +328,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Shared.ReportError(e.Message, Shared.AllUserStore);
+                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
                 }
 
                 #endregion
@@ -382,7 +383,7 @@ namespace SevenUpdate
 
             if (Environment.GetCommandLineArgs()[0] == "Auto")
             {
-                proc.StartInfo.FileName = Shared.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true);
+                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true);
 
                 proc.StartInfo.Verb = "runas";
 
@@ -398,7 +399,7 @@ namespace SevenUpdate
             }
             else
             {
-                proc.StartInfo.FileName = Shared.ConvertPath(@"%PROGRAMFILES%\Seven Update\Seven Update.exe", true, true);
+                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Update\Seven Update.exe", true, true);
                 proc.StartInfo.UseShellExecute = true;
                 proc.StartInfo.Arguments = "Reconnect";
                 proc.Start();
@@ -463,7 +464,7 @@ namespace SevenUpdate
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
-            Download.DownloadUpdates(Shared.Deserialize<Collection<SUI>>(Shared.UserStore + "Apps.sui"), JobPriority.ForeGround);
+            Download.DownloadUpdates(Base.Base.Deserialize<Collection<SUI>>(Base.Base.UserStore + "Apps.sui"), JobPriority.ForeGround);
         }
 
         /// <summary>Occurs when the Seven Update UI disconnected</summary>
@@ -477,11 +478,11 @@ namespace SevenUpdate
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
-            Shared.ReportError("Host Fault", Shared.AllUserStore);
+            Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
-        private static void Search_SearchDoneEventHandler(object sender, Search.SearchCompletedEventArgs e)
+        private static void Search_SearchDoneEventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
             {

@@ -24,7 +24,7 @@ using System.ServiceModel;
 
 #endregion
 
-namespace SevenUpdate.WCF
+namespace SevenUpdate.Admin.WCF
 {
     /// <summary>
     /// Methods for the Event Service

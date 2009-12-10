@@ -30,7 +30,7 @@ using System.Security.Principal;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using SevenUpdate.WCF;
+using SevenUpdate.Base;
 using SevenUpdate.Windows;
 
 #endregion
@@ -64,12 +64,12 @@ namespace SevenUpdate
         /// <summary>
         /// Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
-        public static Collection<SUA> AppsToUpdate { get { return Shared.Deserialize<Collection<SUA>>(Shared.AppsFile); } }
+        public static Collection<SUA> AppsToUpdate { get { return Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile); } }
 
         /// <summary>
         /// Gets the update configuration settings
         /// </summary>
-        public static Config Settings { get { return Shared.DeserializeStruct<Config>(Shared.ConfigFile); } }
+        public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
 
         /// <summary>
         /// Gets or Sets a collection of applications to update
@@ -109,10 +109,10 @@ namespace SevenUpdate
             // Makes sure only 1 copy of Seven Update is allowed to run
             using (new Mutex(true, "Seven Update", out createdNew))
             {
-                Directory.CreateDirectory(Shared.UserStore);
+                Directory.CreateDirectory(Base.Base.UserStore);
                 RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
-                Shared.Locale = Shared.Locale == null ? "en" : Settings.Locale;
-                Shared.SerializationErrorEventHandler += Shared_SerializationErrorEventHandler;
+                Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
+                Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
                 foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
                 {
                     AddSUA(t);
@@ -144,7 +144,7 @@ namespace SevenUpdate
         /// <summary>
         /// Occurs when there is a serialization method. This is a temporary method for testing purposes and will not included in the public release.
         /// </summary>
-        private static void Shared_SerializationErrorEventHandler(object sender, Shared.SerializationErrorEventArgs e)
+        private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
         {
             MessageBox.Show(e.File + e.Exception);
         }
@@ -169,13 +169,14 @@ namespace SevenUpdate
                 {
                     return;
                 }
-                var sua = Shared.Deserialize<SUA>(response.GetResponseStream());
-                var sul = Shared.Deserialize<Collection<SUA>>(Shared.AppsFile);
-                File.Delete(Shared.UserStore + "add.sua");
+                var sua = Base.Base.Deserialize<SUA>(response.GetResponseStream());
+                var sul = Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile);
+                File.Delete(Base.Base.UserStore + "add.sua");
                 var index = sul.IndexOf(sua);
                 if (index < 0)
                 {
-                    if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Shared.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                    if (
+                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                         MessageBoxResult.Yes)
                     {
                         sul.Add(sua);

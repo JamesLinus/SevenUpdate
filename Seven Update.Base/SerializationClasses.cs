@@ -27,7 +27,7 @@ using Microsoft.Win32;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Base
 {
 
     #region Application Settings
@@ -219,8 +219,8 @@ namespace SevenUpdate
         /// Deletes a shortcut
         /// </summary>
         Delete
-
     }
+
     /// <summary>
     /// The action to perform on the file
     /// </summary>

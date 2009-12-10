@@ -32,8 +32,11 @@ using Microsoft.Win32;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Base
 {
+
+    #region Event Args
+
     /// <summary>
     /// Indicates a type of error that can occur
     /// </summary>
@@ -66,9 +69,65 @@ namespace SevenUpdate
     }
 
     /// <summary>
+    /// Provides event data for the ErrorOccurred event
+    /// </summary>
+    public class ErrorOccurredEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Contains event data associated with this event
+        /// </summary>
+        /// <param name="exception">the exception that occurred</param>
+        /// <param name="type">the type of error that occurred</param>
+        public ErrorOccurredEventArgs(Exception exception, ErrorType type)
+        {
+            Exception = exception;
+            Type = type;
+        }
+
+        /// <summary>
+        /// Gets the Exception information of the error that occurred
+        /// </summary>
+        public Exception Exception { get; private set; }
+
+        /// <summary>
+        /// Gets the <see cref="ErrorType"/> of the error that occurred
+        /// </summary>
+        public ErrorType Type { get; private set; }
+    }
+
+    /// <summary>
+    /// Provides event data for the SerializationError event
+    /// </summary>
+    public class SerializationErrorEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Contains event data associated with this event
+        /// </summary>
+        /// <param name="e">The exception data</param>
+        /// <param name="file">The full path of the file</param>
+        public SerializationErrorEventArgs(Exception e, string file)
+        {
+            Exception = e;
+            File = file;
+        }
+
+        /// <summary>
+        /// Gets the exception data
+        /// </summary>
+        public Exception Exception { get; private set; }
+
+        /// <summary>
+        /// Gets the full path of the file
+        /// </summary>
+        public string File { get; private set; }
+    }
+
+    #endregion
+
+    /// <summary>
     /// Methods that are shared between other classes
     /// </summary>
-    public static class Shared
+    public static class Base
     {
         #region Global Vars
 
@@ -164,14 +223,14 @@ namespace SevenUpdate
                     {
                         if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                             if (!is64Bit && key.ToUpper().Contains(@"SOFTWARE\") && !key.ToUpper().Contains(@"SOFTWARE\WOW6432NODE"))
-                               key = key.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\");
+                                key = key.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\");
                         if (value == "@")
                             value = "";
                         path = Registry.GetValue(key, value, null).ToString();
                     }
-                    catch 
+                    catch
                     {
-                        path = null; 
+                        path = null;
                     }
                 }
                 else
@@ -589,68 +648,6 @@ namespace SevenUpdate
         /// Occurs when an error occurs while serializing or deserializing a object/file
         /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
-
-        #region Nested type: ErrorOccurredEventArgs
-
-        /// <summary>
-        /// Provides event data for the ErrorOccurred event
-        /// </summary>
-        public class ErrorOccurredEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="exception">the exception that occurred</param>
-            /// <param name="type">the type of error that occurred</param>
-            public ErrorOccurredEventArgs(Exception exception, ErrorType type)
-            {
-                Exception = exception;
-                Type = type;
-            }
-
-            /// <summary>
-            /// Gets the Exception information of the error that occurred
-            /// </summary>
-            public Exception Exception { get; private set; }
-
-            /// <summary>
-            /// Gets the <see cref="ErrorType"/> of the error that occurred
-            /// </summary>
-            public ErrorType Type { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: SerializationErrorEventArgs
-
-        /// <summary>
-        /// Provides event data for the SerializationError event
-        /// </summary>
-        public class SerializationErrorEventArgs : EventArgs
-        {
-            /// <summary>
-            /// Contains event data associated with this event
-            /// </summary>
-            /// <param name="e">The exception data</param>
-            /// <param name="file">The full path of the file</param>
-            public SerializationErrorEventArgs(Exception e, string file)
-            {
-                Exception = e;
-                File = file;
-            }
-
-            /// <summary>
-            /// Gets the exception data
-            /// </summary>
-            public Exception Exception { get; private set; }
-
-            /// <summary>
-            /// Gets the full path of the file
-            /// </summary>
-            public string File { get; private set; }
-        }
-
-        #endregion
 
         #endregion
     }
