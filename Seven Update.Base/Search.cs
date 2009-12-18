@@ -67,7 +67,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
-        private const string SevenUpdateSUI = @"http://ittakestime.org/su/apps/Seven Update.sui";
+        private const string SevenUpdateSUI = @"http://ittakestime.org/su/Seven Update.sui";
 
         #endregion
 

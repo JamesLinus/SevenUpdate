@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -87,6 +88,11 @@ namespace SevenUpdate
         /// </summary>
         internal static bool IsInstallInProgress { get; set; }
 
+        /// <summary>
+        /// Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
+        /// </summary>
+        internal static bool IsReconnect { get; set; }
+
         #endregion
 
         /// <summary>
@@ -126,16 +132,23 @@ namespace SevenUpdate
                     var p = new WindowsPrincipal(id);
                     IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
                 }
+
                 if (args.Length > 0)
                 {
                     if (args[0] == "Auto")
                         IsAutoCheck = true;
                     if (args[0] == "Reconnect")
                     {
-                        IsAutoCheck = false;
-                        IsInstallInProgress = true;
+                        IsReconnect = true;
                     }
                 }
+
+                if (Process.GetProcessesByName("Seven Update.Admin").Length > 0)
+                {
+                    IsReconnect = true;
+                    IsAutoCheck = false;
+                }
+
                 var app = new Application();
                 app.Run(new MainWindow());
             }

@@ -271,12 +271,10 @@ namespace SevenUpdate
             {
                 while (wcf.State != CommunicationState.Created)
                     Thread.CurrentThread.Join(500);
-                Base.Base.Serialize(App.Applications, Base.Base.UserStore + "Apps.sui");
                 wcf.Subscribe();
             }
-            catch (EndpointNotFoundException e)
+            catch (EndpointNotFoundException)
             {
-                Base.Base.ReportError(e.Message, Base.Base.UserStore);
                 Thread.CurrentThread.Join(500);
                 Connect();
             }
@@ -291,7 +289,14 @@ namespace SevenUpdate
         /// </summary>
         internal static void Disconnect()
         {
-            wcf.UnSubscribe();
+            try
+            {
+                wcf.UnSubscribe();
+            }
+            catch (Exception e)
+            {
+                Base.Base.ReportError(e.Message, Base.Base.UserStore);
+            }
         }
 
         #region Install & Config Methods
@@ -336,16 +341,20 @@ namespace SevenUpdate
         /// <summary>
         /// Aborts the installation of updates
         /// </summary>
-        internal static void AbortInstall()
+        internal static bool AbortInstall()
         {
+            bool abort = false;
             try
             {
-                wcf.UnSubscribe();
+                abort = LaunchAdmin("Abort");
+                if (abort)
+                    wcf.UnSubscribe();
             }
             catch (Exception e)
             {
                 Base.Base.ReportError(e.Message, Base.Base.UserStore);
             }
+            return abort;
         }
 
         /// <summary>
@@ -354,6 +363,7 @@ namespace SevenUpdate
         /// <returns> <c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
+            Base.Base.Serialize(App.Applications, Base.Base.UserStore + "Updates.sui");
             return LaunchAdmin("Install");
         }
 

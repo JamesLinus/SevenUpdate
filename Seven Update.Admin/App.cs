@@ -69,23 +69,22 @@ namespace SevenUpdate.Admin
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
         /// <summary>The UI Resource Strings</summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
-
-        /// <summary>
-        /// Gets or Sets a value indicating weather to abort the installation, <c>true</c> to abort, otherwise <c>false</c>
-        /// </summary>
-        internal static bool Abort { get; set; }
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
 
         /// <summary>The update settings for Seven Update</summary>
         public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
 
-        /// <summary>Gets or sets a bool value indicating Seven Update UI is currently connected.</summary>
+        /// <summary>Gets or Sets a bool value indicating Seven Update UI is currently connected.</summary>
         internal static bool IsClientConnected { get; set; }
+
+        internal static bool IsInstall { get; set; }
 
         #endregion
 
-        /// <summary>The main execution path</summary>
-        /// <param name="args">A string[] of command line arguments</param>
+        /// <summary>
+        /// The main execution method
+        /// </summary>
+        /// <param name="args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -121,6 +120,8 @@ namespace SevenUpdate.Admin
 
                 NotifyIcon.Icon = Resources.icon;
                 NotifyIcon.Visible = false;
+                NotifyIcon.BalloonTipClicked += RunSevenUpdate;
+                NotifyIcon.Click += RunSevenUpdate;
 
                 #region Arguments
 
@@ -130,6 +131,14 @@ namespace SevenUpdate.Admin
                     {
                         switch (args[0])
                         {
+                            case "Abort":
+                                using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
+                                {
+                                    fs.WriteByte(0);
+                                    fs.Close();
+                                }
+                                break;
+
                             case "sua":
 
                                 #region code
@@ -288,6 +297,8 @@ namespace SevenUpdate.Admin
 
                                 if (createdNew)
                                 {
+                                    if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+                                        File.Delete(Base.Base.AllUserStore + "abort.lock");
                                     var app = new Application();
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
                                     NotifyIcon.Visible = true;
@@ -309,6 +320,9 @@ namespace SevenUpdate.Admin
                                 {
                                     try
                                     {
+                                        if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+                                            File.Delete(Base.Base.AllUserStore + "abort.lock");
+                                        IsInstall = true;
                                         var app = new Application();
                                         app.Run();
                                     }
@@ -351,16 +365,15 @@ namespace SevenUpdate.Admin
         /// <param name="filter">The <see cref="NotifyType" /> to set the notifyIcon to.</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
-            if (!NotifyIcon.Visible)
-                return;
+            NotifyIcon.Visible = true;
+            //if (!NotifyIcon.Visible)
+            //    return;
             switch (filter)
             {
                 case NotifyType.DownloadStarted:
                     NotifyIcon.Text = RM.GetString("DownloadingUpdates") + "...";
                     break;
                 case NotifyType.DownloadComplete:
-                    NotifyIcon.BalloonTipClicked += RunSevenUpdate;
-                    NotifyIcon.Click += RunSevenUpdate;
                     NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
                     NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), ToolTipIcon.Info);
                     break;
@@ -369,8 +382,6 @@ namespace SevenUpdate.Admin
                     break;
                 case NotifyType.SearchComplete:
                     NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
-                    NotifyIcon.BalloonTipClicked += RunSevenUpdate;
-                    NotifyIcon.Click += RunSevenUpdate;
                     NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), ToolTipIcon.Info);
                     break;
             }
@@ -381,7 +392,17 @@ namespace SevenUpdate.Admin
         {
             var proc = new Process();
 
-            if (Environment.GetCommandLineArgs()[0] == "Auto")
+            if (Environment.Version.Major < 6)
+            {
+                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update\Seven Update.exe", true, true);
+                proc.StartInfo.UseShellExecute = true;
+                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
+                    proc.StartInfo.Arguments = "Auto";
+                else
+                    proc.StartInfo.Arguments = "Reconnect";
+                proc.Start();
+            }
+            else
             {
                 proc.StartInfo.FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true);
 
@@ -394,16 +415,12 @@ namespace SevenUpdate.Admin
                 proc.StartInfo.CreateNoWindow = true;
 
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
                 proc.Start();
+            }
+
+            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
                 Environment.Exit(0);
-            }
-            else
-            {
-                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Update\Seven Update.exe", true, true);
-                proc.StartInfo.UseShellExecute = true;
-                proc.StartInfo.Arguments = "Reconnect";
-                proc.Start();
-            }
         }
 
         #region Security
@@ -456,7 +473,11 @@ namespace SevenUpdate.Admin
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            Abort = true;
+            using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
+            {
+                fs.WriteByte(0);
+                fs.Close();
+            }
             e.Cancel = true;
         }
 
@@ -464,14 +485,14 @@ namespace SevenUpdate.Admin
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
-            Download.DownloadUpdates(Base.Base.Deserialize<Collection<SUI>>(Base.Base.UserStore + "Apps.sui"), JobPriority.ForeGround);
+            if (File.Exists(Base.Base.UserStore + "Updates.sui"))
+                Download.DownloadUpdates(Base.Base.Deserialize<Collection<SUI>>(Base.Base.UserStore + "Updates.sui"), JobPriority.ForeGround);
         }
 
         /// <summary>Occurs when the Seven Update UI disconnected</summary>
         private static void EventService_ClientDisconnected()
         {
             IsClientConnected = false;
-            Abort = true;
         }
 
         /// <summary>Error Event when the .NetPipe binding faults</summary>

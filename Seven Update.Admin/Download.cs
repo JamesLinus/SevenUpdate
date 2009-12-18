@@ -33,6 +33,7 @@ using SharpBits.Base;
 
 namespace SevenUpdate.Admin
 {
+
     #region EventArgs
 
     /// <summary>
@@ -119,9 +120,9 @@ namespace SevenUpdate.Admin
             if (applications == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
+                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
 
-                Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
+                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
                 Environment.Exit(0);
             }
             else
@@ -137,7 +138,7 @@ namespace SevenUpdate.Admin
             }
 
             // When done with the temp list
-            File.Delete(Base.Base.UserStore + "Apps.sui");
+            File.Delete(Base.Base.UserStore + "Updates.sui");
 
             // Makes the passed applicaytion collection global
             updates = applications;
@@ -264,8 +265,12 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
-            if (App.Abort)
+            if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+            {
+                File.Delete(Base.Base.AllUserStore + "abort.lock");
                 Environment.Exit(0);
+            }
+
             try
             {
                 if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
@@ -334,8 +339,12 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {
-            if (App.Abort)
+            if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+            {
+                File.Delete(Base.Base.AllUserStore + "abort.lock");
                 Environment.Exit(0);
+            }
+
             if (e.Job.DisplayName == "Seven Update")
             {
                 if (e.Job.State == JobState.Transferred)
@@ -353,8 +362,7 @@ namespace SevenUpdate.Admin
                     catch (Exception)
                     {
                     }
-
-                    if (App.Settings.AutoOption == AutoUpdateOption.Install || Environment.GetCommandLineArgs()[0] == "Install")
+                    if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)
                     {
                         if (EventService.DownloadCompleted != null && App.IsClientConnected)
                             EventService.DownloadCompleted(false);

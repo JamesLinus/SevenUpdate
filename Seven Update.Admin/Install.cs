@@ -76,8 +76,8 @@ namespace SevenUpdate.Admin
             if (applications == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.FatalError);
-                Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
+                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
+                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
                 Environment.Exit(0);
             }
             else
@@ -85,8 +85,8 @@ namespace SevenUpdate.Admin
                 if (applications.Count < 1)
                 {
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
-                    Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
+                        EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
+                    Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
                     Environment.Exit(0);
                 }
             }
@@ -116,8 +116,11 @@ namespace SevenUpdate.Admin
             {
                 for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
-                    if (App.Abort)
+                    if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+                    {
+                        File.Delete(Base.Base.AllUserStore + "abort.lock");
                         Environment.Exit(0);
+                    }
 
                     currentUpdateTitle = Base.Base.GetLocaleString(applications[x].Updates[y].Name);
 

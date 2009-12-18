@@ -57,7 +57,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <CodeAnalysisLogFile>bin\Release\Seven_Update.Base.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisInputAssembly>bin\Release\Seven_Update.Base.exe</CodeAnalysisInputAssembly>

@@ -136,15 +136,13 @@ namespace SevenUpdate.Pages
             LoadSettings();
             infoBar.imgAdminShield.Visibility = App.IsAdmin ? Visibility.Collapsed : Visibility.Visible;
 
-            if (App.IsInstallInProgress)
+            if (App.IsReconnect)
                 SetUI(UILayout.ConnectingToService);
-            else
-            {
-                if (App.IsAutoCheck)
-                    CheckForUpdates(true);
-                else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
-                    CheckForUpdates();
-            }
+
+            if (App.IsAutoCheck)
+                CheckForUpdates(true);
+            else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
+                CheckForUpdates();
         }
 
         #region Update Event Methods
@@ -155,6 +153,12 @@ namespace SevenUpdate.Pages
         /// <param name="e">The InstallProgress data</param>
         private void InstallProgressChanged(InstallProgressChangedEventArgs e)
         {
+            if (App.IsReconnect)
+            {
+                SetUI(UILayout.Installing);
+                App.IsReconnect = false;
+            }
+
             if (e.CurrentProgress == -1)
                 infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall") + "...";
             else
@@ -175,6 +179,11 @@ namespace SevenUpdate.Pages
         /// <param name="e">The DownloadProgress data</param>
         private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
         {
+            if (App.IsReconnect)
+            {
+                SetUI(UILayout.Downloading);
+                App.IsReconnect = false;
+            }
             infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
                                     App.RM.GetString("Complete") + ")";
         }
@@ -527,7 +536,7 @@ namespace SevenUpdate.Pages
         /// <param name="layout">type of layout to set</param>
         private void SetUI(UILayout layout)
         {
-            SetUI(layout, null);
+            SetUI(layout, null, 0, 0);
         }
 
         /// <summary>
@@ -639,7 +648,7 @@ namespace SevenUpdate.Pages
 
                     #region Code
 
-                    App.IsInstallInProgress = false;
+                    Admin.Connect();
 
                     #endregion
 
@@ -1119,8 +1128,8 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("StopDownload") || infoBar.tbAction.Text == App.RM.GetString("StopInstallation"))
             {
                 //Cancel installation of updates
-                Admin.AbortInstall();
-                SetUI(UILayout.Canceled);
+                if (Admin.AbortInstall())
+                    SetUI(UILayout.Canceled);
                 return;
             }
             else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
