@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -120,8 +120,10 @@ namespace SevenUpdate.Base
                         switch (app.Updates[y].Files[z].Action)
                         {
                             case FileAction.Update:
-                            case FileAction.UpdateAndExecute:
-                            case FileAction.UpdateAndRegister:
+                            case FileAction.UpdateThenExecute:
+                            case FileAction.UpdateThenRegister:
+                            case FileAction.UpdateIfExist:
+                            case FileAction.CompareOnly:
                                 if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
@@ -130,7 +132,8 @@ namespace SevenUpdate.Base
                                     z--;
                                 }
                                 else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
-                                    size += app.Updates[y].Files[z].Size;
+                                    if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
+                                        size += app.Updates[y].Files[z].Size;
                                 break;
                         }
                     }
@@ -143,16 +146,22 @@ namespace SevenUpdate.Base
                         switch (app.Updates[y].Files[z].Action)
                         {
                             case FileAction.Delete:
-                            case FileAction.UnregisterAndDelete:
+                            case FileAction.UnregisterThenDelete:
                                 app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                 if (app.Updates[y].Files.Count == 0)
                                     break;
                                 z--;
                                 break;
 
+                            case FileAction.UpdateIfExist:
+                                app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
+                                if (app.Updates[y].Files.Count == 0)
+                                    break;
+                                z--;
+                                break;
                             case FileAction.Update:
-                            case FileAction.UpdateAndExecute:
-                            case FileAction.UpdateAndRegister:
+                            case FileAction.UpdateThenExecute:
+                            case FileAction.UpdateThenRegister:
                                 if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
@@ -177,7 +186,7 @@ namespace SevenUpdate.Base
                     foreach (UpdateFile t in app.Updates[y].Files)
                     {
                         // If the update has a file that isn't an execute and delete, let's indicate not to remove the update
-                        if (t.Action != FileAction.ExecuteAndDelete)
+                        if (t.Action != FileAction.ExecuteThenDelete)
                             remove = false;
                     }
                 }

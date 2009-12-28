@@ -1,6 +1,6 @@
 ﻿#region GNU Public License v3
 
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -204,7 +204,8 @@ namespace SevenUpdate.Admin
                     {
                         var fileDestination = Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
 
-                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterAndDelete)
+                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
+                            applications[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
                             continue;
                         if (Base.Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == applications[x].Updates[y].Files[z].Hash)
                             continue;

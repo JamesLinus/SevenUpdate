@@ -142,39 +142,39 @@ Section "Main Section" SEC01
   SetOverwrite on
 	SectionIn RO
 	Call ConnectInternet
-	!insertmacro CheckDotNET3Point5
+	!insertmacro CheckDotNET 3.5sp1
 	
 	Delete "$INSTDIR\uninst.exe"
-  Delete "$INSTDIR\Windows UI.dll"
-  Delete "$INSTDIR\Seven Update.SDK.exe"
-  Delete "$INSTDIR\Seven Update.SDK.exe.config"
-  Delete "$INSTDIR\Seven Update.Library.dll"
+	Delete "$INSTDIR\Windows UI.dll"
+	Delete "$INSTDIR\Seven Update.SDK.exe"
+	Delete "$INSTDIR\Seven Update.SDK.exe.config"
+	Delete "$INSTDIR\Seven Update.Library.dll"
 	
 	StrCpy $0 "$INSTDIR\Seven Update.SDK.exe"
-	NSISdl::download http://ittakestime.org/su/apps/Seven%20Update%20SDK/Seven%20Update.SDK.exe $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.SDK.exe $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.SDK.exe.config"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update%20SDK/Seven%20Update.SDK.exe.config $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.SDK.exe.config $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
-	StrCpy $0 "$INSTDIR\Seven Update.Library.dll"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update%20SDK/Seven%20Update.Library.dll $0
+	StrCpy $0 "$INSTDIR\Seven Update.Base.dll"
+	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.Base.dll $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Windows UI.dll"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update%20SDK/Windows%20UI.dll $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Windows%20UI.dll $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
@@ -184,7 +184,7 @@ Section "Main Section" SEC01
 	CreateDirectory "$APPDATA\Seven Software\Seven Update SDK"
 	SetShellVarContext all
 	CreateDirectory "$SMPROGRAMS\Seven Software"
-  CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk" "$INSTDIR\Seven Update.SDK.exe"
+	CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk" "$INSTDIR\Seven Update.SDK.exe"
 	
 	WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
 	WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
@@ -220,31 +220,31 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-	SetShellVarContext all
-	nsExec::Exec '"FTYPE" SevenUpdate.SUI="$INSTDIR\Seven Update.SDK.exe" %1 %*"'
-	nsExec::Exec '"ASSOC" .sui=SevenUpdate.SUI"'
+  SetShellVarContext all
+  nsExec::Exec '"FTYPE" SevenUpdate.SUI="$INSTDIR\Seven Update.SDK.exe" %1 %*"'
+  nsExec::Exec '"ASSOC" .sui=SevenUpdate.SUI"'
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\Windows UI.dll"
   Delete "$INSTDIR\Seven Update.SDK.exe"
   Delete "$INSTDIR\Seven Update.SDK.exe.config"
-  Delete "$INSTDIR\Seven Update.Library.dll"
+  Delete "$INSTDIR\Seven Update.Base.dll"
   Delete "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk"
 
   RMDir "$SMPROGRAMS\Seven Software"
   RMDir /r "$INSTDIR"
-	RMDir "$PROGRAMFILES64\Seven Software"
-	RMDir "$PROGRAMFILES\Seven Software"
+  RMDir "$PROGRAMFILES64\Seven Software"
+  RMDir "$PROGRAMFILES\Seven Software"
+
+  SetShellVarContext current
+  RMDir /r "$APPDATA\Seven Software\Seven Update SDK"
+  RMDir "$APPDATA\Seven Software"
   
-	SetShellVarContext current
-	RMDir /r "$APPDATA\Seven Software\Seven Update SDK"
-	RMDir "$APPDATA\Seven Software"
-	
-	SetShellVarContext all
-	RMDir "$APPDATA\Seven Software"
-  
-	DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
+  SetShellVarContext all
+  RMDir "$APPDATA\Seven Software"
+
+  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-	DeleteRegKey HKCR ".sui"
-	DeleteRegKey HKCR "SevenUpdate.sui"
+  DeleteRegKey HKCR ".sui"
+  DeleteRegKey HKCR "SevenUpdate.sui"
   SetAutoClose true
 SectionEnd

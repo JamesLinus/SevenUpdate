@@ -148,77 +148,77 @@ FunctionEnd
  
 Section "Main Section" SEC01
   SetOutPath $INSTDIR
-	SetShellVarContext all
+  SetShellVarContext all
   SetOverwrite on
-	SectionIn RO
-	Call ConnectInternet
-	!insertmacro CheckDotNET3Point5
+  SectionIn RO
+  Call ConnectInternet
+  !insertmacro CheckDotNET 3.5
 	
-	Delete "$INSTDIR\uninst.exe"
+  Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
   Delete "$INSTDIR\Seven Update.Admin.exe"
   Delete "$INSTDIR\Seven Update.Admin.exe.config"
   Delete "$INSTDIR\Seven Update.exe"
   Delete "$INSTDIR\Seven Update.exe.config"
-  Delete "$INSTDIR\Seven Update.Library.dll"
+  Delete "$INSTDIR\Seven Update.Base.dll"
   Delete "$INSTDIR\SharpBITS.Base.dll"
-	Delete "$INSTDIR\Seven Update.Helper.exe"
+  Delete "$INSTDIR\Seven Update.Helper.exe"
   Delete "$SMPROGRAMS\Seven Software\Uninstall.lnk"
   Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
-	Delete "$TEMP\Seven Update.xml"
   Delete "$TEMP\Seven Update.xml"
+  Delete "$TEMP\Seven Update.Admin.xml"
 	
 	StrCpy $0 "$INSTDIR\Seven Update.exe"
-	NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.exe $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.exe $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\SharpBITS.Base.dll"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/SharpBITS.Base.dll $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/SharpBITS.Base.dll $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.exe.config"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.exe.config $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.exe.config $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Admin.exe.config"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Admin.exe.config $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.exe.config $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Admin.exe"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Admin.exe $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.exe $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
-	StrCpy $0 "$INSTDIR\Seven Update.Library.dll"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Library.dll $0
+	StrCpy $0 "$INSTDIR\Seven Update.Base.dll"
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Base.dll $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
-  NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Interop.IWshRuntimeLibrary.dll $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Interop.IWshRuntimeLibrary.dll $0
 	Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
+	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Helper.exe"
-	NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Helper.exe $0
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Helper.exe $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
@@ -230,19 +230,21 @@ Section "Main Section" SEC01
 	${Else}
 	
 		StrCpy $0 "$TEMP\Seven Update.xml"
-		NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.xml $0
+		NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.xml $0
 		Pop $R0 ;Get the return value
 		StrCmp $R0 "success" +3
 		MessageBox MB_OK "Download failed: $R0"
 		Quit
 	
 		StrCpy $0 "$TEMP\Seven Update.Admin.xml"
-		NSISdl::download http://ittakestime.org/su/apps/Seven%20Update/Seven%20Update.Admin.xml $0
+		NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.xml $0
 		Pop $R0 ;Get the return value
 		StrCmp $R0 "success" +3
 		MessageBox MB_OK "Download failed: $R0"
 		Quit
 		
+		nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update" /F"'
+		nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update.Admin" /F"'
 		nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\Seven Update.xml" /TN "Seven Update"'
 		nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\Seven Update.Admin.xml" /TN "Seven Update.Admin"'
 	${EndIf}
@@ -298,42 +300,42 @@ Function un.onInit
 FunctionEnd
 
 Section Uninstall
-	SetShellVarContext all
+  SetShellVarContext all
   Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
   Delete "$INSTDIR\Seven Update.Admin.exe"
   Delete "$INSTDIR\Seven Update.Admin.exe.config"
   Delete "$INSTDIR\Seven Update.exe"
   Delete "$INSTDIR\Seven Update.exe.config"
-  Delete "$INSTDIR\Seven Update.Library.dll"
+  Delete "$INSTDIR\Seven Update.Base.dll"
   Delete "$INSTDIR\SharpBITS.Base.dll"
-	Delete "$INSTDIR\Seven Update.Helper.exe"
+  Delete "$INSTDIR\Seven Update.Helper.exe"
   Delete "$SMPROGRAMS\Seven Software\Uninstall.lnk"
   Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
 
   RMDir "$SMPROGRAMS\Seven Software"
   RMDir /r "$INSTDIR"
-	RMDir "$PROGRAMFILES64\Seven Software"
-	RMDir "$PROGRAMFILES\Seven Software"
+  RMDir "$PROGRAMFILES64\Seven Software"
+  RMDir "$PROGRAMFILES\Seven Software"
+
+  SetShellVarContext current
+  RMDir /r "$APPDATA\Seven Software\Seven Update"
+  RMDir "$APPDATA\Seven Software"
   
-	SetShellVarContext current
-	RMDir /r "$APPDATA\Seven Software\Seven Update"
-	RMDir "$APPDATA\Seven Software"
-	
-	SetShellVarContext all
-	RMDir /r "$APPDATA\Seven Software\Seven Update"
-	RMDir "$APPDATA\Seven Software"
-	
-	${If} ${AtMostWinXP}
+  SetShellVarContext all
+  RMDir /r "$APPDATA\Seven Software\Seven Update"
+  RMDir "$APPDATA\Seven Software"
+  
+  ${If} ${AtMostWinXP}
 	DeleteRegValue HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" "Seven Update Automatic Checking"
-	${Else}
-	nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update"'
-	nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update.Admin"'
-	${EndIf}
-  
-	DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
+  ${Else}
+	nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update" /F'
+	nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update.Admin" /F'
+  ${EndIf}
+
+  DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   DeleteRegKey HKLM "${PRODUCT_DIR_REGKEY}"
-	DeleteRegKey HKCR ".sua"
-	DeleteRegKey HKCR "SevenUpdate.sua"
+  DeleteRegKey HKCR ".sua"
+  DeleteRegKey HKCR "SevenUpdate.sua"
   SetAutoClose true
 SectionEnd

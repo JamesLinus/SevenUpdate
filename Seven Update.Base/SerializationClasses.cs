@@ -1,6 +1,6 @@
 ﻿#region GNU Public License v3
 
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -211,14 +211,19 @@ namespace SevenUpdate.Base
     public enum ShortcutAction
     {
         /// <summary>
-        /// Adds or updates a shortcut
+        /// Adds a shortcut
         /// </summary>
         Add,
 
         /// <summary>
         /// Deletes a shortcut
         /// </summary>
-        Delete
+        Delete,
+
+        /// <summary>
+        /// Updates a shortcut only if it exists
+        /// </summary>
+        Update
     }
 
     /// <summary>
@@ -226,36 +231,38 @@ namespace SevenUpdate.Base
     /// </summary>
     public enum FileAction
     {
-        /// <summary>
-        /// Compares information only, does not update the file
-        /// </summary>
-        Compare,
-
-        /// <summary>Update the file</summary>
+        /// <summary>Updates a file</summary>
         Update,
 
-        /// <summary>
-        /// Updates and executes the file
-        /// </summary>
-        UpdateAndExecute,
+        /// <summary>Updates a file, only if it exist</summary>
+        UpdateIfExist,
+
+        /// <summary>Updates a file, then registers the dll</summary>
+        UpdateThenRegister,
+
+        /// <summary>Updates a file, then executes it</summary>
+        UpdateThenExecute,
+
+        /// <summary>Compares a file, but does not update it</summary>
+        CompareOnly,
+
+        /// <summary>Executes a file, can be on system or be downloaded</summary>
+        Execute,
 
         /// <summary>
-        /// Updates and registers the file
+        /// Deletes a file
         /// </summary>
-        UpdateAndRegister,
+        Delete,
 
         /// <summary>
-        /// Unregisters dll and deletes the file
+        /// Executes a file, then deletes it
         /// </summary>
-        UnregisterAndDelete,
+        ExecuteThenDelete,
 
         /// <summary>
-        /// Executes then deletes the file
+        /// Unregisteres a dll, then deletes it
         /// </summary>
-        ExecuteAndDelete,
-
-        /// <summary>Deletes the file</summary>
-        Delete
+        UnregisterThenDelete,
     }
 
     /// <summary>

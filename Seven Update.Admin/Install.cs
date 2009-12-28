@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -198,7 +198,7 @@ namespace SevenUpdate.Admin
                             switch (applications[x].Updates[y].Files[z].Action)
                             {
                                 case FileAction.Delete:
-                                case FileAction.UnregisterAndDelete:
+                                case FileAction.UnregisterThenDelete:
                                     try
                                     {
                                         File.Delete(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true));
@@ -457,10 +457,10 @@ namespace SevenUpdate.Admin
                 {
                         #region Delete file
 
-                    case FileAction.ExecuteAndDelete:
-                    case FileAction.UnregisterAndDelete:
+                    case FileAction.ExecuteThenDelete:
+                    case FileAction.UnregisterThenDelete:
                     case FileAction.Delete:
-                        if (files[x].Action == FileAction.ExecuteAndDelete)
+                        if (files[x].Action == FileAction.ExecuteThenDelete)
                         {
                             if (File.Exists(sourceFile))
                             {
@@ -470,8 +470,8 @@ namespace SevenUpdate.Admin
                             }
                         }
 
-                        if (files[x].Action == FileAction.UnregisterAndDelete)
-                            Process.Start("regsvr32", "/u " + destinationFile);
+                        if (files[x].Action == FileAction.UnregisterThenDelete)
+                            Process.Start("regsvr32", "/u /s" + destinationFile);
 
                         try
                         {
@@ -486,11 +486,24 @@ namespace SevenUpdate.Admin
 
                         #endregion
 
+                    case FileAction.Execute:
+                        try
+                        {
+                            Process.Start(destinationFile, files[x].Args);
+                        }
+                        catch (Exception e)
+                        {
+                            Base.Base.ReportError(e.Message + sourceFile, Base.Base.AllUserStore);
+                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                        }
+                        break;
+
                         #region Update file
 
                     case FileAction.Update:
-                    case FileAction.UpdateAndExecute:
-                    case FileAction.UpdateAndRegister:
+                    case FileAction.UpdateIfExist:
+                    case FileAction.UpdateThenExecute:
+                    case FileAction.UpdateThenRegister:
                         if (File.Exists(sourceFile))
                         {
                             try
@@ -527,7 +540,7 @@ namespace SevenUpdate.Admin
                             error = true;
                         }
 
-                        if (files[x].Action == FileAction.UpdateAndExecute)
+                        if (files[x].Action == FileAction.UpdateThenExecute)
                         {
                             try
                             {
@@ -540,7 +553,7 @@ namespace SevenUpdate.Admin
                             }
                         }
 
-                        if (files[x].Action == FileAction.UpdateAndRegister)
+                        if (files[x].Action == FileAction.UpdateThenRegister)
                             Process.Start("regsvc32", "/s " + destinationFile);
                         break;
 

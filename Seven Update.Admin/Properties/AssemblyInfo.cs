@@ -30,8 +30,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Seven Update")]
-[assembly: AssemblyDescription("Admin Module for Seven Update")]
+[assembly: AssemblyTitle("Seven Update.Admin")]
+[assembly: AssemblyDescription("Seven Update.Admin")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
@@ -66,6 +66,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersionAttribute("9.12.17")]
-[assembly: AssemblyFileVersionAttribute("9.12.17")]
+[assembly: AssemblyVersionAttribute("9.12.25")]
+[assembly: AssemblyFileVersionAttribute("9.12.25")]
 [assembly: NeutralResourcesLanguage("en-US")]

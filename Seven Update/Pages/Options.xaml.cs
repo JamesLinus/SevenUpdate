@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -54,7 +54,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// A collection of SUA's that Seven Update can update
         /// </summary>
-        private ObservableCollection<SUA> userAppList;
+        private ObservableCollection<SUA> machineAppList;
 
         #endregion
 
@@ -121,14 +121,15 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void LoadSUL(ObservableCollection<SUA> officialAppList = null)
         {
-            userAppList = Base.Base.Deserialize<ObservableCollection<SUA>>(Base.Base.AppsFile);
+            machineAppList = Base.Base.Deserialize<ObservableCollection<SUA>>(Base.Base.AppsFile);
 
-            if (userAppList != null)
-                for (var x = 0; x < userAppList.Count; x++)
+            if (machineAppList != null)
+                for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (Directory.Exists(Base.Base.ConvertPath(userAppList[x].Directory, true, userAppList[x].Is64Bit)))
+                    if (Directory.Exists(Base.Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                         continue;
-                    userAppList.RemoveAt(x);
+                    // Remove the application from the list if it is no longer installed or not enabled
+                    machineAppList.RemoveAt(x);
                     x--;
                 }
 
@@ -139,46 +140,52 @@ namespace SevenUpdate.Pages
                 {
                     if (!Directory.Exists(Base.Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
                     {
+                        // Remove the application from the applist if it is not installed
                         officialAppList.RemoveAt(x);
                         x--;
                     }
                     else
                     {
-                        if (userAppList == null)
+                        if (machineAppList == null)
                             continue;
-                        for (var y = 0; y < userAppList.Count; y++)
+                        for (var y = 0; y < machineAppList.Count; y++)
                         {
-                            if (officialAppList[x].Source != userAppList[y].Source)
+                            // Check if the app in both lists are the same
+                            if (officialAppList[x].Name != machineAppList[y].Name && officialAppList[x].Is64Bit != machineAppList[y].Is64Bit)
                                 continue;
-                            officialAppList[x].IsEnabled = userAppList[y].IsEnabled;
-                            userAppList.RemoveAt(y);
+
+                            //if (officialAppList[x].Source != machineAppList[y].Source)
+                            //    continue;
+
+                            officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
+                            machineAppList.RemoveAt(y);
                             y--;
                             break;
                         }
                     }
                 }
-                if (userAppList != null)
-                    for (var x = 0; x < userAppList.Count; x++)
+                if (machineAppList != null)
+                    for (var x = 0; x < machineAppList.Count; x++)
                     {
-                        officialAppList.Add(userAppList[x]);
+                        officialAppList.Add(machineAppList[x]);
                     }
             }
 
             if (officialAppList != null)
-                userAppList = officialAppList;
+                machineAppList = officialAppList;
             Dispatcher.BeginInvoke(UpdateList);
         }
 
         /// <summary>
-        /// Updates the list with the <see cref="userAppList" />
+        /// Updates the list with the <see cref="machineAppList" />
         /// </summary>
         private void UpdateList()
         {
             listView.Cursor = Cursors.Arrow;
-            if (userAppList != null)
+            if (machineAppList != null)
             {
-                listView.ItemsSource = userAppList;
-                userAppList.CollectionChanged += UserAppList_CollectionChanged;
+                listView.ItemsSource = machineAppList;
+                machineAppList.CollectionChanged += UserAppList_CollectionChanged;
                 AddSortBinding();
                 tbListStatus.Text = null;
             }
@@ -233,10 +240,10 @@ namespace SevenUpdate.Pages
             {
                 options.AutoOption = AutoUpdateOption.Never;
 
-                Admin.SaveSettings(false, options, userAppList);
+                Admin.SaveSettings(false, options, machineAppList);
             }
             else
-                Admin.SaveSettings(true, options, userAppList);
+                Admin.SaveSettings(true, options, machineAppList);
         }
 
         #endregion
