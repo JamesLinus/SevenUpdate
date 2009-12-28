@@ -1,0 +1,77 @@
+<?xml
+  version = "1.0"
+  encoding = "utf-8"?>
+
+<xs:schema id="NewDataSet" targetNamespace="http://sevenupdate.sourceforge.net" xmlns:mstns="http://sevenupdate.sourceforge.net" xmlns="http://sevenupdate.sourceforge.net" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="description">
+    <xs:complexType>
+      <xs:attribute name="lang" form="unqualified" type="xs:string" />
+      <xs:attribute name="value" form="unqualified" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="application">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="publisher" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="lang" form="unqualified" type="xs:string" />
+            <xs:attribute name="value" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="update" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="lang" form="unqualified" type="xs:string" />
+                  <xs:attribute name="value" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element ref="description" minOccurs="1" maxOccurs="unbounded" />
+              <xs:element name="file" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="action" form="unqualified" type="xs:string" />
+                  <xs:attribute name="source" form="unqualified" type="xs:string" />
+                  <xs:attribute name="destination" form="unqualified" type="xs:string" />
+                  <xs:attribute name="hash" form="unqualified" type="xs:string" />
+                  <xs:attribute name="size" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="registryItem" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:attribute name="action" form="unqualified" type="xs:string" />
+                  <xs:attribute name="hive" form="unqualified" type="xs:string" />
+                  <xs:attribute name="key" form="unqualified" type="xs:string" />
+                  <xs:attribute name="keyValue" form="unqualified" type="xs:string" />
+                  <xs:attribute name="valueKind" form="unqualified" type="xs:string" />
+                  <xs:attribute name="data" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="shortcut" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element ref="description" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+                  <xs:attribute name="action" form="unqualified" type="xs:string" />
+                  <xs:attribute name="location" form="unqualified" type="xs:string" />
+                  <xs:attribute name="target" form="unqualified" type="xs:string" />
+                  <xs:attribute name="arguments" form="unqualified" type="xs:string" />
+                  <xs:attribute name="icon" form="unqualified" type="xs:string" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="downloadUrl" form="unqualified" type="xs:string" />
+            <xs:attribute name="importance" form="unqualified" type="xs:string" />
+            <xs:attribute name="releaseDate" form="unqualified" type="xs:string" />
+            <xs:attribute name="infoUrl" form="unqualified" type="xs:string" />
+            <xs:attribute name="licenseUrl" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="directory" form="unqualified" type="xs:string" />
+      <xs:attribute name="is64Bit" form="unqualified" type="xs:string" />
+      <xs:attribute name="publisherUrl" form="unqualified" type="xs:string" />
+      <xs:attribute name="helpUrl" form="unqualified" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
