@@ -392,7 +392,7 @@ namespace SevenUpdate.Admin
         {
             var proc = new Process();
 
-            if (Environment.Version.Major < 6)
+            if (Environment.OSVersion.Version.Major < 6)
             {
                 proc.StartInfo.FileName = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update\Seven Update.exe", true, true);
                 proc.StartInfo.UseShellExecute = true;
