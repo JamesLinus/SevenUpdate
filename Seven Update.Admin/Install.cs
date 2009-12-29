@@ -78,7 +78,7 @@ namespace SevenUpdate.Admin
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
                 Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
-                Environment.Exit(0);
+                App.ShutdownApp();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace SevenUpdate.Admin
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
                     Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
-                    Environment.Exit(0);
+                    App.ShutdownApp();
                 }
             }
 
@@ -119,7 +119,7 @@ namespace SevenUpdate.Admin
                     if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
                     {
                         File.Delete(Base.Base.AllUserStore + "abort.lock");
-                        Environment.Exit(0);
+                        App.ShutdownApp();
                     }
 
                     currentUpdateTitle = Base.Base.GetLocaleString(applications[x].Updates[y].Name);
@@ -227,7 +227,7 @@ namespace SevenUpdate.Admin
 
                         proc.Start();
 
-                        Environment.Exit(0);
+                        App.ShutdownApp();
                     }
 
                     #endregion
@@ -285,7 +285,7 @@ namespace SevenUpdate.Admin
             if (EventService.InstallCompleted != null)
                 EventService.InstallCompleted(completedUpdates, failedUpdates);
 
-            Environment.Exit(0);
+            App.ShutdownApp();
         }
 
         /// <summary>

@@ -110,7 +110,7 @@ namespace SevenUpdate.Admin
                         host.Close();
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
-                    Environment.Exit(0);
+                    ShutdownApp();
                 }
 
                 Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
@@ -307,7 +307,7 @@ namespace SevenUpdate.Admin
                                     app.Run();
                                 }
                                 else
-                                    Environment.Exit(0);
+                                    ShutdownApp();
 
                                 #endregion
 
@@ -332,7 +332,7 @@ namespace SevenUpdate.Admin
                                     }
                                 }
                                 else
-                                    Environment.Exit(0);
+                                    ShutdownApp();
 
                                 #endregion
 
@@ -348,9 +348,41 @@ namespace SevenUpdate.Admin
                 #endregion
             }
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            try
+            {
+                if (NotifyIcon != null)
+                {
+                    NotifyIcon.Visible = false;
+                    NotifyIcon.Dispose();
+                    NotifyIcon = null;
+                }
+            }
+            catch (Exception)
+            {
+            }
+
         }
 
         #region Methods
+
+        /// <summary>
+        /// Shuts down the process and removes the icon of the notification bar
+        /// </summary>
+        internal static void ShutdownApp()
+        {
+            try
+            {
+                if (NotifyIcon != null)
+                {
+                    NotifyIcon.Visible = false;
+                    NotifyIcon.Dispose();
+                    NotifyIcon = null;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
 
         /// <summary>Updates the notify icon text</summary>
         /// <param name="text">The string to set the notifyIcon text</param>
@@ -420,7 +452,9 @@ namespace SevenUpdate.Admin
             }
 
             if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
-                Environment.Exit(0);
+            {
+                ShutdownApp();
+            }
         }
 
         #region Security
@@ -473,6 +507,18 @@ namespace SevenUpdate.Admin
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
+            try
+            {
+                if (NotifyIcon != null)
+                {
+                    NotifyIcon.Visible = false;
+                    NotifyIcon.Dispose();
+                    NotifyIcon = null;
+                }
+            }
+            catch (Exception)
+            {
+            }
             using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
@@ -516,7 +562,7 @@ namespace SevenUpdate.Admin
                 }
             }
             else
-                Environment.Exit(0);
+                ShutdownApp();
         }
 
         #endregion
