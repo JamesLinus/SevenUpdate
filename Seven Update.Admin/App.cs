@@ -25,8 +25,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Resources;
-using System.Security.AccessControl;
-using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
@@ -88,6 +86,8 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
+            if (!Directory.Exists(Base.Base.AllUserStore))
+                Directory.CreateDirectory(Base.Base.AllUserStore);
             bool createdNew;
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
@@ -109,7 +109,7 @@ namespace SevenUpdate.Admin
                     if (host != null)
                         host.Close();
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
                     ShutdownApp();
                 }
 
@@ -148,8 +148,6 @@ namespace SevenUpdate.Admin
                                     File.Delete(Base.Base.AppsFile);
 
                                     File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-
-                                    SetFileSecurity(Base.Base.AppsFile);
                                 }
 
                                 #endregion
@@ -164,8 +162,6 @@ namespace SevenUpdate.Admin
                                     File.Delete(Base.Base.ConfigFile);
 
                                     File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-
-                                    SetFileSecurity(Base.Base.ConfigFile);
                                 }
 
                                 if (File.Exists(Base.Base.UserStore + "Apps.sul"))
@@ -173,8 +169,6 @@ namespace SevenUpdate.Admin
                                     File.Delete(Base.Base.AppsFile);
                                     File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
                                 }
-
-                                SetFileSecurity(Base.Base.AppsFile);
 
                                 if (Environment.OSVersion.Version.Major < 6)
                                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
@@ -209,16 +203,12 @@ namespace SevenUpdate.Admin
                                     File.Delete(Base.Base.ConfigFile);
 
                                     File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-
-                                    SetFileSecurity(Base.Base.ConfigFile);
                                 }
                                 if (File.Exists(Base.Base.UserStore + "Apps.sul"))
                                 {
                                     File.Delete(Base.Base.AppsFile);
 
                                     File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-
-                                    SetFileSecurity(Base.Base.AppsFile);
                                 }
                                 if (Environment.OSVersion.Version.Major < 6)
                                 {
@@ -256,8 +246,6 @@ namespace SevenUpdate.Admin
 
                                 Base.Base.Serialize(hidden, Base.Base.HiddenFile);
 
-                                SetFileSecurity(Base.Base.HiddenFile);
-
                                 #endregion
 
                                 break;
@@ -285,8 +273,6 @@ namespace SevenUpdate.Admin
                                 File.Delete(Base.Base.HiddenFile);
 
                                 File.Move(Base.Base.UserStore + "Hidden.suh", Base.Base.HiddenFile);
-
-                                SetFileSecurity(Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -328,7 +314,7 @@ namespace SevenUpdate.Admin
                                     }
                                     catch (Exception e)
                                     {
-                                        Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                                        Base.Base.ReportError(e, Base.Base.AllUserStore);
                                     }
                                 }
                                 else
@@ -342,7 +328,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
                 }
 
                 #endregion
@@ -360,7 +346,6 @@ namespace SevenUpdate.Admin
             catch (Exception)
             {
             }
-
         }
 
         #region Methods
@@ -370,18 +355,18 @@ namespace SevenUpdate.Admin
         /// </summary>
         internal static void ShutdownApp()
         {
-            try
-            {
-                if (NotifyIcon != null)
+            if (NotifyIcon != null)
+                try
                 {
                     NotifyIcon.Visible = false;
                     NotifyIcon.Dispose();
                     NotifyIcon = null;
                 }
-            }
-            catch (Exception)
-            {
-            }
+                catch (Exception)
+                {
+                }
+
+            Environment.Exit(0);
         }
 
         /// <summary>Updates the notify icon text</summary>
@@ -457,49 +442,6 @@ namespace SevenUpdate.Admin
             }
         }
 
-        #region Security
-
-        /// <summary>Sets the ACLS of a file, removes the current user and sets the owner as the Administrators group</summary>
-        /// <param name="file">The complete path to the file</param>
-        internal static void SetFileSecurity(string file)
-        {
-            try
-            {
-                IdentityReference userAdmin = new NTAccount("Administrators");
-
-                IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName);
-
-                var fs = new FileSecurity(file, AccessControlSections.All);
-
-                fs.SetOwner(userAdmin);
-
-                try
-                {
-                    IdentityReference users = new NTAccount("Users");
-
-                    fs.AddAccessRule(new FileSystemAccessRule(users, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
-                }
-                catch (Exception)
-                {
-                }
-
-                fs.PurgeAccessRules(user);
-
-                try
-                {
-                    File.SetAccessControl(file, fs);
-                }
-                catch (Exception)
-                {
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Event Methods
@@ -507,18 +449,17 @@ namespace SevenUpdate.Admin
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            try
-            {
-                if (NotifyIcon != null)
+            if (NotifyIcon != null)
+                try
                 {
                     NotifyIcon.Visible = false;
                     NotifyIcon.Dispose();
                     NotifyIcon = null;
                 }
-            }
-            catch (Exception)
-            {
-            }
+                catch (Exception)
+                {
+                }
+
             using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);

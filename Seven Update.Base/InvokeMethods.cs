@@ -57,19 +57,6 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Invokes a Method to run on the UI thread
         /// </summary>
-        /// <typeparam name="T">the parameter type</typeparam>
-        /// <param name="dispatcher">the dispatcher object</param>
-        /// <param name="method">the method to invoke</param>
-        /// <param name="priority">priority it should run</param>
-        /// <param name="parameter">the parameter to pass to the method</param>
-        public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, DispatcherPriority priority, T parameter)
-        {
-            dispatcher.BeginInvoke(method, priority, parameter);
-        }
-
-        /// <summary>
-        /// Invokes a Method to run on the UI thread
-        /// </summary>
         /// <typeparam name="T1">a parameter type</typeparam>
         /// <typeparam name="T2">a parameter type</typeparam>
         /// <param name="dispatcher">the dispatcher object</param>

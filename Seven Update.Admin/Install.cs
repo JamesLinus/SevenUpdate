@@ -42,19 +42,29 @@ namespace SevenUpdate.Admin
     /// <summary>
     /// Class containing methods to install updates
     /// </summary>
-    internal class Install
+    internal static class Install
     {
         #region Global Vars
 
         /// <summary>
         /// Gets an int that indicates to move a file on reboot
         /// </summary>
-        internal const int MOVEONREBOOT = 5;
+        private const int MOVEONREBOOT = 5;
 
         /// <summary>
-        /// Gets or Sets a value indicating an installation is in progress
+        /// The localized name of the current update being installed
         /// </summary>
-        private static int installProgress;
+        private static string currentUpdateName;
+
+        /// <summary>
+        /// The index position of the current update being installed
+        /// </summary>
+        private static int updateIndex;
+
+        /// <summary>
+        /// The total number of updates being installed
+        /// </summary>
+        private static int updateCount;
 
         /// <summary>
         /// Moves or deletes a file on reboot
@@ -64,9 +74,17 @@ namespace SevenUpdate.Admin
         /// <param name="dwFlags">A int indicating the move operation to perform</param>
         /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
         [DllImport("kernel32.dll")]
-        internal static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
+        private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
         #endregion
+
+        private static void ReportProgress(int installProgress)
+        {
+            if (EventService.InstallProgressChanged != null && App.IsClientConnected)
+                EventService.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
+            if (App.NotifyIcon != null)
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+        }
 
         #region Update Installation
 
@@ -79,38 +97,25 @@ namespace SevenUpdate.Admin
                     EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
                 Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
                 App.ShutdownApp();
+                return;
             }
-            else
+            if (applications.Count < 1)
             {
-                if (applications.Count < 1)
-                {
-                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
-                    Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
-                    App.ShutdownApp();
-                }
+                if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
+                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
+                App.ShutdownApp();
             }
 
             #region variables
 
-            int currentUpdate = 0, completedUpdates = 0, failedUpdates = 0;
+            updateCount = applications.Sum(t => t.Updates.Count);
+            int completedUpdates = 0, failedUpdates = 0;
             var errorOccurred = false;
-            string currentUpdateTitle = null;
 
             #endregion
 
-            int totalUpdates = applications.Sum(t => t.Updates.Count);
-
-            #region Report Progress
-
-            installProgress = GetProgress(5, currentUpdate, totalUpdates);
-
-            if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                EventService.InstallProgressChanged(currentUpdateTitle, -1, 0, totalUpdates);
-            if (App.NotifyIcon != null)
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " 0% " + App.RM.GetString("Complete"));
-
-            #endregion
+            ReportProgress(0);
 
             for (var x = 0; x < applications.Count; x++)
             {
@@ -122,61 +127,35 @@ namespace SevenUpdate.Admin
                         App.ShutdownApp();
                     }
 
-                    currentUpdateTitle = Base.Base.GetLocaleString(applications[x].Updates[y].Name);
+                    currentUpdateName = Base.Base.GetLocaleString(applications[x].Updates[y].Name);
 
-                    #region Report Progress
-
-                    installProgress = GetProgress(5, currentUpdate, totalUpdates);
-
-                    if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                        EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-                    if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
-
-                    #endregion
+                    ReportProgress(5);
 
                     #region Registry
 
                     // ReSharper disable RedundantAssignment
-                    errorOccurred = SetRegistryItems(applications[x].Updates[y]);
+                    errorOccurred = SetRegistryItems(applications[x].Updates[y].RegistryItems);
                     // ReSharper restore RedundantAssignment
 
                     #endregion
 
-                    #region Report Progress
-
-                    installProgress = GetProgress(15, currentUpdate, totalUpdates);
-
-                    if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                        EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-                    if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
-
-                    #endregion
+                    ReportProgress(25);
 
                     #region Files
 
-                    errorOccurred = UpdateFiles(applications[x].Updates[y].Files, Base.Base.AllUserStore + @"downloads\" + currentUpdateTitle + @"\", applications[x].Directory, applications[x].Is64Bit,
-                                                currentUpdateTitle, currentUpdate, totalUpdates);
+                    errorOccurred = UpdateFiles(applications[x].Updates[y].Files, Base.Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     #endregion
+
+                    ReportProgress(75);
 
                     #region Shortcuts
 
-                    SetShortcuts(applications[x].Updates[y], applications[x].Directory, applications[x].Is64Bit);
+                    SetShortcuts(applications[x].Updates[y].Shortcuts, applications[x].Directory, applications[x].Is64Bit);
 
                     #endregion
 
-                    #region Report Progress
-
-                    installProgress = GetProgress(installProgress + 10, currentUpdate, totalUpdates);
-
-                    if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                        EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-                    if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
-
-                    #endregion
+                    ReportProgress(95);
 
                     if (errorOccurred)
                     {
@@ -201,11 +180,11 @@ namespace SevenUpdate.Admin
                                 case FileAction.UnregisterThenDelete:
                                     try
                                     {
-                                        File.Delete(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true));
+                                        File.Delete(applications[x].Updates[y].Files[z].Destination);
                                     }
                                     catch (Exception)
                                     {
-                                        MoveFileEx(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, @"%PROGRAMFILES%\Seven Software\Seven Update", true), null, MOVEONREBOOT);
+                                        MoveFileEx(applications[x].Updates[y].Files[z].Destination, null, MOVEONREBOOT);
                                     }
                                     break;
                                 default:
@@ -219,7 +198,7 @@ namespace SevenUpdate.Admin
                                                {
                                                    FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Helper.exe",
                                                    UseShellExecute = true,
-                                                   Arguments = "\"" + currentUpdateTitle + "\"",
+                                                   Arguments = "\"" + currentUpdateName + "\"",
                                                    CreateNoWindow = true,
                                                    WindowStyle = ProcessWindowStyle.Hidden
                                                }
@@ -232,31 +211,13 @@ namespace SevenUpdate.Admin
 
                     #endregion
 
-                    #region Report Progress
+                    ReportProgress(100);
 
-                    installProgress = GetProgress(100, currentUpdate, totalUpdates);
-
-                    if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                        EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-                    if (App.NotifyIcon != null)
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
-
-                    #endregion
-
-                    currentUpdate++;
+                    updateIndex++;
                 }
             }
 
-            #region Report Progress
-
-            installProgress = 100;
-
-            if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-            if (App.NotifyIcon != null)
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
-
-            #endregion
+            ReportProgress(100);
 
             if (Base.Base.RebootNeeded)
             {
@@ -289,138 +250,147 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// The current progress of the installation
-        /// </summary>
-        /// <param name="currentProgress">the progress of the current update</param>
-        /// <param name="currentUpdate">the current index of the update</param>
-        /// <param name="totalUpdates">the total number of updates being installed</param>
-        /// <returns>returns the progress percentage of the update</returns>
-        private static int GetProgress(int currentProgress, int currentUpdate, int totalUpdates)
-        {
-            try
-            {
-                var percent = (currentProgress*100)/totalUpdates;
-
-                var updProgress = percent/(currentUpdate + 1);
-
-                return updProgress/totalUpdates;
-            }
-            catch (Exception)
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
         /// Sets the registry items of an update
         /// </summary>
-        /// <param name="update">the update to use to set the registry items</param>
-        private static bool SetRegistryItems(Update update)
+        /// <param name="regItems">The registry changes to install on the system</param>
+        /// <returns>a bool value indicating if an error occurred</returns>
+        private static bool SetRegistryItems(IList<RegistryItem> regItems)
         {
             RegistryKey key;
             var error = false;
-            if (update.RegistryItems != null)
+            if (regItems == null)
+                return false;
+
+            for (int x = 0; x < regItems.Count; x++)
             {
-                foreach (var reg in update.RegistryItems)
+                switch (regItems[x].Hive)
                 {
-                    switch (reg.Hive)
-                    {
-                        case RegistryHive.ClassesRoot:
-                            key = Registry.ClassesRoot;
-                            break;
-                        case RegistryHive.CurrentUser:
-                            key = Registry.CurrentUser;
-                            break;
-                        case RegistryHive.LocalMachine:
-                            key = Registry.LocalMachine;
-                            break;
-                        case RegistryHive.Users:
-                            key = Registry.Users;
-                            break;
-                        default:
-                            key = Registry.CurrentUser;
-                            break;
-                    }
-                    switch (reg.Action)
-                    {
-                        case RegistryAction.Add:
-                            try
-                            {
-                                Registry.SetValue(reg.Key, reg.KeyValue, reg.Data, reg.ValueKind);
-                            }
-                            catch (Exception e)
-                            {
-                                Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
-                                EventService.ErrorOccurred(e, ErrorType.InstallationError);
-                                error = true;
-                            }
-                            break;
-                        case RegistryAction.DeleteKey:
-                            try
-                            {
-                                key.OpenSubKey(reg.Key, true).DeleteSubKeyTree(reg.Key);
-                            }
-                            catch (Exception e)
-                            {
-                                Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
-                                EventService.ErrorOccurred(e, ErrorType.InstallationError);
-                            }
-                            break;
-                        case RegistryAction.DeleteValue:
-                            try
-                            {
-                                key.OpenSubKey(reg.Key, true).DeleteValue(reg.KeyValue, false);
-                            }
-                            catch (Exception e)
-                            {
-                                Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
-                                EventService.ErrorOccurred(e, ErrorType.InstallationError);
-                            }
-                            break;
-                    }
+                    case RegistryHive.ClassesRoot:
+                        key = Registry.ClassesRoot;
+                        break;
+                    case RegistryHive.CurrentUser:
+                        key = Registry.CurrentUser;
+                        break;
+                    case RegistryHive.LocalMachine:
+                        key = Registry.LocalMachine;
+                        break;
+                    case RegistryHive.Users:
+                        key = Registry.Users;
+                        break;
+                    default:
+                        key = Registry.CurrentUser;
+                        break;
                 }
+                switch (regItems[x].Action)
+                {
+                    case RegistryAction.Add:
+                        try
+                        {
+                            Registry.SetValue(regItems[x].Key, regItems[x].KeyValue, regItems[x].Data, regItems[x].ValueKind);
+                        }
+                        catch (Exception e)
+                        {
+                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                            error = true;
+                        }
+                        break;
+                    case RegistryAction.DeleteKey:
+                        try
+                        {
+                            key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
+                        }
+                        catch (Exception e)
+                        {
+                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                        }
+                        break;
+                    case RegistryAction.DeleteValue:
+                        try
+                        {
+                            key.OpenSubKey(regItems[x].Key, true).DeleteValue(regItems[x].KeyValue, false);
+                        }
+                        catch (Exception e)
+                        {
+                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                        }
+                        break;
+                }
+
+                #region Report Progress
+
+                int installProgress = (x * 100) / regItems.Count;
+                if (installProgress > 30)
+                    installProgress -= 10;
+
+                ReportProgress(installProgress);
+
+                #endregion
             }
+
             return error;
         }
 
         /// <summary>
         /// Installs the shortcuts of an update
         /// </summary>
-        /// <param name="update">the update to use to install shortcuts</param>
-        /// <param name="applicationDirectory">the directory where the application is installed</param>
+        /// <param name="shortcuts">the shortcuts to install on the system</param>
+        /// <param name="appDirectory">the directory where the application is installed</param>
         /// <param name="is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
-        private static void SetShortcuts(Update update, string applicationDirectory, bool is64Bit)
+        private static void SetShortcuts(IList<Shortcut> shortcuts, string appDirectory, bool is64Bit)
         {
-            if (update.Shortcuts == null)
+            if (shortcuts == null)
                 return;
 
             var ws = new WshShell();
             // Choose the path for the shortcut
-            foreach (var link in update.Shortcuts)
+            for (int x = 0; x < shortcuts.Count; x++)
             {
                 try
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(Base.Base.ConvertPath(link.Location, true, is64Bit)));
-                    File.Delete(Base.Base.ConvertPath(link.Location, true, is64Bit));
-                    var shortcut = (IWshShortcut) ws.CreateShortcut(Base.Base.ConvertPath(link.Location, true, is64Bit));
-                    // Where the shortcut should point to
-                    shortcut.TargetPath = Base.Base.ConvertPath(link.Target, applicationDirectory, is64Bit);
-                    // Description for the shortcut
-                    shortcut.Description = Base.Base.GetLocaleString(link.Description);
-                    // Location for the shortcut's icon
-                    shortcut.IconLocation = Base.Base.ConvertPath(link.Icon, applicationDirectory, is64Bit);
-                    // The arguments to be used for the shortcut
-                    shortcut.Arguments = link.Arguments;
-                    // The working directory to be used for the shortcut
-                    shortcut.WorkingDirectory = Base.Base.ConvertPath(applicationDirectory, true, is64Bit);
-                    // Create the shortcut at the given path
-                    shortcut.Save();
+                    var linkLocation = Base.Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
+                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation)))
+                    {
+                        if (!Directory.Exists(Path.GetDirectoryName(linkLocation)))
+                            Directory.CreateDirectory(Path.GetDirectoryName(linkLocation));
+                        File.Delete(shortcuts[x].Location);
+                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation);
+                        // Where the shortcut should point to
+                        shortcut.TargetPath = shortcuts[x].Target;
+                        // Description for the shortcut
+                        shortcut.Description = Base.Base.GetLocaleString(shortcuts[x].Description);
+                        // Location for the shortcut's icon
+                        shortcut.IconLocation = shortcuts[x].Icon;
+                        // The arguments to be used for the shortcut
+                        shortcut.Arguments = shortcuts[x].Arguments;
+                        // The working directory to be used for the shortcut
+                        shortcut.WorkingDirectory = appDirectory;
+                        // Create the shortcut at the given path
+                        shortcut.Save();
+                    }
+
+                    if (shortcuts[x].Action == ShortcutAction.Delete)
+                    {
+                        File.Delete(shortcuts[x].Location);
+                    }
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
                     EventService.ErrorOccurred(e, ErrorType.InstallationError);
                 }
+
+                #region Report Progress
+
+                int installProgress = (x * 100) / shortcuts.Count;
+                if (installProgress > 90)
+                    installProgress -= 15;
+
+                ReportProgress(installProgress);
+
+                #endregion
             }
         }
 
@@ -429,18 +399,13 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name="files">the collection of files to update</param>
         /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
-        /// <param name="appDirectory">the application directory</param>
-        /// <param name="is64Bit">Indicates if an application is 64-bit, <c>true</c> if 64-bit, otherwise <c>false</c></param>
-        /// <param name="currentUpdateTitle">the name of the current update </param>
-        /// <param name="currentUpdate">the index of the current update in relation to the total number of updates</param>
-        /// <param name="totalUpdates">the total number of updates to install</param>
         /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
-        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory, string appDirectory, bool is64Bit, string currentUpdateTitle, int currentUpdate, int totalUpdates)
+        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             var error = false;
             for (var x = 0; x < files.Count; x++)
             {
-                var destinationFile = Base.Base.ConvertPath(files[x].Destination, appDirectory, is64Bit);
+                var destinationFile = files[x].Destination;
                 var sourceFile = downloadDirectory + Path.GetFileName(destinationFile);
                 try
                 {
@@ -448,7 +413,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
                     EventService.ErrorOccurred(e, ErrorType.InstallationError);
                     return false;
                 }
@@ -493,7 +458,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.Base.ReportError(e.Message + sourceFile, Base.Base.AllUserStore);
+                            Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
                             EventService.ErrorOccurred(e, ErrorType.InstallationError);
                         }
                         break;
@@ -508,8 +473,6 @@ namespace SevenUpdate.Admin
                         {
                             try
                             {
-                                App.SetFileSecurity(sourceFile);
-
                                 if (File.Exists(destinationFile))
                                 {
                                     File.Copy(destinationFile, destinationFile + ".bak", true);
@@ -525,8 +488,6 @@ namespace SevenUpdate.Admin
                                 if (!File.Exists(Base.Base.AllUserStore + "reboot.lock"))
                                 {
                                     File.Create(Base.Base.AllUserStore + "reboot.lock").WriteByte(0);
-
-                                    App.SetFileSecurity(Base.Base.AllUserStore + "reboot.lock");
                                 }
 
                                 MoveFileEx(sourceFile, destinationFile, MOVEONREBOOT);
@@ -548,7 +509,7 @@ namespace SevenUpdate.Admin
                             }
                             catch (Exception e)
                             {
-                                Base.Base.ReportError(e.Message + sourceFile, Base.Base.AllUserStore);
+                                Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
                                 EventService.ErrorOccurred(e, ErrorType.InstallationError);
                             }
                         }
@@ -562,14 +523,11 @@ namespace SevenUpdate.Admin
 
                 #region Report Progress
 
-                installProgress = (x*100)/files.Count;
-                if (installProgress > 90)
+                int installProgress = (x * 100) / files.Count;
+                if (installProgress > 70)
                     installProgress -= 15;
 
-                if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                    EventService.InstallProgressChanged(currentUpdateTitle, installProgress, currentUpdate, totalUpdates);
-                if (App.NotifyIcon != null)
-                    Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                ReportProgress(installProgress);
 
                 #endregion
             }

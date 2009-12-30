@@ -562,12 +562,6 @@ namespace SevenUpdate.Base
         [XmlAttribute("args")]
         public string Args { get; set; }
 
-        /// <summary>
-        /// Specifies if the file is optional, will get updated if installed on system, otherwise it's ignored.
-        /// </summary>
-        [XmlAttribute("optional")]
-        public bool Optional { get; set; }
-
         #endregion
 
         #region Implementation of INotifyPropertyChanged

@@ -36,7 +36,7 @@ namespace SevenUpdate.Windows
     /// Interaction logic for TestWindow.xaml
     /// </summary>
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
-    public partial class MainWindow : NavigationWindow
+    public sealed partial class MainWindow : NavigationWindow
     {
         internal static NavigationService NavService;
 

@@ -38,7 +38,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     /// Interaction logic for Main.xaml
     /// </summary>
-    public partial class Main : Page
+    public sealed partial class Main : Page
     {
         #region Global Vars
 
@@ -184,7 +184,7 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.Downloading);
                 App.IsReconnect = false;
             }
-            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
+            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
                                     App.RM.GetString("Complete") + ")";
         }
 
@@ -365,7 +365,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the search for updates has completed
         /// </summary>
-        internal void SearchCompletedEventHandler(object sender, SearchCompletedEventArgs e)
+        private void SearchCompletedEventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);
@@ -442,7 +442,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Downloads updates
         /// </summary>
-        internal void DownloadInstallUpdates()
+        private void DownloadInstallUpdates()
         {
             for (var x = 0; x < App.Applications.Count; x++)
             {
@@ -526,6 +526,7 @@ namespace SevenUpdate.Pages
             AdminCallBack.InstallDoneEventHandler += InstallCompletedEventHandler;
             AdminCallBack.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
             RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdateEventHandler;
+            Admin.SettingsChangedEventHandler += Admin_SettingsChangedEventHandler;
 
             #endregion
         }
@@ -1116,7 +1117,10 @@ namespace SevenUpdate.Pages
             CheckForUpdates(true);
         }
 
-        // ReSharper disable InconsistentNaming
+        private void Admin_SettingsChangedEventHandler(object sender, EventArgs e)
+        {
+            CheckForUpdates(true);
+        }
 
         /// <summary>
         /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
@@ -1137,8 +1141,6 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
                 Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\shutdown.exe", "-r -t 00");
         }
-
-        // ReSharper restore InconsistentNaming
 
         #endregion
     }

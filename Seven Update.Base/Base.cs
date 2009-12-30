@@ -71,7 +71,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Provides event data for the ErrorOccurred event
     /// </summary>
-    public class ErrorOccurredEventArgs : EventArgs
+    public sealed class ErrorOccurredEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -98,7 +98,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Provides event data for the SerializationError event
     /// </summary>
-    public class SerializationErrorEventArgs : EventArgs
+    public sealed class SerializationErrorEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -391,7 +391,7 @@ namespace SevenUpdate.Base
         /// <param name="find">a string to find in the complete string</param>
         /// <param name="replace">a string to use to replace the find string in the complete string</param>
         /// <returns>a string that has the find value replace by the new value</returns>
-        public static string Replace(string complete, string find, string replace)
+        private static string Replace(string complete, string find, string replace)
         {
             // Get input string length
             var expressionLength = complete.Length;
@@ -443,6 +443,42 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
+        /// Reports the error that occurred to a log file
+        /// </summary>
+        /// <param name="exception">The exception to write in the log</param>
+        /// <param name="directoryStore">The directory to store the log</param>
+        public static void ReportError(Exception exception, string directoryStore)
+        {
+            TextWriter tw = new StreamWriter(directoryStore + "error.log");
+
+            tw.WriteLine(DateTime.Now + ": " + exception.Source);
+            tw.WriteLine(DateTime.Now + ": " + exception.Message);
+
+            if (exception.TargetSite != null)
+                tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+
+            if (exception.InnerException != null)
+            {
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
+
+                if (exception.TargetSite != null)
+                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+
+                if (exception.InnerException.InnerException != null)
+                {
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
+
+                    if (exception.TargetSite != null)
+                        tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+                }
+            }
+
+            tw.Close();
+        }
+
+        /// <summary>
         /// Converts bytes into the proper increments depending on size
         /// </summary>
         /// <param name="bytes">the fileSize in bytes</param>
@@ -450,11 +486,11 @@ namespace SevenUpdate.Base
         public static string ConvertFileSize(ulong bytes)
         {
             if (bytes >= 1073741824)
-                return String.Format("{0:##.##}", bytes/1073741824) + " GB";
+                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
             if (bytes >= 1048576)
-                return String.Format("{0:##.##}", bytes/1048576) + " MB";
+                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
             if (bytes >= 1024)
-                return String.Format("{0:##.##}", bytes/1024) + " KB";
+                return String.Format("{0:##.##}", bytes / 1024) + " KB";
             if (bytes < 1024)
                 return bytes + " Bytes";
             return "0 Bytes";

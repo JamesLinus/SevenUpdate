@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security.Principal;
 using System.Security.AccessControl;
+using System.Security.Principal;
 
 namespace SevenUpdate.Helper
 {
@@ -61,8 +61,6 @@ namespace SevenUpdate.Helper
                         try
                         {
                             File.Copy(t.FullName, appDir + t.Name, true);
-                            SetFileSecurity(appDir + t.Name);
-                            
                         }
                         catch (Exception)
                         {
@@ -116,41 +114,6 @@ namespace SevenUpdate.Helper
                     Environment.Exit(0);
                 }
             }
-        }
-
-        /// <summary>
-        /// Sets the ACLS of a file, removes the current user and sets the owner as the Administrators group
-        /// </summary>
-        /// <param name="file">The complete path to the file</param>
-        internal static void SetFileSecurity(string file)
-        {
-            try
-            {
-                IdentityReference userAdmin = new NTAccount("Administrators");
-
-                IdentityReference user = new NTAccount(Environment.UserDomainName, Environment.UserName);
-
-                var fs = new FileSecurity(file, AccessControlSections.All);
-
-                fs.SetOwner(userAdmin);
-
-                try
-                {
-                    IdentityReference users = new NTAccount("Users");
-
-                    fs.AddAccessRule(new FileSystemAccessRule(users, FileSystemRights.ReadAndExecute, AccessControlType.Allow));
-                }
-                catch (Exception) { }
-
-                fs.PurgeAccessRules(user);
-
-                try
-                {
-                    File.SetAccessControl(file, fs);
-                }
-                catch (Exception) { }
-            }
-            catch (Exception) { }
         }
 
         static void ATimerElapsed(object sender, System.Timers.ElapsedEventArgs e)

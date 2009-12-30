@@ -105,7 +105,7 @@ namespace SevenUpdate.Controls
         /// <summary>
         /// Sorts the SUA class
         /// </summary>
-        internal class SUASorter : ListViewCustomComparer
+        internal sealed class SUASorter : ListViewCustomComparer
         {
             /// <summary>
             /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
@@ -148,7 +148,7 @@ namespace SevenUpdate.Controls
                         if (SortColumns[sortColumn] == ListSortDirection.Ascending)
                             result = String.Compare(valx, valy);
                         else
-                            result = (-1)*String.Compare(valx, valy);
+                            result = (-1) * String.Compare(valx, valy);
 
                         if (result != 0)
                             break;
@@ -171,7 +171,7 @@ namespace SevenUpdate.Controls
         /// <summary>
         /// Sorts the SUH Class
         /// </summary>
-        internal class SUHSorter : ListViewCustomComparer
+        internal sealed class SUHSorter : ListViewCustomComparer
         {
             /// <summary>
             /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
@@ -231,7 +231,7 @@ namespace SevenUpdate.Controls
                         }
 
                         if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1)*result;
+                            result = (-1) * result;
 
                         if (result != 0)
                             break;
@@ -254,7 +254,7 @@ namespace SevenUpdate.Controls
         /// <summary>
         /// Sorts the Update Class
         /// </summary>
-        internal class UpdateSorter : ListViewCustomComparer
+        internal sealed class UpdateSorter : ListViewCustomComparer
         {
             /// <summary>
             /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
@@ -303,7 +303,7 @@ namespace SevenUpdate.Controls
                         }
 
                         if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1)*result;
+                            result = (-1) * result;
 
                         if (result != 0)
                             break;

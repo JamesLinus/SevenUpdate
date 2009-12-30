@@ -33,42 +33,10 @@ using SharpBits.Base;
 
 namespace SevenUpdate.Admin
 {
-
-    #region EventArgs
-
-    /// <summary>
-    /// Provides event data for the DownloadCompleted event
-    /// </summary>
-    public class DownloadCompletedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Contains event data associated with this event
-        /// </summary>
-        /// <param name="errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c> </param>
-        /// <param name="applications"> A collection of Applications that were downloaded</param>
-        public DownloadCompletedEventArgs(bool errorOccurred, Collection<SUI> applications)
-        {
-            ErrorOccurred = errorOccurred;
-            Applications = applications;
-        }
-
-        /// <summary>
-        /// <c>true</c> is an error occurred, otherwise <c>false</c>
-        /// </summary>
-        public bool ErrorOccurred { get; private set; }
-
-        /// <summary>
-        /// A collection of Applications that were downloaded
-        /// </summary>
-        public Collection<SUI> Applications { get; private set; }
-    }
-
-    #endregion
-
     /// <summary>
     /// A class containing methods to download updates
     /// </summary>
-    internal class Download
+    internal static class Download
     {
         #region Global Vars
 
@@ -85,30 +53,6 @@ namespace SevenUpdate.Admin
         #endregion
 
         #region Download Methods
-
-        /// <summary>
-        /// Cancels all BITS Downloads
-        /// </summary>
-        internal static bool CancelDownload()
-        {
-            if (manager != null)
-            {
-                foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "Seven Update"))
-                {
-                    try
-                    {
-                        job.Cancel();
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    return true;
-                }
-            }
-
-            return false;
-        }
 
         /// <summary>
         /// Downloads the updates using BITS
@@ -157,7 +101,13 @@ namespace SevenUpdate.Admin
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
             foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "Seven Update"))
             {
-                job.EnumFiles();
+                try
+                {
+                    job.EnumFiles();
+                }
+                catch (Exception)
+                {
+                }
                 if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
                 {
                     try
@@ -202,7 +152,7 @@ namespace SevenUpdate.Admin
 
                     for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                     {
-                        var fileDestination = Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Destination, applications[x].Directory, applications[x].Is64Bit);
+                        var fileDestination = applications[x].Updates[y].Files[z].Destination;
 
                         if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
                             applications[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
@@ -219,19 +169,25 @@ namespace SevenUpdate.Admin
                             {
                             }
                             var url = new Uri(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
+
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                         }
                         catch (Exception e)
                         {
                             if (EventService.ErrorOccurred != null && App.IsClientConnected)
                                 EventService.ErrorOccurred(e, ErrorType.DownloadError);
-                            Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                            Base.Base.ReportError(e, Base.Base.AllUserStore);
                         }
                     }
                 }
             }
-
-            bitsJob.EnumFiles();
+            try
+            {
+                bitsJob.EnumFiles();
+            }
+            catch (Exception)
+            {
+            }
 
             if (bitsJob.Files.Count > 0)
             {
@@ -241,7 +197,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e.Message, Base.Base.AllUserStore);
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(e, ErrorType.FatalError);
                     App.ShutdownApp();
@@ -304,7 +260,7 @@ namespace SevenUpdate.Admin
                 {
                     Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                                App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                               (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                                                               (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
                 }
             }
             catch

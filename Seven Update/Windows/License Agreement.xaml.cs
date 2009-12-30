@@ -36,7 +36,7 @@ namespace SevenUpdate.Windows
     /// <summary>
     /// Interaction logic for License_Agreement.xaml
     /// </summary>
-    public partial class LicenseAgreement : Window
+    public sealed partial class LicenseAgreement : Window
     {
         #region Global Vars
 

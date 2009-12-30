@@ -81,8 +81,10 @@ namespace SevenUpdate.Base
         /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
         private static bool CheckForUpdates(ref SUI app, IEnumerable<SUH> hidden)
         {
-            if (!Directory.Exists(Base.ConvertPath(app.Directory, true, app.Is64Bit)))
+            app.Directory = Base.ConvertPath(app.Directory, true, app.Is64Bit);
+            if (!Directory.Exists(app.Directory))
                 return false;
+
             var isHidden = false;
             for (var y = 0; y < app.Updates.Count; y++)
             {
@@ -110,10 +112,9 @@ namespace SevenUpdate.Base
                 ulong size = 0;
                 for (var z = 0; z < app.Updates[y].Files.Count; z++)
                 {
-                    var file = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
-
+                    app.Updates[y].Files[z].Destination = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
                     // Checks to see if the file needs updated, if it doesn't it removes it from the list.
-                    if (File.Exists(file))
+                    if (File.Exists(app.Updates[y].Files[z].Destination))
                     {
                         #region File Exists
 
@@ -124,14 +125,15 @@ namespace SevenUpdate.Base
                             case FileAction.UpdateThenRegister:
                             case FileAction.UpdateIfExist:
                             case FileAction.CompareOnly:
-                                if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
+                                if (Base.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
                                         break;
                                     z--;
                                 }
-                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                         app.Updates[y].Files[z].Hash)
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
                                         size += app.Updates[y].Files[z].Size;
                                 break;
@@ -162,14 +164,15 @@ namespace SevenUpdate.Base
                             case FileAction.Update:
                             case FileAction.UpdateThenExecute:
                             case FileAction.UpdateThenRegister:
-                                if (Base.GetHash(file) == app.Updates[y].Files[z].Hash)
+                                if (Base.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
                                         break;
                                     z--;
                                 }
-                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(file)) != app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                         app.Updates[y].Files[z].Hash)
                                     size += app.Updates[y].Files[z].Size;
                                 break;
                         }

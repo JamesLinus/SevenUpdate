@@ -40,7 +40,7 @@ namespace SevenUpdate
     /// <summary>
     /// Provides event data for the DownloadCompleted event
     /// </summary>
-    public class DownloadCompletedEventArgs : EventArgs
+    public sealed class DownloadCompletedEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -60,7 +60,7 @@ namespace SevenUpdate
     /// <summary>
     /// Provides event data for the DownloadProgressChanged event
     /// </summary>
-    public class DownloadProgressChangedEventArgs : EventArgs
+    public sealed class DownloadProgressChangedEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -87,7 +87,7 @@ namespace SevenUpdate
     /// <summary>
     /// Provides event data for the InstallCompleted event
     /// </summary>
-    public class InstallCompletedEventArgs : EventArgs
+    public sealed class InstallCompletedEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -114,7 +114,7 @@ namespace SevenUpdate
     /// <summary>
     /// Provides event data for the InstallProgressChanged event
     /// </summary>
-    public class InstallProgressChangedEventArgs : EventArgs
+    public sealed class InstallProgressChangedEventArgs : EventArgs
     {
         /// <summary>
         /// Contains event data associated with this event
@@ -280,7 +280,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.Base.ReportError(e.Message, Base.Base.UserStore);
+                Base.Base.ReportError(e, Base.Base.UserStore);
             }
         }
 
@@ -289,14 +289,15 @@ namespace SevenUpdate
         /// </summary>
         internal static void Disconnect()
         {
-            try
-            {
-                wcf.UnSubscribe();
-            }
-            catch (Exception e)
-            {
-                Base.Base.ReportError(e.Message, Base.Base.UserStore);
-            }
+            if (wcf != null)
+                try
+                {
+                    wcf.UnSubscribe();
+                }
+                catch (Exception e)
+                {
+                    Base.Base.ReportError(e, Base.Base.UserStore);
+                }
         }
 
         #region Install & Config Methods
@@ -332,7 +333,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.Base.ReportError(e.Message, Base.Base.UserStore);
+                Base.Base.ReportError(e, Base.Base.UserStore);
                 proc.Dispose();
                 return false;
             }
@@ -352,7 +353,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.Base.ReportError(e.Message, Base.Base.UserStore);
+                Base.Base.ReportError(e, Base.Base.UserStore);
             }
             return abort;
         }
@@ -408,11 +409,10 @@ namespace SevenUpdate
         /// Adds an application to Seven Update
         /// </summary>
         /// <param name="sul">the list of applications to update</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        internal static bool AddSUA(Collection<SUA> sul)
+        internal static void AddSUA(Collection<SUA> sul)
         {
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
-            return LaunchAdmin("sua");
+            LaunchAdmin("sua");
         }
 
         /// <summary>
@@ -421,16 +421,26 @@ namespace SevenUpdate
         /// <param name="autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
         /// <param name="options">the options to save</param>
         /// <param name="sul">the list of application to update to save</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        internal static bool SaveSettings(bool autoOn, Config options, Collection<SUA> sul)
+        internal static void SaveSettings(bool autoOn, Config options, Collection<SUA> sul)
         {
             // Save the application settings and applications to update in the user store
             Base.Base.SerializeStruct(options, Base.Base.UserStore + "App.config");
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
 
             // Launch Seven Update.Admin to save the settings to the AppStore.
-            return autoOn ? LaunchAdmin("Options-On", true) : LaunchAdmin("Options-Off", true);
+            if (LaunchAdmin(autoOn ? "Options-On" : "Options-Off", true))
+                if (SettingsChangedEventHandler != null)
+                    SettingsChangedEventHandler(null, new EventArgs());
         }
+
+        #endregion
+
+        #region Event Declarations
+
+        /// <summary>
+        /// Occurs when one or more hidden updates have been restored
+        /// </summary>
+        public static event EventHandler<EventArgs> SettingsChangedEventHandler;
 
         #endregion
     }

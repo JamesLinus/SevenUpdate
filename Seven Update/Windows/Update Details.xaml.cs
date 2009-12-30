@@ -32,7 +32,7 @@ namespace SevenUpdate.Windows
     /// <summary>
     /// Interaction logic for Update_Details.xaml
     /// </summary>
-    public partial class UpdateDetails : Window
+    public sealed partial class UpdateDetails : Window
     {
         /// <summary>
         /// Constructor for the Update Details window
