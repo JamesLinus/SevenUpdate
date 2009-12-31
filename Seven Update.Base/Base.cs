@@ -391,7 +391,7 @@ namespace SevenUpdate.Base
         /// <param name="find">a string to find in the complete string</param>
         /// <param name="replace">a string to use to replace the find string in the complete string</param>
         /// <returns>a string that has the find value replace by the new value</returns>
-        private static string Replace(string complete, string find, string replace)
+        public static string Replace(string complete, string find, string replace)
         {
             // Get input string length
             var expressionLength = complete.Length;

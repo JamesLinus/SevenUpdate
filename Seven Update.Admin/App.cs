@@ -63,6 +63,8 @@ namespace SevenUpdate.Admin
 
         #region Global Vars
 
+        private static ServiceHost host;
+
         /// <summary>The notifyIcon used only when Auto Updating</summary>
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
@@ -89,7 +91,6 @@ namespace SevenUpdate.Admin
             bool createdNew;
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
-                ServiceHost host = null;
                 try
                 {
                     if (createdNew)
@@ -105,7 +106,10 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     if (host != null)
-                        host.Close();
+                        host.Abort();
+                    if (EventService.ErrorOccurred != null)
+                        EventService.ErrorOccurred(new Exception("Communucation with the update service has been interuppted and cannot be resumed"), ErrorType.FatalError);
+
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
                     ShutdownApp();
@@ -484,7 +488,12 @@ namespace SevenUpdate.Admin
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
+            host.Abort();
             Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
+            if (EventService.ErrorOccurred != null)
+                EventService.ErrorOccurred(new Exception("Communucation with the update service has been interuppted and cannot be resumed"), ErrorType.FatalError);
+
+            ShutdownApp();
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>

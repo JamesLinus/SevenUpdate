@@ -243,9 +243,9 @@ namespace SevenUpdate.Admin
                         {
                         }
 
-                        Base.Base.ReportError(e.Job.Error.File + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                        Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
                         if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                            EventService.ErrorOccurred(new Exception(e.Job.Error.File + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+                            EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.DownloadError);
                         return;
                     }
 
@@ -285,9 +285,9 @@ namespace SevenUpdate.Admin
             catch (Exception)
             {
             }
-            Base.Base.ReportError(e.Error.File + " - " + e.Error.Description, Base.Base.AllUserStore);
+            Base.Base.ReportError(e.Error.File.RemoteName + " - " + e.Error.Description, Base.Base.AllUserStore);
             if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                EventService.ErrorOccurred(new Exception(e.Error.File + " - " + e.Error.Description), ErrorType.DownloadError);
+                EventService.ErrorOccurred(new Exception(e.Error.File.RemoteName + " - " + e.Error.Description), ErrorType.DownloadError);
             App.ShutdownApp();
         }
 

@@ -184,8 +184,13 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.Downloading);
                 App.IsReconnect = false;
             }
-            infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
-                                    App.RM.GetString("Complete") + ")";
+            try
+            {
+                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") +
+                                        " % " + App.RM.GetString("Complete") + ")";
+            }catch(Exception)
+            {
+            }
         }
 
         /// <summary>
@@ -318,12 +323,20 @@ namespace SevenUpdate.Pages
 
                     break;
                 case ErrorType.InstallationError:
+                    if (!Dispatcher.CheckAccess())
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
+                    else
+                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
                     break;
 
 
                 case ErrorType.SearchError:
                     break;
                 case ErrorType.DownloadError:
+                    if (!Dispatcher.CheckAccess())
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
+                    else
+                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
                     break;
                 case ErrorType.GeneralErrorNonFatal:
 
