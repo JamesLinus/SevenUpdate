@@ -161,7 +161,7 @@ Section "Main Section" SEC01
   Delete "$INSTDIR\Seven Update.exe"
   Delete "$INSTDIR\Seven Update.exe.config"
   Delete "$INSTDIR\Seven Update.Base.dll"
-  Delete "$INSTDIR\SharpBITS.Base.dll"
+  Delete "$INSTDIR\SharpBits.Base.dll"
   Delete "$INSTDIR\Seven Update.Helper.exe"
   Delete "$SMPROGRAMS\Seven Software\Uninstall.lnk"
   Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
@@ -175,8 +175,8 @@ Section "Main Section" SEC01
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
-	StrCpy $0 "$INSTDIR\SharpBITS.Base.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/SharpBITS.Base.dll $0
+	StrCpy $0 "$INSTDIR\SharpBits.Base.dll"
+	NSISdl::download http://ittakestime.org/su/Seven%20Update/SharpBits.Base.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
@@ -308,7 +308,7 @@ Section Uninstall
   Delete "$INSTDIR\Seven Update.exe"
   Delete "$INSTDIR\Seven Update.exe.config"
   Delete "$INSTDIR\Seven Update.Base.dll"
-  Delete "$INSTDIR\SharpBITS.Base.dll"
+  Delete "$INSTDIR\SharpBits.Base.dll"
   Delete "$INSTDIR\Seven Update.Helper.exe"
   Delete "$SMPROGRAMS\Seven Software\Uninstall.lnk"
   Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
