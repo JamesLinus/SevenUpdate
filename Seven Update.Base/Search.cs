@@ -237,7 +237,13 @@ namespace SevenUpdate.Base
                     ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
                 return;
             }
-
+            catch (Exception e)
+            {
+                // Server Error! If that happens then i am the only one to blame LOL
+                if (ErrorOccurredEventHandler != null)
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
+                return;
+            }
             // Load the Seven Update SUI
             var app = Base.Deserialize<SUI>(response.GetResponseStream());
 

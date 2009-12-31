@@ -86,8 +86,6 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            if (!Directory.Exists(Base.Base.AllUserStore))
-                Directory.CreateDirectory(Base.Base.AllUserStore);
             bool createdNew;
             using (new Mutex(true, "Seven Update.Admin", out createdNew))
             {
