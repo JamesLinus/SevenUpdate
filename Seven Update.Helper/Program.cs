@@ -129,7 +129,13 @@ namespace SevenUpdate.Helper
                 catch (Exception)
                 {
                 }
-                Process.Start(appDir + "Seven Update.exe", "Auto");
+                if (Environment.OSVersion.Version.Major < 6)
+                    Process.Start(appDir + "Seven Update.exe", "Auto");
+                else
+                {
+                    var p = new Process {StartInfo = {FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"Seven Update\""}};
+                    p.Start();
+                }
                 Environment.Exit(0);
             }
             else

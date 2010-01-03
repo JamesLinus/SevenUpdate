@@ -64,7 +64,7 @@ namespace SevenUpdate.Admin
             if (applications == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
+                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
 
                 Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
                 App.ShutdownApp();
@@ -148,6 +148,8 @@ namespace SevenUpdate.Admin
             var bitsJob = manager.CreateJob("Seven Update", JobType.Download);
             bitsJob.NotificationFlags = NotificationFlags.JobErrorOccured | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
             bitsJob.Priority = priority;
+            bitsJob.NoProgressTimeout = 60;
+            bitsJob.MinimumRetryDelay = 60;
             for (var x = 0; x < applications.Count; x++)
             {
                 for (var y = 0; y < applications[x].Updates.Count; y++)
@@ -207,7 +209,7 @@ namespace SevenUpdate.Admin
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(e, ErrorType.FatalError);
+                        EventService.ErrorOccurred(e, ErrorType.DownloadError);
                     App.ShutdownApp();
                 }
             }
@@ -236,59 +238,32 @@ namespace SevenUpdate.Admin
                 App.ShutdownApp();
             }
 
-            try
+            if (e.Job == null)
+                return;
+
+            if (e.Job.DisplayName != "Seven Update")
+                return;
+
+            if (e.Job.State == JobState.Error)
+                return;
+
+            if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
+                EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+
+            if (App.NotifyIcon == null)
+                return;
+
+            if (e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
             {
-                if (e.Job.DisplayName != "Seven Update" || e.Job.State != JobState.Transferring)
-                    if (e.Job.State == JobState.Error || e.Job.State == JobState.TransientError)
-                    {
-                        try
-                        {
-                            e.Job.Cancel();
-                            manager.Dispose();
-                            manager = null;
-                        }
-                        catch (Exception)
-                        {
-                        }
-
-                        if (e.Job.Error.File != null)
-                        {
-                            Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
-                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                                EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.FatalError);
-                        }
-                        else
-                        {
-                            Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
-                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                                EventService.ErrorOccurred(new Exception(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description), ErrorType.FatalError);
-                        }
-                        return;
-                    }
-
-
-                if (e.Job.Progress.BytesTransferred <= 0)
-                    return;
-
-                if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
-                    EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
-
-                if (App.NotifyIcon != null)
-                {
-                    if (e.Job.Progress.BytesTotal > 0)
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                                   (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
-                    }
-                    else
-                    {
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("DownloadingUpdates") + " (" + e.Job.Progress.FilesTransferred + " " + App.RM.GetString("OutOf")
-                            + " "+ e.Job.Progress.FilesTotal + " " + App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")");
-                    }
-                }
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                           App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                           (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
             }
-            catch
+            else
             {
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
+                                                           App.RM.GetString("DownloadingUpdates") + " (" + e.Job.Progress.FilesTransferred + " " + App.RM.GetString("OutOf") + " " +
+                                                           e.Job.Progress.FilesTotal + " " + App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")");
             }
         }
 
@@ -297,21 +272,37 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
+            if (e.Job == null)
+                return;
+
             if (e.Job.DisplayName != "Seven Update")
                 return;
 
+            if (e.Job.State != JobState.Error)
+                return;
+
+            if (e.Job.Error.File != null)
+            {
+                Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                    EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+            }
+            else
+            {
+                Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                    EventService.ErrorOccurred(new Exception(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+            }
+
             try
             {
-                e.Job.Cancel();
+                e.Job.Complete();
                 manager.Dispose();
                 manager = null;
             }
             catch (Exception)
             {
             }
-            Base.Base.ReportError(e.Error.File.RemoteName + " - " + e.Error.Description, Base.Base.AllUserStore);
-            if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                EventService.ErrorOccurred(new Exception(e.Error.File.RemoteName + " - " + e.Error.Description), ErrorType.DownloadError);
             App.ShutdownApp();
         }
 
@@ -326,36 +317,37 @@ namespace SevenUpdate.Admin
                 App.ShutdownApp();
             }
 
-            if (e.Job.DisplayName == "Seven Update")
-            {
-                if (e.Job.State == JobState.Transferred)
-                {
-                    e.Job.Complete();
+            if (e.Job == null)
+                return;
 
-                    manager.OnJobTransferred -= ManagerOnJobTransferred;
-                    manager.OnJobError -= ManagerOnJobError;
-                    manager.OnJobModified -= ManagerOnJobModified;
-                    try
-                    {
-                        manager.Dispose();
-                        manager = null;
-                    }
-                    catch (Exception)
-                    {
-                    }
-                    if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)
-                    {
-                        if (EventService.DownloadCompleted != null && App.IsClientConnected)
-                            EventService.DownloadCompleted(false);
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
-                        Install.InstallUpdates(updates);
-                    }
-                    else
-                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);
-                }
+            if (e.Job.DisplayName != "Seven Update")
+                return;
+
+            if (e.Job.State != JobState.Transferred)
+                return;
+
+            e.Job.Complete();
+
+            manager.OnJobTransferred -= ManagerOnJobTransferred;
+            manager.OnJobError -= ManagerOnJobError;
+            manager.OnJobModified -= ManagerOnJobModified;
+            try
+            {
+                manager.Dispose();
+                manager = null;
+            }
+            catch (Exception)
+            {
+            }
+            if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)
+            {
+                if (EventService.DownloadCompleted != null && App.IsClientConnected)
+                    EventService.DownloadCompleted(false);
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
+                Install.InstallUpdates(updates);
             }
             else
-                e.Job.Resume();
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);
         }
 
         #endregion

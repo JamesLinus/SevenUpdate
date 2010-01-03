@@ -159,7 +159,7 @@ namespace SevenUpdate.Pages
 
                             officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
                             machineAppList.RemoveAt(y);
-                            y--;
+                            break;
                         }
                     }
                 }
