@@ -95,8 +95,15 @@ namespace SevenUpdate.Admin
             manager.OnJobError += ManagerOnJobError;
             manager.OnJobModified += ManagerOnJobModified;
 
-            // Load the BITS Jobs for the entire machine
-            manager.EnumJobs(JobOwner.AllUsers);
+            // Load the BITS Jobs for the entire machine and current user
+            try
+            {
+                manager.EnumJobs(JobOwner.CurrentUser);
+                manager.EnumJobs(JobOwner.AllUsers);
+            }
+            catch
+            {
+            }
 
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
             foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "Seven Update"))
