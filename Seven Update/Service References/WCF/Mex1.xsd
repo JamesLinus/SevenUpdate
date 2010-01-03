@@ -1,7 +1,4 @@
-<?xml
-  version = "1.0"
-  encoding = "utf-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" />
@@ -43,6 +40,8 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="bytesTransferred" type="xs:unsignedLong" />
         <xs:element minOccurs="0" name="bytesTotal" type="xs:unsignedLong" />
+        <xs:element minOccurs="0" name="filesTransferred" type="xs:unsignedInt" />
+        <xs:element minOccurs="0" name="filesTotal" type="xs:unsignedInt" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

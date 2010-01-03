@@ -22,10 +22,11 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
-using System.ServiceModel;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -133,6 +134,11 @@ namespace SevenUpdate.Base
         #region Global Vars
 
         /// <summary>
+        /// The application directory of Seven Update
+        /// </summary>
+        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+
+        /// <summary>
         /// The all users application data location
         /// </summary>
         public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
@@ -175,6 +181,8 @@ namespace SevenUpdate.Base
         #endregion
 
         #region Methods
+
+        #region Conversions
 
         /// <summary>
         /// Gets the preferred localized string from a collection of localized strings
@@ -362,27 +370,21 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Gets the SHA1 Hash of a file
+        /// Converts bytes into the proper increments depending on size
         /// </summary>
-        /// <param name="fileLoc">the full path to the file to get the hash from</param>
-        /// <returns>a SHA1 value</returns>
-        public static string GetHash(string fileLoc)
+        /// <param name="bytes">the fileSize in bytes</param>
+        /// <returns>returns formatted string of converted bytes</returns>
+        public static string ConvertFileSize(ulong bytes)
         {
-            if (!File.Exists(fileLoc))
-                return null;
-            var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
-
-            var sha1 = new SHA1CryptoServiceProvider();
-
-            sha1.ComputeHash(stream);
-
-            stream.Close();
-
-            var buff = new StringBuilder();
-
-            foreach (var hashByte in sha1.Hash)
-                buff.Append(String.Format("{0:X1}", hashByte));
-            return buff.ToString();
+            if (bytes >= 1073741824)
+                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
+            if (bytes >= 1048576)
+                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
+            if (bytes >= 1024)
+                return String.Format("{0:##.##}", bytes / 1024) + " KB";
+            if (bytes < 1024)
+                return bytes + " Bytes";
+            return "0 Bytes";
         }
 
         /// <summary>
@@ -428,6 +430,10 @@ namespace SevenUpdate.Base
             // Return string
             return sbRet.ToString();
         }
+
+        #endregion
+
+        #region Error Reporting
 
         /// <summary>
         /// Reports the error that occurred to a log file
@@ -482,22 +488,63 @@ namespace SevenUpdate.Base
             tw.Close();
         }
 
+        #endregion
+
         /// <summary>
-        /// Converts bytes into the proper increments depending on size
+        /// Gets the SHA1 Hash of a file
         /// </summary>
-        /// <param name="bytes">the fileSize in bytes</param>
-        /// <returns>returns formatted string of converted bytes</returns>
-        public static string ConvertFileSize(ulong bytes)
+        /// <param name="fileLoc">the full path to the file to get the hash from</param>
+        /// <returns>a SHA1 value</returns>
+        public static string GetHash(string fileLoc)
         {
-            if (bytes >= 1073741824)
-                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
-            if (bytes >= 1048576)
-                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
-            if (bytes >= 1024)
-                return String.Format("{0:##.##}", bytes / 1024) + " KB";
-            if (bytes < 1024)
-                return bytes + " Bytes";
-            return "0 Bytes";
+            if (!File.Exists(fileLoc))
+                return null;
+            var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+
+            var sha1 = new SHA1CryptoServiceProvider();
+
+            sha1.ComputeHash(stream);
+
+            stream.Close();
+
+            var buff = new StringBuilder();
+
+            foreach (var hashByte in sha1.Hash)
+                buff.Append(String.Format("{0:X1}", hashByte));
+            return buff.ToString();
+        }
+
+        /// <summary>
+        /// Starts a process on the system
+        /// </summary>
+        /// <param name="fileName">The file to execute</param>
+        /// <param name="arguments">The arguments to execute with the file</param>
+        /// <param name="wait">Specifies if Seven Update should wait until the process has finished executing</param>
+        /// <param name="hidden">Specifes if the process should be executed with no UI visibile</param>
+        /// <returns></returns>
+        public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
+        {
+            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true, Arguments = arguments}};
+            if (hidden)
+            {
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            }
+
+            try
+            {
+                proc.Start();
+                if (wait)
+                    proc.WaitForExit();
+                proc.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                ReportError(e, UserStore);
+                proc.Dispose();
+                return false;
+            }
         }
 
         #endregion

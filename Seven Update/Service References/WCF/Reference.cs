@@ -35,7 +35,7 @@ namespace SevenUpdate.WCF {
         void OnErrorOccurred(System.Exception exception, SevenUpdate.Base.ErrorType type);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnDownloadProgressChanged")]
-        void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal);
+        void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IEventSystem/OnInstallProgressChanged")]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);

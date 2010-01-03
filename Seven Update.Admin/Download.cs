@@ -188,6 +188,7 @@ namespace SevenUpdate.Admin
                     }
                 }
             }
+
             try
             {
                 bitsJob.EnumFiles();
@@ -250,9 +251,18 @@ namespace SevenUpdate.Admin
                         {
                         }
 
-                        Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
-                        if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                            EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+                        if (e.Job.Error.File != null)
+                        {
+                            Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                                EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.FatalError);
+                        }
+                        else
+                        {
+                            Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
+                                EventService.ErrorOccurred(new Exception(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description), ErrorType.FatalError);
+                        }
                         return;
                     }
 
@@ -261,13 +271,20 @@ namespace SevenUpdate.Admin
                     return;
 
                 if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
-                    EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
+                    EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
 
-                if (App.NotifyIcon != null && e.Job.Progress.BytesTotal > 0)
+                if (App.NotifyIcon != null)
                 {
-                    Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                               App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                               (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                    if (e.Job.Progress.BytesTotal > 0)
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                                   (e.Job.Progress.BytesTransferred * 100 / e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")");
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("DownloadingUpdates") + " (" + e.Job.Progress.FilesTransferred + " " + App.RM.GetString("OutOf")
+                            + " "+ e.Job.Progress.FilesTotal + " " + App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")");
+                    }
                 }
             }
             catch

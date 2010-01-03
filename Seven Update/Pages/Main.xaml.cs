@@ -21,7 +21,6 @@
 #region
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -184,12 +183,13 @@ namespace SevenUpdate.Pages
                 SetUI(UILayout.Downloading);
                 App.IsReconnect = false;
             }
-            try
-            {
+            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
                 infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") +
                                         " % " + App.RM.GetString("Complete") + ")";
-            }catch(Exception)
+            else
             {
+
+                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " + App.RM.GetString("Files") + " " +App.RM.GetString("Complete") + ")";
             }
         }
 
@@ -1152,7 +1152,9 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
                 CheckForUpdates();
             else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
-                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.System) + "\\shutdown.exe", "-r -t 00");
+            {
+                Base.Base.StartProcess("shutdown.exe", "-r -t 00");
+            }
         }
 
         #endregion

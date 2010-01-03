@@ -22,13 +22,11 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Resources;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
-using System.Xml;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
 using SevenUpdate.Admin.WCF;
@@ -70,7 +68,7 @@ namespace SevenUpdate.Admin
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
         /// <summary>The UI Resource Strings</summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof(App).Assembly);
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
 
         /// <summary>The update settings for Seven Update</summary>
         public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
@@ -96,7 +94,7 @@ namespace SevenUpdate.Admin
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof(EventService));
+                        host = new ServiceHost(typeof (EventService));
                         host.Open();
                         EventService.ClientConnected += EventService_ClientConnected;
                         EventService.ClientDisconnected += EventService_ClientDisconnected;
@@ -187,23 +185,10 @@ namespace SevenUpdate.Admin
 
                                 if (Environment.OSVersion.Version.Major < 6)
                                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
-                                                      Environment.CurrentDirectory + @"\Seven Update.Helper.exe ");
+                                                      Base.Base.AppDir + @"Seven Update.Helper.exe ");
                                 else
                                 {
-                                    var proc = new Process
-                                                   {
-                                                       StartInfo =
-                                                           {
-                                                               FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
-                                                               Verb = "runas",
-                                                               UseShellExecute = true,
-                                                               Arguments = "/Change /Enable /TN \"Seven Update.Admin\"",
-                                                               CreateNoWindow = true,
-                                                               WindowStyle = ProcessWindowStyle.Hidden
-                                                           }
-                                                   };
-
-                                    proc.Start();
+                                    Base.Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"Seven Update.Admin\"");
                                 }
 
                                 #endregion
@@ -231,20 +216,7 @@ namespace SevenUpdate.Admin
                                 }
                                 else
                                 {
-                                    var proc = new Process
-                                                   {
-                                                       StartInfo =
-                                                           {
-                                                               FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true),
-                                                               Verb = "runas",
-                                                               UseShellExecute = true,
-                                                               Arguments = "/Change /Disable /TN \"Seven Update.Admin\"",
-                                                               CreateNoWindow = true,
-                                                               WindowStyle = ProcessWindowStyle.Hidden
-                                                           }
-                                                   };
-
-                                    proc.Start();
+                                    Base.Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"Seven Update.Admin\"");
                                 }
 
                                 #endregion
@@ -422,33 +394,16 @@ namespace SevenUpdate.Admin
         /// <summary>Starts Seven Update UI</summary>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
-            var proc = new Process();
-
             if (Environment.OSVersion.Version.Major < 6)
             {
-                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update\Seven Update.exe", true, true);
-                proc.StartInfo.UseShellExecute = true;
                 if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
-                    proc.StartInfo.Arguments = "Auto";
+                    Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.exe", "Auto");
                 else
-                    proc.StartInfo.Arguments = "Reconnect";
-                proc.Start();
+                    Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.exe", "Reconnect");
             }
             else
             {
-                proc.StartInfo.FileName = Base.Base.ConvertPath(@"%WINDIR%\system32\schtasks.exe", true, true);
-
-                proc.StartInfo.Verb = "runas";
-
-                proc.StartInfo.UseShellExecute = true;
-
-                proc.StartInfo.Arguments = "/Run /TN \"Seven Update\"";
-
-                proc.StartInfo.CreateNoWindow = true;
-
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-                proc.Start();
+                Base.Base.StartProcess("schtasks.exe", "/Run /TN \"Seven Update\"");
             }
 
             if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
@@ -509,7 +464,7 @@ namespace SevenUpdate.Admin
             ShutdownApp();
         }
 
-        static void host_UnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
+        private static void host_UnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
             Base.Base.ReportError(e.Message.ToString(), Base.Base.AllUserStore);
         }

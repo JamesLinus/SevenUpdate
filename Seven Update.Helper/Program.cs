@@ -1,28 +1,56 @@
-﻿using System;
+﻿#region GNU Public License v3
+
+// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// This file is part of Seven Update.
+//  
+//     Seven Update is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation, either version 3 of the License, or
+//     (at your option) any later version.
+// 
+//     Seven Update is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+//  
+//    You should have received a copy of the GNU General Public License
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
+
+using System;
 using System.Diagnostics;
 using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Timers;
+using System.Windows.Forms;
+using Timer = System.Timers.Timer;
+
+#endregion
 
 namespace SevenUpdate.Helper
 {
-    static class Program
+    internal static class Program
     {
-        [System.Runtime.InteropServices.DllImport("kernel32.dll")]
-        private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
-        const int MoveOnReboot = 5;
+        private const int MoveOnReboot = 5;
 
-        static string appDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%") + @"\Seven Software\Seven Update\";
+        private static string appDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+
+        [DllImport("kernel32.dll")]
+        private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (args.Length > 0)
             {
-
                 var appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
 
                 var downloadDir = appStore + @"downloads\" + args[0] + @"\";
@@ -33,13 +61,17 @@ namespace SevenUpdate.Helper
 
                     Process.GetProcessesByName("Seven Update")[0].Kill();
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                }
 
                 try
                 {
                     Process.GetProcessesByName("Seven Update.Admin")[0].Kill();
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                }
 
                 try
                 {
@@ -50,7 +82,7 @@ namespace SevenUpdate.Helper
                 {
                 }
 
-                System.Threading.Thread.Sleep(1000);
+                Thread.Sleep(1000);
 
                 try
                 {
@@ -69,9 +101,9 @@ namespace SevenUpdate.Helper
                             if (!File.Exists(appStore + "reboot.lock"))
                                 File.Create(appStore + "reboot.lock").WriteByte(0);
                         }
-                        try 
-                        { 
-                            File.Delete(t.FullName); 
+                        try
+                        {
+                            File.Delete(t.FullName);
                         }
                         catch
                         {
@@ -79,7 +111,9 @@ namespace SevenUpdate.Helper
                     }
                 }
                 catch (Exception e)
-                { Console.WriteLine(e.Message); }
+                {
+                    Console.WriteLine(e.Message);
+                }
 
                 try
                 {
@@ -92,7 +126,9 @@ namespace SevenUpdate.Helper
                     else
                         MoveFileEx(appStore + "reboot.lock", null, MoveOnReboot);
                 }
-                catch (Exception) { }
+                catch (Exception)
+                {
+                }
                 Process.Start(appDir + "Seven Update.exe", "Auto");
                 Environment.Exit(0);
             }
@@ -100,12 +136,12 @@ namespace SevenUpdate.Helper
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    var aTimer = new System.Timers.Timer();
+                    var aTimer = new Timer();
 
                     aTimer.Elapsed += ATimerElapsed;
                     aTimer.Interval = 7200000;
                     aTimer.Enabled = true;
-                    System.Windows.Forms.Application.Run();
+                    Application.Run();
                 }
                 else
                 {
@@ -114,9 +150,9 @@ namespace SevenUpdate.Helper
             }
         }
 
-        static void ATimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private static void ATimerElapsed(object sender, ElapsedEventArgs e)
         {
-           Process.Start(appDir + @"Seven Update.Admin.exe", "Auto");
+            Process.Start(appDir + @"Seven Update.Admin.exe", "Auto");
         }
     }
 }

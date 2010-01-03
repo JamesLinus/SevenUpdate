@@ -1,7 +1,4 @@
-<?xml
-	version = "1.0"
-	encoding = "utf-8"?>
-
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -62,324 +59,323 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
-		<xsd:element name="root" msdata:IsDataSet="true">
-			<xsd:complexType>
-				<xsd:choice maxOccurs="unbounded">
-					<xsd:element name="metadata">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" />
-							</xsd:sequence>
-							<xsd:attribute name="name" use="required" type="xsd:string" />
-							<xsd:attribute name="type" type="xsd:string" />
-							<xsd:attribute name="mimetype" type="xsd:string" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="assembly">
-						<xsd:complexType>
-							<xsd:attribute name="alias" type="xsd:string" />
-							<xsd:attribute name="name" type="xsd:string" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="data">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-							<xsd:attribute ref="xml:space" />
-						</xsd:complexType>
-					</xsd:element>
-					<xsd:element name="resheader">
-						<xsd:complexType>
-							<xsd:sequence>
-								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-							</xsd:sequence>
-							<xsd:attribute name="name" type="xsd:string" use="required" />
-						</xsd:complexType>
-					</xsd:element>
-				</xsd:choice>
-			</xsd:complexType>
-		</xsd:element>
-	</xsd:schema>
-	<resheader name="resmimetype">
-		<value>text/microsoft-resx</value>
-	</resheader>
-	<resheader name="version">
-		<value>2.0</value>
-	</resheader>
-	<resheader name="reader">
-		<value>
-			System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-		</value>
-	</resheader>
-	<resheader name="writer">
-		<value>
-			System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-		</value>
-	</resheader>
-	<data name="AcceptLicenseTerms" xml:space="preserve">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AcceptLicenseTerms" xml:space="preserve">
     <value>Please read and accept the license terms for</value>
   </data>
-	<data name="AllowUpdates" xml:space="preserve">
+  <data name="AllowUpdates" xml:space="preserve">
     <value>Would you like to allow Seven Update to search, download and install updates for</value>
   </data>
-	<data name="AlreadyUpdating" xml:space="preserve">
+  <data name="AlreadyUpdating" xml:space="preserve">
     <value>Seven Update is currently already checking for, downloading, or installing updates.</value>
   </data>
-	<data name="At" xml:space="preserve">
+  <data name="At" xml:space="preserve">
     <value>at</value>
   </data>
-	<data name="CancelInstallation" xml:space="preserve">
+  <data name="CancelInstallation" xml:space="preserve">
     <value>You have chosen to cancel the installation of updates.</value>
   </data>
-	<data name="CancelUpdates" xml:space="preserve">
+  <data name="CancelUpdates" xml:space="preserve">
     <value>Cancel updates</value>
   </data>
-	<data name="CheckConnection" xml:space="preserve">
+  <data name="CheckConnection" xml:space="preserve">
     <value>Seven Update cannot connect to the internet, please check your connection or firewall.</value>
   </data>
-	<data name="CheckingForUpdates" xml:space="preserve">
+  <data name="CheckingForUpdates" xml:space="preserve">
     <value>Checking for updates</value>
   </data>
-	<data name="CheckUpdatesOnly" xml:space="preserve">
+  <data name="CheckUpdatesOnly" xml:space="preserve">
     <value>Check for updates but let me choose whether to download and install them</value>
   </data>
-	<data name="Complete" xml:space="preserve">
+  <data name="Complete" xml:space="preserve">
     <value>complete</value>
   </data>
-	<data name="CompletedInstallingUpdates" xml:space="preserve">
+  <data name="CompletedInstallingUpdates" xml:space="preserve">
     <value>Seven Update has completed installing updates.</value>
   </data>
-	<data name="CouldNotConnect" xml:space="preserve">
+  <data name="CouldNotConnect" xml:space="preserve">
     <value>Could not connect to the Seven Update server</value>
   </data>
-	<data name="DownloadAndInstallUpdates" xml:space="preserve">
+  <data name="DownloadAndInstallUpdates" xml:space="preserve">
     <value>Download and install your selected updates</value>
   </data>
-	<data name="DownloadingUpdates" xml:space="preserve">
+  <data name="DownloadingUpdates" xml:space="preserve">
     <value>Downloading Updates</value>
   </data>
-	<data name="DownloadingUpdatesBackground" xml:space="preserve">
+  <data name="DownloadingUpdatesBackground" xml:space="preserve">
     <value>Seven Update is downloading updates in the background.</value>
   </data>
-	<data name="DownloadUpdatesOnly" xml:space="preserve">
+  <data name="DownloadUpdatesOnly" xml:space="preserve">
     <value>Download updates but let me choose whether to install them (Recommended)</value>
   </data>
-	<data name="ErrorOccurred" xml:space="preserve">
+  <data name="ErrorOccurred" xml:space="preserve">
     <value>An error occurred while searching, downloading, or installing updates.</value>
   </data>
-	<data name="ExitConfirm" xml:space="preserve">
+  <data name="ExitConfirm" xml:space="preserve">
     <value>Are you sure you would like to exit?</value>
   </data>
-	<data name="Finish" xml:space="preserve">
+  <data name="Finish" xml:space="preserve">
     <value>Finish</value>
   </data>
-	<data name="FinishedDownloading" xml:space="preserve">
+  <data name="FinishedDownloading" xml:space="preserve">
     <value>Seven Update has finish downloading updates, click here to view them.</value>
   </data>
-	<data name="Hidden" xml:space="preserve">
+  <data name="Hidden" xml:space="preserve">
     <value>Hidden</value>
   </data>
-	<data name="HideUpdate" xml:space="preserve">
+  <data name="HideUpdate" xml:space="preserve">
     <value>Hide update</value>
   </data>
-	<data name="ImportantUpdateAvailable" xml:space="preserve">
+  <data name="ImportantUpdateAvailable" xml:space="preserve">
     <value>important update available</value>
   </data>
-	<data name="ImportantUpdatesAvailable" xml:space="preserve">
+  <data name="ImportantUpdatesAvailable" xml:space="preserve">
     <value>important updates are available</value>
   </data>
-	<data name="ImportantUpdateSelected" xml:space="preserve">
+  <data name="ImportantUpdateSelected" xml:space="preserve">
     <value>important update selected</value>
   </data>
-	<data name="ImportantUpdatesSelected" xml:space="preserve">
+  <data name="ImportantUpdatesSelected" xml:space="preserve">
     <value>important updates selected</value>
   </data>
-	<data name="Installing" xml:space="preserve">
+  <data name="Installing" xml:space="preserve">
     <value>Installing</value>
   </data>
-	<data name="InstallingUpdates" xml:space="preserve">
+  <data name="InstallingUpdates" xml:space="preserve">
     <value>Installing updates</value>
   </data>
-	<data name="InstallingUpdatesBackground" xml:space="preserve">
+  <data name="InstallingUpdatesBackground" xml:space="preserve">
     <value>Seven Update is installing updates in the background.</value>
   </data>
-	<data name="InstallUpdates" xml:space="preserve">
+  <data name="InstallUpdates" xml:space="preserve">
     <value>Install updates</value>
   </data>
-	<data name="InstallUpdatesAutomatically" xml:space="preserve">
+  <data name="InstallUpdatesAutomatically" xml:space="preserve">
     <value>Install updates automatically</value>
   </data>
-	<data name="LastUpdated" xml:space="preserve">
+  <data name="LastUpdated" xml:space="preserve">
     <value>Last updated:</value>
   </data>
-	<data name="NeverCheckUpdates" xml:space="preserve">
+  <data name="NeverCheckUpdates" xml:space="preserve">
     <value>Never check for updates (not recommended)</value>
   </data>
-	<data name="Next" xml:space="preserve">
+  <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
-	<data name="NoImportantUpdates" xml:space="preserve">
+  <data name="NoImportantUpdates" xml:space="preserve">
     <value>No important updates available</value>
   </data>
-	<data name="NoNewUpdates" xml:space="preserve">
+  <data name="NoNewUpdates" xml:space="preserve">
     <value>No new updates are available for your programs.</value>
   </data>
-	<data name="NoUpdatesSelected" xml:space="preserve">
+  <data name="NoUpdatesSelected" xml:space="preserve">
     <value>No updates are currently selected.</value>
   </data>
-	<data name="OptionalUpdateAvailable" xml:space="preserve">
+  <data name="OptionalUpdateAvailable" xml:space="preserve">
     <value>optional update available</value>
   </data>
-	<data name="OptionalUpdatesAvailable" xml:space="preserve">
+  <data name="OptionalUpdatesAvailable" xml:space="preserve">
     <value>optional update are available</value>
   </data>
-	<data name="OptionalUpdateSelected" xml:space="preserve">
+  <data name="OptionalUpdateSelected" xml:space="preserve">
     <value>optional update selected</value>
   </data>
-	<data name="OptionalUpdatesSelected" xml:space="preserve">
+  <data name="OptionalUpdatesSelected" xml:space="preserve">
     <value>optional updates selected</value>
   </data>
-	<data name="OutOf" xml:space="preserve">
+  <data name="OutOf" xml:space="preserve">
     <value>out of</value>
   </data>
-	<data name="PreparingDownload" xml:space="preserve">
+  <data name="PreparingDownload" xml:space="preserve">
     <value>Preparing to download updates...</value>
   </data>
-	<data name="PreparingInstall" xml:space="preserve">
+  <data name="PreparingInstall" xml:space="preserve">
     <value>Preparing to install updates...</value>
   </data>
-	<data name="ProgramsUpToDate" xml:space="preserve">
+  <data name="ProgramsUpToDate" xml:space="preserve">
     <value>Your programs are up to date</value>
   </data>
-	<data name="ReadyToDownload" xml:space="preserve">
+  <data name="ReadyToDownload" xml:space="preserve">
     <value>Ready to download</value>
   </data>
-	<data name="ReadyToInstall" xml:space="preserve">
+  <data name="ReadyToInstall" xml:space="preserve">
     <value>Ready to install</value>
   </data>
-	<data name="RebootNeeded" xml:space="preserve">
+  <data name="RebootNeeded" xml:space="preserve">
     <value>Your computer needs to be restarted to finish updates.</value>
   </data>
-	<data name="RestartNow" xml:space="preserve">
+  <data name="RestartNow" xml:space="preserve">
     <value>Restart now</value>
   </data>
-	<data name="SaveAndReboot" xml:space="preserve">
+  <data name="SaveAndReboot" xml:space="preserve">
     <value>Please save your work and reboot your machine to complete the installation of updates.</value>
   </data>
-	<data name="SevenSoftware" xml:space="preserve">
+  <data name="SevenSoftware" xml:space="preserve">
     <value>Seven Software</value>
   </data>
-	<data name="SevenUpdate" xml:space="preserve">
+  <data name="SevenUpdate" xml:space="preserve">
     <value>Seven Update</value>
   </data>
-	<data name="ShowUpdate" xml:space="preserve">
+  <data name="ShowUpdate" xml:space="preserve">
     <value>Show update</value>
   </data>
-	<data name="Succeeded" xml:space="preserve">
+  <data name="Succeeded" xml:space="preserve">
     <value>Succeeded</value>
   </data>
-	<data name="TodayAt" xml:space="preserve">
+  <data name="TodayAt" xml:space="preserve">
     <value>Today at</value>
   </data>
-	<data name="Total" xml:space="preserve">
+  <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
-	<data name="TotalSelected" xml:space="preserve">
+  <data name="TotalSelected" xml:space="preserve">
     <value>Total selected:</value>
   </data>
-	<data name="TryAgain" xml:space="preserve">
+  <data name="TryAgain" xml:space="preserve">
     <value>Try Again</value>
   </data>
-	<data name="UnknownErrorOccurred" xml:space="preserve">
+  <data name="UnknownErrorOccurred" xml:space="preserve">
     <value>An unknown error occurred</value>
   </data>
-	<data name="Update" xml:space="preserve">
+  <data name="Update" xml:space="preserve">
     <value>update</value>
   </data>
-	<data name="Updates" xml:space="preserve">
+  <data name="Updates" xml:space="preserve">
     <value>updates</value>
   </data>
-	<data name="UpdatesAvailable" xml:space="preserve">
+  <data name="UpdatesAvailable" xml:space="preserve">
     <value>There are updates available, click here to see them</value>
   </data>
-	<data name="UpdatesCanceled" xml:space="preserve">
+  <data name="UpdatesCanceled" xml:space="preserve">
     <value>Updates have been canceled</value>
   </data>
-	<data name="UpdatesComplete" xml:space="preserve">
+  <data name="UpdatesComplete" xml:space="preserve">
     <value>Updates are complete</value>
   </data>
-	<data name="UpdatesDownloaded" xml:space="preserve">
+  <data name="UpdatesDownloaded" xml:space="preserve">
     <value>Updates have been downloaded</value>
   </data>
-	<data name="UpdateSelected" xml:space="preserve">
+  <data name="UpdateSelected" xml:space="preserve">
     <value>update selected</value>
   </data>
-	<data name="UpdatesReadyInstalled" xml:space="preserve">
+  <data name="UpdatesReadyInstalled" xml:space="preserve">
     <value>Updates are ready to be installed</value>
   </data>
-	<data name="Failed" xml:space="preserve">
+  <data name="Failed" xml:space="preserve">
     <value>Failed</value>
   </data>
-	<data name="Important" xml:space="preserve">
+  <data name="Important" xml:space="preserve">
     <value>Important</value>
   </data>
-	<data name="Locale" xml:space="preserve">
+  <data name="Locale" xml:space="preserve">
     <value>Locale</value>
   </data>
-	<data name="Optional" xml:space="preserve">
+  <data name="Optional" xml:space="preserve">
     <value>Optional</value>
   </data>
-	<data name="Recommended" xml:space="preserve">
+  <data name="Recommended" xml:space="preserve">
     <value>Recommended</value>
   </data>
-	<data name="Successful" xml:space="preserve">
+  <data name="Successful" xml:space="preserve">
     <value>Successful</value>
   </data>
-	<data name="InstallUpdatesForPrograms" xml:space="preserve">
+  <data name="InstallUpdatesForPrograms" xml:space="preserve">
     <value>Install updates for your programs</value>
   </data>
-	<data name="RebootNeededFirst" xml:space="preserve">
+  <data name="RebootNeededFirst" xml:space="preserve">
     <value>Seven Update cannot currently check for updates, because you must first restart the computer so that a previous installation may be completed.</value>
   </data>
-	<data name="Save" xml:space="preserve">
+  <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
-	<data name="Restore" xml:space="preserve">
+  <data name="Restore" xml:space="preserve">
     <value>Restore</value>
   </data>
-	<data name="DownloadSize" xml:space="preserve">
+  <data name="DownloadSize" xml:space="preserve">
     <value>Download size</value>
   </data>
-	<data name="On" xml:space="preserve">
+  <data name="On" xml:space="preserve">
     <value>on</value>
   </data>
-	<data name="StopDownload" xml:space="preserve">
+  <data name="StopDownload" xml:space="preserve">
     <value>Stop download</value>
   </data>
-	<data name="StopInstallation" xml:space="preserve">
+  <data name="StopInstallation" xml:space="preserve">
     <value>Stop installation</value>
   </data>
-	<data name="UpdatesInstalled" xml:space="preserve">
+  <data name="UpdatesInstalled" xml:space="preserve">
     <value>The updates were successfully installed</value>
   </data>
-	<data name="Never" xml:space="preserve">
+  <data name="Never" xml:space="preserve">
     <value>Never</value>
   </data>
-	<data name="InstalledOn" xml:space="preserve">
+  <data name="InstalledOn" xml:space="preserve">
     <value>installed on</value>
   </data>
-	<data name="ConnectingToService" xml:space="preserve">
+  <data name="ConnectingToService" xml:space="preserve">
     <value>Connecting to the Seven Update service</value>
   </data>
-	<data name="GettingInstallationStatus" xml:space="preserve">
+  <data name="GettingInstallationStatus" xml:space="preserve">
     <value>Please wait, retrieving update installation status</value>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>files</value>
   </data>
 </root>

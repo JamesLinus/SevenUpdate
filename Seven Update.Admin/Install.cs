@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -192,19 +191,7 @@ namespace SevenUpdate.Admin
                             }
                         }
 
-                        var proc = new Process
-                                       {
-                                           StartInfo =
-                                               {
-                                                   FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Helper.exe",
-                                                   UseShellExecute = true,
-                                                   Arguments = "\"" + currentUpdateName + "\"",
-                                                   CreateNoWindow = true,
-                                                   WindowStyle = ProcessWindowStyle.Hidden
-                                               }
-                                       };
-
-                        proc.Start();
+                        Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Helper.exe", "\"" + currentUpdateName + "\"");
 
                         App.ShutdownApp();
                     }
@@ -429,14 +416,12 @@ namespace SevenUpdate.Admin
                         {
                             if (File.Exists(sourceFile))
                             {
-                                var proc = new Process {StartInfo = {FileName = sourceFile, Arguments = files[x].Args}};
-                                proc.Start();
-                                proc.WaitForExit();
+                                Base.Base.StartProcess(sourceFile, files[x].Args, true);
                             }
                         }
 
                         if (files[x].Action == FileAction.UnregisterThenDelete)
-                            Process.Start("regsvr32", "/u /s" + destinationFile);
+                            Base.Base.StartProcess("regsvr32", "/u /s" + destinationFile);
 
                         try
                         {
@@ -454,7 +439,7 @@ namespace SevenUpdate.Admin
                     case FileAction.Execute:
                         try
                         {
-                            Process.Start(destinationFile, files[x].Args);
+                            Base.Base.StartProcess(destinationFile, files[x].Args);
                         }
                         catch (Exception e)
                         {
@@ -505,7 +490,7 @@ namespace SevenUpdate.Admin
                         {
                             try
                             {
-                                Process.Start(destinationFile, files[x].Args);
+                                Base.Base.StartProcess(destinationFile, files[x].Args);
                             }
                             catch (Exception e)
                             {
@@ -515,7 +500,7 @@ namespace SevenUpdate.Admin
                         }
 
                         if (files[x].Action == FileAction.UpdateThenRegister)
-                            Process.Start("regsvc32", "/s " + destinationFile);
+                            Base.Base.StartProcess("regsvr32", "/s" + destinationFile);
                         break;
 
                         #endregion

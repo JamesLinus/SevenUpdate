@@ -24,7 +24,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.ServiceModel;
 using System.Threading;
 using SevenUpdate.Base;
@@ -67,10 +66,12 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="bytesTransferred">the number of bytes transferred</param>
         /// <param name="bytesTotal">the total number of bytes to download</param>
-        public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal)
+        public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
             BytesTotal = bytesTotal;
             BytesTransferred = bytesTransferred;
+            FilesTotal = filesTotal;
+            FilesTransferred = filesTransferred;
         }
 
         /// <summary>
@@ -82,6 +83,16 @@ namespace SevenUpdate
         /// Gets the total number of bytes to download
         /// </summary>
         public ulong BytesTotal { get; private set; }
+
+        /// <summary>
+        /// Gets the number of files downloaded
+        /// </summary>
+        public uint FilesTransferred{ get; private set; }
+
+        /// <summary>
+        /// Gets the total number of files to download
+        /// </summary>
+        public uint FilesTotal { get; private set; }
     }
 
     /// <summary>
@@ -212,10 +223,12 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="bytesTransferred">the number of bytes downloaded</param>
         /// <param name="bytesTotal">the total number of bytes to download</param>
-        public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal)
+        /// <param name="filesTransferred">The number of files downloaded</param>
+        /// <param name="filesTotal">The total number of files to download</param>
+        public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
             if (DownloadProgressChangedEventHandler != null)
-                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal));
+                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
         }
 
         #endregion
@@ -324,43 +337,6 @@ namespace SevenUpdate
         #region Install & Config Methods
 
         /// <summary>
-        /// Launches the Seven Update.Admin Module
-        /// </summary>
-        /// <param name="arguments">a string of arguments to be passed to admin module</param>
-        /// <param name="wait">a boolean indicating if the current thread will wait for the admin process to exit</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        private static bool LaunchAdmin(string arguments, bool wait = false)
-        {
-            var proc = new Process { StartInfo = { FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe" } };
-
-            if (!App.IsAdmin)
-                proc.StartInfo.Verb = "runas";
-
-            proc.StartInfo.UseShellExecute = true;
-
-            proc.StartInfo.Arguments = arguments;
-
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-
-            try
-            {
-                proc.Start();
-                if (wait)
-                    proc.WaitForExit();
-                proc.Dispose();
-                return true;
-            }
-            catch (Exception e)
-            {
-                Base.Base.ReportError(e, Base.Base.UserStore);
-                proc.Dispose();
-                return false;
-            }
-        }
-
-        /// <summary>
         /// Aborts the installation of updates
         /// </summary>
         internal static bool AbortInstall()
@@ -368,9 +344,10 @@ namespace SevenUpdate
             bool abort = false;
             try
             {
-                abort = LaunchAdmin("Abort");
-                if (abort)
-                    wcf.UnSubscribe();
+                abort = Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "Abort", true);
+                if (abort && wcf != null)
+                    if (wcf.State == CommunicationState.Opened)
+                        wcf.UnSubscribe();
             }
             catch (Exception e)
             {
@@ -386,7 +363,7 @@ namespace SevenUpdate
         internal static bool Install()
         {
             Base.Base.Serialize(App.Applications, Base.Base.UserStore + "Updates.sui");
-            return LaunchAdmin("Install");
+            return Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "Install");
         }
 
         /// <summary>Hides an update</summary>
@@ -395,7 +372,7 @@ namespace SevenUpdate
         internal static bool HideUpdate(SUH hiddenUpdate)
         {
             Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
-            return LaunchAdmin("HideUpdate");
+            return Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "HideUpdate");
         }
 
         /// <summary>
@@ -406,7 +383,7 @@ namespace SevenUpdate
         internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
         {
             Base.Base.Serialize(hiddenUpdates, Base.Base.UserStore + "Hidden.suh");
-            if (LaunchAdmin("HideUpdates", true))
+            if (Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "HideUpdates", true))
                 return true;
             File.Delete(Base.Base.UserStore + "Hidden.suh");
             return false;
@@ -420,7 +397,7 @@ namespace SevenUpdate
         internal static bool ShowUpdate(SUH hiddenUpdate)
         {
             Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
-            if (LaunchAdmin("ShowUpdate"))
+            if (Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "ShowUpdate"))
                 return true;
             File.Delete(Base.Base.UserStore + "Update.suh");
             return true;
@@ -433,7 +410,7 @@ namespace SevenUpdate
         internal static void AddSUA(Collection<SUA> sul)
         {
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
-            LaunchAdmin("sua");
+            Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", "sua");
         }
 
         /// <summary>
@@ -449,7 +426,7 @@ namespace SevenUpdate
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
 
             // Launch Seven Update.Admin to save the settings to the AppStore.
-            if (LaunchAdmin(autoOn ? "Options-On" : "Options-Off", true))
+            if (Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.Admin.exe", autoOn ? "Options-On" : "Options-Off", true))
                 if (SettingsChangedEventHandler != null)
                     SettingsChangedEventHandler(null, new EventArgs());
         }

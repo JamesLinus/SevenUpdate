@@ -52,7 +52,9 @@ namespace SevenUpdate.Admin.WCF
         /// </summary>
         /// <param name="bytesTransferred">The number of bytes downloaded</param>
         /// <param name="bytesTotal">The total number of bytes to download</param>
-        public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal);
+        /// <param name="filesTransferred">The number of files downloaded</param>
+        /// <param name="filesTotal">The total number of files to download</param>
+        public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
 
         /// <summary>
         /// A callback delegate for the <see cref="DownloadProgressChanged" /> event
