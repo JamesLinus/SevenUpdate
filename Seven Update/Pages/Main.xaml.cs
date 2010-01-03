@@ -581,7 +581,7 @@ namespace SevenUpdate.Pages
         /// <param name="errorDescription">The description of the error that occurred</param>
         /// <param name="updatesInstalled">The number of updates installed</param>
         /// <param name="updatesFailed">The number of updates failed</param>
-        private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
+    private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
         {
             switch (layout)
             {
@@ -730,8 +730,7 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
-                    if (!App.IsAdmin)
-                        infoBar.imgAdminShield.Visibility = Visibility.Visible;
+                    infoBar.imgAdminShield.Visibility = Visibility.Collapsed;
 
                     infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
                     infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
