@@ -36,7 +36,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2007-09")]
+[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -76,6 +76,6 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("9.12.31.0")]
-[assembly: AssemblyFileVersion("9.12.31.0")]
+[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyFileVersion("10.1.2")]
 [assembly: NeutralResourcesLanguage("en-US")]

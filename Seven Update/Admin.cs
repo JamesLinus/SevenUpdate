@@ -270,7 +270,9 @@ namespace SevenUpdate
             try
             {
                 while (wcf.State != CommunicationState.Created)
-                    Thread.CurrentThread.Join(500);
+                    if (wcf.State == CommunicationState.Faulted)
+                        throw new FaultException();
+                Thread.CurrentThread.Join(500);
                 wcf.Subscribe();
             }
             catch (EndpointNotFoundException)
@@ -280,7 +282,25 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.Base.ReportError(e, Base.Base.UserStore);
+                AdminError(e);
+            }
+        }
+
+        private static void AdminError(Exception e)
+        {
+            Base.Base.ReportError(e, Base.Base.UserStore);
+            if (ServiceErrorEventHandler != null)
+                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalError));
+            var processes = Process.GetProcessesByName("Seven Update.Admin");
+            foreach (var t in processes)
+            {
+                try
+                {
+                    t.Kill();
+                }
+                catch
+                {
+                }
             }
         }
 
@@ -292,7 +312,8 @@ namespace SevenUpdate
             if (wcf != null)
                 try
                 {
-                    wcf.UnSubscribe();
+                    if (wcf.State == CommunicationState.Opened)
+                        wcf.UnSubscribe();
                 }
                 catch (Exception e)
                 {
@@ -310,7 +331,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         private static bool LaunchAdmin(string arguments, bool wait = false)
         {
-            var proc = new Process {StartInfo = {FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe"}};
+            var proc = new Process { StartInfo = { FileName = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\Seven Update.Admin.exe" } };
 
             if (!App.IsAdmin)
                 proc.StartInfo.Verb = "runas";
@@ -441,6 +462,11 @@ namespace SevenUpdate
         /// Occurs when one or more hidden updates have been restored
         /// </summary>
         public static event EventHandler<EventArgs> SettingsChangedEventHandler;
+
+        /// <summary>
+        /// Occurs when the Seven Update.Admin serice faults or encounters a serious error
+        /// </summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ServiceErrorEventHandler;
 
         #endregion
     }

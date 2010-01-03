@@ -18,7 +18,8 @@
     <StartupObject>SevenUpdate.Admin.App</StartupObject>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -100,7 +101,7 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="SharpBits.Base, Version=9.12.10.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="SharpBits.Base, Version=9.12.29.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\SharpBits.Base.dll</HintPath>
     </Reference>

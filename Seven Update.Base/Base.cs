@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -453,6 +454,7 @@ namespace SevenUpdate.Base
 
             tw.WriteLine(DateTime.Now + ": " + exception.Source);
             tw.WriteLine(DateTime.Now + ": " + exception.Message);
+            tw.WriteLine(DateTime.Now + ": " + exception.StackTrace);
 
             if (exception.TargetSite != null)
                 tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
@@ -461,6 +463,7 @@ namespace SevenUpdate.Base
             {
                 tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
                 tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
 
                 if (exception.TargetSite != null)
                     tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
@@ -469,6 +472,7 @@ namespace SevenUpdate.Base
                 {
                     tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
                     tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
 
                     if (exception.TargetSite != null)
                         tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);

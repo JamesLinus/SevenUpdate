@@ -35,7 +35,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2007-09")]
+[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -66,6 +66,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersionAttribute("9.12.31")]
-[assembly: AssemblyFileVersionAttribute("9.12.31")]
+[assembly: AssemblyVersionAttribute("1.0.0")]
+[assembly: AssemblyFileVersionAttribute("10.1.2")]
 [assembly: NeutralResourcesLanguage("en-US")]

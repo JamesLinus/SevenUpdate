@@ -131,8 +131,6 @@ namespace SevenUpdate.Admin.WCF
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
             DownloadCompleted += callback.OnDownloadCompleted;
             ErrorOccurred += callback.OnErrorOccurred;
-            var obj = (ICommunicationObject) callback;
-            obj.Closed += EventService_Closed;
             ClientConnected();
         }
 
@@ -141,23 +139,13 @@ namespace SevenUpdate.Admin.WCF
         /// </summary>
         public void UnSubscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IEventSystemCallback>();
-            InstallCompleted -= callback.OnInstallCompleted;
-            InstallProgressChanged -= callback.OnInstallProgressChanged;
-            DownloadCompleted -= callback.OnDownloadCompleted;
-            DownloadProgressChanged -= callback.OnDownloadProgressChanged;
+            InstallCompleted = null;
+            InstallProgressChanged = null;
+            DownloadCompleted = null;
+            DownloadProgressChanged = null;
             ClientDisconnected();
         }
 
         #endregion
-
-        /// <summary>
-        /// Occurs when the <see cref="EventService" /> had closed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void EventService_Closed(object sender, EventArgs e)
-        {
-        }
     }
 }

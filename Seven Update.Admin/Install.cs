@@ -170,7 +170,7 @@ namespace SevenUpdate.Admin
 
                     #region If Seven Update
 
-                    if (applications[x].Directory == @"%PROGRAMFILES%\Seven Software\Seven Update" && Base.Base.RebootNeeded)
+                    if (applications[x].Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.Base.RebootNeeded)
                     {
                         for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
                         {

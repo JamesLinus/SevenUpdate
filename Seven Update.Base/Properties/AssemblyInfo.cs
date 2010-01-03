@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2007-09")]
+[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -37,5 +37,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersionAttribute("9.12.31")]
-[assembly: AssemblyFileVersionAttribute("9.12.31")]
+[assembly: AssemblyVersionAttribute("1.0.0")]
+[assembly: AssemblyFileVersionAttribute("10.1.2")]

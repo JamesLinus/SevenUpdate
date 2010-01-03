@@ -256,7 +256,7 @@ namespace SevenUpdate.Admin
                 if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
                     EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal);
 
-                if (App.NotifyIcon != null && e.Job.Progress.FilesTransferred > 0 && e.Job.Progress.BytesTotal > 0)
+                if (App.NotifyIcon != null && e.Job.Progress.BytesTotal > 0)
                 {
                     Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
                                                                App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +

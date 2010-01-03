@@ -11,7 +11,9 @@ namespace SevenUpdate.Helper
         [System.Runtime.InteropServices.DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
         const int MoveOnReboot = 5;
-        
+
+        static string appDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%") + @"\Seven Software\Seven Update\";
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -22,8 +24,6 @@ namespace SevenUpdate.Helper
             {
 
                 var appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
-
-                var appDir = Environment.ExpandEnvironmentVariables("%PROGRAMFILES%") + @"\Seven Software\Seven Update\";
 
                 var downloadDir = appStore + @"downloads\" + args[0] + @"\";
 
@@ -87,8 +87,6 @@ namespace SevenUpdate.Helper
                     {
                         Directory.Delete(appStore + downloadDir, true);
 
-                        Directory.Delete(appStore + @"downloads\Seven Update", true);
-
                         Directory.Delete(appStore + @"downloads", true);
                     }
                     else
@@ -118,7 +116,7 @@ namespace SevenUpdate.Helper
 
         static void ATimerElapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-           // Process.Start(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location) + @"\Seven Update Admin.exe", "Auto");
+           Process.Start(appDir + @"Seven Update.Admin.exe", "Auto");
         }
     }
 }

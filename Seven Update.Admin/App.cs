@@ -28,6 +28,7 @@ using System.Resources;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
+using System.Xml;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
 using SevenUpdate.Admin.WCF;
@@ -69,7 +70,7 @@ namespace SevenUpdate.Admin
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
         /// <summary>The UI Resource Strings</summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
+        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof(App).Assembly);
 
         /// <summary>The update settings for Seven Update</summary>
         public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
@@ -95,20 +96,32 @@ namespace SevenUpdate.Admin
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof (EventService));
+                        host = new ServiceHost(typeof(EventService));
                         host.Open();
                         EventService.ClientConnected += EventService_ClientConnected;
                         EventService.ClientDisconnected += EventService_ClientDisconnected;
                         host.Faulted += HostFaulted;
+                        host.UnknownMessageReceived += host_UnknownMessageReceived;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
                     }
+                }
+                catch (FaultException e)
+                {
+                    if (host != null)
+                        host.Abort();
+                    if (EventService.ErrorOccurred != null)
+                        EventService.ErrorOccurred(e, ErrorType.FatalError);
+
+                    SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    ShutdownApp();
                 }
                 catch (Exception e)
                 {
                     if (host != null)
                         host.Abort();
                     if (EventService.ErrorOccurred != null)
-                        EventService.ErrorOccurred(new Exception("Communucation with the update service has been interuppted and cannot be resumed"), ErrorType.FatalError);
+                        EventService.ErrorOccurred(e, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
@@ -491,9 +504,14 @@ namespace SevenUpdate.Admin
             host.Abort();
             Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
             if (EventService.ErrorOccurred != null)
-                EventService.ErrorOccurred(new Exception("Communucation with the update service has been interuppted and cannot be resumed"), ErrorType.FatalError);
+                EventService.ErrorOccurred(new Exception("Communication with the update service has been interrupted and cannot be resumed"), ErrorType.FatalError);
 
             ShutdownApp();
+        }
+
+        static void host_UnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
+        {
+            Base.Base.ReportError(e.Message.ToString(), Base.Base.AllUserStore);
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
