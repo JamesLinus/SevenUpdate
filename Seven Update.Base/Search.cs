@@ -222,6 +222,18 @@ namespace SevenUpdate.Base
         public static void SearchForUpdates(IEnumerable<SUA> apps)
         {
             var applications = new Collection<SUI>();
+            try
+            {
+                // Check if machine is connected to the internet
+                var clnt = new System.Net.Sockets.TcpClient("www.google.com", 80);
+                clnt.Close();
+            }
+            catch (Exception e)
+            {
+                if (ErrorOccurredEventHandler != null)
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
+                return;
+            }
 
             #region Seven Update
 
@@ -230,7 +242,7 @@ namespace SevenUpdate.Base
             try
             {
                 // Download the Seven Update SUI and load it.
-                response = (HttpWebResponse)hwr.GetResponse();
+                response = (HttpWebResponse) hwr.GetResponse();
                 var app = Base.Deserialize<SUI>(response.GetResponseStream());
 
                 // Check if there is a newer version of Seven Update
@@ -251,7 +263,6 @@ namespace SevenUpdate.Base
             {
                 // If this happens i am the only one to blame lol.
                 Base.ReportError(e, Base.AllUserStore);
-
                 // Notify that there was an error that occurred.
                 if (ErrorOccurredEventHandler != null)
                     ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
