@@ -49,7 +49,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The Seven Update list location
         /// </summary>
-        private static readonly Uri SULLocation = new Uri("http://ittakestime.org/su/Apps.sul");
+        private static readonly Uri SULLocation = new Uri("http://sevenupdate.com/apps/Apps.sul");
 
         /// <summary>
         /// A collection of SUA's that Seven Update can update

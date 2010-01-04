@@ -169,56 +169,56 @@ Section "Main Section" SEC01
   Delete "$TEMP\Seven Update.Admin.xml"
 	
 	StrCpy $0 "$INSTDIR\Seven Update.exe"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.exe $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.exe $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\SharpBits.Base.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/SharpBits.Base.dll $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/SharpBits.Base.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.exe.config"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.exe.config $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.exe.config $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Admin.exe.config"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.exe.config $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.Admin.exe.config $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Admin.exe"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.exe $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.Admin.exe $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Base.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Base.dll $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.Base.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Interop.IWshRuntimeLibrary.dll $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Interop.IWshRuntimeLibrary.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Helper.exe"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Helper.exe $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.Helper.exe $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
@@ -230,14 +230,14 @@ Section "Main Section" SEC01
 	${Else}
 	
 		StrCpy $0 "$TEMP\Seven Update.xml"
-		NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.xml $0
+		NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.xml $0
 		Pop $R0 ;Get the return value
 		StrCmp $R0 "success" +3
 		MessageBox MB_OK "Download failed: $R0"
 		Quit
 	
 		StrCpy $0 "$TEMP\Seven Update.Admin.xml"
-		NSISdl::download http://ittakestime.org/su/Seven%20Update/Seven%20Update.Admin.xml $0
+		NSISdl::download http://sevenupdate.com/apps/Seven%20Update/Seven%20Update.Admin.xml $0
 		Pop $R0 ;Get the return value
 		StrCmp $R0 "success" +3
 		MessageBox MB_OK "Download failed: $R0"

@@ -565,7 +565,7 @@ namespace SevenUpdate.Base
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                     r = new StreamReader(xmlFile);
                     var temp = (T) s.Deserialize(r);
                     r.Close();
@@ -600,7 +600,7 @@ namespace SevenUpdate.Base
                 TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                    s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                     r = new StreamReader(xmlFile);
                     var temp = (T) s.Deserialize(r);
                     r.Close();
@@ -633,7 +633,7 @@ namespace SevenUpdate.Base
             TextReader r = null;
             try
             {
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                 r = new StreamReader(stream);
                 var temp = (T) s.Deserialize(r);
                 r.Close();
@@ -671,8 +671,8 @@ namespace SevenUpdate.Base
             {
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
-                ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                ns.Add("", "http://sevenupdate.com");
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {
@@ -706,8 +706,8 @@ namespace SevenUpdate.Base
             {
                 var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
                 var ns = new XmlSerializerNamespaces();
-                ns.Add("", "http://sevenupdate.sourceforge.net");
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.sourceforge.net");
+                ns.Add("", "http://sevenupdate.com");
+                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                 w = XmlWriter.Create(xmlFile, xs);
                 if (w != null)
                 {

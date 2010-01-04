@@ -35,7 +35,7 @@ namespace SevenUpdate.Base
     #region Struct
 
     /// <summary>Configuration options</summary>
-    [XmlType(AnonymousType = true), XmlRoot("settings", Namespace = "http://sevenupdate.sourceforge.net")]
+    [XmlType(AnonymousType = true), XmlRoot("settings", Namespace = "http://sevenupdate.com")]
     public struct Config
     {
         /// <summary>
@@ -133,7 +133,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Seven Update Application information
     /// </summary>
-    [XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
+    [XmlRoot("application", Namespace = "http://sevenupdate.com")]
     public class SUA : INotifyPropertyChanged
     {
         /// <summary>The application name</summary>
@@ -333,7 +333,7 @@ namespace SevenUpdate.Base
     #region Classes
 
     /// <summary>Application info</summary>
-    [XmlType(AnonymousType = true), XmlRoot("application", Namespace = "http://sevenupdate.sourceforge.net")]
+    [XmlType(AnonymousType = true), XmlRoot("application", Namespace = "http://sevenupdate.com")]
     public class SUI : INotifyPropertyChanged
     {
         #region Required Properties
@@ -405,7 +405,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information on how to install a software update
     /// </summary>
-    [XmlType("update", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    [XmlType("update", Namespace = "http://sevenupdate.com", AnonymousType = true)]
     public class Update : INotifyPropertyChanged
     {
         #region Required Properties
@@ -519,7 +519,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information about a file within an update
     /// </summary>
-    [XmlType("file", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    [XmlType("file", Namespace = "http://sevenupdate.com", AnonymousType = true)]
     public class UpdateFile : INotifyPropertyChanged
     {
         #region Required Properties
@@ -590,7 +590,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// A registry entry within an update
     /// </summary>
-    [XmlType("registryItem", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    [XmlType("registryItem", Namespace = "http://sevenupdate.com", AnonymousType = true)]
     public class RegistryItem : INotifyPropertyChanged
     {
         #region Required Properties
@@ -663,7 +663,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// A shortcut to be created within an update
     /// </summary>
-    [XmlType("shortcut", Namespace = "http://sevenupdate.sourceforge.net", AnonymousType = true)]
+    [XmlType("shortcut", Namespace = "http://sevenupdate.com", AnonymousType = true)]
     public class Shortcut : INotifyPropertyChanged
     {
         #region Required Properties
@@ -741,7 +741,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [XmlType(AnonymousType = true), XmlRoot("update", Namespace = "http://sevenupdate.sourceforge.net")]
+    [XmlType(AnonymousType = true), XmlRoot("update", Namespace = "http://sevenupdate.com")]
     public class SUH : INotifyPropertyChanged
     {
         #region Required Properties

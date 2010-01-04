@@ -159,7 +159,17 @@ namespace SevenUpdate
         /// </summary>
         private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
         {
-            MessageBox.Show(e.File + e.Exception);
+            if (e.File == Base.Base.AppsFile)
+            {
+                try
+                {
+                    File.Delete(Base.Base.AppsFile);
+                }catch
+                {
+                }
+            }
+
+            Base.Base.ReportError(e.Exception, Base.Base.UserStore);
         }
 
         /// <summary>

@@ -151,28 +151,28 @@ Section "Main Section" SEC01
 	Delete "$INSTDIR\Seven Update.Library.dll"
 	
 	StrCpy $0 "$INSTDIR\Seven Update.SDK.exe"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.SDK.exe $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update%20SDK/Seven%20Update.SDK.exe $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.SDK.exe.config"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.SDK.exe.config $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update%20SDK/Seven%20Update.SDK.exe.config $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Seven Update.Base.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Seven%20Update.Base.dll $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update%20SDK/Seven%20Update.Base.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
 	Quit
 	
 	StrCpy $0 "$INSTDIR\Windows UI.dll"
-	NSISdl::download http://ittakestime.org/su/Seven%20Update%20SDK/Windows%20UI.dll $0
+	NSISdl::download http://sevenupdate.com/apps/Seven%20Update%20SDK/Windows%20UI.dll $0
 	Pop $R0 ;Get the return value
 	StrCmp $R0 "success" +3
 	MessageBox MB_OK "Download failed: $R0"
