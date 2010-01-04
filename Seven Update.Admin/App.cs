@@ -276,7 +276,6 @@ namespace SevenUpdate.Admin
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates");
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
-                                    Search.ErrorOccurredEventHandler += Search_ErrorOccurredEventHandler;
                                     Search.SearchForUpdates(Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile));
                                     app.Run();
                                 }
@@ -485,15 +484,6 @@ namespace SevenUpdate.Admin
             }
             else
                 ShutdownApp();
-        }
-
-        /// <summary>
-        /// Fired when an error is occurred while searching for updates during an auto check.
-        /// </summary>
-        static void Search_ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e)
-        {
-            
-            ShutdownApp();
         }
 
         #endregion
