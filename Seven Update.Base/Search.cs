@@ -219,84 +219,89 @@ namespace SevenUpdate.Base
         /// Searches for updates while blocking the calling thread
         /// </summary>
         /// <param name="apps">the list of applications to check for updates</param>
-        public static void SearchForUpdates(Collection<SUA> apps)
+        public static void SearchForUpdates(IEnumerable<SUA> apps)
         {
             var applications = new Collection<SUI>();
 
+            #region Seven Update
+
             var hwr = (HttpWebRequest) WebRequest.Create(SevenUpdateSUI);
             HttpWebResponse response;
-
             try
             {
-                response = (HttpWebResponse) hwr.GetResponse();
-            }
-            catch (WebException e)
-            {
-                // Server Error! If that happens then i am the only one to blame LOL
-                if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
-                return;
-            }
-            catch (Exception e)
-            {
-                // Server Error! If that happens then i am the only one to blame LOL
-                if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
-                return;
-            }
-            // Load the Seven Update SUI
-            var app = Base.Deserialize<SUI>(response.GetResponseStream());
+                // Download the Seven Update SUI and load it.
+                response = (HttpWebResponse)hwr.GetResponse();
+                var app = Base.Deserialize<SUI>(response.GetResponseStream());
 
-            // Checks to see if there are any updates for Seven Update
-            if (app != null)
-            {
+                // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
                 {
                     // If there are updates add it to the collection
                     applications.Add(app);
+
+                    // Search is complete!
+                    if (SearchDoneEventHandler != null)
+                        SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
+
+                    return;
                 }
-                else
+
+            }
+            catch (Exception e)
+            {
+                // If this happens i am the only one to blame lol.
+                Base.ReportError(e, Base.AllUserStore);
+
+                // Notify that there was an error that occurred.
+                if (ErrorOccurredEventHandler != null)
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
+            }
+
+            #endregion
+
+            #region Supported Apps
+
+            if (apps == null)
+            {
+                // Search is complete!
+                if (SearchDoneEventHandler != null)
+                    SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
+
+                return;
+            }
+
+            // Gets the hidden updates from settings
+            var hidden = Base.Deserialize<Collection<SUH>>(Base.HiddenFile);
+
+            // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
+            foreach (SUA t in apps.Where(t => t.IsEnabled))
+            {
+                try
                 {
-                    if (apps != null)
+                    // Download the SUI
+                    hwr = (HttpWebRequest) WebRequest.Create(t.Source);
+                    response = (HttpWebResponse) hwr.GetResponse();
+
+                    // Loads a SUI that was downloaded
+                    var app = Base.Deserialize<SUI>(response.GetResponseStream());
+
+                    // Check to see if any updates are avalible and exclude hidden updates
+                    // If there is an update avaliable, add it.
+                    if (CheckForUpdates(ref app, hidden))
                     {
-                        // Gets the hidden updates from settings
-                        var hidden = Base.Deserialize<Collection<SUH>>(Base.HiddenFile);
-
-                        // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-                        foreach (SUA t in apps.Where(t => t.IsEnabled))
-                        {
-                            try
-                            {
-                                // Download the SUI
-                                hwr = (HttpWebRequest) WebRequest.Create(t.Source);
-                                response = (HttpWebResponse) hwr.GetResponse();
-
-                                // Loads a SUI that was downloaded
-                                app = Base.Deserialize<SUI>(response.GetResponseStream());
-
-                                // Check to see if any updates are avalible and exclude hidden updates
-                                // If there is an update avaliable, add it.
-                                if (CheckForUpdates(ref app, hidden))
-                                {
-                                    applications.Add(app);
-                                }
-                            }
-                            catch (WebException e)
-                            {
-                                // Notify that there was an error that occurred.
-                                if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
-                            }
-                            catch (Exception e)
-                            {
-                                // Notify that there was an error that occurred.
-                                if (ErrorOccurredEventHandler != null)
-                                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
-                            }
-                        }
+                        applications.Add(app);
                     }
                 }
+                catch (Exception e)
+                {
+                    Base.ReportError(e, Base.AllUserStore);
+                    // Notify that there was an error that occurred.
+                    if (ErrorOccurredEventHandler != null)
+                        ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                }
             }
+
+            #endregion
 
             // Search is complete!
             if (SearchDoneEventHandler != null)

@@ -540,6 +540,7 @@ namespace SevenUpdate.Pages
             AdminCallBack.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
             RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdateEventHandler;
             Admin.SettingsChangedEventHandler += Admin_SettingsChangedEventHandler;
+            Admin.ServiceErrorEventHandler += ErrorOccurredEventHandler;
 
             #endregion
         }
@@ -581,7 +582,7 @@ namespace SevenUpdate.Pages
         /// <param name="errorDescription">The description of the error that occurred</param>
         /// <param name="updatesInstalled">The number of updates installed</param>
         /// <param name="updatesFailed">The number of updates failed</param>
-    private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
+        private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
         {
             switch (layout)
             {

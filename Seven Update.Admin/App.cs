@@ -273,9 +273,10 @@ namespace SevenUpdate.Admin
                                     if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
                                         File.Delete(Base.Base.AllUserStore + "abort.lock");
                                     var app = new Application();
-                                    NotifyIcon.Text = RM.GetString("CheckingForUpdates") + "...";
+                                    NotifyIcon.Text = RM.GetString("CheckingForUpdates");
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
+                                    Search.ErrorOccurredEventHandler += Search_ErrorOccurredEventHandler;
                                     Search.SearchForUpdates(Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile));
                                     app.Run();
                                 }
@@ -396,7 +397,7 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
+                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") || NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
                     Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.exe", "Auto");
                 else
                     Base.Base.StartProcess(Base.Base.AppDir + "Seven Update.exe", "Reconnect");
@@ -406,7 +407,7 @@ namespace SevenUpdate.Admin
                 Base.Base.StartProcess("schtasks.exe", "/Run /TN \"Seven Update\"");
             }
 
-            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem"))
+            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") || NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
             {
                 ShutdownApp();
             }
@@ -484,6 +485,15 @@ namespace SevenUpdate.Admin
             }
             else
                 ShutdownApp();
+        }
+
+        /// <summary>
+        /// Fired when an error is occurred while searching for updates during an auto check.
+        /// </summary>
+        static void Search_ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e)
+        {
+            
+            ShutdownApp();
         }
 
         #endregion
