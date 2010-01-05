@@ -2,7 +2,7 @@
   version = "1.0"
   encoding = "utf-8"?>
 
-<xs:schema id="NewDataSet" targetNamespace="http://sevenupdate.sourceforge.net" xmlns:mstns="http://sevenupdate.sourceforge.net" xmlns="http://sevenupdate.sourceforge.net" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+<xs:schema id="NewDataSet" targetNamespace="http://sevenupdate.com" xmlns:mstns="http://sevenupdate.com" xmlns="http://sevenupdate.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:element name="application">
     <xs:complexType>
       <xs:sequence>
