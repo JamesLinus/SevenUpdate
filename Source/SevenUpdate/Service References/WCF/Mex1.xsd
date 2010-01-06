@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" />
+  <xs:element name="Subscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UnSubscribe">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnDownloadCompleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="errorOccurred" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnInstallCompleted">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updatesInstalled" type="xs:int" />
+        <xs:element minOccurs="0" name="updatesFailed" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnErrorOccurred">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="exception" nillable="true" type="q1:Exception" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" minOccurs="0" name="type" type="q2:ErrorType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnDownloadProgressChanged">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="bytesTransferred" type="xs:unsignedLong" />
+        <xs:element minOccurs="0" name="bytesTotal" type="xs:unsignedLong" />
+        <xs:element minOccurs="0" name="filesTransferred" type="xs:unsignedInt" />
+        <xs:element minOccurs="0" name="filesTotal" type="xs:unsignedInt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="OnInstallProgressChanged">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="updateName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="progress" type="xs:int" />
+        <xs:element minOccurs="0" name="updatesComplete" type="xs:int" />
+        <xs:element minOccurs="0" name="totalUpdates" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

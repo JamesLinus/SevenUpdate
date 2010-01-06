@@ -1,0 +1,34 @@
+<?xml
+  version = "1.0"
+  encoding = "utf-8"?>
+
+<xs:schema id="NewDataSet" targetNamespace="http://sevenupdate.com" xmlns:mstns="http://sevenupdate.com" xmlns="http://sevenupdate.com" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:element name="application">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="lang" form="unqualified" type="xs:string" />
+            <xs:attribute name="value" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="description" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="lang" form="unqualified" type="xs:string" />
+            <xs:attribute name="value" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="publisher" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="lang" form="unqualified" type="xs:string" />
+            <xs:attribute name="value" form="unqualified" type="xs:string" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="directory" form="unqualified" type="xs:string" />
+      <xs:attribute name="is64Bit" form="unqualified" type="xs:string" />
+      <xs:attribute name="isEnabled" form="unqualified" type="xs:string" />
+      <xs:attribute name="source" form="unqualified" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
