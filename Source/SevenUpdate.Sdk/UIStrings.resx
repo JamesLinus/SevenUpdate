@@ -186,16 +186,19 @@
   <data name="Update" xml:space="preserve">
     <value>Update</value>
   </data>
-  <data name="URLNotValid" xml:space="preserve">
+  <data name="UrlNotValid" xml:space="preserve">
     <value>The url you have entered is not valid.</value>
   </data>
-  <data name="UrlSUI" xml:space="preserve">
+  <data name="UrlSui" xml:space="preserve">
     <value>The url you have entered must point to your sui file.</value>
   </data>
-  <data name="URLValid" xml:space="preserve">
+  <data name="UrlValid" xml:space="preserve">
     <value>The url you have entered is valid.</value>
   </data>
   <data name="SevenSoftware" xml:space="preserve">
     <value>Seven Software</value>
+  </data>
+  <data name="SuiInvalid" xml:space="preserve">
+    <value />
   </data>
 </root>
