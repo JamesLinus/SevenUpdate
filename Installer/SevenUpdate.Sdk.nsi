@@ -147,21 +147,21 @@ Section "Main Section" SEC01
   RMDir /r $INSTDIR
   
   StrCpy $0 "$INSTDIR\SevenUpdate.Sdk.exe"
-  NSISdl::download "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" $0
+  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" $0
   Pop $R0 ;Get the return value
   StrCmp $R0 "success" +3
   MessageBox MB_OK "Download failed: $R0"
   Quit
   
   StrCpy $0 "$INSTDIR\SevenUpdate.Base.dll"
-  NSISdl::download "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" $0
+  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" $0
   Pop $R0 ;Get the return value
   StrCmp $R0 "success" +3
   MessageBox MB_OK "Download failed: $R0"
   Quit
   
   StrCpy $0 "$INSTDIR\Windows.UI.dll"
-  NSISdl::download "http://sevenupdate.com/apps/SevenUpdateSDK/Windows.UI.dll" $0
+  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdateSDK/Windows.UI.dll" $0
   Pop $R0 ;Get the return value
   StrCmp $R0 "success" +3
   MessageBox MB_OK "Download failed: $R0"
