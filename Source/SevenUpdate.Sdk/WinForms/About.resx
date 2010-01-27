@@ -301,13 +301,13 @@
     <value>95, 68</value>
   </data>
   <data name="lblSupport.Size" type="System.Drawing.Size, System.Drawing">
-    <value>177, 13</value>
+    <value>163, 13</value>
   </data>
   <data name="lblSupport.TabIndex" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
   <data name="lblSupport.Text" xml:space="preserve">
-    <value>http://sevenupdate.sourceforge.net</value>
+    <value>http://sevenupdate.com/support</value>
   </data>
   <data name="&gt;&gt;lblSupport.Name" xml:space="preserve">
     <value>lblSupport</value>

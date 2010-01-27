@@ -249,7 +249,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lineSeparator1</value>
   </data>
   <data name="&gt;&gt;lineSeparator1.Type" xml:space="preserve">
-    <value>System.Drawing.LineSeparator, Seven Update.SDK, Version=9.12.3.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lineSeparator1.Parent" xml:space="preserve">
     <value>panel</value>
@@ -513,7 +513,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>clSUA</value>
   </data>
   <data name="&gt;&gt;clSUA.Type" xml:space="preserve">
-    <value>WindowsUI.CommandLink, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;clSUA.Parent" xml:space="preserve">
     <value>$this</value>
@@ -543,7 +543,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>clOpenSUI</value>
   </data>
   <data name="&gt;&gt;clOpenSUI.Type" xml:space="preserve">
-    <value>WindowsUI.CommandLink, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;clOpenSUI.Parent" xml:space="preserve">
     <value>$this</value>
@@ -573,7 +573,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>clNewSUI</value>
   </data>
   <data name="&gt;&gt;clNewSUI.Type" xml:space="preserve">
-    <value>WindowsUI.CommandLink, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;clNewSUI.Parent" xml:space="preserve">
     <value>$this</value>
@@ -654,7 +654,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lineSeparator2</value>
   </data>
   <data name="&gt;&gt;lineSeparator2.Type" xml:space="preserve">
-    <value>System.Drawing.LineSeparator, Seven Update.SDK, Version=9.12.3.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lineSeparator2.Parent" xml:space="preserve">
     <value>pnlButtonSection</value>
@@ -1440,13 +1440,13 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>dlgOpenFile</value>
   </data>
   <data name="&gt;&gt;dlgOpenFile.Type" xml:space="preserve">
-    <value>WindowsUI.OpenFileDialog, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.OpenFileDialog, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;dlgSaveFile.Name" xml:space="preserve">
     <value>dlgSaveFile</value>
   </data>
   <data name="&gt;&gt;dlgSaveFile.Type" xml:space="preserve">
-    <value>WindowsUI.SaveFileDialog, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.SaveFileDialog, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>Main</value>

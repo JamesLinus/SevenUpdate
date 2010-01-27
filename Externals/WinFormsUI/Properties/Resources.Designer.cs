@@ -60,16 +60,23 @@ namespace Windows.UI.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap green_arrow1 {
+        internal static System.Drawing.Bitmap restarrow {
             get {
-                object obj = ResourceManager.GetObject("green_arrow1", resourceCulture);
+                object obj = ResourceManager.GetObject("restarrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap green_arrow2 {
+        internal static System.Drawing.Bitmap selarrow {
             get {
-                object obj = ResourceManager.GetObject("green_arrow2", resourceCulture);
+                object obj = ResourceManager.GetObject("selarrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap shield {
+            get {
+                object obj = ResourceManager.GetObject("shield", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

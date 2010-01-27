@@ -38,8 +38,8 @@ namespace WindowsUI
     protected override void OnCreateControl()
     {
       base.OnCreateControl();
-      imgArrow1 = Windows.UI.Properties.Resources.green_arrow1;
-      imgArrow2 = Windows.UI.Properties.Resources.green_arrow2;
+      imgArrow1 = Windows.UI.Properties.Resources.restarrow;
+      imgArrow2 = Windows.UI.Properties.Resources.selarrow;
     }
 
   

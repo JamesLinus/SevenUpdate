@@ -47,10 +47,7 @@ namespace SevenUpdate.Sdk
 
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (args.Length > 0)
-                Application.Run(new Main(args[0]));
-            else
-                Application.Run(new Main());
+            Application.Run(args.Length > 0 ? new Main(args[0]) : new Main());
         }
     }
 }

@@ -95,7 +95,7 @@ namespace WindowsUI
                 lblDescription.Click += new EventHandler(lblDescription_Click);
                 lblText.Click += new EventHandler(lblDescription_Click);
                 picIcon.Click += new EventHandler(lblDescription_Click);
-                picIcon.Image = new Bitmap(GetType(), "Images.restarrow.gif");
+                picIcon.Image = Windows.UI.Properties.Resources.restarrow;
                  
                 // Add any initialization after the InitializeComponent() call.
                 if (this.Parent!=null)
@@ -222,16 +222,16 @@ namespace WindowsUI
                             case DisplayStyle.Arrow:
                                 if (mMouseOver == true)
                                 {
-                                    picIcon.Image = new Bitmap(GetType(), "Images.selarrow.gif");
+                                    picIcon.Image = Windows.UI.Properties.Resources.selarrow;
                                 }
                                 else
                                 {
-                                    picIcon.Image = new Bitmap(GetType(), "Images.restarrow.gif");
+                                    picIcon.Image = Windows.UI.Properties.Resources.restarrow;
                                 }
 
                                 break;
                             case DisplayStyle.Shield:
-                                picIcon.Image = new Bitmap(GetType(), "Images.shield.gif");
+                                picIcon.Image = Windows.UI.Properties.Resources.shield;
                                 break;
                             default:
                                 picIcon.Image = null;
@@ -286,7 +286,7 @@ namespace WindowsUI
                         lblDescription.ForeColor = activeTextColor;
                         if (Style == DisplayStyle.Arrow)
                         {
-                            picIcon.Image = new Bitmap(GetType(), "Images.selarrow.gif");
+                            picIcon.Image = Windows.UI.Properties.Resources.selarrow;
                         }
                     }
                     else
@@ -295,7 +295,7 @@ namespace WindowsUI
                         lblDescription.ForeColor = textColor;
                         if (Style == DisplayStyle.Arrow)
                         {
-                            picIcon.Image = new Bitmap(GetType(), "Images.restarrow.gif");
+                            picIcon.Image = Windows.UI.Properties.Resources.restarrow;
                         }
                     }
                     this.Invalidate();

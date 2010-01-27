@@ -46,16 +46,15 @@ namespace SevenUpdate.Sdk.WinForms
 
             InitializeComponent();
 
-            var assembly = Assembly.GetExecutingAssembly();
-            var version = assembly.GetName().Version;
+            var version = Application.ProductVersion;
 
-            Text = Text + " " + assembly.GetName().Name;
+            Text = Text + " " + Application.ProductName + " SDK";
 
             lblVersion.Text = version.ToString();
 
             lblCopyright.Text = "© " + "2007 - " + DateTime.Now.Year + " " + Program.RM.GetString("SevenSoftware");
 
-            lblLicense.Text = assembly.GetName().Name + " " + lblLicense.Text;
+            lblLicense.Text = Application.ProductVersion + " SDK " + lblLicense.Text;
         }
 
         #region UI Events
