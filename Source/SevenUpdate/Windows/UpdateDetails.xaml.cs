@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -61,9 +61,9 @@ namespace SevenUpdate.Windows
             else
                 tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;
             if (updateInfo.InfoUrl != null)
-                tbMoreInfoURL.Text = updateInfo.InfoUrl;
+                tbMoreInfoUrl.Text = updateInfo.InfoUrl;
             if (updateInfo.HelpUrl != null)
-                tbHelpURL.Text = updateInfo.HelpUrl;
+                tbHelpUrl.Text = updateInfo.HelpUrl;
 
             return ShowDialog();
         }
@@ -71,19 +71,19 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Launches the More Information Url
         /// </summary>
-        private void tbMoreInfoURL_MouseDown(object sender, MouseButtonEventArgs e)
+        private void MoreInfoUrlMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbMoreInfoURL.Text != null)
-                Process.Start(tbMoreInfoURL.Text);
+            if (tbMoreInfoUrl.Text != null)
+                Process.Start(tbMoreInfoUrl.Text);
         }
 
         /// <summary>
         /// Launches the Help Url
         /// </summary>
-        private void tbHelpURL_MouseDown(object sender, MouseButtonEventArgs e)
+        private void HelpUrlMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbHelpURL.Text != null)
-                Process.Start(tbHelpURL.Text);
+            if (tbHelpUrl.Text != null)
+                Process.Start(tbHelpUrl.Text);
         }
     }
 }

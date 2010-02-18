@@ -221,6 +221,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             var file = new UpdateFile();
 
+            file.Hash = lblGetHash.Enabled ? lblGetHash.Text : null;
+
             switch (cbFileAction.SelectedIndex)
             {
                 case 0:
@@ -242,12 +244,14 @@ namespace SevenUpdate.Sdk.Pages
                     file.Action = FileAction.Execute;
                     break;
                 case 6:
+                    file.Hash = null;
                     file.Action = FileAction.Delete;
                     break;
                 case 7:
                     file.Action = FileAction.ExecuteThenDelete;
                     break;
                 case 8:
+                    file.Hash = null;
                     file.Action = FileAction.UnregisterThenDelete;
                     break;
             }
@@ -271,8 +275,6 @@ namespace SevenUpdate.Sdk.Pages
             file.Destination = txtFileLoc.Text;
 
             file.Source = txtDownloadLoc.Text;
-
-            file.Hash = lblGetHash.Enabled ? lblGetHash.Text : null;
 
             file.Size = Convert.ToUInt64(txtSize.Text);
 
@@ -426,7 +428,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (cbFileAction.SelectedIndex == 4 || cbFileAction.SelectedIndex == 6 || cbFileAction.SelectedIndex == 8)
             {
-                lblGetHash.Enabled = false;
+                lblGetHash.Enabled = cbFileAction.SelectedIndex == 4;
                 txtDownloadLoc.Enabled = false;
                 txtDownloadLoc.Text = null;
             }

@@ -1,6 +1,6 @@
 ﻿<Page x:Class="SevenUpdate.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d" Title="Update Information" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="Page_Loaded">
+        xmlns:Controls="clr-namespace:SevenUpdate.Controls" mc:Ignorable="d" Title="Update Information" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="PageLoaded">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,11 +25,11 @@
         <Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top"
                 Margin="0,75,0,0" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="listView_SelectionChanged" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black"
+        <ListView Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="ListViewSelectionChanged" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black"
                 BorderThickness="0" SelectedIndex="0">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="cmiHideUpdate" Header="Hide update" Click="MenuItem_MouseClick">
+                    <MenuItem x:Name="cmiHideUpdate" Header="Hide update" Click="MenuItemMouseClick">
                         <MenuItem.Icon>
                             <Image Source="/Images/Shield.png" />
                         </MenuItem.Icon>
@@ -69,7 +69,7 @@
                 <DataTemplate x:Key="FirstCell">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox x:Name="checkBox" IsEnabled="{Binding Path=Tag, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}}"
-                                IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabledChanged="checkBox_IsEnabledChanged" />
+                                IsChecked="{Binding Path=Selected, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabledChanged="CheckBoxIsEnabledChanged" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.Resources>
@@ -97,19 +97,19 @@
             </StackPanel>
 
             <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4"
-                    Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter"
-                    MouseLeave="TextBlock_MouseLeave" />
+                    Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfoMouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlockMouseEnter"
+                    MouseLeave="TextBlockMouseLeave" />
             <TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5"
-                    Foreground="#FF0066CC" MaxWidth="190" MouseDown="tbUrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter"
-                    MouseLeave="TextBlock_MouseLeave" />
+                    Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelpMouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlockMouseEnter"
+                    MouseLeave="TextBlockMouseLeave" />
         </StackPanel>
 
         <Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Name="rectangle1" Grid.Row="6" />
         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="6">
             <Button Content="OK" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" VerticalContentAlignment="Center"
-                    Click="btnOK_Click" />
+                    Click="OkClick" />
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel"
-                    Padding="5,1" VerticalContentAlignment="Center" Click="btnCancel_Click" />
+                    Padding="5,1" VerticalContentAlignment="Center" Click="CancelClick" />
         </StackPanel>
 
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="6" Stretch="Fill" StrokeThickness="1" Grid.ColumnSpan="2"

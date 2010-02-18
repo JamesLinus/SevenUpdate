@@ -17,18 +17,18 @@
             <RowDefinition Height="47*" />
         </Grid.RowDefinitions>
         <Button Content="Close" HorizontalAlignment="Left" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnClose" Padding="5,1"
-                VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="3" Click="btnClose_Click" Margin="0,7,7,7" />
+                VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="3" Click="CloseClick" Margin="0,7,7,7" />
         <TextBlock HorizontalAlignment="Left" Name="textBlock2" Padding="5" Text="Version:" VerticalAlignment="Top" Grid.Column="1" />
         <TextBlock HorizontalAlignment="Left" Name="textBlock1" Padding="5" Text="Copyright:" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" />
         <TextBlock HorizontalAlignment="Left" Name="textBlock3" Padding="5" Text="Support:" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" />
         <TextBlock Name="tbVersion" Padding="5" Text="1.0.0.0" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
         <TextBlock Grid.Row="1" Name="tbCopyright" Padding="5" Text="2007-2010 Seven Software" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
         <TextBlock Grid.Row="2" Name="tbSupport" Padding="5" Text="http://sevenupdate.com/support" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left"
-                Foreground="#FF0066CC" Cursor="Hand" MouseDown="tbSupport_MouseDown" />
+                Foreground="#FF0066CC" Cursor="Hand" MouseDown="SupportMouseDown" />
         <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" VerticalAlignment="Top"></Separator>
         <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Top"></Separator>
         <TextBlock Foreground="#FF0066CC" HorizontalAlignment="Left" Name="tbLicense" Padding="5" Text="is licensed under the GNU GPL Version 3" VerticalAlignment="Bottom"
-                Grid.Row="4" Grid.ColumnSpan="3" MouseDown="tbLicense_MouseDown" Cursor="Hand" Margin="15,0,0,7.39999999999998" />
+                Grid.Row="4" Grid.ColumnSpan="3" MouseDown="LicenseMouseDown" Cursor="Hand" Margin="15,0,0,7.39999999999998" />
         <TextBlock Grid.ColumnSpan="2" Grid.RowSpan="1" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Name="tbDescription" TextWrapping="Wrap"
                 Padding="5" Width="460">
 			Development Team:

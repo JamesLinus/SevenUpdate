@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         /// Gets an int that indicates to move a file on reboot
         /// </summary>
-        private const int MOVEONREBOOT = 5;
+        private const int MoveOnReboot = 5;
 
         /// <summary>
         /// The localized name of the current update being installed
@@ -200,7 +200,7 @@ namespace SevenUpdate.Admin
                                     }
                                     catch (Exception)
                                     {
-                                        MoveFileEx(applications[x].Updates[y].Files[z].Destination, null, MOVEONREBOOT);
+                                        MoveFileEx(applications[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
                                     }
                                     break;
                                 default:
@@ -225,10 +225,10 @@ namespace SevenUpdate.Admin
 
             if (Base.Base.RebootNeeded)
             {
-                MoveFileEx(Base.Base.AllUserStore + "reboot.lock", null, MOVEONREBOOT);
+                MoveFileEx(Base.Base.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
                 if (Directory.Exists(Base.Base.AllUserStore + "downloads"))
-                    MoveFileEx(Base.Base.AllUserStore + "downloads", null, MOVEONREBOOT);
+                    MoveFileEx(Base.Base.AllUserStore + "downloads", null, MoveOnReboot);
             }
             else
             {
@@ -325,7 +325,7 @@ namespace SevenUpdate.Admin
 
                 #region Report Progress
 
-                int installProgress = (x * 100) / regItems.Count;
+                int installProgress = (x*100)/regItems.Count;
                 if (installProgress > 30)
                     installProgress -= 10;
 
@@ -388,7 +388,7 @@ namespace SevenUpdate.Admin
 
                 #region Report Progress
 
-                int installProgress = (x * 100) / shortcuts.Count;
+                int installProgress = (x*100)/shortcuts.Count;
                 if (installProgress > 90)
                     installProgress -= 15;
 
@@ -446,7 +446,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception)
                         {
-                            MoveFileEx(destinationFile, null, MOVEONREBOOT);
+                            MoveFileEx(destinationFile, null, MoveOnReboot);
                         }
 
                         break;
@@ -492,7 +492,7 @@ namespace SevenUpdate.Admin
                                     File.Create(Base.Base.AllUserStore + "reboot.lock").WriteByte(0);
                                 }
 
-                                MoveFileEx(sourceFile, destinationFile, MOVEONREBOOT);
+                                MoveFileEx(sourceFile, destinationFile, MoveOnReboot);
                                 File.Delete(destinationFile + ".bak");
                             }
                         }
@@ -525,7 +525,7 @@ namespace SevenUpdate.Admin
 
                 #region Report Progress
 
-                int installProgress = (x * 100) / files.Count;
+                int installProgress = (x*100)/files.Count;
                 if (installProgress > 70)
                     installProgress -= 15;
 

@@ -1,6 +1,6 @@
 ﻿#region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -133,7 +133,8 @@ namespace SevenUpdate.Helper
                     Process.Start(appDir + "SevenUpdate.exe", "Auto");
                 else
                 {
-                    var p = new Process {StartInfo = {FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\""}};
+                    var p = new Process
+                                {StartInfo = {FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\""}};
                     p.Start();
                 }
                 Environment.Exit(0);

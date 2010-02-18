@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -184,12 +184,12 @@ namespace SevenUpdate.Pages
                 App.IsReconnect = false;
             }
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") +
-                                        " % " + App.RM.GetString("Complete") + ")";
+                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " +
+                                        (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
             else
             {
-                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " + App.RM.GetString("Files") +
-                                        " " + App.RM.GetString("Complete") + ")";
+                infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " +
+                                        App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")";
             }
         }
 
@@ -507,7 +507,8 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
                     tbRecentCheck.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
                 else
-                    tbRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
+                    tbRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+                                         Settings.Default.lastUpdateCheck.ToShortTimeString();
             }
             else
                 tbRecentCheck.Text = App.RM.GetString("Never");
@@ -517,7 +518,8 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastInstall.Equals(DateTime.Now))
                     tbUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastInstall.ToShortTimeString();
                 else
-                    tbUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastInstall.ToShortTimeString();
+                    tbUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " +
+                                              Settings.Default.lastInstall.ToShortTimeString();
             }
             else
                 tbUpdatesInstalled.Text = App.RM.GetString("Never");
@@ -528,9 +530,9 @@ namespace SevenUpdate.Pages
 
             UpdateInfo.CanceledSelectionEventHandler += CanceledSelectionEventHandler;
             UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChangedEventHandler;
-            infoBar.btnAction.Click += btnAction_Click;
-            infoBar.tbViewImportantUpdates.MouseDown += tbViewImportantUpdates_MouseDown;
-            infoBar.tbViewOptionalUpdates.MouseDown += tbViewOptionalUpdates_MouseDown;
+            infoBar.btnAction.Click += ActionClick;
+            infoBar.tbViewImportantUpdates.MouseDown += ViewImportantUpdatesMouseDown;
+            infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdatesMouseDown;
             Search.SearchDoneEventHandler += SearchCompletedEventHandler;
             Search.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
             AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChangedEventHandler;
@@ -952,7 +954,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Options page
         /// </summary>
-        private void tbChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ChangeSettingsMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
         }
@@ -960,7 +962,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Checks for updates
         /// </summary>
-        private void tbCheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CheckForUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             CheckForUpdates();
         }
@@ -968,7 +970,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update History page
         /// </summary>
-        private void tbViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ViewUpdateHistoryMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
         }
@@ -976,7 +978,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Restore Updates page
         /// </summary>
-        private void tbRestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        private void RestoreHiddenUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
         }
@@ -984,7 +986,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the About Dialog window
         /// </summary>
-        private void tbAbout_MouseDown(object sender, MouseButtonEventArgs e)
+        private void AboutMouseDown(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
             about.ShowDialog();
@@ -993,7 +995,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update Info page
         /// </summary>
-        private static void tbViewOptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        private static void ViewOptionalUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
@@ -1002,7 +1004,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update Info page
         /// </summary>
-        private static void tbViewImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        private static void ViewImportantUpdatesMouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
@@ -1033,8 +1035,11 @@ namespace SevenUpdate.Pages
             infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
 
             foreach (Update t1 in
-                App.Applications.TakeWhile(t => infoBar.tbViewImportantUpdates.Visibility != Visibility.Visible || infoBar.tbViewOptionalUpdates.Visibility != Visibility.Visible).SelectMany(
-                    t => t.Updates.TakeWhile(t1 => infoBar.tbViewImportantUpdates.Visibility != Visibility.Visible || infoBar.tbViewOptionalUpdates.Visibility != Visibility.Visible)))
+                App.Applications.TakeWhile(t => infoBar.tbViewImportantUpdates.Visibility != Visibility.Visible || infoBar.tbViewOptionalUpdates.Visibility != Visibility.Visible).
+                    SelectMany(
+                        t =>
+                        t.Updates.TakeWhile(t1 => infoBar.tbViewImportantUpdates.Visibility != Visibility.Visible || infoBar.tbViewOptionalUpdates.Visibility != Visibility.Visible))
+                )
             {
                 switch (t1.Importance)
                 {
@@ -1129,7 +1134,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
         /// </summary>
-        private void btnAction_Click(object sender, RoutedEventArgs e)
+        private void ActionClick(object sender, RoutedEventArgs e)
         {
             if (infoBar.tbAction.Text == App.RM.GetString("InstallUpdates"))
                 DownloadInstallUpdates();

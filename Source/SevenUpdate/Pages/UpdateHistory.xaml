@@ -29,7 +29,7 @@
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseDoubleClick" />
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewMouseDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
@@ -44,7 +44,7 @@
         </ListView>
         <Rectangle Fill="#FFF0F0F0" Name="rectangle1" Grid.Row="2" />
         <Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True" Name="btnOK" Padding="5,1" VerticalAlignment="Center"
-                VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="btnOK_Click" />
+                VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="OkClick" />
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
     </Grid>

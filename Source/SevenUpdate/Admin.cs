@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -66,6 +66,8 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="bytesTransferred">the number of bytes transferred</param>
         /// <param name="bytesTotal">the total number of bytes to download</param>
+        /// <param name="filesTransferred">the number of files transfered</param>
+        /// <param name="filesTotal">the total number of files transfered</param>
         public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
             BytesTotal = bytesTotal;
@@ -87,7 +89,7 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the number of files downloaded
         /// </summary>
-        public uint FilesTransferred{ get; private set; }
+        public uint FilesTransferred { get; private set; }
 
         /// <summary>
         /// Gets the total number of files to download

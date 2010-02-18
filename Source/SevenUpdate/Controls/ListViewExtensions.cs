@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -148,7 +148,7 @@ namespace SevenUpdate.Controls
                         if (SortColumns[sortColumn] == ListSortDirection.Ascending)
                             result = String.Compare(valx, valy);
                         else
-                            result = (-1) * String.Compare(valx, valy);
+                            result = (-1)*String.Compare(valx, valy);
 
                         if (result != 0)
                             break;
@@ -231,7 +231,7 @@ namespace SevenUpdate.Controls
                         }
 
                         if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1) * result;
+                            result = (-1)*result;
 
                         if (result != 0)
                             break;
@@ -303,7 +303,7 @@ namespace SevenUpdate.Controls
                         }
 
                         if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1) * result;
+                            result = (-1)*result;
 
                         if (result != 0)
                             break;

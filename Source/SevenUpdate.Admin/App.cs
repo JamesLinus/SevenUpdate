@@ -1,6 +1,6 @@
 ﻿#region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -99,7 +99,7 @@ namespace SevenUpdate.Admin
                         EventService.ClientConnected += EventService_ClientConnected;
                         EventService.ClientDisconnected += EventService_ClientDisconnected;
                         host.Faulted += HostFaulted;
-                        host.UnknownMessageReceived += host_UnknownMessageReceived;
+                        host.UnknownMessageReceived += HostUnknownMessageReceived;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
                     }
                 }
@@ -398,7 +398,8 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") || NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
+                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
+                    NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
                     Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Auto");
                 else
                     Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Reconnect");
@@ -408,7 +409,8 @@ namespace SevenUpdate.Admin
                 Base.Base.StartProcess("schtasks.exe", "/Run /TN \"Seven Update\"");
             }
 
-            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") || NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
+            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
+                NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
             {
                 ShutdownApp();
             }
@@ -466,7 +468,7 @@ namespace SevenUpdate.Admin
             ShutdownApp();
         }
 
-        private static void host_UnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
+        private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
             Base.Base.ReportError(e.Message.ToString(), Base.Base.AllUserStore);
         }

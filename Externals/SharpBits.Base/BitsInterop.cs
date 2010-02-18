@@ -1415,7 +1415,7 @@ namespace SharpBits.Base
         void GetFileRanges(out uint rangeCount, out IntPtr /*BG_FILE_RANGE[]*/ ranges);
 
         /// <summary>
-        /// Changes the remote name to a new URL in a download job
+        /// Changes the remote name to a new Url in a download job
         /// </summary>
         /// <param name="remoteName">Null-terminated string that contains the name of the file on the server</param>
         void SetRemoteName([MarshalAs(UnmanagedType.LPWStr)] string remoteName);
@@ -1790,7 +1790,7 @@ namespace SharpBits.Base
 
         /// <summary>
         /// The error was related to the specified remote file. 
-        /// For example, the URL is not accessible
+        /// For example, the Url is not accessible
         /// </summary>
         BG_ERROR_CONTEXT_REMOTE_FILE = 5,
 

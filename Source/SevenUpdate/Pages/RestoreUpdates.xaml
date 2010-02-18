@@ -36,7 +36,7 @@
             </ListView.Resources>
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
-                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="listView_MouseDoubleClick" />
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListViewMouseDoubleClick" />
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                 </Style>
             </ListView.ItemContainerStyle>
@@ -52,7 +52,7 @@
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
         <StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore" Padding="5,1" VerticalContentAlignment="Center"
-                    Click="btnRestore_Click" IsEnabled="False">
+                    Click="RestoreClick" IsEnabled="False">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,./Images/ShieldDisabled.png" Stretch="None" Margin="0,0,2,0" IsEnabled="True" Width="16" Height="16"
                             VerticalAlignment="Center" HorizontalAlignment="Center" Name="imgShield"></Image>
@@ -60,7 +60,7 @@
                 </StackPanel>
             </Button>
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel"
-                    Padding="5,1" VerticalContentAlignment="Center" Click="btnCancel_Click" />
+                    Padding="5,1" VerticalContentAlignment="Center" Click="CancelClick" />
         </StackPanel>
         <TextBlock Grid.Row="2" HorizontalAlignment="Left" Name="tbSelected" Text="Total Selected: 0 updates" VerticalAlignment="Center" Margin="20,0,0,0" />
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"

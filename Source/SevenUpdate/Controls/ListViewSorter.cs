@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -42,7 +42,8 @@ namespace SevenUpdate.Controls
         /// </summary>
         public static readonly DependencyProperty IsListviewSortableProperty = DependencyProperty.RegisterAttached("IsListViewSortable", typeof (Boolean), typeof (ListViewSorter),
                                                                                                                    new FrameworkPropertyMetadata(false,
-                                                                                                                                                 new PropertyChangedCallback(OnRegisterSortableGrid)));
+                                                                                                                                                 new PropertyChangedCallback(
+                                                                                                                                                     OnRegisterSortableGrid)));
 
         /// <summary>
         /// A string indicating what to sort the colum by

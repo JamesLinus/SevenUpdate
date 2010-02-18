@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -36,6 +36,7 @@ using Microsoft.Win32;
 
 namespace SevenUpdate.Base
 {
+
     #region Event Args
 
     /// <summary>
@@ -376,11 +377,11 @@ namespace SevenUpdate.Base
         public static string ConvertFileSize(ulong bytes)
         {
             if (bytes >= 1073741824)
-                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
+                return String.Format("{0:##.##}", bytes/1073741824) + " GB";
             if (bytes >= 1048576)
-                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
+                return String.Format("{0:##.##}", bytes/1048576) + " MB";
             if (bytes >= 1024)
-                return String.Format("{0:##.##}", bytes / 1024) + " KB";
+                return String.Format("{0:##.##}", bytes/1024) + " KB";
             if (bytes < 1024)
                 return bytes + " Bytes";
             return "0 Bytes";

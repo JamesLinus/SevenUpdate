@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -114,7 +114,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates back to the Main page
         /// </summary>
-        private void btnOK_Click(object sender, RoutedEventArgs e)
+        private void OkClick(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }
@@ -136,7 +136,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the selected update details
         /// </summary>
-        private void listView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListViewMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || listView.SelectedIndex == -1)
                 return;

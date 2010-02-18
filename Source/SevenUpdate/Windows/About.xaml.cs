@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -56,17 +56,17 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Closes the About window
         /// </summary>
-        private void btnClose_Click(object sender, RoutedEventArgs e)
+        private void CloseClick(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void tbSupport_MouseDown(object sender, MouseButtonEventArgs e)
+        private void SupportMouseDown(object sender, MouseButtonEventArgs e)
         {
             Process.Start(tbSupport.Text);
         }
 
-        private void tbLicense_MouseDown(object sender, MouseButtonEventArgs e)
+        private void LicenseMouseDown(object sender, MouseButtonEventArgs e)
         {
             Process.Start("http://www.gnu.org/licenses/gpl-3.0.txt");
         }

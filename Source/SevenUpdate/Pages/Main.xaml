@@ -15,19 +15,19 @@
         <Image HorizontalAlignment="Left" IsEnabled="True" Name="imgSideBar" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
         <StackPanel HorizontalAlignment="Left" Name="stackPanel1" VerticalAlignment="Top" Margin="12,30,0,0">
             <TextBlock Name="tbCheckForUpdates" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5"
-                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbCheckForUpdates_MouseDown" />
+                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="CheckForUpdatesMouseDown" />
             <TextBlock Name="tbChangeSettings" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White"
-                    Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbChangeSettings_MouseDown" />
+                    Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="ChangeSettingsMouseDown" />
 
             <TextBlock Name="tbViewUpdateHistory" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="5"
-                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbViewUpdateHistory_MouseDown" />
+                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="ViewUpdateHistoryMouseDown" />
             <TextBlock Name="tbRestoreHiddenUpdates" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="5"
-                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbRestoreHiddenUpdates_MouseDown" />
+                    Foreground="White" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="RestoreHiddenUpdatesMouseDown" />
         </StackPanel>
         <TextBlock Text="About Seven Update" Focusable="True" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,20" Name="tbAbout" VerticalAlignment="Bottom"
-                Cursor="Hand" Padding="5" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="tbAbout_MouseDown" />
+                Cursor="Hand" Padding="5" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseDown="AboutMouseDown" />
         <StackPanel Grid.Column="2" HorizontalAlignment="Right" Name="stackPanel2">
-            <TextBlock FontSize="16" Foreground="#FF003399" Name="tb1" Padding="5" Text="SevenUpdate" Margin="0,20" />
+            <TextBlock FontSize="16" Foreground="#FF003399" Name="tb1" Padding="5" Text="Seven Update" Margin="0,20" />
             <!-- InfoBar control -->
             <Border BorderThickness="1" BorderBrush="#FFC6C7C6">
                 <ib:InfoBar x:Name="infoBar" MinWidth="600" />

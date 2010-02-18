@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 
@@ -133,8 +132,9 @@ namespace SevenUpdate.Base
                                         break;
                                     z--;
                                 }
-                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
-                                         app.Updates[y].Files[z].Hash)
+                                else if (
+                                    Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                    app.Updates[y].Files[z].Hash)
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
                                         size += app.Updates[y].Files[z].Size;
                                 break;
@@ -162,6 +162,9 @@ namespace SevenUpdate.Base
                                     break;
                                 z--;
                                 break;
+                            case FileAction.ExecuteThenDelete:
+                                size += app.Updates[y].Files[z].Size;
+                                break;
                             case FileAction.Update:
                             case FileAction.UpdateThenExecute:
                             case FileAction.UpdateThenRegister:
@@ -172,8 +175,9 @@ namespace SevenUpdate.Base
                                         break;
                                     z--;
                                 }
-                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
-                                         app.Updates[y].Files[z].Hash)
+                                else if (
+                                    Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                    app.Updates[y].Files[z].Hash)
                                     size += app.Updates[y].Files[z].Size;
                                 break;
                         }
@@ -285,7 +289,7 @@ namespace SevenUpdate.Base
             var hidden = Base.Deserialize<Collection<SUH>>(Base.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-            for (int x =0; x < apps.Count; x++)
+            for (int x = 0; x < apps.Count; x++)
             {
                 if (!apps[x].IsEnabled)
                 {

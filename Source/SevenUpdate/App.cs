@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -164,7 +164,8 @@ namespace SevenUpdate
                 try
                 {
                     File.Delete(Base.Base.AppsFile);
-                }catch
+                }
+                catch
                 {
                 }
             }
@@ -199,8 +200,8 @@ namespace SevenUpdate
                 if (index < 0)
                 {
                     if (
-                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) ==
-                        MessageBoxResult.Yes)
+                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         sul.Add(sua);
                         Admin.AddSUA(sul);

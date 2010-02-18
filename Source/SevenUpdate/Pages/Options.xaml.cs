@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -151,15 +151,17 @@ namespace SevenUpdate.Pages
                         for (var y = 0; y < machineAppList.Count; y++)
                         {
                             // Check if the app in both lists are the same
-                            if (officialAppList[x].Name != machineAppList[y].Name && officialAppList[x].Is64Bit != machineAppList[y].Is64Bit)
-                                continue;
+                            if (officialAppList[x].Directory == machineAppList[y].Directory && officialAppList[x].Is64Bit == machineAppList[y].Is64Bit)
+                            {
+                                //if (officialAppList[x].Source != machineAppList[y].Source)
+                                //    continue;
 
-                            //if (officialAppList[x].Source != machineAppList[y].Source)
-                            //    continue;
-
-                            officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
-                            machineAppList.RemoveAt(y);
-                            break;
+                                officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
+                                machineAppList.RemoveAt(y);
+                                y--;
+                                break;
+                            }
+                            continue;
                         }
                     }
                 }
@@ -232,7 +234,8 @@ namespace SevenUpdate.Pages
             if (cbAutoUpdateMethod.SelectedIndex == 3)
                 options.AutoOption = AutoUpdateOption.Never;
 
-            options.IncludeRecommended = ((bool) chkRecommendedUpdates.IsChecked);
+            if (chkRecommendedUpdates.IsChecked != null)
+                options.IncludeRecommended = ((bool) chkRecommendedUpdates.IsChecked);
 
 
             if (cbAutoUpdateMethod.SelectedIndex == 3)
@@ -254,7 +257,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void cbAutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AutoUpdateMethodSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (cbAutoUpdateMethod.SelectedIndex)
             {
@@ -314,7 +317,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnSave_Click(object sender, RoutedEventArgs e)
+        private void SaveClick(object sender, RoutedEventArgs e)
         {
             SaveSettings();
             MainWindow.NavService.GoBack();
@@ -325,7 +328,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void CancelClick(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }

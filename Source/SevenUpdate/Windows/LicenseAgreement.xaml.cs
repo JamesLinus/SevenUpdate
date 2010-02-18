@@ -1,6 +1,6 @@
 #region GNU Public License v3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //  
 //     Seven Update is free software: you can redistribute it and/or modify
@@ -72,7 +72,7 @@ namespace SevenUpdate.Windows
             internal int AppIndex { get; set; }
 
             /// <summary>
-            /// The URL for the license agreement
+            /// The Url for the license agreement
             /// </summary>
             internal string LicenseUrl { get; set; }
 
@@ -130,7 +130,13 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new EULA {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
+                    var sla = new EULA
+                                  {
+                                      LicenseUrl = App.Applications[x].Updates[y].LicenseUrl,
+                                      Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name),
+                                      AppIndex = x,
+                                      UpdateIndex = y
+                                  };
 
                     licenseInformation.Add(sla);
                 }
@@ -214,7 +220,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        private void CancelClick(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
@@ -223,7 +229,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Downloads the EULA's when the window is loaded
         /// </summary>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void WindowLoaded(object sender, RoutedEventArgs e)
         {
             DownloadLicenseInformation();
         }
@@ -231,7 +237,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Sets the IsEnabled property of btnAction depending if Accept is selected
         /// </summary>
-        private void radioAccept_Checked(object sender, RoutedEventArgs e)
+        private void AcceptChecked(object sender, RoutedEventArgs e)
         {
             btnAction.IsEnabled = true;
             imgAdminShield.Source = shield;
@@ -240,7 +246,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Sets the IsEnabled property of btnAction depending if Decline selected
         /// </summary>
-        private void rbDecline_Checked(object sender, RoutedEventArgs e)
+        private void DeclineChecked(object sender, RoutedEventArgs e)
         {
             if (App.Applications.Count != 1)
             {
@@ -257,7 +263,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Displays the next license agreement or returns
         /// </summary>
-        private void btnAction_Click(object sender, RoutedEventArgs e)
+        private void ActionClick(object sender, RoutedEventArgs e)
         {
             if (rbDecline.IsChecked == true)
             {
