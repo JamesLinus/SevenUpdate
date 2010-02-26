@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -70,8 +70,17 @@ namespace SevenUpdate.Admin
         /// <summary>The UI Resource Strings</summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
 
-        /// <summary>The update settings for Seven Update</summary>
-        public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
+        /// <summary>
+        /// Gets the update configuration settings
+        /// </summary>
+        public static Config Settings
+        {
+            get
+            {
+                var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
+                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false, Locale = "en"};
+            }
+        }
 
         /// <summary>Gets or Sets a bool value indicating Seven Update UI is currently connected.</summary>
         internal static bool IsClientConnected { get; set; }
@@ -187,9 +196,7 @@ namespace SevenUpdate.Admin
                                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
                                                       Base.Base.AppDir + @"SevenUpdate.Helper.exe ");
                                 else
-                                {
                                     Base.Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
-                                }
 
                                 #endregion
 
@@ -211,13 +218,9 @@ namespace SevenUpdate.Admin
                                     File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
                                 }
                                 if (Environment.OSVersion.Version.Major < 6)
-                                {
                                     Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
-                                }
                                 else
-                                {
                                     Base.Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
-                                }
 
                                 #endregion
 
@@ -226,8 +229,8 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                var hidden = Base.Base.Deserialize<Collection<SUH>>(Base.Base.HiddenFile) ?? new Collection<SUH>();
-                                hidden.Add(Base.Base.Deserialize<SUH>(Base.Base.UserStore + "Update.suh"));
+                                var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+                                hidden.Add(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
 
                                 File.Delete(Base.Base.UserStore + "Update.suh");
 
@@ -240,8 +243,8 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                var show = Base.Base.Deserialize<Collection<SUH>>(Base.Base.HiddenFile) ?? new Collection<SUH>();
-                                show.Remove(Base.Base.Deserialize<SUH>(Base.Base.UserStore + "Update.suh"));
+                                var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+                                show.Remove(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
 
                                 File.Delete(Base.Base.UserStore + "Update.suh");
 
@@ -277,7 +280,7 @@ namespace SevenUpdate.Admin
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
                                     Search.ErrorOccurredEventHandler += Search_ErrorOccurredEventHandler;
-                                    Search.SearchForUpdates(Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile));
+                                    Search.SearchForUpdates(Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile));
 
                                     app.Run();
                                 }
@@ -332,7 +335,7 @@ namespace SevenUpdate.Admin
                     NotifyIcon = null;
                 }
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -345,15 +348,17 @@ namespace SevenUpdate.Admin
         internal static void ShutdownApp()
         {
             if (NotifyIcon != null)
+            {
                 try
                 {
                     NotifyIcon.Visible = false;
                     NotifyIcon.Dispose();
                     NotifyIcon = null;
                 }
-                catch (Exception)
+                catch
                 {
                 }
+            }
 
             Environment.Exit(0);
         }
@@ -405,15 +410,11 @@ namespace SevenUpdate.Admin
                     Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Reconnect");
             }
             else
-            {
                 Base.Base.StartProcess("schtasks.exe", "/Run /TN \"Seven Update\"");
-            }
 
             if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
                 NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
-            {
                 ShutdownApp();
-            }
         }
 
         #endregion
@@ -424,15 +425,17 @@ namespace SevenUpdate.Admin
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             if (NotifyIcon != null)
+            {
                 try
                 {
                     NotifyIcon.Visible = false;
                     NotifyIcon.Dispose();
                     NotifyIcon = null;
                 }
-                catch (Exception)
+                catch
                 {
                 }
+            }
 
             using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
             {
@@ -447,7 +450,7 @@ namespace SevenUpdate.Admin
         {
             IsClientConnected = true;
             if (File.Exists(Base.Base.UserStore + "Updates.sui"))
-                Download.DownloadUpdates(Base.Base.Deserialize<Collection<SUI>>(Base.Base.UserStore + "Updates.sui"), JobPriority.ForeGround);
+                Download.DownloadUpdates(Base.Base.Deserialize<Collection<Sui>>(Base.Base.UserStore + "Updates.sui"), JobPriority.ForeGround);
         }
 
         /// <summary>Occurs when the Seven Update UI disconnected</summary>

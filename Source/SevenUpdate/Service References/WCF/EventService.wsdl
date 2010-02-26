@@ -131,7 +131,9 @@
     <wsdl:port name="NetNamedPipeBinding_IEventSystem" binding="tns:NetNamedPipeBinding_IEventSystem">
       <soap12:address location="net.pipe://localhost/SevenUpdate/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.pipe://localhost/SevenUpdate/</wsa10:Address>
+        <wsa10:Address>
+          net.pipe://localhost/SevenUpdate/
+        </wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>SERVER-7\sevenalive</Upn>
         </Identity>

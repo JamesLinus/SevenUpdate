@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -54,7 +54,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// A collection of SUA's that Seven Update can update
         /// </summary>
-        private ObservableCollection<SUA> machineAppList;
+        private ObservableCollection<Sua> machineAppList;
 
         #endregion
 
@@ -81,7 +81,7 @@ namespace SevenUpdate.Pages
             try
             {
                 response = (HttpWebResponse) hwr.GetResponse();
-                LoadSUL(Base.Base.Deserialize<ObservableCollection<SUA>>(response.GetResponseStream()));
+                LoadSUL(Base.Base.Deserialize<ObservableCollection<Sua>>(response.GetResponseStream()));
             }
             catch (WebException)
             {
@@ -119,11 +119,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
         /// </summary>
-        private void LoadSUL(ObservableCollection<SUA> officialAppList = null)
+        private void LoadSUL(ObservableCollection<Sua> officialAppList = null)
         {
-            machineAppList = Base.Base.Deserialize<ObservableCollection<SUA>>(Base.Base.AppsFile);
+            machineAppList = Base.Base.Deserialize<ObservableCollection<Sua>>(Base.Base.AppsFile);
 
             if (machineAppList != null)
+            {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
                     if (Directory.Exists(Base.Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
@@ -132,6 +133,7 @@ namespace SevenUpdate.Pages
                     machineAppList.RemoveAt(x);
                     x--;
                 }
+            }
 
 
             if (officialAppList != null)
@@ -159,6 +161,7 @@ namespace SevenUpdate.Pages
                                 officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
                                 machineAppList.RemoveAt(y);
                                 y--;
+
                                 break;
                             }
                             continue;
@@ -166,10 +169,10 @@ namespace SevenUpdate.Pages
                     }
                 }
                 if (machineAppList != null)
-                    foreach (SUA t in machineAppList)
-                    {
+                {
+                    foreach (Sua t in machineAppList)
                         officialAppList.Add(t);
-                    }
+                }
             }
 
             if (officialAppList != null)
@@ -191,9 +194,7 @@ namespace SevenUpdate.Pages
                 tbListStatus.Text = null;
             }
             else
-            {
                 tbListStatus.Text = App.RM.GetString("CouldNotConnect");
-            }
         }
 
         /// <summary>

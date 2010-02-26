@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -209,12 +209,14 @@ namespace SevenUpdate.Pages
                     updIndex++;
                     var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.Items[updIndex]);
                     if (item.Tag != null)
+                    {
                         if (!(bool) item.Tag)
                         {
                             App.Applications[x].Updates.RemoveAt(y);
                             y--;
                             continue;
                         }
+                    }
 
                     if (!App.Applications[x].Updates[y].Selected)
                         continue;
@@ -394,7 +396,7 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(tbUrlInfo.Tag.ToString());
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -408,7 +410,7 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(tbUrlHelp.Tag.ToString());
             }
-            catch (Exception)
+            catch
             {
             }
         }
@@ -446,7 +448,7 @@ namespace SevenUpdate.Pages
             var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
             var appIndex = indices[listView.SelectedIndex].AppIndex;
 
-            var hnh = new SUH
+            var hnh = new Suh
                           {
                               HelpUrl = App.Applications[appIndex].HelpUrl,
                               InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
@@ -549,8 +551,11 @@ namespace SevenUpdate.Pages
             if (((bool) e.NewValue) == false)
             {
                 var chkbox = sender as CheckBox;
-                chkbox.IsChecked = false;
-                chkbox.GetBindingExpression(ToggleButton.IsCheckedProperty).UpdateSource();
+                if (chkbox != null)
+                {
+                    chkbox.IsChecked = false;
+                    chkbox.GetBindingExpression(ToggleButton.IsCheckedProperty).UpdateSource();
+                }
                 AreHiddenUpdates = true;
             }
         }

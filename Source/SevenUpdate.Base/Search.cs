@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -44,7 +44,7 @@ namespace SevenUpdate.Base
         /// Contains event data associated with this event
         /// </summary>
         /// <param name="applications">The collection of applications to update</param>
-        public SearchCompletedEventArgs(Collection<SUI> applications)
+        public SearchCompletedEventArgs(Collection<Sui> applications)
         {
             Applications = applications;
         }
@@ -52,7 +52,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Gets a collection of applications that contain updates to install
         /// </summary>
-        public Collection<SUI> Applications { get; private set; }
+        public Collection<Sui> Applications { get; private set; }
     }
 
     #endregion
@@ -79,7 +79,7 @@ namespace SevenUpdate.Base
         /// <param name="app"> a collection of applications to check for updates</param>
         /// <param name="hidden"> a collection of hidden updates</param>
         /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
-        private static bool CheckForUpdates(ref SUI app, IEnumerable<SUH> hidden)
+        private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.Directory = Base.ConvertPath(app.Directory, true, app.Is64Bit);
             if (!Directory.Exists(app.Directory))
@@ -90,7 +90,7 @@ namespace SevenUpdate.Base
             {
                 if (hidden != null)
                 {
-                    foreach (SUH t in hidden)
+                    foreach (Suh t in hidden)
                     {
                         if (t.ReleaseDate == app.Updates[y].ReleaseDate && t.Name[0].Value == app.Updates[y].Name[0].Value)
                         {
@@ -135,8 +135,10 @@ namespace SevenUpdate.Base
                                 else if (
                                     Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
                                     app.Updates[y].Files[z].Hash)
+                                {
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
                                         size += app.Updates[y].Files[z].Size;
+                                }
                                 break;
                         }
                     }
@@ -224,9 +226,9 @@ namespace SevenUpdate.Base
         /// Searches for updates while blocking the calling thread
         /// </summary>
         /// <param name="apps">the list of applications to check for updates</param>
-        public static void SearchForUpdates(Collection<SUA> apps)
+        public static void SearchForUpdates(Collection<Sua> apps)
         {
-            var applications = new Collection<SUI>();
+            var applications = new Collection<Sui>();
             try
             {
                 // Check if machine is connected to the internet
@@ -248,7 +250,7 @@ namespace SevenUpdate.Base
             {
                 // Download the Seven Update SUI and load it.
                 response = (HttpWebResponse) hwr.GetResponse();
-                var app = Base.Deserialize<SUI>(response.GetResponseStream());
+                var app = Base.Deserialize<Sui>(response.GetResponseStream());
 
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
@@ -286,7 +288,7 @@ namespace SevenUpdate.Base
             }
 
             // Gets the hidden updates from settings
-            var hidden = Base.Deserialize<Collection<SUH>>(Base.HiddenFile);
+            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
             for (int x = 0; x < apps.Count; x++)
@@ -303,14 +305,12 @@ namespace SevenUpdate.Base
                         response = (HttpWebResponse) hwr.GetResponse();
 
                         // Loads a SUI that was downloaded
-                        var app = Base.Deserialize<SUI>(response.GetResponseStream());
+                        var app = Base.Deserialize<Sui>(response.GetResponseStream());
 
                         // Check to see if any updates are avalible and exclude hidden updates
                         // If there is an update avaliable, add it.
                         if (CheckForUpdates(ref app, hidden))
-                        {
                             applications.Add(app);
-                        }
                     }
                     catch (WebException e)
                     {
@@ -340,7 +340,7 @@ namespace SevenUpdate.Base
         /// Searches for files without blocking the calling thread
         /// </summary>
         /// <param name="apps">the list of Seven Update Admin.applications to check for updates</param>
-        public static void SearchForUpdatesAync(Collection<SUA> apps)
+        public static void SearchForUpdatesAync(Collection<Sua> apps)
         {
             var worker = new BackgroundWorker();
             worker.DoWork -= WorkerDoWork;
@@ -355,7 +355,7 @@ namespace SevenUpdate.Base
         /// <param name="f"></param>
         private static void WorkerDoWork(object sender, DoWorkEventArgs f)
         {
-            SearchForUpdates(((Collection<SUA>) f.Argument));
+            SearchForUpdates(((Collection<Sua>) f.Argument));
         }
 
         #endregion

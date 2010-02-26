@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -28,9 +28,8 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 using Microsoft.Win32;
+using ProtoBuf;
 
 #endregion
 
@@ -171,7 +170,10 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Specifies if a reboot is needed
         /// </summary>
-        public static bool RebootNeeded { get { return File.Exists(AllUserStore + @"reboot.lock"); } }
+        public static bool RebootNeeded
+        {
+            get { return File.Exists(AllUserStore + @"reboot.lock"); }
+        }
 
         /// <summary>
         /// Gets or Sets the ISO language code
@@ -192,9 +194,7 @@ namespace SevenUpdate.Base
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
             foreach (LocaleString t in localeStrings.Where(t => t.Lang == Locale))
-            {
                 return t.Value;
-            }
             return localeStrings[0].Value;
         }
 
@@ -231,8 +231,10 @@ namespace SevenUpdate.Base
                     try
                     {
                         if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+                        {
                             if (!is64Bit && key.ToUpper().Contains(@"SOFTWARE\") && !key.ToUpper().Contains(@"SOFTWARE\WOW6432NODE"))
                                 key = key.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\");
+                        }
                         if (value == "@")
                             value = "";
                         path = Registry.GetValue(key, value, null).ToString();
@@ -549,72 +551,27 @@ namespace SevenUpdate.Base
 
         #endregion
 
-        #region DeSerialize Methods
+        #region Serialization Methods
 
         /// <summary>
         /// DeSerializes an object
         /// </summary>
         /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="xmlFile">the file that contains the object to DeSerialize</param>
+        /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
-        public static T DeserializeStruct<T>(string xmlFile) where T : struct
+        public static T Deserialize<T>(string fileName) where T : class
         {
-            if (File.Exists(xmlFile))
+            if (File.Exists(fileName))
             {
-                XmlSerializer s;
-                TextReader r = null;
                 try
                 {
-                    s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
-                    r = new StreamReader(xmlFile);
-                    var temp = (T) s.Deserialize(r);
-                    r.Close();
-                    return temp;
+                    using (var file = File.OpenRead(fileName))
+                        return Serializer.Deserialize<T>(file);
                 }
                 catch (Exception e)
                 {
                     if (SerializationErrorEventHandler != null)
-                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
-                }
-                finally
-                {
-                    if (r != null)
-                        r.Close();
-                }
-            }
-
-            return new T();
-        }
-
-        /// <summary>
-        /// DeSerializes an object
-        /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="xmlFile">the file that contains the object to DeSerialize</param>
-        /// <returns>returns the object</returns>
-        public static T Deserialize<T>(string xmlFile) where T : class
-        {
-            if (File.Exists(xmlFile))
-            {
-                XmlSerializer s;
-                TextReader r = null;
-                try
-                {
-                    s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
-                    r = new StreamReader(xmlFile);
-                    var temp = (T) s.Deserialize(r);
-                    r.Close();
-                    return temp;
-                }
-                catch (Exception e)
-                {
-                    if (SerializationErrorEventHandler != null)
-                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
-                }
-                finally
-                {
-                    if (r != null)
-                        r.Close();
+                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
                 }
             }
 
@@ -629,101 +586,36 @@ namespace SevenUpdate.Base
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream) where T : class
         {
-            XmlSerializer s;
-            TextReader r = null;
             try
             {
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
-                r = new StreamReader(stream);
-                var temp = (T) s.Deserialize(r);
-                r.Close();
-                return temp;
+                return Serializer.Deserialize<T>(stream);
             }
             catch (Exception e)
             {
                 if (SerializationErrorEventHandler != null)
                     SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, "SUI file"));
             }
-            finally
-            {
-                if (r != null)
-                    r.Close();
-            }
 
             return null;
         }
 
-        #endregion
-
-        #region Serialize Methods
-
         /// <summary>
         /// Serializes an object into a file
         /// </summary>
         /// <typeparam name="T">the object</typeparam>
         /// <param name="item">the object to serialize</param>
-        /// <param name="xmlFile">the location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, string xmlFile) where T : class
+        /// <param name="fileName">the location of a file that will be serialized</param>
+        public static void Serialize<T>(T item, string fileName) where T : class
         {
-            XmlSerializer s;
-            XmlWriter w = null;
             try
             {
-                var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
-                var ns = new XmlSerializerNamespaces();
-                ns.Add("", "http://sevenupdate.com");
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
-                w = XmlWriter.Create(xmlFile, xs);
-                if (w != null)
-                {
-                    s.Serialize(w, item, ns);
-                    w.Close();
-                }
+                using (var file = File.Create(fileName))
+                    Serializer.Serialize(file, item);
             }
             catch (Exception e)
             {
                 if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
-            }
-            finally
-            {
-                if (w != null)
-                    w.Close();
-            }
-        }
-
-        /// <summary>
-        /// Serializes an object into a file
-        /// </summary>
-        /// <typeparam name="T">the object</typeparam>
-        /// <param name="item">the object to serialize</param>
-        /// <param name="xmlFile">the location of a file that will be serialized</param>
-        public static void SerializeStruct<T>(T item, string xmlFile) where T : struct
-        {
-            XmlSerializer s;
-            XmlWriter w = null;
-            try
-            {
-                var xs = new XmlWriterSettings {Indent = true, OmitXmlDeclaration = true};
-                var ns = new XmlSerializerNamespaces();
-                ns.Add("", "http://sevenupdate.com");
-                s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
-                w = XmlWriter.Create(xmlFile, xs);
-                if (w != null)
-                {
-                    s.Serialize(w, item, ns);
-                    w.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, xmlFile));
-            }
-            finally
-            {
-                if (w != null)
-                    w.Close();
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
             }
         }
 

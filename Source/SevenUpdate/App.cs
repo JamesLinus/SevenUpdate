@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -65,23 +65,32 @@ namespace SevenUpdate
         /// <summary>
         /// Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
-        public static Collection<SUA> AppsToUpdate { get { return Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile); } }
+        public static Collection<Sua> AppsToUpdate
+        {
+            get { return Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile); }
+        }
 
         /// <summary>
         /// Gets the update configuration settings
         /// </summary>
-        public static Config Settings { get { return Base.Base.DeserializeStruct<Config>(Base.Base.ConfigFile); } }
+        public static Config Settings
+        {
+            get
+            {
+                var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
+                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false, Locale = "en"};
+            }
+        }
 
         /// <summary>
         /// Gets or Sets a collection of applications to update
         /// </summary>
-        internal static Collection<SUI> Applications { get; set; }
+        internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>
         /// Gets a value indicating if an auto check is being performed
         /// </summary>
         internal static bool IsAutoCheck { get; private set; }
-
 
         /// <summary>
         /// Gets or Sets a value indicating if an install is currently in progress
@@ -138,9 +147,7 @@ namespace SevenUpdate
                     if (args[0] == "Auto")
                         IsAutoCheck = true;
                     if (args[0] == "Reconnect")
-                    {
                         IsReconnect = true;
-                    }
                 }
 
                 if (Process.GetProcessesByName("SevenUpdate.Admin").Length > 0)
@@ -193,8 +200,8 @@ namespace SevenUpdate
                 {
                     return;
                 }
-                var sua = Base.Base.Deserialize<SUA>(response.GetResponseStream());
-                var sul = Base.Base.Deserialize<Collection<SUA>>(Base.Base.AppsFile);
+                var sua = Base.Base.Deserialize<Sua>(response.GetResponseStream());
+                var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
                 File.Delete(Base.Base.UserStore + "add.sua");
                 var index = sul.IndexOf(sua);
                 if (index < 0)

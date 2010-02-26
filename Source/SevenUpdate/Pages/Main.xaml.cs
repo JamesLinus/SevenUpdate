@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -165,8 +165,10 @@ namespace SevenUpdate.Pages
                 infoBar.tbStatus.Text = App.RM.GetString("Installing") + " " + e.UpdateName;
 
                 if (e.TotalUpdates > 1)
+                {
                     infoBar.tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + App.RM.GetString("OutOf") + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
                                              App.RM.GetString("Complete");
+                }
                 else
                     infoBar.tbStatus.Text += ", " + e.CurrentProgress + "% " + App.RM.GetString("Complete");
             }
@@ -184,8 +186,10 @@ namespace SevenUpdate.Pages
                 App.IsReconnect = false;
             }
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
+            {
                 infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " +
                                         (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
+            }
             else
             {
                 infoBar.tbStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " +
@@ -217,9 +221,7 @@ namespace SevenUpdate.Pages
             if (e.ErrorOccurred)
                 SetUI(UILayout.ErrorOccurred);
             else
-            {
                 SetUI(App.IsAutoCheck ? UILayout.DownloadCompleted : UILayout.Installing);
-            }
         }
 
         /// <summary>
@@ -1148,9 +1150,7 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
                 CheckForUpdates();
             else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
-            {
                 Base.Base.StartProcess("shutdown.exe", "-r -t 00");
-            }
         }
 
         #endregion

@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -285,8 +285,10 @@ namespace SevenUpdate
             try
             {
                 while (wcf.State != CommunicationState.Created)
+                {
                     if (wcf.State == CommunicationState.Faulted)
                         throw new FaultException();
+                }
                 Thread.CurrentThread.Join(500);
                 wcf.Subscribe();
             }
@@ -325,6 +327,7 @@ namespace SevenUpdate
         internal static void Disconnect()
         {
             if (wcf != null)
+            {
                 try
                 {
                     if (wcf.State == CommunicationState.Opened)
@@ -334,6 +337,7 @@ namespace SevenUpdate
                 {
                     Base.Base.ReportError(e, Base.Base.UserStore);
                 }
+            }
         }
 
         #region Install & Config Methods
@@ -348,8 +352,10 @@ namespace SevenUpdate
             {
                 abort = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
                 if (abort && wcf != null)
+                {
                     if (wcf.State == CommunicationState.Opened)
                         wcf.UnSubscribe();
+                }
             }
             catch (Exception e)
             {
@@ -371,7 +377,7 @@ namespace SevenUpdate
         /// <summary>Hides an update</summary>
         /// <param name="hiddenUpdate">the update to hide</param>
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        internal static bool HideUpdate(SUH hiddenUpdate)
+        internal static bool HideUpdate(Suh hiddenUpdate)
         {
             Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
             return Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdate");
@@ -382,7 +388,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="hiddenUpdates">the list of updates to hide</param>
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        internal static bool HideUpdates(Collection<SUH> hiddenUpdates)
+        internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
             Base.Base.Serialize(hiddenUpdates, Base.Base.UserStore + "Hidden.suh");
             if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdates", true))
@@ -396,7 +402,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="hiddenUpdate">the hidden update to unhide</param>
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
-        internal static bool ShowUpdate(SUH hiddenUpdate)
+        internal static bool ShowUpdate(Suh hiddenUpdate)
         {
             Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
             if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "ShowUpdate"))
@@ -409,7 +415,7 @@ namespace SevenUpdate
         /// Adds an application to Seven Update
         /// </summary>
         /// <param name="sul">the list of applications to update</param>
-        internal static void AddSUA(Collection<SUA> sul)
+        internal static void AddSUA(Collection<Sua> sul)
         {
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
             Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");
@@ -421,16 +427,18 @@ namespace SevenUpdate
         /// <param name="autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
         /// <param name="options">the options to save</param>
         /// <param name="sul">the list of application to update to save</param>
-        internal static void SaveSettings(bool autoOn, Config options, Collection<SUA> sul)
+        internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             // Save the application settings and applications to update in the user store
-            Base.Base.SerializeStruct(options, Base.Base.UserStore + "App.config");
+            Base.Base.Serialize(options, Base.Base.UserStore + "App.config");
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
 
             // Launch SevenUpdate.Admin to save the settings to the AppStore.
             if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", autoOn ? "Options-On" : "Options-Off", true))
+            {
                 if (SettingsChangedEventHandler != null)
                     SettingsChangedEventHandler(null, new EventArgs());
+            }
         }
 
         #endregion

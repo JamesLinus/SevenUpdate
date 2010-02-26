@@ -86,6 +86,9 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\Externals\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceModel" />
@@ -103,12 +106,6 @@
     <Compile Include="Search.cs" />
     <Compile Include="SerializationClasses.cs" />
     <AppDesigner Include="Properties\" />
-    <None Include="Schemas\SUA.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Schemas\SUI.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

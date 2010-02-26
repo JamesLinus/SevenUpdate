@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -48,7 +48,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         /// Collection of updates
         /// </summary>
-        private static Collection<SUI> updates;
+        private static Collection<Sui> updates;
 
         #endregion
 
@@ -59,7 +59,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name="applications">the Collection of applications and updates</param>
         /// <param name="priority">the Priority of the download</param>
-        internal static void DownloadUpdates(Collection<SUI> applications, JobPriority priority)
+        internal static void DownloadUpdates(Collection<Sui> applications, JobPriority priority)
         {
             if (applications == null)
             {
@@ -112,7 +112,7 @@ namespace SevenUpdate.Admin
                 {
                     job.EnumFiles();
                 }
-                catch (Exception)
+                catch
                 {
                 }
                 if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
@@ -121,7 +121,7 @@ namespace SevenUpdate.Admin
                     {
                         job.Cancel();
                     }
-                    catch (Exception)
+                    catch
                     {
                     }
                 }
@@ -132,13 +132,13 @@ namespace SevenUpdate.Admin
                         job.Resume();
                         return;
                     }
-                    catch (Exception)
+                    catch
                     {
                         try
                         {
                             job.Cancel();
                         }
-                        catch (Exception)
+                        catch
                         {
                         }
                     }
@@ -174,7 +174,7 @@ namespace SevenUpdate.Admin
                             {
                                 File.Delete(downloadDir + @"\" + Path.GetFileName(fileDestination));
                             }
-                            catch (Exception)
+                            catch
                             {
                             }
                             var url = new Uri(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
@@ -195,7 +195,7 @@ namespace SevenUpdate.Admin
             {
                 bitsJob.EnumFiles();
             }
-            catch (Exception)
+            catch
             {
             }
 
@@ -301,7 +301,7 @@ namespace SevenUpdate.Admin
                 manager.Dispose();
                 manager = null;
             }
-            catch (Exception)
+            catch
             {
             }
             App.ShutdownApp();
@@ -337,7 +337,7 @@ namespace SevenUpdate.Admin
                 manager.Dispose();
                 manager = null;
             }
-            catch (Exception)
+            catch
             {
             }
             if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)

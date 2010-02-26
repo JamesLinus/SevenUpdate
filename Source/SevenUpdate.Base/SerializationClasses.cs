@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -22,8 +22,8 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Xml.Serialization;
 using Microsoft.Win32;
+using ProtoBuf;
 
 #endregion
 
@@ -32,57 +32,54 @@ namespace SevenUpdate.Base
 
     #region Application Settings
 
-    #region Struct
-
     /// <summary>Configuration options</summary>
-    [XmlType(AnonymousType = true), XmlRoot("settings", Namespace = "http://sevenupdate.com")]
-    public struct Config
+    [ProtoContract]
+    public class Config
     {
         /// <summary>
         /// Specifies which update setting Seven Update should use
         /// </summary>
-        [XmlElement("auto")]
+        [ProtoMember(1)]
         public AutoUpdateOption AutoOption { get; set; }
 
         /// <summary>
         /// Gets or Sets a value indicating if Seven Update is to included recommended updates when automatically downloading updates
         /// </summary>
-        [XmlElement("includeRecommended")]
+        [ProtoMember(2)]
         public bool IncludeRecommended { get; set; }
 
         /// <summary>
         /// Specifies the language Seven Update uses
         /// </summary>
-        [XmlElement("locale")]
+        [ProtoMember(3)]
         public string Locale { get; set; }
     }
-
-    #endregion
 
     #region Enums
 
     /// <summary>
     /// Automatic Update option Seven Update can use
     /// </summary>
+    [ProtoContract]
     public enum AutoUpdateOption
     {
         /// <summary>
         /// Download and Installs updates automatically
         /// </summary>
-        Install,
+        [ProtoMember(1)] Install,
 
         /// <summary>
         /// Downloads Updates automatically
         /// </summary>
-        Download,
+        [ProtoMember(2)] Download,
 
         /// <summary>
         /// Only checks and notifies the user of updates
         /// </summary>
-        Notify,
+        [ProtoMember(3)] Notify,
 
         /// <summary>No automatic checking</summary>
-        Never
+        [ProtoMember(4)] Never
     }
 
     #endregion
@@ -97,11 +94,11 @@ namespace SevenUpdate.Base
     public class LocaleString : INotifyPropertyChanged
     {
         /// <summary>an ISO language code</summary>
-        [XmlAttribute("lang", Namespace = "")]
+        [ProtoMember(1)]
         public string Lang { get; set; }
 
         /// <summary>The value of the string</summary>
-        [XmlAttribute("value", Namespace = "")]
+        [ProtoMember(2)]
         public string Value { get; set; }
 
         #region Implementation of INotifyPropertyChanged
@@ -133,48 +130,48 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Seven Update Application information
     /// </summary>
-    [XmlRoot("application", Namespace = "http://sevenupdate.com")]
-    public class SUA : INotifyPropertyChanged
+    [ProtoContract]
+    public class Sua : INotifyPropertyChanged
     {
         /// <summary>The application name</summary>
-        [XmlElement("name")]
+        [ProtoMember(1)]
         public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         /// Gets or Sets release information about the update
         /// </summary>
-        [XmlElement("description")]
+        [ProtoMember(2)]
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The directory where the application is installed
         /// </summary>
-        [XmlAttribute("directory")]
+        [ProtoMember(3)]
         public string Directory { get; set; }
 
         /// <summary>
         /// Specifies if the application is 64 bit
         /// </summary>
-        [XmlAttribute("is64Bit")]
+        [ProtoMember(4)]
         public bool Is64Bit { get; set; }
 
         /// <summary>
         /// Gets or Sets a value Indicating if the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
-        [XmlAttribute("isEnabled")]
+        [ProtoMember(5)]
         public bool IsEnabled { get; set; }
 
         /// 
         /// <summary>
         /// The publisher of the application
         /// </summary>
-        [XmlElement("publisher")]
+        [ProtoMember(6)]
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         /// The SUI file of the application
         /// </summary>
-        [XmlAttribute("source")]
+        [ProtoMember(7)]
         public string Source { get; set; }
 
         #region Implementation of INotifyPropertyChanged
@@ -208,105 +205,109 @@ namespace SevenUpdate.Base
     /// <summary>
     /// The action to preform on the shortcut
     /// </summary>
+    [ProtoContract]
     public enum ShortcutAction
     {
         /// <summary>
         /// Adds a shortcut
         /// </summary>
-        Add,
+        [ProtoMember(1)] Add,
 
         /// <summary>
         /// Deletes a shortcut
         /// </summary>
-        Delete,
+        [ProtoMember(2)] Delete,
 
         /// <summary>
         /// Updates a shortcut only if it exists
         /// </summary>
-        Update
+        [ProtoMember(3)] Update
     }
 
     /// <summary>
     /// The action to perform on the file
     /// </summary>
+    [ProtoContract]
     public enum FileAction
     {
         /// <summary>Updates a file</summary>
-        Update,
+        [ProtoMember(1)] Update,
 
         /// <summary>Updates a file, only if it exist</summary>
-        UpdateIfExist,
+        [ProtoMember(2)] UpdateIfExist,
 
         /// <summary>Updates a file, then registers the dll</summary>
-        UpdateThenRegister,
+        [ProtoMember(3)] UpdateThenRegister,
 
         /// <summary>Updates a file, then executes it</summary>
-        UpdateThenExecute,
+        [ProtoMember(4)] UpdateThenExecute,
 
         /// <summary>Compares a file, but does not update it</summary>
-        CompareOnly,
+        [ProtoMember(5)] CompareOnly,
 
         /// <summary>Executes a file, can be on system or be downloaded</summary>
-        Execute,
+        [ProtoMember(6)] Execute,
 
         /// <summary>
         /// Deletes a file
         /// </summary>
-        Delete,
+        [ProtoMember(7)] Delete,
 
         /// <summary>
         /// Executes a file, then deletes it
         /// </summary>
-        ExecuteThenDelete,
+        [ProtoMember(8)] ExecuteThenDelete,
 
         /// <summary>
         /// Unregisteres a dll, then deletes it
         /// </summary>
-        UnregisterThenDelete,
+        [ProtoMember(9)] UnregisterThenDelete,
     }
 
     /// <summary>
     /// Contains the UpdateType of the update
-    /// </summary>
+    /// </summary>\
+    [ProtoContract]
     public enum Importance
     {
         /// <summary>Important update</summary>
-        Important,
+        [ProtoMember(1)] Important,
 
         /// <summary>Locale or language</summary>
-        Locale,
+        [ProtoMember(2)] Locale,
 
         /// <summary>Optional update</summary>
-        Optional,
+        [ProtoMember(3)] Optional,
 
         /// <summary>Recommended update</summary>
-        Recommended
+        [ProtoMember(4)] Recommended
     }
 
     /// <summary>
     /// The current status of the update
     /// </summary>
+    [ProtoContract]
     public enum UpdateStatus
     {
         /// <summary>
         /// Indicates that the update installation failed
         /// </summary>
-        Failed,
+        [ProtoMember(1)] Failed,
 
         /// <summary>
         /// Indicates that the update is hidden
         /// </summary>
-        Hidden,
+        [ProtoMember(2)] Hidden,
 
         /// <summary>
         /// Indicates that the update is visible
         /// </summary>
-        Visible,
+        [ProtoMember(3)] Visible,
 
         /// <summary>
         /// Indicates that the update installation succeeded
         /// </summary>
-        Successful
+        [ProtoMember(4)] Successful
     }
 
     /// <summary>
@@ -317,15 +318,15 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Adds a registry entry to the machine
         /// </summary>
-        Add,
+        [ProtoMember(1)] Add,
         /// <summary>
         /// Deletes a registry key on the machine
         /// </summary>
-        DeleteKey,
+        [ProtoMember(2)] DeleteKey,
         /// <summary>
         /// Deletes a value of a registry key on the machine
         /// </summary>
-        DeleteValue
+        [ProtoMember(3)] DeleteValue
     }
 
     #endregion
@@ -333,39 +334,39 @@ namespace SevenUpdate.Base
     #region Classes
 
     /// <summary>Application info</summary>
-    [XmlType(AnonymousType = true), XmlRoot("application", Namespace = "http://sevenupdate.com")]
-    public class SUI : INotifyPropertyChanged
+    [ProtoContract]
+    public class Sui : INotifyPropertyChanged
     {
         #region Required Properties
 
         /// <summary>
         /// The application main directory, usually in Program Files
         /// </summary>
-        [XmlAttribute("directory")]
+        [ProtoMember(1)]
         public string Directory { get; set; }
 
         /// <summary>
         /// Specifies if the application is 64 bit
         /// </summary>
-        [XmlAttribute("is64Bit")]
+        [ProtoMember(2)]
         public bool Is64Bit { get; set; }
 
         /// <summary>
         /// The company or developer of the Application
         /// </summary>
-        [XmlElement("publisher")]
+        [ProtoMember(3)]
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         /// The url of the company or developer
         /// </summary>
-        [XmlAttribute("publisherUrl")]
+        [ProtoMember(4)]
         public string PublisherUrl { get; set; }
 
         /// <summary>
         /// The help url of the update: Optional
         /// </summary>
-        [XmlAttribute("helpUrl")]
+        [ProtoMember(5)]
         public string HelpUrl { get; set; }
 
         #endregion
@@ -375,7 +376,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Collection of updates for the application
         /// </summary>
-        [XmlElement("update")]
+        [ProtoMember(6)]
         public ObservableCollection<Update> Updates { get; set; }
 
         #endregion
@@ -405,37 +406,37 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information on how to install a software update
     /// </summary>
-    [XmlType("update", Namespace = "http://sevenupdate.com", AnonymousType = true)]
+    [ProtoContract]
     public class Update : INotifyPropertyChanged
     {
         #region Required Properties
 
         /// <summary>The name of the update</summary>
-        [XmlElement("name")]
+        [ProtoMember(1)]
         public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         /// Release information about the update
         /// </summary>
-        [XmlElement("description")]
+        [ProtoMember(2)]
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The default download directory where the updates files are stored
         /// </summary>
-        [XmlAttribute("downloadUrl")]
+        [ProtoMember(3)]
         public string DownloadUrl { get; set; }
 
         /// <summary>
         /// The update type of the update: Important, Recommended, Optional, Locale, Installation.
         /// </summary>
-        [XmlAttribute("importance")]
+        [ProtoMember(4)]
         public Importance Importance { get; set; }
 
         /// <summary>
         /// The date when the update was released
         /// </summary>
-        [XmlAttribute("releaseDate")]
+        [ProtoMember(5)]
         public string ReleaseDate { get; set; }
 
         #endregion
@@ -445,13 +446,13 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The information/change log url of the update: Optional
         /// </summary>
-        [XmlAttribute("infoUrl")]
+        [ProtoMember(6)]
         public string InfoUrl { get; set; }
 
         /// <summary>
         /// The Software License Agreement Url
         /// </summary>
-        [XmlAttribute("licenseUrl")]
+        [ProtoMember(7)]
         public string LicenseUrl { get; set; }
 
         #endregion
@@ -461,19 +462,19 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The files of the current update
         /// </summary>
-        [XmlElement("file")]
+        [ProtoMember(8)]
         public ObservableCollection<UpdateFile> Files { get; set; }
 
         /// <summary>
         /// The registry entries of the current update
         /// </summary>
-        [XmlElement("registryItem")]
+        [ProtoMember(9)]
         public ObservableCollection<RegistryItem> RegistryItems { get; set; }
 
         /// <summary>
         /// The shortcuts to create for the update
         /// </summary>
-        [XmlElement("shortcut")]
+        [ProtoMember(10)]
         public ObservableCollection<Shortcut> Shortcuts { get; set; }
 
         #endregion
@@ -483,13 +484,11 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Gets or Sets a value Indicating if the update is selected (not used in the SDK)
         /// </summary>
-        [XmlIgnore]
         public bool Selected { get; set; }
 
         /// <summary>
         /// The download size of the update in bytes, not used by the SDK
         /// </summary>
-        [XmlIgnore]
         public ulong Size { get; set; }
 
         #endregion
@@ -519,7 +518,7 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information about a file within an update
     /// </summary>
-    [XmlType("file", Namespace = "http://sevenupdate.com", AnonymousType = true)]
+    [ProtoContract]
     public class UpdateFile : INotifyPropertyChanged
     {
         #region Required Properties
@@ -527,29 +526,29 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The action to perform on a file
         /// </summary>
-        [XmlAttribute("action")]
+        [ProtoMember(1)]
         public FileAction Action { get; set; }
 
         /// <summary>
         /// The source location of the current file with the filename
         /// </summary>
-        [XmlAttribute("source")]
+        [ProtoMember(2)]
         public string Source { get; set; }
 
         /// <summary>
         /// The destination location of the current file with the filename
         /// </summary>
-        [XmlAttribute("destination")]
+        [ProtoMember(3)]
         public string Destination { get; set; }
 
         /// <summary>
         /// The SHA1 hash of the current file
         /// </summary>
-        [XmlAttribute("hash")]
+        [ProtoMember(4)]
         public string Hash { get; set; }
 
         /// <summary>File size in bytes</summary>
-        [XmlAttribute("size")]
+        [ProtoMember(5)]
         public ulong Size { get; set; }
 
         #endregion
@@ -559,7 +558,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Command line arguments for the file
         /// </summary>
-        [XmlAttribute("args")]
+        [ProtoMember(6)]
         public string Args { get; set; }
 
         #endregion
@@ -586,11 +585,10 @@ namespace SevenUpdate.Base
         #endregion
     }
 
-
     /// <summary>
     /// A registry entry within an update
     /// </summary>
-    [XmlType("registryItem", Namespace = "http://sevenupdate.com", AnonymousType = true)]
+    [ProtoContract]
     public class RegistryItem : INotifyPropertyChanged
     {
         #region Required Properties
@@ -598,19 +596,19 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The action to perform to the registry item
         /// </summary>
-        [XmlAttribute("action")]
+        [ProtoMember(1)]
         public RegistryAction Action { get; set; }
 
         /// <summary>
         /// The hive of the current registry item
         /// </summary>
-        [XmlAttribute("hive")]
+        [ProtoMember(2)]
         public RegistryHive Hive { get; set; }
 
         /// <summary>
         /// The Key path of the current registry item
         /// </summary>
-        [XmlAttribute("key")]
+        [ProtoMember(3)]
         public string Key { get; set; }
 
         #endregion
@@ -620,19 +618,19 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Name of the Value in the specified key
         /// </summary>
-        [XmlAttribute("keyValue")]
+        [ProtoMember(4)]
         public string KeyValue { get; set; }
 
         /// <summary>
         /// The ValueKind of the value in the specified key
         /// </summary>
-        [XmlAttribute("valueKind")]
+        [ProtoMember(5)]
         public RegistryValueKind ValueKind { get; set; }
 
         /// <summary>
         /// The data of the value in the specified key
         /// </summary>
-        [XmlAttribute("data")]
+        [ProtoMember(6)]
         public string Data { get; set; }
 
         #endregion
@@ -659,11 +657,10 @@ namespace SevenUpdate.Base
         #endregion
     }
 
-
     /// <summary>
     /// A shortcut to be created within an update
     /// </summary>
-    [XmlType("shortcut", Namespace = "http://sevenupdate.com", AnonymousType = true)]
+    [ProtoContract]
     public class Shortcut : INotifyPropertyChanged
     {
         #region Required Properties
@@ -671,13 +668,13 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The location of where the shortcut is to be stored.
         /// </summary>
-        [XmlAttribute("location")]
+        [ProtoMember(1)]
         public string Location { get; set; }
 
         /// <summary>
         /// The action to peform on the shortcut
         /// </summary>
-        [XmlAttribute("action")]
+        [ProtoMember(2)]
         public ShortcutAction Action { get; set; }
 
         #endregion
@@ -687,25 +684,25 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Any arguments to be used with the shortcut
         /// </summary>
-        [XmlAttribute("arguments")]
+        [ProtoMember(3)]
         public string Arguments { get; set; }
 
         /// <summary>
         /// Description of the shortcut
         /// </summary>
-        [XmlElement("description")]
+        [ProtoMember(4)]
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The full path to the icon or exe containing an icon
         /// </summary>
-        [XmlAttribute("icon")]
+        [ProtoMember(5)]
         public string Icon { get; set; }
 
         /// <summary>
         /// The full path of the target to the shortcut.
         /// </summary>
-        [XmlAttribute("target")]
+        [ProtoMember(6)]
         public string Target { get; set; }
 
         #endregion
@@ -741,55 +738,55 @@ namespace SevenUpdate.Base
     /// <summary>
     /// Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [XmlType(AnonymousType = true), XmlRoot("update", Namespace = "http://sevenupdate.com")]
-    public class SUH : INotifyPropertyChanged
+    [ProtoContract]
+    public class Suh : INotifyPropertyChanged
     {
         #region Required Properties
 
         /// <summary>The name of the update</summary>
-        [XmlElement("name")]
+        [ProtoMember(1)]
         public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         /// A description of the update, usually list new features or changes the update brings.
         /// </summary>
-        [XmlElement("description")]
+        [ProtoMember(2)]
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         /// The update type of the update: Critical, Recommended, Optional, Locale
         /// </summary>
-        [XmlAttribute("importance")]
+        [ProtoMember(3)]
         public Importance Importance { get; set; }
 
         /// <summary>
         /// The current status of the update
         /// </summary>
-        [XmlAttribute("status")]
+        [ProtoMember(4)]
         public UpdateStatus Status { get; set; }
 
         /// <summary>
         /// The date when the update was released
         /// </summary>
-        [XmlAttribute("releaseDate")]
+        [ProtoMember(5)]
         public string ReleaseDate { get; set; }
 
         /// <summary>
         /// The full size of the update
         /// </summary>
-        [XmlAttribute("size")]
+        [ProtoMember(6)]
         public ulong Size { get; set; }
 
         /// <summary>
         /// The Publisher of the update/application
         /// </summary>
-        [XmlElement("publisher")]
+        [ProtoMember(7)]
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         /// The website of the publisher
         /// </summary>
-        [XmlAttribute("publisherUrl")]
+        [ProtoMember(8)]
         public string PublisherUrl { get; set; }
 
         #endregion
@@ -799,19 +796,19 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The help url of the update: Optional
         /// </summary>
-        [XmlAttribute("helpUrl")]
+        [ProtoMember(9)]
         public string HelpUrl { get; set; }
 
         /// <summary>
         /// The information/change log url of the update: Optional
         /// </summary>
-        [XmlAttribute("infoUrl")]
+        [ProtoMember(10)]
         public string InfoUrl { get; set; }
 
         /// <summary>
         /// The date when the update was installed
         /// </summary>
-        [XmlAttribute("installDate")]
+        [ProtoMember(11)]
         public string InstallDate { get; set; }
 
         #endregion

@@ -1,20 +1,20 @@
-#region GNU Public License v3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -88,7 +88,7 @@ namespace SevenUpdate.Admin
         #region Update Installation
 
         /// <summary>Installs updates</summary>
-        internal static void InstallUpdates(Collection<SUI> applications)
+        internal static void InstallUpdates(Collection<Sui> applications)
         {
             if (applications == null)
             {
@@ -133,14 +133,14 @@ namespace SevenUpdate.Admin
                         {
                             Process.GetProcessesByName("Seven Update.Helper")[0].Kill();
                         }
-                        catch (Exception)
+                        catch
                         {
                         }
                         try
                         {
                             Process.GetProcessesByName("SevenUpdate.Helper")[0].Kill();
                         }
-                        catch (Exception)
+                        catch
                         {
                         }
                     }
@@ -198,7 +198,7 @@ namespace SevenUpdate.Admin
                                     {
                                         File.Delete(applications[x].Updates[y].Files[z].Destination);
                                     }
-                                    catch (Exception)
+                                    catch
                                     {
                                         MoveFileEx(applications[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
                                     }
@@ -241,7 +241,7 @@ namespace SevenUpdate.Admin
                         {
                             Directory.Delete(Base.Base.AllUserStore + "downloads", true);
                         }
-                        catch (Exception)
+                        catch
                         {
                         }
                     }
@@ -376,9 +376,7 @@ namespace SevenUpdate.Admin
                     }
 
                     if (shortcuts[x].Action == ShortcutAction.Delete)
-                    {
                         File.Delete(linkLocation);
-                    }
                 }
                 catch (Exception e)
                 {
@@ -432,9 +430,7 @@ namespace SevenUpdate.Admin
                         if (files[x].Action == FileAction.ExecuteThenDelete)
                         {
                             if (File.Exists(sourceFile))
-                            {
                                 Base.Base.StartProcess(sourceFile, files[x].Args, true);
-                            }
                         }
 
                         if (files[x].Action == FileAction.UnregisterThenDelete)
@@ -444,7 +440,7 @@ namespace SevenUpdate.Admin
                         {
                             File.Delete(destinationFile);
                         }
-                        catch (Exception)
+                        catch
                         {
                             MoveFileEx(destinationFile, null, MoveOnReboot);
                         }
@@ -485,12 +481,10 @@ namespace SevenUpdate.Admin
                                 if (File.Exists(destinationFile + ".bak"))
                                     File.Delete(destinationFile + ".bak");
                             }
-                            catch (Exception)
+                            catch
                             {
                                 if (!File.Exists(Base.Base.AllUserStore + "reboot.lock"))
-                                {
                                     File.Create(Base.Base.AllUserStore + "reboot.lock").WriteByte(0);
-                                }
 
                                 MoveFileEx(sourceFile, destinationFile, MoveOnReboot);
                                 File.Delete(destinationFile + ".bak");
@@ -546,10 +540,10 @@ namespace SevenUpdate.Admin
         /// <param name="updateInfo">the update information</param>
         /// <param name="failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
         /// <param name="appInfo"> the application information</param>
-        private static void AddHistory(SUI appInfo, Update updateInfo, bool failed = false)
+        private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var history = Base.Base.Deserialize<Collection<SUH>>(Base.Base.HistoryFile) ?? new Collection<SUH>();
-            var hist = new SUH
+            var history = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HistoryFile) ?? new Collection<Suh>();
+            var hist = new Suh
                            {
                                HelpUrl = appInfo.HelpUrl,
                                Publisher = appInfo.Publisher,

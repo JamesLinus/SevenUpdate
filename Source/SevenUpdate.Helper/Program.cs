@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -61,7 +61,7 @@ namespace SevenUpdate.Helper
 
                     Process.GetProcessesByName("SevenUpdate")[0].Kill();
                 }
-                catch (Exception)
+                catch
                 {
                 }
 
@@ -69,7 +69,7 @@ namespace SevenUpdate.Helper
                 {
                     Process.GetProcessesByName("SevenUpdate.Admin")[0].Kill();
                 }
-                catch (Exception)
+                catch
                 {
                 }
 
@@ -94,7 +94,7 @@ namespace SevenUpdate.Helper
                         {
                             File.Copy(t.FullName, appDir + t.Name, true);
                         }
-                        catch (Exception)
+                        catch
                         {
                             MoveFileEx(t.FullName, appDir + t.Name, MoveOnReboot);
 
@@ -126,7 +126,7 @@ namespace SevenUpdate.Helper
                     else
                         MoveFileEx(appStore + "reboot.lock", null, MoveOnReboot);
                 }
-                catch (Exception)
+                catch
                 {
                 }
                 if (Environment.OSVersion.Version.Major < 6)
@@ -151,9 +151,7 @@ namespace SevenUpdate.Helper
                     Application.Run();
                 }
                 else
-                {
                     Environment.Exit(0);
-                }
             }
         }
 
