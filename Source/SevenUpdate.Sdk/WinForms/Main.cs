@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -48,9 +48,9 @@ namespace SevenUpdate.Sdk.WinForms
         private bool editUpdate;
 
         /// <summary>
-        /// Indicates if it's a new SUI file
+        /// Indicates if it's a new Sui file
         /// </summary>
-        private bool newSUI;
+        private bool newSui;
 
         /// <summary>
         /// Indicates if the app in a x64 bit Application
@@ -60,7 +60,7 @@ namespace SevenUpdate.Sdk.WinForms
         /// <summary>
         /// Gets or Sets the current sui files that has been opened
         /// </summary>
-        private string suiFile { get; set; }
+        private string SuiFile { get; set; }
 
         #endregion
 
@@ -71,8 +71,8 @@ namespace SevenUpdate.Sdk.WinForms
 
         private Registry pageRegistry;
 
-        private SUAInfo pageSUA;
         private Shortcuts pageShortcuts;
+        private SuaInfo pageSua;
         private UpdateInfo pageUpdateInfo;
         private UpdateMenu pageUpdateMenu;
 
@@ -88,9 +88,9 @@ namespace SevenUpdate.Sdk.WinForms
         }
 
         /// <summary>
-        /// Loads the Form and loads a SUI file
+        /// Loads the Form and loads a Sui file
         /// </summary>
-        /// <param name="file">The fullpath to the SUI</param>
+        /// <param name="file">The fullpath to the Sui</param>
         public Main(string file)
         {
             Font = SystemFonts.MessageBoxFont;
@@ -101,12 +101,12 @@ namespace SevenUpdate.Sdk.WinForms
 
             LoadPages();
 
-            if (!SDK.LoadSUI(file))
+            if (!Sdk.LoadSui(file))
                 return;
 
             pageAppInfo.LoadInfo();
 
-            suiFile = file;
+            SuiFile = file;
 
             curPanel = 1;
 
@@ -140,7 +140,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageAppInfo.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -151,7 +151,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageFiles.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -162,7 +162,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageRegistry.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -173,7 +173,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageShortcuts.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -184,7 +184,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageUpdateInfo.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -195,7 +195,7 @@ namespace SevenUpdate.Sdk.WinForms
                 {
                     pageUpdateMenu.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
@@ -231,17 +231,17 @@ namespace SevenUpdate.Sdk.WinForms
             pageUpdateMenu.SendToBack();
 
             //Event Handlers
-            pageUpdateMenu.clNewUpdate.Click -= ClNewUpdateClick;
+            pageUpdateMenu.clNewUpdate.Click -= NewUpdate_Click;
 
             pageUpdateMenu.clEditUpdate.Click -= ClEditUpdateClick;
 
-            pageUpdateMenu.clSave.Click -= ClSaveClick;
+            pageUpdateMenu.clSave.Click -= Save_Click;
 
-            pageUpdateMenu.clNewUpdate.Click += ClNewUpdateClick;
+            pageUpdateMenu.clNewUpdate.Click += NewUpdate_Click;
 
             pageUpdateMenu.clEditUpdate.Click += ClEditUpdateClick;
 
-            pageUpdateMenu.clSave.Click += ClSaveClick;
+            pageUpdateMenu.clSave.Click += Save_Click;
         }
 
         /// <summary>
@@ -317,18 +317,18 @@ namespace SevenUpdate.Sdk.WinForms
 
             update.Shortcuts = pageShortcuts.UpdateShortcuts;
 
-            if (SDK.Application.Updates == null)
-                SDK.Application.Updates = new ObservableCollection<Update>();
-            SDK.Application.Updates.Add(update);
+            if (Sdk.Application.Updates == null)
+                Sdk.Application.Updates = new ObservableCollection<Update>();
+            Sdk.Application.Updates.Add(update);
 
             if (editUpdate && pageUpdateMenu.Index > -1)
-                SDK.Application.Updates.RemoveAt(pageUpdateMenu.Index);
+                Sdk.Application.Updates.RemoveAt(pageUpdateMenu.Index);
         }
 
         /// <summary>
         /// Sets the Top Panel Menu depending on if your editing
         /// </summary>
-        /// <param name="editing">Indictates if your editing a SUI</param>
+        /// <param name="editing">Indictates if your editing a Sui</param>
         private void SetMenu(bool editing)
         {
             if (editing)
@@ -450,7 +450,7 @@ namespace SevenUpdate.Sdk.WinForms
 
         private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
         {
-            MessageBox.Show(Program.RM.GetString("CouldNotLoad") + " " + e.File + ": " + e.Exception);
+            MessageBox.Show(Program.RM.GetString("CouldNotLoad") + @" " + e.File + @": " + e.Exception);
         }
 
         #endregion
@@ -459,9 +459,9 @@ namespace SevenUpdate.Sdk.WinForms
 
         #region Buttons
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
-            if ((curPanel < 4 && curPanel != 2) || (newSUI && SDK.Application.Updates == null))
+            if ((curPanel < 4 && curPanel != 2) || (newSui && Sdk.Application.Updates == null))
                 curPanel = 0;
             else
                 curPanel = 3;
@@ -469,7 +469,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void btnNext_Click(object sender, EventArgs e)
+        private void Next_Click(object sender, EventArgs e)
         {
             if ((pageAppInfo.cbLoc.SelectedIndex > 0 && pageAppInfo.txtValueName.Text.Length < 1) || (pageAppInfo.txtAppDir.Text.Length < 1) ||
                 ((pageUpdateInfo.txtUpdateTitle.Text.Length < 1 || pageUpdateInfo.txtDownloadURL.Text.Length < 1) && curPanel == 2))
@@ -481,7 +481,7 @@ namespace SevenUpdate.Sdk.WinForms
 
                 if (curPanel == 1)
                 {
-                    if (!newSUI)
+                    if (!newSui)
                         curPanel = 2;
                 }
 
@@ -514,14 +514,14 @@ namespace SevenUpdate.Sdk.WinForms
 
             ClearPages();
 
-            pageUpdateInfo.txtInfoURL.Text = SDK.Application.Updates[pageUpdateMenu.Index].InfoUrl;
-            pageUpdateInfo.txtLicenseURL.Text = SDK.Application.Updates[pageUpdateMenu.Index].LicenseUrl;
-            pageUpdateInfo.txtUpdateInfo.Text = SDK.Application.Updates[pageUpdateMenu.Index].Description[0].Value;
-            pageUpdateInfo.txtUpdateTitle.Text = SDK.Application.Updates[pageUpdateMenu.Index].Name[0].Value;
-            pageUpdateInfo.dtReleaseDate.Text = SDK.Application.Updates[pageUpdateMenu.Index].ReleaseDate;
-            pageUpdateInfo.txtDownloadURL.Text = SDK.Application.Updates[pageUpdateMenu.Index].DownloadUrl;
+            pageUpdateInfo.txtInfoURL.Text = Sdk.Application.Updates[pageUpdateMenu.Index].InfoUrl;
+            pageUpdateInfo.txtLicenseURL.Text = Sdk.Application.Updates[pageUpdateMenu.Index].LicenseUrl;
+            pageUpdateInfo.txtUpdateInfo.Text = Sdk.Application.Updates[pageUpdateMenu.Index].Description[0].Value;
+            pageUpdateInfo.txtUpdateTitle.Text = Sdk.Application.Updates[pageUpdateMenu.Index].Name[0].Value;
+            pageUpdateInfo.dtReleaseDate.Text = Sdk.Application.Updates[pageUpdateMenu.Index].ReleaseDate;
+            pageUpdateInfo.txtDownloadURL.Text = Sdk.Application.Updates[pageUpdateMenu.Index].DownloadUrl;
 
-            switch (SDK.Application.Updates[pageUpdateMenu.Index].Importance)
+            switch (Sdk.Application.Updates[pageUpdateMenu.Index].Importance)
             {
                 case Importance.Important:
                     pageUpdateInfo.cbUpdateType.SelectedIndex = 0;
@@ -539,21 +539,21 @@ namespace SevenUpdate.Sdk.WinForms
                     pageUpdateInfo.cbUpdateType.SelectedIndex = 3;
                     break;
             }
-            pageFiles.LoadFiles(SDK.Application.Updates[pageUpdateMenu.Index].Files);
+            pageFiles.LoadFiles(Sdk.Application.Updates[pageUpdateMenu.Index].Files);
 
-            pageRegistry.LoadRegistryItems(SDK.Application.Updates[pageUpdateMenu.Index].RegistryItems);
+            pageRegistry.LoadRegistryItems(Sdk.Application.Updates[pageUpdateMenu.Index].RegistryItems);
 
-            pageShortcuts.LoadShortcuts(SDK.Application.Updates[pageUpdateMenu.Index].Shortcuts);
+            pageShortcuts.LoadShortcuts(Sdk.Application.Updates[pageUpdateMenu.Index].Shortcuts);
         }
 
-        private void clNewSUI_Click(object sender, EventArgs e)
+        private void NewSui_Click(object sender, EventArgs e)
         {
-            suiFile = null;
+            SuiFile = null;
 
             LoadPages();
 
-            newSUI = true;
-            SDK.Application = new SUI {Updates = new ObservableCollection<Update>()};
+            newSui = true;
+            Sdk.Application = new Sui {Updates = new ObservableCollection<Update>()};
 
             pageAppInfo.ClearUI();
 
@@ -564,7 +564,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void ClNewUpdateClick(object sender, EventArgs e)
+        private void NewUpdate_Click(object sender, EventArgs e)
         {
             editUpdate = false;
 
@@ -577,20 +577,20 @@ namespace SevenUpdate.Sdk.WinForms
             ClearPages();
         }
 
-        private void clOpenSUI_Click(object sender, EventArgs e)
+        private void OpenSui_Click(object sender, EventArgs e)
         {
             if (dlgOpenFile.ShowDialog() != DialogResult.OK)
                 return;
 
 
-            suiFile = dlgOpenFile.FileName;
+            SuiFile = dlgOpenFile.FileName;
 
-            if (!SDK.LoadSUI(suiFile))
+            if (!Sdk.LoadSui(SuiFile))
                 return;
 
             LoadPages();
 
-            newSUI = false;
+            newSui = false;
 
             pageAppInfo.ClearUI();
 
@@ -604,48 +604,48 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void ClSaveClick(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             pageAppInfo.SaveInfo();
 
-            dlgSaveFile.FileName = suiFile;
+            dlgSaveFile.FileName = SuiFile;
 
             if (dlgSaveFile.ShowDialog() != DialogResult.OK)
                 return;
-            SDK.SaveSUI(dlgSaveFile.FileName);
+            Sdk.SaveSui(dlgSaveFile.FileName);
 
             curPanel = 0;
 
             SetPanel();
         }
 
-        private void clSUA_Click(object sender, EventArgs e)
+        private void Sua_Click(object sender, EventArgs e)
         {
-            if (pageSUA != null)
+            if (pageSua != null)
             {
                 try
                 {
-                    pageSUA.Dispose();
+                    pageSua.Dispose();
                 }
-                catch (Exception)
+                catch
                 {
                 }
             }
 
-            pageSUA = new SUAInfo {BackColor = Color.White, Dock = DockStyle.Fill, Location = new Point(0, 56), Name = "pageSUA"};
+            pageSua = new SuaInfo {BackColor = Color.White, Dock = DockStyle.Fill, Location = new Point(0, 56), Name = "pageSua"};
 
-            Controls.Add(pageSUA);
+            Controls.Add(pageSua);
 
-            pageSUA.Visible = true;
+            pageSua.Visible = true;
 
-            pageSUA.BringToFront();
+            pageSua.BringToFront();
         }
 
         #endregion
 
         #region Form
 
-        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (curPanel <= 0)
                 return;
@@ -654,8 +654,8 @@ namespace SevenUpdate.Sdk.WinForms
             if (!Settings.Default.exitMessage)
                 return;
             if (
-                TaskDialog.Show(ProductName, Program.RM.GetString("ExitConfirm"), Program.RM.GetString("LoseProgress"), "", "", Program.RM.GetString("DontShowMessage"), TaskDialogButtons.YesNo,
-                                TaskDialogIcons.Warning, TaskDialogIcons.None) == DialogResult.No)
+                TaskDialog.Show(ProductName, Program.RM.GetString("ExitConfirm"), Program.RM.GetString("LoseProgress"), "", "", Program.RM.GetString("DontShowMessage"),
+                                TaskDialogButtons.YesNo, TaskDialogIcons.Warning, TaskDialogIcons.None) == DialogResult.No)
                 e.Cancel = true;
 
             if (!TaskDialog.VerificationChecked)
@@ -669,14 +669,14 @@ namespace SevenUpdate.Sdk.WinForms
 
         #region Labels
 
-        private void lblAbout_Click(object sender, EventArgs e)
+        private void About_Click(object sender, EventArgs e)
         {
             var about = new About();
 
             about.ShowDialog();
         }
 
-        private void lblAbout_MouseEnter(object sender, EventArgs e)
+        private void About_MouseEnter(object sender, EventArgs e)
         {
             var label = ((Label) sender);
 
@@ -685,7 +685,7 @@ namespace SevenUpdate.Sdk.WinForms
             label.Font = new Font(label.Font, FontStyle.Underline);
         }
 
-        private void lblAbout_MouseLeave(object sender, EventArgs e)
+        private void About_MouseLeave(object sender, EventArgs e)
         {
             var label = ((Label) sender);
 
@@ -694,7 +694,7 @@ namespace SevenUpdate.Sdk.WinForms
             label.Font = new Font(label.Font, FontStyle.Regular);
         }
 
-        private void lblStepA_Click(object sender, EventArgs e)
+        private void StepA_Click(object sender, EventArgs e)
         {
             if (lblStepA.Cursor != Cursors.Hand)
                 return;
@@ -702,7 +702,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void lblStepB_Click(object sender, EventArgs e)
+        private void StepB_Click(object sender, EventArgs e)
         {
             if (lblStepB.Cursor != Cursors.Hand)
                 return;
@@ -710,7 +710,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void lblStepC_Click(object sender, EventArgs e)
+        private void StepC_Click(object sender, EventArgs e)
         {
             if (lblStepC.Cursor != Cursors.Hand)
                 return;
@@ -718,7 +718,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void lblStep2_Click(object sender, EventArgs e)
+        private void Step2_Click(object sender, EventArgs e)
         {
             if (lblStep2.Cursor != Cursors.Hand)
                 return;
@@ -726,7 +726,7 @@ namespace SevenUpdate.Sdk.WinForms
             SetPanel();
         }
 
-        private void lblStep3_Click(object sender, EventArgs e)
+        private void Step3_Click(object sender, EventArgs e)
         {
             if (lblStep3.Cursor != Cursors.Hand)
                 return;

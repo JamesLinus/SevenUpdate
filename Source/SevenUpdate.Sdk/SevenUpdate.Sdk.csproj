@@ -123,7 +123,7 @@
     <Compile Include="Controls\NumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SDK.cs" />
+    <Compile Include="Sdk.cs" />
     <Compile Include="Pages\AppInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -245,7 +245,6 @@
     <None Include="Resources\restorer.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Resources\Registry.png" />
     <None Include="Resources\shorcut.png" />
     <EmbeddedResource Include="Pages\SUAInfo.resx">

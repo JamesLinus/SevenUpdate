@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -63,16 +63,16 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         internal void LoadInfo()
         {
-            if (SDK.Application.Directory == null)
+            if (Sdk.Application.Directory == null)
                 return;
-            if (SDK.Application.Directory.StartsWith("HKEY"))
+            if (Sdk.Application.Directory.StartsWith("HKEY"))
             {
                 char[] split = {'|'};
-                var slash = SDK.Application.Directory.IndexOf(@"\", StringComparison.OrdinalIgnoreCase);
-                txtAppDir.Text = SDK.Application.Directory.Substring(slash + 1);
+                var slash = Sdk.Application.Directory.IndexOf(@"\", StringComparison.OrdinalIgnoreCase);
+                txtAppDir.Text = Sdk.Application.Directory.Substring(slash + 1);
                 txtAppDir.Text = txtAppDir.Text.Split(split)[0];
-                txtValueName.Text = SDK.Application.Directory.Split(split)[1];
-                cbLoc.SelectedItem = SDK.Application.Directory.Substring(0, slash + 1);
+                txtValueName.Text = Sdk.Application.Directory.Split(split)[1];
+                cbLoc.SelectedItem = Sdk.Application.Directory.Substring(0, slash + 1);
                 txtValueName.Visible = true;
                 lblValue.Visible = true;
                 lblValidate.Visible = false;
@@ -80,17 +80,17 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                txtAppDir.Text = SDK.Application.Directory;
+                txtAppDir.Text = Sdk.Application.Directory;
                 cbLoc.SelectedIndex = 0;
                 txtValueName.Visible = false;
                 lblValue.Visible = false;
                 lblValidate.Visible = true;
                 lblBrowse.Visible = true;
             }
-            chk64Bit.Checked = SDK.Application.Is64Bit;
-            txtHelpURL.Text = SDK.Application.HelpUrl;
-            txtPublisher.Text = SDK.Application.Publisher[0].Value;
-            txtPublisherURL.Text = SDK.Application.PublisherUrl;
+            chkIs64Bit.Checked = Sdk.Application.Is64Bit;
+            txtHelpURL.Text = Sdk.Application.HelpUrl;
+            txtPublisher.Text = Sdk.Application.Publisher[0].Value;
+            txtPublisherURL.Text = Sdk.Application.PublisherUrl;
         }
 
         /// <summary>
@@ -100,21 +100,21 @@ namespace SevenUpdate.Sdk.Pages
         {
             ApplicationDirectory = txtAppDir.Text;
             if (cbLoc.SelectedIndex == 0)
-                SDK.Application.Directory = txtAppDir.Text;
+                Sdk.Application.Directory = txtAppDir.Text;
             else
             {
                 if (txtAppDir.Text.Substring(0, 1) == "\\")
-                    SDK.Application.Directory.Remove(0, 1);
-                SDK.Application.Directory = cbLoc.SelectedItem + txtAppDir.Text + "|" + txtValueName.Text;
+                    Sdk.Application.Directory.Remove(0, 1);
+                Sdk.Application.Directory = cbLoc.SelectedItem + txtAppDir.Text + "|" + txtValueName.Text;
             }
             if (txtAppDir.Text.Substring(txtAppDir.Text.Length - 1, 1) == "\\")
                 txtAppDir.Text = txtAppDir.Text.Substring(0, txtAppDir.Text.Length - 1);
-            SDK.Application.Is64Bit = chk64Bit.Checked;
+            Sdk.Application.Is64Bit = chkIs64Bit.Checked;
             var ls = new LocaleString {Lang = "en", Value = txtPublisher.Text};
-            SDK.Application.HelpUrl = txtHelpURL.Text;
+            Sdk.Application.HelpUrl = txtHelpURL.Text;
             var publisher = new ObservableCollection<LocaleString> {ls};
-            SDK.Application.Publisher = publisher;
-            SDK.Application.PublisherUrl = txtPublisherURL.Text;
+            Sdk.Application.Publisher = publisher;
+            Sdk.Application.PublisherUrl = txtPublisherURL.Text;
         }
 
         #endregion
@@ -123,15 +123,15 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Labels
 
-        private void lblBrowse_Click(object sender, EventArgs e)
+        private void Browse_Click(object sender, EventArgs e)
         {
             if (dlgFolder.ShowDialog() == DialogResult.OK)
-                txtAppDir.Text = Base.Base.ConvertPath(dlgFolder.SelectedPath, false, chk64Bit.Checked);
+                txtAppDir.Text = Base.Base.ConvertPath(dlgFolder.SelectedPath, false, chkIs64Bit.Checked);
         }
 
-        private void lblValidate_Click(object sender, EventArgs e)
+        private void Validate_Click(object sender, EventArgs e)
         {
-            txtAppDir.Text = Base.Base.ConvertPath(txtAppDir.Text, false, chk64Bit.Checked);
+            txtAppDir.Text = Base.Base.ConvertPath(txtAppDir.Text, false, chkIs64Bit.Checked);
         }
 
         private void Label_MouseEnter(object sender, EventArgs e)
@@ -150,7 +150,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void cbLoc_SelectedIndexChanged(object sender, EventArgs e)
+        private void Loc_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLoc.SelectedIndex > 0)
             {
@@ -168,15 +168,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void chk64Bit_CheckedChanged(object sender, EventArgs e)
+        private void Is64Bit_CheckedChanged(object sender, EventArgs e)
         {
-            Main.Is64Bit = chk64Bit.Checked;
+            Main.Is64Bit = chkIs64Bit.Checked;
         }
 
         #endregion
 
         /// <summary>
-        /// The Application directory for the SUI
+        /// The Application directory for the Sui
         /// </summary>
         internal static string ApplicationDirectory { get; set; }
     }

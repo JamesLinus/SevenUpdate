@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -33,22 +33,17 @@ namespace SevenUpdate.Sdk.Pages
 {
     public sealed partial class Registry : UserControl
     {
-        #region Global Vars     
+        #region Global Vars 
 
         /// <summary>
-        /// The current Index of the registry item
+        /// The current Index of the UpdateRegistry item
         /// </summary>
         private int index;
 
         /// <summary>
-        /// Gets the registry items of the update
+        /// Gets the UpdateRegistry items of the update
         /// </summary>
-        internal ObservableCollection<RegistryItem> UpdateRegistry { get { return registry; } }
-
-        /// <summary>
-        /// Collection of registry items
-        /// </summary>
-        private ObservableCollection<RegistryItem> registry { get; set; }
+        internal ObservableCollection<RegistryItem> UpdateRegistry { get; private set; }
 
         #endregion
 
@@ -61,7 +56,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        /// Adds a registry item to the update
+        /// Adds a UpdateRegistry item to the update
         /// </summary>
         private void AddRegItem()
         {
@@ -81,7 +76,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Clears the UI
         /// </summary>
-        /// <param name="clearRegistryItems">Indicates if to clear the registry items</param>
+        /// <param name="clearRegistryItems">Indicates if to clear the UpdateRegistry items</param>
         internal void ClearUI(bool clearRegistryItems)
         {
             if (clearRegistryItems)
@@ -105,7 +100,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Deletes a registry item
+        /// Deletes a UpdateRegistry item
         /// </summary>
         private void DeleteRegItem()
         {
@@ -113,9 +108,9 @@ namespace SevenUpdate.Sdk.Pages
             if (x < 0)
                 return;
 
-            if (registry.Count > 0)
+            if (UpdateRegistry.Count > 0)
             {
-                registry.RemoveAt(index);
+                UpdateRegistry.RemoveAt(index);
 
                 lbRegistry.Items.RemoveAt(index);
             }
@@ -129,22 +124,22 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Loads the registry item
+        /// Loads the UpdateRegistry item
         /// </summary>
-        /// <param name="x">The Index of the current registry item</param>
+        /// <param name="x">The Index of the current UpdateRegistry item</param>
         private void LoadReg(int x)
         {
             if (x < 0)
                 return;
             ClearUI(false);
 
-            txtKeyPath.Text = registry[x].Key;
+            txtKeyPath.Text = UpdateRegistry[x].Key;
 
-            txtValueData.Text = registry[x].Data;
+            txtValueData.Text = UpdateRegistry[x].Data;
 
-            txtValueName.Text = registry[x].KeyValue;
+            txtValueName.Text = UpdateRegistry[x].KeyValue;
 
-            switch (registry[x].Action)
+            switch (UpdateRegistry[x].Action)
             {
                 case RegistryAction.Add:
                     rbAddUpd.Checked = true;
@@ -159,7 +154,7 @@ namespace SevenUpdate.Sdk.Pages
                     break;
             }
 
-            switch (registry[x].Hive)
+            switch (UpdateRegistry[x].Hive)
             {
                 case RegistryHive.ClassesRoot:
                     cbHives.SelectedItem = "CLASSES_ROOT";
@@ -182,27 +177,29 @@ namespace SevenUpdate.Sdk.Pages
                     break;
             }
 
-            cbDataType.SelectedItem = registry[x].ValueKind;
+            cbDataType.SelectedItem = UpdateRegistry[x].ValueKind;
         }
 
         /// <summary>
-        /// Loads the registry items in the UI
+        /// Loads the UpdateRegistry items in the UI
         /// </summary>
-        internal void LoadRegistryItems(ObservableCollection<RegistryItem> registryItems)
+        internal void LoadRegistryItems(ObservableCollection<RegistryItem> updateRegistryItems)
         {
-            registry = new ObservableCollection<RegistryItem>();
+            UpdateRegistry = new ObservableCollection<RegistryItem>();
 
-            if (registryItems != null)
+            if (updateRegistryItems != null)
             {
-                for (var x = 0; x < registryItems.Count; x++)
-                    registry.Add(registryItems[x]);
+                for (var x = 0; x < updateRegistryItems.Count; x++)
+                    UpdateRegistry.Add(updateRegistryItems[x]);
             }
 
             lbRegistry.Items.Clear();
 
-            for (var x = 0; x < registry.Count; x++)
+            for (var x = 0; x < UpdateRegistry.Count; x++)
+            {
                 if (lbRegistry != null)
                     lbRegistry.Items.Add(Program.RM.GetString("RegistryItem") + " " + (x + 1));
+            }
 
             if (lbRegistry != null)
             {
@@ -217,12 +214,12 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Saves an registry item
+        /// Saves an UpdateRegistry item
         /// </summary>
         private void SaveReg()
         {
-            if (registry == null)
-                registry = new ObservableCollection<RegistryItem>();
+            if (UpdateRegistry == null)
+                UpdateRegistry = new ObservableCollection<RegistryItem>();
 
             var reg = new RegistryItem();
 
@@ -266,17 +263,17 @@ namespace SevenUpdate.Sdk.Pages
 
             reg.ValueKind = (RegistryValueKind) Enum.Parse(typeof (RegistryValueKind), cbDataType.SelectedItem.ToString());
 
-            if (index > -1 && registry.Count > 0)
+            if (index > -1 && UpdateRegistry.Count > 0)
             {
-                registry.RemoveAt(index);
+                UpdateRegistry.RemoveAt(index);
 
-                registry.Insert(index, reg);
+                UpdateRegistry.Insert(index, reg);
                 lbRegistry.Items[index] = Program.RM.GetString("RegistryItem") + " " + (lbRegistry.SelectedIndex + 1);
                 lbRegistry.SelectedIndex = index;
             }
             else
             {
-                registry.Add(reg);
+                UpdateRegistry.Add(reg);
                 lbRegistry.Items.Add(Program.RM.GetString("RegistryItem") + " " + (lbRegistry.Items.Count + 1));
                 lbRegistry.SelectedIndex = lbRegistry.Items.Count - 1;
             }
@@ -292,7 +289,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Buttons
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             if (txtKeyPath.Text.Length > 0)
                 SaveReg();
@@ -304,13 +301,13 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Context Menu
 
-        private void tmiAddRegItem_Click(object sender, EventArgs e)
+        private void AddRegItem_Click(object sender, EventArgs e)
         {
             lbRegistry.SelectedIndex = -1;
             AddRegItem();
         }
 
-        private void tmiDeleteRegItem_Click(object sender, EventArgs e)
+        private void DeleteRegItem_Click(object sender, EventArgs e)
         {
             DeleteRegItem();
         }
@@ -319,7 +316,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Labels
 
-        private void lbRegistry_SelectedIndexChanged(object sender, EventArgs e)
+        private void Registry_SelectedIndexChanged(object sender, EventArgs e)
         {
             index = lbRegistry.SelectedIndex;
 
@@ -331,7 +328,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region lbRegistry
 
-        private void lbRegistry_MouseDown(object sender, MouseEventArgs e)
+        private void Registry_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
                 return;
@@ -352,7 +349,7 @@ namespace SevenUpdate.Sdk.Pages
             cmsMenu.Show(MousePosition);
         }
 
-        private void lbRegistry_KeyDown(object sender, KeyEventArgs e)
+        private void Registry_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
                 DeleteRegItem();

@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -31,9 +31,9 @@ using SevenUpdate.Sdk.WinForms;
 
 namespace SevenUpdate.Sdk.Pages
 {
-    public sealed partial class SUAInfo : UserControl
+    public sealed partial class SuaInfo : UserControl
     {
-        public SUAInfo()
+        public SuaInfo()
         {
             Font = SystemFonts.MessageBoxFont;
 
@@ -48,27 +48,27 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Buttons
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void Cancel_Click(object sender, EventArgs e)
         {
             Dispose();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
-            if (txtDescription.Text.Length < 1 || txtAppDir.Text.Length < 1 || txtAppName.Text.Length < 1 || txtPublisher.Text.Length < 1 || txtSUILocation.Text.Length < 1 ||
+            if (txtDescription.Text.Length < 1 || txtAppDir.Text.Length < 1 || txtAppName.Text.Length < 1 || txtPublisher.Text.Length < 1 || txtSuiLocation.Text.Length < 1 ||
                 (cbLoc.SelectedIndex > 0 && txtValueName.Text.Length < 1))
                 MessageBox.Show(Program.RM.GetString("FillRequiredInformation"));
             else
             {
-                if (!txtSUILocation.Text.EndsWith(".sui", StringComparison.OrdinalIgnoreCase))
-                    MessageBox.Show(Program.RM.GetString("UrlSUI"));
+                if (!txtSuiLocation.Text.EndsWith(".sui", StringComparison.OrdinalIgnoreCase))
+                    MessageBox.Show(Program.RM.GetString("UrlSui"));
                 else
                 {
                     dlgSaveFile.FileName = txtAppName.Text;
 
                     if (dlgSaveFile.ShowDialog() == DialogResult.OK)
                     {
-                        var sua = new SUA();
+                        var sua = new Sua();
 
                         if (cbLoc.SelectedIndex == 0)
                             sua.Directory = txtAppDir.Text;
@@ -98,7 +98,7 @@ namespace SevenUpdate.Sdk.Pages
 
                         sua.Is64Bit = chk64Bit.Checked;
 
-                        sua.Source = txtSUILocation.Text;
+                        sua.Source = txtSuiLocation.Text;
 
                         Base.Base.Serialize(sua, dlgSaveFile.FileName);
 
@@ -110,7 +110,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void cbLoc_SelectedIndexChanged(object sender, EventArgs e)
+        private void Loc_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbLoc.SelectedIndex > 0)
             {
@@ -134,19 +134,19 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void SUAInfo_Load(object sender, EventArgs e)
+        private void SuaInfo_Load(object sender, EventArgs e)
         {
         }
 
         #region Labels
 
-        private void lblBrowse_Click(object sender, EventArgs e)
+        private void Browse_Click(object sender, EventArgs e)
         {
             if (dlgFolder.ShowDialog() == DialogResult.OK)
                 txtAppDir.Text = Base.Base.ConvertPath(dlgFolder.SelectedPath, false, Main.Is64Bit);
         }
 
-        private void lblValidate_Click(object sender, EventArgs e)
+        private void Validate_Click(object sender, EventArgs e)
         {
             txtAppDir.Text = Base.Base.ConvertPath(txtAppDir.Text, false, Main.Is64Bit);
         }

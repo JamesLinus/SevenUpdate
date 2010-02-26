@@ -60,7 +60,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblValue = new System.Windows.Forms.Label();
             this.txtValueName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.chk64Bit = new System.Windows.Forms.CheckBox();
+            this.chkIs64Bit = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // dlgOpenFile
@@ -90,7 +90,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowse.Name = "lblBrowse";
             this.lblBrowse.TabStop = true;
-            this.lblBrowse.Click += new System.EventHandler(this.lblBrowse_Click);
+            this.lblBrowse.Click += new System.EventHandler(this.Browse_Click);
             this.lblBrowse.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowse.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -102,7 +102,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblValidate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblValidate.Name = "lblValidate";
             this.lblValidate.TabStop = true;
-            this.lblValidate.Click += new System.EventHandler(this.lblValidate_Click);
+            this.lblValidate.Click += new System.EventHandler(this.Validate_Click);
             this.lblValidate.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblValidate.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -131,14 +131,14 @@ namespace SevenUpdate.Sdk.Pages
             this.cbLoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLoc.FormattingEnabled = true;
             this.cbLoc.Items.AddRange(new object[] {
-                                                       resources.GetString("cbLoc.Items"),
-                                                       resources.GetString("cbLoc.Items1"),
-                                                       resources.GetString("cbLoc.Items2"),
-                                                       resources.GetString("cbLoc.Items3")});
+            resources.GetString("cbLoc.Items"),
+            resources.GetString("cbLoc.Items1"),
+            resources.GetString("cbLoc.Items2"),
+            resources.GetString("cbLoc.Items3")});
             resources.ApplyResources(this.cbLoc, "cbLoc");
             this.cbLoc.Name = "cbLoc";
             this.cbLoc.Sorted = true;
-            this.cbLoc.SelectedIndexChanged += new System.EventHandler(this.cbLoc_SelectedIndexChanged);
+            this.cbLoc.SelectedIndexChanged += new System.EventHandler(this.Loc_SelectedIndexChanged);
             // 
             // lblValue
             // 
@@ -155,18 +155,18 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.label7, "label7");
             this.label7.Name = "label7";
             // 
-            // chk64Bit
+            // chkIs64Bit
             // 
-            resources.ApplyResources(this.chk64Bit, "chk64Bit");
-            this.chk64Bit.Name = "chk64Bit";
-            this.chk64Bit.UseVisualStyleBackColor = true;
-            this.chk64Bit.CheckedChanged += new System.EventHandler(this.chk64Bit_CheckedChanged);
+            resources.ApplyResources(this.chkIs64Bit, "chkIs64Bit");
+            this.chkIs64Bit.Name = "chkIs64Bit";
+            this.chkIs64Bit.UseVisualStyleBackColor = true;
+            this.chkIs64Bit.CheckedChanged += new System.EventHandler(this.Is64Bit_CheckedChanged);
             // 
             // AppInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.chk64Bit);
+            this.Controls.Add(this.chkIs64Bit);
             this.Controls.Add(this.cbLoc);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lblValue);
@@ -205,7 +205,7 @@ namespace SevenUpdate.Sdk.Pages
         private System.Windows.Forms.Label label7;
         internal System.Windows.Forms.ComboBox cbLoc;
         internal System.Windows.Forms.TextBox txtValueName;
-        private System.Windows.Forms.CheckBox chk64Bit;
+        private System.Windows.Forms.CheckBox chkIs64Bit;
     }
 }
 

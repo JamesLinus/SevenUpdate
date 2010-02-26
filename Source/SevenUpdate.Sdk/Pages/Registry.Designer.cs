@@ -76,9 +76,9 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.lbRegistry, "lbRegistry");
             this.lbRegistry.FormattingEnabled = true;
             this.lbRegistry.Name = "lbRegistry";
-            this.lbRegistry.SelectedIndexChanged += new System.EventHandler(this.lbRegistry_SelectedIndexChanged);
-            this.lbRegistry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbRegistry_KeyDown);
-            this.lbRegistry.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbRegistry_MouseDown);
+            this.lbRegistry.SelectedIndexChanged += new System.EventHandler(this.Registry_SelectedIndexChanged);
+            this.lbRegistry.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Registry_KeyDown);
+            this.lbRegistry.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Registry_MouseDown);
             // 
             // label2
             // 
@@ -185,7 +185,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.Save_Click);
             // 
             // cmsMenu
             // 
@@ -201,7 +201,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             resources.ApplyResources(this.tmiAddRegItem, "tmiAddRegItem");
             this.tmiAddRegItem.Name = "tmiAddRegItem";
-            this.tmiAddRegItem.Click += new System.EventHandler(this.tmiAddRegItem_Click);
+            this.tmiAddRegItem.Click += new System.EventHandler(this.AddRegItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -212,7 +212,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             this.tmiDeleteRegItem.Name = "tmiDeleteRegItem";
             resources.ApplyResources(this.tmiDeleteRegItem, "tmiDeleteRegItem");
-            this.tmiDeleteRegItem.Click += new System.EventHandler(this.tmiDeleteRegItem_Click);
+            this.tmiDeleteRegItem.Click += new System.EventHandler(this.DeleteRegItem_Click);
             // 
             // tmiImportRegFile
             // 

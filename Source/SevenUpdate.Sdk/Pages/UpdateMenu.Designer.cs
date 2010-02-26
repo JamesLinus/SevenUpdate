@@ -62,12 +62,12 @@ namespace SevenUpdate.Sdk.Pages
             this.lbUpdates.ContextMenuStrip = this.cmMenu;
             this.lbUpdates.FormattingEnabled = true;
             this.lbUpdates.Name = "lbUpdates";
-            this.lbUpdates.SelectedIndexChanged += new System.EventHandler(this.lbUpdates_SelectedIndexChanged);
+            this.lbUpdates.SelectedIndexChanged += new System.EventHandler(this.Updates_SelectedIndexChanged);
             // 
             // cmMenu
             // 
             this.cmMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                                                                                    this.removeUpdateToolStripMenuItem});
+            this.removeUpdateToolStripMenuItem});
             this.cmMenu.Name = "contextMenuStrip1";
             resources.ApplyResources(this.cmMenu, "cmMenu");
             // 
@@ -75,7 +75,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             this.removeUpdateToolStripMenuItem.Name = "removeUpdateToolStripMenuItem";
             resources.ApplyResources(this.removeUpdateToolStripMenuItem, "removeUpdateToolStripMenuItem");
-            this.removeUpdateToolStripMenuItem.Click += new System.EventHandler(this.removeUpdateToolStripMenuItem_Click);
+            this.removeUpdateToolStripMenuItem.Click += new System.EventHandler(this.RemoveUpdate_Click);
             // 
             // label1
             // 
@@ -85,7 +85,7 @@ namespace SevenUpdate.Sdk.Pages
             // clNewUpdate
             // 
             this.clNewUpdate.BackColor = System.Drawing.Color.White;
-            this.clNewUpdate.Description = "This will create a new update for the Application";
+            this.clNewUpdate.Description = "This will create a new update";
             resources.ApplyResources(this.clNewUpdate, "clNewUpdate");
             this.clNewUpdate.Name = "clNewUpdate";
             this.clNewUpdate.TabStop = false;
@@ -103,7 +103,7 @@ namespace SevenUpdate.Sdk.Pages
             // clSave
             // 
             this.clSave.BackColor = System.Drawing.Color.White;
-            this.clSave.Description = "Choose this when your finished creating your SUI";
+            this.clSave.Description = "Save your changes";
             resources.ApplyResources(this.clSave, "clSave");
             this.clSave.Name = "clSave";
             this.clSave.TabStop = false;

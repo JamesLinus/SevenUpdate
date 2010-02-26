@@ -112,23 +112,23 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="UpdateBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
   <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>6, 50</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="textBox1.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
@@ -139,7 +139,7 @@
     <value>29</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>This program will guide you through the process of creating a SUI (Seven Update Information) file. 
+    <value>This program will guide you through the process of creating a Sui (Seven Update Information) file. 
 
 This program may perform a little slow or freeze for a short while. A new version is currently under development and will be out asap.</value>
   </data>
@@ -147,7 +147,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>textBox1</value>
   </data>
   <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
     <value>UpdateBox</value>
@@ -174,7 +174,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>picReloadNotifier</value>
   </data>
   <data name="&gt;&gt;picReloadNotifier.Type" xml:space="preserve">
-    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;picReloadNotifier.Parent" xml:space="preserve">
     <value>UpdateBox</value>
@@ -201,7 +201,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblHeading</value>
   </data>
   <data name="&gt;&gt;lblHeading.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblHeading.Parent" xml:space="preserve">
     <value>UpdateBox</value>
@@ -222,7 +222,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>UpdateBox</value>
   </data>
   <data name="&gt;&gt;UpdateBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;UpdateBox.Parent" xml:space="preserve">
     <value>$this</value>
@@ -249,7 +249,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lineSeparator1</value>
   </data>
   <data name="&gt;&gt;lineSeparator1.Type" xml:space="preserve">
-    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lineSeparator1.Parent" xml:space="preserve">
     <value>panel</value>
@@ -276,7 +276,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStepA</value>
   </data>
   <data name="&gt;&gt;lblStepA.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStepA.Parent" xml:space="preserve">
     <value>panel</value>
@@ -303,7 +303,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStep3</value>
   </data>
   <data name="&gt;&gt;lblStep3.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStep3.Parent" xml:space="preserve">
     <value>panel</value>
@@ -330,7 +330,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStepC</value>
   </data>
   <data name="&gt;&gt;lblStepC.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStepC.Parent" xml:space="preserve">
     <value>panel</value>
@@ -357,7 +357,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStepB</value>
   </data>
   <data name="&gt;&gt;lblStepB.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStepB.Parent" xml:space="preserve">
     <value>panel</value>
@@ -384,7 +384,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStep2</value>
   </data>
   <data name="&gt;&gt;lblStep2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStep2.Parent" xml:space="preserve">
     <value>panel</value>
@@ -411,7 +411,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblStep1</value>
   </data>
   <data name="&gt;&gt;lblStep1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblStep1.Parent" xml:space="preserve">
     <value>panel</value>
@@ -438,7 +438,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>panel</value>
   </data>
   <data name="&gt;&gt;panel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;panel.Parent" xml:space="preserve">
     <value>$this</value>
@@ -446,13 +446,13 @@ This program may perform a little slow or freeze for a short while. A new versio
   <data name="&gt;&gt;panel.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <metadata name="dlgOpenFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="dlgOpenFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="dlgOpenFile.Filter" xml:space="preserve">
     <value>Seven Update Information|*.sui</value>
   </data>
-  <metadata name="dlgSaveFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="dlgSaveFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>135, 17</value>
   </metadata>
   <data name="dlgSaveFile.Filter" xml:space="preserve">
@@ -483,7 +483,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lblAbout</value>
   </data>
   <data name="&gt;&gt;lblAbout.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;lblAbout.Parent" xml:space="preserve">
     <value>$this</value>
@@ -491,94 +491,94 @@ This program may perform a little slow or freeze for a short while. A new versio
   <data name="&gt;&gt;lblAbout.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-  <data name="clSUA.AutoSize" type="System.Boolean, mscorlib">
+  <data name="clSua.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="clSUA.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="clSua.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
   </data>
-  <data name="clSUA.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="clSua.Location" type="System.Drawing.Point, System.Drawing">
     <value>176, 329</value>
   </data>
-  <data name="clSUA.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="clSua.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 58</value>
   </data>
-  <data name="clSUA.TabIndex" type="System.Int32, mscorlib">
+  <data name="clSua.TabIndex" type="System.Int32, mscorlib">
     <value>52</value>
   </data>
-  <data name="clSUA.Text" xml:space="preserve">
+  <data name="clSua.Text" xml:space="preserve">
     <value>Create SUA file</value>
   </data>
-  <data name="&gt;&gt;clSUA.Name" xml:space="preserve">
-    <value>clSUA</value>
+  <data name="&gt;&gt;clSua.Name" xml:space="preserve">
+    <value>clSua</value>
   </data>
-  <data name="&gt;&gt;clSUA.Type" xml:space="preserve">
+  <data name="&gt;&gt;clSua.Type" xml:space="preserve">
     <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;clSUA.Parent" xml:space="preserve">
+  <data name="&gt;&gt;clSua.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;clSUA.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;clSua.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="clOpenSUI.AutoSize" type="System.Boolean, mscorlib">
+  <data name="clOpenSui.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="clOpenSUI.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="clOpenSui.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
   </data>
-  <data name="clOpenSUI.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="clOpenSui.Location" type="System.Drawing.Point, System.Drawing">
     <value>176, 255</value>
   </data>
-  <data name="clOpenSUI.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="clOpenSui.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 58</value>
   </data>
-  <data name="clOpenSUI.TabIndex" type="System.Int32, mscorlib">
+  <data name="clOpenSui.TabIndex" type="System.Int32, mscorlib">
     <value>42</value>
   </data>
-  <data name="clOpenSUI.Text" xml:space="preserve">
+  <data name="clOpenSui.Text" xml:space="preserve">
     <value>Open an existing SUI file</value>
   </data>
-  <data name="&gt;&gt;clOpenSUI.Name" xml:space="preserve">
-    <value>clOpenSUI</value>
+  <data name="&gt;&gt;clOpenSui.Name" xml:space="preserve">
+    <value>clOpenSui</value>
   </data>
-  <data name="&gt;&gt;clOpenSUI.Type" xml:space="preserve">
+  <data name="&gt;&gt;clOpenSui.Type" xml:space="preserve">
     <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;clOpenSUI.Parent" xml:space="preserve">
+  <data name="&gt;&gt;clOpenSui.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;clOpenSUI.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;clOpenSui.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="clNewSUI.AutoSize" type="System.Boolean, mscorlib">
+  <data name="clNewSui.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="clNewSUI.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="clNewSui.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>System</value>
   </data>
-  <data name="clNewSUI.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="clNewSui.Location" type="System.Drawing.Point, System.Drawing">
     <value>176, 181</value>
   </data>
-  <data name="clNewSUI.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="clNewSui.Size" type="System.Drawing.Size, System.Drawing">
     <value>415, 58</value>
   </data>
-  <data name="clNewSUI.TabIndex" type="System.Int32, mscorlib">
+  <data name="clNewSui.TabIndex" type="System.Int32, mscorlib">
     <value>41</value>
   </data>
-  <data name="clNewSUI.Text" xml:space="preserve">
+  <data name="clNewSui.Text" xml:space="preserve">
     <value>Create a new SUI file</value>
   </data>
-  <data name="&gt;&gt;clNewSUI.Name" xml:space="preserve">
-    <value>clNewSUI</value>
+  <data name="&gt;&gt;clNewSui.Name" xml:space="preserve">
+    <value>clNewSui</value>
   </data>
-  <data name="&gt;&gt;clNewSUI.Type" xml:space="preserve">
+  <data name="&gt;&gt;clNewSui.Type" xml:space="preserve">
     <value>WindowsUI.CommandLink, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;clNewSUI.Parent" xml:space="preserve">
+  <data name="&gt;&gt;clNewSui.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;clNewSUI.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;clNewSui.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="btnNext.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -600,7 +600,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>btnNext</value>
   </data>
   <data name="&gt;&gt;btnNext.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnNext.Parent" xml:space="preserve">
     <value>pnlButtonSection</value>
@@ -627,7 +627,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>btnCancel</value>
   </data>
   <data name="&gt;&gt;btnCancel.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnCancel.Parent" xml:space="preserve">
     <value>pnlButtonSection</value>
@@ -654,7 +654,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>lineSeparator2</value>
   </data>
   <data name="&gt;&gt;lineSeparator2.Type" xml:space="preserve">
-    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>System.Drawing.LineSeparator, SevenUpdate.Sdk, Version=1.0.1.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;lineSeparator2.Parent" xml:space="preserve">
     <value>pnlButtonSection</value>
@@ -681,7 +681,7 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>pnlButtonSection</value>
   </data>
   <data name="&gt;&gt;pnlButtonSection.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;pnlButtonSection.Parent" xml:space="preserve">
     <value>$this</value>
@@ -689,7 +689,7 @@ This program may perform a little slow or freeze for a short while. A new versio
   <data name="&gt;&gt;pnlButtonSection.ZOrder" xml:space="preserve">
     <value>6</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
@@ -802,7 +802,7 @@ This program may perform a little slow or freeze for a short while. A new versio
         8Ozs3sq3sAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD//////+AH//+A
         Af/+AAB//AAAP/gAAB/wAAAP4AAAB+AAAAfAAAADwAAAA4AAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAA
         AAGAAAABgAAAAYAAAAHAAAADwAAAA+AAAAfgAAAH8AAAD/gAAB/8AAA//gAAf/+AAf//4Af//////ygA
-        AAAYAAAAMAAAAAEACAAAAAAAQAIAAAAAAAAAAAAAAAEAAAABAAAAAAAAIjkjACM6JAAkPSUAJkAnACdC
+        AAAYAAAAMAAAAAEACAAAAAAAQAIAAAAAAAAAAAAAAAEAAAABAAAAAAAAIjkjACM6JAAkPSuaJkAnACdC
         KAArSCwALEkuAC1MLwAuSTAAMVEzADJVNAA1VzcANFg2ADdcOQA4XToAPVg/ADxfPgA5YDsAOmE8ADxl
         PgA+Z0AAP2lBAFtcXABcXV4ARGREAEBqQgBAbEIAQm5EAEdqSQBJb0sATmpPAENxRgBEckYARXNIAEZ1
         SABIeEoASXpMAEp9TQBMfk4ATX1QAF9tYgBhYmMAZGVmAGlrawBsbW0AaX1sAG5vcABucHAAcHFyAHR2
@@ -1285,7 +1285,7 @@ This program may perform a little slow or freeze for a short while. A new versio
         VI12n3nai7eO/KHFo/6917/+5u/n/+bv5v7i7eL+3+vf/9ro2v7P4tD+xNvF/7bTt/6lyKb8h6qJ2lt1
         XI4oNykzKTcqBjRHNQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAALT0tATNFNAQkMSUILkAvKz1TP2F3iHiMjqGPrZmymsKSs5TIkrOUyIamiMN0kXatY3xljEVY
+        AAAAAAAALT0tATNFNAQkMSuiLkAvKz1TP2F3iHiMjqGPrZmymsKSs5TIkrOUyIamiMN0kXatY3xljEVY
         RmE3RzgsKzcsCTtMPAQ0RDUBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADtKOwJFUkUDSFNJBTxHPQU+Sz8GPEo9BjZD
@@ -1452,6 +1452,6 @@ This program may perform a little slow or freeze for a short while. A new versio
     <value>Main</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

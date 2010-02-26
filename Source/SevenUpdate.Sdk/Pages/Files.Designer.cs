@@ -80,9 +80,9 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.lbFiles, "lbFiles");
             this.lbFiles.FormattingEnabled = true;
             this.lbFiles.Name = "lbFiles";
-            this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.lbFiles_SelectedIndexChanged);
-            this.lbFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbFiles_KeyDown);
-            this.lbFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbFiles_MouseDown);
+            this.lbFiles.SelectedIndexChanged += new System.EventHandler(this.Files_SelectedIndexChanged);
+            this.lbFiles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Files_KeyDown);
+            this.lbFiles.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Files_MouseDown);
             // 
             // cmsMenu
             // 
@@ -98,13 +98,13 @@ namespace SevenUpdate.Sdk.Pages
             // 
             this.tmiAddFiles.Name = "tmiAddFiles";
             resources.ApplyResources(this.tmiAddFiles, "tmiAddFiles");
-            this.tmiAddFiles.Click += new System.EventHandler(this.tmiAddFiles_Click);
+            this.tmiAddFiles.Click += new System.EventHandler(this.AddFiles_Click);
             // 
             // tmiAddFolder
             // 
             this.tmiAddFolder.Name = "tmiAddFolder";
             resources.ApplyResources(this.tmiAddFolder, "tmiAddFolder");
-            this.tmiAddFolder.Click += new System.EventHandler(this.tmiAddFolder_Click);
+            this.tmiAddFolder.Click += new System.EventHandler(this.AddFolder_Click);
             // 
             // toolStripSeparator1
             // 
@@ -115,7 +115,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             this.tmiDeleteFile.Name = "tmiDeleteFile";
             resources.ApplyResources(this.tmiDeleteFile, "tmiDeleteFile");
-            this.tmiDeleteFile.Click += new System.EventHandler(this.tmiDeleteFile_Click);
+            this.tmiDeleteFile.Click += new System.EventHandler(this.DeleteFile_Click);
             // 
             // txtDownloadLoc
             // 
@@ -161,7 +161,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblGetHash.Name = "lblGetHash";
             this.lblGetHash.TabStop = true;
             this.lblGetHash.UseMnemonic = false;
-            this.lblGetHash.Click += new System.EventHandler(this.lblGetHash_Click);
+            this.lblGetHash.Click += new System.EventHandler(this.GetHash_Click);
             this.lblGetHash.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblGetHash.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -183,7 +183,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowse.Name = "lblBrowse";
             this.lblBrowse.TabStop = true;
-            this.lblBrowse.Click += new System.EventHandler(this.lblBrowse_Click);
+            this.lblBrowse.Click += new System.EventHandler(this.Browse_Click);
             this.lblBrowse.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowse.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -192,7 +192,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.SaveClick);
             // 
             // label6
             // 
@@ -215,7 +215,7 @@ namespace SevenUpdate.Sdk.Pages
                                                               resources.GetString("cbFileAction.Items7"),
                                                               resources.GetString("cbFileAction.Items8")});
             this.cbFileAction.Name = "cbFileAction";
-            this.cbFileAction.SelectedIndexChanged += new System.EventHandler(this.cbFileAction_SelectedIndexChanged);
+            this.cbFileAction.SelectedIndexChanged += new System.EventHandler(this.FileAction_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -267,7 +267,6 @@ namespace SevenUpdate.Sdk.Pages
             this.DoubleBuffered = true;
             this.Name = "Files";
             resources.ApplyResources(this, "$this");
-            this.Load += new System.EventHandler(this.Files_Load);
             this.cmsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

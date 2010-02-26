@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -43,21 +43,16 @@ namespace SevenUpdate.Sdk.Pages
         private int index;
 
         /// <summary>
-        /// The selected folder when adding files
+        /// The selected folder when adding UpdateFiles
         /// </summary>
         private string selectedFolder;
 
         private BackgroundWorker worker;
 
         /// <summary>
-        /// Gets the files of the update
+        /// Gets the UpdateFiles of the update
         /// </summary>
-        internal ObservableCollection<UpdateFile> UpdateFiles { get { return files; } }
-
-        /// <summary>
-        /// List of files
-        /// </summary>
-        private ObservableCollection<UpdateFile> files { get; set; }
+        internal ObservableCollection<UpdateFile> UpdateFiles { get; private set; }
 
         private delegate void SetTextCallback(string hash);
 
@@ -75,21 +70,21 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        /// Adds a new file or group of files to the update
+        /// Adds a new file or group of UpdateFiles to the update
         /// </summary>
         private void AddFiles(string[] addedFiles)
         {
             Cursor = Cursors.WaitCursor;
             worker = new BackgroundWorker();
-            worker.DoWork += WorkerDoWork;
+            worker.DoWork += Worker_DoWork;
             worker.RunWorkerAsync(addedFiles);
-            worker.RunWorkerCompleted += WorkerRunWorkerCompleted;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
         }
 
         /// <summary>
         /// Clears the UI
         /// </summary>
-        /// <param name="clearFiles">True  if to clear the collection of files</param>
+        /// <param name="clearFiles">True  if to clear the collection of UpdateFiles</param>
         internal void ClearUI(bool clearFiles)
         {
             txtSize.Text = null;
@@ -117,9 +112,9 @@ namespace SevenUpdate.Sdk.Pages
             if (x < 0)
                 return;
 
-            if (files.Count > 0)
+            if (UpdateFiles.Count > 0)
             {
-                files.RemoveAt(lbFiles.SelectedIndex);
+                UpdateFiles.RemoveAt(lbFiles.SelectedIndex);
 
                 lbFiles.Items.RemoveAt(lbFiles.SelectedIndex);
             }
@@ -148,15 +143,15 @@ namespace SevenUpdate.Sdk.Pages
 
             ClearUI(false);
 
-            txtFileLoc.Text = files[x].Destination;
+            txtFileLoc.Text = UpdateFiles[x].Destination;
 
-            txtDownloadLoc.Text = files[x].Source;
+            txtDownloadLoc.Text = UpdateFiles[x].Source;
 
-            txtArgs.Text = files[x].Args;
-            if (files[x].Hash != null)
-                lblGetHash.Text = files[x].Hash;
+            txtArgs.Text = UpdateFiles[x].Args;
+            if (UpdateFiles[x].Hash != null)
+                lblGetHash.Text = UpdateFiles[x].Hash;
 
-            switch (files[x].Action)
+            switch (UpdateFiles[x].Action)
             {
                 case FileAction.Update:
                     cbFileAction.SelectedIndex = 0;
@@ -187,7 +182,7 @@ namespace SevenUpdate.Sdk.Pages
                     break;
             }
 
-            txtSize.Text = files[x].Size.ToString();
+            txtSize.Text = UpdateFiles[x].Size.ToString();
         }
 
         /// <summary>
@@ -195,15 +190,15 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         internal void LoadFiles(ObservableCollection<UpdateFile> fileItems)
         {
-            files = new ObservableCollection<UpdateFile>();
+            UpdateFiles = new ObservableCollection<UpdateFile>();
 
             for (var x = 0; x < fileItems.Count; x++)
-                files.Add(fileItems[x]);
+                UpdateFiles.Add(fileItems[x]);
 
             lbFiles.Items.Clear();
 
-            for (var x = 0; x < files.Count; x++)
-                lbFiles.Items.Add(Path.GetFileName(files[x].Destination));
+            for (var x = 0; x < UpdateFiles.Count; x++)
+                lbFiles.Items.Add(Path.GetFileName(UpdateFiles[x].Destination));
 
             if (lbFiles.Items.Count <= 0)
                 return;
@@ -219,9 +214,7 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         private void SaveFile()
         {
-            var file = new UpdateFile();
-
-            file.Hash = lblGetHash.Enabled ? lblGetHash.Text : null;
+            var file = new UpdateFile {Hash = lblGetHash.Enabled ? lblGetHash.Text : null};
 
             switch (cbFileAction.SelectedIndex)
             {
@@ -278,17 +271,17 @@ namespace SevenUpdate.Sdk.Pages
 
             file.Size = Convert.ToUInt64(txtSize.Text);
 
-            if (index > -1 && files.Count > 0)
+            if (index > -1 && UpdateFiles.Count > 0)
             {
-                files.RemoveAt(index);
+                UpdateFiles.RemoveAt(index);
 
-                files.Insert(index, file);
+                UpdateFiles.Insert(index, file);
                 lbFiles.Items[index] = Path.GetFileName(file.Destination);
                 lbFiles.SelectedIndex = index;
             }
             else
             {
-                files.Add(file);
+                UpdateFiles.Add(file);
                 lbFiles.Items.Add(Path.GetFileName(file.Destination));
                 lbFiles.SelectedIndex = lbFiles.Items.Count - 1;
             }
@@ -311,9 +304,10 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Button
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void SaveClick(object sender, EventArgs e)
         {
-            if (lblGetHash.Text != Program.RM.GetString("CalculateHashSize") || cbFileAction.SelectedIndex == 4 || cbFileAction.SelectedIndex == 6 || cbFileAction.SelectedIndex == 8)
+            if (lblGetHash.Text != Program.RM.GetString("CalculateHashSize") || cbFileAction.SelectedIndex == 4 || cbFileAction.SelectedIndex == 6 ||
+                cbFileAction.SelectedIndex == 8)
             {
                 if (txtSize.Text.Length > 0)
                     SaveFile();
@@ -328,12 +322,12 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Context Menu Items
 
-        private void tmiDeleteFile_Click(object sender, EventArgs e)
+        private void DeleteFile_Click(object sender, EventArgs e)
         {
             DeleteFile();
         }
 
-        private void tmiAddFiles_Click(object sender, EventArgs e)
+        private void AddFiles_Click(object sender, EventArgs e)
         {
             dlgOpenFile.Multiselect = true;
             dlgOpenFile.FileName = null;
@@ -344,7 +338,7 @@ namespace SevenUpdate.Sdk.Pages
             AddFiles(dlgOpenFile.FileNames);
         }
 
-        private void tmiAddFolder_Click(object sender, EventArgs e)
+        private void AddFolder_Click(object sender, EventArgs e)
         {
             if (dlgOpenFolder.ShowDialog() != DialogResult.OK)
                 return;
@@ -357,7 +351,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Labels
 
-        private void lblBrowse_Click(object sender, EventArgs e)
+        private void Browse_Click(object sender, EventArgs e)
         {
             dlgOpenFile.Multiselect = false;
             dlgOpenFile.FileName = null;
@@ -365,8 +359,8 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             txtFileLoc.Text = dlgOpenFile.FileName;
             worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += WorkerRunWorkerCompleted2;
-            worker.DoWork += WorkerDoWork2;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted2;
+            worker.DoWork += Worker_DoWork2;
             Cursor = Cursors.WaitCursor;
             worker.RunWorkerAsync(dlgOpenFile.FileName);
 
@@ -375,7 +369,7 @@ namespace SevenUpdate.Sdk.Pages
             SaveFile();
         }
 
-        private void lblGetHash_Click(object sender, EventArgs e)
+        private void GetHash_Click(object sender, EventArgs e)
         {
             dlgOpenFile.FileName = null;
 
@@ -390,8 +384,8 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             selectedFolder = Path.GetDirectoryName(dlgOpenFile.FileName);
             worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += WorkerRunWorkerCompleted2;
-            worker.DoWork += WorkerDoWork2;
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted2;
+            worker.DoWork += Worker_DoWork2;
             Cursor = Cursors.WaitCursor;
             worker.RunWorkerAsync(dlgOpenFile.FileName);
 
@@ -400,7 +394,7 @@ namespace SevenUpdate.Sdk.Pages
             txtSize.Text = fi.Length.ToString();
         }
 
-        private void lbFiles_SelectedIndexChanged(object sender, EventArgs e)
+        private void Files_SelectedIndexChanged(object sender, EventArgs e)
         {
             index = lbFiles.SelectedIndex;
 
@@ -424,7 +418,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void cbFileAction_SelectedIndexChanged(object sender, EventArgs e)
+        private void FileAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFileAction.SelectedIndex == 4 || cbFileAction.SelectedIndex == 6 || cbFileAction.SelectedIndex == 8)
             {
@@ -441,7 +435,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region lbFiles
 
-        private void lbFiles_MouseDown(object sender, MouseEventArgs e)
+        private void Files_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
                 return;
@@ -454,7 +448,7 @@ namespace SevenUpdate.Sdk.Pages
             cmsMenu.Show(MousePosition);
         }
 
-        private void lbFiles_KeyDown(object sender, KeyEventArgs e)
+        private void Files_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
                 DeleteFile();
@@ -466,41 +460,41 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Worker Events
 
-        private void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Cursor = Cursors.Arrow;
             lbFiles.Items.Clear();
-            for (var x = 0; x < files.Count; x++)
-                lbFiles.Items.Add(Path.GetFileName(files[x].Destination));
+            for (var x = 0; x < UpdateFiles.Count; x++)
+                lbFiles.Items.Add(Path.GetFileName(UpdateFiles[x].Destination));
             lbFiles.SelectedIndex = lbFiles.Items.Count - 1;
-            worker.DoWork -= WorkerDoWork;
-            worker.RunWorkerCompleted -= WorkerRunWorkerCompleted;
+            worker.DoWork -= Worker_DoWork;
+            worker.RunWorkerCompleted -= Worker_RunWorkerCompleted;
         }
 
-        private void WorkerRunWorkerCompleted2(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_RunWorkerCompleted2(object sender, RunWorkerCompletedEventArgs e)
         {
             Cursor = Cursors.Arrow;
-            worker.DoWork -= WorkerDoWork2;
-            worker.RunWorkerCompleted -= WorkerRunWorkerCompleted2;
+            worker.DoWork -= Worker_DoWork2;
+            worker.RunWorkerCompleted -= Worker_RunWorkerCompleted2;
         }
 
-        private void WorkerDoWork2(object sender, DoWorkEventArgs e)
+        private void Worker_DoWork2(object sender, DoWorkEventArgs e)
         {
             var file = ((string) e.Argument);
             SetHash(Base.Base.GetHash(file));
         }
 
-        private void WorkerDoWork(object sender, DoWorkEventArgs e)
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             var addedFiles = ((string[]) e.Argument);
-            if (files == null)
-                files = new ObservableCollection<UpdateFile>();
+            if (UpdateFiles == null)
+                UpdateFiles = new ObservableCollection<UpdateFile>();
 
             for (var x = 0; x < addedFiles.Length; x++)
             {
                 var fi = new FileInfo(addedFiles[x]);
 
-                var file = new UpdateFile {Hash = Base.Base.GetHash(addedFiles[x]), Action = FileAction.Update};
+                var file = new UpdateFile {Hash = Base.Base.GetHash(addedFiles[x]), Action = FileAction.UpdateIfExist};
 
                 var folder = Path.GetDirectoryName(addedFiles[x]);
                 var fileName = Path.GetFileName(addedFiles[x]);
@@ -525,14 +519,10 @@ namespace SevenUpdate.Sdk.Pages
 
                 file.Size = Convert.ToUInt64(fi.Length);
 
-                files.Add(file);
+                UpdateFiles.Add(file);
             }
         }
 
         #endregion
-
-        private void Files_Load(object sender, EventArgs e)
-        {
-        }
     }
 }

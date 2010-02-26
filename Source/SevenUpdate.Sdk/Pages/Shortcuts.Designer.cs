@@ -82,7 +82,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblValidateIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblValidateIcon.Name = "lblValidateIcon";
             this.lblValidateIcon.TabStop = true;
-            this.lblValidateIcon.Click += new System.EventHandler(this.lblValidateIcon_Click);
+            this.lblValidateIcon.Click += new System.EventHandler(this.ValidateIcon_Click);
             this.lblValidateIcon.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblValidateIcon.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -121,9 +121,9 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.lbShortcuts, "lbShortcuts");
             this.lbShortcuts.FormattingEnabled = true;
             this.lbShortcuts.Name = "lbShortcuts";
-            this.lbShortcuts.SelectedIndexChanged += new System.EventHandler(this.lbShortcuts_SelectedIndexChanged);
-            this.lbShortcuts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lbShortcuts_KeyDown);
-            this.lbShortcuts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbShortcuts_MouseDown);
+            this.lbShortcuts.SelectedIndexChanged += new System.EventHandler(this.Shortcuts_SelectedIndexChanged);
+            this.lbShortcuts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Shortcuts_KeyDown);
+            this.lbShortcuts.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Shortcuts_MouseDown);
             // 
             // label1
             // 
@@ -143,7 +143,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblValidateTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblValidateTarget.Name = "lblValidateTarget";
             this.lblValidateTarget.TabStop = true;
-            this.lblValidateTarget.Click += new System.EventHandler(this.lblValidateTarget_Click);
+            this.lblValidateTarget.Click += new System.EventHandler(this.ValidateTarget_Click);
             this.lblValidateTarget.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblValidateTarget.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -155,7 +155,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowseTarget.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowseTarget.Name = "lblBrowseTarget";
             this.lblBrowseTarget.TabStop = true;
-            this.lblBrowseTarget.Click += new System.EventHandler(this.lblBrowseTarget_Click);
+            this.lblBrowseTarget.Click += new System.EventHandler(this.BrowseTarget_Click);
             this.lblBrowseTarget.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowseTarget.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -167,7 +167,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowseIcon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowseIcon.Name = "lblBrowseIcon";
             this.lblBrowseIcon.TabStop = true;
-            this.lblBrowseIcon.Click += new System.EventHandler(this.lblBrowseIcon_Click);
+            this.lblBrowseIcon.Click += new System.EventHandler(this.BrowseIcon_Click);
             this.lblBrowseIcon.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowseIcon.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -179,7 +179,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowseLoc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowseLoc.Name = "lblBrowseLoc";
             this.lblBrowseLoc.TabStop = true;
-            this.lblBrowseLoc.Click += new System.EventHandler(this.lblBrowseLoc_Click);
+            this.lblBrowseLoc.Click += new System.EventHandler(this.BrowseLoc_Click);
             this.lblBrowseLoc.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowseLoc.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -191,7 +191,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblValidateShortcutLoc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblValidateShortcutLoc.Name = "lblValidateShortcutLoc";
             this.lblValidateShortcutLoc.TabStop = true;
-            this.lblValidateShortcutLoc.Click += new System.EventHandler(this.lblValidateShortcutLoc_Click);
+            this.lblValidateShortcutLoc.Click += new System.EventHandler(this.ValidateShortcutLoc_Click);
             this.lblValidateShortcutLoc.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblValidateShortcutLoc.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -210,7 +210,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.Save_Click);
             // 
             // dlgOpenFile
             // 
@@ -230,7 +230,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             resources.ApplyResources(this.tmiAddShortcut, "tmiAddShortcut");
             this.tmiAddShortcut.Name = "tmiAddShortcut";
-            this.tmiAddShortcut.Click += new System.EventHandler(this.tmiAddShortcut_Click);
+            this.tmiAddShortcut.Click += new System.EventHandler(this.AddShortcut_Click);
             // 
             // tmiImportShortcut
             // 
@@ -246,7 +246,7 @@ namespace SevenUpdate.Sdk.Pages
             // 
             this.tmiDeleteShortcut.Name = "tmiDeleteShortcut";
             resources.ApplyResources(this.tmiDeleteShortcut, "tmiDeleteShortcut");
-            this.tmiDeleteShortcut.Click += new System.EventHandler(this.tmiDeleteShortcut_Click);
+            this.tmiDeleteShortcut.Click += new System.EventHandler(this.DeleteShortcut_Click);
             // 
             // label7
             // 
@@ -263,7 +263,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.GetString("cbShortcutAction.Items1"),
             resources.GetString("cbShortcutAction.Items2")});
             this.cbShortcutAction.Name = "cbShortcutAction";
-            this.cbShortcutAction.SelectedIndexChanged += new System.EventHandler(this.cbShortcutAction_SelectedIndexChanged);
+            this.cbShortcutAction.SelectedIndexChanged += new System.EventHandler(this.ShortcutAction_SelectedIndexChanged);
             // 
             // Shortcuts
             // 

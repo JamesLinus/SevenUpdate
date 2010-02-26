@@ -16,7 +16,7 @@ This file is part of Seven Update.
 
 namespace SevenUpdate.Sdk.Pages
 {
-    sealed partial class SUAInfo
+    sealed partial class SuaInfo
     {
         /// <summary> 
         /// Required designer variable.
@@ -44,7 +44,7 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SUAInfo));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SuaInfo));
             this.txtAppName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblBrowse = new System.Windows.Forms.Label();
@@ -63,7 +63,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblHeading = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtSUILocation = new System.Windows.Forms.TextBox();
+            this.txtSuiLocation = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.dlgSaveFile = new WindowsUI.SaveFileDialog();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -88,7 +88,7 @@ namespace SevenUpdate.Sdk.Pages
             this.lblBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblBrowse.Name = "lblBrowse";
             this.lblBrowse.TabStop = true;
-            this.lblBrowse.Click += new System.EventHandler(this.lblBrowse_Click);
+            this.lblBrowse.Click += new System.EventHandler(this.Browse_Click);
             this.lblBrowse.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblBrowse.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -130,7 +130,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.lblValidate, "lblValidate");
             this.lblValidate.Name = "lblValidate";
             this.lblValidate.TabStop = true;
-            this.lblValidate.Click += new System.EventHandler(this.lblValidate_Click);
+            this.lblValidate.Click += new System.EventHandler(this.Validate_Click);
             this.lblValidate.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblValidate.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -154,14 +154,14 @@ namespace SevenUpdate.Sdk.Pages
             this.cbLoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLoc.FormattingEnabled = true;
             this.cbLoc.Items.AddRange(new object[] {
-                                                       resources.GetString("cbLoc.Items"),
-                                                       resources.GetString("cbLoc.Items1"),
-                                                       resources.GetString("cbLoc.Items2"),
-                                                       resources.GetString("cbLoc.Items3")});
+            resources.GetString("cbLoc.Items"),
+            resources.GetString("cbLoc.Items1"),
+            resources.GetString("cbLoc.Items2"),
+            resources.GetString("cbLoc.Items3")});
             resources.ApplyResources(this.cbLoc, "cbLoc");
             this.cbLoc.Name = "cbLoc";
             this.cbLoc.Sorted = true;
-            this.cbLoc.SelectedIndexChanged += new System.EventHandler(this.cbLoc_SelectedIndexChanged);
+            this.cbLoc.SelectedIndexChanged += new System.EventHandler(this.Loc_SelectedIndexChanged);
             // 
             // lblHeading
             // 
@@ -179,17 +179,17 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.label6, "label6");
             this.label6.Name = "label6";
             // 
-            // txtSUILocation
+            // txtSuiLocation
             // 
-            resources.ApplyResources(this.txtSUILocation, "txtSUILocation");
-            this.txtSUILocation.Name = "txtSUILocation";
+            resources.ApplyResources(this.txtSuiLocation, "txtSuiLocation");
+            this.txtSuiLocation.Name = "txtSuiLocation";
             // 
             // btnSave
             // 
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.btnSave.Click += new System.EventHandler(this.Save_Click);
             // 
             // dlgSaveFile
             // 
@@ -202,7 +202,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // chk64Bit
             // 
@@ -210,7 +210,7 @@ namespace SevenUpdate.Sdk.Pages
             this.chk64Bit.Name = "chk64Bit";
             this.chk64Bit.UseVisualStyleBackColor = true;
             // 
-            // SUAInfo
+            // SuaInfo
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.White;
@@ -218,7 +218,7 @@ namespace SevenUpdate.Sdk.Pages
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.txtSUILocation);
+            this.Controls.Add(this.txtSuiLocation);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.lblHeading);
             this.Controls.Add(this.label3);
@@ -236,9 +236,9 @@ namespace SevenUpdate.Sdk.Pages
             this.Controls.Add(this.txtAppName);
             this.Controls.Add(this.txtAppDir);
             this.DoubleBuffered = true;
-            this.Name = "SUAInfo";
+            this.Name = "SuaInfo";
             resources.ApplyResources(this, "$this");
-            this.Load += new System.EventHandler(this.SUAInfo_Load);
+            this.Load += new System.EventHandler(this.SuaInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,7 +264,7 @@ namespace SevenUpdate.Sdk.Pages
         private System.Windows.Forms.Label lblHeading;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox txtSUILocation;
+        private System.Windows.Forms.TextBox txtSuiLocation;
         private System.Windows.Forms.Button btnSave;
         private WindowsUI.SaveFileDialog dlgSaveFile;
         private System.Windows.Forms.Button btnCancel;

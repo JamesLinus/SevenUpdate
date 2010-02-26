@@ -60,7 +60,7 @@ namespace SevenUpdate.Sdk.WinForms
             resources.ApplyResources(this.btnClose, "btnClose");
             this.btnClose.Name = "btnClose";
             this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            this.btnClose.Click += new System.EventHandler(this.Close_Click);
             // 
             // lblVersion
             // 
@@ -95,7 +95,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblSupport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblSupport.Name = "lblSupport";
             this.lblSupport.TabStop = true;
-            this.lblSupport.Click += new System.EventHandler(this.lblSupport_Click);
+            this.lblSupport.Click += new System.EventHandler(this.Support_Click);
             this.lblSupport.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblSupport.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 
@@ -107,7 +107,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblLicense.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblLicense.Name = "lblLicense";
             this.lblLicense.TabStop = true;
-            this.lblLicense.Click += new System.EventHandler(this.lblLicense_Click);
+            this.lblLicense.Click += new System.EventHandler(this.License_Click);
             this.lblLicense.MouseEnter += new System.EventHandler(this.Label_MouseEnter);
             this.lblLicense.MouseLeave += new System.EventHandler(this.Label_MouseLeave);
             // 

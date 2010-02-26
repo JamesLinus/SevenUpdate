@@ -28,6 +28,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml.Serialization;
 using Microsoft.Win32;
 using ProtoBuf;
 
@@ -563,10 +564,27 @@ namespace SevenUpdate.Base
         {
             if (File.Exists(fileName))
             {
+                var s = new XmlSerializer(typeof(T), "http://sevenupdate.com");
                 try
                 {
-                    using (var file = File.OpenRead(fileName))
-                        return Serializer.Deserialize<T>(file);
+                    T temp;
+                    using (var r = new StreamReader(fileName))
+                    {
+                        try
+                        {
+                            temp = (T)s.Deserialize(r);
+                        }
+                        catch
+                        {
+                            temp = null;
+                        }
+                    }
+
+                    if (temp == null)
+                        using (var file = File.OpenRead(fileName))
+                            temp = Serializer.Deserialize<T>(file);
+
+                    return temp;
                 }
                 catch (Exception e)
                 {
@@ -586,14 +604,25 @@ namespace SevenUpdate.Base
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream) where T : class
         {
+            var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
             {
-                return Serializer.Deserialize<T>(stream);
+                T temp;
+                try
+                {
+                    temp = (T) s.Deserialize(stream);
+                }
+                catch
+                {
+                    temp = null;
+                }
+
+                return temp ?? (Serializer.Deserialize<T>(stream));
             }
             catch (Exception e)
             {
                 if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, "SUI file"));
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, @"sui file"));
             }
 
             return null;

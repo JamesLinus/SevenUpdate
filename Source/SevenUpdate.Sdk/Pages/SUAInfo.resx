@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="txtAppName.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -550,7 +550,7 @@
     <value>84</value>
   </data>
   <data name="label6.Text" xml:space="preserve">
-    <value>SUI Web Location:</value>
+    <value>Sui Web Location:</value>
   </data>
   <data name="&gt;&gt;label6.Name" xml:space="preserve">
     <value>label6</value>
@@ -564,28 +564,28 @@
   <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
     <value>3</value>
   </data>
-  <data name="txtSUILocation.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+  <data name="txtSuiLocation.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
   </data>
-  <data name="txtSUILocation.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="txtSuiLocation.Location" type="System.Drawing.Point, System.Drawing">
     <value>13, 296</value>
   </data>
-  <data name="txtSUILocation.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="txtSuiLocation.Size" type="System.Drawing.Size, System.Drawing">
     <value>617, 20</value>
   </data>
-  <data name="txtSUILocation.TabIndex" type="System.Int32, mscorlib">
+  <data name="txtSuiLocation.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="&gt;&gt;txtSUILocation.Name" xml:space="preserve">
-    <value>txtSUILocation</value>
+  <data name="&gt;&gt;txtSuiLocation.Name" xml:space="preserve">
+    <value>txtSuiLocation</value>
   </data>
-  <data name="&gt;&gt;txtSUILocation.Type" xml:space="preserve">
+  <data name="&gt;&gt;txtSuiLocation.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;txtSUILocation.Parent" xml:space="preserve">
+  <data name="&gt;&gt;txtSuiLocation.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;txtSUILocation.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;txtSuiLocation.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
   <data name="btnSave.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
@@ -619,7 +619,7 @@
     <value>240, 17</value>
   </metadata>
   <data name="dlgSaveFile.Filter" xml:space="preserve">
-    <value>SUA file|*.sua</value>
+    <value>Sua file|*.sua</value>
   </data>
   <data name="dlgSaveFile.Title" xml:space="preserve">
     <value>Save your Seven Update Application File</value>
@@ -688,16 +688,16 @@
     <value>dlgFolder</value>
   </data>
   <data name="&gt;&gt;dlgFolder.Type" xml:space="preserve">
-    <value>WindowsUI.FolderBrowserDialog, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>WindowsUI.FolderBrowserDialog, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;dlgSaveFile.Name" xml:space="preserve">
     <value>dlgSaveFile</value>
   </data>
   <data name="&gt;&gt;dlgSaveFile.Type" xml:space="preserve">
-    <value>WindowsUI.SaveFileDialog, Windows UI, Version=9.5.20.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>WindowsUI.SaveFileDialog, Windows.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>SUAInfo</value>
+    <value>SuaInfo</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
     <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

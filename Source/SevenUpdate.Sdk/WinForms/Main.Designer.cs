@@ -60,14 +60,15 @@ namespace SevenUpdate.Sdk.WinForms
             this.dlgOpenFile = new WindowsUI.OpenFileDialog();
             this.dlgSaveFile = new WindowsUI.SaveFileDialog();
             this.lblAbout = new System.Windows.Forms.Label();
-            this.clSUA = new WindowsUI.CommandLink();
-            this.clOpenSUI = new WindowsUI.CommandLink();
-            this.clNewSUI = new WindowsUI.CommandLink();
+            this.clSua = new WindowsUI.CommandLink();
+            this.clOpenSui = new WindowsUI.CommandLink();
+            this.clNewSui = new WindowsUI.CommandLink();
             this.btnNext = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.lineSeparator2 = new System.Drawing.LineSeparator();
             this.pnlButtonSection = new System.Windows.Forms.Panel();
             this.UpdateBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picReloadNotifier)).BeginInit();
             this.panel.SuspendLayout();
             this.pnlButtonSection.SuspendLayout();
             this.SuspendLayout();
@@ -130,7 +131,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblStepA.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.lblStepA.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblStepA.Name = "lblStepA";
-            this.lblStepA.Click += new System.EventHandler(this.lblStepA_Click);
+            this.lblStepA.Click += new System.EventHandler(this.StepA_Click);
             // 
             // lblStep3
             // 
@@ -138,7 +139,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblStep3.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.lblStep3.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblStep3.Name = "lblStep3";
-            this.lblStep3.Click += new System.EventHandler(this.lblStep3_Click);
+            this.lblStep3.Click += new System.EventHandler(this.Step3_Click);
             // 
             // lblStepC
             // 
@@ -146,7 +147,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblStepC.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.lblStepC.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblStepC.Name = "lblStepC";
-            this.lblStepC.Click += new System.EventHandler(this.lblStepC_Click);
+            this.lblStepC.Click += new System.EventHandler(this.StepC_Click);
             // 
             // lblStepB
             // 
@@ -154,7 +155,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblStepB.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.lblStepB.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblStepB.Name = "lblStepB";
-            this.lblStepB.Click += new System.EventHandler(this.lblStepB_Click);
+            this.lblStepB.Click += new System.EventHandler(this.StepB_Click);
             // 
             // lblStep2
             // 
@@ -162,7 +163,7 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblStep2.Cursor = System.Windows.Forms.Cursors.Default;
             this.lblStep2.ForeColor = System.Drawing.SystemColors.GrayText;
             this.lblStep2.Name = "lblStep2";
-            this.lblStep2.Click += new System.EventHandler(this.lblStep2_Click);
+            this.lblStep2.Click += new System.EventHandler(this.Step2_Click);
             // 
             // lblStep1
             // 
@@ -190,53 +191,53 @@ namespace SevenUpdate.Sdk.WinForms
             this.lblAbout.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lblAbout.Name = "lblAbout";
             this.lblAbout.TabStop = true;
-            this.lblAbout.Click += new System.EventHandler(this.lblAbout_Click);
-            this.lblAbout.MouseEnter += new System.EventHandler(this.lblAbout_MouseEnter);
-            this.lblAbout.MouseLeave += new System.EventHandler(this.lblAbout_MouseLeave);
+            this.lblAbout.Click += new System.EventHandler(this.About_Click);
+            this.lblAbout.MouseEnter += new System.EventHandler(this.About_MouseEnter);
+            this.lblAbout.MouseLeave += new System.EventHandler(this.About_MouseLeave);
             // 
-            // clSUA
+            // clSua
             // 
-            resources.ApplyResources(this.clSUA, "clSUA");
-            this.clSUA.BackColor = System.Drawing.Color.White;
-            this.clSUA.Description = "This file will allow users to add your Application to Seven Update";
-            this.clSUA.Name = "clSUA";
-            this.clSUA.TabStop = false;
-            this.clSUA.UseVisualStyleBackColor = true;
-            this.clSUA.Click += new System.EventHandler(this.clSUA_Click);
+            resources.ApplyResources(this.clSua, "clSua");
+            this.clSua.BackColor = System.Drawing.Color.White;
+            this.clSua.Description = "This file will allow users to add your software to Seven Update";
+            this.clSua.Name = "clSua";
+            this.clSua.TabStop = false;
+            this.clSua.UseVisualStyleBackColor = true;
+            this.clSua.Click += new System.EventHandler(this.Sua_Click);
             // 
-            // clOpenSUI
+            // clOpenSui
             // 
-            resources.ApplyResources(this.clOpenSUI, "clOpenSUI");
-            this.clOpenSUI.BackColor = System.Drawing.Color.White;
-            this.clOpenSUI.Description = "Use this if you already made a SUI file for your Application";
-            this.clOpenSUI.Name = "clOpenSUI";
-            this.clOpenSUI.TabStop = false;
-            this.clOpenSUI.UseVisualStyleBackColor = true;
-            this.clOpenSUI.Click += new System.EventHandler(this.clOpenSUI_Click);
+            resources.ApplyResources(this.clOpenSui, "clOpenSui");
+            this.clOpenSui.BackColor = System.Drawing.Color.White;
+            this.clOpenSui.Description = "Use this if you already made a SUI file for your Application";
+            this.clOpenSui.Name = "clOpenSui";
+            this.clOpenSui.TabStop = false;
+            this.clOpenSui.UseVisualStyleBackColor = true;
+            this.clOpenSui.Click += new System.EventHandler(this.OpenSui_Click);
             // 
-            // clNewSUI
+            // clNewSui
             // 
-            resources.ApplyResources(this.clNewSUI, "clNewSUI");
-            this.clNewSUI.BackColor = System.Drawing.Color.White;
-            this.clNewSUI.Description = "This will create a new SUI for use with Seven Update";
-            this.clNewSUI.Name = "clNewSUI";
-            this.clNewSUI.TabStop = false;
-            this.clNewSUI.UseVisualStyleBackColor = true;
-            this.clNewSUI.Click += new System.EventHandler(this.clNewSUI_Click);
+            resources.ApplyResources(this.clNewSui, "clNewSui");
+            this.clNewSui.BackColor = System.Drawing.Color.White;
+            this.clNewSui.Description = "This will create a new SUI for use with Seven Update";
+            this.clNewSui.Name = "clNewSui";
+            this.clNewSui.TabStop = false;
+            this.clNewSui.UseVisualStyleBackColor = true;
+            this.clNewSui.Click += new System.EventHandler(this.NewSui_Click);
             // 
             // btnNext
             // 
             resources.ApplyResources(this.btnNext, "btnNext");
             this.btnNext.Name = "btnNext";
             this.btnNext.UseVisualStyleBackColor = true;
-            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            this.btnNext.Click += new System.EventHandler(this.Next_Click);
             // 
             // btnCancel
             // 
             resources.ApplyResources(this.btnCancel, "btnCancel");
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
             // lineSeparator2
             // 
@@ -262,16 +263,17 @@ namespace SevenUpdate.Sdk.WinForms
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.panel);
             this.Controls.Add(this.UpdateBox);
-            this.Controls.Add(this.clSUA);
-            this.Controls.Add(this.clOpenSUI);
-            this.Controls.Add(this.clNewSUI);
+            this.Controls.Add(this.clSua);
+            this.Controls.Add(this.clOpenSui);
+            this.Controls.Add(this.clNewSui);
             this.Controls.Add(this.lblAbout);
             this.Controls.Add(this.pnlButtonSection);
             this.DoubleBuffered = true;
             this.Name = "Main";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.UpdateBox.ResumeLayout(false);
             this.UpdateBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picReloadNotifier)).EndInit();
             this.panel.ResumeLayout(false);
             this.panel.PerformLayout();
             this.pnlButtonSection.ResumeLayout(false);
@@ -284,9 +286,9 @@ namespace SevenUpdate.Sdk.WinForms
 
         System.Windows.Forms.PictureBox picReloadNotifier;
         System.Windows.Forms.Label lblHeading;
-        WindowsUI.CommandLink clNewSUI;
+        WindowsUI.CommandLink clNewSui;
         System.Windows.Forms.TextBox textBox1;
-        WindowsUI.CommandLink clOpenSUI;
+        WindowsUI.CommandLink clOpenSui;
         System.Windows.Forms.Panel panel;
         System.Windows.Forms.Label lblStep3;
         System.Windows.Forms.Label lblStepB;
@@ -294,7 +296,7 @@ namespace SevenUpdate.Sdk.WinForms
         System.Windows.Forms.Label lblStep1;
         System.Windows.Forms.Label lblStepA;
         WindowsUI.OpenFileDialog dlgOpenFile;
-        WindowsUI.CommandLink clSUA;
+        WindowsUI.CommandLink clSua;
         WindowsUI.SaveFileDialog dlgSaveFile;
         private System.Windows.Forms.Label lblAbout;
         private System.Windows.Forms.GroupBox UpdateBox;

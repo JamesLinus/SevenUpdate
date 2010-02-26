@@ -1,20 +1,20 @@
-﻿#region GNU Public License v3
+﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, aka Seven ALive.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
 //  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 #endregion
 
@@ -43,14 +43,9 @@ namespace SevenUpdate.Sdk.Pages
         private int index;
 
         /// <summary>
-        /// Gets the shortcuts of the update
+        /// Gets the UpdateShortcuts of the update
         /// </summary>
-        internal ObservableCollection<Shortcut> UpdateShortcuts { get { return shortcuts; } }
-
-        /// <summary>
-        /// Collection of shortcuts
-        /// </summary>
-        private ObservableCollection<Shortcut> shortcuts { get; set; }
+        internal ObservableCollection<Shortcut> UpdateShortcuts { get; private set; }
 
         #endregion
 
@@ -78,7 +73,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Clears the UI
         /// </summary>
-        /// <param name="clearShortcuts">If True the shortcuts and list will be cleared out</param>
+        /// <param name="clearShortcuts">If True the UpdateShortcuts and list will be cleared out</param>
         internal void ClearUI(bool clearShortcuts)
         {
             if (clearShortcuts)
@@ -105,9 +100,9 @@ namespace SevenUpdate.Sdk.Pages
             var x = lbShortcuts.SelectedIndex;
             if (x < 0)
                 return;
-            if (shortcuts.Count > 0)
+            if (UpdateShortcuts.Count > 0)
             {
-                shortcuts.RemoveAt(x);
+                UpdateShortcuts.RemoveAt(x);
                 lbShortcuts.Items.RemoveAt(x);
             }
 
@@ -129,17 +124,17 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             ClearUI(false);
 
-            txtArgs.Text = shortcuts[x].Arguments;
+            txtArgs.Text = UpdateShortcuts[x].Arguments;
 
-            txtDescription.Text = shortcuts[x].Description[0].Value;
+            txtDescription.Text = UpdateShortcuts[x].Description[0].Value;
 
-            txtIcon.Text = shortcuts[x].Icon;
+            txtIcon.Text = UpdateShortcuts[x].Icon;
 
-            txtLoc.Text = shortcuts[x].Location;
+            txtLoc.Text = UpdateShortcuts[x].Location;
 
-            txtTarget.Text = shortcuts[x].Target;
+            txtTarget.Text = UpdateShortcuts[x].Target;
 
-            switch(shortcuts[x].Action)
+            switch (UpdateShortcuts[x].Action)
             {
                 case ShortcutAction.Add:
                     cbShortcutAction.SelectedIndex = 0;
@@ -150,24 +145,23 @@ namespace SevenUpdate.Sdk.Pages
                 case ShortcutAction.Delete:
                     cbShortcutAction.SelectedIndex = 2;
                     break;
-
             }
         }
 
         /// <summary>
         /// Loads the shortcutItems into the UI
         /// </summary>
-        /// <param name="shortcutItems">The collection of shortcuts to load</param>
+        /// <param name="shortcutItems">The collection of UpdateShortcuts to load</param>
         internal void LoadShortcuts(ObservableCollection<Shortcut> shortcutItems)
         {
-            shortcuts = new ObservableCollection<Shortcut>();
+            UpdateShortcuts = new ObservableCollection<Shortcut>();
 
             for (var x = 0; x < shortcutItems.Count; x++)
-                shortcuts.Add(shortcutItems[x]);
+                UpdateShortcuts.Add(shortcutItems[x]);
 
             lbShortcuts.Items.Clear();
 
-            for (var x = 0; x < shortcuts.Count; x++)
+            for (var x = 0; x < UpdateShortcuts.Count; x++)
                 lbShortcuts.Items.Add(Program.RM.GetString("Shortcut") + " " + (x + 1));
             if (lbShortcuts.Items.Count <= 0)
                 return;
@@ -183,8 +177,8 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         private void SaveShortcut()
         {
-            if (shortcuts == null)
-                shortcuts = new ObservableCollection<Shortcut>();
+            if (UpdateShortcuts == null)
+                UpdateShortcuts = new ObservableCollection<Shortcut>();
 
             var shortcut = new Shortcut {Arguments = txtArgs.Text};
 
@@ -210,21 +204,20 @@ namespace SevenUpdate.Sdk.Pages
                 case 2:
                     shortcut.Action = ShortcutAction.Delete;
                     break;
-
             }
 
 
-            if (index > -1 && shortcuts.Count > 0)
+            if (index > -1 && UpdateShortcuts.Count > 0)
             {
-                shortcuts.RemoveAt(index);
+                UpdateShortcuts.RemoveAt(index);
 
-                shortcuts.Insert(index, shortcut);
+                UpdateShortcuts.Insert(index, shortcut);
                 lbShortcuts.Items[index] = Program.RM.GetString("Shortcut") + " " + (lbShortcuts.SelectedIndex + 1);
                 lbShortcuts.SelectedIndex = index;
             }
             else
             {
-                shortcuts.Add(shortcut);
+                UpdateShortcuts.Add(shortcut);
                 lbShortcuts.Items.Add(Program.RM.GetString("Shortcut") + " " + (lbShortcuts.Items.Count + 1));
                 lbShortcuts.SelectedIndex = lbShortcuts.Items.Count - 1;
             }
@@ -238,7 +231,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Buttons
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             if (txtLoc.Text.Length > 0 && (txtTarget.Text.Length > 0 || cbShortcutAction.SelectedIndex == 2))
             {
@@ -255,13 +248,13 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Context Menu
 
-        private void tmiAddShortcut_Click(object sender, EventArgs e)
+        private void AddShortcut_Click(object sender, EventArgs e)
         {
             lbShortcuts.SelectedIndex = -1;
             AddShortcut();
         }
 
-        private void tmiDeleteShortcut_Click(object sender, EventArgs e)
+        private void DeleteShortcut_Click(object sender, EventArgs e)
         {
             DeleteShortcut();
         }
@@ -270,7 +263,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Labels
 
-        private void lblBrowseLoc_Click(object sender, EventArgs e)
+        private void BrowseLoc_Click(object sender, EventArgs e)
         {
             dlgOpenFile.FileName = null;
 
@@ -280,7 +273,7 @@ namespace SevenUpdate.Sdk.Pages
 
             dlgOpenFile.DereferenceLinks = false;
 
-            dlgOpenFile.Filter = "Shortcut files|*.lnk";
+            dlgOpenFile.Filter = @"Shortcut files|*.lnk";
 
             if (dlgOpenFile.ShowDialog() != DialogResult.OK)
                 return;
@@ -289,7 +282,7 @@ namespace SevenUpdate.Sdk.Pages
             txtLoc.Text = Base.Base.Replace(txtLoc.Text, AppInfo.ApplicationDirectory, "[AppDir]");
         }
 
-        private void lblBrowseIcon_Click(object sender, EventArgs e)
+        private void BrowseIcon_Click(object sender, EventArgs e)
         {
             dlgOpenFile.FileName = null;
             dlgOpenFile.Filter = null;
@@ -309,7 +302,7 @@ namespace SevenUpdate.Sdk.Pages
             txtIcon.Text = Base.Base.Replace(txtIcon.Text, AppInfo.ApplicationDirectory, "[AppDir]");
         }
 
-        private void lblBrowseTarget_Click(object sender, EventArgs e)
+        private void BrowseTarget_Click(object sender, EventArgs e)
         {
             dlgOpenFile.FileName = null;
             dlgOpenFile.Filter = null;
@@ -332,17 +325,17 @@ namespace SevenUpdate.Sdk.Pages
 
             txtTarget.Text = Base.Base.Replace(txtTarget.Text, AppInfo.ApplicationDirectory, "[AppDir]");
 
-            txtIcon.Text = txtTarget.Text + ",0";
+            txtIcon.Text = txtTarget.Text + @",0";
         }
 
-        private void lblValidateIcon_Click(object sender, EventArgs e)
+        private void ValidateIcon_Click(object sender, EventArgs e)
         {
             txtIcon.Text = Base.Base.ConvertPath(txtIcon.Text, false, Main.Is64Bit);
 
             txtIcon.Text = Base.Base.Replace(txtIcon.Text, AppInfo.ApplicationDirectory, "[AppDir]");
         }
 
-        private void lblValidateShortcutLoc_Click(object sender, EventArgs e)
+        private void ValidateShortcutLoc_Click(object sender, EventArgs e)
         {
             txtLoc.Text = Base.Base.ConvertPath(txtLoc.Text, false, Main.Is64Bit);
 
@@ -352,14 +345,14 @@ namespace SevenUpdate.Sdk.Pages
                 MessageBox.Show(Program.RM.GetString("ShortcutNotValid"));
         }
 
-        private void lblValidateTarget_Click(object sender, EventArgs e)
+        private void ValidateTarget_Click(object sender, EventArgs e)
         {
             txtTarget.Text = Base.Base.ConvertPath(txtTarget.Text, false, Main.Is64Bit);
 
             txtTarget.Text = Base.Base.Replace(txtTarget.Text, AppInfo.ApplicationDirectory, "[AppDir]");
         }
 
-        private void lbShortcuts_SelectedIndexChanged(object sender, EventArgs e)
+        private void Shortcuts_SelectedIndexChanged(object sender, EventArgs e)
         {
             index = lbShortcuts.SelectedIndex;
 
@@ -389,7 +382,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region lbShortcuts
 
-        private void lbShortcuts_MouseDown(object sender, MouseEventArgs e)
+        private void Shortcuts_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
                 return;
@@ -410,7 +403,7 @@ namespace SevenUpdate.Sdk.Pages
             cmsMenu.Show(MousePosition);
         }
 
-        private void lbShortcuts_KeyDown(object sender, KeyEventArgs e)
+        private void Shortcuts_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Delete)
                 DeleteShortcut();
@@ -418,7 +411,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void cbShortcutAction_SelectedIndexChanged(object sender, EventArgs e)
+        private void ShortcutAction_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbShortcutAction.SelectedIndex == 2)
             {
