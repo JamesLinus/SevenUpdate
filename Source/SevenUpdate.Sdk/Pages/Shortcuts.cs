@@ -154,6 +154,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="shortcutItems">The collection of UpdateShortcuts to load</param>
         internal void LoadShortcuts(ObservableCollection<Shortcut> shortcutItems)
         {
+            if (shortcutItems == null)
+                return;
+
             UpdateShortcuts = new ObservableCollection<Shortcut>();
 
             for (var x = 0; x < shortcutItems.Count; x++)

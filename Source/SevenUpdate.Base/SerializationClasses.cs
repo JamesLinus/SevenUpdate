@@ -607,7 +607,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The hive of the current registry item
         /// </summary>
-        [ProtoMember(2), XmlAttribute("hive")]
+        [ProtoMember(2, IsRequired = true), XmlAttribute("hive")]
         public RegistryHive Hive { get; set; }
 
         /// <summary>

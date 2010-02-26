@@ -185,13 +185,12 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         internal void LoadRegistryItems(ObservableCollection<RegistryItem> updateRegistryItems)
         {
+            if (updateRegistryItems == null)
+                return;
             UpdateRegistry = new ObservableCollection<RegistryItem>();
 
-            if (updateRegistryItems != null)
-            {
                 for (var x = 0; x < updateRegistryItems.Count; x++)
                     UpdateRegistry.Add(updateRegistryItems[x]);
-            }
 
             lbRegistry.Items.Clear();
 

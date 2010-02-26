@@ -190,6 +190,9 @@ namespace SevenUpdate.Sdk.Pages
         /// </summary>
         internal void LoadFiles(ObservableCollection<UpdateFile> fileItems)
         {
+            if (fileItems == null)
+                return;
+
             UpdateFiles = new ObservableCollection<UpdateFile>();
 
             for (var x = 0; x < fileItems.Count; x++)
