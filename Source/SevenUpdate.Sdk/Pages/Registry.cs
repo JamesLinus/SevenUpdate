@@ -189,8 +189,8 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             UpdateRegistry = new ObservableCollection<RegistryItem>();
 
-                for (var x = 0; x < updateRegistryItems.Count; x++)
-                    UpdateRegistry.Add(updateRegistryItems[x]);
+            for (var x = 0; x < updateRegistryItems.Count; x++)
+                UpdateRegistry.Add(updateRegistryItems[x]);
 
             lbRegistry.Items.Clear();
 

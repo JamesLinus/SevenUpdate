@@ -1,23 +1,3 @@
-#region GNU Public License v3
-
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
-// This file is part of Seven Update.
-//  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
 #region
 
 using System;
@@ -59,20 +39,16 @@ namespace SharpBits.Base
         StaticCloaking = 0x20,
         DynamicCloaking = 0x40,
         AnyAuthority = 0x80,
-        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")]
-        MakeFullSIC = 0x100,
+        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")] MakeFullSIC = 0x100,
         Default = 0x800,
         SecureRefs = 0x02,
         AccessControl = 0x04,
-        [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase", MessageId = "Member")]
-        AppID = 0x08,
+        [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase", MessageId = "Member")] AppID = 0x08,
         Dynamic = 0x10,
-        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")]
-        RequireFullSIC = 0x200,
+        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")] RequireFullSIC = 0x200,
         AutoImpersonate = 0x400,
         NoCustomMarshal = 0x2000,
-        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")]
-        DisableAAA = 0x1000
+        [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member")] DisableAAA = 0x1000
     }
 
     public enum BitsVersion
@@ -94,7 +70,8 @@ namespace SharpBits.Base
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
-        internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long cbName, StringBuilder domainName, ref long cbDomainName, ref int psUse);
+        internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long cbName, StringBuilder domainName, ref long cbDomainName,
+                                                      ref int psUse);
 
         [DllImport("ole32.dll", CharSet = CharSet.Auto)]
         public static extern int CoInitializeSecurity(IntPtr pVoid, int cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, RpcAuthnLevel level, RpcImpLevel impers, IntPtr pAuthList,
@@ -122,7 +99,10 @@ namespace SharpBits.Base
             version = GetBitsVersion();
         }
 
-        internal static BitsVersion BITSVersion { get { return version; } }
+        internal static BitsVersion BITSVersion
+        {
+            get { return version; }
+        }
 
         internal static string GetName(string sid)
         {
@@ -136,9 +116,7 @@ namespace SharpBits.Base
             if (NativeMethods.ConvertStringSidToSidW(sid, ref ptrSID))
             {
                 if (NativeMethods.LookupAccountSidW(string.Empty, ptrSID, userName, ref cbUserName, domainName, ref cbDomainName, ref psUse))
-                {
                     return string.Concat(domainName.ToString(), "\\", userName.ToString());
-                }
             }
             return string.Empty;
         }
@@ -183,15 +161,11 @@ namespace SharpBits.Base
                     return BitsVersion.Bits0_0;
                 var buffer = new byte[size];
                 if (!NativeMethods.GetFileVersionInfo(fileName, handle, size, buffer))
-                {
                     return BitsVersion.Bits0_0;
-                }
                 IntPtr subBlock;
                 uint len;
                 if (!NativeMethods.VerQueryValue(buffer, @"\VarFileInfo\Translation", out subBlock, out len))
-                {
                     return BitsVersion.Bits0_0;
-                }
 
                 int block1 = Marshal.ReadInt16(subBlock);
                 int block2 = Marshal.ReadInt16((IntPtr) ((int) subBlock + 2));
@@ -199,9 +173,7 @@ namespace SharpBits.Base
 
                 string versionInfo;
                 if (!NativeMethods.VerQueryValue(buffer, spv, out versionInfo, out len))
-                {
                     return BitsVersion.Bits0_0;
-                }
 
                 string[] versionNumbers = versionInfo.Split('.');
 

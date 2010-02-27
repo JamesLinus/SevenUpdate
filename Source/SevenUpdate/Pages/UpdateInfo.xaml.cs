@@ -280,7 +280,7 @@ namespace SevenUpdate.Pages
 
             var items = new Binding {Source = selectedUpdates};
             listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
-            selectedUpdates.CollectionChanged += SelectedUpdatesCollectionChanged;
+            selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
             var myView = (CollectionView) CollectionViewSource.GetDefaultView(listView.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
             myView.GroupDescriptions.Add(groupDescription);
@@ -348,7 +348,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates back to the Main page
         /// </summary>
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             if (CanceledSelectionEventHandler != null && AreHiddenUpdates)
                 CanceledSelectionEventHandler(this, new EventArgs());
@@ -358,7 +358,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Saves the selection of updates and navigates back to the Main page
         /// </summary>
-        private void OkClick(object sender, RoutedEventArgs e)
+        private void Ok_Click(object sender, RoutedEventArgs e)
         {
             IterateVisualChild(listView);
             SaveUpdateSelection();
@@ -372,7 +372,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Underlines the text when mouse is over the <see cref="TextBlock" />
         /// </summary>
-        private void TextBlockMouseEnter(object sender, MouseEventArgs e)
+        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
             var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = TextDecorations.Underline;
@@ -381,7 +381,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
         /// </summary>
-        private void TextBlockMouseLeave(object sender, MouseEventArgs e)
+        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
             var textBlock = ((TextBlock) sender);
             textBlock.TextDecorations = null;
@@ -390,7 +390,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Launches the More Information <c>Url</c> of the update
         /// </summary>
-        private void UrlInfoMouseDown(object sender, MouseButtonEventArgs e)
+        private void UrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -404,7 +404,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Launches the Help <c>Url</c> of the update
         /// </summary>
-        private void UrlHelpMouseDown(object sender, MouseButtonEventArgs e)
+        private void UrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -420,7 +420,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Loads the updates found into the UI
         /// </summary>
-        private void PageLoaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddUpdates();
             listView.SelectedIndex = 0;
@@ -431,7 +431,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Updates the <see cref="CollectionView" /> when the <c>updateHistory</c> collection changes
         /// </summary>
-        private void SelectedUpdatesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
@@ -443,7 +443,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the selected update details
         /// </summary>
-        private void MenuItemMouseClick(object sender, RoutedEventArgs e)
+        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
             var appIndex = indices[listView.SelectedIndex].AppIndex;
@@ -486,7 +486,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the selected update details in the sidebar when the selection changes
         /// </summary>
-        private void ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listView.SelectedIndex == -1)
                 HideLabels();
@@ -546,7 +546,7 @@ namespace SevenUpdate.Pages
                 expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Important");
         }
 
-        private void CheckBoxIsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void CheckBoxIsEnabled_Changed(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (((bool) e.NewValue) == false)
             {

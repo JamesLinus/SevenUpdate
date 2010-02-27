@@ -192,7 +192,7 @@ namespace SevenUpdate.Sdk.Pages
             resources.ApplyResources(this.btnSave, "btnSave");
             this.btnSave.Name = "btnSave";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.SaveClick);
+            this.btnSave.Click += new System.EventHandler(this.Save_Click);
             // 
             // label6
             // 

@@ -43,9 +43,7 @@ namespace SharpBits.Base.File
                 uint fetchedCount;
                 fileList.Next(1, out currentFile, out fetchedCount);
                 if (fetchedCount == 1)
-                {
                     Add(new BitsFile(job, currentFile));
-                }
             }
         }
 

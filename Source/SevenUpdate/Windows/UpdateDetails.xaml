@@ -11,8 +11,8 @@
 		</StackPanel>
 		<TextBlock FontWeight="Normal" Grid.Row="6" Name="tbUpdateDescription" TextWrapping="Wrap" Grid.Column="1" Width="575" Margin="0,5" Padding="5" />
 		<TextBlock FontWeight="Normal" Grid.Row="7" Name="textBlock3" Padding="5" Text="More information:" Grid.Column="1" Grid.RowSpan="2" Height="25.96" />
-		<TextBlock FontWeight="Normal" Grid.Row="9" Name="tbMoreInfoUrl" Padding="5" Text="Url HERE" Grid.Column="1" Foreground="#FF0066CC" MouseDown="MoreInfoUrlMouseDown" Cursor="Hand" HorizontalAlignment="Left" />
+		<TextBlock FontWeight="Normal" Grid.Row="9" Name="tbMoreInfoUrl" Padding="5" Text="Url HERE" Grid.Column="1" Foreground="#FF0066CC" MouseDown="MoreInfoUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" />
 		<TextBlock FontWeight="Normal" Grid.Row="10" Name="textBlock4" Padding="5" Text="Help and Support:" Grid.Column="1" Margin="0,10,0,0" />
-		<TextBlock FontWeight="Normal" Grid.Row="10" Name="tbHelpUrl" Padding="5" Text="Url HERE" Grid.Column="1" Foreground="#FF0066CC" MouseDown="HelpUrlMouseDown" Cursor="Hand" HorizontalAlignment="Left" />
+		<TextBlock FontWeight="Normal" Grid.Row="10" Name="tbHelpUrl" Padding="5" Text="Url HERE" Grid.Column="1" Foreground="#FF0066CC" MouseDown="HelpUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" />
 	</StackPanel>
 </Window>

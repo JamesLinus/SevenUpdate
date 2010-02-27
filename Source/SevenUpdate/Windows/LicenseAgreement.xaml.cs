@@ -54,7 +54,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// List of updates that have EULAS
         /// </summary>
-        private Collection<EULA> licenseInformation;
+        private Collection<Eula> licenseInformation;
 
         /// <summary>
         /// An array of the strings that consist of the software licenses
@@ -64,7 +64,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Data containing the update's license agreement
         /// </summary>
-        private struct EULA
+        private struct Eula
         {
             /// <summary>
             /// The index of the application of the update
@@ -118,7 +118,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void GetLicenseAgreements()
         {
-            licenseInformation = new Collection<EULA>();
+            licenseInformation = new Collection<Eula>();
 
             if (App.Applications == null)
                 return;
@@ -130,7 +130,7 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new EULA
+                    var sla = new Eula
                                   {
                                       LicenseUrl = App.Applications[x].Updates[y].LicenseUrl,
                                       Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name),
@@ -220,7 +220,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
             Close();
@@ -229,7 +229,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Downloads the EULA's when the window is loaded
         /// </summary>
-        private void WindowLoaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DownloadLicenseInformation();
         }
@@ -237,7 +237,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Sets the IsEnabled property of btnAction depending if Accept is selected
         /// </summary>
-        private void AcceptChecked(object sender, RoutedEventArgs e)
+        private void Accept_Checked(object sender, RoutedEventArgs e)
         {
             btnAction.IsEnabled = true;
             imgAdminShield.Source = shield;
@@ -246,7 +246,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Sets the IsEnabled property of btnAction depending if Decline selected
         /// </summary>
-        private void DeclineChecked(object sender, RoutedEventArgs e)
+        private void Decline_Checked(object sender, RoutedEventArgs e)
         {
             if (App.Applications.Count != 1)
             {
@@ -263,7 +263,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Displays the next license agreement or returns
         /// </summary>
-        private void ActionClick(object sender, RoutedEventArgs e)
+        private void Action_Click(object sender, RoutedEventArgs e)
         {
             if (rbDecline.IsChecked == true)
             {

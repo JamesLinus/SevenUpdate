@@ -14,10 +14,19 @@ namespace SharpBits.Base.File
             fileRange = new BG_FILE_RANGE {InitialOffset = initialOffset, Length = length};
         }
 
-        public ulong InitialOffset { get { return fileRange.InitialOffset; } }
+        public ulong InitialOffset
+        {
+            get { return fileRange.InitialOffset; }
+        }
 
-        public ulong Length { get { return fileRange.Length; } }
+        public ulong Length
+        {
+            get { return fileRange.Length; }
+        }
 
-        internal BG_FILE_RANGE _BG_FILE_RANGE { get { return fileRange; } }
+        internal BG_FILE_RANGE _BG_FILE_RANGE
+        {
+            get { return fileRange; }
+        }
     }
 }

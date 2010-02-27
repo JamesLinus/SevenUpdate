@@ -127,10 +127,10 @@ namespace SevenUpdate
                 Directory.CreateDirectory(Base.Base.UserStore);
                 RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
                 Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
-                Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+                Base.Base.SerializationErrorEventHandler += Base_SerializationError_EventHandler;
                 foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
                 {
-                    AddSUA(t);
+                    AddSua(t);
                     return;
                 }
                 if (!createdNew)
@@ -164,7 +164,7 @@ namespace SevenUpdate
         /// <summary>
         /// Occurs when there is a serialization method. This is a temporary method for testing purposes and will not included in the public release.
         /// </summary>
-        private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
+        private static void Base_SerializationError_EventHandler(object sender, SerializationErrorEventArgs e)
         {
             if (e.File == Base.Base.AppsFile)
             {
@@ -184,7 +184,7 @@ namespace SevenUpdate
         /// Adds an Application for use with Seven Update
         /// </summary>
         /// <param name="suaLoc">the location of the SUA file</param>
-        private static void AddSUA(string suaLoc)
+        private static void AddSua(string suaLoc)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace SevenUpdate
                                         MessageBoxImage.Question) == MessageBoxResult.Yes)
                     {
                         sul.Add(sua);
-                        Admin.AddSUA(sul);
+                        Admin.AddSua(sul);
                     }
                 }
             }

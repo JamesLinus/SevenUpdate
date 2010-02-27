@@ -23,13 +23,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.GetMaximumDownloadTime(out maxTime);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -42,13 +38,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.SetMaximumDownloadTime(value);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -65,13 +57,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.GetPeerCachingFlags(out peerCaching);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -84,13 +72,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.SetPeerCachingFlags((PEER_CACHING_FLAGS) value);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -107,13 +91,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.GetOwnerIntegrityLevel(out integrityLevel);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -131,13 +111,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                    {
                         job4.GetOwnerElevationState(out elevated);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
                 }
                 catch (COMException exception)
                 {

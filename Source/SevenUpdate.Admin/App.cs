@@ -278,8 +278,8 @@ namespace SevenUpdate.Admin
                                     var app = new Application();
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates");
                                     NotifyIcon.Visible = true;
-                                    Search.SearchDoneEventHandler += Search_SearchDoneEventHandler;
-                                    Search.ErrorOccurredEventHandler += Search_ErrorOccurredEventHandler;
+                                    Search.SearchDoneEventHandler += Search_SearchDone_EventHandler;
+                                    Search.ErrorOccurredEventHandler += Search_ErrorOccurred_EventHandler;
                                     Search.SearchForUpdates(Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile));
 
                                     app.Run();
@@ -477,7 +477,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
-        private static void Search_SearchDoneEventHandler(object sender, SearchCompletedEventArgs e)
+        private static void Search_SearchDone_EventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
             {
@@ -496,7 +496,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         /// Runs when there is an error searching for updates
         /// </summary>
-        private static void Search_ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e)
+        private static void Search_ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
         {
             if (e.Type == ErrorType.FatalNetworkError)
                 ShutdownApp();

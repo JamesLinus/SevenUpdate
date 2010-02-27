@@ -15,10 +15,19 @@ namespace SharpBits.Base.Job
             this.jobTimes = jobTimes;
         }
 
-        public DateTime CreationTime { get { return Utils.FileTime2DateTime(jobTimes.CreationTime); } }
+        public DateTime CreationTime
+        {
+            get { return Utils.FileTime2DateTime(jobTimes.CreationTime); }
+        }
 
-        public DateTime ModificationTime { get { return Utils.FileTime2DateTime(jobTimes.ModificationTime); } }
+        public DateTime ModificationTime
+        {
+            get { return Utils.FileTime2DateTime(jobTimes.ModificationTime); }
+        }
 
-        public DateTime TransferCompletionTime { get { return Utils.FileTime2DateTime(jobTimes.TransferCompletionTime); } }
+        public DateTime TransferCompletionTime
+        {
+            get { return Utils.FileTime2DateTime(jobTimes.TransferCompletionTime); }
+        }
     }
 }

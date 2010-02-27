@@ -1,23 +1,3 @@
-#region GNU Public License v3
-
-// Copyright 2007, 2008 Robert Baker, aka Seven ALive.
-// This file is part of Seven Update.
-//  
-//     Seven Update is free software: you can redistribute it and/or modify
-//     it under the terms of the GNU General Public License as published by
-//     the Free Software Foundation, either version 3 of the License, or
-//     (at your option) any later version.
-// 
-//     Seven Update is distributed in the hope that it will be useful,
-//     but WITHOUT ANY WARRANTY; without even the implied warranty of
-//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//     GNU General Public License for more details.
-//  
-//    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
 #region
 
 using System;
@@ -105,13 +85,22 @@ namespace SharpBits.Base
 
         #endregion
 
-        public BitsJobs Jobs { get { return jobs; } }
+        public BitsJobs Jobs
+        {
+            get { return jobs; }
+        }
 
-        internal IBackgroundCopyManager BackgroundCopyManager { get { return manager; } }
+        internal IBackgroundCopyManager BackgroundCopyManager
+        {
+            get { return manager; }
+        }
 
         #region util methods
 
-        public BitsVersion BitsVersion { get { return Utils.BITSVersion; } }
+        public BitsVersion BitsVersion
+        {
+            get { return Utils.BITSVersion; }
+        }
 
         #endregion
 
@@ -130,7 +119,10 @@ namespace SharpBits.Base
 
         #region internal notification handling
 
-        internal BitsNotification NotificationHandler { get { return notificationHandler; } }
+        internal BitsNotification NotificationHandler
+        {
+            get { return notificationHandler; }
+        }
 
         internal void NotifyOnJobRemoval(BitsJob job)
         {
@@ -151,17 +143,41 @@ namespace SharpBits.Base
 
         #region public events
 
-        public event EventHandler<NotificationEventArgs> OnJobModified { add { onJobModified += value; } remove { onJobModified -= value; } }
+        public event EventHandler<NotificationEventArgs> OnJobModified
+        {
+            add { onJobModified += value; }
+            remove { onJobModified -= value; }
+        }
 
-        public event EventHandler<NotificationEventArgs> OnJobTransferred { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
+        public event EventHandler<NotificationEventArgs> OnJobTransferred
+        {
+            add { onJobTransfered += value; }
+            remove { onJobTransfered -= value; }
+        }
 
-        public event EventHandler<ErrorNotificationEventArgs> OnJobError { add { onJobErrored += value; } remove { onJobErrored -= value; } }
+        public event EventHandler<ErrorNotificationEventArgs> OnJobError
+        {
+            add { onJobErrored += value; }
+            remove { onJobErrored -= value; }
+        }
 
-        public event EventHandler<NotificationEventArgs> OnJobAdded { add { onJobAdded += value; } remove { onJobAdded -= value; } }
+        public event EventHandler<NotificationEventArgs> OnJobAdded
+        {
+            add { onJobAdded += value; }
+            remove { onJobAdded -= value; }
+        }
 
-        public event EventHandler<NotificationEventArgs> OnJobRemoved { add { onJobRemoved += value; } remove { onJobRemoved -= value; } }
+        public event EventHandler<NotificationEventArgs> OnJobRemoved
+        {
+            add { onJobRemoved += value; }
+            remove { onJobRemoved -= value; }
+        }
 
-        public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError { add { onInterfaceError += value; } remove { onInterfaceError -= value; } }
+        public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
+        {
+            add { onInterfaceError += value; }
+            remove { onInterfaceError -= value; }
+        }
 
         #endregion
 
@@ -184,20 +200,15 @@ namespace SharpBits.Base
 
         public BitsJobs EnumJobs(JobOwner jobOwner)
         {
-            
             if (manager == null)
                 return null;
             CurrentOwner = jobOwner;
             IEnumBackgroundCopyJobs jobList;
             manager.EnumJobs((UInt32) jobOwner, out jobList);
             if (jobs == null)
-            {
                 jobs = new BitsJobs(this, jobList);
-            }
             else
-            {
                 jobs.Update(jobList);
-            }
 
             return jobs;
         }
@@ -234,9 +245,7 @@ namespace SharpBits.Base
                 if (disposing)
                 {
                     foreach (BitsJob job in Jobs.Values)
-                    {
                         job.Dispose();
-                    }
 
                     jobs.Clear();
                     jobs.Dispose();

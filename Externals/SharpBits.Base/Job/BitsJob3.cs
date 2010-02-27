@@ -17,7 +17,7 @@ namespace SharpBits.Base.Job
 
         #region IBackgroundCopyJob3
 
-        public FileACLFlags FileACLFlags
+        public FileACLFlags FileAclFlags
         {
             get
             {
@@ -25,13 +25,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job3 != null) // only supported from IBackgroundCopyJob3 and above
-                    {
                         job3.GetFileACLFlags(out flags);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob3");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -44,13 +40,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job3 != null) // only supported from IBackgroundCopyJob3 and above
-                    {
                         job3.SetFileACLFlags((FILE_ACL_FLAGS) value);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob3");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -64,13 +56,9 @@ namespace SharpBits.Base.Job
             try
             {
                 if (job3 != null) // only supported from IBackgroundCopyJob3 and above
-                {
                     job3.ReplaceRemotePrefix(oldPrefix, newPrefix);
-                }
                 else
-                {
                     throw new NotSupportedException("IBackgroundCopyJob3");
-                }
             }
             catch (COMException exception)
             {
@@ -86,15 +74,11 @@ namespace SharpBits.Base.Job
                 {
                     var ranges = new BG_FILE_RANGE[fileRanges.Count];
                     for (int i = 0; i < fileRanges.Count; i++)
-                    {
                         ranges[i] = fileRanges[i]._BG_FILE_RANGE;
-                    }
                     job3.AddFileWithRanges(remoteName, localName, (uint) fileRanges.Count, ranges);
                 }
                 else
-                {
                     throw new NotSupportedException("IBackgroundCopyJob3");
-                }
             }
             catch (COMException exception)
             {

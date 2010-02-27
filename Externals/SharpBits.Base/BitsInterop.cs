@@ -22,8 +22,8 @@ namespace SharpBits.Base
     /// <summary>
     /// Entry point to the BITS infrastructure.
     /// </summary>
-    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute, SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
-	
+    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute,
+     SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     internal class BackgroundCopyManager
     {
     }
@@ -36,7 +36,6 @@ namespace SharpBits.Base
     /// and to retrieve individual jobs from the queue.
     /// </summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C"), ComImportAttribute]
-	
     internal interface IBackgroundCopyManager
     {
         /// <summary>
@@ -81,7 +80,6 @@ namespace SharpBits.Base
     /// instead of polling for the status of the job.
     /// </summary>
     [ComImport, Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-	
     internal interface IBackgroundCopyCallback
     {
         /// <summary>
@@ -115,7 +113,6 @@ namespace SharpBits.Base
     /// job, and to start and stop the job.
     /// </summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("37668D37-507E-4160-9316-26306D150B12"), ComImportAttribute]
-	
     internal interface IBackgroundCopyJob
     {
         /// <summary>
@@ -325,7 +322,8 @@ namespace SharpBits.Base
         /// <param name="pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name="pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name="pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
+                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         /// Changes the ownership of the job to the current user
@@ -341,7 +339,6 @@ namespace SharpBits.Base
     /// Use the IBackgroundCopyJob2 interface to retrieve reply data from an upload-reply job, determine the progress of the reply data transfer to the client, request command line execution, and provide credentials for proxy and remote server authentication requests.
     /// </summary>
     [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("54B50739-686F-45EB-9DFF-D6A9A0FAA9AF")]
-	
     internal interface IBackgroundCopyJob2
     {
         /// <summary>
@@ -551,7 +548,8 @@ namespace SharpBits.Base
         /// <param name="pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name="pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name="pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
+                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         /// Changes the ownership of the job to the current user
@@ -619,7 +617,6 @@ namespace SharpBits.Base
     /// Use the IBackgroundCopyJob3 interface to download ranges of a file and change the prefix of a remote file name.
     /// </summary>
     [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("443C8934-90FF-48ED-BCDE-26F5C7450042")]
-	
     internal interface IBackgroundCopyJob3
     {
         /// <summary>
@@ -829,7 +826,8 @@ namespace SharpBits.Base
         /// <param name="pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name="pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name="pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
+                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         /// Changes the ownership of the job to the current user
@@ -906,7 +904,6 @@ namespace SharpBits.Base
     /// Use this interface to enable peer caching, restrict download time, and inspect user token characteristics.
     /// </summary>
     [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("BC2C92DF-4972-4FA7-B8A0-444E127BA670")]
-	
     internal interface IBackgroundCopyJob4
     {
         #region inherited
@@ -1118,7 +1115,8 @@ namespace SharpBits.Base
         /// <param name="pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name="pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name="pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
+                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         /// Changes the ownership of the job to the current user
@@ -1211,7 +1209,6 @@ namespace SharpBits.Base
     /// can proceed
     /// </summary>
     [GuidAttribute("19C613A0-FCB8-4F28-81AE-897C3D078F81"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
-	
     internal interface IBackgroundCopyError
     {
         /// <summary>
@@ -1260,7 +1257,6 @@ namespace SharpBits.Base
     /// interface pointer, call the IBackgroundCopyManager::EnumJobs method
     /// </summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD"), ComImportAttribute]
-	
     internal interface IEnumBackgroundCopyJobs
     {
         /// <summary>
@@ -1306,7 +1302,6 @@ namespace SharpBits.Base
     /// pointer, call the IBackgroundCopyJob::EnumFiles method
     /// </summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
-	
     internal interface IEnumBackgroundCopyFiles
     {
         /// <summary>
@@ -1353,7 +1348,6 @@ namespace SharpBits.Base
     ///  information
     /// </summary>
     [GuidAttribute("01B7BD23-FB88-4A77-8490-5891D3E4653A"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
-	
     internal interface IBackgroundCopyFile
     {
         /// <summary>
@@ -1386,7 +1380,6 @@ namespace SharpBits.Base
     ///  ranges to download
     /// </summary>
     [GuidAttribute("83E81B93-0873-474D-8A8C-F2018B1A939C"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
-	
     internal interface IBackgroundCopyFile2
     {
         /// <summary>
@@ -1695,14 +1688,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Identifies whether to use the credentials for a proxy or server authentication request. For a list of values, see the BG_AUTH_TARGET enumeration.
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        public BG_AUTH_TARGET Target;
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] public BG_AUTH_TARGET Target;
 
         /// <summary>
         /// Identifies the scheme to use for authentication (for example, Basic or NTLM). For a list of values, see the BG_AUTH_SCHEME enumeration. 
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
-        public BG_AUTH_SCHEME Scheme;
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")] public BG_AUTH_SCHEME Scheme;
 
         /// <summary>
         /// Identifies the credentials to use for the specified authentication scheme. For details, see the BG_AUTH_CREDENTIALS_UNION union.
@@ -1739,16 +1730,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Null-terminated string that contains the user name to authenticate. The user name is limited to 300 characters, not including the null terminator. The format of the user name depends on the authentication scheme requested. For example, for Basic, NTLM, and Negotiate authentication, the user name is of the form "domain\user name" or "user name". For Passport authentication, the user name is an e-mail address. If NULL, default credentials for this session context are used. 
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields"), MarshalAs(UnmanagedType.LPWStr)]
-		
-        internal string UserName;
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields"), MarshalAs(UnmanagedType.LPWStr)] internal string UserName;
 
         /// <summary>
         /// Null-terminated string that contains the password in clear-text. The password is limited to 300 characters, not including the null terminator. The password can be blank. Set to NULL if UserName is NULL. BITS encrypts the password before persisting the job if a network disconnect occurs or the user logs off. 
         /// </summary>
-        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields"), MarshalAs(UnmanagedType.LPWStr)]
-		
-        internal string Password;
+        [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields"), MarshalAs(UnmanagedType.LPWStr)] internal string Password;
     }
 
     #endregion
@@ -1850,14 +1837,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Remote Name for the File
         /// </summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string RemoteName;
+        [MarshalAs(UnmanagedType.LPWStr)] public string RemoteName;
 
         /// <summary>
         /// Local Name for the file
         /// </summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string LocalName;
+        [MarshalAs(UnmanagedType.LPWStr)] public string LocalName;
     }
 
     #endregion

@@ -71,7 +71,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Launches the More Information Url
         /// </summary>
-        private void MoreInfoUrlMouseDown(object sender, MouseButtonEventArgs e)
+        private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbMoreInfoUrl.Text != null)
                 Process.Start(tbMoreInfoUrl.Text);
@@ -80,7 +80,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         /// Launches the Help Url
         /// </summary>
-        private void HelpUrlMouseDown(object sender, MouseButtonEventArgs e)
+        private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (tbHelpUrl.Text != null)
                 Process.Start(tbHelpUrl.Text);

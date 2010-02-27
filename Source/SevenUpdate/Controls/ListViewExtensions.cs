@@ -100,12 +100,12 @@ namespace SevenUpdate.Controls
             return xRank > yRank ? 1 : (xRank == yRank ? 0 : -1);
         }
 
-        #region Nested type: SUASorter
+        #region Nested type: SuaSorter
 
         /// <summary>
         /// Sorts the SUA class
         /// </summary>
-        internal sealed class SUASorter : ListViewCustomComparer
+        internal sealed class SuaSorter : ListViewCustomComparer
         {
             /// <summary>
             /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
@@ -166,12 +166,12 @@ namespace SevenUpdate.Controls
 
         #endregion
 
-        #region Nested type: SUHSorter
+        #region Nested type: SuhSorter
 
         /// <summary>
         /// Sorts the SUH Class
         /// </summary>
-        internal sealed class SUHSorter : ListViewCustomComparer
+        internal sealed class SuhSorter : ListViewCustomComparer
         {
             /// <summary>
             /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.

@@ -111,7 +111,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SUHSorter());
+            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SuhSorter());
         }
 
         #endregion
@@ -123,7 +123,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Main page
         /// </summary>
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }
@@ -131,7 +131,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Unhides one or more updates and navigates to the Main page
         /// </summary>
-        private void RestoreClick(object sender, RoutedEventArgs e)
+        private void Restore_Click(object sender, RoutedEventArgs e)
         {
             for (var x = 0; x < hiddenUpdates.Count; x++)
             {
@@ -208,7 +208,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the selected update details
         /// </summary>
-        private void ListViewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || listView.SelectedIndex == -1)
                 return;

@@ -64,13 +64,9 @@ namespace SharpBits.Base.File
                 try
                 {
                     if (file2 != null)
-                    {
                         file2.SetRemoteName(value);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyFile2");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -83,20 +79,20 @@ namespace SharpBits.Base.File
         {
             get
             {
-                if (null == this.progress)
+                if (null == progress)
                 {
-                    BG_FILE_PROGRESS progress;
+                    BG_FILE_PROGRESS fileProgress;
                     try
                     {
-                        this.file.GetProgress(out progress);
-                        this.progress = new FileProgress(progress);
+                        file.GetProgress(out fileProgress);
+                        progress = new FileProgress(fileProgress);
                     }
                     catch (COMException exception)
                     {
-                        this.job.PublishException(exception);
+                        job.PublishException(exception);
                     }
                 }
-                return this.progress;
+                return progress;
             }
         }
 

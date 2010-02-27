@@ -415,7 +415,7 @@ namespace SevenUpdate
         /// Adds an application to Seven Update
         /// </summary>
         /// <param name="sul">the list of applications to update</param>
-        internal static void AddSUA(Collection<Sua> sul)
+        internal static void AddSua(Collection<Sua> sul)
         {
             Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
             Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");

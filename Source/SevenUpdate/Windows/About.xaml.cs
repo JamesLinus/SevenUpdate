@@ -20,11 +20,10 @@
 
 #region
 
-using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Navigation;
 
 #endregion
 
@@ -42,33 +41,23 @@ namespace SevenUpdate.Windows
         {
             InitializeComponent();
 
-            var assembly = Assembly.GetExecutingAssembly();
-            var version = assembly.GetName().Version;
-
-            Title = Title + " " + assembly.GetName().Name;
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
 
             tbVersion.Text = version.ToString();
-
-            tbCopyright.Text = "© " + "2007 - " + DateTime.Now.Year + " " + App.RM.GetString("SevenSoftware");
-            tbLicense.Text = assembly.GetName().Name + " " + tbLicense.Text;
         }
 
         /// <summary>
         /// Closes the About window
         /// </summary>
-        private void CloseClick(object sender, RoutedEventArgs e)
+        private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void SupportMouseDown(object sender, MouseButtonEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(tbSupport.Text);
-        }
-
-        private void LicenseMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Process.Start("http://www.gnu.org/licenses/gpl-3.0.txt");
+            Process.Start(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
     }
 }

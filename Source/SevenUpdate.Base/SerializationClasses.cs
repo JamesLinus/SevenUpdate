@@ -67,20 +67,20 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Download and Installs updates automatically
         /// </summary>
-        [ProtoEnum] Install=0,
+        [ProtoEnum] Install = 0,
 
         /// <summary>
         /// Downloads Updates automatically
         /// </summary>
-        [ProtoEnum] Download=1,
+        [ProtoEnum] Download = 1,
 
         /// <summary>
         /// Only checks and notifies the user of updates
         /// </summary>
-        [ProtoEnum] Notify=2,
+        [ProtoEnum] Notify = 2,
 
         /// <summary>No automatic checking</summary>
-        [ProtoEnum] Never=3
+        [ProtoEnum] Never = 3
     }
 
     #endregion
@@ -212,17 +212,17 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Adds a shortcut
         /// </summary>
-        [ProtoEnum] Add=0,
+        [ProtoEnum] Add = 0,
 
         /// <summary>
         /// Deletes a shortcut
         /// </summary>
-        [ProtoEnum] Delete=2,
+        [ProtoEnum] Delete = 2,
 
         /// <summary>
         /// Updates a shortcut only if it exists
         /// </summary>
-        [ProtoEnum] Update=1
+        [ProtoEnum] Update = 1
     }
 
     /// <summary>
@@ -232,37 +232,37 @@ namespace SevenUpdate.Base
     public enum FileAction
     {
         /// <summary>Updates a file</summary>
-        [ProtoEnum] Update=0,
+        [ProtoEnum] Update = 0,
 
         /// <summary>Updates a file, only if it exist</summary>
-        [ProtoEnum] UpdateIfExist=1,
+        [ProtoEnum] UpdateIfExist = 1,
 
         /// <summary>Updates a file, then registers the dll</summary>
-        [ProtoEnum] UpdateThenRegister=2,
+        [ProtoEnum] UpdateThenRegister = 2,
 
         /// <summary>Updates a file, then executes it</summary>
-        [ProtoEnum] UpdateThenExecute=3,
+        [ProtoEnum] UpdateThenExecute = 3,
 
         /// <summary>Compares a file, but does not update it</summary>
-        [ProtoEnum] CompareOnly=4,
+        [ProtoEnum] CompareOnly = 4,
 
         /// <summary>Executes a file, can be on system or be downloaded</summary>
-        [ProtoEnum] Execute=5,
+        [ProtoEnum] Execute = 5,
 
         /// <summary>
         /// Deletes a file
         /// </summary>
-        [ProtoEnum] Delete=6,
+        [ProtoEnum] Delete = 6,
 
         /// <summary>
         /// Executes a file, then deletes it
         /// </summary>
-        [ProtoEnum] ExecuteThenDelete=7,
+        [ProtoEnum] ExecuteThenDelete = 7,
 
         /// <summary>
         /// Unregisteres a dll, then deletes it
         /// </summary>
-        [ProtoEnum] UnregisterThenDelete=8,
+        [ProtoEnum] UnregisterThenDelete = 8,
     }
 
     /// <summary>
@@ -272,16 +272,16 @@ namespace SevenUpdate.Base
     public enum Importance
     {
         /// <summary>Important update</summary>
-        [ProtoEnum] Important=0,
+        [ProtoEnum] Important = 0,
 
         /// <summary>Locale or language</summary>
-        [ProtoEnum] Locale=1,
+        [ProtoEnum] Locale = 1,
 
         /// <summary>Optional update</summary>
-        [ProtoEnum] Optional=2,
+        [ProtoEnum] Optional = 2,
 
         /// <summary>Recommended update</summary>
-        [ProtoEnum] Recommended=3
+        [ProtoEnum] Recommended = 3
     }
 
     /// <summary>
@@ -293,22 +293,22 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Indicates that the update installation failed
         /// </summary>
-        [ProtoEnum] Failed=0,
+        [ProtoEnum] Failed = 0,
 
         /// <summary>
         /// Indicates that the update is hidden
         /// </summary>
-        [ProtoEnum] Hidden=1,
+        [ProtoEnum] Hidden = 1,
 
         /// <summary>
         /// Indicates that the update is visible
         /// </summary>
-        [ProtoEnum] Visible=2,
+        [ProtoEnum] Visible = 2,
 
         /// <summary>
         /// Indicates that the update installation succeeded
         /// </summary>
-        [ProtoEnum] Successful=3
+        [ProtoEnum] Successful = 3
     }
 
     /// <summary>
@@ -319,15 +319,15 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Adds a registry entry to the machine
         /// </summary>
-        [ProtoEnum] Add=0,
+        [ProtoEnum] Add = 0,
         /// <summary>
         /// Deletes a registry key on the machine
         /// </summary>
-        [ProtoEnum] DeleteKey=1,
+        [ProtoEnum] DeleteKey = 1,
         /// <summary>
         /// Deletes a value of a registry key on the machine
         /// </summary>
-        [ProtoEnum] DeleteValue=2
+        [ProtoEnum] DeleteValue = 2
     }
 
     #endregion
@@ -485,15 +485,13 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Gets or Sets a value Indicating if the update is selected (not used in the SDK)
         /// </summary>
-        [XmlIgnore]
-        [ProtoIgnore]
+        [XmlIgnore, ProtoIgnore]
         public bool Selected { get; set; }
 
         /// <summary>
         /// The download size of the update in bytes, not used by the SDK
         /// </summary>
-        [XmlIgnore]
-        [ProtoIgnore]
+        [XmlIgnore, ProtoIgnore]
         public ulong Size { get; set; }
 
         #endregion
@@ -607,7 +605,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The hive of the current registry item
         /// </summary>
-        [ProtoMember(2, IsRequired = true), XmlAttribute("hive")]
+        [ProtoMember(2), XmlAttribute("hive"), DefaultValue(RegistryHive.LocalMachine)]
         public RegistryHive Hive { get; set; }
 
         /// <summary>

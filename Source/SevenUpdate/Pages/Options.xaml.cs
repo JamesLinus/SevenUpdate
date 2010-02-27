@@ -49,7 +49,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The Seven Update list location
         /// </summary>
-        private static readonly Uri SULLocation = new Uri("http://sevenupdate.com/apps/Apps.sul");
+        private static readonly Uri SulLocation = new Uri("http://sevenupdate.com/apps/Apps.sul");
 
         /// <summary>
         /// A collection of SUA's that Seven Update can update
@@ -74,18 +74,18 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Downloads the Seven Update Application List
         /// </summary>
-        private void DownloadSUL()
+        private void DownloadSul()
         {
-            var hwr = (HttpWebRequest) WebRequest.Create(SULLocation);
+            var hwr = (HttpWebRequest) WebRequest.Create(SulLocation);
             HttpWebResponse response;
             try
             {
                 response = (HttpWebResponse) hwr.GetResponse();
-                LoadSUL(Base.Base.Deserialize<ObservableCollection<Sua>>(response.GetResponseStream()));
+                LoadSul(Base.Base.Deserialize<ObservableCollection<Sua>>(response.GetResponseStream()));
             }
             catch (WebException)
             {
-                LoadSUL();
+                LoadSul();
             }
         }
 
@@ -119,7 +119,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
         /// </summary>
-        private void LoadSUL(ObservableCollection<Sua> officialAppList = null)
+        private void LoadSul(ObservableCollection<Sua> officialAppList = null)
         {
             machineAppList = Base.Base.Deserialize<ObservableCollection<Sua>>(Base.Base.AppsFile);
 
@@ -213,7 +213,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Architecture"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SUASorter());
+            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SuaSorter());
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AutoUpdateMethodSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (cbAutoUpdateMethod.SelectedIndex)
             {
@@ -284,7 +284,7 @@ namespace SevenUpdate.Pages
         {
             listView.Cursor = Cursors.Wait;
             LoadSettings();
-            new Thread(DownloadSUL).Start();
+            new Thread(DownloadSul).Start();
         }
 
         #region ListView Related
@@ -318,7 +318,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void SaveClick(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
             MainWindow.NavService.GoBack();
@@ -329,7 +329,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CancelClick(object sender, RoutedEventArgs e)
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();
         }

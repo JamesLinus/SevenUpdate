@@ -67,7 +67,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// Location of the SUI for Seven Update
         /// </summary>
-        private const string SevenUpdateSUI = @"http://sevenupdate.com/apps/SevenUpdate.sui";
+        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate.sui";
 
         #endregion
 
@@ -244,7 +244,7 @@ namespace SevenUpdate.Base
 
             #region Seven Update
 
-            var hwr = (HttpWebRequest) WebRequest.Create(SevenUpdateSUI);
+            var hwr = (HttpWebRequest) WebRequest.Create(SevenUpdateSui);
             HttpWebResponse response;
             try
             {

@@ -307,7 +307,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Button
 
-        private void SaveClick(object sender, EventArgs e)
+        private void Save_Click(object sender, EventArgs e)
         {
             if (lblGetHash.Text != Program.RM.GetString("CalculateHashSize") || cbFileAction.SelectedIndex == 4 || cbFileAction.SelectedIndex == 6 ||
                 cbFileAction.SelectedIndex == 8)

@@ -151,15 +151,15 @@ namespace SevenUpdate.Controls
         private static void RegisterSortableGridView(IInputElement grid, DependencyPropertyChangedEventArgs args)
         {
             if (args.NewValue is Boolean && (Boolean) args.NewValue)
-                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
+                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeader_ClickedHandler));
             else
-                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeaderClickedHandler));
+                grid.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(GridViewColumnHeader_ClickedHandler));
         }
 
         /// <summary>
         /// Occurs when the <see cref="GridViewColumnHeader" /> is clicked
         /// </summary>
-        private static void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        private static void GridViewColumnHeader_ClickedHandler(object sender, RoutedEventArgs e)
         {
             var headerClicked = e.OriginalSource as GridViewColumnHeader;
 

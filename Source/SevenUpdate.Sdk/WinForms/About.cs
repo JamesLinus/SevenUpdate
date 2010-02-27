@@ -47,13 +47,9 @@ namespace SevenUpdate.Sdk.WinForms
 
             var version = Application.ProductVersion;
 
-            Text = Text + @" " + Application.ProductName + @" SDK";
-
             lblVersion.Text = version;
 
             lblCopyright.Text = @"© " + @"2007 - " + DateTime.Now.Year + @" " + Program.RM.GetString("SevenSoftware");
-
-            lblLicense.Text = Application.ProductVersion + @" SDK " + lblLicense.Text;
         }
 
         #region UI Events

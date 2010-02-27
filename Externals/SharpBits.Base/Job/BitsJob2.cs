@@ -39,9 +39,7 @@ namespace SharpBits.Base.Job
                         }
                     }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -58,10 +56,7 @@ namespace SharpBits.Base.Job
                         job2.GetNotifyCmdLine(out program, out parameters);
                         return program;
                     }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
+                    throw new NotSupportedException("IBackgroundCopyJob2");
                 }
                 catch (COMException exception)
                 {
@@ -82,15 +77,11 @@ namespace SharpBits.Base.Job
                         string program, parameters;
                         job2.GetNotifyCmdLine(out program, out parameters);
                         if (value != null) //the command line program should be passed as first parameter, enclosed by quotes
-                        {
                             value = string.Format("\"{0}\" {1}", program, value);
-                        }
                         job2.SetNotifyCmdLine(program, value);
                     }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -107,10 +98,7 @@ namespace SharpBits.Base.Job
                         job2.GetNotifyCmdLine(out program, out parameters);
                         return parameters;
                     }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
+                    throw new NotSupportedException("IBackgroundCopyJob2");
                 }
                 catch (COMException exception)
                 {
@@ -132,10 +120,7 @@ namespace SharpBits.Base.Job
                         job2.GetReplyFileName(out replyFileName);
                         return replyFileName;
                     }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
+                    throw new NotSupportedException("IBackgroundCopyJob2");
                 }
                 catch (COMException exception)
                 {
@@ -148,13 +133,9 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (job2 != null) // only supported from IBackgroundCopyJob2 and above
-                    {
                         job2.SetReplyFileName(value);
-                    }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -178,10 +159,7 @@ namespace SharpBits.Base.Job
                         Marshal.Copy(bufferPtr, buffer, 0, (int) length); //truncating length to int may be ok as the buffer could be 1MB maximum
                         return buffer;
                     }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
+                    throw new NotSupportedException("IBackgroundCopyJob2");
                 }
                 catch (COMException exception)
                 {
@@ -197,23 +175,21 @@ namespace SharpBits.Base.Job
             {
                 try
                 {
-                    if (this.job2 != null)
+                    if (job2 != null)
                     {
-                        BG_JOB_REPLY_PROGRESS replyProgress;
-                        this.job2.GetReplyProgress(out replyProgress);
-                        this.replyProgress = new JobReplyProgress(replyProgress);
+                        BG_JOB_REPLY_PROGRESS replyJobProgress;
+                        job2.GetReplyProgress(out replyJobProgress);
+                        replyProgress = new JobReplyProgress(replyJobProgress);
                     }
                     else
-                    {
                         throw new NotSupportedException("IBackgroundCopyJob2");
-                    }
                 }
                 catch (COMException exception)
                 {
                     manager.PublishException(this, exception);
                     return null;
                 }
-                return this.replyProgress;
+                return replyProgress;
             }
         }
 
@@ -223,17 +199,14 @@ namespace SharpBits.Base.Job
             {
                 if (job2 != null && credentials != null) // only supported from IBackgroundCopyJob2 and above
                 {
-                    var bgCredentials = new BG_AUTH_CREDENTIALS();
-                    bgCredentials.Scheme = (BG_AUTH_SCHEME) credentials.AuthenticationScheme;
-                    bgCredentials.Target = (BG_AUTH_TARGET) credentials.AuthenticationTarget;
-                    bgCredentials.Credentials.Basic.Password = credentials.Password.ToString();
-                    bgCredentials.Credentials.Basic.UserName = credentials.UserName.ToString();
+                    var bgCredentials = new BG_AUTH_CREDENTIALS
+                                            {Scheme = (BG_AUTH_SCHEME) credentials.AuthenticationScheme, Target = (BG_AUTH_TARGET) credentials.AuthenticationTarget};
+                    bgCredentials.Credentials.Basic.Password = credentials.Password;
+                    bgCredentials.Credentials.Basic.UserName = credentials.UserName;
                     job2.SetCredentials(ref bgCredentials);
                 }
                 else
-                {
                     throw new NotSupportedException("IBackgroundCopyJob2");
-                }
             }
             catch (COMException exception)
             {
@@ -246,13 +219,9 @@ namespace SharpBits.Base.Job
             try
             {
                 if (job2 != null && credentials != null) // only supported from IBackgroundCopyJob2 and above
-                {
                     job2.RemoveCredentials((BG_AUTH_TARGET) credentials.AuthenticationTarget, (BG_AUTH_SCHEME) credentials.AuthenticationScheme);
-                }
                 else
-                {
                     throw new NotSupportedException("IBackgroundCopyJob2");
-                }
             }
             catch (COMException exception)
             {
@@ -265,13 +234,9 @@ namespace SharpBits.Base.Job
             try
             {
                 if (job2 != null) // only supported from IBackgroundCopyJob2 and above
-                {
                     job2.RemoveCredentials((BG_AUTH_TARGET) target, (BG_AUTH_SCHEME) scheme);
-                }
                 else
-                {
                     throw new NotSupportedException("IBackgroundCopyJob2");
-                }
             }
             catch (COMException exception)
             {

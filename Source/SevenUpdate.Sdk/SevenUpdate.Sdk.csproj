@@ -130,11 +130,11 @@
     <Compile Include="Pages\AppInfo.Designer.cs">
       <DependentUpon>AppInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SUAInfo.cs">
+    <Compile Include="Pages\SuaInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pages\SUAInfo.Designer.cs">
-      <DependentUpon>SUAInfo.cs</DependentUpon>
+    <Compile Include="Pages\SuaInfo.Designer.cs">
+      <DependentUpon>SuaInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Pages\UpdateMenu.cs">
       <SubType>UserControl</SubType>
@@ -247,8 +247,8 @@
   <ItemGroup>
     <None Include="Resources\Registry.png" />
     <None Include="Resources\shorcut.png" />
-    <EmbeddedResource Include="Pages\SUAInfo.resx">
-      <DependentUpon>SUAInfo.cs</DependentUpon>
+    <EmbeddedResource Include="Pages\SuaInfo.resx">
+      <DependentUpon>SuaInfo.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WinForms\About.resx">

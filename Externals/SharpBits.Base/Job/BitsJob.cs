@@ -14,6 +14,7 @@ namespace SharpBits.Base.Job
     {
         #region member fields
 
+        internal IBackgroundCopyCallback NotificationTarget;
         private bool disposed;
 
         private BitsError error;
@@ -23,7 +24,6 @@ namespace SharpBits.Base.Job
         private JobTimes jobTimes;
         private BitsManager manager;
         //notification
-        internal IBackgroundCopyCallback NotificationTarget;
         private EventHandler<JobErrorNotificationEventArgs> onJobErrored;
         private EventHandler<JobNotificationEventArgs> onJobModified;
         private EventHandler<JobNotificationEventArgs> onJobTransfered;
@@ -45,9 +45,7 @@ namespace SharpBits.Base.Job
             // store existing notification handler and route message to this as well
             // otherwise it may break system download jobs
             if (NotificationInterface != null)
-            {
                 NotificationTarget = NotificationInterface; //pointer to the existing one;
-            }
             NotificationInterface = manager.NotificationHandler; //notification interface will be disabled when NotifyCmd is set
         }
 
@@ -199,19 +197,22 @@ namespace SharpBits.Base.Job
             {
                 try
                 {
-                    BG_JOB_PROGRESS progress;
-                    this.job.GetProgress(out progress);
-                    this.progress = new JobProgress(progress);
+                    BG_JOB_PROGRESS jobProgress;
+                    job.GetProgress(out jobProgress);
+                    progress = new JobProgress(jobProgress);
                 }
                 catch (COMException exception)
                 {
                     manager.PublishException(this, exception);
                 }
-                return this.progress;
+                return progress;
             }
         }
 
-        public BitsFiles Files { get { return files; } }
+        public BitsFiles Files
+        {
+            get { return files; }
+        }
 
         public ulong ErrorCount
         {
@@ -236,18 +237,15 @@ namespace SharpBits.Base.Job
             {
                 try
                 {
-                    JobState state = this.State;
+                    JobState state = State;
                     if (state == JobState.Error || state == JobState.TransientError)
                     {
-
-                        if (null == this.error)
+                        if (null == error)
                         {
-                            IBackgroundCopyError error;
-                            this.job.GetError(out error);
-                            if (null != error)
-                            {
-                                this.error = new BitsError(this, error);
-                            }
+                            IBackgroundCopyError copyError;
+                            job.GetError(out copyError);
+                            if (null != copyError)
+                                this.error = new BitsError(this, copyError);
                         }
                     }
                 }
@@ -255,7 +253,7 @@ namespace SharpBits.Base.Job
                 {
                     manager.PublishException(this, exception);
                 }
-                return this.error;
+                return error;
             }
         }
 
@@ -322,9 +320,7 @@ namespace SharpBits.Base.Job
                 try
                 {
                     if (guid == Guid.Empty)
-                    {
                         job.GetId(out guid);
-                    }
                 }
                 catch (COMException exception)
                 {
@@ -388,14 +384,7 @@ namespace SharpBits.Base.Job
 
         public ProxySettings ProxySettings
         {
-            get
-            {
-                if (null == proxySettings)
-                {
-                    proxySettings = new ProxySettings(job);
-                }
-                return proxySettings;
-            }
+            get { return proxySettings ?? (proxySettings = new ProxySettings(job)); }
         }
 
         public NotificationFlags NotificationFlags
@@ -565,9 +554,7 @@ namespace SharpBits.Base.Job
         {
             var fileArray = new BG_FILE_INFO[files.Count];
             for (int i = 0; i < files.Count; i++)
-            {
                 fileArray[i] = files[i]._BG_FILE_INFO;
-            }
             AddFiles(fileArray);
         }
 
@@ -599,17 +586,32 @@ namespace SharpBits.Base.Job
 
         #region public events
 
-        public event EventHandler<JobNotificationEventArgs> OnJobModified { add { onJobModified += value; } remove { onJobModified -= value; } }
+        public event EventHandler<JobNotificationEventArgs> OnJobModified
+        {
+            add { onJobModified += value; }
+            remove { onJobModified -= value; }
+        }
 
-        public event EventHandler<JobNotificationEventArgs> OnJobTransferred { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
+        public event EventHandler<JobNotificationEventArgs> OnJobTransferred
+        {
+            add { onJobTransfered += value; }
+            remove { onJobTransfered -= value; }
+        }
 
-        public event EventHandler<JobErrorNotificationEventArgs> OnJobError { add { onJobErrored += value; } remove { onJobErrored -= value; } }
+        public event EventHandler<JobErrorNotificationEventArgs> OnJobError
+        {
+            add { onJobErrored += value; }
+            remove { onJobErrored -= value; }
+        }
 
         #endregion
 
         #region internal
 
-        internal IBackgroundCopyJob Job { get { return job; } }
+        internal IBackgroundCopyJob Job
+        {
+            get { return job; }
+        }
 
         internal void PublishException(COMException exception)
         {

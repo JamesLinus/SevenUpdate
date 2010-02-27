@@ -29,7 +29,10 @@ namespace SharpBits.Base.Job
             Update();
         }
 
-        internal IEnumBackgroundCopyJobs Jobs { get { return jobList; } }
+        internal IEnumBackgroundCopyJobs Jobs
+        {
+            get { return jobList; }
+        }
 
         #region IDisposable Members
 
@@ -73,9 +76,7 @@ namespace SharpBits.Base.Job
                         currentList.Remove(guid);
                     }
                     else
-                    {
                         job = new BitsJob(manager, currentJob);
-                    }
                     Add(job.JobId, job);
                 }
             }

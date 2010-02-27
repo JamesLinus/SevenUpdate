@@ -313,7 +313,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when an error occurs
         /// </summary>
-        private void ErrorOccurredEventHandler(object sender, ErrorOccurredEventArgs e)
+        private void ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
         {
             switch (e.Type)
             {
@@ -358,7 +358,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the install progress has changed
         /// </summary>
-        private void InstallProgressChangedEventHandler(object sender, InstallProgressChangedEventArgs e)
+        private void InstallProgressChanged_EventHandler(object sender, InstallProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallProgressChanged, e);
@@ -369,7 +369,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the download progress has changed
         /// </summary>
-        private void DownloadProgressChangedEventHandler(object sender, DownloadProgressChangedEventArgs e)
+        private void DownloadProgressChanged_EventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadProgressChanged, e);
@@ -380,7 +380,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the search for updates has completed
         /// </summary>
-        private void SearchCompletedEventHandler(object sender, SearchCompletedEventArgs e)
+        private void SearchCompleted_EventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);
@@ -391,7 +391,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the installation of updates has completed
         /// </summary>
-        private void InstallCompletedEventHandler(object sender, InstallCompletedEventArgs e)
+        private void InstallCompleted_EventHandler(object sender, InstallCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallCompleted, e);
@@ -402,7 +402,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Sets the UI when the downloading of updates has completed
         /// </summary>
-        private void DownloadCompletedEventHandler(object sender, DownloadCompletedEventArgs e)
+        private void DownloadCompleted_EventHandler(object sender, DownloadCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadCompleted, e);
@@ -530,21 +530,21 @@ namespace SevenUpdate.Pages
 
             #region Event Handler Declarations
 
-            UpdateInfo.CanceledSelectionEventHandler += CanceledSelectionEventHandler;
-            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChangedEventHandler;
-            infoBar.btnAction.Click += ActionClick;
-            infoBar.tbViewImportantUpdates.MouseDown += ViewImportantUpdatesMouseDown;
-            infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdatesMouseDown;
-            Search.SearchDoneEventHandler += SearchCompletedEventHandler;
-            Search.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
-            AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChangedEventHandler;
-            AdminCallBack.DownloadDoneEventHandler += DownloadCompletedEventHandler;
-            AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChangedEventHandler;
-            AdminCallBack.InstallDoneEventHandler += InstallCompletedEventHandler;
-            AdminCallBack.ErrorOccurredEventHandler += ErrorOccurredEventHandler;
-            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdateEventHandler;
-            Admin.SettingsChangedEventHandler += Admin_SettingsChangedEventHandler;
-            Admin.ServiceErrorEventHandler += ErrorOccurredEventHandler;
+            UpdateInfo.CanceledSelectionEventHandler += CanceledSelection_EventHandler;
+            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChanged_EventHandler;
+            infoBar.btnAction.Click += Action_Click;
+            infoBar.tbViewImportantUpdates.MouseDown += ViewImportantUpdates_MouseDown;
+            infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdates_MouseDown;
+            Search.SearchDoneEventHandler += SearchCompleted_EventHandler;
+            Search.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
+            AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
+            AdminCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
+            AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
+            AdminCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
+            AdminCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
+            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdate_EventHandler;
+            Admin.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
+            Admin.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
 
             #endregion
         }
@@ -956,7 +956,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Options page
         /// </summary>
-        private void ChangeSettingsMouseDown(object sender, MouseButtonEventArgs e)
+        private void ChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
         }
@@ -964,7 +964,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Checks for updates
         /// </summary>
-        private void CheckForUpdatesMouseDown(object sender, MouseButtonEventArgs e)
+        private void CheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             CheckForUpdates();
         }
@@ -972,7 +972,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update History page
         /// </summary>
-        private void ViewUpdateHistoryMouseDown(object sender, MouseButtonEventArgs e)
+        private void ViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
         }
@@ -980,7 +980,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Restore Updates page
         /// </summary>
-        private void RestoreHiddenUpdatesMouseDown(object sender, MouseButtonEventArgs e)
+        private void RestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
         }
@@ -988,7 +988,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Shows the About Dialog window
         /// </summary>
-        private void AboutMouseDown(object sender, MouseButtonEventArgs e)
+        private void About_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
             about.ShowDialog();
@@ -997,7 +997,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update Info page
         /// </summary>
-        private static void ViewOptionalUpdatesMouseDown(object sender, MouseButtonEventArgs e)
+        private static void ViewOptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
@@ -1006,7 +1006,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Navigates to the Update Info page
         /// </summary>
-        private static void ViewImportantUpdatesMouseDown(object sender, MouseButtonEventArgs e)
+        private static void ViewImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
@@ -1017,7 +1017,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
         /// </summary>
-        private void CanceledSelectionEventHandler(object sender, EventArgs e)
+        private void CanceledSelection_EventHandler(object sender, EventArgs e)
         {
             CheckForUpdates();
         }
@@ -1025,7 +1025,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Updates the UI after the user selects updates to install
         /// </summary>
-        private void UpdateSelectionChangedEventHandler(object sender, UpdateSelectionChangedEventArgs e)
+        private void UpdateSelectionChanged_EventHandler(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (App.Applications.Count == 0)
             {
@@ -1123,12 +1123,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Checks for updates after hidden updates have been restored
         /// </summary>
-        private void RestoredHiddenUpdateEventHandler(object sender, EventArgs e)
+        private void RestoredHiddenUpdate_EventHandler(object sender, EventArgs e)
         {
             CheckForUpdates(true);
         }
 
-        private void Admin_SettingsChangedEventHandler(object sender, EventArgs e)
+        private void Admin_SettingsChanged_EventHandler(object sender, EventArgs e)
         {
             CheckForUpdates(true);
         }
@@ -1136,7 +1136,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
         /// </summary>
-        private void ActionClick(object sender, RoutedEventArgs e)
+        private void Action_Click(object sender, RoutedEventArgs e)
         {
             if (infoBar.tbAction.Text == App.RM.GetString("InstallUpdates"))
                 DownloadInstallUpdates();

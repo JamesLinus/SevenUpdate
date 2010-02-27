@@ -33,7 +33,6 @@ namespace SevenUpdate.WCF
 {
     [GeneratedCode("System.ServiceModel", "4.0.0.0"),
      ServiceContract(ConfigurationName = "WCF.IEventSystem", CallbackContract = typeof (IEventSystemCallback), SessionMode = SessionMode.Required)]
-    
     public interface IEventSystem
     {
         [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IEventSystem/Subscribe")]
@@ -68,7 +67,6 @@ namespace SevenUpdate.WCF
     }
 
     [DebuggerStepThrough, GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    
     public class EventSystemClient : DuplexClientBase<IEventSystem>, IEventSystem
     {
         public EventSystemClient(InstanceContext callbackInstance) : base(callbackInstance)

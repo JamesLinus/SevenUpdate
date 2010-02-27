@@ -564,7 +564,7 @@ namespace SevenUpdate.Base
         {
             if (File.Exists(fileName))
             {
-                var s = new XmlSerializer(typeof(T), "http://sevenupdate.com");
+                var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                 try
                 {
                     T temp;
@@ -572,7 +572,7 @@ namespace SevenUpdate.Base
                     {
                         try
                         {
-                            temp = (T)s.Deserialize(r);
+                            temp = (T) s.Deserialize(r);
                         }
                         catch
                         {
@@ -581,8 +581,10 @@ namespace SevenUpdate.Base
                     }
 
                     if (temp == null)
+                    {
                         using (var file = File.OpenRead(fileName))
                             temp = Serializer.Deserialize<T>(file);
+                    }
 
                     return temp;
                 }

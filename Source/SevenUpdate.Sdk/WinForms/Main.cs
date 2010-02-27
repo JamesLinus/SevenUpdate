@@ -233,13 +233,13 @@ namespace SevenUpdate.Sdk.WinForms
             //Event Handlers
             pageUpdateMenu.clNewUpdate.Click -= NewUpdate_Click;
 
-            pageUpdateMenu.clEditUpdate.Click -= ClEditUpdateClick;
+            pageUpdateMenu.clEditUpdate.Click -= ClEditUpdate_Click;
 
             pageUpdateMenu.clSave.Click -= Save_Click;
 
             pageUpdateMenu.clNewUpdate.Click += NewUpdate_Click;
 
-            pageUpdateMenu.clEditUpdate.Click += ClEditUpdateClick;
+            pageUpdateMenu.clEditUpdate.Click += ClEditUpdate_Click;
 
             pageUpdateMenu.clSave.Click += Save_Click;
         }
@@ -502,7 +502,7 @@ namespace SevenUpdate.Sdk.WinForms
 
         #region Command Links
 
-        private void ClEditUpdateClick(object sender, EventArgs e)
+        private void ClEditUpdate_Click(object sender, EventArgs e)
         {
             editUpdate = true;
 
