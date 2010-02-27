@@ -25,9 +25,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using ProtoBuf;
@@ -552,6 +554,41 @@ namespace SevenUpdate.Base
 
         #endregion
 
+        public static MemoryStream DownloadFile(string url)
+        {
+            //Get a data stream from the url
+            WebRequest req = WebRequest.Create(url);
+            WebResponse response = req.GetResponse();
+            Stream stream = response.GetResponseStream();
+
+            
+
+            //Download in chuncks
+            var buffer = new byte[1024];
+
+            //Download to memory
+            //Note: adjust the streams here to download directly to the hard drive
+            using (var memStream = new MemoryStream())
+            {
+                while (true)
+                {
+                    //Try to read the data
+                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
+
+                    if (bytesRead == 0)
+                    {
+                        //Finished downloading
+                        break;
+                    }
+                    //Write the downloaded data
+                    memStream.Write(buffer, 0, bytesRead);
+                }
+
+                //Convert the downloaded stream to a byte array
+                return new MemoryStream(memStream.ToArray());
+            }
+        }
+
         #region Serialization Methods
 
         /// <summary>
@@ -562,6 +599,7 @@ namespace SevenUpdate.Base
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
+            
             if (File.Exists(fileName))
             {
                 var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
@@ -583,7 +621,7 @@ namespace SevenUpdate.Base
                     if (temp == null)
                     {
                         using (var file = File.OpenRead(fileName))
-                            temp = Serializer.Deserialize<T>(file);
+                            temp = Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32);
                     }
 
                     return temp;
@@ -604,7 +642,7 @@ namespace SevenUpdate.Base
         /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream) where T : class
+        public static T Deserialize<T>(Stream stream, string suiLoc) where T : class
         {
             var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
@@ -618,13 +656,12 @@ namespace SevenUpdate.Base
                 {
                     temp = null;
                 }
-
-                return temp ?? (Serializer.Deserialize<T>(stream));
+                return temp ?? (Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32));
             }
             catch (Exception e)
             {
                 if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, @"sui file"));
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, suiLoc));
             }
 
             return null;
@@ -640,8 +677,28 @@ namespace SevenUpdate.Base
         {
             try
             {
-                using (var file = File.Create(fileName))
-                    Serializer.Serialize(file, item);
+                //XmlWriter w = null;
+                //var xs = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true };
+                //var ns = new XmlSerializerNamespaces();
+                //ns.Add("", "http://sevenupdate.com");
+                //var s = new XmlSerializer(typeof(T), "http://sevenupdate.com");
+                //w = XmlWriter.Create(fileName, xs);
+                //if (w != null)
+                //{
+                //    s.Serialize(w, item, ns);
+                //    w.Close();
+                //}
+
+                if (File.Exists(fileName))
+                {
+                    using (var file = File.Open(fileName, FileMode.Truncate))
+                        Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                }
+                else
+                {
+                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                        Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                }
             }
             catch (Exception e)
             {

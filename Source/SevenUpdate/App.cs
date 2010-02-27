@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
@@ -65,7 +66,7 @@ namespace SevenUpdate
         /// <summary>
         /// Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
-        public static Collection<Sua> AppsToUpdate
+        public static IEnumerable<Sua> AppsToUpdate
         {
             get { return Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile); }
         }
@@ -86,6 +87,12 @@ namespace SevenUpdate
         /// Gets or Sets a collection of applications to update
         /// </summary>
         internal static Collection<Sui> Applications { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating if the current user is running on admin privileges
+        /// </summary>
+        /// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
+        internal static bool IsAdmin { get; private set; }
 
         /// <summary>
         /// Gets a value indicating if an auto check is being performed
@@ -189,18 +196,7 @@ namespace SevenUpdate
             try
             {
                 suaLoc = suaLoc.Replace("sevenupdate://", null);
-                var hwr = (HttpWebRequest) WebRequest.Create(suaLoc);
-                HttpWebResponse response;
-
-                try
-                {
-                    response = (HttpWebResponse) hwr.GetResponse();
-                }
-                catch (WebException)
-                {
-                    return;
-                }
-                var sua = Base.Base.Deserialize<Sua>(response.GetResponseStream());
+                var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
                 var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
                 File.Delete(Base.Base.UserStore + "add.sua");
                 var index = sul.IndexOf(sua);
@@ -227,22 +223,12 @@ namespace SevenUpdate
         /// </summary>
         /// <param name="files">the collection of files of an update</param>
         /// <returns>a ulong value of the size of the update</returns>
-        internal static ulong GetUpdateSize(Collection<UpdateFile> files)
+        internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.Size);
         }
 
         #endregion
-
-        #endregion
-
-        #region UI methods
-
-        /// <summary>
-        /// Gets a value indicating if the current user is running on admin privileges
-        /// </summary>
-        /// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
-        internal static bool IsAdmin { get; private set; }
 
         #endregion
     }

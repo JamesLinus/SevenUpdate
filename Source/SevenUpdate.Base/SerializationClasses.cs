@@ -343,7 +343,7 @@ namespace SevenUpdate.Base
         /// <summary>
         /// The application main directory, usually in Program Files
         /// </summary>
-        [XmlAttribute("directory"), ProtoMember(1)]
+        [ ProtoMember(1), XmlAttribute("directory")]
         public string Directory { get; set; }
 
         /// <summary>

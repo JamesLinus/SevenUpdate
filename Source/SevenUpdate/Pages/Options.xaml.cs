@@ -49,7 +49,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// The Seven Update list location
         /// </summary>
-        private static readonly Uri SulLocation = new Uri("http://sevenupdate.com/apps/Apps.sul");
+        private const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
 
         /// <summary>
         /// A collection of SUA's that Seven Update can update
@@ -76,12 +76,9 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void DownloadSul()
         {
-            var hwr = (HttpWebRequest) WebRequest.Create(SulLocation);
-            HttpWebResponse response;
             try
             {
-                response = (HttpWebResponse) hwr.GetResponse();
-                LoadSul(Base.Base.Deserialize<ObservableCollection<Sua>>(response.GetResponseStream()));
+                LoadSul(Base.Base.Deserialize<ObservableCollection<Sua>>(Base.Base.DownloadFile(SulLocation), SulLocation.ToString()));
             }
             catch (WebException)
             {

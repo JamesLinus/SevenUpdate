@@ -226,7 +226,7 @@ namespace SevenUpdate.Base
         /// Searches for updates while blocking the calling thread
         /// </summary>
         /// <param name="apps">the list of applications to check for updates</param>
-        public static void SearchForUpdates(Collection<Sua> apps)
+        public static void SearchForUpdates(IEnumerable<Sua> apps)
         {
             var applications = new Collection<Sui>();
             try
@@ -244,13 +244,10 @@ namespace SevenUpdate.Base
 
             #region Seven Update
 
-            var hwr = (HttpWebRequest) WebRequest.Create(SevenUpdateSui);
-            HttpWebResponse response;
             try
             {
                 // Download the Seven Update SUI and load it.
-                response = (HttpWebResponse) hwr.GetResponse();
-                var app = Base.Deserialize<Sui>(response.GetResponseStream());
+                var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
 
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
@@ -291,21 +288,19 @@ namespace SevenUpdate.Base
             var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-            for (int x = 0; x < apps.Count; x++)
+            foreach (Sua t in apps)
             {
-                if (!apps[x].IsEnabled)
+                if (!t.IsEnabled)
                 {
                 }
                 else
                 {
                     try
                     {
-                        // Download the SUI
-                        hwr = (HttpWebRequest) WebRequest.Create(apps[x].Source);
-                        response = (HttpWebResponse) hwr.GetResponse();
+                        Sui app;
 
                         // Loads a SUI that was downloaded
-                        var app = Base.Deserialize<Sui>(response.GetResponseStream());
+                        app = Base.Deserialize<Sui>(Base.DownloadFile(t.Source), t.Source);
 
                         // Check to see if any updates are avalible and exclude hidden updates
                         // If there is an update avaliable, add it.
@@ -314,7 +309,7 @@ namespace SevenUpdate.Base
                     }
                     catch (WebException e)
                     {
-                        Base.ReportError("Error downloading file: " + apps[x].Source, Base.AllUserStore);
+                        Base.ReportError("Error downloading file: " + t.Source, Base.AllUserStore);
                         // Notify that there was an error that occurred.
                         if (ErrorOccurredEventHandler != null)
                             ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
@@ -340,7 +335,7 @@ namespace SevenUpdate.Base
         /// Searches for files without blocking the calling thread
         /// </summary>
         /// <param name="apps">the list of Seven Update Admin.applications to check for updates</param>
-        public static void SearchForUpdatesAync(Collection<Sua> apps)
+        public static void SearchForUpdatesAync(IEnumerable<Sua> apps)
         {
             var worker = new BackgroundWorker();
             worker.DoWork -= WorkerDoWork;
