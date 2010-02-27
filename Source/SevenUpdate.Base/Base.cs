@@ -557,9 +557,11 @@ namespace SevenUpdate.Base
         public static Stream DownloadFile(string url)
         {
             //Get a data stream from the url
-            WebRequest req = WebRequest.Create(url);
-            WebResponse response = req.GetResponse();
-            return response.GetResponseStream();
+            //WebRequest req = WebRequest.Create(url);
+            //WebResponse response = req.GetResponse();
+
+            var wc = new WebClient();
+            return new MemoryStream(wc.DownloadData(url));
         }
 
         #region Serialization Methods
@@ -569,8 +571,9 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
+        /// <param name="usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(string fileName) where T : class
+        public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
             
             if (File.Exists(fileName))
@@ -591,13 +594,10 @@ namespace SevenUpdate.Base
                         }
                     }
 
-                    if (temp == null)
-                    {
-                        using (var file = File.OpenRead(fileName))
-                            temp = Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32);
-                    }
-
-                    return temp;
+                    if (temp != null)
+                        return temp;
+                    using (var file = File.OpenRead(fileName))
+                        return usePrefix ? Serializer.Deserialize<T>(file) : Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32);
                 }
                 catch (Exception e)
                 {
@@ -615,8 +615,9 @@ namespace SevenUpdate.Base
         /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The url to the source stream that is being deserialized</param>
+        /// <param name="usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
+        public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
             var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
@@ -630,7 +631,7 @@ namespace SevenUpdate.Base
                 {
                     temp = null;
                 }
-                return temp ?? (Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32));
+                return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
             }
             catch (Exception e)
             {
@@ -647,7 +648,8 @@ namespace SevenUpdate.Base
         /// <typeparam name="T">the object</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, string fileName) where T : class
+        /// <param name="usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
+        public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
             try
             {
@@ -666,11 +668,17 @@ namespace SevenUpdate.Base
                 if (File.Exists(fileName))
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
+                    if (usePrefix)
+                        Serializer.Serialize(file, item);
+                    else
                         Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                 }
                 else
                 {
                     using (var file = File.Open(fileName, FileMode.CreateNew))
+                    if (usePrefix)
+                        Serializer.Serialize(file, item);
+                    else
                         Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                 }
             }
