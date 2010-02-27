@@ -597,7 +597,7 @@ namespace SevenUpdate.Base
                     if (temp != null)
                         return temp;
                     using (var file = File.OpenRead(fileName))
-                        return usePrefix ? Serializer.Deserialize<T>(file) : Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32);
+                        return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
                 }
                 catch (Exception e)
                 {
@@ -619,19 +619,21 @@ namespace SevenUpdate.Base
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
-            var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
+            //var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
             {
-                T temp;
-                try
-                {
-                    temp = (T) s.Deserialize(stream);
-                }
-                catch
-                {
-                    temp = null;
-                }
-                return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
+                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
+                //T temp;
+                //try
+                //{
+                //    temp = (T) s.Deserialize(stream);
+                //    stream.Position = 0;
+                //}
+                //catch
+                //{
+                //    temp = null;
+                //}
+                //return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
             }
             catch (Exception e)
             {
@@ -669,17 +671,18 @@ namespace SevenUpdate.Base
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
                     if (usePrefix)
-                        Serializer.Serialize(file, item);
+                       Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                     else
-                        Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        Serializer.Serialize(file, item);
+                      
                 }
                 else
                 {
                     using (var file = File.Open(fileName, FileMode.CreateNew))
-                    if (usePrefix)
-                        Serializer.Serialize(file, item);
-                    else
-                        Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        if (usePrefix)
+                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        else
+                            Serializer.Serialize(file, item);
                 }
             }
             catch (Exception e)
