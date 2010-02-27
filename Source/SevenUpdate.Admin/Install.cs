@@ -120,9 +120,9 @@ namespace SevenUpdate.Admin
             {
                 for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
-                    if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+                    if (File.Exists(Base.Base.AllUserStore + @"abort.lock"))
                     {
-                        File.Delete(Base.Base.AllUserStore + "abort.lock");
+                        File.Delete(Base.Base.AllUserStore + @"abort.lock");
                         App.ShutdownApp();
                     }
 
@@ -131,14 +131,14 @@ namespace SevenUpdate.Admin
                     {
                         try
                         {
-                            Process.GetProcessesByName("Seven Update.Helper")[0].Kill();
+                            Process.GetProcessesByName(@"Seven Update.Helper")[0].Kill();
                         }
                         catch
                         {
                         }
                         try
                         {
-                            Process.GetProcessesByName("SevenUpdate.Helper")[0].Kill();
+                            Process.GetProcessesByName(@"SevenUpdate.Helper")[0].Kill();
                         }
                         catch
                         {

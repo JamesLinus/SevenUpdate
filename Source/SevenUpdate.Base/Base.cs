@@ -554,39 +554,12 @@ namespace SevenUpdate.Base
 
         #endregion
 
-        public static MemoryStream DownloadFile(string url)
+        public static Stream DownloadFile(string url)
         {
             //Get a data stream from the url
             WebRequest req = WebRequest.Create(url);
             WebResponse response = req.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            
-
-            //Download in chuncks
-            var buffer = new byte[1024];
-
-            //Download to memory
-            //Note: adjust the streams here to download directly to the hard drive
-            using (var memStream = new MemoryStream())
-            {
-                while (true)
-                {
-                    //Try to read the data
-                    int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-                    if (bytesRead == 0)
-                    {
-                        //Finished downloading
-                        break;
-                    }
-                    //Write the downloaded data
-                    memStream.Write(buffer, 0, bytesRead);
-                }
-
-                //Convert the downloaded stream to a byte array
-                return new MemoryStream(memStream.ToArray());
-            }
+            return response.GetResponseStream();
         }
 
         #region Serialization Methods
@@ -641,8 +614,9 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
+        /// <param name="sourceUrl">The url to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string suiLoc) where T : class
+        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
         {
             var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
@@ -661,7 +635,7 @@ namespace SevenUpdate.Base
             catch (Exception e)
             {
                 if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, suiLoc));
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, sourceUrl));
             }
 
             return null;
