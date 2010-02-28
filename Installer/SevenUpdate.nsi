@@ -126,8 +126,6 @@ Function .onInit
 		StrCpy $INSTDIR "$PROGRAMFILES\Seven Software\Seven Update"
 	${EndIf}
 	
-	Call CloseSevenUpdate
-	
 FunctionEnd
 	 
  Function ConnectInternet
@@ -154,6 +152,14 @@ FunctionEnd
   
 FunctionEnd
  
+!macro DownloadFile SOURCE DEST 
+  InetLoad::load /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
+  Pop $0 ;Get the return value
+  StrCmp $0 "OK" +3
+  MessageBox MB_OK "Download failed: $0"
+  Quit
+!macroend
+
 Section "Main Section" SEC01
   SetOutPath $INSTDIR
   SetShellVarContext all
@@ -161,83 +167,26 @@ Section "Main Section" SEC01
   SectionIn RO
   Call ConnectInternet
   !insertmacro CheckDotNET 3.5
+  Call CloseSevenUpdate
 	
   RMDir /r $INSTDIR
-	
-  StrCpy $0 "$INSTDIR\SevenUpdate.exe"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SharpBits.Base.dll"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SevenUpdate.exe.config"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SevenUpdate.Admin.exe.config"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe.config" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SevenUpdate.Admin.exe"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SevenUpdate.Base.dll"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/Interop.IWshRuntimeLibrary.dll" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
-  
-  StrCpy $0 "$INSTDIR\SevenUpdate.Helper.exe"
-  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" $0
-  Pop $R0 ;Get the return value
-  StrCmp $R0 "success" +3
-  MessageBox MB_OK "Download failed: $R0"
-  Quit
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/Interop.IWshRuntimeLibrary.dll" "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe.config" "$INSTDIR\SevenUpdate.Admin.exe.config"
+ 
 	  
   ${If} ${AtMostWinXP}
 	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe'
 	  
   ${Else}
-  
-	  StrCpy $0 "$TEMP\SevenUpdate.xml"
-	  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" $0
-	  Pop $R0 ;Get the return value
-	  StrCmp $R0 "success" +3
-	  MessageBox MB_OK "Download failed: $R0"
-	  Quit
-  
-	  StrCpy $0 "$TEMP\SevenUpdate.Admin.xml"
-	  NSISdl::download /TIMEOUT=60000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" $0
-	  Pop $R0 ;Get the return value
-	  StrCmp $R0 "success" +3
-	  MessageBox MB_OK "Download failed: $R0"
-	  Quit
+    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml"
+    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml"
 	  
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update" /F"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update.Admin" /F"'
