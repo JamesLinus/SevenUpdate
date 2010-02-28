@@ -38,7 +38,7 @@ namespace SevenUpdate.Helper
     {
         private const int MoveOnReboot = 5;
 
-        private static string appDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
@@ -92,11 +92,11 @@ namespace SevenUpdate.Helper
                     {
                         try
                         {
-                            File.Copy(t.FullName, appDir + t.Name, true);
+                            File.Copy(t.FullName, AppDir + t.Name, true);
                         }
                         catch
                         {
-                            MoveFileEx(t.FullName, appDir + t.Name, MoveOnReboot);
+                            MoveFileEx(t.FullName, AppDir + t.Name, MoveOnReboot);
 
                             if (!File.Exists(appStore + "reboot.lock"))
                                 File.Create(appStore + "reboot.lock").WriteByte(0);
@@ -130,7 +130,7 @@ namespace SevenUpdate.Helper
                 {
                 }
                 if (Environment.OSVersion.Version.Major < 6)
-                    Process.Start(appDir + "SevenUpdate.exe", "Auto");
+                    Process.Start(AppDir + "SevenUpdate.exe", "Auto");
                 else
                 {
                     var p = new Process
@@ -157,7 +157,7 @@ namespace SevenUpdate.Helper
 
         private static void ATimerElapsed(object sender, ElapsedEventArgs e)
         {
-            Process.Start(appDir + @"SevenUpdate.Admin.exe", "Auto");
+            Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");
         }
     }
 }

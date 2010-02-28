@@ -53,9 +53,7 @@ namespace SevenUpdate.Admin
             /// <summary>Indicates download has completed</summary>
             DownloadComplete,
             /// <summary>Indicates that the installation of updates has begun</summary>
-            InstallStarted,
-            /// <summary>Indicates Install has completed</summary>
-            InstallComplete
+            InstallStarted
         }
 
         #endregion
@@ -83,7 +81,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Gets or Sets a bool value indicating Seven Update UI is currently connected.</summary>
-        internal static bool IsClientConnected { get; set; }
+        internal static bool IsClientConnected { get; private set; }
 
         internal static bool IsInstall { get; set; }
 
@@ -377,8 +375,6 @@ namespace SevenUpdate.Admin
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
             NotifyIcon.Visible = true;
-            //if (!NotifyIcon.Visible)
-            //    return;
             switch (filter)
             {
                 case NotifyType.DownloadStarted:
@@ -410,7 +406,7 @@ namespace SevenUpdate.Admin
                     Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Reconnect");
             }
             else
-                Base.Base.StartProcess("schtasks.exe", "/Run /TN \"Seven Update\"");
+                Base.Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
 
             if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
                 NotifyIcon.Text == RM.GetString("CheckingForUpdates"))

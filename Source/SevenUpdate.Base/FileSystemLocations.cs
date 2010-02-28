@@ -44,272 +44,267 @@ namespace SevenUpdate.Base
     internal static class FileSystemLocations
     {
         /// <summary>
-        /// %USERNAME%\Start Menu\Programs\Administrative Tools
-        /// </summary>
-        public const int CSIDL_ADMINTOOLS = 0x0030;
-
-        /// <summary>
-        /// The non localized startup folder
-        /// </summary>
-        public const int CSIDL_ALTSTARTUP = 0x001d;
-
-        /// <summary>
-        /// %USERNAME%\Application Data or %USERNAME%\AppData
-        /// </summary>
-        public const int CSIDL_APPDATA = 0x001a;
-
-        /// <summary>
-        /// %DESKTOP%\RECYCLE BIN
-        /// </summary>
-        public const int CSIDL_BITBUCKET = 0x000a;
-
-        /// <summary>
-        /// %USERPROFILE%\Local Settings\Application Data\Microsoft\CD Burning
-        /// </summary>
-        public const int CSIDL_CDBURN_AREA = 0x003b;
-
-        /// <summary>
-        /// %ALLUSERS%\Start Menu\Programs\Administrative Tools
-        /// </summary>
-        public const int CSIDL_COMMON_ADMINTOOLS = 0x002f;
-
-        /// <summary>
-        /// The non localized %ALLUSERS% startup folder
-        /// </summary>
-        public const int CSIDL_COMMON_ALTSTARTUP = 0x001e;
-
-        /// <summary>
-        /// %ALLUSERS%\Application Data
-        /// </summary>
-        public const int CSIDL_COMMON_APPDATA = 0x0023;
-
-        /// <summary>
-        /// %ALLUSERS%\Desktop
-        /// </summary>
-        public const int CSIDL_COMMON_DESKTOPDIRECTORY = 0x0019;
-
-        /// <summary>
-        /// %ALLUSERS%\Documents
-        /// </summary>
-        public const int CSIDL_COMMON_DOCUMENTS = 0x002e;
-
-        /// <summary></summary>
-        public const int CSIDL_COMMON_FAVORITES = 0x001f;
-
-        /// <summary>
-        /// %ALLUSERS%\My Music
-        /// </summary>
-        public const int CSIDL_COMMON_MUSIC = 0x0035;
-
-        /// <summary>
-        /// %ALLUSERS%\My Pictures
-        /// </summary>
-        public const int CSIDL_COMMON_PICTURES = 0x0036;
-
-        /// <summary>
         /// ALLUSERS%\Start Menu\Programs
         /// </summary>
-        public const int CSIDL_COMMON_PROGRAMS = 0x0017;
+        internal const int CSIDL_COMMON_PROGRAMS = 0x0017;
 
         /// <summary>
         /// %ALLUSERS%\Start Menu
         /// </summary>
-        public const int CSIDL_COMMON_STARTMENU = 0x0016;
+        internal const int CSIDL_COMMON_STARTMENU = 0x0016;
 
-        /// <summary>
-        /// %ALLUSERS%\Startup
-        /// </summary>
-        public const int CSIDL_COMMON_STARTUP = 0x0018;
+        ///// <summary>
+        ///// %USERNAME%\Start Menu\Programs\Administrative Tools
+        ///// </summary>
+        //internal const int CSIDL_ADMINTOOLS = 0x0030;
 
-        /// <summary>
-        /// %ALLUSERS%\Templates
-        /// </summary>
-        public const int CSIDL_COMMON_TEMPLATES = 0x002d;
+        ///// <summary>
+        ///// The non localized startup folder
+        ///// </summary>
+        //internal const int CSIDL_ALTSTARTUP = 0x001d;
 
-        /// <summary>
-        /// %ALLUSERS%\My Video
-        /// </summary>
-        public const int CSIDL_COMMON_VIDEO = 0x0037;
+        ///// <summary>
+        ///// %USERNAME%\Application Data or %USERNAME%\AppData
+        ///// </summary>
+        //internal const int CSIDL_APPDATA = 0x001a;
 
-        /// <summary>
-        /// Computers Near Me (computers from Work group membership)
-        /// </summary>
-        public const int CSIDL_COMPUTERSNEARME = 0x003d;
+        ///// <summary>
+        ///// %DESKTOP%\RECYCLE BIN
+        ///// </summary>
+        //internal const int CSIDL_BITBUCKET = 0x000a;
 
-        /// <summary>
-        /// Network and Dial-up Connections
-        /// </summary>
-        public const int CSIDL_CONNECTIONS = 0x0031;
+        ///// <summary>
+        ///// %USERPROFILE%\Local Settings\Application Data\Microsoft\CD Burning
+        ///// </summary>
+        //internal const int CSIDL_CDBURN_AREA = 0x003b;
 
-        /// <summary>
-        /// My Computer\Control Panel
-        /// </summary>
-        public const int CSIDL_CONTROLS = 0x0003;
+        ///// <summary>
+        ///// %ALLUSERS%\Start Menu\Programs\Administrative Tools
+        ///// </summary>
+        //internal const int CSIDL_COMMON_ADMINTOOLS = 0x002f;
 
-        /// <summary>%DESKTOP%</summary>
-        public const int CSIDL_DESKTOP = 0x0000;
+        ///// <summary>
+        ///// The non localized %ALLUSERS% startup folder
+        ///// </summary>
+        //internal const int CSIDL_COMMON_ALTSTARTUP = 0x001e;
 
-        /// <summary>
-        /// %USERNAME%\Desktop
-        /// </summary>
-        public const int CSIDL_DESKTOPDIRECTORY = 0x0010;
+        ///// <summary>
+        ///// %ALLUSERS%\Application Data
+        ///// </summary>
+        //internal const int CSIDL_COMMON_APPDATA = 0x0023;
 
-        /// <summary>My Computer</summary>
-        public const int CSIDL_DRIVES = 0x0011;
+        ///// <summary>
+        ///// %ALLUSERS%\Desktop
+        ///// </summary>
+        //internal const int CSIDL_COMMON_DESKTOPDIRECTORY = 0x0019;
 
-        /// <summary>
-        /// %USERNAME%\Favorites
-        /// </summary>
-        public const int CSIDL_FAVORITES = 0x0006;
+        ///// <summary>
+        ///// %ALLUSERS%\Documents
+        ///// </summary>
+        //internal const int CSIDL_COMMON_DOCUMENTS = 0x002e;
 
-        /// <summary>
-        /// combine with CSIDL_ value to force folder creation in SHGetFolderPath()
-        /// </summary>
-        public const int CSIDL_FLAG_CREATE = 0x8000;
+        ///// <summary></summary>
+        //internal const int CSIDL_COMMON_FAVORITES = 0x001f;
 
-        /// <summary>
-        /// combine with CSIDL_ value to avoid un-expanding environment variables
-        /// </summary>
-        public const int CSIDL_FLAG_DONT_UNEXPAND = 0x2000;
+        ///// <summary>
+        ///// %ALLUSERS%\My Music
+        ///// </summary>
+        //internal const int CSIDL_COMMON_MUSIC = 0x0035;
 
-        /// <summary>
-        /// combine with CSIDL_ value to return an unverified folder path
-        /// </summary>
-        public const int CSIDL_FLAG_DONT_VERIFY = 0x4000;
+        ///// <summary>
+        ///// %ALLUSERS%\My Pictures
+        ///// </summary>
+        //internal const int CSIDL_COMMON_PICTURES = 0x0036;
 
-        /// <summary>
-        /// combine with CSIDL_ value to insure non-alias versions of the pidl
-        /// </summary>
-        public const int CSIDL_FLAG_NO_ALIAS = 0x1000;
+        ///// <summary>
+        ///// %USERNAME%\My Documents
+        ///// </summary>
+        //internal const int CSIDL_PERSONAL = 0x0005;
 
-        /// <summary>
-        /// combine with CSIDL_ value to indicate per-user init (eg. upgrade)
-        /// </summary>
-        public const int CSIDL_FLAG_PER_USER_INIT = 0x0800;
+        ///// <summary>
+        ///// %ALLUSERS%\Startup
+        ///// </summary>
+        //internal const int CSIDL_COMMON_STARTUP = 0x0018;
 
-        /// <summary>windows\fonts</summary>
-        public const int CSIDL_FONTS = 0x0014;
+        ///// <summary>
+        ///// %ALLUSERS%\Templates
+        ///// </summary>
+        //internal const int CSIDL_COMMON_TEMPLATES = 0x002d;
 
-        /// <summary>
-        /// Internet Explorer (icon on desktop)
-        /// </summary>
-        public const int CSIDL_INTERNET = 0x0001;
+        ///// <summary>
+        ///// %ALLUSERS%\My Video
+        ///// </summary>
+        //internal const int CSIDL_COMMON_VIDEO = 0x0037;
 
-        /// <summary>%tmp%</summary>
-        public const int CSIDL_INTERNET_CACHE = 0x0020;
+        ///// <summary>
+        ///// Computers Near Me (computers from Work group membership)
+        ///// </summary>
+        //internal const int CSIDL_COMPUTERSNEARME = 0x003d;
 
-        /// <summary>
-        /// %USERNAME%\Local Settings\Application Data (non roaming)
-        /// </summary>
-        public const int CSIDL_LOCAL_APPDATA = 0x001c;
+        ///// <summary>
+        ///// Network and Dial-up Connections
+        ///// </summary>
+        //internal const int CSIDL_CONNECTIONS = 0x0031;
 
-        /// <summary>
-        /// Personal was just a silly name for My Documents
-        /// </summary>
-        public const int CSIDL_MYDOCUMENTS = CSIDL_PERSONAL;
+        ///// <summary>
+        ///// My Computer\Control Panel
+        ///// </summary>
+        //internal const int CSIDL_CONTROLS = 0x0003;
 
-        /// <summary>
-        /// %USERNAME%\My Music
-        /// </summary>
-        public const int CSIDL_MYMUSIC = 0x000d;
+        ///// <summary>%DESKTOP%</summary>
+        //internal const int CSIDL_DESKTOP = 0x0000;
 
-        /// <summary>
-        /// %USERNAME%\My Pictures
-        /// </summary>
-        public const int CSIDL_MYPICTURES = 0x0027;
+        ///// <summary>
+        ///// %USERNAME%\Desktop
+        ///// </summary>
+        //internal const int CSIDL_DESKTOPDIRECTORY = 0x0010;
 
-        /// <summary>
-        /// %USERNAME%\My Videos
-        /// </summary>
-        public const int CSIDL_MYVIDEO = 0x000e;
+        ///// <summary>My Computer</summary>
+        //internal const int CSIDL_DRIVES = 0x0011;
 
-        /// <summary>
-        /// %USERNAME%\nethood
-        /// </summary>
-        public const int CSIDL_NETHOOD = 0x0013;
+        ///// <summary>
+        ///// %USERNAME%\Favorites
+        ///// </summary>
+        //internal const int CSIDL_FAVORITES = 0x0006;
 
-        /// <summary>
-        /// Network Neighborhood (My Network Places)
-        /// </summary>
-        public const int CSIDL_NETWORK = 0x0012;
+        ///// <summary>
+        ///// combine with CSIDL_ value to force folder creation in SHGetFolderPath()
+        ///// </summary>
+        //internal const int CSIDL_FLAG_CREATE = 0x8000;
 
-        /// <summary>
-        /// %USERNAME%\My Documents
-        /// </summary>
-        public const int CSIDL_PERSONAL = 0x0005;
+        ///// <summary>
+        ///// combine with CSIDL_ value to avoid un-expanding environment variables
+        ///// </summary>
+        //internal const int CSIDL_FLAG_DONT_UNEXPAND = 0x2000;
 
-        /// <summary>
-        /// My Computer\Printers
-        /// </summary>
-        public const int CSIDL_PRINTERS = 0x0004;
+        ///// <summary>
+        ///// combine with CSIDL_ value to return an unverified folder path
+        ///// </summary>
+        //internal const int CSIDL_FLAG_DONT_VERIFY = 0x4000;
 
-        /// <summary>
-        /// %USERNAME%\PrintHood
-        /// </summary>
-        public const int CSIDL_PRINTHOOD = 0x001b;
+        ///// <summary>
+        ///// combine with CSIDL_ value to insure non-alias versions of the pidl
+        ///// </summary>
+        //internal const int CSIDL_FLAG_NO_ALIAS = 0x1000;
 
-        /// <summary>%USERPROFILE%</summary>
-        public const int CSIDL_PROFILE = 0x0028;
+        ///// <summary>
+        ///// combine with CSIDL_ value to indicate per-user init (eg. upgrade)
+        ///// </summary>
+        //internal const int CSIDL_FLAG_PER_USER_INIT = 0x0800;
 
-        /// <summary>%PROGRAMFILES%</summary>
-        public const int CSIDL_PROGRAM_FILES = 0x0026;
+        ///// <summary>windows\fonts</summary>
+        //internal const int CSIDL_FONTS = 0x0014;
 
-        /// <summary>
-        /// %PROGRAMFILES%\Common
-        /// </summary>
-        public const int CSIDL_PROGRAM_FILES_COMMON = 0x002b;
+        ///// <summary>
+        ///// Internet Explorer (icon on desktop)
+        ///// </summary>
+        //internal const int CSIDL_INTERNET = 0x0001;
 
-        /// <summary>
-        /// %PROGRAMFILES(x86)%\Common
-        /// </summary>
-        public const int CSIDL_PROGRAM_FILES_COMMONX86 = 0x002c;
+        ///// <summary>%tmp%</summary>
+        //internal const int CSIDL_INTERNET_CACHE = 0x0020;
 
-        /// <summary>
-        /// /// %PROGRAMFILES(x86)%\
-        /// </summary>
-        public const int CSIDL_PROGRAM_FILESX86 = 0x002a;
+        ///// <summary>
+        ///// %USERNAME%\Local Settings\Application Data (non roaming)
+        ///// </summary>
+        //internal const int CSIDL_LOCAL_APPDATA = 0x001c;
 
-        /// <summary>
-        /// %STARTMENU%\Programs
-        /// </summary>
-        public const int CSIDL_PROGRAMS = 0x0002;
+        ///// <summary>
+        ///// %USERNAME%\My Music
+        ///// </summary>
+        //internal const int CSIDL_MYMUSIC = 0x000d;
 
-        /// <summary>
-        /// %USERNAME%\Recent
-        /// </summary>
-        public const int CSIDL_RECENT = 0x0008;
+        ///// <summary>
+        ///// %USERNAME%\My Pictures
+        ///// </summary>
+        //internal const int CSIDL_MYPICTURES = 0x0027;
 
-        /// <summary>
-        /// %USERNAME%\SendTo
-        /// </summary>
-        public const int CSIDL_SENDTO = 0x0009;
+        ///// <summary>
+        ///// %USERNAME%\My Videos
+        ///// </summary>
+        //internal const int CSIDL_MYVIDEO = 0x000e;
 
-        /// <summary>
-        /// %USERNAME%\Start Menu
-        /// </summary>
-        public const int CSIDL_STARTMENU = 0x000b;
+        ///// <summary>
+        ///// %USERNAME%\nethood
+        ///// </summary>
+        //internal const int CSIDL_NETHOOD = 0x0013;
 
-        /// <summary>
-        /// %STARTMENU%\Programs\Startup
-        /// </summary>
-        public const int CSIDL_STARTUP = 0x0007;
+        ///// <summary>
+        ///// Network Neighborhood (My Network Places)
+        ///// </summary>
+        //internal const int CSIDL_NETWORK = 0x0012;
 
-        /// <summary>
-        /// GetSystemDirectory()
-        /// </summary>
-        public const int CSIDL_SYSTEM = 0x0025;
+        ///// <summary>
+        ///// My Computer\Printers
+        ///// </summary>
+        //internal const int CSIDL_PRINTERS = 0x0004;
 
-        /// <summary>
-        /// x86 system directory
-        /// </summary>
-        public const int CSIDL_SYSTEMX86 = 0x0029;
+        ///// <summary>
+        ///// %USERNAME%\PrintHood
+        ///// </summary>
+        //internal const int CSIDL_PRINTHOOD = 0x001b;
 
-        /// <summary>
-        /// %ALLUSERS%\Templates
-        /// </summary>
-        public const int CSIDL_TEMPLATES = 0x0015;
+        ///// <summary>%USERPROFILE%</summary>
+        //internal const int CSIDL_PROFILE = 0x0028;
 
-        /// <summary>%WINDOWS%</summary>
-        public const int CSIDL_WINDOWS = 0x0024;
+        ///// <summary>%PROGRAMFILES%</summary>
+        //internal const int CSIDL_PROGRAM_FILES = 0x0026;
+
+        ///// <summary>
+        ///// %PROGRAMFILES%\Common
+        ///// </summary>
+        //internal const int CSIDL_PROGRAM_FILES_COMMON = 0x002b;
+
+        ///// <summary>
+        ///// %PROGRAMFILES(x86)%\Common
+        ///// </summary>
+        //internal const int CSIDL_PROGRAM_FILES_COMMONX86 = 0x002c;
+
+        ///// <summary>
+        ///// /// %PROGRAMFILES(x86)%\
+        ///// </summary>
+        //internal const int CSIDL_PROGRAM_FILESX86 = 0x002a;
+
+        ///// <summary>
+        ///// %STARTMENU%\Programs
+        ///// </summary>
+        //internal const int CSIDL_PROGRAMS = 0x0002;
+
+        ///// <summary>
+        ///// %USERNAME%\Recent
+        ///// </summary>
+        //internal const int CSIDL_RECENT = 0x0008;
+
+        ///// <summary>
+        ///// %USERNAME%\SendTo
+        ///// </summary>
+        //internal const int CSIDL_SENDTO = 0x0009;
+
+        ///// <summary>
+        ///// %USERNAME%\Start Menu
+        ///// </summary>
+        //internal const int CSIDL_STARTMENU = 0x000b;
+
+        ///// <summary>
+        ///// %STARTMENU%\Programs\Startup
+        ///// </summary>
+        //internal const int CSIDL_STARTUP = 0x0007;
+
+        ///// <summary>
+        ///// GetSystemDirectory()
+        ///// </summary>
+        //internal const int CSIDL_SYSTEM = 0x0025;
+
+        ///// <summary>
+        ///// x86 system directory
+        ///// </summary>
+        //internal const int CSIDL_SYSTEMX86 = 0x0029;
+
+        ///// <summary>
+        ///// %ALLUSERS%\Templates
+        ///// </summary>
+        //internal const int CSIDL_TEMPLATES = 0x0015;
+
+        ///// <summary>%WINDOWS%</summary>
+        //internal const int CSIDL_WINDOWS = 0x0024;
     }
 }

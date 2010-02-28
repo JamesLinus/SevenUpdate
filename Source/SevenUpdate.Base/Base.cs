@@ -29,7 +29,6 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
 using System.Xml.Serialization;
 using Microsoft.Win32;
 using ProtoBuf;
@@ -184,8 +183,6 @@ namespace SevenUpdate.Base
         public static string Locale { get; set; }
 
         #endregion
-
-        #region Methods
 
         #region Conversions
 
@@ -552,14 +549,9 @@ namespace SevenUpdate.Base
             }
         }
 
-        #endregion
-
         public static Stream DownloadFile(string url)
         {
             //Get a data stream from the url
-            //WebRequest req = WebRequest.Create(url);
-            //WebResponse response = req.GetResponse();
-
             var wc = new WebClient();
             return new MemoryStream(wc.DownloadData(url));
         }
@@ -619,21 +611,21 @@ namespace SevenUpdate.Base
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
-            //var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
+            var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
             {
-                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
-                //T temp;
-                //try
-                //{
-                //    temp = (T) s.Deserialize(stream);
-                //    stream.Position = 0;
-                //}
-                //catch
-                //{
-                //    temp = null;
-                //}
-                //return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
+                T temp;
+                try
+                {
+                    temp = (T)s.Deserialize(stream);
+                    stream.Position = 0;
+                }
+                catch
+                {
+                    stream.Position = 0;
+                    temp = null;
+                }
+                return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
             }
             catch (Exception e)
             {

@@ -93,7 +93,7 @@ namespace SevenUpdate.Base
     /// Contains a string indicating the language and a value
     /// </summary>
     [ProtoContract, XmlType(Namespace = "http://sevenupdate.com", AnonymousType = true)]
-    public class LocaleString : INotifyPropertyChanged
+    public class LocaleString
     {
         /// <summary>an ISO language code</summary>
         [ProtoMember(1), XmlAttribute("lang", Namespace = "")]
@@ -102,27 +102,6 @@ namespace SevenUpdate.Base
         /// <summary>The value of the string</summary>
         [ProtoMember(2), XmlAttribute("value", Namespace = "")]
         public string Value { get; set; }
-
-        #region Implementation of INotifyPropertyChanged
-
-        /// <summary>
-        /// Occurs when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name="name"></param>
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
-
-        #endregion
     }
 
     #endregion
@@ -408,7 +387,7 @@ namespace SevenUpdate.Base
     /// Information on how to install a software update
     /// </summary>
     [ProtoContract, XmlType("update", Namespace = "http://sevenupdate.com", AnonymousType = true)]
-    public class Update : INotifyPropertyChanged
+    public class Update
     {
         #region Required Properties
 
@@ -495,34 +474,13 @@ namespace SevenUpdate.Base
         public ulong Size { get; set; }
 
         #endregion
-
-        #region Implementation of INotifyPropertyChanged
-
-        /// <summary>
-        /// Occurs when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name="name"></param>
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
-
-        #endregion
     }
 
     /// <summary>
     /// Information about a file within an update
     /// </summary>
     [ProtoContract, XmlType("file", Namespace = "http://sevenupdate.com", AnonymousType = true)]
-    public class UpdateFile : INotifyPropertyChanged
+    public class UpdateFile
     {
         #region Required Properties
 
@@ -563,27 +521,6 @@ namespace SevenUpdate.Base
         /// </summary>
         [ProtoMember(6, IsRequired = false), XmlAttribute("args")]
         public string Args { get; set; }
-
-        #endregion
-
-        #region Implementation of INotifyPropertyChanged
-
-        /// <summary>
-        /// Occurs when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name="name"></param>
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
 
         #endregion
     }
@@ -664,7 +601,7 @@ namespace SevenUpdate.Base
     /// A shortcut to be created within an update
     /// </summary>
     [ProtoContract, XmlType("shortcut", Namespace = "http://sevenupdate.com", AnonymousType = true)]
-    public class Shortcut : INotifyPropertyChanged
+    public class Shortcut
     {
         #region Required Properties
 
@@ -707,27 +644,6 @@ namespace SevenUpdate.Base
         /// </summary>
         [ProtoMember(6, IsRequired = false), XmlAttribute("target")]
         public string Target { get; set; }
-
-        #endregion
-
-        #region Implementation of INotifyPropertyChanged
-
-        /// <summary>
-        /// Occurs when a property has changed
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name="name"></param>
-        protected void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
 
         #endregion
     }

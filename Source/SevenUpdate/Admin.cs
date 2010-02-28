@@ -268,7 +268,7 @@ namespace SevenUpdate
     /// <summary>
     /// Provides static methods that control SevenUpdate.Admin for operations that require administrator access
     /// </summary>
-    internal class Admin : AdminCallBack
+    internal static class Admin
     {
         /// <summary>
         /// The client of the WCF service

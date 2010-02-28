@@ -140,7 +140,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
         /// </summary>
-        internal static bool DisplayOptionalUpdates { get; set; }
+        internal static bool DisplayOptionalUpdates { private get; set; }
 
         #endregion
 

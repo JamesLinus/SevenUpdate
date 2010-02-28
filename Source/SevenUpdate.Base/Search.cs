@@ -297,10 +297,8 @@ namespace SevenUpdate.Base
                 {
                     try
                     {
-                        Sui app;
-
                         // Loads a SUI that was downloaded
-                        app = Base.Deserialize<Sui>(Base.DownloadFile(t.Source), t.Source);
+                        var app = Base.Deserialize<Sui>(Base.DownloadFile(t.Source), t.Source);
 
                         // Check to see if any updates are avalible and exclude hidden updates
                         // If there is an update avaliable, add it.

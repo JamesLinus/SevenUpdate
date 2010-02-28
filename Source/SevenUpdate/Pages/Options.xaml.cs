@@ -78,7 +78,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                LoadSul(Base.Base.Deserialize<ObservableCollection<Sua>>(Base.Base.DownloadFile(SulLocation), SulLocation.ToString()));
+                LoadSul(Base.Base.Deserialize<ObservableCollection<Sua>>(Base.Base.DownloadFile(SulLocation), SulLocation));
             }
             catch (WebException)
             {
