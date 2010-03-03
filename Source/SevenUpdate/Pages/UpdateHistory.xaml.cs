@@ -35,26 +35,26 @@ using SevenUpdate.Windows;
 namespace SevenUpdate.Pages
 {
     /// <summary>
-    /// Interaction logic for Update_History.xaml
+    ///   Interaction logic for Update_History.xaml
     /// </summary>
     public partial class UpdateHistory : Page
     {
         #region Global Vars
 
         /// <summary>
-        /// The location of the update history file
+        ///   The location of the update history file
         /// </summary>
         private static readonly string HistoryFile = Base.Base.AllUserStore + "History.suh";
 
         /// <summary>
-        /// Gets or Sets a collection of SUH items
+        ///   Gets or Sets a collection of SUH items
         /// </summary>
         private ObservableCollection<Suh> updateHistory;
 
         #endregion
 
         /// <summary>
-        /// The constructor for the Update History page
+        ///   The constructor for the Update History page
         /// </summary>
         public UpdateHistory()
         {
@@ -64,7 +64,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        /// Gets the update history and loads it to the listView
+        ///   Gets the update history and loads it to the listView
         /// </summary>
         private void GetHistory()
         {
@@ -78,7 +78,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
+        ///   Adds the
+        ///   <see cref = "GridViewColumn" />
+        ///   's of the
+        ///   <see cref = "ListView" />
+        ///   to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -104,7 +108,7 @@ namespace SevenUpdate.Pages
         #region UI Events
 
         /// <summary>
-        /// Loads the update history when the page is loaded
+        ///   Loads the update history when the page is loaded
         /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -112,7 +116,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates back to the Main page
+        ///   Navigates back to the Main page
         /// </summary>
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
@@ -122,7 +126,11 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView" /> when the <c>updateHistory</c> collection changes
+        ///   Updates the
+        ///   <see cref = "CollectionView" />
+        ///   when the
+        ///   <c>updateHistory</c>
+        ///   collection changes
         /// </summary>
         private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -134,7 +142,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details
+        ///   Shows the selected update details
         /// </summary>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -145,7 +153,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details
+        ///   Shows the selected update details
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {

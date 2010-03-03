@@ -29,7 +29,7 @@ using SevenUpdate.Base;
 namespace SevenUpdate.Admin.WCF
 {
     /// <summary>
-    /// Class containing events and delegates for the EventService
+    ///   Class containing events and delegates for the EventService
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public sealed class EventService : IEventSystem
@@ -37,46 +37,60 @@ namespace SevenUpdate.Admin.WCF
         #region Delegates
 
         /// <summary>
-        /// A callback delegate for a WCF Event
+        ///   A callback delegate for a WCF Event
         /// </summary>
         public delegate void CallbackDelegate();
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadCompleted" /> event
+        ///   A callback delegate for the
+        ///   <see cref = "DownloadCompleted" />
+        ///   event
         /// </summary>
-        /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        /// <param name = "errorOccurred">
+        ///   <c>true</c>
+        ///   if an error occurred, otherwise
+        ///   <c>false</c>
+        /// </param>
         public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadProgressChanged" /> event
+        ///   A callback delegate for the
+        ///   <see cref = "DownloadProgressChanged" />
+        ///   event
         /// </summary>
-        /// <param name="bytesTransferred">The number of bytes downloaded</param>
-        /// <param name="bytesTotal">The total number of bytes to download</param>
-        /// <param name="filesTransferred">The number of files downloaded</param>
-        /// <param name="filesTotal">The total number of files to download</param>
+        /// <param name = "bytesTransferred">The number of bytes downloaded</param>
+        /// <param name = "bytesTotal">The total number of bytes to download</param>
+        /// <param name = "filesTransferred">The number of files downloaded</param>
+        /// <param name = "filesTotal">The total number of files to download</param>
         public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
 
         /// <summary>
-        /// A callback delegate for the <see cref="DownloadProgressChanged" /> event
+        ///   A callback delegate for the
+        ///   <see cref = "DownloadProgressChanged" />
+        ///   event
         /// </summary>
-        /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType" /> of the error that occurred</param>
+        /// <param name = "exception">The exception data</param>
+        /// <param name = "type">The
+        ///   <see cref = "ErrorType" />
+        ///   of the error that occurred</param>
         public delegate void ErrorOccurredCallbackDelegate(Exception exception, ErrorType type);
 
         /// <summary>
-        /// A callback delegate for the<see cref="InstallCompleted" /> event
+        ///   A callback delegate for the
+        ///   <see cref = "InstallCompleted" />
+        ///   event
         /// </summary>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of failed updates</param>
+        /// <param name = "updatesInstalled">The number of updates installed</param>
+        /// <param name = "updatesFailed">The number of failed updates</param>
         public delegate void InstallCompletedCallbackDelegate(int updatesInstalled, int updatesFailed);
 
         /// <summary>
-        /// A callback Delegate for a WCF Event
+        ///   A callback Delegate for a WCF Event
         /// </summary>
-        /// <param name="updateName">The name of the update being installed</param>
-        /// <param name="progress">The progress of the update being installed</param>
-        /// <param name="updatesCompleted">The number of updates completed</param>
-        /// <param name="totalUpdates">The total number of updates being installed</param>
+        /// <param name = "updateName">The name of the update being installed</param>
+        /// <param name = "progress">The progress of the update being installed</param>
+        /// <param name = "updatesCompleted">The number of updates completed</param>
+        /// <param name = "totalUpdates">The total number of updates being installed</param>
         public delegate void InstallProgressCallbackDelegate(string updateName, int progress, int updatesCompleted, int totalUpdates);
 
         #endregion
@@ -84,37 +98,37 @@ namespace SevenUpdate.Admin.WCF
         #region Callbacks
 
         /// <summary>
-        /// Occurs when the download of updates has completed
+        ///   Occurs when the download of updates has completed
         /// </summary>
         public static DownloadCompletedCallbackDelegate DownloadCompleted;
 
         /// <summary>
-        /// Occurs when the install progress has changed
+        ///   Occurs when the install progress has changed
         /// </summary>
         public static DownloadProgressChangedCallbackDelegate DownloadProgressChanged;
 
         /// <summary>
-        /// Occurs when a error occurs when downloading or installing updates
+        ///   Occurs when a error occurs when downloading or installing updates
         /// </summary>
         public static ErrorOccurredCallbackDelegate ErrorOccurred;
 
         /// <summary>
-        /// Occurs when the installation of updates has completed
+        ///   Occurs when the installation of updates has completed
         /// </summary>
         public static InstallCompletedCallbackDelegate InstallCompleted;
 
         /// <summary>
-        /// Occurs when the install progress has changed
+        ///   Occurs when the install progress has changed
         /// </summary>
         public static InstallProgressCallbackDelegate InstallProgressChanged;
 
         /// <summary>
-        /// Raises an event when the client is connected
+        ///   Raises an event when the client is connected
         /// </summary>
         public static event CallbackDelegate ClientConnected;
 
         /// <summary>
-        /// Raises an event when the client disconnects
+        ///   Raises an event when the client disconnects
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
@@ -123,7 +137,7 @@ namespace SevenUpdate.Admin.WCF
         #region IEventSystem Members
 
         /// <summary>
-        /// Subscribes to the WCF
+        ///   Subscribes to the WCF
         /// </summary>
         public void Subscribe()
         {
@@ -137,7 +151,7 @@ namespace SevenUpdate.Admin.WCF
         }
 
         /// <summary>
-        /// unsubscribes from the client
+        ///   unsubscribes from the client
         /// </summary>
         public void UnSubscribe()
         {

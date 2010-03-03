@@ -31,7 +31,7 @@ namespace SevenUpdate.Base
     internal static class NativeMethods
     {
         /// <summary>
-        /// Gets the system folder(s) of a path
+        ///   Gets the system folder(s) of a path
         /// </summary>
         /// <returns>a string of the path with expanded system variables</returns>
         [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
@@ -39,17 +39,17 @@ namespace SevenUpdate.Base
     }
 
     /// <summary>
-    /// Defines constants for file system locations
+    ///   Defines constants for file system locations
     /// </summary>
     internal static class FileSystemLocations
     {
         /// <summary>
-        /// ALLUSERS%\Start Menu\Programs
+        ///   ALLUSERS%\Start Menu\Programs
         /// </summary>
         internal const int CSIDL_COMMON_PROGRAMS = 0x0017;
 
         /// <summary>
-        /// %ALLUSERS%\Start Menu
+        ///   %ALLUSERS%\Start Menu
         /// </summary>
         internal const int CSIDL_COMMON_STARTMENU = 0x0016;
 

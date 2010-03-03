@@ -45,17 +45,17 @@ namespace SevenUpdate.Pages
     #region EventArgs
 
     /// <summary>
-    /// Provides event data for the UpdateSelection event
+    ///   Provides event data for the UpdateSelection event
     /// </summary>
     internal sealed class UpdateSelectionChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// Contains event data associated with this event
+        ///   Contains event data associated with this event
         /// </summary>
-        /// <param name="importantUpdates">The number of Important updates selected</param>
-        /// <param name="optionalUpdates">The number of Optional updates selected</param>
-        /// <param name="importantDownloadSize">A value indicating the download size of the Important updates</param>
-        /// <param name="optionalDownloadSize">A value indicating the download size of the Optional updates</param>
+        /// <param name = "importantUpdates">The number of Important updates selected</param>
+        /// <param name = "optionalUpdates">The number of Optional updates selected</param>
+        /// <param name = "importantDownloadSize">A value indicating the download size of the Important updates</param>
+        /// <param name = "optionalDownloadSize">A value indicating the download size of the Optional updates</param>
         public UpdateSelectionChangedEventArgs(int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
         {
             ImportantUpdates = importantUpdates;
@@ -68,22 +68,22 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Gets the number of Important Updates selected
+        ///   Gets the number of Important Updates selected
         /// </summary>
         internal int ImportantUpdates { get; private set; }
 
         /// <summary>
-        /// Gets the number of Optional Updates selected
+        ///   Gets the number of Optional Updates selected
         /// </summary>
         internal int OptionalUpdates { get; private set; }
 
         /// <summary>
-        /// Gets the total download size in bytes of the important updates
+        ///   Gets the total download size in bytes of the important updates
         /// </summary>
         internal ulong ImportantDownloadSize { get; private set; }
 
         /// <summary>
-        /// Gets the total download size in bytes of the optional updates
+        ///   Gets the total download size in bytes of the optional updates
         /// </summary>
         internal ulong OptionalDownloadSize { get; private set; }
     }
@@ -91,24 +91,24 @@ namespace SevenUpdate.Pages
     #endregion
 
     /// <summary>
-    /// Interaction logic for Update_Info.xaml
+    ///   Interaction logic for Update_Info.xaml
     /// </summary>
     public sealed partial class UpdateInfo : Page
     {
         #region Structs
 
         /// <summary>
-        /// The indices of an update
+        ///   The indices of an update
         /// </summary>
         private struct Indices
         {
             /// <summary>
-            /// Gets or Sets the position of the Application information of an update
+            ///   Gets or Sets the position of the Application information of an update
             /// </summary>
             internal int AppIndex { get; set; }
 
             /// <summary>
-            /// Gets or Sets the position of the update information within the Application information of an update
+            ///   Gets or Sets the position of the update information within the Application information of an update
             /// </summary>
             internal int UpdateIndex { get; set; }
         }
@@ -118,34 +118,34 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
-        /// Gets an image of a blue arrow
+        ///   Gets an image of a blue arrow
         /// </summary>
         private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets an image of a green arrow
+        ///   Gets an image of a green arrow
         /// </summary>
         private readonly BitmapImage greenArrow = new BitmapImage(new Uri("/Images/GreenArrow.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets or Sets a list of indices relating to the current Update Collection
+        ///   Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<Indices> indices;
 
         /// <summary>
-        /// Gets or Sets a value indicating if one or more updates were hidden
+        ///   Gets or Sets a value indicating if one or more updates were hidden
         /// </summary>
         private bool AreHiddenUpdates { get; set; }
 
         /// <summary>
-        /// Gets or Sets a value indicating to expand the Optional Updates Group by default.
+        ///   Gets or Sets a value indicating to expand the Optional Updates Group by default.
         /// </summary>
         internal static bool DisplayOptionalUpdates { private get; set; }
 
         #endregion
 
         /// <summary>
-        /// Constructor for the Update Info Page
+        ///   Constructor for the Update Info Page
         /// </summary>
         public UpdateInfo()
         {
@@ -157,12 +157,12 @@ namespace SevenUpdate.Pages
         #region Event Declarations
 
         /// <summary>
-        /// Occurs when the update selection has changed
+        ///   Occurs when the update selection has changed
         /// </summary>
         internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChangedEventHandler;
 
         /// <summary>
-        /// Occurs when the user cancels their update selection
+        ///   Occurs when the user cancels their update selection
         /// </summary>
         internal static event EventHandler CanceledSelectionEventHandler;
 
@@ -171,9 +171,13 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        /// Loops through the <see cref="ListView" /> and updates the source when the update selection has been saved
+        ///   Loops through the
+        ///   <see cref = "ListView" />
+        ///   and updates the source when the update selection has been saved
         /// </summary>
-        /// <param name="element">The <see cref="DependencyObject" /></param>
+        /// <param name = "element">The
+        ///   <see cref = "DependencyObject" />
+        /// </param>
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -195,7 +199,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Saves the update selection
+        ///   Saves the update selection
         /// </summary>
         private void SaveUpdateSelection()
         {
@@ -259,7 +263,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the updates to the list
+        ///   Adds the updates to the list
         /// </summary>
         private void AddUpdates()
         {
@@ -289,7 +293,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
+        ///   Adds the
+        ///   <see cref = "GridViewColumn" />
+        ///   's of the
+        ///   <see cref = "ListView" />
+        ///   to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -308,7 +316,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the update information in the sidebar
+        ///   Shows the update information in the sidebar
         /// </summary>
         private void ShowLabels()
         {
@@ -324,7 +332,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Hides the update information in the sidebar
+        ///   Hides the update information in the sidebar
         /// </summary>
         private void HideLabels()
         {
@@ -346,7 +354,7 @@ namespace SevenUpdate.Pages
         #region Buttons
 
         /// <summary>
-        /// Navigates back to the Main page
+        ///   Navigates back to the Main page
         /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -356,7 +364,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Saves the selection of updates and navigates back to the Main page
+        ///   Saves the selection of updates and navigates back to the Main page
         /// </summary>
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
@@ -370,7 +378,8 @@ namespace SevenUpdate.Pages
         #region TextBlocks
 
         /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock" />
+        ///   Underlines the text when mouse is over the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -379,7 +388,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
+        ///   Removes the Underlined text when mouse is leaves the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -388,7 +398,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Launches the More Information <c>Url</c> of the update
+        ///   Launches the More Information
+        ///   <c>Url</c>
+        ///   of the update
         /// </summary>
         private void UrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -402,7 +414,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Launches the Help <c>Url</c> of the update
+        ///   Launches the Help
+        ///   <c>Url</c>
+        ///   of the update
         /// </summary>
         private void UrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -418,7 +432,7 @@ namespace SevenUpdate.Pages
         #endregion
 
         /// <summary>
-        /// Loads the updates found into the UI
+        ///   Loads the updates found into the UI
         /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -429,7 +443,11 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView" /> when the <c>updateHistory</c> collection changes
+        ///   Updates the
+        ///   <see cref = "CollectionView" />
+        ///   when the
+        ///   <c>updateHistory</c>
+        ///   collection changes
         /// </summary>
         private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -441,7 +459,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details
+        ///   Shows the selected update details
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
@@ -484,7 +502,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details in the sidebar when the selection changes
+        ///   Shows the selected update details in the sidebar when the selection changes
         /// </summary>
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -533,7 +551,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Expands the group expander based on the which link was clicked from the main page
+        ///   Expands the group expander based on the which link was clicked from the main page
         /// </summary>
         private void Expander_Loaded(object sender, RoutedEventArgs e)
         {

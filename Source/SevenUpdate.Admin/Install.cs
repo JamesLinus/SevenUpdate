@@ -39,39 +39,43 @@ using File = System.IO.File;
 namespace SevenUpdate.Admin
 {
     /// <summary>
-    /// Class containing methods to install updates
+    ///   Class containing methods to install updates
     /// </summary>
     internal static class Install
     {
         #region Global Vars
 
         /// <summary>
-        /// Gets an int that indicates to move a file on reboot
+        ///   Gets an int that indicates to move a file on reboot
         /// </summary>
         private const int MoveOnReboot = 5;
 
         /// <summary>
-        /// The localized name of the current update being installed
+        ///   The localized name of the current update being installed
         /// </summary>
         private static string currentUpdateName;
 
         /// <summary>
-        /// The index position of the current update being installed
+        ///   The index position of the current update being installed
         /// </summary>
         private static int updateIndex;
 
         /// <summary>
-        /// The total number of updates being installed
+        ///   The total number of updates being installed
         /// </summary>
         private static int updateCount;
 
         /// <summary>
-        /// Moves or deletes a file on reboot
+        ///   Moves or deletes a file on reboot
         /// </summary>
-        /// <param name="lpExistingFileName">The source filename</param>
-        /// <param name="lpNewFileName">The destination filename</param>
-        /// <param name="dwFlags">A int indicating the move operation to perform</param>
-        /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
+        /// <param name = "lpExistingFileName">The source filename</param>
+        /// <param name = "lpNewFileName">The destination filename</param>
+        /// <param name = "dwFlags">A int indicating the move operation to perform</param>
+        /// <returns>
+        ///   <c>true</c>
+        ///   if successful, otherwise
+        ///   <c>false</c>
+        /// </returns>
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
@@ -87,7 +91,9 @@ namespace SevenUpdate.Admin
 
         #region Update Installation
 
-        /// <summary>Installs updates</summary>
+        /// <summary>
+        ///   Installs updates
+        /// </summary>
         internal static void InstallUpdates(Collection<Sui> applications)
         {
             if (applications == null)
@@ -254,9 +260,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Sets the registry items of an update
+        ///   Sets the registry items of an update
         /// </summary>
-        /// <param name="regItems">The registry changes to install on the system</param>
+        /// <param name = "regItems">The registry changes to install on the system</param>
         /// <returns>a bool value indicating if an error occurred</returns>
         private static bool SetRegistryItems(IList<RegistryItem> regItems)
         {
@@ -338,11 +344,15 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Installs the shortcuts of an update
+        ///   Installs the shortcuts of an update
         /// </summary>
-        /// <param name="shortcuts">the shortcuts to install on the system</param>
-        /// <param name="appDirectory">the directory where the application is installed</param>
-        /// <param name="is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
+        /// <param name = "shortcuts">the shortcuts to install on the system</param>
+        /// <param name = "appDirectory">the directory where the application is installed</param>
+        /// <param name = "is64Bit">
+        ///   <c>true</c>
+        ///   if the application is 64 bit, otherwise
+        ///   <c>false</c>
+        /// </param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, string appDirectory, bool is64Bit)
         {
             if (shortcuts == null)
@@ -397,11 +407,15 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Installs the files in the update
+        ///   Installs the files in the update
         /// </summary>
-        /// <param name="files">the collection of files to update</param>
-        /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
-        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
+        /// <param name = "files">the collection of files to update</param>
+        /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
+        /// <returns>
+        ///   <c>true</c>
+        ///   if updated all files without errors, otherwise
+        ///   <c>false</c>
+        /// </returns>
         private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             var error = false;
@@ -535,11 +549,15 @@ namespace SevenUpdate.Admin
         #region Update History
 
         /// <summary>
-        /// Adds an update to the update history
+        ///   Adds an update to the update history
         /// </summary>
-        /// <param name="updateInfo">the update information</param>
-        /// <param name="failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
-        /// <param name="appInfo"> the application information</param>
+        /// <param name = "updateInfo">the update information</param>
+        /// <param name = "failed">
+        ///   <c>true</c>
+        ///   if the update failed, otherwise
+        ///   <c>false</c>
+        /// </param>
+        /// <param name = "appInfo">the application information</param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
             var history = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HistoryFile) ?? new Collection<Suh>();

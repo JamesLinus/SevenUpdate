@@ -32,7 +32,7 @@ using SevenUpdate.Base;
 namespace SevenUpdate.Converters
 {
     /// <summary>
-    /// Converts Importance to a localized string
+    ///   Converts Importance to a localized string
     /// </summary>
     [ValueConversion(typeof (Importance), typeof (string))]
     public class ImportanceGroupConverter : IValueConverter
@@ -40,7 +40,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -59,7 +59,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -71,7 +71,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a string to a localized string
+    ///   Converts a string to a localized string
     /// </summary>
     [ValueConversion(typeof (string), typeof (string))]
     public class StringToLocaleConverter : IValueConverter
@@ -79,7 +79,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -89,7 +89,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -101,7 +101,9 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a <see cref="LocaleString" /> to a localized string
+    ///   Converts a
+    ///   <see cref = "LocaleString" />
+    ///   to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
     public class LocaleStringConverter : IValueConverter
@@ -109,7 +111,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -129,7 +131,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -141,7 +143,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a collection of UpdateFiles to a string representing the size
+    ///   Converts a collection of UpdateFiles to a string representing the size
     /// </summary>
     [ValueConversion(typeof (UpdateFile), typeof (string))]
     public class FileSizeConverter : IValueConverter
@@ -149,7 +151,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -160,7 +162,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -172,7 +174,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts an Enum to a bool value
+    ///   Converts an Enum to a bool value
     /// </summary>
     [ValueConversion(typeof (UpdateStatus), typeof (bool))]
     public class EnumToBoolConverter : IValueConverter
@@ -180,7 +182,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -190,7 +192,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -202,7 +204,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    /// Converts a Bool to a readable string
+    ///   Converts a Bool to a readable string
     /// </summary>
     [ValueConversion(typeof (bool), typeof (string))]
     public class BoolToStringConverter : IValueConverter
@@ -210,7 +212,7 @@ namespace SevenUpdate.Converters
         #region IValueConverter Members
 
         /// <summary>
-        /// Converts a object into another object
+        ///   Converts a object into another object
         /// </summary>
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -222,7 +224,7 @@ namespace SevenUpdate.Converters
         }
 
         /// <summary>
-        /// Converts a converted object back into it's original form
+        ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

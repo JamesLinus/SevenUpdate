@@ -39,29 +39,31 @@ using SevenUpdate.Windows;
 namespace SevenUpdate.Pages
 {
     /// <summary>
-    /// Interaction logic for Update_History.xaml
+    ///   Interaction logic for Update_History.xaml
     /// </summary>
     public sealed partial class RestoreUpdates : Page
     {
         #region Global Vars
 
         /// <summary>
-        /// The disabled shield image
+        ///   The disabled shield image
         /// </summary>
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
-        /// <summary>The UAC shield</summary>
+        /// <summary>
+        ///   The UAC shield
+        /// </summary>
         private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets or Sets a collection of SUH items
+        ///   Gets or Sets a collection of SUH items
         /// </summary>
         private ObservableCollection<Suh> hiddenUpdates;
 
         #endregion
 
         /// <summary>
-        /// The constructor for Restore Updates page
+        ///   The constructor for Restore Updates page
         /// </summary>
         public RestoreUpdates()
         {
@@ -74,7 +76,7 @@ namespace SevenUpdate.Pages
         #region Event Declarations
 
         /// <summary>
-        /// Occurs when one or more hidden updates have been restored
+        ///   Occurs when one or more hidden updates have been restored
         /// </summary>
         public static event EventHandler<EventArgs> RestoredHiddenUpdateEventHandler;
 
@@ -83,7 +85,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        /// Gets the hidden updates and loads them in the listView
+        ///   Gets the hidden updates and loads them in the listView
         /// </summary>
         private void GetHiddenUpdates()
         {
@@ -96,7 +98,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
+        ///   Adds the
+        ///   <see cref = "GridViewColumn" />
+        ///   's of the
+        ///   <see cref = "ListView" />
+        ///   to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -121,7 +127,7 @@ namespace SevenUpdate.Pages
         #region Buttons
 
         /// <summary>
-        /// Navigates to the Main page
+        ///   Navigates to the Main page
         /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
@@ -129,7 +135,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Unhides one or more updates and navigates to the Main page
+        ///   Unhides one or more updates and navigates to the Main page
         /// </summary>
         private void Restore_Click(object sender, RoutedEventArgs e)
         {
@@ -153,10 +159,14 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView" /> when the <c>hiddenUpdates</c> collection changes
+        ///   Updates the
+        ///   <see cref = "CollectionView" />
+        ///   when the
+        ///   <c>hiddenUpdates</c>
+        ///   collection changes
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void HiddenUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -167,7 +177,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI when an update check box is clicked
+        ///   Updates the UI when an update check box is clicked
         /// </summary>
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
@@ -189,7 +199,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Limit the size of the <see cref="GridViewColumn" /> when it's being resized
+        ///   Limit the size of the
+        ///   <see cref = "GridViewColumn" />
+        ///   when it's being resized
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -197,7 +209,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details
+        ///   Shows the selected update details
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
@@ -206,7 +218,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the selected update details
+        ///   Shows the selected update details
         /// </summary>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -219,10 +231,10 @@ namespace SevenUpdate.Pages
         #endregion
 
         /// <summary>
-        /// Loads the collection of hidden updates when the page is loaded
+        ///   Loads the collection of hidden updates when the page is loaded
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHiddenUpdates();

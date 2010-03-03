@@ -41,46 +41,46 @@ namespace SevenUpdate.Base
     #region Event Args
 
     /// <summary>
-    /// Indicates a type of error that can occur
+    ///   Indicates a type of error that can occur
     /// </summary>
     public enum ErrorType
     {
         /// <summary>
-        /// An error that occurred while trying to download updates
+        ///   An error that occurred while trying to download updates
         /// </summary>
         DownloadError,
         /// <summary>
-        /// An error that occurred while trying to install updates
+        ///   An error that occurred while trying to install updates
         /// </summary>
         InstallationError,
         /// <summary>
-        /// A general network connection error
+        ///   A general network connection error
         /// </summary>
         FatalNetworkError,
         /// <summary>
-        /// An unspecified error, non fatal
+        ///   An unspecified error, non fatal
         /// </summary>
         GeneralErrorNonFatal,
         /// <summary>
-        /// An unspecified error that prevents Seven Update from continuing
+        ///   An unspecified error that prevents Seven Update from continuing
         /// </summary>
         FatalError,
         /// <summary>
-        /// An error that occurs while searching for updates
+        ///   An error that occurs while searching for updates
         /// </summary>
         SearchError
     }
 
     /// <summary>
-    /// Provides event data for the ErrorOccurred event
+    ///   Provides event data for the ErrorOccurred event
     /// </summary>
     public sealed class ErrorOccurredEventArgs : EventArgs
     {
         /// <summary>
-        /// Contains event data associated with this event
+        ///   Contains event data associated with this event
         /// </summary>
-        /// <param name="exception">the exception that occurred</param>
-        /// <param name="type">the type of error that occurred</param>
+        /// <param name = "exception">the exception that occurred</param>
+        /// <param name = "type">the type of error that occurred</param>
         public ErrorOccurredEventArgs(Exception exception, ErrorType type)
         {
             Exception = exception;
@@ -88,26 +88,28 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Gets the Exception information of the error that occurred
+        ///   Gets the Exception information of the error that occurred
         /// </summary>
         public Exception Exception { get; private set; }
 
         /// <summary>
-        /// Gets the <see cref="ErrorType"/> of the error that occurred
+        ///   Gets the
+        ///   <see cref = "ErrorType" />
+        ///   of the error that occurred
         /// </summary>
         public ErrorType Type { get; private set; }
     }
 
     /// <summary>
-    /// Provides event data for the SerializationError event
+    ///   Provides event data for the SerializationError event
     /// </summary>
     public sealed class SerializationErrorEventArgs : EventArgs
     {
         /// <summary>
-        /// Contains event data associated with this event
+        ///   Contains event data associated with this event
         /// </summary>
-        /// <param name="e">The exception data</param>
-        /// <param name="file">The full path of the file</param>
+        /// <param name = "e">The exception data</param>
+        /// <param name = "file">The full path of the file</param>
         public SerializationErrorEventArgs(Exception e, string file)
         {
             Exception = e;
@@ -115,12 +117,12 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Gets the exception data
+        ///   Gets the exception data
         /// </summary>
         public Exception Exception { get; private set; }
 
         /// <summary>
-        /// Gets the full path of the file
+        ///   Gets the full path of the file
         /// </summary>
         public string File { get; private set; }
     }
@@ -128,49 +130,49 @@ namespace SevenUpdate.Base
     #endregion
 
     /// <summary>
-    /// Methods that are shared between other classes
+    ///   Methods that are shared between other classes
     /// </summary>
     public static class Base
     {
         #region Global Vars
 
         /// <summary>
-        /// The application directory of Seven Update
+        ///   The application directory of Seven Update
         /// </summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         /// <summary>
-        /// The all users application data location
+        ///   The all users application data location
         /// </summary>
         public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
 
         /// <summary>
-        /// The location of the list of applications Seven Update can update
+        ///   The location of the list of applications Seven Update can update
         /// </summary>
         public static readonly string AppsFile = AllUserStore + "Apps.sul";
 
         /// <summary>
-        /// The location of the application settings file
+        ///   The location of the application settings file
         /// </summary>
         public static readonly string ConfigFile = AllUserStore + "App.config";
 
         /// <summary>
-        /// The location of the hidden updates file
+        ///   The location of the hidden updates file
         /// </summary>
         public static readonly string HiddenFile = AllUserStore + "Hidden.suh";
 
         /// <summary>
-        /// The location of the update history file
+        ///   The location of the update history file
         /// </summary>
         public static readonly string HistoryFile = AllUserStore + "History.suh";
 
         /// <summary>
-        /// The user application data location
+        ///   The user application data location
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
 
         /// <summary>
-        /// Specifies if a reboot is needed
+        ///   Specifies if a reboot is needed
         /// </summary>
         public static bool RebootNeeded
         {
@@ -178,7 +180,7 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Gets or Sets the ISO language code
+        ///   Gets or Sets the ISO language code
         /// </summary>
         public static string Locale { get; set; }
 
@@ -187,9 +189,11 @@ namespace SevenUpdate.Base
         #region Conversions
 
         /// <summary>
-        /// Gets the preferred localized string from a collection of localized strings
+        ///   Gets the preferred localized string from a collection of localized strings
         /// </summary>
-        /// <param name="localeStrings">A collection of <see cref="LocaleString"/>'s</param>
+        /// <param name = "localeStrings">A collection of
+        ///   <see cref = "LocaleString" />
+        ///   's</param>
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
@@ -199,11 +203,11 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Expands the file location variables
+        ///   Expands the file location variables
         /// </summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="dir">a string that contains a directory</param>
-        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name = "path">a string that contains a file path</param>
+        /// <param name = "dir">a string that contains a directory</param>
+        /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string dir, bool is64Bit)
         {
@@ -213,11 +217,15 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Expands the system variables in a string
+        ///   Expands the system variables in a string
         /// </summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="expand"><c>true</c> to expand system variable, <c>false</c> to converts paths into system variables</param>
-        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name = "path">a string that contains a file path</param>
+        /// <param name = "expand">
+        ///   <c>true</c>
+        ///   to expand system variable,
+        ///   <c>false</c>
+        ///   to converts paths into system variables</param>
+        /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
         {
@@ -372,9 +380,9 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Converts bytes into the proper increments depending on size
+        ///   Converts bytes into the proper increments depending on size
         /// </summary>
-        /// <param name="bytes">the fileSize in bytes</param>
+        /// <param name = "bytes">the fileSize in bytes</param>
         /// <returns>returns formatted string of converted bytes</returns>
         public static string ConvertFileSize(ulong bytes)
         {
@@ -390,11 +398,11 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Replaces a string within a string
+        ///   Replaces a string within a string
         /// </summary>
-        /// <param name="complete">the string that will be searched</param>
-        /// <param name="find">a string to find in the complete string</param>
-        /// <param name="replace">a string to use to replace the find string in the complete string</param>
+        /// <param name = "complete">the string that will be searched</param>
+        /// <param name = "find">a string to find in the complete string</param>
+        /// <param name = "replace">a string to use to replace the find string in the complete string</param>
         /// <returns>a string that has the find value replace by the new value</returns>
         public static string Replace(string complete, string find, string replace)
         {
@@ -438,10 +446,10 @@ namespace SevenUpdate.Base
         #region Error Reporting
 
         /// <summary>
-        /// Reports the error that occurred to a log file
+        ///   Reports the error that occurred to a log file
         /// </summary>
-        /// <param name="message">The message to write in the log</param>
-        /// <param name="directoryStore">The directory to store the log</param>
+        /// <param name = "message">The message to write in the log</param>
+        /// <param name = "directoryStore">The directory to store the log</param>
         public static void ReportError(string message, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log");
@@ -452,10 +460,10 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Reports the error that occurred to a log file
+        ///   Reports the error that occurred to a log file
         /// </summary>
-        /// <param name="exception">The exception to write in the log</param>
-        /// <param name="directoryStore">The directory to store the log</param>
+        /// <param name = "exception">The exception to write in the log</param>
+        /// <param name = "directoryStore">The directory to store the log</param>
         public static void ReportError(Exception exception, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log");
@@ -493,9 +501,9 @@ namespace SevenUpdate.Base
         #endregion
 
         /// <summary>
-        /// Gets the SHA1 Hash of a file
+        ///   Gets the SHA1 Hash of a file
         /// </summary>
-        /// <param name="fileLoc">the full path to the file to get the hash from</param>
+        /// <param name = "fileLoc">the full path to the file to get the hash from</param>
         /// <returns>a SHA1 value</returns>
         public static string GetHash(string fileLoc)
         {
@@ -517,12 +525,12 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Starts a process on the system
+        ///   Starts a process on the system
         /// </summary>
-        /// <param name="fileName">The file to execute</param>
-        /// <param name="arguments">The arguments to execute with the file</param>
-        /// <param name="wait">Specifies if Seven Update should wait until the process has finished executing</param>
-        /// <param name="hidden">Specifes if the process should be executed with no UI visibile</param>
+        /// <param name = "fileName">The file to execute</param>
+        /// <param name = "arguments">The arguments to execute with the file</param>
+        /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
+        /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
         /// <returns></returns>
         public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
@@ -559,15 +567,18 @@ namespace SevenUpdate.Base
         #region Serialization Methods
 
         /// <summary>
-        /// DeSerializes an object
+        ///   DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="fileName">the file that contains the object to DeSerialize</param>
-        /// <param name="usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <typeparam name = "T">the object to deserialize</typeparam>
+        /// <param name = "fileName">the file that contains the object to DeSerialize</param>
+        /// <param name = "usePrefix">
+        ///   <c>True</c>
+        ///   to Deserialize with a length prefix, otherwise
+        ///   <c>false</c>
+        /// </param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
-            
             if (File.Exists(fileName))
             {
                 var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
@@ -602,12 +613,16 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// DeSerializes an object
+        ///   DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="stream">The Stream to deserialize</param>
-        /// <param name="sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name="usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <typeparam name = "T">the object to deserialize</typeparam>
+        /// <param name = "stream">The Stream to deserialize</param>
+        /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
+        /// <param name = "usePrefix">
+        ///   <c>True</c>
+        ///   to Deserialize with a length prefix, otherwise
+        ///   <c>false</c>
+        /// </param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
@@ -617,7 +632,7 @@ namespace SevenUpdate.Base
                 T temp;
                 try
                 {
-                    temp = (T)s.Deserialize(stream);
+                    temp = (T) s.Deserialize(stream);
                     stream.Position = 0;
                 }
                 catch
@@ -637,12 +652,16 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Serializes an object into a file
+        ///   Serializes an object into a file
         /// </summary>
-        /// <typeparam name="T">the object</typeparam>
-        /// <param name="item">the object to serialize</param>
-        /// <param name="fileName">the location of a file that will be serialized</param>
-        /// <param name="usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
+        /// <typeparam name = "T">the object</typeparam>
+        /// <param name = "item">the object to serialize</param>
+        /// <param name = "fileName">the location of a file that will be serialized</param>
+        /// <param name = "usePrefix">
+        ///   <c>True</c>
+        ///   to Serialize with a length prefix, otherwise
+        ///   <c>false</c>
+        /// </param>
         public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
             try
@@ -662,19 +681,22 @@ namespace SevenUpdate.Base
                 if (File.Exists(fileName))
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
-                    if (usePrefix)
-                       Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
-                    else
-                        Serializer.Serialize(file, item);
-                      
-                }
-                else
-                {
-                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                    {
                         if (usePrefix)
                             Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                         else
                             Serializer.Serialize(file, item);
+                    }
+                }
+                else
+                {
+                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                    {
+                        if (usePrefix)
+                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        else
+                            Serializer.Serialize(file, item);
+                    }
                 }
             }
             catch (Exception e)
@@ -689,7 +711,7 @@ namespace SevenUpdate.Base
         #region Event Handlers
 
         /// <summary>
-        /// Occurs when an error occurs while serializing or deserializing a object/file
+        ///   Occurs when an error occurs while serializing or deserializing a object/file
         /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
 

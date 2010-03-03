@@ -33,7 +33,7 @@ using SevenUpdate.Properties;
 namespace SevenUpdate.Windows
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///   Interaction logic for MainWindow.xaml
     /// </summary>
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
     public sealed partial class MainWindow : NavigationWindow
@@ -48,10 +48,10 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Sets the Height and Width of the window from the settings
+        ///   Sets the Height and Width of the window from the settings
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void NavigationWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Height = Settings.Default.windowHeight;
@@ -59,10 +59,10 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// When Seven Update is closing, save the Window Width and Height in the settings
+        ///   When Seven Update is closing, save the Window Width and Height in the settings
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void NavigationWindow_Closing(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = Height;

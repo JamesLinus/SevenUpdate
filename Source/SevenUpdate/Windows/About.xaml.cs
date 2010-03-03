@@ -30,12 +30,12 @@ using System.Windows.Navigation;
 namespace SevenUpdate.Windows
 {
     /// <summary>
-    /// Interaction logic for About.xaml
+    ///   Interaction logic for About.xaml
     /// </summary>
     public sealed partial class About : Window
     {
         /// <summary>
-        /// Displays About Information
+        ///   Displays About Information
         /// </summary>
         public About()
         {
@@ -47,7 +47,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Closes the About window
+        ///   Closes the About window
         /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {

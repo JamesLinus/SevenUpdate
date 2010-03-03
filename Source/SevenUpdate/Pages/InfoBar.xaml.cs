@@ -29,12 +29,12 @@ using System.Windows.Input;
 namespace SevenUpdate.Pages
 {
     /// <summary>
-    /// Interaction logic for InfoBar.xaml
+    ///   Interaction logic for InfoBar.xaml
     /// </summary>
     public partial class InfoBar : UserControl
     {
         /// <summary>
-        /// A Control that displays update progress and information
+        ///   A Control that displays update progress and information
         /// </summary>
         public InfoBar()
         {
@@ -42,7 +42,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock" />
+        ///   Underlines the text when mouse is over the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -51,7 +52,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
+        ///   Removes the Underlined text when mouse is leaves the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {

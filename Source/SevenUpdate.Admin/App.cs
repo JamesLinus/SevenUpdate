@@ -38,21 +38,33 @@ using Application = System.Windows.Application;
 
 namespace SevenUpdate.Admin
 {
-    /// <summary>The main class of the application</summary>
+    /// <summary>
+    ///   The main class of the application
+    /// </summary>
     internal class App
     {
         #region Enums
 
-        /// <summary>Defines constants for the notification type, such has SearchComplete</summary>
+        /// <summary>
+        ///   Defines constants for the notification type, such has SearchComplete
+        /// </summary>
         internal enum NotifyType
         {
-            /// <summary>Indicates searching is completed</summary>
+            /// <summary>
+            ///   Indicates searching is completed
+            /// </summary>
             SearchComplete,
-            /// <summary>Indicates the downloading of updates has started</summary>
+            /// <summary>
+            ///   Indicates the downloading of updates has started
+            /// </summary>
             DownloadStarted,
-            /// <summary>Indicates download has completed</summary>
+            /// <summary>
+            ///   Indicates download has completed
+            /// </summary>
             DownloadComplete,
-            /// <summary>Indicates that the installation of updates has begun</summary>
+            /// <summary>
+            ///   Indicates that the installation of updates has begun
+            /// </summary>
             InstallStarted
         }
 
@@ -62,14 +74,18 @@ namespace SevenUpdate.Admin
 
         private static ServiceHost host;
 
-        /// <summary>The notifyIcon used only when Auto Updating</summary>
+        /// <summary>
+        ///   The notifyIcon used only when Auto Updating
+        /// </summary>
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
-        /// <summary>The UI Resource Strings</summary>
+        /// <summary>
+        ///   The UI Resource Strings
+        /// </summary>
         internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
 
         /// <summary>
-        /// Gets the update configuration settings
+        ///   Gets the update configuration settings
         /// </summary>
         public static Config Settings
         {
@@ -80,7 +96,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Gets or Sets a bool value indicating Seven Update UI is currently connected.</summary>
+        /// <summary>
+        ///   Gets or Sets a bool value indicating Seven Update UI is currently connected.
+        /// </summary>
         internal static bool IsClientConnected { get; private set; }
 
         internal static bool IsInstall { get; set; }
@@ -88,9 +106,9 @@ namespace SevenUpdate.Admin
         #endregion
 
         /// <summary>
-        /// The main execution method
+        ///   The main execution method
         /// </summary>
-        /// <param name="args">The command line arguments</param>
+        /// <param name = "args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -341,7 +359,7 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>
-        /// Shuts down the process and removes the icon of the notification bar
+        ///   Shuts down the process and removes the icon of the notification bar
         /// </summary>
         internal static void ShutdownApp()
         {
@@ -361,17 +379,21 @@ namespace SevenUpdate.Admin
             Environment.Exit(0);
         }
 
-        /// <summary>Updates the notify icon text</summary>
-        /// <param name="text">The string to set the notifyIcon text</param>
+        /// <summary>
+        ///   Updates the notify icon text
+        /// </summary>
+        /// <param name = "text">The string to set the notifyIcon text</param>
         internal static void UpdateNotifyIcon(string text)
         {
             NotifyIcon.Text = text;
         }
 
         /// <summary>
-        /// Updates the notifyIcon state
+        ///   Updates the notifyIcon state
         /// </summary>
-        /// <param name="filter">The <see cref="NotifyType" /> to set the notifyIcon to.</param>
+        /// <param name = "filter">The
+        ///   <see cref = "NotifyType" />
+        ///   to set the notifyIcon to.</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
             NotifyIcon.Visible = true;
@@ -394,7 +416,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Starts Seven Update UI</summary>
+        /// <summary>
+        ///   Starts Seven Update UI
+        /// </summary>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -417,7 +441,9 @@ namespace SevenUpdate.Admin
 
         #region Event Methods
 
-        /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
+        /// <summary>
+        ///   Prevents the system from shutting down until the installation is safely stopped
+        /// </summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             if (NotifyIcon != null)
@@ -441,7 +467,9 @@ namespace SevenUpdate.Admin
             e.Cancel = true;
         }
 
-        /// <summary>Occurs when Seven Update UI connects to the admin process</summary>
+        /// <summary>
+        ///   Occurs when Seven Update UI connects to the admin process
+        /// </summary>
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
@@ -449,13 +477,17 @@ namespace SevenUpdate.Admin
                 Download.DownloadUpdates(Base.Base.Deserialize<Collection<Sui>>(Base.Base.UserStore + "Updates.sui"), JobPriority.ForeGround);
         }
 
-        /// <summary>Occurs when the Seven Update UI disconnected</summary>
+        /// <summary>
+        ///   Occurs when the Seven Update UI disconnected
+        /// </summary>
         private static void EventService_ClientDisconnected()
         {
             IsClientConnected = false;
         }
 
-        /// <summary>Error Event when the .NetPipe binding faults</summary>
+        /// <summary>
+        ///   Error Event when the .NetPipe binding faults
+        /// </summary>
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
@@ -472,7 +504,9 @@ namespace SevenUpdate.Admin
             Base.Base.ReportError(e.Message.ToString(), Base.Base.AllUserStore);
         }
 
-        /// <summary>Runs when the search for updates has completed for an auto update</summary>
+        /// <summary>
+        ///   Runs when the search for updates has completed for an auto update
+        /// </summary>
         private static void Search_SearchDone_EventHandler(object sender, SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
@@ -490,7 +524,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Runs when there is an error searching for updates
+        ///   Runs when there is an error searching for updates
         /// </summary>
         private static void Search_ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
         {

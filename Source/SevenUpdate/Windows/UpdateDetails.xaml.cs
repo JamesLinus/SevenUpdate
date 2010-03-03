@@ -30,12 +30,12 @@ using SevenUpdate.Base;
 namespace SevenUpdate.Windows
 {
     /// <summary>
-    /// Interaction logic for Update_Details.xaml
+    ///   Interaction logic for Update_Details.xaml
     /// </summary>
     public sealed partial class UpdateDetails : Window
     {
         /// <summary>
-        /// Constructor for the Update Details window
+        ///   Constructor for the Update Details window
         /// </summary>
         public UpdateDetails()
         {
@@ -43,10 +43,12 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Shows the window and displays the update information
+        ///   Shows the window and displays the update information
         /// </summary>
-        /// <param name="updateInfo">The update information to display</param>
-        /// <returns><c>true</c></returns>
+        /// <param name = "updateInfo">The update information to display</param>
+        /// <returns>
+        ///   <c>true</c>
+        /// </returns>
         internal bool? ShowDialog(Suh updateInfo)
         {
             tbUpdateName.Text = Base.Base.GetLocaleString(updateInfo.Name);
@@ -69,7 +71,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Launches the More Information Url
+        ///   Launches the More Information Url
         /// </summary>
         private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -78,7 +80,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Launches the Help Url
+        ///   Launches the Help Url
         /// </summary>
         private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {

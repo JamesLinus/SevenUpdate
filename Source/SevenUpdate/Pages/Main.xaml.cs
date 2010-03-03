@@ -35,29 +35,29 @@ using SevenUpdate.Windows;
 namespace SevenUpdate.Pages
 {
     /// <summary>
-    /// Interaction logic for Main.xaml
+    ///   Interaction logic for Main.xaml
     /// </summary>
     public sealed partial class Main : Page
     {
         #region Global Vars
 
         /// <summary>
-        /// Gets a green side image
+        ///   Gets a green side image
         /// </summary>
         private readonly BitmapImage greenSide = new BitmapImage(new Uri("/Images/GreenSide.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets a red side image
+        ///   Gets a red side image
         /// </summary>
         private readonly BitmapImage redSide = new BitmapImage(new Uri("/Images/RedSide.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets the Seven Update icon
+        ///   Gets the Seven Update icon
         /// </summary>
         private readonly BitmapImage suIcon = new BitmapImage(new Uri("/Images/Icon.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets a yellow side image
+        ///   Gets a yellow side image
         /// </summary>
         private readonly BitmapImage yellowSide = new BitmapImage(new Uri("/Images/YellowSide.png", UriKind.Relative));
 
@@ -66,60 +66,62 @@ namespace SevenUpdate.Pages
         #region Enums
 
         /// <summary>
-        /// The layout for the Info Panel
+        ///   The layout for the Info Panel
         /// </summary>
         private enum UILayout
         {
-            /// <summary>Canceled Updates</summary>
+            /// <summary>
+            ///   Canceled Updates
+            /// </summary>
             Canceled,
 
             /// <summary>
-            /// Checking for updates
+            ///   Checking for updates
             /// </summary>
             CheckingForUpdates,
 
             /// <summary>
-            /// When connecting to the admin service
+            ///   When connecting to the admin service
             /// </summary>
             ConnectingToService,
 
             /// <summary>
-            /// When downloading of updates has been completed
+            ///   When downloading of updates has been completed
             /// </summary>
             DownloadCompleted,
 
             /// <summary>
-            /// Downloading updates
+            ///   Downloading updates
             /// </summary>
             Downloading,
 
             /// <summary>
-            /// An Error Occurred when downloading/installing updates
+            ///   An Error Occurred when downloading/installing updates
             /// </summary>
             ErrorOccurred,
 
             /// <summary>
-            /// When installation of updates have completed
+            ///   When installation of updates have completed
             /// </summary>
             InstallationCompleted,
 
             /// <summary>
-            /// Installing Updates
+            ///   Installing Updates
             /// </summary>
             Installing,
 
             /// <summary>
-            /// No updates have been found
+            ///   No updates have been found
             /// </summary>
             NoUpdates,
 
             /// <summary>
-            /// A reboot is needed to finish installing updates
+            ///   A reboot is needed to finish installing updates
             /// </summary>
             RebootNeeded,
 
             /// <summary>
-            /// No updates have been found
+            ///   No updates have been found
             /// </summary>
             UpdatesFound,
         }
@@ -127,7 +129,7 @@ namespace SevenUpdate.Pages
         #endregion
 
         /// <summary>
-        /// The constructor for the Main page
+        ///   The constructor for the Main page
         /// </summary>
         public Main()
         {
@@ -147,9 +149,9 @@ namespace SevenUpdate.Pages
         #region Update Event Methods
 
         /// <summary>
-        /// Updates the UI when the installation progress has changed
+        ///   Updates the UI when the installation progress has changed
         /// </summary>
-        /// <param name="e">The InstallProgress data</param>
+        /// <param name = "e">The InstallProgress data</param>
         private void InstallProgressChanged(InstallProgressChangedEventArgs e)
         {
             if (App.IsReconnect)
@@ -175,9 +177,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI when the download progress has changed
+        ///   Updates the UI when the download progress has changed
         /// </summary>
-        /// <param name="e">The DownloadProgress data</param>
+        /// <param name = "e">The DownloadProgress data</param>
         private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
         {
             if (App.IsReconnect)
@@ -198,9 +200,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI when the installation has completed
+        ///   Updates the UI when the installation has completed
         /// </summary>
-        /// <param name="e">The InstallCompleted data</param>
+        /// <param name = "e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
         {
             Settings.Default.lastInstall = DateTime.Now;
@@ -213,9 +215,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI when the downloading of updates has completed
+        ///   Updates the UI when the downloading of updates has completed
         /// </summary>
-        /// <param name="e">The DownloadCompleted data</param>
+        /// <param name = "e">The DownloadCompleted data</param>
         private void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
@@ -225,9 +227,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI the search for updates has completed
+        ///   Updates the UI the search for updates has completed
         /// </summary>
-        /// <param name="e">The SearchComplete data</param>
+        /// <param name = "e">The SearchComplete data</param>
         private void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (e.Applications.Count > 0)
@@ -311,7 +313,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the UI when an error occurs
+        ///   Sets the UI when an error occurs
         /// </summary>
         private void ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
         {
@@ -356,7 +358,7 @@ namespace SevenUpdate.Pages
         #region Invoker Events
 
         /// <summary>
-        /// Sets the UI when the install progress has changed
+        ///   Sets the UI when the install progress has changed
         /// </summary>
         private void InstallProgressChanged_EventHandler(object sender, InstallProgressChangedEventArgs e)
         {
@@ -367,7 +369,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the UI when the download progress has changed
+        ///   Sets the UI when the download progress has changed
         /// </summary>
         private void DownloadProgressChanged_EventHandler(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -378,7 +380,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the UI when the search for updates has completed
+        ///   Sets the UI when the search for updates has completed
         /// </summary>
         private void SearchCompleted_EventHandler(object sender, SearchCompletedEventArgs e)
         {
@@ -389,7 +391,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the UI when the installation of updates has completed
+        ///   Sets the UI when the installation of updates has completed
         /// </summary>
         private void InstallCompleted_EventHandler(object sender, InstallCompletedEventArgs e)
         {
@@ -400,7 +402,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the UI when the downloading of updates has completed
+        ///   Sets the UI when the downloading of updates has completed
         /// </summary>
         private void DownloadCompleted_EventHandler(object sender, DownloadCompletedEventArgs e)
         {
@@ -417,9 +419,13 @@ namespace SevenUpdate.Pages
         #region Update Methods
 
         /// <summary>
-        /// Checks for updates
+        ///   Checks for updates
         /// </summary>
-        /// <param name="auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c></param>
+        /// <param name = "auto">
+        ///   <c>true</c>
+        ///   if it's called because of an auto update check, otherwise
+        ///   <c>false</c>
+        /// </param>
         private void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -432,7 +438,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Checks for updates
+        ///   Checks for updates
         /// </summary>
         private void CheckForUpdates()
         {
@@ -455,7 +461,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Downloads updates
+        ///   Downloads updates
         /// </summary>
         private void DownloadInstallUpdates()
         {
@@ -500,7 +506,7 @@ namespace SevenUpdate.Pages
         #region UI Methods
 
         /// <summary>
-        /// Loads the application settings and initializes event handlers for the pages
+        ///   Loads the application settings and initializes event handlers for the pages
         /// </summary>
         private void LoadSettings()
         {
@@ -550,42 +556,54 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Sets the Main Page UI
+        ///   Sets the Main Page UI
         /// </summary>
-        /// <param name="layout">type of layout to set</param>
+        /// <param name = "layout">type of layout to set</param>
         private void SetUI(UILayout layout)
         {
             SetUI(layout, null, 0, 0);
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar" /> UI
+        ///   Sets the Main Page and
+        ///   <see cref = "InfoBar" />
+        ///   UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
-        /// <param name="errorDescription">The description of the error that occurred</param>
+        /// <param name = "layout">The
+        ///   <see cref = "UILayout" />
+        ///   to set the UI to</param>
+        /// <param name = "errorDescription">The description of the error that occurred</param>
         private void SetUI(UILayout layout, string errorDescription)
         {
             SetUI(layout, errorDescription, 0, 0);
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar" /> UI
+        ///   Sets the Main Page and
+        ///   <see cref = "InfoBar" />
+        ///   UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of updates failed</param>
+        /// <param name = "layout">The
+        ///   <see cref = "UILayout" />
+        ///   to set the UI to</param>
+        /// <param name = "updatesInstalled">The number of updates installed</param>
+        /// <param name = "updatesFailed">The number of updates failed</param>
         private void SetUI(UILayout layout, int updatesInstalled, int updatesFailed)
         {
             SetUI(layout, null, updatesInstalled, updatesFailed);
         }
 
         /// <summary>
-        /// Sets the Main Page and <see cref="InfoBar" /> UI
+        ///   Sets the Main Page and
+        ///   <see cref = "InfoBar" />
+        ///   UI
         /// </summary>
-        /// <param name="layout">The <see cref="UILayout" /> to set the UI to</param>
-        /// <param name="errorDescription">The description of the error that occurred</param>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of updates failed</param>
+        /// <param name = "layout">The
+        ///   <see cref = "UILayout" />
+        ///   to set the UI to</param>
+        /// <param name = "errorDescription">The description of the error that occurred</param>
+        /// <param name = "updatesInstalled">The number of updates installed</param>
+        /// <param name = "updatesFailed">The number of updates failed</param>
         private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
         {
             switch (layout)
@@ -936,7 +954,8 @@ namespace SevenUpdate.Pages
         #region TextBlock
 
         /// <summary>
-        /// Underlines the text when mouse is over the <see cref="TextBlock" />
+        ///   Underlines the text when mouse is over the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -945,7 +964,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Removes the Underlined text when mouse is leaves the <see cref="TextBlock" />
+        ///   Removes the Underlined text when mouse is leaves the
+        ///   <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -954,7 +974,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates to the Options page
+        ///   Navigates to the Options page
         /// </summary>
         private void ChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -962,7 +982,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Checks for updates
+        ///   Checks for updates
         /// </summary>
         private void CheckForUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -970,7 +990,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates to the Update History page
+        ///   Navigates to the Update History page
         /// </summary>
         private void ViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -978,7 +998,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates to the Restore Updates page
+        ///   Navigates to the Restore Updates page
         /// </summary>
         private void RestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -986,7 +1006,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Shows the About Dialog window
+        ///   Shows the About Dialog window
         /// </summary>
         private void About_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -995,7 +1015,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates to the Update Info page
+        ///   Navigates to the Update Info page
         /// </summary>
         private static void ViewOptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -1004,7 +1024,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Navigates to the Update Info page
+        ///   Navigates to the Update Info page
         /// </summary>
         private static void ViewImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -1015,7 +1035,7 @@ namespace SevenUpdate.Pages
         #endregion
 
         /// <summary>
-        /// When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
+        ///   When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
         /// </summary>
         private void CanceledSelection_EventHandler(object sender, EventArgs e)
         {
@@ -1023,7 +1043,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the UI after the user selects updates to install
+        ///   Updates the UI after the user selects updates to install
         /// </summary>
         private void UpdateSelectionChanged_EventHandler(object sender, UpdateSelectionChangedEventArgs e)
         {
@@ -1121,7 +1141,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Checks for updates after hidden updates have been restored
+        ///   Checks for updates after hidden updates have been restored
         /// </summary>
         private void RestoredHiddenUpdate_EventHandler(object sender, EventArgs e)
         {
@@ -1134,7 +1154,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
+        ///   Executes action based on current label. Installed, cancels, and/or searches for updates. it also can reboot the computer.
         /// </summary>
         private void Action_Click(object sender, RoutedEventArgs e)
         {

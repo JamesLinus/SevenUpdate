@@ -20,7 +20,6 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
@@ -40,26 +39,26 @@ using SevenUpdate.Windows;
 namespace SevenUpdate.Pages
 {
     /// <summary>
-    /// Interaction logic for Options.xaml
+    ///   Interaction logic for Options.xaml
     /// </summary>
     public partial class Options : Page
     {
         #region Global Vars
 
         /// <summary>
-        /// The Seven Update list location
+        ///   The Seven Update list location
         /// </summary>
         private const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
 
         /// <summary>
-        /// A collection of SUA's that Seven Update can update
+        ///   A collection of SUA's that Seven Update can update
         /// </summary>
         private ObservableCollection<Sua> machineAppList;
 
         #endregion
 
         /// <summary>
-        /// The constructor for the Options Page
+        ///   The constructor for the Options Page
         /// </summary>
         public Options()
         {
@@ -72,7 +71,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        /// Downloads the Seven Update Application List
+        ///   Downloads the Seven Update Application List
         /// </summary>
         private void DownloadSul()
         {
@@ -87,7 +86,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Loads the configuration and sets the UI
+        ///   Loads the configuration and sets the UI
         /// </summary>
         private void LoadSettings()
         {
@@ -114,7 +113,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
+        ///   Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
         /// </summary>
         private void LoadSul(ObservableCollection<Sua> officialAppList = null)
         {
@@ -178,7 +177,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Updates the list with the <see cref="machineAppList" />
+        ///   Updates the list with the
+        ///   <see cref = "machineAppList" />
         /// </summary>
         private void UpdateList()
         {
@@ -195,7 +195,11 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Adds the <see cref="GridViewColumn" />'s of the <see cref="ListView" /> to be sorted
+        ///   Adds the
+        ///   <see cref = "GridViewColumn" />
+        ///   's of the
+        ///   <see cref = "ListView" />
+        ///   to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -214,7 +218,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Saves the Settings
+        ///   Saves the Settings
         /// </summary>
         private void SaveSettings()
         {
@@ -251,10 +255,10 @@ namespace SevenUpdate.Pages
         #region UI Events
 
         /// <summary>
-        /// When the AutoUpdate selection changes update the shield image
+        ///   When the AutoUpdate selection changes update the shield image
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (cbAutoUpdateMethod.SelectedIndex)
@@ -275,7 +279,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Loads the settings and SUA list when the page is loaded
+        ///   Loads the settings and SUA list when the page is loaded
         /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -287,7 +291,11 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        /// Updates the <see cref="CollectionView" /> when the <c>userAppList</c> collection changes
+        ///   Updates the
+        ///   <see cref = "CollectionView" />
+        ///   when the
+        ///   <c>userAppList</c>
+        ///   collection changes
         /// </summary>
         private void UserAppList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -299,7 +307,9 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Limit the size of the <see cref="GridViewColumn" /> when it's being resized
+        ///   Limit the size of the
+        ///   <see cref = "GridViewColumn" />
+        ///   when it's being resized
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -311,10 +321,10 @@ namespace SevenUpdate.Pages
         #region Buttons
 
         /// <summary>
-        /// Saves the settings and goes back to the Main page
+        ///   Saves the settings and goes back to the Main page
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
@@ -322,10 +332,10 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// Goes back to the Main page without saving the settings
+        ///   Goes back to the Main page without saving the settings
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.GoBack();

@@ -39,31 +39,31 @@ using SevenUpdate.Windows;
 namespace SevenUpdate
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    ///   Interaction logic for App.xaml
     /// </summary>
     public sealed class App
     {
         #region Global Vars
 
         /// <summary>
-        /// Gets a green shield image
+        ///   Gets a green shield image
         /// </summary>
         internal static readonly BitmapImage GreenShield = new BitmapImage(new Uri("/Images/GreenShield.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets a red shield image
+        ///   Gets a red shield image
         /// </summary>
         internal static readonly BitmapImage RedShield = new BitmapImage(new Uri("/Images/RedShield.png", UriKind.Relative));
 
         /// <summary>
-        /// Gets a yellow shield image
+        ///   Gets a yellow shield image
         /// </summary>
         internal static readonly BitmapImage YellowShield = new BitmapImage(new Uri("/Images/YellowShield.png", UriKind.Relative));
 
         #region Properties
 
         /// <summary>
-        /// Gets or Sets a collection of software that Seven Update can check for updates
+        ///   Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
         public static IEnumerable<Sua> AppsToUpdate
         {
@@ -71,7 +71,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets the update configuration settings
+        ///   Gets the update configuration settings
         /// </summary>
         public static Config Settings
         {
@@ -83,35 +83,39 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or Sets a collection of applications to update
+        ///   Gets or Sets a collection of applications to update
         /// </summary>
         internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>
-        /// Gets a value indicating if the current user is running on admin privileges
+        ///   Gets a value indicating if the current user is running on admin privileges
         /// </summary>
-        /// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
+        /// <returns>
+        ///   <c>true</c>
+        ///   if the current user is an admin, otherwise
+        ///   <c>false</c>
+        /// </returns>
         internal static bool IsAdmin { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating if an auto check is being performed
+        ///   Gets a value indicating if an auto check is being performed
         /// </summary>
         internal static bool IsAutoCheck { get; private set; }
 
         /// <summary>
-        /// Gets or Sets a value indicating if an install is currently in progress
+        ///   Gets or Sets a value indicating if an install is currently in progress
         /// </summary>
         internal static bool IsInstallInProgress { get; set; }
 
         /// <summary>
-        /// Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
+        ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
         /// </summary>
         internal static bool IsReconnect { get; set; }
 
         #endregion
 
         /// <summary>
-        /// Gets the resources for the application
+        ///   Gets the resources for the application
         /// </summary>
         internal static ResourceManager RM { get; private set; }
 
@@ -120,9 +124,11 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>
-        /// The main entry point for the application.
+        ///   The main entry point for the application.
         /// </summary>
-        /// <param name="args">Command line <c>args</c></param>
+        /// <param name = "args">Command line
+        ///   <c>args</c>
+        /// </param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -168,7 +174,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Occurs when there is a serialization method. This is a temporary method for testing purposes and will not included in the public release.
+        ///   Occurs when there is a serialization method. This is a temporary method for testing purposes and will not included in the public release.
         /// </summary>
         private static void Base_SerializationError_EventHandler(object sender, SerializationErrorEventArgs e)
         {
@@ -187,9 +193,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Adds an Application for use with Seven Update
+        ///   Adds an Application for use with Seven Update
         /// </summary>
-        /// <param name="suaLoc">the location of the SUA file</param>
+        /// <param name = "suaLoc">the location of the SUA file</param>
         private static void AddSua(string suaLoc)
         {
             try
@@ -218,9 +224,9 @@ namespace SevenUpdate
         #region Recount Methods
 
         /// <summary>
-        /// Gets the total size of a single update
+        ///   Gets the total size of a single update
         /// </summary>
-        /// <param name="files">the collection of files of an update</param>
+        /// <param name = "files">the collection of files of an update</param>
         /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {

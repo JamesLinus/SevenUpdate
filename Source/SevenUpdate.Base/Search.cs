@@ -36,21 +36,21 @@ namespace SevenUpdate.Base
     #region Event Args
 
     /// <summary>
-    /// Provides event data for the SearchCompleted event
+    ///   Provides event data for the SearchCompleted event
     /// </summary>
     public class SearchCompletedEventArgs : EventArgs
     {
         /// <summary>
-        /// Contains event data associated with this event
+        ///   Contains event data associated with this event
         /// </summary>
-        /// <param name="applications">The collection of applications to update</param>
+        /// <param name = "applications">The collection of applications to update</param>
         public SearchCompletedEventArgs(Collection<Sui> applications)
         {
             Applications = applications;
         }
 
         /// <summary>
-        /// Gets a collection of applications that contain updates to install
+        ///   Gets a collection of applications that contain updates to install
         /// </summary>
         public Collection<Sui> Applications { get; private set; }
     }
@@ -58,14 +58,14 @@ namespace SevenUpdate.Base
     #endregion
 
     /// <summary>
-    /// Contains methods to search for updates
+    ///   Contains methods to search for updates
     /// </summary>
     public static class Search
     {
         #region Global Vars
 
         /// <summary>
-        /// Location of the SUI for Seven Update
+        ///   Location of the SUI for Seven Update
         /// </summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate.sui";
 
@@ -74,11 +74,15 @@ namespace SevenUpdate.Base
         #region Search Methods
 
         /// <summary>
-        /// Checks for updates
+        ///   Checks for updates
         /// </summary>
-        /// <param name="app"> a collection of applications to check for updates</param>
-        /// <param name="hidden"> a collection of hidden updates</param>
-        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
+        /// <param name = "app">a collection of applications to check for updates</param>
+        /// <param name = "hidden">a collection of hidden updates</param>
+        /// <returns>returns
+        ///   <c>true</c>
+        ///   if found updates, otherwise
+        ///   <c>false</c>
+        /// </returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.Directory = Base.ConvertPath(app.Directory, true, app.Is64Bit);
@@ -223,9 +227,9 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Searches for updates while blocking the calling thread
+        ///   Searches for updates while blocking the calling thread
         /// </summary>
-        /// <param name="apps">the list of applications to check for updates</param>
+        /// <param name = "apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(IEnumerable<Sua> apps)
         {
             var applications = new Collection<Sui>();
@@ -330,9 +334,9 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Searches for files without blocking the calling thread
+        ///   Searches for files without blocking the calling thread
         /// </summary>
-        /// <param name="apps">the list of Seven Update Admin.applications to check for updates</param>
+        /// <param name = "apps">the list of Seven Update Admin.applications to check for updates</param>
         public static void SearchForUpdatesAync(IEnumerable<Sua> apps)
         {
             var worker = new BackgroundWorker();
@@ -342,10 +346,10 @@ namespace SevenUpdate.Base
         }
 
         /// <summary>
-        /// Searches for updates on a new thread
+        ///   Searches for updates on a new thread
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="f"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "f"></param>
         private static void WorkerDoWork(object sender, DoWorkEventArgs f)
         {
             SearchForUpdates(((Collection<Sua>) f.Argument));
@@ -356,12 +360,12 @@ namespace SevenUpdate.Base
         #region Events
 
         /// <summary>
-        /// Occurs if an error occurred
+        ///   Occurs if an error occurred
         /// </summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
 
         /// <summary>
-        /// Occurs when the searching of updates has completed.
+        ///   Occurs when the searching of updates has completed.
         /// </summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchDoneEventHandler;
 

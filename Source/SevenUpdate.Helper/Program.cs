@@ -44,7 +44,7 @@ namespace SevenUpdate.Helper
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
         /// <summary>
-        /// The main entry point for the application.
+        ///   The main entry point for the application.
         /// </summary>
         [STAThread]
         private static void Main(string[] args)

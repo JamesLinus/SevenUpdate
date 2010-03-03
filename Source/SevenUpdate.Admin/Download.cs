@@ -34,19 +34,19 @@ using SharpBits.Base;
 namespace SevenUpdate.Admin
 {
     /// <summary>
-    /// A class containing methods to download updates
+    ///   A class containing methods to download updates
     /// </summary>
     internal static class Download
     {
         #region Global Vars
 
         /// <summary>
-        /// Manager for Background Intelligent Transfer Service
+        ///   Manager for Background Intelligent Transfer Service
         /// </summary>
         private static BitsManager manager;
 
         /// <summary>
-        /// Collection of updates
+        ///   Collection of updates
         /// </summary>
         private static Collection<Sui> updates;
 
@@ -55,10 +55,10 @@ namespace SevenUpdate.Admin
         #region Download Methods
 
         /// <summary>
-        /// Downloads the updates using BITS
+        ///   Downloads the updates using BITS
         /// </summary>
-        /// <param name="applications">the Collection of applications and updates</param>
-        /// <param name="priority">the Priority of the download</param>
+        /// <param name = "applications">the Collection of applications and updates</param>
+        /// <param name = "priority">the Priority of the download</param>
         internal static void DownloadUpdates(Collection<Sui> applications, JobPriority priority)
         {
             if (applications == null)
@@ -228,7 +228,9 @@ namespace SevenUpdate.Admin
         #region Event Handlers
 
         /// <summary>
-        /// Calls the DownloadProgressChanged Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when the job progress has changed
+        ///   Calls the DownloadProgressChanged Event and updates the
+        ///   <see cref = "System.Windows.Forms.NotifyIcon" />
+        ///   when the job progress has changed
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
@@ -269,7 +271,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Calls the ErrorOccurred Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when an error occurs
+        ///   Calls the ErrorOccurred Event and updates the
+        ///   <see cref = "System.Windows.Forms.NotifyIcon" />
+        ///   when an error occurs
         /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
@@ -308,7 +312,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        /// Calls the DownloadComplete Event and updates the <see cref="System.Windows.Forms.NotifyIcon" /> when the job has been downloaded or Calls the InstallUpdates Method
+        ///   Calls the DownloadComplete Event and updates the
+        ///   <see cref = "System.Windows.Forms.NotifyIcon" />
+        ///   when the job has been downloaded or Calls the InstallUpdates Method
         /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {

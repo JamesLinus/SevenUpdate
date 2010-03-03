@@ -34,53 +34,59 @@ using System.Windows.Media.Imaging;
 namespace SevenUpdate.Windows
 {
     /// <summary>
-    /// Interaction logic for License_Agreement.xaml
+    ///   Interaction logic for License_Agreement.xaml
     /// </summary>
     public sealed partial class LicenseAgreement : Window
     {
         #region Global Vars
 
         /// <summary>
-        /// The disabled shield image
+        ///   The disabled shield image
         /// </summary>
         private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
 
-        /// <summary>The UAC shield</summary>
+        /// <summary>
+        ///   The UAC shield
+        /// </summary>
         private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
-        /// <summary>Current index</summary>
+        /// <summary>
+        ///   Current index
+        /// </summary>
         private int index;
 
         /// <summary>
-        /// List of updates that have EULAS
+        ///   List of updates that have EULAS
         /// </summary>
         private Collection<Eula> licenseInformation;
 
         /// <summary>
-        /// An array of the strings that consist of the software licenses
+        ///   An array of the strings that consist of the software licenses
         /// </summary>
         private string[] licenseText;
 
         /// <summary>
-        /// Data containing the update's license agreement
+        ///   Data containing the update's license agreement
         /// </summary>
         private struct Eula
         {
             /// <summary>
-            /// The index of the application of the update
+            ///   The index of the application of the update
             /// </summary>
             internal int AppIndex { get; set; }
 
             /// <summary>
-            /// The Url for the license agreement
+            ///   The Url for the license agreement
             /// </summary>
             internal string LicenseUrl { get; set; }
 
-            /// <summary>The update title</summary>
+            /// <summary>
+            ///   The update title
+            /// </summary>
             internal string Title { get; set; }
 
             /// <summary>
-            /// The index of the update
+            ///   The index of the update
             /// </summary>
             internal int UpdateIndex { get; set; }
         }
@@ -88,7 +94,7 @@ namespace SevenUpdate.Windows
         #endregion
 
         /// <summary>
-        /// Constructor for the License Agreement page
+        ///   Constructor for the License Agreement page
         /// </summary>
         public LicenseAgreement()
         {
@@ -98,7 +104,7 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>
-        /// Downloads the licenseInformation
+        ///   Downloads the licenseInformation
         /// </summary>
         private void DownloadLicenseInformation()
         {
@@ -114,7 +120,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Gets the license agreements from the selected updates
+        ///   Gets the license agreements from the selected updates
         /// </summary>
         private void GetLicenseAgreements()
         {
@@ -144,7 +150,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Loads the licenseInformation and shows the form
+        ///   Loads the licenseInformation and shows the form
         /// </summary>
         /// <returns></returns>
         internal bool? LoadLicenses()
@@ -160,10 +166,10 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Downloads the license agreements of the updates
+        ///   Downloads the license agreements of the updates
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void WorkerDoWork(object sender, DoWorkEventArgs e)
         {
             licenseText = new string[licenseInformation.Count];
@@ -190,7 +196,7 @@ namespace SevenUpdate.Windows
         #region UI Events
 
         /// <summary>
-        /// Updates the UI when the downloading the license agreements has completed
+        ///   Updates the UI when the downloading the license agreements has completed
         /// </summary>
         private void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -216,10 +222,10 @@ namespace SevenUpdate.Windows
         #region Buttons
 
         /// <summary>
-        /// Closes the window, declining all EULA's
+        ///   Closes the window, declining all EULA's
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name = "sender"></param>
+        /// <param name = "e"></param>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -227,7 +233,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Downloads the EULA's when the window is loaded
+        ///   Downloads the EULA's when the window is loaded
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -235,7 +241,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Sets the IsEnabled property of btnAction depending if Accept is selected
+        ///   Sets the IsEnabled property of btnAction depending if Accept is selected
         /// </summary>
         private void Accept_Checked(object sender, RoutedEventArgs e)
         {
@@ -244,7 +250,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Sets the IsEnabled property of btnAction depending if Decline selected
+        ///   Sets the IsEnabled property of btnAction depending if Decline selected
         /// </summary>
         private void Decline_Checked(object sender, RoutedEventArgs e)
         {
@@ -261,7 +267,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Displays the next license agreement or returns
+        ///   Displays the next license agreement or returns
         /// </summary>
         private void Action_Click(object sender, RoutedEventArgs e)
         {

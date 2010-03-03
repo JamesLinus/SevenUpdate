@@ -29,50 +29,56 @@ using SevenUpdate.Base;
 namespace SevenUpdate.Admin.WCF
 {
     /// <summary>
-    /// Callback methods for the WCF Service
+    ///   Callback methods for the WCF Service
     /// </summary>
     internal interface IEventSystemCallback
     {
         /// <summary>
-        /// Occurs when the download has completed
+        ///   Occurs when the download has completed
         /// </summary>
-        /// <param name="errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        /// <param name = "errorOccurred">
+        ///   <c>true</c>
+        ///   if an error occurred, otherwise
+        ///   <c>false</c>
+        /// </param>
         [OperationContract(IsOneWay = true)]
         void OnDownloadCompleted(bool errorOccurred);
 
         /// <summary>
-        /// Occurs when the installation of updates has completed
+        ///   Occurs when the installation of updates has completed
         /// </summary>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of failed updates</param>
+        /// <param name = "updatesInstalled">The number of updates installed</param>
+        /// <param name = "updatesFailed">The number of failed updates</param>
         [OperationContract(IsOneWay = true)]
         void OnInstallCompleted(int updatesInstalled, int updatesFailed);
 
         /// <summary>
-        /// Occurs when an error occurs
+        ///   Occurs when an error occurs
         /// </summary>
-        /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType" /> of the error that occurred</param>
+        /// <param name = "exception">The exception data</param>
+        /// <param name = "type">The
+        ///   <see cref = "ErrorType" />
+        ///   of the error that occurred</param>
         [OperationContract(IsOneWay = true)]
         void OnErrorOccurred(Exception exception, ErrorType type);
 
         /// <summary>
-        /// Occurs when the download progress has changed
+        ///   Occurs when the download progress has changed
         /// </summary>
-        /// <param name="bytesTransferred">The number of bytes downloaded</param>
-        /// <param name="bytesTotal">The total number of bytes to download</param>
-        /// <param name="filesTransferred">The number of files downloaded</param>
-        /// <param name="filesTotal">The total number of files to download</param>
+        /// <param name = "bytesTransferred">The number of bytes downloaded</param>
+        /// <param name = "bytesTotal">The total number of bytes to download</param>
+        /// <param name = "filesTransferred">The number of files downloaded</param>
+        /// <param name = "filesTotal">The total number of files to download</param>
         [OperationContract(IsOneWay = true)]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
 
         /// <summary>
-        /// Occurs when the installation progress has changed
+        ///   Occurs when the installation progress has changed
         /// </summary>
-        /// <param name="updateName">The name of the update that is being installed</param>
-        /// <param name="progress">The current update progress</param>
-        /// <param name="updatesComplete">The number of updates that have completed</param>
-        /// <param name="totalUpdates">The total number of updates</param>
+        /// <param name = "updateName">The name of the update that is being installed</param>
+        /// <param name = "progress">The current update progress</param>
+        /// <param name = "updatesComplete">The number of updates that have completed</param>
+        /// <param name = "totalUpdates">The total number of updates</param>
         [OperationContract(IsOneWay = true)]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
