@@ -25,13 +25,37 @@ namespace SevenUpdate.Sdk.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool exitMessage {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double windowHeight {
             get {
-                return ((bool)(this["exitMessage"]));
+                return ((double)(this["windowHeight"]));
             }
             set {
-                this["exitMessage"] = value;
+                this["windowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double windowWidth {
+            get {
+                return ((double)(this["windowWidth"]));
+            }
+            set {
+                this["windowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
+        public string locale {
+            get {
+                return ((string)(this["locale"]));
+            }
+            set {
+                this["locale"] = value;
             }
         }
     }

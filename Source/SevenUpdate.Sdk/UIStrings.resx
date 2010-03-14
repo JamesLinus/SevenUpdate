@@ -199,6 +199,6 @@
     <value>Seven Software</value>
   </data>
   <data name="SuiInvalid" xml:space="preserve">
-    <value />
+    <value>The SUI is not valid or has been corrupted.</value>
   </data>
 </root>
