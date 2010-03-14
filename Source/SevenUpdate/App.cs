@@ -45,23 +45,9 @@ namespace SevenUpdate
     {
         #region Global Vars
 
-        /// <summary>
-        ///   Gets a green shield image
-        /// </summary>
-        internal static readonly BitmapImage GreenShield = new BitmapImage(new Uri("/Images/GreenShield.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets a red shield image
-        /// </summary>
-        internal static readonly BitmapImage RedShield = new BitmapImage(new Uri("/Images/RedShield.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets a yellow shield image
-        /// </summary>
-        internal static readonly BitmapImage YellowShield = new BitmapImage(new Uri("/Images/YellowShield.png", UriKind.Relative));
-
         #region Properties
 
+        internal static ResourceDictionary Resources;
         /// <summary>
         ///   Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>

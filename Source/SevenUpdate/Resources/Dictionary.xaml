@@ -23,4 +23,13 @@
 		<Setter Property="HorizontalContentAlignment" Value="Left" />
 		<Setter Property="Padding" Value="5,0" />
 	</Style>
+    
+    <BitmapImage x:Key="GreenSide" UriSource="pack://application:,,,/SevenUpdate;component/Images/GreenSide.png" />
+    <BitmapImage x:Key="YellowSide" UriSource="pack://application:,,,/SevenUpdate;component/Images/YellowSide.png" />
+    <BitmapImage x:Key="RedSide" UriSource="pack://application:,,,/SevenUpdate;component/Images/RedSide.png" />
+    <BitmapImage x:Key="GreenShield" UriSource="pack://application:,,,/SevenUpdate;component/Images/GreenShield.png" />
+    <BitmapImage x:Key="YellowShield" UriSource="pack://application:,,,/SevenUpdate;component/Images/YellowShield.png" />
+    <BitmapImage x:Key="RedShield" UriSource="pack://application:,,,/SevenUpdate;component/Images/RedShield.png" />
+    <BitmapImage x:Key="SUIcon" UriSource="pack://application:,,,/SevenUpdate;component/Images/Icon.png" />
+
 </ResourceDictionary>

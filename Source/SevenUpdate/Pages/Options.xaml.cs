@@ -30,6 +30,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using SevenUpdate.Base;
 using SevenUpdate.Controls;
 using SevenUpdate.Windows;
@@ -54,6 +56,14 @@ namespace SevenUpdate.Pages
         ///   A collection of SUA's that Seven Update can update
         /// </summary>
         private ObservableCollection<Sua> machineAppList;
+
+        /// <summary>
+        ///   The shield Icon uri
+        /// </summary>
+        private ImageSource ShieldIcon
+        {
+            set { shieldIcon.Source = value; }
+        }
 
         #endregion
 
@@ -264,16 +274,16 @@ namespace SevenUpdate.Pages
             switch (cbAutoUpdateMethod.SelectedIndex)
             {
                 case 0:
-                    imgShield.Source = App.GreenShield;
+                    ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
                     break;
                 case 1:
-                    imgShield.Source = App.GreenShield;
+                    ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
                     break;
                 case 2:
-                    imgShield.Source = null;
+                    ShieldIcon = null;
                     break;
                 case 3:
-                    imgShield.Source = App.RedShield;
+                    ShieldIcon = (BitmapImage)App.Resources["RedShield"];
                     break;
             }
         }

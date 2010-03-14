@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
+using System.Windows.Media.Imaging;
 using SevenUpdate.Base;
 
 #endregion
@@ -35,7 +36,7 @@ namespace SevenUpdate.Converters
     ///   Converts Importance to a localized string
     /// </summary>
     [ValueConversion(typeof (Importance), typeof (string))]
-    public class ImportanceGroupConverter : IValueConverter
+    public sealed class ImportanceGroupConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -74,7 +75,7 @@ namespace SevenUpdate.Converters
     ///   Converts a string to a localized string
     /// </summary>
     [ValueConversion(typeof (string), typeof (string))]
-    public class StringToLocaleConverter : IValueConverter
+    public sealed class StringToLocaleConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -106,7 +107,7 @@ namespace SevenUpdate.Converters
     ///   to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
-    public class LocaleStringConverter : IValueConverter
+    public sealed class LocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -146,7 +147,7 @@ namespace SevenUpdate.Converters
     ///   Converts a collection of UpdateFiles to a string representing the size
     /// </summary>
     [ValueConversion(typeof (UpdateFile), typeof (string))]
-    public class FileSizeConverter : IValueConverter
+    public sealed class FileSizeConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -177,7 +178,7 @@ namespace SevenUpdate.Converters
     ///   Converts an Enum to a bool value
     /// </summary>
     [ValueConversion(typeof (UpdateStatus), typeof (bool))]
-    public class EnumToBoolConverter : IValueConverter
+    public sealed class EnumToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -207,7 +208,7 @@ namespace SevenUpdate.Converters
     ///   Converts a Bool to a readable string
     /// </summary>
     [ValueConversion(typeof (bool), typeof (string))]
-    public class BoolToStringConverter : IValueConverter
+    public sealed class BoolToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 

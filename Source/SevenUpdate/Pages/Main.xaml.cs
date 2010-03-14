@@ -39,29 +39,6 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class Main : Page
     {
-        #region Global Vars
-
-        /// <summary>
-        ///   Gets a green side image
-        /// </summary>
-        private readonly BitmapImage greenSide = new BitmapImage(new Uri("/Images/GreenSide.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets a red side image
-        /// </summary>
-        private readonly BitmapImage redSide = new BitmapImage(new Uri("/Images/RedSide.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets the Seven Update icon
-        /// </summary>
-        private readonly BitmapImage suIcon = new BitmapImage(new Uri("/Images/Icon.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets a yellow side image
-        /// </summary>
-        private readonly BitmapImage yellowSide = new BitmapImage(new Uri("/Images/YellowSide.png", UriKind.Relative));
-
-        #endregion
 
         #region Enums
 
@@ -284,8 +261,8 @@ namespace SevenUpdate.Pages
                     {
                         if (count[0] == 0)
                         {
-                            infoBar.imgSide.Source = greenSide;
-                            infoBar.imgShield.Source = App.GreenShield;
+                            infoBar.SideImage = (BitmapImage)App.Resources["GreenSide"];
+                            infoBar.ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
                             infoBar.tbHeading.Text = App.RM.GetString("NoImportantUpdates");
                         }
 
@@ -624,8 +601,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("CancelInstallation");
                     infoBar.tbAction.Text = App.RM.GetString("TryAgain");
 
-                    infoBar.imgShield.Source = App.RedShield;
-                    infoBar.imgSide.Source = redSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["RedShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["RedSide"];
 
                     #endregion
 
@@ -652,8 +629,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("CheckingForUpdates") + "...";
                     tbRecentCheck.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
 
-                    infoBar.imgShield.Source = suIcon;
-                    infoBar.imgSide.Source = null;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["SUIcon"];
+                    infoBar.SideImage = null;
 
                     #endregion
 
@@ -678,8 +655,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("GettingInstallationStatus");
                     infoBar.tbHeading.Text = App.RM.GetString("ConnectingToService") + "...";
 
-                    infoBar.imgShield.Source = App.YellowShield;
-                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["YellowShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["YellowSide"];
 
                     #endregion
 
@@ -708,8 +685,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("PreparingDownload");
                     infoBar.tbAction.Text = App.RM.GetString("StopDownload");
 
-                    infoBar.imgShield.Source = App.YellowShield;
-                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["YellowShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["YellowSide"];
 
                     #endregion
 
@@ -737,8 +714,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("UpdatesReadyInstalled");
                     infoBar.tbAction.Text = App.RM.GetString("InstallUpdates");
 
-                    infoBar.imgShield.Source = App.YellowShield;
-                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["YellowShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["YellowSide"];
 
                     #endregion
 
@@ -766,8 +743,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbAction.Text = App.RM.GetString("TryAgain");
                     infoBar.tbStatus.Text = errorDescription ?? App.RM.GetString("UnknownErrorOccurred");
 
-                    infoBar.imgSide.Source = redSide;
-                    infoBar.imgShield.Source = App.RedShield;
+                    infoBar.SideImage = (BitmapImage)App.Resources["RedSide"];
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["RedShield"];
 
                     #endregion
 
@@ -796,7 +773,7 @@ namespace SevenUpdate.Pages
                     infoBar.tbStatus.Text = App.RM.GetString("PreparingInstall");
                     infoBar.tbHeading.Text = App.RM.GetString("InstallingUpdates") + "...";
 
-                    infoBar.imgShield.Source = suIcon;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["SUIcon"];
 
                     #endregion
 
@@ -814,7 +791,7 @@ namespace SevenUpdate.Pages
                     if (!App.IsAdmin)
                         infoBar.imgAdminShield.Visibility = Visibility.Visible;
 
-                    infoBar.imgSide.Source = null;
+                    infoBar.SideImage = null;
                     infoBar.btnAction.Visibility = Visibility.Collapsed;
                     infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
                     infoBar.line.Visibility = Visibility.Collapsed;
@@ -823,8 +800,8 @@ namespace SevenUpdate.Pages
                     infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
 
                     infoBar.tbHeading.Text = App.RM.GetString("UpdatesInstalled");
-                    infoBar.imgShield.Source = App.GreenShield;
-                    infoBar.imgSide.Source = greenSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["GreenSide"];
 
                     #region Update Status
 
@@ -876,8 +853,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("ProgramsUpToDate");
                     infoBar.tbStatus.Text = App.RM.GetString("NoNewUpdates");
 
-                    infoBar.imgSide.Source = greenSide;
-                    infoBar.imgShield.Source = App.GreenShield;
+                    infoBar.SideImage = (BitmapImage)App.Resources["GreenSide"];
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
 
                     #endregion
 
@@ -904,8 +881,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("RebootNeeded");
                     infoBar.tbStatus.Text = App.RM.GetString("SaveAndReboot");
 
-                    infoBar.imgShield.Source = App.YellowShield;
-                    infoBar.imgSide.Source = yellowSide;
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["YellowShield"];
+                    infoBar.SideImage = (BitmapImage)App.Resources["YellowSide"];
 
                     #endregion
 
@@ -932,8 +909,8 @@ namespace SevenUpdate.Pages
                     infoBar.tbHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
                     infoBar.tbAction.Text = App.RM.GetString("InstallUpdates");
 
-                    infoBar.imgSide.Source = yellowSide;
-                    infoBar.imgShield.Source = App.YellowShield;
+                    infoBar.SideImage = (BitmapImage)App.Resources["YellowSide"];
+                    infoBar.ShieldIcon = (BitmapImage)App.Resources["YellowShield"];
 
                     #endregion
 
