@@ -80,7 +80,7 @@
                                     <Image HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0">
                                         <Image.Style>
                                             <Style>
-                                                <Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrow.png" />
+                                                <Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrowHover.png" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding Path=UseShield}" Value="True">
                                                         <Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/Shield.png" />

@@ -23,11 +23,11 @@
 		</TextBlock>
 		<StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
 			<Controls:CommandLink x:Name="clNewSui" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new SUI file"
-			                Note="Enables Seven Update to update your software" Width="350" UseShield="False" />
+			                Note="Enables Seven Update to update your software" Width="350" UseShield="False" TabIndex="0" />
 			<Controls:CommandLink x:Name="clEditSui" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Open an existing SUI file"
-			                Note="Release a new update with an existing SUI file" Width="350"/>
+			                Note="Release a new update with an existing SUI file" Width="350" TabIndex="1" />
 			<Controls:CommandLink x:Name="clNewSUA" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a SUA file"
-			                Note="Enable Seven Update to manage updates for your software" Width="350"/>
+			                Note="Enable Seven Update to manage updates for your software" Width="350" TabIndex="2" Margin="0" />
 		</StackPanel>
 	</Grid>
 </Page>
