@@ -3,13 +3,16 @@
       MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="SevenUpdate" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="800">
 
 	<!-- Grid-->
-	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False" Height="453" Name="grid">
-		<Grid.RowDefinitions>
-
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False" Name="grid" Height="464">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="809*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="369*" />
-		</Grid.RowDefinitions>
+            <RowDefinition Height="48*" />
+            <RowDefinition Height="424*" />
+        </Grid.RowDefinitions>
 
 	</Grid>
 </Page>

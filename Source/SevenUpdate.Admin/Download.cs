@@ -45,11 +45,6 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static BitsManager manager;
 
-        /// <summary>
-        ///   Collection of updates
-        /// </summary>
-        private static Collection<Sui> updates;
-
         #endregion
 
         #region Download Methods
@@ -57,11 +52,11 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Downloads the updates using BITS
         /// </summary>
-        /// <param name = "applications">the Collection of applications and updates</param>
+        /// <param name = "App.AppUpdates">the Collection of App.AppUpdates and updates</param>
         /// <param name = "priority">the Priority of the download</param>
-        internal static void DownloadUpdates(Collection<Sui> applications, JobPriority priority)
+        internal static void DownloadUpdates(JobPriority priority)
         {
-            if (applications == null)
+            if (App.AppUpdates == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
@@ -71,7 +66,7 @@ namespace SevenUpdate.Admin
             }
             else
             {
-                if (applications.Count < 1)
+                if (App.AppUpdates.Count < 1)
                 {
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
                         EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
@@ -83,9 +78,6 @@ namespace SevenUpdate.Admin
 
             // When done with the temp list
             File.Delete(Base.Base.UserStore + "Updates.sui");
-
-            // Makes the passed applicaytion collection global
-            updates = applications;
 
             // It's a new manager class
             manager = new BitsManager();
@@ -150,23 +142,23 @@ namespace SevenUpdate.Admin
             bitsJob.Priority = priority;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
-            for (var x = 0; x < applications.Count; x++)
+            for (var x = 0; x < App.AppUpdates.Count; x++)
             {
-                for (var y = 0; y < applications[x].Updates.Count; y++)
+                for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of appname and update title
-                    var downloadDir = Base.Base.AllUserStore + @"downloads\" + applications[x].Updates[y].Name[0].Value;
+                    var downloadDir = Base.Base.AllUserStore + @"downloads\" + App.AppUpdates[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
 
-                    for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
+                    for (var z = 0; z < App.AppUpdates[x].Updates[y].Files.Count; z++)
                     {
-                        var fileDestination = applications[x].Updates[y].Files[z].Destination;
+                        var fileDestination = App.AppUpdates[x].Updates[y].Files[z].Destination;
 
-                        if (applications[x].Updates[y].Files[z].Action == FileAction.Delete || applications[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
-                            applications[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
+                        if (App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
+                            App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
                             continue;
-                        if (Base.Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == applications[x].Updates[y].Files[z].Hash)
+                        if (Base.Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == App.AppUpdates[x].Updates[y].Files[z].Hash)
                             continue;
                         try
                         {
@@ -177,7 +169,7 @@ namespace SevenUpdate.Admin
                             catch
                             {
                             }
-                            var url = new Uri(Base.Base.ConvertPath(applications[x].Updates[y].Files[z].Source, applications[x].Updates[y].DownloadUrl, applications[x].Is64Bit));
+                            var url = new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl, App.AppUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                         }
@@ -217,7 +209,7 @@ namespace SevenUpdate.Admin
             {
                 manager.Dispose();
                 manager = null;
-                Install.InstallUpdates(updates);
+                Install.InstallUpdates();
             }
         }
 
@@ -351,7 +343,7 @@ namespace SevenUpdate.Admin
                 if (EventService.DownloadCompleted != null && App.IsClientConnected)
                     EventService.DownloadCompleted(false);
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
-                Install.InstallUpdates(updates);
+                Install.InstallUpdates();
             }
             else
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);

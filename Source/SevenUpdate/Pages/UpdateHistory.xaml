@@ -14,7 +14,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Review your update history" VerticalAlignment="Top" Margin="24,12,0,5" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
-		<ListView Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0" Controls:ListViewSorter.IsListViewSortable="True">
+        <ListView AlternationCount="2" Grid.Row="1" Name="listView" Foreground="Black" BorderThickness="0" Controls:ListViewSorter.IsListViewSortable="True">
 			<ListView.Resources>
 				<Style x:Key="hcs" TargetType="{x:Type GridViewColumnHeader}">
 					<Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -25,7 +25,7 @@
 			</ListView.Resources>
 			<ListView.ItemContainerStyle>
 				<Style TargetType="{x:Type ListViewItem}">
-					<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListView_MouseDoubleClick" />
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListView_MouseDoubleClick" />
 					<Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
 				</Style>
 			</ListView.ItemContainerStyle>

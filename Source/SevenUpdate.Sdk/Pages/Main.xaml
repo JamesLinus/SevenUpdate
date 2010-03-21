@@ -16,7 +16,7 @@
 			<LineBreak />
 			<LineBreak />
 			I hope you find the new SDK to be easy to understand and use. If you need help using the SDK or have any questions related to Seven Update or the SDK, please visit the support forums at
-			<Hyperlink Click="Hyperlink_Click">
+			<Hyperlink NavigateUri="http://sevenupdate.com/forum/" RequestNavigate="Hyperlink_RequestNavigate" Foreground="#FF0066CC">
 				http://sevenupdate.com/forum/
 			</Hyperlink>
 

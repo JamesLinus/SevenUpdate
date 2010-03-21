@@ -28,6 +28,8 @@ using System.ServiceModel;
 using System.Threading;
 using SevenUpdate.Base;
 using SevenUpdate.WCF;
+using Sua = SevenUpdate.Base.Sua;
+using Suh = SevenUpdate.Base.Suh;
 
 #endregion
 
@@ -185,7 +187,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "exception">the exception that occurred</param>
         /// <param name = "type">the type of error that occurred</param>
-        public void OnErrorOccurred(Exception exception, ErrorType type)
+        public void OnErrorOccurred(System.Exception exception, ErrorType type)
         {
             if (ErrorOccurredEventHandler == null)
                 return;
@@ -315,7 +317,7 @@ namespace SevenUpdate
             }
         }
 
-        private static void AdminError(Exception e)
+        private static void AdminError(System.Exception e)
         {
             Base.Base.ReportError(e, Base.Base.UserStore);
             if (ServiceErrorEventHandler != null)
@@ -387,7 +389,13 @@ namespace SevenUpdate
         internal static bool Install()
         {
             Base.Base.Serialize(App.Applications, Base.Base.UserStore + "Updates.sui");
-            return Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
+            bool success =  Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
+            if (success)
+            {
+                Connect();
+                wcf.SetUpdates(App.Applications);
+            }
+            return success;
         }
 
         /// <summary>
@@ -401,8 +409,14 @@ namespace SevenUpdate
         /// </returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
-            return Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdate");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdate");
+            if (success)
+            {
+                Connect();
+                wcf.HideUpdate(hiddenUpdate);
+            }
+
+            return success;
         }
 
         /// <summary>
@@ -416,11 +430,13 @@ namespace SevenUpdate
         /// </returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            Base.Base.Serialize(hiddenUpdates, Base.Base.UserStore + "Hidden.suh");
-            if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdates", true))
-                return true;
-            File.Delete(Base.Base.UserStore + "Hidden.suh");
-            return false;
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdates", true);
+            if (success)
+            {
+                Connect();
+                wcf.HideUpdates(hiddenUpdates);
+            }
+            return success;
         }
 
         /// <summary>
@@ -434,10 +450,13 @@ namespace SevenUpdate
         /// </returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            Base.Base.Serialize(hiddenUpdate, Base.Base.UserStore + "Update.suh");
-            if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "ShowUpdate"))
-                return true;
-            File.Delete(Base.Base.UserStore + "Update.suh");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "ShowUpdate");
+
+            if (success)
+            {
+                Connect();
+                wcf.ShowUpdate(hiddenUpdate);
+            }
             return true;
         }
 
@@ -447,8 +466,14 @@ namespace SevenUpdate
         /// <param name = "sul">the list of applications to update</param>
         internal static void AddSua(Collection<Sua> sul)
         {
-            Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
-            Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");
+
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");
+
+            if (success)
+            {
+                Connect();
+                wcf.AddApp(sul);
+            }
         }
 
         /// <summary>

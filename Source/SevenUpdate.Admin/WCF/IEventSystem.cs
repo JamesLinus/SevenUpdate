@@ -20,7 +20,11 @@
 
 #region
 
+using System;
+using System.Collections.ObjectModel;
 using System.ServiceModel;
+using ProtoBuf;
+using SevenUpdate.Base;
 
 #endregion
 
@@ -43,5 +47,78 @@ namespace SevenUpdate.Admin.WCF
         /// </summary>
         [OperationContract(IsOneWay = true)]
         void UnSubscribe();
+
+        [OperationContract(IsOneWay = true)]
+        void AddApp(Sua app);
+
+        /// <summary>
+        ///   Gets a list containing SUI's
+        /// </summary>
+        [OperationContract(IsOneWay = true)]
+        void SetUpdates(Collection<Sui> appUpdates);
+
+        [OperationContract(IsOneWay = true)]
+        void ShowUpdate(Suh hiddenUpdate);
+
+        [OperationContract(IsOneWay = true)]
+        void HideUpdate(Suh hiddenUpdate);
+
+        [OperationContract(IsOneWay = true)]
+        void HideUpdates(Collection<Suh> hiddenUpdates);
+    }
+
+    /// <summary>
+    ///   Callback methods for the WCF Service
+    /// </summary>
+    internal interface IEventSystemCallback
+    {
+        /// <summary>
+        ///   Occurs when the download has completed
+        /// </summary>
+        /// <param name = "errorOccurred">
+        ///   <c>true</c>
+        ///   if an error occurred, otherwise
+        ///   <c>false</c>
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        void OnDownloadCompleted(bool errorOccurred);
+
+        /// <summary>
+        ///   Occurs when the installation of updates has completed
+        /// </summary>
+        /// <param name = "updatesInstalled">The number of updates installed</param>
+        /// <param name = "updatesFailed">The number of failed updates</param>
+        [OperationContract(IsOneWay = true)]
+        void OnInstallCompleted(int updatesInstalled, int updatesFailed);
+
+        /// <summary>
+        ///   Occurs when an error occurs
+        /// </summary>
+        /// <param name = "exception">The exception data</param>
+        /// <param name = "type">The
+        ///   <see cref = "ErrorType" />
+        ///   of the error that occurred</param>
+        [OperationContract(IsOneWay = true)]
+        void OnErrorOccurred(Exception exception, ErrorType type);
+
+        /// <summary>
+        ///   Occurs when the download progress has changed
+        /// </summary>
+        /// <param name = "bytesTransferred">The number of bytes downloaded</param>
+        /// <param name = "bytesTotal">The total number of bytes to download</param>
+        /// <param name = "filesTransferred">The number of files downloaded</param>
+        /// <param name = "filesTotal">The total number of files to download</param>
+        [OperationContract(IsOneWay = true)]
+        void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
+
+        /// <summary>
+        ///   Occurs when the installation progress has changed
+        /// </summary>
+        /// <param name = "updateName">The name of the update that is being installed</param>
+        /// <param name = "progress">The current update progress</param>
+        /// <param name = "updatesComplete">The number of updates that have completed</param>
+        /// <param name = "totalUpdates">The total number of updates</param>
+        [OperationContract(IsOneWay = true)]
+        void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
 }

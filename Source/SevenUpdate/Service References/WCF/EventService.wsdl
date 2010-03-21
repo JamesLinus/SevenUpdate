@@ -33,8 +33,9 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System" />
-      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Win32" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IEventSystem_Subscribe_InputMessage">
@@ -42,6 +43,21 @@
   </wsdl:message>
   <wsdl:message name="IEventSystem_UnSubscribe_InputMessage">
     <wsdl:part name="parameters" element="tns:UnSubscribe" />
+  </wsdl:message>
+  <wsdl:message name="IEventSystem_AddApp_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddApp" />
+  </wsdl:message>
+  <wsdl:message name="IEventSystem_SetUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetUpdates" />
+  </wsdl:message>
+  <wsdl:message name="IEventSystem_ShowUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:ShowUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IEventSystem_HideUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:HideUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IEventSystem_HideUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:HideUpdates" />
   </wsdl:message>
   <wsdl:message name="IEventSystem_OnDownloadCompleted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnDownloadCompleted" />
@@ -64,6 +80,21 @@
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UnSubscribe">
       <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/UnSubscribe" message="tns:IEventSystem_UnSubscribe_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddApp">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/AddApp" message="tns:IEventSystem_AddApp_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SetUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/SetUpdates" message="tns:IEventSystem_SetUpdates_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/ShowUpdate" message="tns:IEventSystem_ShowUpdate_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="HideUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/HideUpdate" message="tns:IEventSystem_HideUpdate_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="HideUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IEventSystem/HideUpdates" message="tns:IEventSystem_HideUpdates_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadCompleted">
       <wsdl:output wsaw:Action="http://tempuri.org/IEventSystem/OnDownloadCompleted" message="tns:IEventSystem_OnDownloadCompleted_OutputCallbackMessage" />
@@ -92,6 +123,36 @@
     </wsdl:operation>
     <wsdl:operation name="UnSubscribe">
       <soap12:operation soapAction="http://tempuri.org/IEventSystem/UnSubscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="AddApp">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/AddApp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SetUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/SetUpdates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ShowUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/ShowUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="HideUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/HideUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="HideUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IEventSystem/HideUpdates" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -131,9 +192,7 @@
     <wsdl:port name="NetNamedPipeBinding_IEventSystem" binding="tns:NetNamedPipeBinding_IEventSystem">
       <soap12:address location="net.pipe://localhost/SevenUpdate/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>
-          net.pipe://localhost/SevenUpdate/
-        </wsa10:Address>
+        <wsa10:Address>net.pipe://localhost/SevenUpdate/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>SERVER-7\sevenalive</Upn>
         </Identity>

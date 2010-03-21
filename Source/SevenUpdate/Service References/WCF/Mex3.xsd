@@ -1,11 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/System" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Win32" />
   <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:complexType name="Exception">
+  <xs:complexType name="Sua">
     <xs:sequence>
-      <xs:any minOccurs="0" maxOccurs="unbounded" namespace="##local" processContents="skip" />
+      <xs:element minOccurs="0" name="AppUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="Directory" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HelpUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Is64Bit" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="Publisher" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="SuiUrl" nillable="true" type="xs:string" />
     </xs:sequence>
-    <xs:attribute ref="ser:FactoryType" />
   </xs:complexType>
-  <xs:element name="Exception" nillable="true" type="tns:Exception" />
+  <xs:element name="Sua" nillable="true" type="tns:Sua" />
+  <xs:complexType name="ArrayOfLocaleString">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocaleString" nillable="true" type="tns:LocaleString" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocaleString" nillable="true" type="tns:ArrayOfLocaleString" />
+  <xs:complexType name="LocaleString">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Lang" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocaleString" nillable="true" type="tns:LocaleString" />
+  <xs:complexType name="ArrayOfSui">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Sui" nillable="true" type="tns:Sui" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSui" nillable="true" type="tns:ArrayOfSui" />
+  <xs:complexType name="Sui">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppInfo" nillable="true" type="tns:Sua" />
+      <xs:element minOccurs="0" name="Updates" nillable="true" type="tns:ArrayOfUpdate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Sui" nillable="true" type="tns:Sui" />
+  <xs:complexType name="ArrayOfUpdate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Update" nillable="true" type="tns:Update" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdate" nillable="true" type="tns:ArrayOfUpdate" />
+  <xs:complexType name="Update">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="DownloadUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Files" nillable="true" type="tns:ArrayOfUpdateFile" />
+      <xs:element minOccurs="0" name="Importance" type="tns:Importance" />
+      <xs:element minOccurs="0" name="InfoUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LicenseUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="RegistryItems" nillable="true" type="tns:ArrayOfRegistryItem" />
+      <xs:element minOccurs="0" name="ReleaseDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Selected" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Shortcuts" nillable="true" type="tns:ArrayOfShortcut" />
+      <xs:element minOccurs="0" name="Size" type="xs:unsignedLong" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Update" nillable="true" type="tns:Update" />
+  <xs:complexType name="ArrayOfUpdateFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="UpdateFile" nillable="true" type="tns:UpdateFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUpdateFile" nillable="true" type="tns:ArrayOfUpdateFile" />
+  <xs:complexType name="UpdateFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" type="tns:FileAction" />
+      <xs:element minOccurs="0" name="Args" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Hash" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Size" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UpdateFile" nillable="true" type="tns:UpdateFile" />
+  <xs:simpleType name="FileAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Update" />
+      <xs:enumeration value="UpdateIfExist" />
+      <xs:enumeration value="UpdateThenRegister" />
+      <xs:enumeration value="UpdateThenExecute" />
+      <xs:enumeration value="CompareOnly" />
+      <xs:enumeration value="Execute" />
+      <xs:enumeration value="Delete" />
+      <xs:enumeration value="ExecuteThenDelete" />
+      <xs:enumeration value="UnregisterThenDelete" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FileAction" nillable="true" type="tns:FileAction" />
+  <xs:simpleType name="Importance">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Important" />
+      <xs:enumeration value="Locale" />
+      <xs:enumeration value="Optional" />
+      <xs:enumeration value="Recommended" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Importance" nillable="true" type="tns:Importance" />
+  <xs:complexType name="ArrayOfRegistryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RegistryItem" nillable="true" type="tns:RegistryItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRegistryItem" nillable="true" type="tns:ArrayOfRegistryItem" />
+  <xs:complexType name="RegistryItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Action" type="tns:RegistryAction" />
+      <xs:element minOccurs="0" name="Data" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Microsoft.Win32" minOccurs="0" name="Hive" type="q1:RegistryHive" />
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KeyValue" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Microsoft.Win32" minOccurs="0" name="ValueKind" type="q2:RegistryValueKind" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegistryItem" nillable="true" type="tns:RegistryItem" />
+  <xs:simpleType name="RegistryAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Add" />
+      <xs:enumeration value="DeleteKey" />
+      <xs:enumeration value="DeleteValue" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="RegistryAction" nillable="true" type="tns:RegistryAction" />
+  <xs:complexType name="ArrayOfShortcut">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Shortcut" nillable="true" type="tns:Shortcut" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfShortcut" nillable="true" type="tns:ArrayOfShortcut" />
+  <xs:complexType name="Shortcut">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Arguments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="Icon" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Target" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Shortcut" nillable="true" type="tns:Shortcut" />
+  <xs:simpleType name="ShortcutAction">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Add" />
+      <xs:enumeration value="Delete">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Update">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ShortcutAction" nillable="true" type="tns:ShortcutAction" />
+  <xs:complexType name="Suh">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Description" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="HelpUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Importance" type="tns:Importance" />
+      <xs:element minOccurs="0" name="InfoUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InstallDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="Publisher" nillable="true" type="tns:ArrayOfLocaleString" />
+      <xs:element minOccurs="0" name="PublisherUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReleaseDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Size" type="xs:unsignedLong" />
+      <xs:element minOccurs="0" name="Status" type="tns:UpdateStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Suh" nillable="true" type="tns:Suh" />
+  <xs:simpleType name="UpdateStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Failed" />
+      <xs:enumeration value="Hidden" />
+      <xs:enumeration value="Visible" />
+      <xs:enumeration value="Successful" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="UpdateStatus" nillable="true" type="tns:UpdateStatus" />
+  <xs:complexType name="ArrayOfSuh">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Suh" nillable="true" type="tns:Suh" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSuh" nillable="true" type="tns:ArrayOfSuh" />
+  <xs:simpleType name="ErrorType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DownloadError" />
+      <xs:enumeration value="InstallationError" />
+      <xs:enumeration value="FatalNetworkError" />
+      <xs:enumeration value="GeneralErrorNonFatal" />
+      <xs:enumeration value="FatalError" />
+      <xs:enumeration value="SearchError" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ErrorType" nillable="true" type="tns:ErrorType" />
 </xs:schema>

@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.ServiceModel;
 using SevenUpdate.Base;
 
@@ -151,7 +152,7 @@ namespace SevenUpdate.Admin.WCF
         }
 
         /// <summary>
-        ///   unsubscribes from the client
+        ///   Unsubscribes from the client
         /// </summary>
         public void UnSubscribe()
         {
@@ -160,6 +161,31 @@ namespace SevenUpdate.Admin.WCF
             DownloadCompleted = null;
             DownloadProgressChanged = null;
             ClientDisconnected();
+        }
+
+        public void AddApp(Sua app)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetUpdates(Collection<Sui> appUpdates)
+        {
+            App.AppUpdates = appUpdates as Collection<Sui>;
+        }
+
+        public void ShowUpdate(Suh hiddenUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HideUpdate(Suh hiddenUpdate)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HideUpdates(Collection<Suh>  hiddenUpdates)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

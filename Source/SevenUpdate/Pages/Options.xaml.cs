@@ -22,6 +22,7 @@
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
@@ -29,6 +30,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -354,5 +356,17 @@ namespace SevenUpdate.Pages
         #endregion
 
         #endregion
+
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            try
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
+            catch
+            {
+            }
+            e.Handled = true;
+        }
     }
 }

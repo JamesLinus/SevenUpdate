@@ -103,6 +103,8 @@ namespace SevenUpdate.Admin
 
         internal static bool IsInstall { get; set; }
 
+        internal static Collection<Sui> AppUpdates { get; set; }
+
         #endregion
 
         /// <summary>
@@ -354,6 +356,10 @@ namespace SevenUpdate.Admin
             catch
             {
             }
+
+            while (true)
+            {
+            }
         }
 
         #region Methods
@@ -474,7 +480,7 @@ namespace SevenUpdate.Admin
         {
             IsClientConnected = true;
             if (File.Exists(Base.Base.UserStore + "Updates.sui"))
-                Download.DownloadUpdates(Base.Base.Deserialize<Collection<Sui>>(Base.Base.UserStore + "Updates.sui"), JobPriority.ForeGround);
+                Download.DownloadUpdates(JobPriority.ForeGround);
         }
 
         /// <summary>
@@ -509,6 +515,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void Search_SearchDone_EventHandler(object sender, SearchCompletedEventArgs e)
         {
+            AppUpdates = e.Applications;
             if (e.Applications.Count > 0)
             {
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
@@ -516,7 +523,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Download.DownloadUpdates(e.Applications, JobPriority.Normal);
+                    Download.DownloadUpdates(JobPriority.Normal);
                 }
             }
             else

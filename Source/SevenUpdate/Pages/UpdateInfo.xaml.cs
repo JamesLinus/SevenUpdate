@@ -468,10 +468,10 @@ namespace SevenUpdate.Pages
 
             var hnh = new Suh
                           {
-                              HelpUrl = App.Applications[appIndex].HelpUrl,
+                              HelpUrl = App.Applications[appIndex].AppInfo.HelpUrl,
                               InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
-                              Publisher = App.Applications[appIndex].Publisher,
-                              PublisherUrl = App.Applications[appIndex].PublisherUrl,
+                              Publisher = App.Applications[appIndex].AppInfo.Publisher,
+                              PublisherUrl = App.Applications[appIndex].AppInfo.AppUrl,
                               ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
                               Status = UpdateStatus.Hidden,
                               Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
@@ -515,12 +515,12 @@ namespace SevenUpdate.Pages
                 tbUpdateDescription.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
                 tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
                 tbUpdateName.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
-                if (string.IsNullOrEmpty(App.Applications[appIndex].HelpUrl))
+                if (string.IsNullOrEmpty(App.Applications[appIndex].AppInfo.HelpUrl))
                     tbUrlHelp.Visibility = Visibility.Collapsed;
                 else
                 {
                     tbUrlHelp.Visibility = Visibility.Visible;
-                    tbUrlHelp.Tag = App.Applications[appIndex].HelpUrl;
+                    tbUrlHelp.Tag = App.Applications[appIndex].AppInfo.HelpUrl;
                 }
                 if (string.IsNullOrEmpty(App.Applications[appIndex].Updates[updateIndex].InfoUrl))
                     tbUrlInfo.Visibility = Visibility.Collapsed;

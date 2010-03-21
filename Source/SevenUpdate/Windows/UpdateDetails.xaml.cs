@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
@@ -62,9 +63,20 @@ namespace SevenUpdate.Windows
             }
             else
                 tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;
-            if (updateInfo.InfoUrl != null)
+
+            if (String.IsNullOrEmpty(updateInfo.InfoUrl))
+            {
+                tbMoreInfoUrl.Visibility = Visibility.Collapsed;
+                textBlock3.Visibility = Visibility.Collapsed;
+            }
+            else
                 tbMoreInfoUrl.Text = updateInfo.InfoUrl;
-            if (updateInfo.HelpUrl != null)
+            if (String.IsNullOrEmpty(updateInfo.HelpUrl))
+            {
+                tbHelpUrl.Visibility = Visibility.Collapsed;
+                textBlock4.Visibility = Visibility.Collapsed;
+            }
+            else
                 tbHelpUrl.Text = updateInfo.HelpUrl;
 
             return ShowDialog();

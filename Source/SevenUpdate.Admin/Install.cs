@@ -94,9 +94,9 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Installs updates
         /// </summary>
-        internal static void InstallUpdates(Collection<Sui> applications)
+        internal static void InstallUpdates()
         {
-            if (applications == null)
+            if (App.AppUpdates == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
@@ -104,7 +104,7 @@ namespace SevenUpdate.Admin
                 App.ShutdownApp();
                 return;
             }
-            if (applications.Count < 1)
+            if (App.AppUpdates.Count < 1)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
                     EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
@@ -114,7 +114,7 @@ namespace SevenUpdate.Admin
 
             #region variables
 
-            updateCount = applications.Sum(t => t.Updates.Count);
+            updateCount = App.AppUpdates.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
             var errorOccurred = false;
 
@@ -122,9 +122,9 @@ namespace SevenUpdate.Admin
 
             ReportProgress(0);
 
-            for (var x = 0; x < applications.Count; x++)
+            for (var x = 0; x < App.AppUpdates.Count; x++)
             {
-                for (var y = 0; y < applications[x].Updates.Count; y++)
+                for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
                 {
                     if (File.Exists(Base.Base.AllUserStore + @"abort.lock"))
                     {
@@ -132,8 +132,8 @@ namespace SevenUpdate.Admin
                         App.ShutdownApp();
                     }
 
-                    currentUpdateName = Base.Base.GetLocaleString(applications[x].Updates[y].Name);
-                    if (applications[x].Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
+                    currentUpdateName = Base.Base.GetLocaleString(App.AppUpdates[x].Updates[y].Name);
+                    if (App.AppUpdates[x].AppInfo.Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
                     {
                         try
                         {
@@ -156,7 +156,7 @@ namespace SevenUpdate.Admin
                     #region Registry
 
                     // ReSharper disable RedundantAssignment
-                    errorOccurred = SetRegistryItems(applications[x].Updates[y].RegistryItems);
+                    errorOccurred = SetRegistryItems(App.AppUpdates[x].Updates[y].RegistryItems);
                     // ReSharper restore RedundantAssignment
 
                     #endregion
@@ -165,7 +165,7 @@ namespace SevenUpdate.Admin
 
                     #region Files
 
-                    errorOccurred = UpdateFiles(applications[x].Updates[y].Files, Base.Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    errorOccurred = UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     #endregion
 
@@ -173,7 +173,7 @@ namespace SevenUpdate.Admin
 
                     #region Shortcuts
 
-                    SetShortcuts(applications[x].Updates[y].Shortcuts, applications[x].Directory, applications[x].Is64Bit);
+                    SetShortcuts(App.AppUpdates[x].Updates[y].Shortcuts, App.AppUpdates[x].AppInfo.Directory, App.AppUpdates[x].AppInfo.Is64Bit);
 
                     #endregion
 
@@ -182,31 +182,31 @@ namespace SevenUpdate.Admin
                     if (errorOccurred)
                     {
                         failedUpdates++;
-                        AddHistory(applications[x], applications[x].Updates[y]);
+                        AddHistory(App.AppUpdates[x], App.AppUpdates[x].Updates[y]);
                     }
                     else
                     {
                         completedUpdates++;
-                        AddHistory(applications[x], applications[x].Updates[y]);
+                        AddHistory(App.AppUpdates[x], App.AppUpdates[x].Updates[y]);
                     }
 
                     #region If Seven Update
 
-                    if (applications[x].Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.Base.RebootNeeded)
+                    if (App.AppUpdates[x].AppInfo.Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.Base.RebootNeeded)
                     {
-                        for (var z = 0; z < applications[x].Updates[y].Files.Count; z++)
+                        for (var z = 0; z < App.AppUpdates[x].Updates[y].Files.Count; z++)
                         {
-                            switch (applications[x].Updates[y].Files[z].Action)
+                            switch (App.AppUpdates[x].Updates[y].Files[z].Action)
                             {
                                 case FileAction.Delete:
                                 case FileAction.UnregisterThenDelete:
                                     try
                                     {
-                                        File.Delete(applications[x].Updates[y].Files[z].Destination);
+                                        File.Delete(App.AppUpdates[x].Updates[y].Files[z].Destination);
                                     }
                                     catch
                                     {
-                                        MoveFileEx(applications[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
+                                        MoveFileEx(App.AppUpdates[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
                                     }
                                     break;
                                 default:
@@ -563,9 +563,9 @@ namespace SevenUpdate.Admin
             var history = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HistoryFile) ?? new Collection<Suh>();
             var hist = new Suh
                            {
-                               HelpUrl = appInfo.HelpUrl,
-                               Publisher = appInfo.Publisher,
-                               PublisherUrl = appInfo.PublisherUrl,
+                               HelpUrl = appInfo.AppInfo.HelpUrl,
+                               Publisher = appInfo.AppInfo.Publisher,
+                               PublisherUrl = appInfo.AppInfo.AppUrl,
                                Description = updateInfo.Description,
                                Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
                                InfoUrl = updateInfo.InfoUrl,

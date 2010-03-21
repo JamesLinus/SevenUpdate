@@ -3,7 +3,7 @@
       MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="SevenUpdate" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="800">
 
 	<!-- Grid-->
-	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False" Height="453" Name="grid">
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False" Name="grid">
 		<Grid.RowDefinitions>
 
 			<RowDefinition Height="Auto" />

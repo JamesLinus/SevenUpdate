@@ -85,8 +85,8 @@ namespace SevenUpdate.Base
         /// </returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
-            app.Directory = Base.ConvertPath(app.Directory, true, app.Is64Bit);
-            if (!Directory.Exists(app.Directory))
+            app.AppInfo.Directory = Base.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
+            if (!Directory.Exists(app.AppInfo.Directory))
                 return false;
 
             var isHidden = false;
@@ -116,7 +116,7 @@ namespace SevenUpdate.Base
                 ulong size = 0;
                 for (var z = 0; z < app.Updates[y].Files.Count; z++)
                 {
-                    app.Updates[y].Files[z].Destination = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.Directory, app.Is64Bit);
+                    app.Updates[y].Files[z].Destination = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Is64Bit);
                     // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                     if (File.Exists(app.Updates[y].Files[z].Destination))
                     {
@@ -252,7 +252,7 @@ namespace SevenUpdate.Base
             {
                 // Download the Seven Update SUI and load it.
                 var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-
+                app.AppInfo = new Sua { AppUrl = "http://sevenupdate.com/", HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
                 {
@@ -302,7 +302,9 @@ namespace SevenUpdate.Base
                     try
                     {
                         // Loads a SUI that was downloaded
-                        var app = Base.Deserialize<Sui>(Base.DownloadFile(t.Source), t.Source);
+                        var app = Base.Deserialize<Sui>(Base.DownloadFile(t.SuiUrl), t.SuiUrl);
+                       
+                        app.AppInfo = t;
 
                         // Check to see if any updates are avalible and exclude hidden updates
                         // If there is an update avaliable, add it.
@@ -311,7 +313,7 @@ namespace SevenUpdate.Base
                     }
                     catch (WebException e)
                     {
-                        Base.ReportError("Error downloading file: " + t.Source, Base.AllUserStore);
+                        Base.ReportError("Error downloading file: " + t.SuiUrl, Base.AllUserStore);
                         // Notify that there was an error that occurred.
                         if (ErrorOccurredEventHandler != null)
                             ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));

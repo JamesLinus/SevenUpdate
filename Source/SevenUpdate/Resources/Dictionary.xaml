@@ -32,4 +32,16 @@
     <BitmapImage x:Key="RedShield" UriSource="pack://application:,,,/SevenUpdate;component/Images/RedShield.png" />
     <BitmapImage x:Key="SUIcon" UriSource="pack://application:,,,/SevenUpdate;component/Images/Icon.png" />
 
+    <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Style.Triggers>
+            <!-- setting up triggers for alternate background colors -->
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="#F3F7FB"></Setter>
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="White"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>

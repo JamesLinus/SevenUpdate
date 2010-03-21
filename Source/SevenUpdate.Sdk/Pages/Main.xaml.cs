@@ -37,9 +37,16 @@ namespace SevenUpdate.Sdk.Pages
             InitializeComponent();
         }
 
-        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start("http://sevenupdate.com/forum/");
+            try
+            {
+                Process.Start(e.Uri.AbsolutePath);
+            }catch
+            {
+            }
+
+            e.Handled = true;
         }
     }
 }
