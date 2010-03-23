@@ -201,9 +201,6 @@
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
     <None Include="Service References\WCF\EventService.wsdl" />
-    <None Include="Service References\WCF\Mex.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\WCF\Mex1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -216,9 +213,6 @@
     <None Include="Service References\WCF\Mex4.xsd">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -279,6 +273,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
     <WCFMetadataStorage Include="Service References\WCF\" />
   </ItemGroup>
   <ItemGroup>
@@ -291,6 +288,7 @@
     <None Include="Service References\WCF\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

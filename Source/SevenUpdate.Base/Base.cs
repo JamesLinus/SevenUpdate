@@ -81,7 +81,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <param name = "exception">the exception that occurred</param>
         /// <param name = "type">the type of error that occurred</param>
-        public ErrorOccurredEventArgs(Exception exception, ErrorType type)
+        public ErrorOccurredEventArgs(string exception, ErrorType type)
         {
             Exception = exception;
             Type = type;
@@ -90,7 +90,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Gets the Exception information of the error that occurred
         /// </summary>
-        public Exception Exception { get; private set; }
+        public string Exception { get; private set; }
 
         /// <summary>
         ///   Gets the

@@ -305,9 +305,9 @@ namespace SevenUpdate.Pages
                     break;
                 case ErrorType.InstallationError:
                     if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
                     else
-                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
+                        SetUI(UILayout.ErrorOccurred, e.Exception);
                     break;
 
 
@@ -315,18 +315,18 @@ namespace SevenUpdate.Pages
                     break;
                 case ErrorType.DownloadError:
                     if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
                     else
-                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
+                        SetUI(UILayout.ErrorOccurred, e.Exception);
                     break;
                 case ErrorType.GeneralErrorNonFatal:
 
                     break;
                 case ErrorType.FatalError:
                     if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception.Message);
+                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
                     else
-                        SetUI(UILayout.ErrorOccurred, e.Exception.Message);
+                        SetUI(UILayout.ErrorOccurred, e.Exception);
 
                     break;
             }
@@ -468,7 +468,6 @@ namespace SevenUpdate.Pages
 
                 if (Admin.Install())
                 {
-                    Admin.Connect();
                     SetUI(infoBar.tbHeading.Text == App.RM.GetString("DownloadAndInstallUpdates") ? UILayout.Downloading : UILayout.Installing);
                 }
                 else

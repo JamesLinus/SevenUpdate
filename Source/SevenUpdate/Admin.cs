@@ -23,13 +23,9 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO;
 using System.ServiceModel;
 using System.Threading;
 using SevenUpdate.Base;
-using SevenUpdate.WCF;
-using Sua = SevenUpdate.Base.Sua;
-using Suh = SevenUpdate.Base.Suh;
 
 #endregion
 
@@ -187,7 +183,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "exception">the exception that occurred</param>
         /// <param name = "type">the type of error that occurred</param>
-        public void OnErrorOccurred(System.Exception exception, ErrorType type)
+        public void OnErrorOccurred(string exception, Base.ErrorType type)
         {
             if (ErrorOccurredEventHandler == null)
                 return;
@@ -275,6 +271,37 @@ namespace SevenUpdate
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChangedEventHandler;
 
         #endregion
+
+        public void OnDownloadCompleted(OnDownloadCompleted request)
+        {
+            if (DownloadDoneEventHandler != null)
+                DownloadDoneEventHandler(this, new DownloadCompletedEventArgs(request.errorOccurred));
+        }
+
+        public void OnInstallCompleted(OnInstallCompleted request)
+        {
+            if (InstallDoneEventHandler != null)
+                InstallDoneEventHandler(this, new InstallCompletedEventArgs(request.updatesInstalled, request.updatesFailed));
+        }
+
+        public void OnErrorOccurred(OnErrorOccurred request)
+        {
+            if (ErrorOccurredEventHandler == null)
+                return;
+            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(request.exception, (ErrorType) request.type));
+        }
+
+        public void OnDownloadProgressChanged(OnDownloadProgressChanged request)
+        {
+            if (DownloadProgressChangedEventHandler != null)
+                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(request.bytesTransferred, request.bytesTotal, request.filesTransferred, request.filesTotal));
+        }
+
+        public void OnInstallProgressChanged(OnInstallProgressChanged request)
+        {
+            if (InstallProgressChangedEventHandler != null)
+                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(request.updateName, request.progress, request.updatesComplete, request.totalUpdates));
+        }
     }
 
     /// <summary>
@@ -304,7 +331,7 @@ namespace SevenUpdate
                         throw new FaultException();
                 }
                 Thread.CurrentThread.Join(500);
-                wcf.Subscribe();
+                wcf.Subscribe(new Subscribe());
             }
             catch (EndpointNotFoundException)
             {
@@ -321,7 +348,7 @@ namespace SevenUpdate
         {
             Base.Base.ReportError(e, Base.Base.UserStore);
             if (ServiceErrorEventHandler != null)
-                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalError));
+                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e.Message, Base.ErrorType.FatalError));
             var processes = Process.GetProcessesByName("SevenUpdate.Admin");
             foreach (var t in processes)
             {
@@ -345,7 +372,7 @@ namespace SevenUpdate
                 try
                 {
                     if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe();
+                        wcf.UnSubscribe(new UnSubscribe());
                 }
                 catch (Exception e)
                 {
@@ -368,7 +395,7 @@ namespace SevenUpdate
                 if (abort && wcf != null)
                 {
                     if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe();
+                        wcf.UnSubscribe(new UnSubscribe());
                 }
             }
             catch (Exception e)
@@ -388,12 +415,12 @@ namespace SevenUpdate
         /// </returns>
         internal static bool Install()
         {
-            Base.Base.Serialize(App.Applications, Base.Base.UserStore + "Updates.sui");
             bool success =  Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
             if (success)
             {
                 Connect();
-                wcf.SetUpdates(App.Applications);
+                wcf.SetUpdates(new SetUpdates(App.Applications));
+
             }
             return success;
         }
@@ -413,7 +440,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.HideUpdate(hiddenUpdate);
+                wcf.HideUpdate(new HideUpdate(hiddenUpdate));
             }
 
             return success;
@@ -434,7 +461,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.HideUpdates(hiddenUpdates);
+                wcf.HideUpdates(new HideUpdates(hiddenUpdates));
             }
             return success;
         }
@@ -455,7 +482,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.ShowUpdate(hiddenUpdate);
+                wcf.ShowUpdate(new ShowUpdate(hiddenUpdate));
             }
             return true;
         }
@@ -464,7 +491,7 @@ namespace SevenUpdate
         ///   Adds an application to Seven Update
         /// </summary>
         /// <param name = "sul">the list of applications to update</param>
-        internal static void AddSua(Collection<Sua> sul)
+        internal static void AddSua(Sua sul)
         {
 
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");
@@ -472,7 +499,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.AddApp(sul);
+                wcf.AddApp(new AddApp(sul));
             }
         }
 
@@ -486,7 +513,7 @@ namespace SevenUpdate
         /// </param>
         /// <param name = "options">the options to save</param>
         /// <param name = "sul">the list of application to update to save</param>
-        internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
+        internal static void SaveSettings(bool autoOn, Config options, Collection<Base.Sua> sul)
         {
             // Save the application settings and applications to update in the user store
             Base.Base.Serialize(options, Base.Base.UserStore + "App.config");

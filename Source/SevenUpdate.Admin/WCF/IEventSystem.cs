@@ -20,10 +20,8 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
-using ProtoBuf;
 using SevenUpdate.Base;
 
 #endregion
@@ -99,7 +97,7 @@ namespace SevenUpdate.Admin.WCF
         ///   <see cref = "ErrorType" />
         ///   of the error that occurred</param>
         [OperationContract(IsOneWay = true)]
-        void OnErrorOccurred(Exception exception, ErrorType type);
+        void OnErrorOccurred(string exception, ErrorType type);
 
         /// <summary>
         ///   Occurs when the download progress has changed

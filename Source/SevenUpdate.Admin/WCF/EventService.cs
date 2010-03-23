@@ -20,10 +20,10 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using SevenUpdate.Base;
+using SharpBits.Base;
 
 #endregion
 
@@ -74,7 +74,7 @@ namespace SevenUpdate.Admin.WCF
         /// <param name = "type">The
         ///   <see cref = "ErrorType" />
         ///   of the error that occurred</param>
-        public delegate void ErrorOccurredCallbackDelegate(Exception exception, ErrorType type);
+        public delegate void ErrorOccurredCallbackDelegate(string exception, ErrorType type);
 
         /// <summary>
         ///   A callback delegate for the
@@ -165,27 +165,26 @@ namespace SevenUpdate.Admin.WCF
 
         public void AddApp(Sua app)
         {
-            throw new NotImplementedException();
         }
 
         public void SetUpdates(Collection<Sui> appUpdates)
         {
-            App.AppUpdates = appUpdates as Collection<Sui>;
+            
+            App.AppUpdates = appUpdates;
+            Base.Base.Serialize(appUpdates, @"c:\users\sevenalive\desktop\appfiles.txt");
+            Download.DownloadUpdates(JobPriority.ForeGround);
         }
 
         public void ShowUpdate(Suh hiddenUpdate)
         {
-            throw new NotImplementedException();
         }
 
         public void HideUpdate(Suh hiddenUpdate)
         {
-            throw new NotImplementedException();
         }
 
-        public void HideUpdates(Collection<Suh>  hiddenUpdates)
+        public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            throw new NotImplementedException();
         }
 
         #endregion

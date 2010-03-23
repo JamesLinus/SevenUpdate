@@ -99,16 +99,16 @@ namespace SevenUpdate.Admin
             if (App.AppUpdates == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.FatalError);
-                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
+                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.FatalError);
+                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                 App.ShutdownApp();
                 return;
             }
             if (App.AppUpdates.Count < 1)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
-                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
+                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
+                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                 App.ShutdownApp();
             }
 
@@ -301,7 +301,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             error = true;
                         }
                         break;
@@ -313,7 +313,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
                     case RegistryAction.DeleteValue:
@@ -324,7 +324,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
                 }
@@ -391,7 +391,7 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
-                    EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                    EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                 }
 
                 #region Report Progress
@@ -430,7 +430,7 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
-                    EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                    EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                     return false;
                 }
 
@@ -471,7 +471,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
 
@@ -507,7 +507,7 @@ namespace SevenUpdate.Admin
                         else
                         {
                             Base.Base.ReportError("FileNotFound: " + sourceFile, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(new Exception("FileNotFound: " + sourceFile), ErrorType.InstallationError);
+                            EventService.ErrorOccurred(@"FileNotFound: " + sourceFile, ErrorType.InstallationError);
                             error = true;
                         }
 
@@ -520,7 +520,7 @@ namespace SevenUpdate.Admin
                             catch (Exception e)
                             {
                                 Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
-                                EventService.ErrorOccurred(e, ErrorType.InstallationError);
+                                EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             }
                         }
 

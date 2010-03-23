@@ -242,7 +242,7 @@ namespace SevenUpdate.Base
             catch (Exception e)
             {
                 if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.FatalNetworkError));
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalNetworkError));
                 return;
             }
 
@@ -272,7 +272,7 @@ namespace SevenUpdate.Base
                 Base.ReportError(e, Base.AllUserStore);
                 // Notify that there was an error that occurred.
                 if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
             }
 
             #endregion
@@ -316,14 +316,14 @@ namespace SevenUpdate.Base
                         Base.ReportError("Error downloading file: " + t.SuiUrl, Base.AllUserStore);
                         // Notify that there was an error that occurred.
                         if (ErrorOccurredEventHandler != null)
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                     }
                     catch (Exception e)
                     {
                         Base.ReportError(e, Base.AllUserStore);
                         // Notify that there was an error that occurred.
                         if (ErrorOccurredEventHandler != null)
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e, ErrorType.SearchError));
+                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                     }
                 }
             }

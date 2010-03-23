@@ -466,7 +466,7 @@ namespace SevenUpdate.Pages
             var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
             var appIndex = indices[listView.SelectedIndex].AppIndex;
 
-            var hnh = new Suh
+            WCF.Suh hnh = new Suh
                           {
                               HelpUrl = App.Applications[appIndex].AppInfo.HelpUrl,
                               InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,

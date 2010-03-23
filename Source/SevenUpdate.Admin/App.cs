@@ -135,7 +135,7 @@ namespace SevenUpdate.Admin
                     if (host != null)
                         host.Abort();
                     if (EventService.ErrorOccurred != null)
-                        EventService.ErrorOccurred(e, ErrorType.FatalError);
+                        EventService.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
@@ -146,7 +146,7 @@ namespace SevenUpdate.Admin
                     if (host != null)
                         host.Abort();
                     if (EventService.ErrorOccurred != null)
-                        EventService.ErrorOccurred(e, ErrorType.FatalError);
+                        EventService.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
@@ -183,12 +183,12 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                {
-                                    File.Delete(Base.Base.AppsFile);
+                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
+                                //{
+                                //    File.Delete(Base.Base.AppsFile);
 
-                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                }
+                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
+                                //}
 
                                 #endregion
 
@@ -197,18 +197,18 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                if (File.Exists(Base.Base.UserStore + "App.config"))
-                                {
-                                    File.Delete(Base.Base.ConfigFile);
+                                //if (File.Exists(Base.Base.UserStore + "App.config"))
+                                //{
+                                //    File.Delete(Base.Base.ConfigFile);
 
-                                    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-                                }
+                                //    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
+                                //}
 
-                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                {
-                                    File.Delete(Base.Base.AppsFile);
-                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                }
+                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
+                                //{
+                                //    File.Delete(Base.Base.AppsFile);
+                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
+                                //}
 
                                 if (Environment.OSVersion.Version.Major < 6)
                                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
@@ -223,18 +223,19 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                if (File.Exists(Base.Base.UserStore + "App.config"))
-                                {
-                                    File.Delete(Base.Base.ConfigFile);
+                                //if (File.Exists(Base.Base.UserStore + "App.config"))
+                                //{
+                                //    File.Delete(Base.Base.ConfigFile);
 
-                                    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-                                }
-                                if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                {
-                                    File.Delete(Base.Base.AppsFile);
+                                //    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
+                                //}
+                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
+                                //{
+                                //    File.Delete(Base.Base.AppsFile);
 
-                                    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                }
+                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
+                                //}
+
                                 if (Environment.OSVersion.Version.Major < 6)
                                     Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
                                 else
@@ -247,12 +248,12 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
-                                hidden.Add(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
+                                //var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+                                //hidden.Add(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
 
-                                File.Delete(Base.Base.UserStore + "Update.suh");
+                                //File.Delete(Base.Base.UserStore + "Update.suh");
 
-                                Base.Base.Serialize(hidden, Base.Base.HiddenFile);
+                                //Base.Base.Serialize(hidden, Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -261,15 +262,15 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
-                                show.Remove(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
+                                //var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+                                //show.Remove(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
 
-                                File.Delete(Base.Base.UserStore + "Update.suh");
+                                //File.Delete(Base.Base.UserStore + "Update.suh");
 
-                                if (show.Count == 0)
-                                    File.Delete(Base.Base.HiddenFile);
-                                else
-                                    Base.Base.Serialize(show, Base.Base.HiddenFile);
+                                //if (show.Count == 0)
+                                //    File.Delete(Base.Base.HiddenFile);
+                                //else
+                                //    Base.Base.Serialize(show, Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -278,9 +279,9 @@ namespace SevenUpdate.Admin
 
                                 #region code
 
-                                File.Delete(Base.Base.HiddenFile);
+                                //File.Delete(Base.Base.HiddenFile);
 
-                                File.Move(Base.Base.UserStore + "Hidden.suh", Base.Base.HiddenFile);
+                                //File.Move(Base.Base.UserStore + "Hidden.suh", Base.Base.HiddenFile);
 
                                 #endregion
 
@@ -479,8 +480,7 @@ namespace SevenUpdate.Admin
         private static void EventService_ClientConnected()
         {
             IsClientConnected = true;
-            if (File.Exists(Base.Base.UserStore + "Updates.sui"))
-                Download.DownloadUpdates(JobPriority.ForeGround);
+            
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace SevenUpdate.Admin
             host.Abort();
             Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
             if (EventService.ErrorOccurred != null)
-                EventService.ErrorOccurred(new Exception("Communication with the update service has been interrupted and cannot be resumed"), ErrorType.FatalError);
+                EventService.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
 
             ShutdownApp();
         }

@@ -59,9 +59,9 @@ namespace SevenUpdate.Admin
             if (App.AppUpdates == null)
             {
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception("Applications file could not be deserialized"), ErrorType.DownloadError);
+                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
-                Base.Base.ReportError("Applications file could not be deserialized", Base.Base.AllUserStore);
+                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wir", Base.Base.AllUserStore);
                 App.ShutdownApp();
             }
             else
@@ -69,15 +69,12 @@ namespace SevenUpdate.Admin
                 if (App.AppUpdates.Count < 1)
                 {
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(new Exception("Applications file could not be found"), ErrorType.DownloadError);
+                        EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
-                    Base.Base.ReportError("Applications file could not be found", Base.Base.AllUserStore);
+                    Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                     App.ShutdownApp();
                 }
             }
-
-            // When done with the temp list
-            File.Delete(Base.Base.UserStore + "Updates.sui");
 
             // It's a new manager class
             manager = new BitsManager();
@@ -176,7 +173,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                                EventService.ErrorOccurred(e, ErrorType.DownloadError);
+                                EventService.ErrorOccurred(e.Message, ErrorType.DownloadError);
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
                         }
                     }
@@ -201,7 +198,7 @@ namespace SevenUpdate.Admin
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
                     if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(e, ErrorType.DownloadError);
+                        EventService.ErrorOccurred(e.Message, ErrorType.DownloadError);
                     App.ShutdownApp();
                 }
             }
@@ -282,13 +279,13 @@ namespace SevenUpdate.Admin
             {
                 Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+                    EventService.ErrorOccurred(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
             else
             {
                 Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
                 if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(new Exception(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description), ErrorType.DownloadError);
+                    EventService.ErrorOccurred(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
 
             try
