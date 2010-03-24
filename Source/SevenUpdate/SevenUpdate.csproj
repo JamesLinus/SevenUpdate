@@ -267,6 +267,10 @@
     <Resource Include="Images\wicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SevenUpdate.Admin\SevenUpdate.Admin.csproj">
+      <Project>{762D246E-1DF7-4C49-8169-413AD897F8BD}</Project>
+      <Name>SevenUpdate.Admin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
       <Name>SevenUpdate.Base</Name>

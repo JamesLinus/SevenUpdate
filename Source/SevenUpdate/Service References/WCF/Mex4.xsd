@@ -14,6 +14,8 @@
       <xs:element minOccurs="0" name="Publisher" nillable="true" type="tns:ArrayOfLocaleString" />
       <xs:element minOccurs="0" name="SuiUrl" nillable="true" type="xs:string" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="Sua" nillable="true" type="tns:Sua" />
   <xs:complexType name="ArrayOfLocaleString">

@@ -119,7 +119,7 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Seven Update Application information
     /// </summary>
-    [ProtoContract, ]
+    [ProtoContract, DataContract(IsReference = true)]
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     public class Sua : INotifyPropertyChanged
     {
