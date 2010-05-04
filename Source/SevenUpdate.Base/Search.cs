@@ -67,7 +67,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Location of the SUI for Seven Update
         /// </summary>
-        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate.sui";
+        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
 
         #endregion
 

@@ -159,7 +159,13 @@ namespace SevenUpdate.Base
         /// </summary>
         [ProtoMember(6), DataMember]
         public ObservableCollection<LocaleString> Publisher { get; set; }
-
+        
+        /// <summary>
+        ///   The SUI file of the application
+        /// </summary>
+        [ProtoMember(7), DataMember]
+        public string SuiUrl { get; set; }
+        
         /// <summary>
         ///   The url for the application
         /// </summary>
@@ -171,12 +177,6 @@ namespace SevenUpdate.Base
         /// </summary>
         [ProtoMember(9), DataMember]
         public string HelpUrl { get; set; }
-
-        /// <summary>
-        ///   The SUI file of the application
-        /// </summary>
-        [ProtoMember(7), DataMember]
-        public string SuiUrl { get; set; }
 
         #region Implementation of INotifyPropertyChanged
 
@@ -364,44 +364,6 @@ namespace SevenUpdate.Base
     
     public class Sui : INotifyPropertyChanged
     {
-        #region Obsolete Properties
-
-        /// <summary>
-        ///   The application main directory, usually in Program Files
-        /// </summary>
-        [Obsolete, ProtoMember(1)]
-
-        public string Directory { get; set; }
-
-        /// <summary>
-        ///   Specifies if the application is 64 bit
-        /// </summary>
-        [Obsolete, ProtoMember(2)]
-
-        public bool Is64Bit { get; set; }
-
-        /// <summary>
-        ///   The company or developer of the Application
-        /// </summary>
-        [ProtoMember(3)]
-        public ObservableCollection<LocaleString> Publisher { get; set; }
-
-        /// <summary>
-        ///   The url of the company or developer
-        /// </summary>
-        [Obsolete, ProtoMember(4)]
-
-        public string PublisherUrl { get; set; }
-
-        /// <summary>
-        ///   The help url of the update: Optional
-        /// </summary>
-        [Obsolete, ProtoMember(5)]
-
-        public string HelpUrl { get; set; }
-
-        #endregion
-
         /// <summary>
         ///   Information about the software
         /// </summary>
@@ -411,7 +373,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Collection of updates for the application
         /// </summary>
-        [ProtoMember(6), DataMember]
+        [ProtoMember(1), DataMember]
         public ObservableCollection<Update> Updates { get; set; }
 
         #region Implementation of INotifyPropertyChanged

@@ -431,7 +431,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Adds an application to Seven Update
         /// </summary>
-        /// <param name = "sul">the list of applications to update</param>
+        /// <param name = "sua">the application to add to Seven Update</param>
         internal static void AddSua(Sua sua)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
