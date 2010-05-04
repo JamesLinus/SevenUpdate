@@ -30,10 +30,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using SevenUpdate.Base;
 using SevenUpdate.Controls;
 using SevenUpdate.Windows;
@@ -62,10 +62,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   The shield Icon uri
         /// </summary>
-        private ImageSource ShieldIcon
-        {
-            set { shieldIcon.Source = value; }
-        }
+        private ImageSource ShieldIcon { set { shieldIcon.Source = value; } }
 
         #endregion
 
@@ -189,8 +186,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Updates the list with the
-        ///   <see cref = "machineAppList" />
+        ///   Updates the list with the <see cref = "machineAppList" />
         /// </summary>
         private void UpdateList()
         {
@@ -207,11 +203,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Adds the
-        ///   <see cref = "GridViewColumn" />
-        ///   's of the
-        ///   <see cref = "ListView" />
-        ///   to be sorted
+        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -276,16 +268,16 @@ namespace SevenUpdate.Pages
             switch (cbAutoUpdateMethod.SelectedIndex)
             {
                 case 0:
-                    ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
+                    ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
                     break;
                 case 1:
-                    ShieldIcon = (BitmapImage)App.Resources["GreenShield"];
+                    ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
                     break;
                 case 2:
                     ShieldIcon = null;
                     break;
                 case 3:
-                    ShieldIcon = (BitmapImage)App.Resources["RedShield"];
+                    ShieldIcon = (BitmapImage) App.Resources["RedShield"];
                     break;
             }
         }
@@ -303,11 +295,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        ///   Updates the
-        ///   <see cref = "CollectionView" />
-        ///   when the
-        ///   <c>userAppList</c>
-        ///   collection changes
+        ///   Updates the <see cref = "CollectionView" /> when the <c>userAppList</c> collection changes
         /// </summary>
         private void UserAppList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -319,9 +307,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Limit the size of the
-        ///   <see cref = "GridViewColumn" />
-        ///   when it's being resized
+        ///   Limit the size of the <see cref = "GridViewColumn" /> when it's being resized
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -357,7 +343,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             try
             {

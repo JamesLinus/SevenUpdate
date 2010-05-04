@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
 using SevenUpdate.Base;
 
 #endregion
@@ -102,9 +101,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    ///   Converts a
-    ///   <see cref = "LocaleString" />
-    ///   to a localized string
+    ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
     public sealed class LocaleStringConverter : IValueConverter

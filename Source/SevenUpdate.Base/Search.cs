@@ -78,11 +78,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <param name = "app">a collection of applications to check for updates</param>
         /// <param name = "hidden">a collection of hidden updates</param>
-        /// <returns>returns
-        ///   <c>true</c>
-        ///   if found updates, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.AppInfo.Directory = Base.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
@@ -252,7 +248,7 @@ namespace SevenUpdate.Base
             {
                 // Download the Seven Update SUI and load it.
                 var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-                app.AppInfo = new Sua { AppUrl = "http://sevenupdate.com/", HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
+                app.AppInfo = new Sua {AppUrl = "http://sevenupdate.com/", HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
                 {
@@ -303,7 +299,7 @@ namespace SevenUpdate.Base
                     {
                         // Loads a SUI that was downloaded
                         var app = Base.Deserialize<Sui>(Base.DownloadFile(t.SuiUrl), t.SuiUrl);
-                       
+
                         app.AppInfo = t;
 
                         // Check to see if any updates are avalible and exclude hidden updates

@@ -22,8 +22,7 @@
 		<Image Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Name="imgSideDetails" Stretch="Fill" />
 		<Image IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
 
-        <ListView ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" AlternationCount="2" Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="ListView_SelectionChanged" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black"
-                BorderThickness="0" SelectedIndex="0" >
+		<ListView ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" AlternationCount="2" Grid.Row="1" Grid.RowSpan="5" Name="listView" SelectionChanged="ListView_SelectionChanged" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black" BorderThickness="0" SelectedIndex="0">
 			<ListView.ContextMenu>
 				<ContextMenu>
 					<MenuItem x:Name="cmiHideUpdate" Header="Hide update" Click="MenuItem_MouseClick">

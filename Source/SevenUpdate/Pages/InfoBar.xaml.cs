@@ -20,12 +20,10 @@
 
 #region
 
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 #endregion
 
@@ -41,18 +39,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   The shield icon uri
         /// </summary>
-        internal ImageSource ShieldIcon
-        {
-            set { shieldIcon.Source = value; }
-        }
+        internal ImageSource ShieldIcon { set { shieldIcon.Source = value; } }
 
         /// <summary>
         ///   The side image uri
         /// </summary>
-        internal ImageSource SideImage
-        {
-            set { sideImage.Source = value; }
-        }
+        internal ImageSource SideImage { set { sideImage.Source = value; } }
 
         #endregion
 
@@ -65,8 +57,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Underlines the text when mouse is over the
-        ///   <see cref = "TextBlock" />
+        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -75,8 +66,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the
-        ///   <see cref = "TextBlock" />
+        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {

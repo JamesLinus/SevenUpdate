@@ -39,8 +39,7 @@ namespace SevenUpdate.Controls
         protected Dictionary<string, ListSortDirection> SortColumns = new Dictionary<string, ListSortDirection>();
 
         /// <summary>
-        ///   Adds a column to the
-        ///   <see cref = "SortColumns" />
+        ///   Adds a column to the <see cref = "SortColumns" />
         /// </summary>
         /// <param name = "sortColumn">a string representing a column to be sorted</param>
         /// <param name = "direction">the direction to sort</param>

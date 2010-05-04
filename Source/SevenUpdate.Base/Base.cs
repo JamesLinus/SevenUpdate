@@ -29,7 +29,6 @@ using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml.Serialization;
 using Microsoft.Win32;
 using ProtoBuf;
 
@@ -93,9 +92,7 @@ namespace SevenUpdate.Base
         public string Exception { get; private set; }
 
         /// <summary>
-        ///   Gets the
-        ///   <see cref = "ErrorType" />
-        ///   of the error that occurred
+        ///   Gets the <see cref = "ErrorType" /> of the error that occurred
         /// </summary>
         public ErrorType Type { get; private set; }
     }
@@ -174,10 +171,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Specifies if a reboot is needed
         /// </summary>
-        public static bool RebootNeeded
-        {
-            get { return File.Exists(AllUserStore + @"reboot.lock"); }
-        }
+        public static bool RebootNeeded { get { return File.Exists(AllUserStore + @"reboot.lock"); } }
 
         /// <summary>
         ///   Gets or Sets the ISO language code
@@ -191,9 +185,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Gets the preferred localized string from a collection of localized strings
         /// </summary>
-        /// <param name = "localeStrings">A collection of
-        ///   <see cref = "LocaleString" />
-        ///   's</param>
+        /// <param name = "localeStrings">A collection of <see cref = "LocaleString" />'s</param>
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
@@ -220,11 +212,7 @@ namespace SevenUpdate.Base
         ///   Expands the system variables in a string
         /// </summary>
         /// <param name = "path">a string that contains a file path</param>
-        /// <param name = "expand">
-        ///   <c>true</c>
-        ///   to expand system variable,
-        ///   <c>false</c>
-        ///   to converts paths into system variables</param>
+        /// <param name = "expand"><c>true</c> to expand system variable, <c>false</c> to converts paths into system variables</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
@@ -582,7 +570,7 @@ namespace SevenUpdate.Base
                     using (var file = File.OpenRead(fileName))
                     {
                         T obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
-                        
+
                         file.Close();
                         return obj;
                     }

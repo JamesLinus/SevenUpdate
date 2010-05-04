@@ -219,7 +219,7 @@ namespace SevenUpdate.Admin
                                         if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
                                             File.Delete(Base.Base.AllUserStore + "abort.lock");
                                         IsInstall = true;
-                                        
+
                                         app.Run();
                                     }
                                     catch (Exception e)
@@ -301,9 +301,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Updates the notifyIcon state
         /// </summary>
-        /// <param name = "filter">The
-        ///   <see cref = "NotifyType" />
-        ///   to set the notifyIcon to.</param>
+        /// <param name = "filter">The <see cref = "NotifyType" /> to set the notifyIcon to.</param>
         internal static void UpdateNotifyIcon(NotifyType filter)
         {
             NotifyIcon.Visible = true;
@@ -426,6 +424,7 @@ namespace SevenUpdate.Admin
         }
 
         #region Service events
+
         /// <summary>
         ///   Occurs when Seven Update UI connects to the admin process
         /// </summary>
@@ -502,9 +501,7 @@ namespace SevenUpdate.Admin
             var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
             var index = sul.IndexOf(e.App);
             if (index < 0)
-            {
                 sul.Add(e.App);
-            }
 
             Base.Base.Serialize(sul, Base.Base.AppsFile);
             ShutdownApp();

@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -69,22 +70,22 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Download and Installs updates automatically
         /// </summary>
-       [ProtoEnum, EnumMember] Install = 0,
+        [ProtoEnum, EnumMember] Install = 0,
 
         /// <summary>
         ///   Downloads Updates automatically
         /// </summary>
-       [ProtoEnum, EnumMember] Download = 1,
+        [ProtoEnum, EnumMember] Download = 1,
 
         /// <summary>
         ///   Only checks and notifies the user of updates
         /// </summary>
-       [ProtoEnum, EnumMember] Notify = 2,
+        [ProtoEnum, EnumMember] Notify = 2,
 
         /// <summary>
         ///   No automatic checking
         /// </summary>
-       [ProtoEnum, EnumMember] Never = 3
+        [ProtoEnum, EnumMember] Never = 3
     }
 
     #endregion
@@ -119,8 +120,8 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Seven Update Application information
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>))]
+    
     public class Sua : INotifyPropertyChanged
     {
         /// <summary>
@@ -185,9 +186,7 @@ namespace SevenUpdate.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///   When a property has changed, call the
-        ///   <see cref = "OnPropertyChanged" />
-        ///   Event
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name"></param>
         protected void OnPropertyChanged(string name)
@@ -216,17 +215,17 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Adds a shortcut
         /// </summary>
-       [ProtoEnum, EnumMember] Add = 0,
+        [ProtoEnum, EnumMember] Add = 0,
 
         /// <summary>
         ///   Deletes a shortcut
         /// </summary>
-       [ProtoEnum, EnumMember] Delete = 2,
+        [ProtoEnum, EnumMember] Delete = 2,
 
         /// <summary>
         ///   Updates a shortcut only if it exists
         /// </summary>
-       [ProtoEnum, EnumMember] Update = 1
+        [ProtoEnum, EnumMember] Update = 1
     }
 
     /// <summary>
@@ -243,42 +242,42 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Updates a file, only if it exist
         /// </summary>
-       [ProtoEnum, EnumMember] UpdateIfExist = 1,
+        [ProtoEnum, EnumMember] UpdateIfExist = 1,
 
         /// <summary>
         ///   Updates a file, then registers the dll
         /// </summary>
-       [ProtoEnum, EnumMember] UpdateThenRegister = 2,
+        [ProtoEnum, EnumMember] UpdateThenRegister = 2,
 
         /// <summary>
         ///   Updates a file, then executes it
         /// </summary>
-       [ProtoEnum, EnumMember] UpdateThenExecute = 3,
+        [ProtoEnum, EnumMember] UpdateThenExecute = 3,
 
         /// <summary>
         ///   Compares a file, but does not update it
         /// </summary>
-       [ProtoEnum, EnumMember] CompareOnly = 4,
+        [ProtoEnum, EnumMember] CompareOnly = 4,
 
         /// <summary>
         ///   Executes a file, can be on system or be downloaded
         /// </summary>
-       [ProtoEnum, EnumMember] Execute = 5,
+        [ProtoEnum, EnumMember] Execute = 5,
 
         /// <summary>
         ///   Deletes a file
         /// </summary>
-       [ProtoEnum, EnumMember] Delete = 6,
+        [ProtoEnum, EnumMember] Delete = 6,
 
         /// <summary>
         ///   Executes a file, then deletes it
         /// </summary>
-       [ProtoEnum, EnumMember] ExecuteThenDelete = 7,
+        [ProtoEnum, EnumMember] ExecuteThenDelete = 7,
 
         /// <summary>
         ///   Unregisteres a dll, then deletes it
         /// </summary>
-       [ProtoEnum, EnumMember] UnregisterThenDelete = 8,
+        [ProtoEnum, EnumMember] UnregisterThenDelete = 8,
     }
 
     /// <summary>
@@ -290,22 +289,22 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Important update
         /// </summary>
-       [ProtoEnum, EnumMember] Important = 0,
+        [ProtoEnum, EnumMember] Important = 0,
 
         /// <summary>
         ///   Locale or language
         /// </summary>
-       [ProtoEnum, EnumMember] Locale = 1,
+        [ProtoEnum, EnumMember] Locale = 1,
 
         /// <summary>
         ///   Optional update
         /// </summary>
-       [ProtoEnum, EnumMember] Optional = 2,
+        [ProtoEnum, EnumMember] Optional = 2,
 
         /// <summary>
         ///   Recommended update
         /// </summary>
-       [ProtoEnum, EnumMember] Recommended = 3
+        [ProtoEnum, EnumMember] Recommended = 3
     }
 
     /// <summary>
@@ -317,22 +316,22 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Indicates that the update installation failed
         /// </summary>
-       [ProtoEnum, EnumMember] Failed = 0,
+        [ProtoEnum, EnumMember] Failed = 0,
 
         /// <summary>
         ///   Indicates that the update is hidden
         /// </summary>
-       [ProtoEnum, EnumMember] Hidden = 1,
+        [ProtoEnum, EnumMember] Hidden = 1,
 
         /// <summary>
         ///   Indicates that the update is visible
         /// </summary>
-       [ProtoEnum, EnumMember] Visible = 2,
+        [ProtoEnum, EnumMember] Visible = 2,
 
         /// <summary>
         ///   Indicates that the update installation succeeded
         /// </summary>
-       [ProtoEnum, EnumMember] Successful = 3
+        [ProtoEnum, EnumMember] Successful = 3
     }
 
     /// <summary>
@@ -343,15 +342,15 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Adds a registry entry to the machine
         /// </summary>
-       [ProtoEnum, EnumMember] Add = 0,
+        [ProtoEnum, EnumMember] Add = 0,
         /// <summary>
         ///   Deletes a registry key on the machine
         /// </summary>
-       [ProtoEnum, EnumMember] DeleteKey = 1,
+        [ProtoEnum, EnumMember] DeleteKey = 1,
         /// <summary>
         ///   Deletes a value of a registry key on the machine
         /// </summary>
-       [ProtoEnum, EnumMember] DeleteValue = 2
+        [ProtoEnum, EnumMember] DeleteValue = 2
     }
 
     #endregion
@@ -361,48 +360,47 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Application info
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof (Sua))]
-    [KnownType(typeof(ObservableCollection<Update>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
+    
     public class Sui : INotifyPropertyChanged
     {
-        //#region Obsolete Properties
+        #region Obsolete Properties
 
-        ///// <summary>
-        /////   The application main directory, usually in Program Files
-        ///// </summary>
-        //[Obsolete, ProtoMember(1)]
+        /// <summary>
+        ///   The application main directory, usually in Program Files
+        /// </summary>
+        [Obsolete, ProtoMember(1)]
 
-        //public string Directory { get; set; }
+        public string Directory { get; set; }
 
-        ///// <summary>
-        /////   Specifies if the application is 64 bit
-        ///// </summary>
-        //[Obsolete, ProtoMember(2)]
+        /// <summary>
+        ///   Specifies if the application is 64 bit
+        /// </summary>
+        [Obsolete, ProtoMember(2)]
 
-        //public bool Is64Bit { get; set; }
+        public bool Is64Bit { get; set; }
 
-        ///// <summary>
-        /////   The company or developer of the Application
-        ///// </summary>
-        //[ProtoMember(3)]
-        //public ObservableCollection<LocaleString> Publisher { get; set; }
+        /// <summary>
+        ///   The company or developer of the Application
+        /// </summary>
+        [ProtoMember(3)]
+        public ObservableCollection<LocaleString> Publisher { get; set; }
 
-        ///// <summary>
-        /////   The url of the company or developer
-        ///// </summary>
-        //[Obsolete, ProtoMember(4)]
+        /// <summary>
+        ///   The url of the company or developer
+        /// </summary>
+        [Obsolete, ProtoMember(4)]
 
-        //public string PublisherUrl { get; set; }
+        public string PublisherUrl { get; set; }
 
-        ///// <summary>
-        /////   The help url of the update: Optional
-        ///// </summary>
-        //[Obsolete, ProtoMember(5)]
+        /// <summary>
+        ///   The help url of the update: Optional
+        /// </summary>
+        [Obsolete, ProtoMember(5)]
 
-        //public string HelpUrl { get; set; }
+        public string HelpUrl { get; set; }
 
-        //#endregion
+        #endregion
 
         /// <summary>
         ///   Information about the software
@@ -414,7 +412,6 @@ namespace SevenUpdate.Base
         ///   Collection of updates for the application
         /// </summary>
         [ProtoMember(6), DataMember]
-        
         public ObservableCollection<Update> Updates { get; set; }
 
         #region Implementation of INotifyPropertyChanged
@@ -425,9 +422,7 @@ namespace SevenUpdate.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///   When a property has changed, call the
-        ///   <see cref = "OnPropertyChanged" />
-        ///   Event
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name"></param>
         protected void OnPropertyChanged(string name)
@@ -444,11 +439,9 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Information on how to install a software update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(ObservableCollection<LocaleString>))]
-    [KnownType(typeof(UpdateFile))]
-    [KnownType(typeof(RegistryItem))]
-    [KnownType(typeof(Shortcut))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>)), KnownType(typeof (UpdateFile)), KnownType(typeof (RegistryItem)),
+     KnownType(typeof (Shortcut))]
+    
     public class Update
     {
         #region Required Properties
@@ -457,35 +450,30 @@ namespace SevenUpdate.Base
         ///   The name of the update
         /// </summary>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         ///   Release information about the update
         /// </summary>
         [ProtoMember(2), DataMember]
-        
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         ///   The default download directory where the updates files are stored
         /// </summary>
         [ProtoMember(3), DataMember]
-        
         public string DownloadUrl { get; set; }
 
         /// <summary>
         ///   The update type of the update: Important, Recommended, Optional, Locale, Installation.
         /// </summary>
         [ProtoMember(4), DataMember]
-        
         public Importance Importance { get; set; }
 
         /// <summary>
         ///   The date when the update was released
         /// </summary>
         [ProtoMember(5), DataMember]
-        
         public string ReleaseDate { get; set; }
 
         #endregion
@@ -496,14 +484,12 @@ namespace SevenUpdate.Base
         ///   The information/change log url of the update: Optional
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string InfoUrl { get; set; }
 
         /// <summary>
         ///   The Software License Agreement Url
         /// </summary>
         [ProtoMember(7, IsRequired = false), DataMember]
-        
         public string LicenseUrl { get; set; }
 
         #endregion
@@ -514,21 +500,18 @@ namespace SevenUpdate.Base
         ///   The files of the current update
         /// </summary>
         [ProtoMember(8, IsRequired = false), DataMember]
-        
         public ObservableCollection<UpdateFile> Files { get; set; }
 
         /// <summary>
         ///   The registry entries of the current update
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
-        
         public ObservableCollection<RegistryItem> RegistryItems { get; set; }
 
         /// <summary>
         ///   The shortcuts to create for the update
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
-        
         public ObservableCollection<Shortcut> Shortcuts { get; set; }
 
         #endregion
@@ -539,14 +522,12 @@ namespace SevenUpdate.Base
         ///   Gets or Sets a value Indicating if the update is selected (not used in the SDK)
         /// </summary>
         [ProtoIgnore, IgnoreDataMember]
-        
         public bool Selected { get; set; }
 
         /// <summary>
         ///   The download size of the update in bytes, not used by the SDK
         /// </summary>
         [ProtoIgnore, IgnoreDataMember]
-        
         public ulong Size { get; set; }
 
         #endregion
@@ -555,8 +536,8 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Information about a file within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(FileAction))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (FileAction))]
+    
     public class UpdateFile
     {
         #region Required Properties
@@ -565,35 +546,30 @@ namespace SevenUpdate.Base
         ///   The action to perform on a file
         /// </summary>
         [ProtoMember(1), DataMember]
-        
         public FileAction Action { get; set; }
 
         /// <summary>
         ///   The source location of the current file with the filename
         /// </summary>
         [ProtoMember(2), DataMember]
-        
         public string Source { get; set; }
 
         /// <summary>
         ///   The destination location of the current file with the filename
         /// </summary>
         [ProtoMember(3), DataMember]
-        
         public string Destination { get; set; }
 
         /// <summary>
         ///   The SHA1 hash of the current file
         /// </summary>
         [ProtoMember(4), DataMember]
-        
         public string Hash { get; set; }
 
         /// <summary>
         ///   File size in bytes
         /// </summary>
         [ProtoMember(5), DataMember]
-        
         public ulong Size { get; set; }
 
         #endregion
@@ -612,10 +588,8 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   A registry entry within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(RegistryAction))]
-    [KnownType(typeof(RegistryHive))]
-    [KnownType(typeof(RegistryValueKind))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (RegistryAction)), KnownType(typeof (RegistryHive)), KnownType(typeof (RegistryValueKind))]
+    
     public class RegistryItem : INotifyPropertyChanged
     {
         #region Required Properties
@@ -624,21 +598,18 @@ namespace SevenUpdate.Base
         ///   The action to perform to the registry item
         /// </summary>
         [ProtoMember(1), DataMember]
-        
         public RegistryAction Action { get; set; }
 
         /// <summary>
         ///   The hive of the current registry item
         /// </summary>
-        [ProtoMember(2),  DefaultValue(RegistryHive.LocalMachine), DataMember]
-        
+        [ProtoMember(2), DefaultValue(RegistryHive.LocalMachine), DataMember]
         public RegistryHive Hive { get; set; }
 
         /// <summary>
         ///   The Key path of the current registry item
         /// </summary>
         [ProtoMember(3), DataMember]
-        
         public string Key { get; set; }
 
         #endregion
@@ -649,21 +620,18 @@ namespace SevenUpdate.Base
         ///   Name of the Value in the specified key
         /// </summary>
         [ProtoMember(4, IsRequired = false), DataMember]
-        
         public string KeyValue { get; set; }
 
         /// <summary>
         ///   The ValueKind of the value in the specified key
         /// </summary>
         [ProtoMember(5, IsRequired = false), DataMember]
-        
         public RegistryValueKind ValueKind { get; set; }
 
         /// <summary>
         ///   The data of the value in the specified key
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string Data { get; set; }
 
         #endregion
@@ -676,9 +644,7 @@ namespace SevenUpdate.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///   When a property has changed, call the
-        ///   <see cref = "OnPropertyChanged" />
-        ///   Event
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name"></param>
         protected void OnPropertyChanged(string name)
@@ -695,8 +661,8 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   A shortcut to be created within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(ShortcutAction))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ShortcutAction))]
+    
     public class Shortcut
     {
         #region Required Properties
@@ -721,28 +687,24 @@ namespace SevenUpdate.Base
         ///   Any arguments to be used with the shortcut
         /// </summary>
         [ProtoMember(3, IsRequired = false), DataMember]
-        
         public string Arguments { get; set; }
 
         /// <summary>
         ///   Description of the shortcut
         /// </summary>
         [ProtoMember(4, IsRequired = false), DataMember]
-        
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         ///   The full path to the icon or exe containing an icon
         /// </summary>
         [ProtoMember(5, IsRequired = false), DataMember]
-        
         public string Icon { get; set; }
 
         /// <summary>
         ///   The full path of the target to the shortcut.
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string Target { get; set; }
 
         #endregion
@@ -757,10 +719,8 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(UpdateStatus))]
-    [KnownType(typeof(Importance))]
-    [KnownType(typeof(ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (UpdateStatus)), KnownType(typeof (Importance)), KnownType(typeof (ObservableCollection<LocaleString>))]
+    
     public class Suh : INotifyPropertyChanged
     {
         #region Required Properties
@@ -769,56 +729,48 @@ namespace SevenUpdate.Base
         ///   The name of the update
         /// </summary>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<LocaleString> Name { get; set; }
 
         /// <summary>
         ///   A description of the update, usually list new features or changes the update brings.
         /// </summary>
         [ProtoMember(2), DataMember]
-        
         public ObservableCollection<LocaleString> Description { get; set; }
 
         /// <summary>
         ///   The update type of the update: Critical, Recommended, Optional, Locale
         /// </summary>
         [ProtoMember(3), DataMember]
-        
         public Importance Importance { get; set; }
 
         /// <summary>
         ///   The current status of the update
         /// </summary>
         [ProtoMember(4), DataMember]
-        
         public UpdateStatus Status { get; set; }
 
         /// <summary>
         ///   The date when the update was released
         /// </summary>
         [ProtoMember(5), DataMember]
-        
         public string ReleaseDate { get; set; }
 
         /// <summary>
         ///   The full size of the update
         /// </summary>
         [ProtoMember(6), DataMember]
-        
         public ulong Size { get; set; }
 
         /// <summary>
         ///   The Publisher of the update/application
         /// </summary>
         [ProtoMember(7), DataMember]
-        
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
         ///   The website of the publisher
         /// </summary>
         [ProtoMember(8), DataMember]
-        
         public string PublisherUrl { get; set; }
 
         #endregion
@@ -829,21 +781,18 @@ namespace SevenUpdate.Base
         ///   The help url of the update: Optional
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
-        
         public string HelpUrl { get; set; }
 
         /// <summary>
         ///   The information/change log url of the update: Optional
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
-        
         public string InfoUrl { get; set; }
 
         /// <summary>
         ///   The date when the update was installed
         /// </summary>
-        [ ProtoMember(11), DataMember]
-        
+        [ProtoMember(11), DataMember]
         public string InstallDate { get; set; }
 
         #endregion
@@ -856,9 +805,7 @@ namespace SevenUpdate.Base
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        ///   When a property has changed, call the
-        ///   <see cref = "OnPropertyChanged" />
-        ///   Event
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name"></param>
         protected void OnPropertyChanged(string name)

@@ -77,11 +77,7 @@ namespace SevenUpdate.Service
         /// <summary>
         ///   Occurs when the download has completed
         /// </summary>
-        /// <param name = "errorOccurred">
-        ///   <c>true</c>
-        ///   if an error occurred, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnDownloadCompleted(bool errorOccurred);
 
@@ -97,9 +93,7 @@ namespace SevenUpdate.Service
         ///   Occurs when an error occurs
         /// </summary>
         /// <param name = "exception">The exception data</param>
-        /// <param name = "type">The
-        ///   <see cref = "ErrorType" />
-        ///   of the error that occurred</param>
+        /// <param name = "type">The <see cref = "ErrorType" /> of the error that occurred</param>
         [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnErrorOccurred(string exception, ErrorType type);
 

@@ -47,13 +47,11 @@ namespace SevenUpdate
         #region Properties
 
         internal static ResourceDictionary Resources;
+
         /// <summary>
         ///   Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
-        public static IEnumerable<Sua> AppsToUpdate
-        {
-            get { return Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile); }
-        }
+        public static IEnumerable<Sua> AppsToUpdate { get { return Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile); } }
 
         /// <summary>
         ///   Gets the update configuration settings
@@ -75,11 +73,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets a value indicating if the current user is running on admin privileges
         /// </summary>
-        /// <returns>
-        ///   <c>true</c>
-        ///   if the current user is an admin, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
         internal static bool IsAdmin { get; private set; }
 
         /// <summary>
@@ -111,9 +105,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line
-        ///   <c>args</c>
-        /// </param>
+        /// <param name = "args">Command line <c>args</c></param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -188,11 +180,10 @@ namespace SevenUpdate
                 suaLoc = suaLoc.Replace("sevenupdate://", null);
                 var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
                 File.Delete(Base.Base.UserStore + "add.sua");
-                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), 
-                    MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
+                if (
+                    MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
                     AdminClient.AddSua(sua);
-                }
             }
             catch
             {

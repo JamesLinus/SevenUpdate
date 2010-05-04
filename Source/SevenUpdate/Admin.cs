@@ -26,13 +26,13 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using SevenUpdate.Base;
-using SevenUpdate.Service;
 using SevenUpdate.WCF;
 
 #endregion
 
 namespace SevenUpdate
 {
+
     #region Event Args
 
     /// <summary>
@@ -43,20 +43,14 @@ namespace SevenUpdate
         /// <summary>
         ///   Contains event data associated with this event
         /// </summary>
-        /// <param name = "errorOccurred">
-        ///   <c>true</c>
-        ///   is an error occurred, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c></param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             ErrorOccurred = errorOccurred;
         }
 
         /// <summary>
-        ///   <c>true</c>
-        ///   if an error occurred, otherwise
-        ///   <c>false</c>
+        ///   <c>true</c> if an error occurred, otherwise <c>false</c>
         /// </summary>
         public bool ErrorOccurred { get; private set; }
     }
@@ -175,9 +169,9 @@ namespace SevenUpdate
     /// <summary>
     ///   Contains callback methods for WCF
     /// </summary>
-    public class ServiceCallBack : WCF.IServiceCallback
+    public class ServiceCallBack : IServiceCallback
     {
-        #region IServiceCallBack Members
+        #region IServiceCallback Members
 
         /// <summary>
         ///   Occurs when a error occurs when downloading or installing updates
@@ -205,11 +199,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when the download of updates has completed
         /// </summary>
-        /// <param name = "errorOccurred">
-        ///   <c>true</c>
-        ///   if an error occurred, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public void OnDownloadCompleted(bool errorOccurred)
         {
             if (DownloadDoneEventHandler != null)
@@ -287,9 +277,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Connects to the SevenUpdate.Admin sub program
         /// </summary>
-        /// <returns>returns
-        ///   <c>true</c>
-        ///   if successful</returns>
+        /// <returns><c>true</c> if successful</returns>
         internal static void Connect()
         {
             wcf = new ServiceClient(new InstanceContext(new ServiceCallBack()));
@@ -378,11 +366,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Installs selected updates
         /// </summary>
-        /// <returns>
-        ///   <c>true</c>
-        ///   if the admin process was executed, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
@@ -398,11 +382,7 @@ namespace SevenUpdate
         ///   Hides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the update to hide</param>
-        /// <returns>
-        ///   <c>true</c>
-        ///   if the admin process was executed, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");

@@ -31,19 +31,14 @@ using SevenUpdate.Base;
 namespace SevenUpdate.Controls
 {
     /// <summary>
-    ///   Contains methods that extend the
-    ///   <see cref = "ListView" />
-    ///   control
+    ///   Contains methods that extend the <see cref = "ListView" /> control
     /// </summary>
     internal static class ListViewExtensions
     {
         /// <summary>
-        ///   Limits resizing of a
-        ///   <see cref = "GridViewColumn" />
+        ///   Limits resizing of a <see cref = "GridViewColumn" />
         /// </summary>
-        /// <param name = "e">The Thumb object of the
-        ///   <see cref = "GridViewColumn" />
-        ///   to limit it's size</param>
+        /// <param name = "e">The Thumb object of the <see cref = "GridViewColumn" /> to limit it's size</param>
         internal static void LimitColumnSize(Thumb e)
         {
             var senderAsThumb = e;
@@ -60,13 +55,12 @@ namespace SevenUpdate.Controls
         }
 
         /// <summary>
-        ///   Compares two
-        ///   <see cref = "Importance" />
-        ///   objects
+        ///   Compares two <see cref = "Importance" /> objects
         /// </summary>
-        /// <param name = "x">First object</param>
-        /// <param name = "y">Second object</param>
-        /// <returns>returns an integer that indicates their relationship to one another in the sort order.</returns>
+        /// <param name = "x">The first object to compare.</param>
+        /// <param name = "y">The second object to compare.</param>
+        /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+        ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
         private static int CompareImportance(Importance x, Importance y)
         {
             var xRank = 0;
@@ -117,22 +111,10 @@ namespace SevenUpdate.Controls
             /// <summary>
             ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>Value  Condition  Less than zero
-            ///   <paramref name = "x" />
-            ///   is less than
-            ///   <paramref name = "y" />
-            ///   . Zero
-            ///   <paramref name = "x" />
-            ///   equals
-            ///   <paramref name = "y" />
-            ///   .
-            ///   Greater than zero
-            ///   <paramref name = "x" />
-            ///   is greater than
-            ///   <paramref name = "y" />
-            ///   .</returns>
             /// <param name = "x">The first object to compare.</param>
             /// <param name = "y">The second object to compare.</param>
+            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
             public override int Compare(object x, object y)
             {
                 try
@@ -195,22 +177,10 @@ namespace SevenUpdate.Controls
             /// <summary>
             ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>Value  Condition  Less than zero
-            ///   <paramref name = "x" />
-            ///   is less than
-            ///   <paramref name = "y" />
-            ///   . Zero
-            ///   <paramref name = "x" />
-            ///   equals
-            ///   <paramref name = "y" />
-            ///   .
-            ///   Greater than zero
-            ///   <paramref name = "x" />
-            ///   is greater than
-            ///   <paramref name = "y" />
-            ///   .</returns>
             /// <param name = "x">The first object to compare.</param>
             /// <param name = "y">The second object to compare.</param>
+            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
             public override int Compare(object x, object y)
             {
                 try
@@ -290,22 +260,10 @@ namespace SevenUpdate.Controls
             /// <summary>
             ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
             /// </summary>
-            /// <returns>Value  Condition  Less than zero
-            ///   <paramref name = "x" />
-            ///   is less than
-            ///   <paramref name = "y" />
-            ///   . Zero
-            ///   <paramref name = "x" />
-            ///   equals
-            ///   <paramref name = "y" />
-            ///   .
-            ///   Greater than zero
-            ///   <paramref name = "x" />
-            ///   is greater than
-            ///   <paramref name = "y" />
-            ///   .</returns>
             /// <param name = "x">The first object to compare.</param>
             /// <param name = "y">The second object to compare.</param>
+            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
             public override int Compare(object x, object y)
             {
                 try

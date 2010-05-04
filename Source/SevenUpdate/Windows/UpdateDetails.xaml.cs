@@ -47,9 +47,7 @@ namespace SevenUpdate.Windows
         ///   Shows the window and displays the update information
         /// </summary>
         /// <param name = "updateInfo">The update information to display</param>
-        /// <returns>
-        ///   <c>true</c>
-        /// </returns>
+        /// <returns><c>true</c></returns>
         internal bool? ShowDialog(Suh updateInfo)
         {
             tbUpdateName.Text = Base.Base.GetLocaleString(updateInfo.Name);

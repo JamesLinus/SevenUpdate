@@ -53,6 +53,8 @@ namespace SevenUpdate.Service
 
         #region Event Args
 
+        #region Nested type: OnAddAppEventArgs
+
         /// <summary>
         ///   Provides event data the AddApp event
         /// </summary>
@@ -67,48 +69,14 @@ namespace SevenUpdate.Service
             }
 
             /// <summary>
-            /// The app to add to the Seven Update list
+            ///   The app to add to the Seven Update list
             /// </summary>
             public Sua App { get; private set; }
         }
 
-        /// <summary>
-        ///   Provides event data the SetUpdate event
-        /// </summary>
-        public sealed class OnSetUpdatesEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnSetUpdatesEventArgs(Collection<Sui> appUpdates)
-            {
-                AppUpdates = appUpdates;
-            }
+        #endregion
 
-            /// <summary>
-            /// The apps to update
-            /// </summary>
-            public Collection<Sui> AppUpdates { get; private set; }
-        }
-
-        /// <summary>
-        ///   Provides event data the ShowUpdate event
-        /// </summary>
-        public sealed class OnShowUpdateEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnShowUpdateEventArgs(Suh hiddenUpdate)
-            {
-                HiddenUpdate = hiddenUpdate;
-            }
-
-            /// <summary>
-            /// The app to unhide
-            /// </summary>
-            public Suh HiddenUpdate { get; private set; }
-        }
+        #region Nested type: OnHideUpdateEventArgs
 
         /// <summary>
         ///   Provides event data the HideUpdate event
@@ -124,10 +92,14 @@ namespace SevenUpdate.Service
             }
 
             /// <summary>
-            /// The app to hide
+            ///   The app to hide
             /// </summary>
             public Suh HiddenUpdate { get; private set; }
         }
+
+        #endregion
+
+        #region Nested type: OnHideUpdatesEventArgs
 
         /// <summary>
         ///   Provides event data the HideUpdate event
@@ -143,10 +115,37 @@ namespace SevenUpdate.Service
             }
 
             /// <summary>
-            /// The app to hide
+            ///   The app to hide
             /// </summary>
             public Collection<Suh> HiddenUpdates { get; private set; }
         }
+
+        #endregion
+
+        #region Nested type: OnSetUpdatesEventArgs
+
+        /// <summary>
+        ///   Provides event data the SetUpdate event
+        /// </summary>
+        public sealed class OnSetUpdatesEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnSetUpdatesEventArgs(Collection<Sui> appUpdates)
+            {
+                AppUpdates = appUpdates;
+            }
+
+            /// <summary>
+            ///   The apps to update
+            /// </summary>
+            public Collection<Sui> AppUpdates { get; private set; }
+        }
+
+        #endregion
+
+        #region Nested type: OnSettingsChangedEventArgs
 
         /// <summary>
         ///   Provides event data the OnSettingsChanged event
@@ -161,16 +160,15 @@ namespace SevenUpdate.Service
                 Apps = apps;
                 Options = options;
                 AutoOn = autoOn;
-               
             }
 
             /// <summary>
-            /// The apps that Seven Update will update
+            ///   The apps that Seven Update will update
             /// </summary>
             public Collection<Sua> Apps { get; private set; }
 
             /// <summary>
-            /// The apps that Seven Update will update
+            ///   The apps that Seven Update will update
             /// </summary>
             public Config Options { get; private set; }
 
@@ -182,6 +180,31 @@ namespace SevenUpdate.Service
 
         #endregion
 
+        #region Nested type: OnShowUpdateEventArgs
+
+        /// <summary>
+        ///   Provides event data the ShowUpdate event
+        /// </summary>
+        public sealed class OnShowUpdateEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnShowUpdateEventArgs(Suh hiddenUpdate)
+            {
+                HiddenUpdate = hiddenUpdate;
+            }
+
+            /// <summary>
+            ///   The app to unhide
+            /// </summary>
+            public Suh HiddenUpdate { get; private set; }
+        }
+
+        #endregion
+
+        #endregion
+
         #region Delegates
 
         /// <summary>
@@ -190,21 +213,13 @@ namespace SevenUpdate.Service
         public delegate void CallbackDelegate();
 
         /// <summary>
-        ///   A callback delegate for the
-        ///   <see cref = "DownloadCompleted" />
-        ///   event
+        ///   A callback delegate for the <see cref = "DownloadCompleted" /> event
         /// </summary>
-        /// <param name = "errorOccurred">
-        ///   <c>true</c>
-        ///   if an error occurred, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>
-        ///   A callback delegate for the
-        ///   <see cref = "DownloadProgressChanged" />
-        ///   event
+        ///   A callback delegate for the <see cref = "DownloadProgressChanged" /> event
         /// </summary>
         /// <param name = "bytesTransferred">The number of bytes downloaded</param>
         /// <param name = "bytesTotal">The total number of bytes to download</param>
@@ -213,20 +228,14 @@ namespace SevenUpdate.Service
         public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
 
         /// <summary>
-        ///   A callback delegate for the
-        ///   <see cref = "DownloadProgressChanged" />
-        ///   event
+        ///   A callback delegate for the <see cref = "DownloadProgressChanged" /> event
         /// </summary>
         /// <param name = "exception">The exception data</param>
-        /// <param name = "type">The
-        ///   <see cref = "ErrorType" />
-        ///   of the error that occurred</param>
+        /// <param name = "type">The <see cref = "ErrorType" /> of the error that occurred</param>
         public delegate void ErrorOccurredCallbackDelegate(string exception, ErrorType type);
 
         /// <summary>
-        ///   A callback delegate for the
-        ///   <see cref = "InstallCompleted" />
-        ///   event
+        ///   A callback delegate for the <see cref = "InstallCompleted" /> event
         /// </summary>
         /// <param name = "updatesInstalled">The number of updates installed</param>
         /// <param name = "updatesFailed">The number of failed updates</param>
@@ -280,8 +289,6 @@ namespace SevenUpdate.Service
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
-        private IServiceCallBack Callback { get { return OperationContext.Current.GetCallbackChannel<IServiceCallBack>(); } }
-        
         #endregion
 
         #region IService Members

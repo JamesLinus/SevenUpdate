@@ -171,13 +171,9 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        ///   Loops through the
-        ///   <see cref = "ListView" />
-        ///   and updates the source when the update selection has been saved
+        ///   Loops through the <see cref = "ListView" /> and updates the source when the update selection has been saved
         /// </summary>
-        /// <param name = "element">The
-        ///   <see cref = "DependencyObject" />
-        /// </param>
+        /// <param name = "element">The <see cref = "DependencyObject" /></param>
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -293,11 +289,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Adds the
-        ///   <see cref = "GridViewColumn" />
-        ///   's of the
-        ///   <see cref = "ListView" />
-        ///   to be sorted
+        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -378,8 +370,7 @@ namespace SevenUpdate.Pages
         #region TextBlocks
 
         /// <summary>
-        ///   Underlines the text when mouse is over the
-        ///   <see cref = "TextBlock" />
+        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -388,8 +379,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the
-        ///   <see cref = "TextBlock" />
+        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
         /// </summary>
         private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
         {
@@ -398,9 +388,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Launches the More Information
-        ///   <c>Url</c>
-        ///   of the update
+        ///   Launches the More Information <c>Url</c> of the update
         /// </summary>
         private void UrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -414,9 +402,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Launches the Help
-        ///   <c>Url</c>
-        ///   of the update
+        ///   Launches the Help <c>Url</c> of the update
         /// </summary>
         private void UrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -443,11 +429,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        ///   Updates the
-        ///   <see cref = "CollectionView" />
-        ///   when the
-        ///   <c>updateHistory</c>
-        ///   collection changes
+        ///   Updates the <see cref = "CollectionView" /> when the <c>updateHistory</c> collection changes
         /// </summary>
         private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

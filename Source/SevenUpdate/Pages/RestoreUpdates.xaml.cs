@@ -98,11 +98,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Adds the
-        ///   <see cref = "GridViewColumn" />
-        ///   's of the
-        ///   <see cref = "ListView" />
-        ///   to be sorted
+        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
         /// </summary>
         private void AddSortBinding()
         {
@@ -159,11 +155,7 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        ///   Updates the
-        ///   <see cref = "CollectionView" />
-        ///   when the
-        ///   <c>hiddenUpdates</c>
-        ///   collection changes
+        ///   Updates the <see cref = "CollectionView" /> when the <c>hiddenUpdates</c> collection changes
         /// </summary>
         /// <param name = "sender"></param>
         /// <param name = "e"></param>
@@ -199,9 +191,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Limit the size of the
-        ///   <see cref = "GridViewColumn" />
-        ///   when it's being resized
+        ///   Limit the size of the <see cref = "GridViewColumn" /> when it's being resized
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {

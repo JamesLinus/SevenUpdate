@@ -45,9 +45,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line
-        ///   <c>args</c>
-        /// </param>
+        /// <param name = "args">Command line <c>args</c></param>
         [STAThread]
         private static void Main(string[] args)
         {
