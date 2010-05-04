@@ -30,7 +30,6 @@ using System.Resources;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using SevenUpdate.Base;
 using SevenUpdate.Windows;
 
@@ -188,18 +187,11 @@ namespace SevenUpdate
             {
                 suaLoc = suaLoc.Replace("sevenupdate://", null);
                 var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
-                var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
                 File.Delete(Base.Base.UserStore + "add.sua");
-                var index = sul.IndexOf(sua);
-                if (index < 0)
+                if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), 
+                    MessageBoxButton.YesNo,MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    if (
-                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
-                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    {
-                        sul.Add(sua);
-                        Admin.AddSua(sul);
-                    }
+                    AdminClient.AddSua(sua);
                 }
             }
             catch

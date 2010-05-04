@@ -452,7 +452,7 @@ namespace SevenUpdate.Base
         /// <param name = "directoryStore">The directory to store the log</param>
         public static void ReportError(string message, string directoryStore)
         {
-            TextWriter tw = new StreamWriter(directoryStore + "error.log");
+            TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
 
             tw.WriteLine(DateTime.Now + ": " + message);
 
@@ -466,7 +466,7 @@ namespace SevenUpdate.Base
         /// <param name = "directoryStore">The directory to store the log</param>
         public static void ReportError(Exception exception, string directoryStore)
         {
-            TextWriter tw = new StreamWriter(directoryStore + "error.log");
+            TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
 
             tw.WriteLine(DateTime.Now + ": " + exception.Source);
             tw.WriteLine(DateTime.Now + ": " + exception.Message);
@@ -571,36 +571,21 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix">
-        ///   <c>True</c>
-        ///   to Deserialize with a length prefix, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
             if (File.Exists(fileName))
             {
-                var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
                 try
                 {
-                    T temp;
-                    using (var r = new StreamReader(fileName))
-                    {
-                        try
-                        {
-                            temp = (T) s.Deserialize(r);
-                        }
-                        catch
-                        {
-                            temp = null;
-                        }
-                    }
-
-                    if (temp != null)
-                        return temp;
                     using (var file = File.OpenRead(fileName))
-                        return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
+                    {
+                        T obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
+                        
+                        file.Close();
+                        return obj;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -618,29 +603,13 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
         /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix">
-        ///   <c>True</c>
-        ///   to Deserialize with a length prefix, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
-            var s = new XmlSerializer(typeof (T), "http://sevenupdate.com");
             try
             {
-                T temp;
-                try
-                {
-                    temp = (T) s.Deserialize(stream);
-                    stream.Position = 0;
-                }
-                catch
-                {
-                    stream.Position = 0;
-                    temp = null;
-                }
-                return temp ?? (usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream));
+                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
             }
             catch (Exception e)
             {
@@ -657,27 +626,11 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object</typeparam>
         /// <param name = "item">the object to serialize</param>
         /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix">
-        ///   <c>True</c>
-        ///   to Serialize with a length prefix, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
         public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
             try
             {
-                //XmlWriter w = null;
-                //var xs = new XmlWriterSettings { Indent = true, OmitXmlDeclaration = true };
-                //var ns = new XmlSerializerNamespaces();
-                //ns.Add("", "http://sevenupdate.com");
-                //var s = new XmlSerializer(typeof(T), "http://sevenupdate.com");
-                //w = XmlWriter.Create(fileName, xs);
-                //if (w != null)
-                //{
-                //    s.Serialize(w, item, ns);
-                //    w.Close();
-                //}
-
                 if (File.Exists(fileName))
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
@@ -686,6 +639,7 @@ namespace SevenUpdate.Base
                             Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                         else
                             Serializer.Serialize(file, item);
+                        file.Close();
                     }
                 }
                 else
@@ -696,6 +650,7 @@ namespace SevenUpdate.Base
                             Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
                         else
                             Serializer.Serialize(file, item);
+                        file.Close();
                     }
                 }
             }

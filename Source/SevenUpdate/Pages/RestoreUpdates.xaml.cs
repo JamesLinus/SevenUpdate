@@ -146,7 +146,7 @@ namespace SevenUpdate.Pages
                 hiddenUpdates.RemoveAt(x);
                 x--;
             }
-            if (Admin.HideUpdates(hiddenUpdates))
+            if (AdminClient.HideUpdates(hiddenUpdates))
             {
                 if (RestoredHiddenUpdateEventHandler != null)
                     RestoredHiddenUpdateEventHandler(this, new EventArgs());

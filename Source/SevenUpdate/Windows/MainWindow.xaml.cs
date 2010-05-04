@@ -69,7 +69,7 @@ namespace SevenUpdate.Windows
             Settings.Default.windowHeight = Height;
             Settings.Default.windowWidth = Width;
             Settings.Default.Save();
-            Admin.Disconnect();
+            AdminClient.Disconnect();
             Environment.Exit(0);
         }
     }

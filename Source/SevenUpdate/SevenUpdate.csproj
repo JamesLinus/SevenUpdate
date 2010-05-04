@@ -77,6 +77,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="protobuf-net, Version=1.0.0.282, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Externals\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -200,7 +204,9 @@
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\WCF\EventService.wsdl" />
+    <None Include="Service References\WCF\Mex.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\WCF\Mex1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -210,12 +216,12 @@
     <None Include="Service References\WCF\Mex3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WCF\Mex4.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Service References\WCF\Service.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -275,6 +281,10 @@
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
       <Name>SevenUpdate.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SevenUpdate.Service\SevenUpdate.Service.csproj">
+      <Project>{DDB3F933-3284-4817-B1AD-AEB1DF19CA2D}</Project>
+      <Name>SevenUpdate.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -292,7 +302,6 @@
     <None Include="Service References\WCF\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

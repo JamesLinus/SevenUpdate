@@ -139,9 +139,7 @@
     </Compile>
     <Compile Include="Download.cs" />
     <Compile Include="Install.cs" />
-    <Compile Include="WCF\EventService.cs" />
-    <Compile Include="WCF\IEventSystem.cs" />
-    <None Include="app.config">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\app.manifest" />
@@ -196,6 +194,10 @@
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
       <Name>SevenUpdate.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SevenUpdate.Service\SevenUpdate.Service.csproj">
+      <Project>{DDB3F933-3284-4817-B1AD-AEB1DF19CA2D}</Project>
+      <Name>SevenUpdate.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

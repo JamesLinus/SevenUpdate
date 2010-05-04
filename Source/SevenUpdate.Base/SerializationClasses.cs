@@ -36,25 +36,25 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Configuration options
     /// </summary>
-    [ProtoContract]
+    [ProtoContract, DataContract(IsReference = true)]
     public class Config
     {
         /// <summary>
         ///   Specifies which update setting Seven Update should use
         /// </summary>
-        [ProtoMember(1)]
+        [ProtoMember(1), DataMember]
         public AutoUpdateOption AutoOption { get; set; }
 
         /// <summary>
         ///   Gets or Sets a value indicating if Seven Update is to included recommended updates when automatically downloading updates
         /// </summary>
-        [ProtoMember(2)]
+        [ProtoMember(2), DataMember]
         public bool IncludeRecommended { get; set; }
 
         /// <summary>
         ///   Specifies the language Seven Update uses
         /// </summary>
-        [ProtoMember(3)]
+        [ProtoMember(3), DataMember]
         public string Locale { get; set; }
     }
 

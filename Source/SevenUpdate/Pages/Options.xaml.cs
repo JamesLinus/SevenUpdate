@@ -256,10 +256,10 @@ namespace SevenUpdate.Pages
             {
                 options.AutoOption = AutoUpdateOption.Never;
 
-                Admin.SaveSettings(false, options, machineAppList);
+                AdminClient.SaveSettings(false, options, machineAppList);
             }
             else
-                Admin.SaveSettings(true, options, machineAppList);
+                AdminClient.SaveSettings(true, options, machineAppList);
         }
 
         #endregion

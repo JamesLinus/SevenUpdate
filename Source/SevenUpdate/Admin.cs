@@ -26,12 +26,13 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using SevenUpdate.Base;
+using SevenUpdate.Service;
+using SevenUpdate.WCF;
 
 #endregion
 
 namespace SevenUpdate
 {
-
     #region Event Args
 
     /// <summary>
@@ -57,7 +58,7 @@ namespace SevenUpdate
         ///   if an error occurred, otherwise
         ///   <c>false</c>
         /// </summary>
-        internal bool ErrorOccurred { get; private set; }
+        public bool ErrorOccurred { get; private set; }
     }
 
     /// <summary>
@@ -174,16 +175,16 @@ namespace SevenUpdate
     /// <summary>
     ///   Contains callback methods for WCF
     /// </summary>
-    internal class AdminCallBack : IEventSystemCallback
+    public class ServiceCallBack : WCF.IServiceCallback
     {
-        #region IEventSystemCallback Members
+        #region IServiceCallBack Members
 
         /// <summary>
         ///   Occurs when a error occurs when downloading or installing updates
         /// </summary>
         /// <param name = "exception">the exception that occurred</param>
         /// <param name = "type">the type of error that occurred</param>
-        public void OnErrorOccurred(string exception, Base.ErrorType type)
+        public void OnErrorOccurred(string exception, ErrorType type)
         {
             if (ErrorOccurredEventHandler == null)
                 return;
@@ -271,48 +272,17 @@ namespace SevenUpdate
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChangedEventHandler;
 
         #endregion
-
-        public void OnDownloadCompleted(OnDownloadCompleted request)
-        {
-            if (DownloadDoneEventHandler != null)
-                DownloadDoneEventHandler(this, new DownloadCompletedEventArgs(request.errorOccurred));
-        }
-
-        public void OnInstallCompleted(OnInstallCompleted request)
-        {
-            if (InstallDoneEventHandler != null)
-                InstallDoneEventHandler(this, new InstallCompletedEventArgs(request.updatesInstalled, request.updatesFailed));
-        }
-
-        public void OnErrorOccurred(OnErrorOccurred request)
-        {
-            if (ErrorOccurredEventHandler == null)
-                return;
-            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(request.exception, (ErrorType) request.type));
-        }
-
-        public void OnDownloadProgressChanged(OnDownloadProgressChanged request)
-        {
-            if (DownloadProgressChangedEventHandler != null)
-                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(request.bytesTransferred, request.bytesTotal, request.filesTransferred, request.filesTotal));
-        }
-
-        public void OnInstallProgressChanged(OnInstallProgressChanged request)
-        {
-            if (InstallProgressChangedEventHandler != null)
-                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(request.updateName, request.progress, request.updatesComplete, request.totalUpdates));
-        }
     }
 
     /// <summary>
     ///   Provides static methods that control SevenUpdate.Admin for operations that require administrator access
     /// </summary>
-    internal static class Admin
+    internal static class AdminClient
     {
         /// <summary>
         ///   The client of the WCF service
         /// </summary>
-        private static EventSystemClient wcf;
+        private static ServiceClient wcf;
 
         /// <summary>
         ///   Connects to the SevenUpdate.Admin sub program
@@ -322,7 +292,7 @@ namespace SevenUpdate
         ///   if successful</returns>
         internal static void Connect()
         {
-            wcf = new EventSystemClient(new InstanceContext(new AdminCallBack()));
+            wcf = new ServiceClient(new InstanceContext(new ServiceCallBack()));
             try
             {
                 while (wcf.State != CommunicationState.Created)
@@ -331,7 +301,7 @@ namespace SevenUpdate
                         throw new FaultException();
                 }
                 Thread.CurrentThread.Join(500);
-                wcf.Subscribe(new Subscribe());
+                wcf.Subscribe();
             }
             catch (EndpointNotFoundException)
             {
@@ -344,11 +314,11 @@ namespace SevenUpdate
             }
         }
 
-        private static void AdminError(System.Exception e)
+        private static void AdminError(Exception e)
         {
             Base.Base.ReportError(e, Base.Base.UserStore);
             if (ServiceErrorEventHandler != null)
-                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e.Message, Base.ErrorType.FatalError));
+                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
             var processes = Process.GetProcessesByName("SevenUpdate.Admin");
             foreach (var t in processes)
             {
@@ -372,7 +342,7 @@ namespace SevenUpdate
                 try
                 {
                     if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe(new UnSubscribe());
+                        wcf.UnSubscribe();
                 }
                 catch (Exception e)
                 {
@@ -395,7 +365,7 @@ namespace SevenUpdate
                 if (abort && wcf != null)
                 {
                     if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe(new UnSubscribe());
+                        wcf.UnSubscribe();
                 }
             }
             catch (Exception e)
@@ -415,12 +385,11 @@ namespace SevenUpdate
         /// </returns>
         internal static bool Install()
         {
-            bool success =  Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
             if (success)
             {
                 Connect();
-                wcf.SetUpdates(new SetUpdates(App.Applications));
-
+                wcf.SetUpdates(App.Applications);
             }
             return success;
         }
@@ -436,11 +405,11 @@ namespace SevenUpdate
         /// </returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdate");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 Connect();
-                wcf.HideUpdate(new HideUpdate(hiddenUpdate));
+                wcf.HideUpdate(hiddenUpdate);
             }
 
             return success;
@@ -450,18 +419,14 @@ namespace SevenUpdate
         ///   Hides multiple updates
         /// </summary>
         /// <param name = "hiddenUpdates">the list of updates to hide</param>
-        /// <returns>
-        ///   <c>true</c>
-        ///   if the admin process was executed, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "HideUpdates", true);
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 Connect();
-                wcf.HideUpdates(new HideUpdates(hiddenUpdates));
+                wcf.HideUpdates(hiddenUpdates);
             }
             return success;
         }
@@ -470,19 +435,15 @@ namespace SevenUpdate
         ///   Unhides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the hidden update to unhide</param>
-        /// <returns>
-        ///   <c>true</c>
-        ///   if the admin process was executed, otherwise
-        ///   <c>false</c>
-        /// </returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "ShowUpdate");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
             if (success)
             {
                 Connect();
-                wcf.ShowUpdate(new ShowUpdate(hiddenUpdate));
+                wcf.ShowUpdate(hiddenUpdate);
             }
             return true;
         }
@@ -491,40 +452,34 @@ namespace SevenUpdate
         ///   Adds an application to Seven Update
         /// </summary>
         /// <param name = "sul">the list of applications to update</param>
-        internal static void AddSua(Sua sul)
+        internal static void AddSua(Sua sua)
         {
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "sua");
-
-            if (success)
-            {
-                Connect();
-                wcf.AddApp(new AddApp(sul));
-            }
+            if (!success)
+                return;
+            Connect();
+            wcf.AddApp(sua);
         }
 
         /// <summary>
         ///   Save the settings and call SevenUpdate.Admin to commit them.
         /// </summary>
-        /// <param name = "autoOn">
-        ///   <c>true</c>
-        ///   if auto updates are enabled, otherwise
-        ///   <c>false</c>
-        /// </param>
+        /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
         /// <param name = "options">the options to save</param>
         /// <param name = "sul">the list of application to update to save</param>
-        internal static void SaveSettings(bool autoOn, Config options, Collection<Base.Sua> sul)
+        internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
-            // Save the application settings and applications to update in the user store
-            Base.Base.Serialize(options, Base.Base.UserStore + "App.config");
-            Base.Base.Serialize(sul, Base.Base.UserStore + "Apps.sul");
-
             // Launch SevenUpdate.Admin to save the settings to the AppStore.
-            if (Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", autoOn ? "Options-On" : "Options-Off", true))
-            {
-                if (SettingsChangedEventHandler != null)
-                    SettingsChangedEventHandler(null, new EventArgs());
-            }
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+
+            if (!success)
+                return;
+            Connect();
+            wcf.ChangeSettings(sul, options, autoOn);
+
+            if (SettingsChangedEventHandler != null)
+                SettingsChangedEventHandler(null, new EventArgs());
         }
 
         #endregion

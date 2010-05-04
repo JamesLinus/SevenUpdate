@@ -30,7 +30,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
-using SevenUpdate.Admin.WCF;
 using SevenUpdate.Base;
 using File = System.IO.File;
 
@@ -83,8 +82,8 @@ namespace SevenUpdate.Admin
 
         private static void ReportProgress(int installProgress)
         {
-            if (EventService.InstallProgressChanged != null && App.IsClientConnected)
-                EventService.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
+            if (Service.Service.InstallProgressChanged != null && App.IsClientConnected)
+                Service.Service.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
             if (App.NotifyIcon != null)
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
         }
@@ -98,16 +97,16 @@ namespace SevenUpdate.Admin
         {
             if (App.AppUpdates == null)
             {
-                if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.FatalError);
+                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.FatalError);
                 Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                 App.ShutdownApp();
                 return;
             }
             if (App.AppUpdates.Count < 1)
             {
-                if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
+                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
                 Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                 App.ShutdownApp();
             }
@@ -253,8 +252,8 @@ namespace SevenUpdate.Admin
                     }
                 }
             }
-            if (EventService.InstallCompleted != null)
-                EventService.InstallCompleted(completedUpdates, failedUpdates);
+            if (Service.Service.InstallCompleted != null)
+                Service.Service.InstallCompleted(completedUpdates, failedUpdates);
 
             App.ShutdownApp();
         }
@@ -301,7 +300,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             error = true;
                         }
                         break;
@@ -313,7 +312,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
                     case RegistryAction.DeleteValue:
@@ -324,7 +323,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
                 }
@@ -391,7 +390,7 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
-                    EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                    Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                 }
 
                 #region Report Progress
@@ -430,7 +429,7 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
-                    EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                    Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                     return false;
                 }
 
@@ -471,7 +470,7 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
 
@@ -507,7 +506,7 @@ namespace SevenUpdate.Admin
                         else
                         {
                             Base.Base.ReportError("FileNotFound: " + sourceFile, Base.Base.AllUserStore);
-                            EventService.ErrorOccurred(@"FileNotFound: " + sourceFile, ErrorType.InstallationError);
+                            Service.Service.ErrorOccurred(@"FileNotFound: " + sourceFile, ErrorType.InstallationError);
                             error = true;
                         }
 
@@ -520,7 +519,7 @@ namespace SevenUpdate.Admin
                             catch (Exception e)
                             {
                                 Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
-                                EventService.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                                Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             }
                         }
 

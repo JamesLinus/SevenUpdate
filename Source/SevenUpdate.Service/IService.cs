@@ -22,53 +22,57 @@
 
 using System.Collections.ObjectModel;
 using System.ServiceModel;
+using ProtoBuf.ServiceModel;
 using SevenUpdate.Base;
 
 #endregion
 
-namespace SevenUpdate.Admin.WCF
+namespace SevenUpdate.Service
 {
     /// <summary>
     ///   Methods for the Event Service
     /// </summary>
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof (IEventSystemCallback))]
-    internal interface IEventSystem
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof (IServiceCallBack))]
+    public interface IService
     {
         /// <summary>
         ///   Subscribes to the event service
         /// </summary>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void Subscribe();
 
         /// <summary>
         ///   UnSubscribes from the event service
         /// </summary>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void UnSubscribe();
 
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void AddApp(Sua app);
 
         /// <summary>
         ///   Gets a list containing SUI's
         /// </summary>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void SetUpdates(Collection<Sui> appUpdates);
 
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void ShowUpdate(Suh hiddenUpdate);
 
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void HideUpdate(Suh hiddenUpdate);
 
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void HideUpdates(Collection<Suh> hiddenUpdates);
+
+        [OperationContract(IsOneWay = true), ProtoBehavior]
+        void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck);
     }
 
     /// <summary>
     ///   Callback methods for the WCF Service
     /// </summary>
-    internal interface IEventSystemCallback
+    public interface IServiceCallBack
     {
         /// <summary>
         ///   Occurs when the download has completed
@@ -78,7 +82,7 @@ namespace SevenUpdate.Admin.WCF
         ///   if an error occurred, otherwise
         ///   <c>false</c>
         /// </param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnDownloadCompleted(bool errorOccurred);
 
         /// <summary>
@@ -86,7 +90,7 @@ namespace SevenUpdate.Admin.WCF
         /// </summary>
         /// <param name = "updatesInstalled">The number of updates installed</param>
         /// <param name = "updatesFailed">The number of failed updates</param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnInstallCompleted(int updatesInstalled, int updatesFailed);
 
         /// <summary>
@@ -96,7 +100,7 @@ namespace SevenUpdate.Admin.WCF
         /// <param name = "type">The
         ///   <see cref = "ErrorType" />
         ///   of the error that occurred</param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnErrorOccurred(string exception, ErrorType type);
 
         /// <summary>
@@ -106,7 +110,7 @@ namespace SevenUpdate.Admin.WCF
         /// <param name = "bytesTotal">The total number of bytes to download</param>
         /// <param name = "filesTransferred">The number of files downloaded</param>
         /// <param name = "filesTotal">The total number of files to download</param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
 
         /// <summary>
@@ -116,7 +120,7 @@ namespace SevenUpdate.Admin.WCF
         /// <param name = "progress">The current update progress</param>
         /// <param name = "updatesComplete">The number of updates that have completed</param>
         /// <param name = "totalUpdates">The total number of updates</param>
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
 }

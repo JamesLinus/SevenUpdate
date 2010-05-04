@@ -466,7 +466,7 @@ namespace SevenUpdate.Pages
             var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
             var appIndex = indices[listView.SelectedIndex].AppIndex;
 
-            WCF.Suh hnh = new Suh
+            var hnh = new Suh
                           {
                               HelpUrl = App.Applications[appIndex].AppInfo.HelpUrl,
                               InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
@@ -483,7 +483,7 @@ namespace SevenUpdate.Pages
             var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
-                if (Admin.HideUpdate(hnh))
+                if (AdminClient.HideUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
                     item.Foreground = Brushes.Gray;
@@ -492,7 +492,7 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                if (Admin.ShowUpdate(hnh))
+                if (AdminClient.ShowUpdate(hnh))
                 {
                     cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
                     item.Foreground = Brushes.Black;

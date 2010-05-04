@@ -29,7 +29,6 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
-using SevenUpdate.Admin.WCF;
 using SevenUpdate.Base;
 using SharpBits.Base;
 using Application = System.Windows.Application;
@@ -121,21 +120,27 @@ namespace SevenUpdate.Admin
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof (EventService));
+                        host = new ServiceHost(typeof (Service.Service));
                         host.Open();
-                        EventService.ClientConnected += EventService_ClientConnected;
-                        EventService.ClientDisconnected += EventService_ClientDisconnected;
+                        Service.Service.ClientConnected += Service_ClientConnected;
+                        Service.Service.ClientDisconnected += Service_ClientDisconnected;
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+                        Service.Service.OnAddApp += Service_OnAddApp;
+                        Service.Service.OnHideUpdate += Service_OnHideUpdate;
+                        Service.Service.OnHideUpdates += Service_OnHideUpdates;
+                        Service.Service.OnSettingsChanged += Service_OnSettingsChanged;
+                        Service.Service.OnSetUpdates += Service_OnSetUpdates;
+                        Service.Service.OnShowUpdate += Service_OnShowUpdate;
                     }
                 }
                 catch (FaultException e)
                 {
                     if (host != null)
                         host.Abort();
-                    if (EventService.ErrorOccurred != null)
-                        EventService.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    if (Service.Service.ErrorOccurred != null)
+                        Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
@@ -145,8 +150,8 @@ namespace SevenUpdate.Admin
                 {
                     if (host != null)
                         host.Abort();
-                    if (EventService.ErrorOccurred != null)
-                        EventService.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    if (Service.Service.ErrorOccurred != null)
+                        Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
@@ -169,6 +174,7 @@ namespace SevenUpdate.Admin
                 {
                     if (args.Length > 0)
                     {
+                        var app = new Application();
                         switch (args[0])
                         {
                             case "Abort":
@@ -179,113 +185,6 @@ namespace SevenUpdate.Admin
                                 }
                                 break;
 
-                            case "sua":
-
-                                #region code
-
-                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                //{
-                                //    File.Delete(Base.Base.AppsFile);
-
-                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                //}
-
-                                #endregion
-
-                                break;
-                            case "Options-On":
-
-                                #region code
-
-                                //if (File.Exists(Base.Base.UserStore + "App.config"))
-                                //{
-                                //    File.Delete(Base.Base.ConfigFile);
-
-                                //    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-                                //}
-
-                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                //{
-                                //    File.Delete(Base.Base.AppsFile);
-                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                //}
-
-                                if (Environment.OSVersion.Version.Major < 6)
-                                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
-                                                      Base.Base.AppDir + @"SevenUpdate.Helper.exe ");
-                                else
-                                    Base.Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
-
-                                #endregion
-
-                                break;
-                            case "Options-Off":
-
-                                #region code
-
-                                //if (File.Exists(Base.Base.UserStore + "App.config"))
-                                //{
-                                //    File.Delete(Base.Base.ConfigFile);
-
-                                //    File.Move(Base.Base.UserStore + "App.config", Base.Base.ConfigFile);
-                                //}
-                                //if (File.Exists(Base.Base.UserStore + "Apps.sul"))
-                                //{
-                                //    File.Delete(Base.Base.AppsFile);
-
-                                //    File.Move(Base.Base.UserStore + "Apps.sul", Base.Base.AppsFile);
-                                //}
-
-                                if (Environment.OSVersion.Version.Major < 6)
-                                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
-                                else
-                                    Base.Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
-
-                                #endregion
-
-                                break;
-                            case "HideUpdate":
-
-                                #region code
-
-                                //var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
-                                //hidden.Add(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
-
-                                //File.Delete(Base.Base.UserStore + "Update.suh");
-
-                                //Base.Base.Serialize(hidden, Base.Base.HiddenFile);
-
-                                #endregion
-
-                                break;
-                            case "ShowUpdate":
-
-                                #region code
-
-                                //var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
-                                //show.Remove(Base.Base.Deserialize<Suh>(Base.Base.UserStore + "Update.suh"));
-
-                                //File.Delete(Base.Base.UserStore + "Update.suh");
-
-                                //if (show.Count == 0)
-                                //    File.Delete(Base.Base.HiddenFile);
-                                //else
-                                //    Base.Base.Serialize(show, Base.Base.HiddenFile);
-
-                                #endregion
-
-                                break;
-                            case "HideUpdates":
-
-                                #region code
-
-                                //File.Delete(Base.Base.HiddenFile);
-
-                                //File.Move(Base.Base.UserStore + "Hidden.suh", Base.Base.HiddenFile);
-
-                                #endregion
-
-                                break;
                             case "Auto":
 
                                 #region code
@@ -294,7 +193,7 @@ namespace SevenUpdate.Admin
                                 {
                                     if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
                                         File.Delete(Base.Base.AllUserStore + "abort.lock");
-                                    var app = new Application();
+
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates");
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDone_EventHandler;
@@ -320,7 +219,7 @@ namespace SevenUpdate.Admin
                                         if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
                                             File.Delete(Base.Base.AllUserStore + "abort.lock");
                                         IsInstall = true;
-                                        var app = new Application();
+                                        
                                         app.Run();
                                     }
                                     catch (Exception e)
@@ -333,6 +232,10 @@ namespace SevenUpdate.Admin
 
                                 #endregion
 
+                                break;
+
+                            case "Wait":
+                                app.Run();
                                 break;
                         }
                     }
@@ -358,9 +261,9 @@ namespace SevenUpdate.Admin
             {
             }
 
-            while (true)
-            {
-            }
+            //while (true)
+            //{
+            //}
         }
 
         #region Methods
@@ -475,23 +378,6 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        ///   Occurs when Seven Update UI connects to the admin process
-        /// </summary>
-        private static void EventService_ClientConnected()
-        {
-            IsClientConnected = true;
-            
-        }
-
-        /// <summary>
-        ///   Occurs when the Seven Update UI disconnected
-        /// </summary>
-        private static void EventService_ClientDisconnected()
-        {
-            IsClientConnected = false;
-        }
-
-        /// <summary>
         ///   Error Event when the .NetPipe binding faults
         /// </summary>
         private static void HostFaulted(object sender, EventArgs e)
@@ -499,8 +385,8 @@ namespace SevenUpdate.Admin
             IsClientConnected = false;
             host.Abort();
             Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
-            if (EventService.ErrorOccurred != null)
-                EventService.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
+            if (Service.Service.ErrorOccurred != null)
+                Service.Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
 
             ShutdownApp();
         }
@@ -538,6 +424,93 @@ namespace SevenUpdate.Admin
             if (e.Type == ErrorType.FatalNetworkError)
                 ShutdownApp();
         }
+
+        #region Service events
+        /// <summary>
+        ///   Occurs when Seven Update UI connects to the admin process
+        /// </summary>
+        private static void Service_ClientConnected()
+        {
+            IsClientConnected = true;
+        }
+
+        /// <summary>
+        ///   Occurs when the Seven Update UI disconnected
+        /// </summary>
+        private static void Service_ClientDisconnected()
+        {
+            IsClientConnected = false;
+        }
+
+        private static void Service_OnShowUpdate(object sender, Service.Service.OnShowUpdateEventArgs e)
+        {
+            var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+
+            if (show.Count == 0)
+                File.Delete(Base.Base.HiddenFile);
+            else
+            {
+                show.Remove(e.HiddenUpdate);
+                Base.Base.Serialize(show, Base.Base.HiddenFile);
+            }
+            ShutdownApp();
+        }
+
+        private static void Service_OnSetUpdates(object sender, Service.Service.OnSetUpdatesEventArgs e)
+        {
+            AppUpdates = e.AppUpdates;
+        }
+
+        private static void Service_OnSettingsChanged(object sender, Service.Service.OnSettingsChangedEventArgs e)
+        {
+            if (e.AutoOn)
+            {
+                if (Environment.OSVersion.Version.Major < 6)
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
+                else
+                    Base.Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
+            }
+            else
+            {
+                if (Environment.OSVersion.Version.Major < 6)
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
+                                      Base.Base.AppDir + @"SevenUpdate.Helper.exe ");
+                else
+                    Base.Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
+            }
+            Base.Base.Serialize(e.Apps, Base.Base.AppsFile);
+            Base.Base.Serialize(e.Options, Base.Base.ConfigFile);
+            ShutdownApp();
+        }
+
+        private static void Service_OnHideUpdates(object sender, Service.Service.OnHideUpdatesEventArgs e)
+        {
+            Base.Base.Serialize(e.HiddenUpdates, Base.Base.HiddenFile);
+            ShutdownApp();
+        }
+
+        private static void Service_OnHideUpdate(object sender, Service.Service.OnHideUpdateEventArgs e)
+        {
+            var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+            hidden.Add(e.HiddenUpdate);
+
+            Base.Base.Serialize(hidden, Base.Base.HiddenFile);
+        }
+
+        private static void Service_OnAddApp(object sender, Service.Service.OnAddAppEventArgs e)
+        {
+            var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
+            var index = sul.IndexOf(e.App);
+            if (index < 0)
+            {
+                sul.Add(e.App);
+            }
+
+            Base.Base.Serialize(sul, Base.Base.AppsFile);
+            ShutdownApp();
+        }
+
+        #endregion
 
         #endregion
     }

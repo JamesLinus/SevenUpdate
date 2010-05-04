@@ -20,21 +20,168 @@
 
 #region
 
+using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using SevenUpdate.Base;
-using SharpBits.Base;
 
 #endregion
 
-namespace SevenUpdate.Admin.WCF
+namespace SevenUpdate.Service
 {
     /// <summary>
     ///   Class containing events and delegates for the EventService
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public sealed class EventService : IEventSystem
+    public sealed class Service : IService
     {
+        #region Events
+
+        public static event EventHandler<OnSettingsChangedEventArgs> OnSettingsChanged;
+
+        public static event EventHandler<OnSetUpdatesEventArgs> OnSetUpdates;
+
+        public static event EventHandler<OnAddAppEventArgs> OnAddApp;
+
+        public static event EventHandler<OnShowUpdateEventArgs> OnShowUpdate;
+
+        public static event EventHandler<OnHideUpdateEventArgs> OnHideUpdate;
+
+        public static event EventHandler<OnHideUpdatesEventArgs> OnHideUpdates;
+
+        #endregion
+
+        #region Event Args
+
+        /// <summary>
+        ///   Provides event data the AddApp event
+        /// </summary>
+        public sealed class OnAddAppEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnAddAppEventArgs(Sua app)
+            {
+                App = app;
+            }
+
+            /// <summary>
+            /// The app to add to the Seven Update list
+            /// </summary>
+            public Sua App { get; private set; }
+        }
+
+        /// <summary>
+        ///   Provides event data the SetUpdate event
+        /// </summary>
+        public sealed class OnSetUpdatesEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnSetUpdatesEventArgs(Collection<Sui> appUpdates)
+            {
+                AppUpdates = appUpdates;
+            }
+
+            /// <summary>
+            /// The apps to update
+            /// </summary>
+            public Collection<Sui> AppUpdates { get; private set; }
+        }
+
+        /// <summary>
+        ///   Provides event data the ShowUpdate event
+        /// </summary>
+        public sealed class OnShowUpdateEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnShowUpdateEventArgs(Suh hiddenUpdate)
+            {
+                HiddenUpdate = hiddenUpdate;
+            }
+
+            /// <summary>
+            /// The app to unhide
+            /// </summary>
+            public Suh HiddenUpdate { get; private set; }
+        }
+
+        /// <summary>
+        ///   Provides event data the HideUpdate event
+        /// </summary>
+        public sealed class OnHideUpdateEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnHideUpdateEventArgs(Suh hiddenUpdate)
+            {
+                HiddenUpdate = hiddenUpdate;
+            }
+
+            /// <summary>
+            /// The app to hide
+            /// </summary>
+            public Suh HiddenUpdate { get; private set; }
+        }
+
+        /// <summary>
+        ///   Provides event data the HideUpdate event
+        /// </summary>
+        public sealed class OnHideUpdatesEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnHideUpdatesEventArgs(Collection<Suh> hiddenUpdates)
+            {
+                HiddenUpdates = hiddenUpdates;
+            }
+
+            /// <summary>
+            /// The app to hide
+            /// </summary>
+            public Collection<Suh> HiddenUpdates { get; private set; }
+        }
+
+        /// <summary>
+        ///   Provides event data the OnSettingsChanged event
+        /// </summary>
+        public sealed class OnSettingsChangedEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Contains event data associated with this event
+            /// </summary>
+            public OnSettingsChangedEventArgs(Collection<Sua> apps, Config options, bool autoOn)
+            {
+                Apps = apps;
+                Options = options;
+                AutoOn = autoOn;
+               
+            }
+
+            /// <summary>
+            /// The apps that Seven Update will update
+            /// </summary>
+            public Collection<Sua> Apps { get; private set; }
+
+            /// <summary>
+            /// The apps that Seven Update will update
+            /// </summary>
+            public Config Options { get; private set; }
+
+            /// <summary>
+            ///   Gets or Sets a value indicating if auto updates should be enabled
+            /// </summary>
+            public bool AutoOn { get; private set; }
+        }
+
+        #endregion
+
         #region Delegates
 
         /// <summary>
@@ -133,16 +280,18 @@ namespace SevenUpdate.Admin.WCF
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
+        private IServiceCallBack Callback { get { return OperationContext.Current.GetCallbackChannel<IServiceCallBack>(); } }
+        
         #endregion
 
-        #region IEventSystem Members
+        #region IService Members
 
         /// <summary>
         ///   Subscribes to the WCF
         /// </summary>
         public void Subscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IEventSystemCallback>();
+            var callback = OperationContext.Current.GetCallbackChannel<IServiceCallBack>();
             InstallCompleted += callback.OnInstallCompleted;
             InstallProgressChanged += callback.OnInstallProgressChanged;
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
@@ -165,26 +314,38 @@ namespace SevenUpdate.Admin.WCF
 
         public void AddApp(Sua app)
         {
+            if (OnAddApp != null)
+                OnAddApp(this, new OnAddAppEventArgs(app));
         }
 
         public void SetUpdates(Collection<Sui> appUpdates)
         {
-            
-            App.AppUpdates = appUpdates;
-            Base.Base.Serialize(appUpdates, @"c:\users\sevenalive\desktop\appfiles.txt");
-            Download.DownloadUpdates(JobPriority.ForeGround);
+            if (OnSetUpdates != null)
+                OnSetUpdates(this, new OnSetUpdatesEventArgs(appUpdates));
         }
 
         public void ShowUpdate(Suh hiddenUpdate)
         {
+            if (OnShowUpdate != null)
+                OnShowUpdate(this, new OnShowUpdateEventArgs(hiddenUpdate));
         }
 
         public void HideUpdate(Suh hiddenUpdate)
         {
+            if (OnHideUpdate != null)
+                OnHideUpdate(this, new OnHideUpdateEventArgs(hiddenUpdate));
         }
 
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
+            if (OnHideUpdates != null)
+                OnHideUpdates(this, new OnHideUpdatesEventArgs(hiddenUpdates));
+        }
+
+        public void ChangeSettings(Collection<Sua> apps, Config options, bool autoOn)
+        {
+            if (OnSettingsChanged != null)
+                OnSettingsChanged(this, new OnSettingsChangedEventArgs(apps, options, autoOn));
         }
 
         #endregion

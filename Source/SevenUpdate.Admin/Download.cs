@@ -21,11 +21,9 @@
 #region
 
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using SevenUpdate.Admin.WCF;
 using SevenUpdate.Base;
 using SharpBits.Base;
 
@@ -58,8 +56,8 @@ namespace SevenUpdate.Admin
         {
             if (App.AppUpdates == null)
             {
-                if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
+                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
                 Base.Base.ReportError(@"Error recieving Sui collection from the WCF wir", Base.Base.AllUserStore);
                 App.ShutdownApp();
@@ -68,8 +66,8 @@ namespace SevenUpdate.Admin
             {
                 if (App.AppUpdates.Count < 1)
                 {
-                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
+                    if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                        Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
                     Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                     App.ShutdownApp();
@@ -172,8 +170,8 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                                EventService.ErrorOccurred(e.Message, ErrorType.DownloadError);
+                            if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                                Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
                             Base.Base.ReportError(e, Base.Base.AllUserStore);
                         }
                     }
@@ -197,8 +195,8 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
-                    if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                        EventService.ErrorOccurred(e.Message, ErrorType.DownloadError);
+                    if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                        Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
                     App.ShutdownApp();
                 }
             }
@@ -238,8 +236,8 @@ namespace SevenUpdate.Admin
             if (e.Job.State == JobState.Error)
                 return;
 
-            if (EventService.DownloadProgressChanged != null && App.IsClientConnected)
-                EventService.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+            if (Service.Service.DownloadProgressChanged != null && App.IsClientConnected)
+                Service.Service.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
 
             if (App.NotifyIcon == null)
                 return;
@@ -278,14 +276,14 @@ namespace SevenUpdate.Admin
             if (e.Job.Error.File != null)
             {
                 Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
-                if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, ErrorType.DownloadError);
+                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                    Service.Service.ErrorOccurred(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
             else
             {
                 Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
-                if (EventService.ErrorOccurred != null && App.IsClientConnected)
-                    EventService.ErrorOccurred(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, ErrorType.DownloadError);
+                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
+                    Service.Service.ErrorOccurred(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
 
             try
@@ -337,8 +335,8 @@ namespace SevenUpdate.Admin
             }
             if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)
             {
-                if (EventService.DownloadCompleted != null && App.IsClientConnected)
-                    EventService.DownloadCompleted(false);
+                if (Service.Service.DownloadCompleted != null && App.IsClientConnected)
+                    Service.Service.DownloadCompleted(false);
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
                 Install.InstallUpdates();
             }

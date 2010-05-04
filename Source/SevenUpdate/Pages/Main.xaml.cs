@@ -28,6 +28,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using SevenUpdate.Base;
 using SevenUpdate.Properties;
+using SevenUpdate.Service;
 using SevenUpdate.Windows;
 
 #endregion
@@ -466,7 +467,7 @@ namespace SevenUpdate.Pages
                     return;
                 }
 
-                if (Admin.Install())
+                if (AdminClient.Install())
                 {
                     SetUI(infoBar.tbHeading.Text == App.RM.GetString("DownloadAndInstallUpdates") ? UILayout.Downloading : UILayout.Installing);
                 }
@@ -519,14 +520,14 @@ namespace SevenUpdate.Pages
             infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdates_MouseDown;
             Search.SearchDoneEventHandler += SearchCompleted_EventHandler;
             Search.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
-            AdminCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
-            AdminCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
-            AdminCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
-            AdminCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
-            AdminCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
+            ServiceCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
+            ServiceCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
+            ServiceCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
+            ServiceCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
+            ServiceCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
             RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdate_EventHandler;
-            Admin.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
-            Admin.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
+            AdminClient.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
+            AdminClient.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
 
             #endregion
         }
@@ -661,7 +662,7 @@ namespace SevenUpdate.Pages
 
                     #region Code
 
-                    Admin.Connect();
+                    AdminClient.Connect();
 
                     #endregion
 
@@ -1139,7 +1140,7 @@ namespace SevenUpdate.Pages
             else if (infoBar.tbAction.Text == App.RM.GetString("StopDownload") || infoBar.tbAction.Text == App.RM.GetString("StopInstallation"))
             {
                 //Cancel installation of updates
-                if (Admin.AbortInstall())
+                if (AdminClient.AbortInstall())
                     SetUI(UILayout.Canceled);
                 return;
             }
