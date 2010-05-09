@@ -269,10 +269,12 @@ namespace SevenUpdate
     /// </summary>
     internal static class AdminClient
     {
+        private static int retry;
+
         /// <summary>
         ///   The client of the WCF service
         /// </summary>
-        private static ServiceClient wcf;
+        private static ServiceClient wcfClient;
 
         /// <summary>
         ///   Connects to the SevenUpdate.Admin sub program
@@ -280,21 +282,26 @@ namespace SevenUpdate
         /// <returns><c>true</c> if successful</returns>
         internal static void Connect()
         {
-            wcf = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+            if (wcfClient == null)
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
             try
             {
-                while (wcf.State != CommunicationState.Created)
+                while (wcfClient.State != CommunicationState.Created)
                 {
-                    if (wcf.State == CommunicationState.Faulted)
+                    if (wcfClient.State == CommunicationState.Faulted)
                         throw new FaultException();
                 }
                 Thread.CurrentThread.Join(500);
-                wcf.Subscribe();
+                wcfClient.Subscribe();
             }
-            catch (EndpointNotFoundException)
+            catch (EndpointNotFoundException e)
             {
+                retry++;
                 Thread.CurrentThread.Join(500);
-                Connect();
+                if (retry < 4)
+                    Connect();
+                else
+                    AdminError(e);
             }
             catch (Exception e)
             {
@@ -325,12 +332,12 @@ namespace SevenUpdate
         /// </summary>
         internal static void Disconnect()
         {
-            if (wcf != null)
+            if (wcfClient != null)
             {
                 try
                 {
-                    if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe();
+                    if (wcfClient.State == CommunicationState.Opened)
+                        wcfClient.UnSubscribe();
                 }
                 catch (Exception e)
                 {
@@ -350,10 +357,10 @@ namespace SevenUpdate
             try
             {
                 abort = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
-                if (abort && wcf != null)
+                if (abort && wcfClient != null)
                 {
-                    if (wcf.State == CommunicationState.Opened)
-                        wcf.UnSubscribe();
+                    if (wcfClient.State == CommunicationState.Opened)
+                        wcfClient.UnSubscribe();
                 }
             }
             catch (Exception e)
@@ -373,7 +380,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.SetUpdates(App.Applications);
+                wcfClient.SetUpdates(App.Applications);
             }
             return success;
         }
@@ -389,7 +396,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.HideUpdate(hiddenUpdate);
+                wcfClient.HideUpdate(hiddenUpdate);
             }
 
             return success;
@@ -406,7 +413,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.HideUpdates(hiddenUpdates);
+                wcfClient.HideUpdates(hiddenUpdates);
             }
             return success;
         }
@@ -423,7 +430,7 @@ namespace SevenUpdate
             if (success)
             {
                 Connect();
-                wcf.ShowUpdate(hiddenUpdate);
+                wcfClient.ShowUpdate(hiddenUpdate);
             }
             return true;
         }
@@ -432,14 +439,14 @@ namespace SevenUpdate
         ///   Adds an application to Seven Update
         /// </summary>
         /// <param name = "sua">the application to add to Seven Update</param>
-        internal static void AddSua(Sua sua)
+        internal static void AddSua(Sua app)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
             if (!success)
                 return;
             Connect();
-            wcf.AddApp(sua);
+            wcfClient.AddApp(app);
         }
 
         /// <summary>
@@ -456,7 +463,7 @@ namespace SevenUpdate
             if (!success)
                 return;
             Connect();
-            wcf.ChangeSettings(sul, options, autoOn);
+            wcfClient.ChangeSettings(sul, options, autoOn);
 
             if (SettingsChangedEventHandler != null)
                 SettingsChangedEventHandler(null, new EventArgs());

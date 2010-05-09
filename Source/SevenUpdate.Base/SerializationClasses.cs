@@ -20,7 +20,6 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -64,7 +63,7 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Automatic Update option Seven Update can use
     /// </summary>
-    [ProtoContract]
+    [ProtoContract, DataContract, DefaultValue(Install)]
     public enum AutoUpdateOption
     {
         /// <summary>
@@ -121,7 +120,6 @@ namespace SevenUpdate.Base
     ///   Seven Update Application information
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>))]
-    
     public class Sua : INotifyPropertyChanged
     {
         /// <summary>
@@ -159,13 +157,13 @@ namespace SevenUpdate.Base
         /// </summary>
         [ProtoMember(6), DataMember]
         public ObservableCollection<LocaleString> Publisher { get; set; }
-        
+
         /// <summary>
         ///   The SUI file of the application
         /// </summary>
         [ProtoMember(7), DataMember]
         public string SuiUrl { get; set; }
-        
+
         /// <summary>
         ///   The url for the application
         /// </summary>
@@ -209,29 +207,29 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   The action to preform on the shortcut
     /// </summary>
-    [ProtoContract, DataContract]
+    [ProtoContract, DataContract, DefaultValue(Add)]
     public enum ShortcutAction
     {
         /// <summary>
         ///   Adds a shortcut
         /// </summary>
         [ProtoEnum, EnumMember] Add = 0,
+        
+        /// <summary>
+        ///   Updates a shortcut only if it exists
+        /// </summary>
+        [ProtoEnum, EnumMember] Update = 1,
 
         /// <summary>
         ///   Deletes a shortcut
         /// </summary>
-        [ProtoEnum, EnumMember] Delete = 2,
-
-        /// <summary>
-        ///   Updates a shortcut only if it exists
-        /// </summary>
-        [ProtoEnum, EnumMember] Update = 1
+        [ProtoEnum, EnumMember] Delete = 2
     }
 
     /// <summary>
     ///   The action to perform on the file
     /// </summary>
-    [ProtoContract, DataContract]
+    [ProtoContract, DataContract, DefaultValue(Update)]
     public enum FileAction
     {
         /// <summary>
@@ -283,7 +281,7 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Contains the UpdateType of the update
     /// </summary>
-    [ProtoContract, DataContract]
+    [ProtoContract, DataContract, DefaultValue(Important)]
     public enum Importance
     {
         /// <summary>
@@ -310,7 +308,7 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   The current status of the update
     /// </summary>
-    [ProtoContract]
+    [ProtoContract, DataContract, DefaultValue(Successful)]
     public enum UpdateStatus
     {
         /// <summary>
@@ -337,6 +335,7 @@ namespace SevenUpdate.Base
     /// <summary>
     ///   Contains the Actions you can perform to the registry
     /// </summary>
+    [ProtoContract, DataContract, DefaultValue(Add)]
     public enum RegistryAction
     {
         /// <summary>
@@ -361,7 +360,6 @@ namespace SevenUpdate.Base
     ///   Application info
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
-    
     public class Sui : INotifyPropertyChanged
     {
         /// <summary>
@@ -403,7 +401,6 @@ namespace SevenUpdate.Base
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>)), KnownType(typeof (UpdateFile)), KnownType(typeof (RegistryItem)),
      KnownType(typeof (Shortcut))]
-    
     public class Update
     {
         #region Required Properties
@@ -499,7 +496,6 @@ namespace SevenUpdate.Base
     ///   Information about a file within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (FileAction))]
-    
     public class UpdateFile
     {
         #region Required Properties
@@ -551,7 +547,6 @@ namespace SevenUpdate.Base
     ///   A registry entry within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (RegistryAction)), KnownType(typeof (RegistryHive)), KnownType(typeof (RegistryValueKind))]
-    
     public class RegistryItem : INotifyPropertyChanged
     {
         #region Required Properties
@@ -624,7 +619,6 @@ namespace SevenUpdate.Base
     ///   A shortcut to be created within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ShortcutAction))]
-    
     public class Shortcut
     {
         #region Required Properties
@@ -682,7 +676,6 @@ namespace SevenUpdate.Base
     ///   Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (UpdateStatus)), KnownType(typeof (Importance)), KnownType(typeof (ObservableCollection<LocaleString>))]
-    
     public class Suh : INotifyPropertyChanged
     {
         #region Required Properties

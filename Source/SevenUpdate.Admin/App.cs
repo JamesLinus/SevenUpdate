@@ -260,10 +260,6 @@ namespace SevenUpdate.Admin
             catch
             {
             }
-
-            //while (true)
-            //{
-            //}
         }
 
         #region Methods

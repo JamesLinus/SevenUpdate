@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="tCC+gaRlc5uxepSOrK5eQEqsy6Q=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="UTd4eUWd7AO8Vh1UsEpAW2d2yzo=">
   <bindingConfigurations>
-    <bindingConfiguration bindingType="netNamedPipeBinding" name="NetNamedPipeBinding_IService1">
+    <bindingConfiguration bindingType="netNamedPipeBinding" name="NetNamedPipeBinding_IService">
       <properties>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IService1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IService</serializedValue>
         </property>
         <property path="/closeTimeout" isComplexType="false" isExplicitlyDefined="true" clrType="System.TimeSpan, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>00:01:00</serializedValue>
@@ -76,7 +76,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="NetNamedPipeBinding_IService1" contract="WCF.IService" bindingType="netNamedPipeBinding" address="net.pipe://localhost/SevenUpdate/" bindingConfiguration="NetNamedPipeBinding_IService1">
+    <endpoint name="NetNamedPipeBinding_IService" contract="WCF.IService" bindingType="netNamedPipeBinding" address="net.pipe://localhost/SevenUpdate/" bindingConfiguration="NetNamedPipeBinding_IService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>net.pipe://localhost/SevenUpdate/</serializedValue>
@@ -88,7 +88,7 @@
           <serializedValue>netNamedPipeBinding</serializedValue>
         </property>
         <property path="/bindingConfiguration" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IService1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IService</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>WCF.IService</serializedValue>
@@ -151,7 +151,7 @@
           <serializedValue>False</serializedValue>
         </property>
         <property path="/name" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>NetNamedPipeBinding_IService1</serializedValue>
+          <serializedValue>NetNamedPipeBinding_IService</serializedValue>
         </property>
         <property path="/kind" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

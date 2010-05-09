@@ -160,20 +160,8 @@
   <xs:simpleType name="ShortcutAction">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Add" />
-      <xs:enumeration value="Delete">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Update">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
+      <xs:enumeration value="Update" />
+      <xs:enumeration value="Delete" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ShortcutAction" nillable="true" type="tns:ShortcutAction" />

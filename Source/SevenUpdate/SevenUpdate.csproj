@@ -53,10 +53,6 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\bin\x86\Seven Update\Debug\</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>..\bin\Debug\SevenUpdate.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisInputAssembly>bin\x86\Debug\SevenUpdate.exe</CodeAnalysisInputAssembly>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
@@ -64,10 +60,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\bin\x86\Seven Update\Release\</OutputPath>
     <PlatformTarget>x86</PlatformTarget>
-    <CodeAnalysisLogFile>..\bin\Release\SevenUpdate.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisInputAssembly>bin\x86\Release\SevenUpdate.exe</CodeAnalysisInputAssembly>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
@@ -219,7 +211,7 @@
     <None Include="Service References\WCF\Service.wsdl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\Settings.settings">

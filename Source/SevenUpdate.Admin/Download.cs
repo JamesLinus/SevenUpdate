@@ -50,7 +50,6 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Downloads the updates using BITS
         /// </summary>
-        /// <param name = "App.AppUpdates">the Collection of App.AppUpdates and updates</param>
         /// <param name = "priority">the Priority of the download</param>
         internal static void DownloadUpdates(JobPriority priority)
         {

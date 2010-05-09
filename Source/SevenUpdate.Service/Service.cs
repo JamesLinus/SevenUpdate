@@ -32,7 +32,7 @@ namespace SevenUpdate.Service
     /// <summary>
     ///   Class containing events and delegates for the EventService
     /// </summary>
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public sealed class Service : IService
     {
         #region Events
