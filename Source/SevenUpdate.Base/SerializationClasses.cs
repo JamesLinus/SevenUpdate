@@ -214,7 +214,7 @@ namespace SevenUpdate.Base
         ///   Adds a shortcut
         /// </summary>
         [ProtoEnum, EnumMember] Add = 0,
-        
+
         /// <summary>
         ///   Updates a shortcut only if it exists
         /// </summary>
