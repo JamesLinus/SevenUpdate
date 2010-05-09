@@ -131,7 +131,7 @@ namespace SevenUpdate.Admin
                         Service.Service.OnHideUpdate += Service_OnHideUpdate;
                         Service.Service.OnHideUpdates += Service_OnHideUpdates;
                         Service.Service.OnSettingsChanged += Service_OnSettingsChanged;
-                        Service.Service.OnSetUpdates += Service_OnSetUpdates;
+                        Service.Service.OnInstallUpdates += Service_OnInstallUpdates;
                         Service.Service.OnShowUpdate += Service_OnShowUpdate;
                     }
                 }
@@ -201,31 +201,6 @@ namespace SevenUpdate.Admin
                                     Search.SearchForUpdates(Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile));
 
                                     app.Run();
-                                }
-                                else
-                                    ShutdownApp();
-
-                                #endregion
-
-                                break;
-                            case "Install":
-
-                                #region code
-
-                                if (createdNew)
-                                {
-                                    try
-                                    {
-                                        if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
-                                            File.Delete(Base.Base.AllUserStore + "abort.lock");
-                                        IsInstall = true;
-
-                                        app.Run();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        Base.Base.ReportError(e, Base.Base.AllUserStore);
-                                    }
                                 }
                                 else
                                     ShutdownApp();
@@ -475,9 +450,20 @@ namespace SevenUpdate.Admin
             ShutdownApp();
         }
 
-        private static void Service_OnSetUpdates(object sender, Service.Service.OnSetUpdatesEventArgs e)
+        private static void Service_OnInstallUpdates(object sender, Service.Service.OnInstallUpdatesEventArgs e)
         {
+            IsInstall = true;
             AppUpdates = e.AppUpdates;
+            try
+            {
+                if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+                    File.Delete(Base.Base.AllUserStore + "abort.lock");
+            }
+            catch (Exception f)
+            {
+                Base.Base.ReportError(f, Base.Base.AllUserStore);
+            }
+            Download.DownloadUpdates(JobPriority.ForeGround);
         }
 
         private static void Service_OnSettingsChanged(object sender, Service.Service.OnSettingsChangedEventArgs e)

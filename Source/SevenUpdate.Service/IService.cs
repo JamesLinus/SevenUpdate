@@ -54,7 +54,7 @@ namespace SevenUpdate.Service
         ///   Gets a list containing SUI's
         /// </summary>
         [OperationContract(IsOneWay = true), ProtoBehavior]
-        void SetUpdates(Collection<Sui> appUpdates);
+        void InstallUpdates(Collection<Sui> appUpdates);
 
         [OperationContract(IsOneWay = true), ProtoBehavior]
         void ShowUpdate(Suh hiddenUpdate);

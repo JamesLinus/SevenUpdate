@@ -455,7 +455,6 @@ namespace SevenUpdate.Base
         public static void ReportError(Exception exception, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
-
             tw.WriteLine(DateTime.Now + ": " + exception.Source);
             tw.WriteLine(DateTime.Now + ": " + exception.Message);
             tw.WriteLine(DateTime.Now + ": " + exception.StackTrace);

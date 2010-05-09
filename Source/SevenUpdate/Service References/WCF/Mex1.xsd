@@ -18,7 +18,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="SetUpdates">
+  <xs:element name="InstallUpdates">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/SevenUpdate.Base" minOccurs="0" name="appUpdates" nillable="true" type="q2:ArrayOfSui" />

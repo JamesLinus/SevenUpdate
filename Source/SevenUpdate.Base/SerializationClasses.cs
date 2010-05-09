@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -363,9 +364,9 @@ namespace SevenUpdate.Base
     public class Sui : INotifyPropertyChanged
     {
         /// <summary>
-        ///   Information about the software
+        ///   Software information for the app updates.
         /// </summary>
-        [DataMember]
+        [ProtoMember(2), DataMember]
         public Sua AppInfo { get; set; }
 
         /// <summary>

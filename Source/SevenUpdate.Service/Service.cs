@@ -39,7 +39,7 @@ namespace SevenUpdate.Service
 
         public static event EventHandler<OnSettingsChangedEventArgs> OnSettingsChanged;
 
-        public static event EventHandler<OnSetUpdatesEventArgs> OnSetUpdates;
+        public static event EventHandler<OnInstallUpdatesEventArgs> OnInstallUpdates;
 
         public static event EventHandler<OnAddAppEventArgs> OnAddApp;
 
@@ -122,17 +122,17 @@ namespace SevenUpdate.Service
 
         #endregion
 
-        #region Nested type: OnSetUpdatesEventArgs
+        #region Nested type: OnInstallUpdatesEventArgs
 
         /// <summary>
-        ///   Provides event data the SetUpdate event
+        ///   Provides event data the InstallUpdates event
         /// </summary>
-        public sealed class OnSetUpdatesEventArgs : EventArgs
+        public sealed class OnInstallUpdatesEventArgs : EventArgs
         {
             /// <summary>
             ///   Contains event data associated with this event
             /// </summary>
-            public OnSetUpdatesEventArgs(Collection<Sui> appUpdates)
+            public OnInstallUpdatesEventArgs(Collection<Sui> appUpdates)
             {
                 AppUpdates = appUpdates;
             }
@@ -325,10 +325,10 @@ namespace SevenUpdate.Service
                 OnAddApp(this, new OnAddAppEventArgs(app));
         }
 
-        public void SetUpdates(Collection<Sui> appUpdates)
+        public void InstallUpdates(Collection<Sui> appUpdates)
         {
-            if (OnSetUpdates != null)
-                OnSetUpdates(this, new OnSetUpdatesEventArgs(appUpdates));
+            if (OnInstallUpdates != null)
+                OnInstallUpdates(this, new OnInstallUpdatesEventArgs(appUpdates));
         }
 
         public void ShowUpdate(Suh hiddenUpdate)

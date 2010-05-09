@@ -58,7 +58,7 @@ namespace SevenUpdate.Admin
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
-                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wir", Base.Base.AllUserStore);
+                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
                 App.ShutdownApp();
             }
             else
@@ -163,8 +163,7 @@ namespace SevenUpdate.Admin
                             catch
                             {
                             }
-                            var url =
-                                new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
+                            var url = new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
                                                               App.AppUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
@@ -235,7 +234,7 @@ namespace SevenUpdate.Admin
             if (e.Job.State == JobState.Error)
                 return;
 
-            if (Service.Service.DownloadProgressChanged != null && App.IsClientConnected)
+            if (Service.Service.DownloadProgressChanged != null && App.IsClientConnected && e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
                 Service.Service.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
 
             if (App.NotifyIcon == null)

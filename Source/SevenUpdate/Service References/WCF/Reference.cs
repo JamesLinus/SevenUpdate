@@ -24,8 +24,8 @@ namespace SevenUpdate.WCF {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/AddApp")]
         void AddApp(SevenUpdate.Base.Sua app);
         
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/SetUpdates")]
-        void SetUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/InstallUpdates")]
+        void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/ShowUpdate")]
         void ShowUpdate(SevenUpdate.Base.Suh hiddenUpdate);
@@ -99,8 +99,8 @@ namespace SevenUpdate.WCF {
             base.Channel.AddApp(app);
         }
         
-        public void SetUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates) {
-            base.Channel.SetUpdates(appUpdates);
+        public void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates) {
+            base.Channel.InstallUpdates(appUpdates);
         }
         
         public void ShowUpdate(SevenUpdate.Base.Suh hiddenUpdate) {

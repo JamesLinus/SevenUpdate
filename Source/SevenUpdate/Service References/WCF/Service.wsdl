@@ -46,8 +46,8 @@
   <wsdl:message name="IService_AddApp_InputMessage">
     <wsdl:part name="parameters" element="tns:AddApp" />
   </wsdl:message>
-  <wsdl:message name="IService_SetUpdates_InputMessage">
-    <wsdl:part name="parameters" element="tns:SetUpdates" />
+  <wsdl:message name="IService_InstallUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:InstallUpdates" />
   </wsdl:message>
   <wsdl:message name="IService_ShowUpdate_InputMessage">
     <wsdl:part name="parameters" element="tns:ShowUpdate" />
@@ -86,8 +86,8 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddApp">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/AddApp" message="tns:IService_AddApp_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SetUpdates">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/SetUpdates" message="tns:IService_SetUpdates_InputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InstallUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/InstallUpdates" message="tns:IService_InstallUpdates_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowUpdate">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/ShowUpdate" message="tns:IService_ShowUpdate_InputMessage" />
@@ -138,8 +138,8 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="SetUpdates">
-      <soap12:operation soapAction="http://tempuri.org/IService/SetUpdates" style="document" />
+    <wsdl:operation name="InstallUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IService/InstallUpdates" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

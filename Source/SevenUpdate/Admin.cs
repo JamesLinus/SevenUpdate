@@ -378,11 +378,11 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Install");
+            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 if (Connect())
-                    wcfClient.SetUpdates(App.Applications);
+                    wcfClient.InstallUpdates(App.Applications);
             }
             return success;
         }
@@ -400,7 +400,6 @@ namespace SevenUpdate
                 if (Connect())
                 {
                     wcfClient.HideUpdate(hiddenUpdate);
-                    //wcfClient.Close();
                 }
             }
 
@@ -420,7 +419,6 @@ namespace SevenUpdate
                 if (Connect())
                 {
                     wcfClient.HideUpdates(hiddenUpdates);
-                    // wcfClient.Close();
                 }
             }
             return success;
@@ -440,7 +438,6 @@ namespace SevenUpdate
                 if (Connect())
                 {
                     wcfClient.ShowUpdate(hiddenUpdate);
-                    //wcfClient.Close();
                 }
             }
             return true;
@@ -459,7 +456,6 @@ namespace SevenUpdate
             if (Connect())
             {
                 wcfClient.AddApp(app);
-                //wcfClient.Close();
             }
         }
 
@@ -479,7 +475,6 @@ namespace SevenUpdate
             if (Connect())
             {
                 wcfClient.ChangeSettings(sul, options, autoOn);
-                //wcfClient.Close();
             }
 
             if (SettingsChangedEventHandler != null)
