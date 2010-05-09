@@ -248,7 +248,7 @@ namespace SevenUpdate.Base
             {
                 // Download the Seven Update SUI and load it.
                 var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-                app.AppInfo = new Sua {AppUrl = "http://sevenupdate.com/", HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
+                app.AppInfo = new Sua {AppUrl = "http://sevenupdate.com/", Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true,true), HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
                 {
