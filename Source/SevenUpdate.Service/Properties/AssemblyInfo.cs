@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("SevenUpdate.Service")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("SevenUpdate.Service")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
-[assembly: AssemblyProduct("SevenUpdate.Service")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2010")]
+[assembly: AssemblyProduct("Seven Update")]
+[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -39,5 +39,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.2.0")]
+[assembly: AssemblyFileVersion("10.5.10")]

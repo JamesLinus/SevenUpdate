@@ -282,6 +282,24 @@ namespace SevenUpdate.Admin
                 }
             }
 
+            if (host != null)
+            {
+                host.Closed += Host_Closed;
+                try
+                {
+                    host.Abort();
+                }
+                catch
+                {
+                    Environment.Exit(0);
+                }
+            }
+            else
+                Environment.Exit(0);
+        }
+
+        private static void Host_Closed(object sender, EventArgs e)
+        {
             Environment.Exit(0);
         }
 
@@ -377,10 +395,16 @@ namespace SevenUpdate.Admin
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
-            host.Abort();
             Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
             if (Service.Service.ErrorOccurred != null)
                 Service.Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
+            try
+            {
+                host.Abort();
+            }
+            catch
+            {
+            }
 
             ShutdownApp();
         }
@@ -458,7 +482,7 @@ namespace SevenUpdate.Admin
 
         private static void Service_OnSettingsChanged(object sender, Service.Service.OnSettingsChangedEventArgs e)
         {
-            if (e.AutoOn)
+            if (!e.AutoOn)
             {
                 if (Environment.OSVersion.Version.Major < 6)
                     Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
