@@ -156,6 +156,7 @@ Section "Main Section" SEC01
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/Windows.UI.dll" "$INSTDIR\Windows.UI.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
   
   File "D:\Documents\Software Development\Install Files\Seven Update\sui.ico"
   
