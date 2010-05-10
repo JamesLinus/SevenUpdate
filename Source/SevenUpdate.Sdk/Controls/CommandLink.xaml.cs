@@ -2,13 +2,10 @@
 
 #region
 
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 #endregion
 
@@ -47,11 +44,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Indicates if the button is in a checked state
         /// </summary>
-        public bool? IsCheck
-        {
-            get { return button.IsChecked; }
-            set { button.IsChecked = value; }
-        }
+        public bool? IsCheck { get { return button.IsChecked; } set { button.IsChecked = value; } }
 
         public bool UseShield { get; set; }
 

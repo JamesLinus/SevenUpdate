@@ -54,24 +54,10 @@ namespace SevenUpdate.Pages
         public InfoBar()
         {
             InitializeComponent();
-        }
-
-        /// <summary>
-        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = null;
+            tbViewOptionalUpdates.MouseEnter += App.TextBlock_MouseEnter;
+            tbViewImportantUpdates.MouseEnter += App.TextBlock_MouseEnter;
+            tbViewOptionalUpdates.MouseLeave += App.TextBlock_MouseLeave;
+            tbViewImportantUpdates.MouseLeave += App.TextBlock_MouseLeave;
         }
     }
 }

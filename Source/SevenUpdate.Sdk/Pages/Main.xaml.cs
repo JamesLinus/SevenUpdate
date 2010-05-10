@@ -16,9 +16,11 @@
 
 #region
 
+using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -35,18 +37,18 @@ namespace SevenUpdate.Sdk.Pages
         public Main()
         {
             InitializeComponent();
+            tbHelp.MouseEnter += Base.TextBlock_MouseEnter;
+            tbHelp.MouseLeave += Base.TextBlock_MouseLeave;
         }
 
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void NewProject_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Process.Start(e.Uri.AbsolutePath);
-            }catch
-            {
-            }
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+        }
 
-            e.Handled = true;
+        private void Help_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start(@"http://sevenupdate.com/support");
         }
     }
 }

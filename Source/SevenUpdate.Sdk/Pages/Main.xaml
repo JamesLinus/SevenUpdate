@@ -1,33 +1,31 @@
 ﻿<Page x:Class="SevenUpdate.Sdk.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls" mc:Ignorable="d" MinWidth="850" MinHeight="467" HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch" Title="SevenUpdate" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="800">
+      VerticalAlignment="Stretch"
+        KeepAlive="True" d:DesignHeight="467" d:DesignWidth="800">
 
 	<!-- Grid-->
 	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False" Height="453" Name="grid">
 		<Grid.RowDefinitions>
 
+			<RowDefinition Height="48
+                           " />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="369*" />
-		</Grid.RowDefinitions>
-
-		<TextBlock HorizontalAlignment="Stretch" Margin="20,20,0,0" Name="textBlock1" TextWrapping="Wrap" VerticalAlignment="Top" MaxWidth="{Binding ActualWidth, ElementName=grid}">
-			Welcome to the new Seven Update SDK. The SDK has been built from the ground up to be faster and more efficent.
-			<LineBreak />
-			<LineBreak />
-			I hope you find the new SDK to be easy to understand and use. If you need help using the SDK or have any questions related to Seven Update or the SDK, please visit the support forums at
-			<Hyperlink NavigateUri="http://sevenupdate.com/forum/" RequestNavigate="Hyperlink_RequestNavigate" Foreground="#FF0066CC">
-				http://sevenupdate.com/forum/
-			</Hyperlink>
-
-		</TextBlock>
-		<StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Controls:CommandLink x:Name="clNewSui" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new SUI file"
-			                Note="Enables Seven Update to update your software" Width="350" UseShield="False" TabIndex="0" />
-			<Controls:CommandLink x:Name="clEditSui" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Open an existing SUI file"
-			                Note="Release a new update with an existing SUI file" Width="350" TabIndex="1" />
-			<Controls:CommandLink x:Name="clNewSUA" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a SUA file"
-			                Note="Enable Seven Update to manage updates for your software" Width="350" TabIndex="2" Margin="0" />
-		</StackPanel>
-	</Grid>
+            <RowDefinition Height="358*" />
+        </Grid.RowDefinitions>
+        <Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Grid.Row="1" Y1="0"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,30,250,41">
+			<Controls:CommandLink x:Name="clNewProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new project"
+			                Note="Enables Seven Update to update your software" Width="350" UseShield="False" TabIndex="0" Click="NewProject_Click" />
+			<Controls:CommandLink x:Name="clEditProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Open an existing Project"
+			                Note="Release a new update with an existing project" Width="350" TabIndex="1" />
+			<Controls:CommandLink x:Name="clTestProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Test your project"
+			                Note="Test your updates with the simulator" Width="350" TabIndex="2" Margin="0,0,0,12" />
+            <Controls:CommandLink x:Name="clReleaseUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Release an update"
+                    Note="Release your software updates" Width="350" TabIndex="3" Margin="0" />
+        </StackPanel>
+        <Label Content="Welcome to the Seven Update SDK" FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Margin="24,0,0,0" VerticalAlignment="Center" />
+        <TextBlock HorizontalAlignment="Right" Name="tbHelp" Text="Help &amp; Support" VerticalAlignment="Bottom" Margin="0,0,24,2" Padding="2" Foreground="#FF0066CC"
+                MouseDown="Help_MouseDown" Cursor="Hand" />
+    </Grid>
 </Page>

@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Resources;
 using System.Windows;
+using System.Windows.Shell;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
@@ -38,6 +39,7 @@ namespace SevenUpdate.Sdk
 
         internal static string SUIFile { get; set; }
 
+        private static Application app;
         #endregion
 
         #region Methods
@@ -49,11 +51,12 @@ namespace SevenUpdate.Sdk
         [STAThread]
         private static void Main(string[] args)
         {
-            Directory.CreateDirectory(Base.Base.UserStore);
+            Directory.CreateDirectory(SevenUpdate.Base.Base.UserStore);
             RM = new ResourceManager("SevenUpdate.Sdk.Resources.UIStrings", typeof (App).Assembly);
-            Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+            SevenUpdate.Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
 
-            var app = new Application();
+            app = new Application();
+            SetJumpLists();
             if (args.Length > 0)
                 SUIFile = args[0];
             else
@@ -63,6 +66,47 @@ namespace SevenUpdate.Sdk
         private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
         {
             MessageBox.Show(RM.GetString("SuiInvalid") + " - " + e.Exception.Message);
+        }
+
+        private static void SetJumpLists()
+        {
+            //Configure a new JumpTask
+            var jumpTask1 = new JumpTask
+                                {
+                                    ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    Title = "Seven Update SDK",
+                                    Description = "Create new project",
+                                    CustomCategory = "Tasks",
+                                    Arguments="NewProject"
+                                };
+
+            var jumpTask2 = new JumpTask
+            {
+                ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                Title = "Seven Update SDK",
+                Description = "Edit an existing project",
+                CustomCategory = "Tasks",
+                Arguments = "EditProject"
+            };
+
+            var jumpTask3 = new JumpTask
+            {
+                ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                Title = "Seven Update SDK",
+                Description = "Test project",
+                CustomCategory = "Tasks",
+                Arguments = "TestProject"
+            };
+
+            var jumpList = new JumpList();
+            jumpList.JumpItems.Add(jumpTask1);
+            jumpList.JumpItems.Add(jumpTask2);
+            jumpList.JumpItems.Add(jumpTask3);
+            JumpList.SetJumpList(app, jumpList);
+
         }
 
         #endregion

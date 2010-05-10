@@ -90,8 +90,8 @@
 				<TextBlock Name="tbStatus" Padding="5" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spSide}" Margin="0,0,5,0" Visibility="Hidden" />
 			</StackPanel>
 
-			<TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" />
-			<TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" />
+			<TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlInfo" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" />
+			<TextBlock FontWeight="Normal" HorizontalAlignment="Left" Name="tbUrlHelp" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" />
 		</StackPanel>
 
 		<Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Name="rectangle1" Grid.Row="6" />

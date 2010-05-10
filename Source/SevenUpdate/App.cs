@@ -30,6 +30,8 @@ using System.Resources;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using SevenUpdate.Base;
 using SevenUpdate.Windows;
 
@@ -203,6 +205,24 @@ namespace SevenUpdate
         }
 
         #endregion
+
+        /// <summary>
+        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
+        /// </summary>
+        internal static void TextBlock_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = TextDecorations.Underline;
+        }
+
+        /// <summary>
+        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
+        /// </summary>
+        internal static void TextBlock_MouseLeave(object sender, MouseEventArgs e)
+        {
+            var textBlock = ((TextBlock)sender);
+            textBlock.TextDecorations = null;
+        }
 
         #endregion
     }

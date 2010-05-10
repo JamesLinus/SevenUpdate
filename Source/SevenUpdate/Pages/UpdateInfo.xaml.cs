@@ -152,6 +152,11 @@ namespace SevenUpdate.Pages
             InitializeComponent();
             if (App.IsAdmin)
                 cmiHideUpdate.Icon = null;
+
+            tbUrlInfo.MouseEnter += App.TextBlock_MouseEnter;
+            tbUrlInfo.MouseLeave += App.TextBlock_MouseLeave;
+            tbUrlHelp.MouseEnter += App.TextBlock_MouseEnter;
+            tbUrlHelp.MouseLeave += App.TextBlock_MouseLeave;
         }
 
         #region Event Declarations
@@ -368,24 +373,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region TextBlocks
-
-        /// <summary>
-        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = null;
-        }
 
         /// <summary>
         ///   Launches the More Information <c>Url</c> of the update

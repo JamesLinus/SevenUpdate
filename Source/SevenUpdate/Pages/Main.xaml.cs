@@ -110,6 +110,38 @@ namespace SevenUpdate.Pages
         public Main()
         {
             InitializeComponent();
+
+            #region Event Handler Declarations
+
+            tbViewUpdateHistory.MouseEnter += App.TextBlock_MouseEnter;
+            tbRestoreHiddenUpdates.MouseEnter += App.TextBlock_MouseEnter;
+            tbCheckForUpdates.MouseEnter += App.TextBlock_MouseEnter;
+            tbChangeSettings.MouseEnter += App.TextBlock_MouseEnter;
+            tbAbout.MouseEnter += App.TextBlock_MouseEnter;
+            tbViewUpdateHistory.MouseLeave += App.TextBlock_MouseLeave;
+            tbRestoreHiddenUpdates.MouseLeave += App.TextBlock_MouseLeave;
+            tbCheckForUpdates.MouseLeave += App.TextBlock_MouseLeave;
+            tbChangeSettings.MouseLeave += App.TextBlock_MouseLeave;
+            tbAbout.MouseLeave += App.TextBlock_MouseLeave;
+
+            UpdateInfo.CanceledSelectionEventHandler += CanceledSelection_EventHandler;
+            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChanged_EventHandler;
+            infoBar.btnAction.Click += Action_Click;
+            infoBar.tbViewImportantUpdates.MouseDown += ViewImportantUpdates_MouseDown;
+            infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdates_MouseDown;
+            Search.SearchDoneEventHandler += SearchCompleted_EventHandler;
+            Search.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
+            ServiceCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
+            ServiceCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
+            ServiceCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
+            ServiceCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
+            ServiceCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
+            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdate_EventHandler;
+            AdminClient.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
+            AdminClient.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
+
+            #endregion
+
             LoadSettings();
             infoBar.imgAdminShield.Visibility = App.IsAdmin ? Visibility.Collapsed : Visibility.Visible;
 
@@ -502,26 +534,6 @@ namespace SevenUpdate.Pages
                 tbUpdatesInstalled.Text = App.RM.GetString("Never");
 
             SetUI(Base.Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
-
-            #region Event Handler Declarations
-
-            UpdateInfo.CanceledSelectionEventHandler += CanceledSelection_EventHandler;
-            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChanged_EventHandler;
-            infoBar.btnAction.Click += Action_Click;
-            infoBar.tbViewImportantUpdates.MouseDown += ViewImportantUpdates_MouseDown;
-            infoBar.tbViewOptionalUpdates.MouseDown += ViewOptionalUpdates_MouseDown;
-            Search.SearchDoneEventHandler += SearchCompleted_EventHandler;
-            Search.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
-            ServiceCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
-            ServiceCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
-            ServiceCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
-            ServiceCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
-            ServiceCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
-            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdate_EventHandler;
-            AdminClient.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
-            AdminClient.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
-
-            #endregion
         }
 
         /// <summary>
@@ -909,24 +921,6 @@ namespace SevenUpdate.Pages
         #region UI Events
 
         #region TextBlock
-
-        /// <summary>
-        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
-        /// </summary>
-        private void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock) sender);
-            textBlock.TextDecorations = null;
-        }
 
         /// <summary>
         ///   Navigates to the Options page
