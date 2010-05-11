@@ -57,7 +57,7 @@ namespace SevenUpdate.Windows
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
-                tbStatus.Text = Base.Base.ConvertFileSize(updateInfo.Size);
+                tbStatus.Text = Base.Base.ConvertFileSize(updateInfo.UpdateSize);
             }
             else
                 tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;

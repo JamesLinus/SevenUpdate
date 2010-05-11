@@ -137,7 +137,7 @@ namespace SevenUpdate.Base
                                     app.Updates[y].Files[z].Hash)
                                 {
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
-                                        size += app.Updates[y].Files[z].Size;
+                                        size += app.Updates[y].Files[z].FileSize;
                                 }
                                 break;
                         }
@@ -165,7 +165,7 @@ namespace SevenUpdate.Base
                                 z--;
                                 break;
                             case FileAction.ExecuteThenDelete:
-                                size += app.Updates[y].Files[z].Size;
+                                size += app.Updates[y].Files[z].FileSize;
                                 break;
                             case FileAction.Update:
                             case FileAction.UpdateThenExecute:
@@ -180,7 +180,7 @@ namespace SevenUpdate.Base
                                 else if (
                                     Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
                                     app.Updates[y].Files[z].Hash)
-                                    size += app.Updates[y].Files[z].Size;
+                                    size += app.Updates[y].Files[z].FileSize;
                                 break;
                         }
 
@@ -246,9 +246,27 @@ namespace SevenUpdate.Base
 
             try
             {
+                var publisher = new ObservableCollection<LocaleString>();
+                var ls = new LocaleString {Value = "Seven Software", Lang = "en"};
+                publisher.Add(ls);
+
+                var name = new ObservableCollection<LocaleString>();
+                ls = new LocaleString {Value = "Seven Update", Lang = "en"};
+                name.Add(ls);
+
                 // Download the Seven Update SUI and load it.
                 var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-                app.AppInfo = new Sua {AppUrl = "http://sevenupdate.com/", Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true,true), HelpUrl = "http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui};
+                app.AppInfo = new Sua
+                                  {
+                                      AppUrl = "http://sevenupdate.com/",
+                                      Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                                      Publisher = publisher,
+                                      Name = name,
+                                      HelpUrl = "http://sevenupdate.com/support/",
+                                      Is64Bit = true,
+                                      IsEnabled = true,
+                                      SuiUrl = SevenUpdateSui
+                                  };
                 // Check if there is a newer version of Seven Update
                 if (CheckForUpdates(ref app, null))
                 {

@@ -529,7 +529,7 @@ namespace SevenUpdate.Base
         ///   File size in bytes
         /// </summary>
         [ProtoMember(5), DataMember]
-        public ulong Size { get; set; }
+        public ulong FileSize { get; set; }
 
         #endregion
 
@@ -715,7 +715,7 @@ namespace SevenUpdate.Base
         ///   The full size of the update
         /// </summary>
         [ProtoMember(6), DataMember]
-        public ulong Size { get; set; }
+        public ulong UpdateSize { get; set; }
 
         /// <summary>
         ///   The Publisher of the update/application

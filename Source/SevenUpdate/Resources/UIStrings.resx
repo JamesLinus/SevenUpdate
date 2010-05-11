@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AcceptLicenseTerms" xml:space="preserve">
     <value>Please read and accept the license terms for</value>
@@ -377,5 +377,14 @@
   </data>
   <data name="Files" xml:space="preserve">
     <value>files</value>
+  </data>
+  <data name="CheckForUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="CheckForUpdatesHeading" xml:space="preserve">
+    <value>Check for updates for your installed software</value>
+  </data>
+  <data name="InstallLatestUpdates" xml:space="preserve">
+    <value>Always install the latest updates to enhance your software security and performance.</value>
   </data>
 </root>

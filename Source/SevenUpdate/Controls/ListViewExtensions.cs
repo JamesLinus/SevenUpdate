@@ -219,9 +219,9 @@ namespace SevenUpdate.Controls
                                     result = -1;
                                 break;
                             case "Size":
-                                if (xc.Size > yc.Size)
+                                if (xc.UpdateSize > yc.UpdateSize)
                                     result = 1;
-                                else if (xc.Size == yc.Size)
+                                else if (xc.UpdateSize == yc.UpdateSize)
                                     result = 0;
                                 else
                                     result = -1;

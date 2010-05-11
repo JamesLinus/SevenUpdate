@@ -54,10 +54,6 @@ namespace SevenUpdate.Pages
         public InfoBar()
         {
             InitializeComponent();
-            tbViewOptionalUpdates.MouseEnter += App.TextBlock_MouseEnter;
-            tbViewImportantUpdates.MouseEnter += App.TextBlock_MouseEnter;
-            tbViewOptionalUpdates.MouseLeave += App.TextBlock_MouseLeave;
-            tbViewImportantUpdates.MouseLeave += App.TextBlock_MouseLeave;
         }
     }
 }

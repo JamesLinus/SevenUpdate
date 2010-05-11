@@ -1,18 +1,22 @@
-﻿// // Copyright 2007-2010 Robert Baker, Seven Software.
-// // This file is part of Seven Update.
-// //  
-// //     Seven Update is free software: you can redistribute it and/or modify
-// //     it under the terms of the GNU General Public License as published by
-// //     the Free Software Foundation, either version 3 of the License, or
-// //     (at your option) any later version.
-// // 
-// //     Seven Update is distributed in the hope that it will be useful,
-// //     but WITHOUT ANY WARRANTY; without even the implied warranty of
-// //     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// //     GNU General Public License for more details.
-// //  
-// //    You should have received a copy of the GNU General Public License
-// //    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -32,6 +36,8 @@ namespace SevenUpdate.Sdk
     {
         #region Global Vars
 
+        private static Application app;
+
         /// <summary>
         ///   Gets the resources for the application
         /// </summary>
@@ -39,7 +45,6 @@ namespace SevenUpdate.Sdk
 
         internal static string SUIFile { get; set; }
 
-        private static Application app;
         #endregion
 
         #region Methods
@@ -78,35 +83,34 @@ namespace SevenUpdate.Sdk
                                     Title = "Seven Update SDK",
                                     Description = "Create new project",
                                     CustomCategory = "Tasks",
-                                    Arguments="NewProject"
+                                    Arguments = "NewProject"
                                 };
 
             var jumpTask2 = new JumpTask
-            {
-                ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                Title = "Seven Update SDK",
-                Description = "Edit an existing project",
-                CustomCategory = "Tasks",
-                Arguments = "EditProject"
-            };
+                                {
+                                    ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    Title = "Seven Update SDK",
+                                    Description = "Edit an existing project",
+                                    CustomCategory = "Tasks",
+                                    Arguments = "EditProject"
+                                };
 
             var jumpTask3 = new JumpTask
-            {
-                ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                Title = "Seven Update SDK",
-                Description = "Test project",
-                CustomCategory = "Tasks",
-                Arguments = "TestProject"
-            };
+                                {
+                                    ApplicationPath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    IconResourcePath = SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                    Title = "Seven Update SDK",
+                                    Description = "Test project",
+                                    CustomCategory = "Tasks",
+                                    Arguments = "TestProject"
+                                };
 
             var jumpList = new JumpList();
             jumpList.JumpItems.Add(jumpTask1);
             jumpList.JumpItems.Add(jumpTask2);
             jumpList.JumpItems.Add(jumpTask3);
             JumpList.SetJumpList(app, jumpList);
-
         }
 
         #endregion

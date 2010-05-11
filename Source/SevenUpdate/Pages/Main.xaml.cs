@@ -50,6 +50,11 @@ namespace SevenUpdate.Pages
             ///   Canceled Updates
             /// </summary>
             Canceled,
+            
+            /// <summary>
+            /// Check for updates
+            /// </summary>
+            CheckForUpdates,
 
             /// <summary>
             ///   Checking for updates
@@ -113,17 +118,6 @@ namespace SevenUpdate.Pages
 
             #region Event Handler Declarations
 
-            tbViewUpdateHistory.MouseEnter += App.TextBlock_MouseEnter;
-            tbRestoreHiddenUpdates.MouseEnter += App.TextBlock_MouseEnter;
-            tbCheckForUpdates.MouseEnter += App.TextBlock_MouseEnter;
-            tbChangeSettings.MouseEnter += App.TextBlock_MouseEnter;
-            tbAbout.MouseEnter += App.TextBlock_MouseEnter;
-            tbViewUpdateHistory.MouseLeave += App.TextBlock_MouseLeave;
-            tbRestoreHiddenUpdates.MouseLeave += App.TextBlock_MouseLeave;
-            tbCheckForUpdates.MouseLeave += App.TextBlock_MouseLeave;
-            tbChangeSettings.MouseLeave += App.TextBlock_MouseLeave;
-            tbAbout.MouseLeave += App.TextBlock_MouseLeave;
-
             UpdateInfo.CanceledSelectionEventHandler += CanceledSelection_EventHandler;
             UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChanged_EventHandler;
             infoBar.btnAction.Click += Action_Click;
@@ -147,11 +141,12 @@ namespace SevenUpdate.Pages
 
             if (App.IsReconnect)
                 SetUI(UILayout.ConnectingToService);
-
-            if (App.IsAutoCheck)
-                CheckForUpdates(true);
-            else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
-                CheckForUpdates();
+            else
+                if (App.IsAutoCheck)
+                    CheckForUpdates(true);
+                else
+                    if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
+                        SetUI(UILayout.CheckForUpdates);
         }
 
         #region Update Event Methods
@@ -595,6 +590,32 @@ namespace SevenUpdate.Pages
 
                     infoBar.ShieldIcon = (BitmapImage) App.Resources["RedShield"];
                     infoBar.SideImage = (BitmapImage) App.Resources["RedSide"];
+
+                    #endregion
+
+                    #region Code
+
+                    App.IsInstallInProgress = false;
+
+                    #endregion
+
+                    break;
+                    case UILayout.CheckForUpdates:
+                    #region GUI Code
+
+                    infoBar.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.spUpdateInfo.Visibility = Visibility.Collapsed;
+                    infoBar.tbSelectedUpdates.Visibility = Visibility.Collapsed;
+                    infoBar.tbStatus.Visibility = Visibility.Visible;
+                    infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
+                    infoBar.btnAction.Visibility = Visibility.Visible;
+                    infoBar.tbAction.Text = App.RM.GetString("CheckForUpdates");
+                    infoBar.imgAdminShield.Visibility = Visibility.Collapsed;
+
+                    infoBar.tbHeading.Text = App.RM.GetString("CheckForUpdatesHeading");
+                    infoBar.tbStatus.Text = App.RM.GetString("InstallLatestUpdates") + Environment.NewLine;
+                    infoBar.ShieldIcon = (BitmapImage) App.Resources["YellowShield"];
+                    infoBar.SideImage = (BitmapImage) App.Resources["YellowSide"];
 
                     #endregion
 
@@ -1116,7 +1137,7 @@ namespace SevenUpdate.Pages
                     SetUI(UILayout.Canceled);
                 return;
             }
-            else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain"))
+            else if (infoBar.tbAction.Text == App.RM.GetString("TryAgain") || infoBar.tbAction.Text == App.RM.GetString("CheckForUpdates"))
                 CheckForUpdates();
             else if (infoBar.tbAction.Text == App.RM.GetString("RestartNow"))
                 Base.Base.StartProcess("shutdown.exe", "-r -t 00");

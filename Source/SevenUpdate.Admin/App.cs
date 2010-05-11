@@ -500,6 +500,7 @@ namespace SevenUpdate.Admin
             hidden.Add(e.HiddenUpdate);
 
             Base.Base.Serialize(hidden, Base.Base.HiddenFile);
+            ShutdownApp();
         }
 
         private static void Service_OnAddApp(object sender, Service.Service.OnAddAppEventArgs e)

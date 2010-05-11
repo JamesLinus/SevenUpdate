@@ -141,7 +141,7 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    ///   Converts a collection of UpdateFiles to a string representing the size
+    ///   Converts a ulong or group of ulongs into a string readable filesize
     /// </summary>
     [ValueConversion(typeof (UpdateFile), typeof (string))]
     public sealed class FileSizeConverter : IValueConverter
@@ -154,9 +154,19 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var files = value as Collection<UpdateFile>;
-            // Gets the full size of the update then converts it into a string format
-            return Base.Base.ConvertFileSize(App.GetUpdateSize(files));
+            try
+            {
+                var files = value as Collection<UpdateFile>;
+                // Gets the full size of the update then converts it into a string format
+                return Base.Base.ConvertFileSize(App.GetUpdateSize(files));
+            }
+            catch (Exception)
+            {
+                var size = System.Convert.ToUInt64(value);
+                // Converts the ulong into a readable file size string
+                return Base.Base.ConvertFileSize(size);
+            }
+
         }
 
         /// <summary>

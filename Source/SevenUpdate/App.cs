@@ -201,28 +201,10 @@ namespace SevenUpdate
         /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
-            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.Size);
+            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
         #endregion
-
-        /// <summary>
-        ///   Underlines the text when mouse is over the <see cref = "TextBlock" />
-        /// </summary>
-        internal static void TextBlock_MouseEnter(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = TextDecorations.Underline;
-        }
-
-        /// <summary>
-        ///   Removes the Underlined text when mouse is leaves the <see cref = "TextBlock" />
-        /// </summary>
-        internal static void TextBlock_MouseLeave(object sender, MouseEventArgs e)
-        {
-            var textBlock = ((TextBlock)sender);
-            textBlock.TextDecorations = null;
-        }
 
         #endregion
     }

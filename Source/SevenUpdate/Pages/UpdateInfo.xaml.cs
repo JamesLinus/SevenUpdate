@@ -152,11 +152,6 @@ namespace SevenUpdate.Pages
             InitializeComponent();
             if (App.IsAdmin)
                 cmiHideUpdate.Icon = null;
-
-            tbUrlInfo.MouseEnter += App.TextBlock_MouseEnter;
-            tbUrlInfo.MouseLeave += App.TextBlock_MouseLeave;
-            tbUrlHelp.MouseEnter += App.TextBlock_MouseEnter;
-            tbUrlHelp.MouseLeave += App.TextBlock_MouseLeave;
         }
 
         #region Event Declarations
@@ -443,7 +438,7 @@ namespace SevenUpdate.Pages
                               PublisherUrl = App.Applications[appIndex].AppInfo.AppUrl,
                               ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
                               Status = UpdateStatus.Hidden,
-                              Size = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
+                              UpdateSize = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
                               Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
                               Description = App.Applications[appIndex].Updates[updateIndex].Description,
                               Name = App.Applications[appIndex].Updates[updateIndex].Name
@@ -491,6 +486,7 @@ namespace SevenUpdate.Pages
                     tbUrlHelp.Visibility = Visibility.Visible;
                     tbUrlHelp.Tag = App.Applications[appIndex].AppInfo.HelpUrl;
                 }
+
                 if (string.IsNullOrEmpty(App.Applications[appIndex].Updates[updateIndex].InfoUrl))
                     tbUrlInfo.Visibility = Visibility.Collapsed;
                 else
@@ -498,6 +494,9 @@ namespace SevenUpdate.Pages
                     tbUrlInfo.Visibility = Visibility.Visible;
                     tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 }
+
+               // cmiHideUpdate.IsEnabled = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+
                 var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
 
                 if (item.Tag != null)
