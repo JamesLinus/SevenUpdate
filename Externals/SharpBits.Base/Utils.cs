@@ -99,10 +99,7 @@ namespace SharpBits.Base
             version = GetBitsVersion();
         }
 
-        internal static BitsVersion BITSVersion
-        {
-            get { return version; }
-        }
+        internal static BitsVersion BITSVersion { get { return version; } }
 
         internal static string GetName(string sid)
         {
@@ -140,14 +137,14 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        /// maps version information from file version
-        /// version number returned by qmgr.dll
-        /// 6.0.xxxx = BITS 1.0
-        /// 6.2.xxxx = BITS 1.2
-        /// 6.5.xxxx = BITS 1.5
-        /// 6.6.xxxx = BITS 2.0
-        /// 6.7.xxxx = BITS 2.5
-        /// 7.0.xxxx = BITS 3.0
+        ///   maps version information from file version
+        ///   version number returned by qmgr.dll
+        ///   6.0.xxxx = BITS 1.0
+        ///   6.2.xxxx = BITS 1.2
+        ///   6.5.xxxx = BITS 1.5
+        ///   6.6.xxxx = BITS 2.0
+        ///   6.7.xxxx = BITS 2.5
+        ///   7.0.xxxx = BITS 3.0
         /// </summary>
         /// <returns></returns>
         private static BitsVersion GetBitsVersion()

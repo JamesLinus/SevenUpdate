@@ -19,19 +19,10 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        public ulong BytesTransferred
-        {
-            get { return jobProgress.BytesTransferred; }
-        }
+        public ulong BytesTransferred { get { return jobProgress.BytesTransferred; } }
 
-        public uint FilesTotal
-        {
-            get { return jobProgress.FilesTotal; }
-        }
+        public uint FilesTotal { get { return jobProgress.FilesTotal; } }
 
-        public uint FilesTransferred
-        {
-            get { return jobProgress.FilesTransferred; }
-        }
+        public uint FilesTransferred { get { return jobProgress.FilesTransferred; } }
     }
 }

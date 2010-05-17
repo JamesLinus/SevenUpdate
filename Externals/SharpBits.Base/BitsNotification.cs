@@ -30,10 +30,7 @@ namespace SharpBits.Base
             this.error = error;
         }
 
-        public BitsError Error
-        {
-            get { return error; }
-        }
+        public BitsError Error { get { return error; } }
     }
 
     public class NotificationEventArgs : JobNotificationEventArgs
@@ -45,10 +42,7 @@ namespace SharpBits.Base
             this.job = job;
         }
 
-        public BitsJob Job
-        {
-            get { return job; }
-        }
+        public BitsJob Job { get { return job; } }
     }
 
     public class ErrorNotificationEventArgs : NotificationEventArgs
@@ -60,10 +54,7 @@ namespace SharpBits.Base
             this.error = error;
         }
 
-        public BitsError Error
-        {
-            get { return error; }
-        }
+        public BitsError Error { get { return error; } }
     }
 
     public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
@@ -77,20 +68,11 @@ namespace SharpBits.Base
             this.exception = exception;
         }
 
-        public string Message
-        {
-            get { return exception.Message; }
-        }
+        public string Message { get { return exception.Message; } }
 
-        public string Description
-        {
-            get { return description; }
-        }
+        public string Description { get { return description; } }
 
-        public int HResult
-        {
-            get { return exception.ErrorCode; }
-        }
+        public int HResult { get { return exception.ErrorCode; } }
     }
 
     #endregion
@@ -192,22 +174,10 @@ namespace SharpBits.Base
 
         #endregion
 
-        public event EventHandler<NotificationEventArgs> OnJobModifiedEvent
-        {
-            add { onJobModified += value; }
-            remove { onJobModified -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobModifiedEvent { add { onJobModified += value; } remove { onJobModified -= value; } }
 
-        public event EventHandler<NotificationEventArgs> OnJobTransferredEvent
-        {
-            add { onJobTransfered += value; }
-            remove { onJobTransfered -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobTransferredEvent { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
 
-        public event EventHandler<ErrorNotificationEventArgs> OnJobErrorEvent
-        {
-            add { onJobErrored += value; }
-            remove { onJobErrored -= value; }
-        }
+        public event EventHandler<ErrorNotificationEventArgs> OnJobErrorEvent { add { onJobErrored += value; } remove { onJobErrored -= value; } }
     }
 }

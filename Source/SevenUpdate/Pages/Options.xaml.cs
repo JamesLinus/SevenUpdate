@@ -57,12 +57,14 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   A collection of SUA's that Seven Update can update
         /// </summary>
-        private ObservableCollection<Sua> machineAppList;
+        private static ObservableCollection<Sua> machineAppList;
+
+        private static Config AppConfig = App.Settings;
 
         /// <summary>
         ///   The shield Icon uri
         /// </summary>
-        private ImageSource ShieldIcon { set { shieldIcon.Source = value; } }
+        private ImageSource ShieldIcon { set { imgShieldIcon.Source = value; } }
 
         #endregion
 
@@ -72,12 +74,72 @@ namespace SevenUpdate.Pages
         public Options()
         {
             InitializeComponent();
-            listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
+            lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
             if (App.IsAdmin)
                 btnSave.Content = App.RM.GetString("Save");
         }
 
         #region Methods
+
+        /// <summary>
+        ///   Loads the configuration and sets the UI
+        /// </summary>
+        private void LoadSettings()
+        {
+            cbxRecommended.IsChecked = App.Settings.IncludeRecommended;
+
+            switch (App.Settings.AutoOption)
+            {
+                case AutoUpdateOption.Install:
+                    cmbUpdateOption.SelectedIndex = 0;
+                    break;
+
+                case AutoUpdateOption.Download:
+                    cmbUpdateOption.SelectedIndex = 1;
+                    break;
+
+                case AutoUpdateOption.Notify:
+                    cmbUpdateOption.SelectedIndex = 2;
+                    break;
+
+                case AutoUpdateOption.Never:
+                    cmbUpdateOption.SelectedIndex = 3;
+                    break;
+            }
+        }
+
+        /// <summary>
+        ///   Saves the Settings
+        /// </summary>
+        private void SaveSettings()
+        {
+            var options = new Config();
+
+            if (cmbUpdateOption.SelectedIndex == 0)
+                options.AutoOption = AutoUpdateOption.Install;
+
+            if (cmbUpdateOption.SelectedIndex == 1)
+                options.AutoOption = AutoUpdateOption.Download;
+
+            if (cmbUpdateOption.SelectedIndex == 2)
+                options.AutoOption = AutoUpdateOption.Notify;
+
+            if (cmbUpdateOption.SelectedIndex == 3)
+                options.AutoOption = AutoUpdateOption.Never;
+
+            if (cbxRecommended.IsChecked != null)
+                options.IncludeRecommended = ((bool) cbxRecommended.IsChecked);
+
+
+            if (cmbUpdateOption.SelectedIndex == 3)
+            {
+                options.AutoOption = AutoUpdateOption.Never;
+
+                AdminClient.SaveSettings(false, options, machineAppList);
+            }
+            else
+                AdminClient.SaveSettings(true, options, machineAppList);
+        }
 
         /// <summary>
         ///   Downloads the Seven Update Application List
@@ -92,33 +154,6 @@ namespace SevenUpdate.Pages
             {
                 LoadSul();
             }
-        }
-
-        /// <summary>
-        ///   Loads the configuration and sets the UI
-        /// </summary>
-        private void LoadSettings()
-        {
-            switch (App.Settings.AutoOption)
-            {
-                case AutoUpdateOption.Install:
-                    cbAutoUpdateMethod.SelectedIndex = 0;
-                    break;
-
-                case AutoUpdateOption.Download:
-                    cbAutoUpdateMethod.SelectedIndex = 1;
-                    break;
-
-                case AutoUpdateOption.Notify:
-                    cbAutoUpdateMethod.SelectedIndex = 2;
-                    break;
-
-                case AutoUpdateOption.Never:
-                    cbAutoUpdateMethod.SelectedIndex = 3;
-                    break;
-            }
-
-            chkRecommendedUpdates.IsChecked = App.Settings.IncludeRecommended;
         }
 
         /// <summary>
@@ -190,16 +225,16 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void UpdateList()
         {
-            listView.Cursor = Cursors.Arrow;
+            lvApps.Cursor = Cursors.Arrow;
             if (machineAppList != null)
             {
-                listView.ItemsSource = machineAppList;
+                lvApps.ItemsSource = machineAppList;
                 machineAppList.CollectionChanged += UserAppList_CollectionChanged;
                 AddSortBinding();
-                tbListStatus.Text = null;
+                lblListStatus.Text = null;
             }
             else
-                tbListStatus.Text = App.RM.GetString("CouldNotConnect");
+                lblListStatus.Text = App.RM.GetString("CouldNotConnect");
         }
 
         /// <summary>
@@ -207,7 +242,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView) lvApps.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("ApplicationName"));
@@ -218,40 +253,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Architecture"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SuaSorter());
-        }
-
-        /// <summary>
-        ///   Saves the Settings
-        /// </summary>
-        private void SaveSettings()
-        {
-            var options = new Config();
-
-            if (cbAutoUpdateMethod.SelectedIndex == 0)
-                options.AutoOption = AutoUpdateOption.Install;
-
-            if (cbAutoUpdateMethod.SelectedIndex == 1)
-                options.AutoOption = AutoUpdateOption.Download;
-
-            if (cbAutoUpdateMethod.SelectedIndex == 2)
-                options.AutoOption = AutoUpdateOption.Notify;
-
-            if (cbAutoUpdateMethod.SelectedIndex == 3)
-                options.AutoOption = AutoUpdateOption.Never;
-
-            if (chkRecommendedUpdates.IsChecked != null)
-                options.IncludeRecommended = ((bool) chkRecommendedUpdates.IsChecked);
-
-
-            if (cbAutoUpdateMethod.SelectedIndex == 3)
-            {
-                options.AutoOption = AutoUpdateOption.Never;
-
-                AdminClient.SaveSettings(false, options, machineAppList);
-            }
-            else
-                AdminClient.SaveSettings(true, options, machineAppList);
+            ListViewSorter.SetCustomSorter(lvApps, new ListViewExtensions.SuaSorter());
         }
 
         #endregion
@@ -265,7 +267,7 @@ namespace SevenUpdate.Pages
         /// <param name = "e"></param>
         private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (cbAutoUpdateMethod.SelectedIndex)
+            switch (cmbUpdateOption.SelectedIndex)
             {
                 case 0:
                     ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
@@ -287,7 +289,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            listView.Cursor = Cursors.Wait;
+            lvApps.Cursor = Cursors.Wait;
             LoadSettings();
             new Thread(DownloadSul).Start();
         }
@@ -302,7 +304,7 @@ namespace SevenUpdate.Pages
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
                 return;
-            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var dataView = CollectionViewSource.GetDefaultView(lvApps.ItemsSource);
             dataView.Refresh();
         }
 

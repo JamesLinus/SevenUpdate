@@ -25,14 +25,8 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        public ulong BytesTransferred
-        {
-            get { return fileProgress.BytesTransferred; }
-        }
+        public ulong BytesTransferred { get { return fileProgress.BytesTransferred; } }
 
-        public bool Completed
-        {
-            get { return Convert.ToBoolean(fileProgress.Completed); }
-        }
+        public bool Completed { get { return Convert.ToBoolean(fileProgress.Completed); } }
     }
 }

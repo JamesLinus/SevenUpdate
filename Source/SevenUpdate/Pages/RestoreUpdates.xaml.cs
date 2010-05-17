@@ -70,7 +70,7 @@ namespace SevenUpdate.Pages
             InitializeComponent();
             if (App.IsAdmin)
                 imgShield.Visibility = Visibility.Collapsed;
-            listView.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
+            lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
         }
 
         #region Event Declarations
@@ -85,14 +85,14 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        ///   Gets the hidden updates and loads them in the listView
+        ///   Gets the hidden updates and loads them in thelvHiddenUpdates
         /// </summary>
         private void GetHiddenUpdates()
         {
             hiddenUpdates = Base.Base.Deserialize<ObservableCollection<Suh>>(Base.Base.HiddenFile);
             if (hiddenUpdates == null)
                 return;
-            listView.ItemsSource = hiddenUpdates;
+            lvHiddenUpdates.ItemsSource = hiddenUpdates;
             hiddenUpdates.CollectionChanged += HiddenUpdates_CollectionChanged;
             AddSortBinding();
         }
@@ -102,7 +102,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView) lvHiddenUpdates.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -113,7 +113,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SuhSorter());
+            ListViewSorter.SetCustomSorter(lvHiddenUpdates, new ListViewExtensions.SuhSorter());
         }
 
         #endregion
@@ -164,7 +164,7 @@ namespace SevenUpdate.Pages
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
                 return;
-            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var dataView = CollectionViewSource.GetDefaultView(lvHiddenUpdates.ItemsSource);
             dataView.Refresh();
         }
 
@@ -175,16 +175,16 @@ namespace SevenUpdate.Pages
         {
             var checkedCount = hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            tbSelected.Text = App.RM.GetString("TotalSelected") + " " + checkedCount + " ";
+            lblSelectedUpdates.Text = App.RM.GetString("TotalSelected") + " " + checkedCount + " ";
             if (checkedCount > 0)
             {
-                tbSelected.Text += checkedCount == 1 ? App.RM.GetString("Updates") : App.RM.GetString("Update");
+                lblSelectedUpdates.Text += checkedCount == 1 ? App.RM.GetString("Updates") : App.RM.GetString("Update");
                 btnRestore.IsEnabled = true;
                 imgShield.Source = shield;
             }
             else
             {
-                tbSelected.Text += App.RM.GetString("Updates");
+                lblSelectedUpdates.Text += App.RM.GetString("Updates");
                 btnRestore.IsEnabled = false;
                 imgShield.Source = disabledShield;
             }
@@ -204,7 +204,7 @@ namespace SevenUpdate.Pages
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
-            details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
+            details.ShowDialog(hiddenUpdates[lvHiddenUpdates.SelectedIndex]);
         }
 
         /// <summary>
@@ -212,10 +212,10 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount != 2 || listView.SelectedIndex == -1)
+            if (e.ClickCount != 2 || lvHiddenUpdates.SelectedIndex == -1)
                 return;
             var details = new UpdateDetails();
-            details.ShowDialog(hiddenUpdates[listView.SelectedIndex]);
+            details.ShowDialog(hiddenUpdates[lvHiddenUpdates.SelectedIndex]);
         }
 
         #endregion

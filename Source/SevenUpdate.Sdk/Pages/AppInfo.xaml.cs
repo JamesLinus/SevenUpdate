@@ -22,6 +22,7 @@
 
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows;
 
 #endregion
 
@@ -42,6 +43,32 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FileSystem_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lblValue == null)
+                return;
+            lblRegistry.Visibility = Visibility.Collapsed;
+            lblValue.Visibility = Visibility.Collapsed;
+            tbxValueName.Visibility = Visibility.Collapsed;
+            tbBrowse.Visibility = Visibility.Visible;
+        }
+
+        private void Registry_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lblValue == null)
+                return;
+            lblRegistry.Visibility = Visibility.Visible;
+            lblValue.Visibility = Visibility.Visible;
+            tbxValueName.Visibility = Visibility.Visible;
+            tbBrowse.Visibility = Visibility.Collapsed;
+            
         }
     }
 }

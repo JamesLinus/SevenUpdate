@@ -166,7 +166,6 @@ namespace SevenUpdate.Converters
                 // Converts the ulong into a readable file size string
                 return Base.Base.ConvertFileSize(size);
             }
-
         }
 
         /// <summary>

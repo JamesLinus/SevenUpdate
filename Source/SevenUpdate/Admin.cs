@@ -398,9 +398,7 @@ namespace SevenUpdate
             if (success)
             {
                 if (Connect())
-                {
                     wcfClient.HideUpdate(hiddenUpdate);
-                }
             }
 
             return success;
@@ -417,9 +415,7 @@ namespace SevenUpdate
             if (success)
             {
                 if (Connect())
-                {
                     wcfClient.HideUpdates(hiddenUpdates);
-                }
             }
             return success;
         }
@@ -436,9 +432,7 @@ namespace SevenUpdate
             if (success)
             {
                 if (Connect())
-                {
                     wcfClient.ShowUpdate(hiddenUpdate);
-                }
             }
             return true;
         }
@@ -454,9 +448,7 @@ namespace SevenUpdate
             if (!success)
                 return;
             if (Connect())
-            {
                 wcfClient.AddApp(app);
-            }
         }
 
         /// <summary>
@@ -473,9 +465,7 @@ namespace SevenUpdate
             if (!success)
                 return;
             if (Connect())
-            {
                 wcfClient.ChangeSettings(sul, options, autoOn);
-            }
 
             if (SettingsChangedEventHandler != null)
                 SettingsChangedEventHandler(null, new EventArgs());

@@ -207,7 +207,7 @@ namespace SevenUpdate.Pages
                 for (var y = 0; y < App.Applications[x].Updates.Count; y++)
                 {
                     updIndex++;
-                    var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.Items[updIndex]);
+                    var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.Items[updIndex]);
                     if (item.Tag != null)
                     {
                         if (!(bool) item.Tag)
@@ -279,9 +279,9 @@ namespace SevenUpdate.Pages
             }
 
             var items = new Binding {Source = selectedUpdates};
-            listView.SetBinding(ItemsControl.ItemsSourceProperty, items);
+            lvUpdates.SetBinding(ItemsControl.ItemsSourceProperty, items);
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
-            var myView = (CollectionView) CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var myView = (CollectionView) CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
             myView.GroupDescriptions.Add(groupDescription);
 
@@ -293,7 +293,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView) lvUpdates.View;
 
             var col = gv.Columns[1];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -304,7 +304,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.UpdateSorter());
+            ListViewSorter.SetCustomSorter(lvUpdates, new ListViewExtensions.UpdateSorter());
         }
 
         /// <summary>
@@ -312,13 +312,13 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ShowLabels()
         {
-            tbStatus.Visibility = Visibility.Visible;
-            tbPublishedDate.Visibility = Visibility.Visible;
-            tbPublishedLabel.Visibility = Visibility.Visible;
-            tbUpdateDescription.Visibility = Visibility.Visible;
-            tbUpdateName.Visibility = Visibility.Visible;
-            tbUrlHelp.Visibility = Visibility.Visible;
-            tbUrlInfo.Visibility = Visibility.Visible;
+            lblStatus.Visibility = Visibility.Visible;
+            lblPublishedDate.Visibility = Visibility.Visible;
+            lblPublished.Visibility = Visibility.Visible;
+            lblDescription.Visibility = Visibility.Visible;
+            lblUpdateName.Visibility = Visibility.Visible;
+            lblHelpUrl.Visibility = Visibility.Visible;
+            lblInfoUrl.Visibility = Visibility.Visible;
             imgIcon.Visibility = Visibility.Hidden;
             imgArrow.Visibility = Visibility.Visible;
         }
@@ -328,13 +328,13 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void HideLabels()
         {
-            tbStatus.Visibility = Visibility.Hidden;
-            tbPublishedDate.Visibility = Visibility.Hidden;
-            tbPublishedLabel.Visibility = Visibility.Hidden;
-            tbUpdateDescription.Visibility = Visibility.Hidden;
-            tbUpdateName.Visibility = Visibility.Hidden;
-            tbUrlHelp.Visibility = Visibility.Hidden;
-            tbUrlInfo.Visibility = Visibility.Hidden;
+            lblStatus.Visibility = Visibility.Hidden;
+            lblPublishedDate.Visibility = Visibility.Hidden;
+            lblPublished.Visibility = Visibility.Hidden;
+            lblDescription.Visibility = Visibility.Hidden;
+            lblUpdateName.Visibility = Visibility.Hidden;
+            lblHelpUrl.Visibility = Visibility.Hidden;
+            lblInfoUrl.Visibility = Visibility.Hidden;
             imgIcon.Visibility = Visibility.Visible;
             imgArrow.Visibility = Visibility.Hidden;
         }
@@ -360,7 +360,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
-            IterateVisualChild(listView);
+            IterateVisualChild(lvUpdates);
             SaveUpdateSelection();
             MainWindow.NavService.GoBack();
         }
@@ -376,7 +376,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                Process.Start(tbUrlInfo.Tag.ToString());
+                Process.Start(lblInfoUrl.Tag.ToString());
             }
             catch
             {
@@ -390,7 +390,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                Process.Start(tbUrlHelp.Tag.ToString());
+                Process.Start(lblHelpUrl.Tag.ToString());
             }
             catch
             {
@@ -405,7 +405,7 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddUpdates();
-            listView.SelectedIndex = 0;
+            lvUpdates.SelectedIndex = 0;
         }
 
         #region ListView Related
@@ -418,7 +418,7 @@ namespace SevenUpdate.Pages
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
                 return;
-            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var dataView = CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
             dataView.Refresh();
         }
 
@@ -427,8 +427,8 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
-            var appIndex = indices[listView.SelectedIndex].AppIndex;
+            var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
+            var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
 
             var hnh = new Suh
                           {
@@ -444,7 +444,7 @@ namespace SevenUpdate.Pages
                               Name = App.Applications[appIndex].Updates[updateIndex].Name
                           };
 
-            var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+            var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
             if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
             {
                 if (AdminClient.HideUpdate(hnh))
@@ -470,34 +470,34 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (listView.SelectedIndex == -1)
+            if (lvUpdates.SelectedIndex == -1)
                 HideLabels();
             else
             {
-                var appIndex = indices[listView.SelectedIndex].AppIndex;
-                var updateIndex = indices[listView.SelectedIndex].UpdateIndex;
-                tbUpdateDescription.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
-                tbPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                tbUpdateName.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
+                var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
+                var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
+                lblDescription.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
+                lblPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
+                lblUpdateName.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
                 if (string.IsNullOrEmpty(App.Applications[appIndex].AppInfo.HelpUrl))
-                    tbUrlHelp.Visibility = Visibility.Collapsed;
+                    lblHelpUrl.Visibility = Visibility.Collapsed;
                 else
                 {
-                    tbUrlHelp.Visibility = Visibility.Visible;
-                    tbUrlHelp.Tag = App.Applications[appIndex].AppInfo.HelpUrl;
+                    lblHelpUrl.Visibility = Visibility.Visible;
+                    lblHelpUrl.Tag = App.Applications[appIndex].AppInfo.HelpUrl;
                 }
 
                 if (string.IsNullOrEmpty(App.Applications[appIndex].Updates[updateIndex].InfoUrl))
-                    tbUrlInfo.Visibility = Visibility.Collapsed;
+                    lblInfoUrl.Visibility = Visibility.Collapsed;
                 else
                 {
-                    tbUrlInfo.Visibility = Visibility.Visible;
-                    tbUrlInfo.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
+                    lblInfoUrl.Visibility = Visibility.Visible;
+                    lblInfoUrl.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 }
 
-               // cmiHideUpdate.IsEnabled = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+                // cmiHideUpdate.IsEnabled = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
 
-                var item = (ListViewItem) listView.ItemContainerGenerator.ContainerFromItem(listView.SelectedItem);
+                var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
 
                 if (item.Tag != null)
                     cmiHideUpdate.Header = ((bool) item.Tag) ? App.RM.GetString("HideUpdate") : App.RM.GetString("ShowUpdate");
@@ -506,12 +506,12 @@ namespace SevenUpdate.Pages
 
                 if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
                 {
-                    tbStatus.Text = App.RM.GetString("ReadyToDownload");
+                    lblStatus.Text = App.RM.GetString("ReadyToDownload");
                     imgArrow.Source = blueArrow;
                 }
                 else
                 {
-                    tbStatus.Text = App.RM.GetString("ReadyToInstall");
+                    lblStatus.Text = App.RM.GetString("ReadyToInstall");
                     imgArrow.Source = greenArrow;
                 }
                 ShowLabels();

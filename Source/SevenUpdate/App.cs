@@ -30,8 +30,6 @@ using System.Resources;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
 using SevenUpdate.Base;
 using SevenUpdate.Windows;
 
@@ -42,13 +40,13 @@ namespace SevenUpdate
     /// <summary>
     ///   Interaction logic for App.xaml
     /// </summary>
-    public sealed class App
+    public partial class App
     {
         #region Global Vars
 
-        #region Properties
+        internal new static ResourceDictionary Resources;
 
-        internal static ResourceDictionary Resources;
+        #region Properties
 
         /// <summary>
         ///   Gets or Sets a collection of software that Seven Update can check for updates
@@ -63,7 +61,7 @@ namespace SevenUpdate
             get
             {
                 var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
-                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false, Locale = "en"};
+                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
             }
         }
 
@@ -104,93 +102,52 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        ///   The main entry point for the application.
-        /// </summary>
-        /// <param name = "args">Command line <c>args</c></param>
-        [STAThread]
-        private static void Main(string[] args)
+        internal static void Init(string[] args)
         {
-            bool createdNew;
-            // Makes sure only 1 copy of Seven Update is allowed to run
-            using (new Mutex(true, "SevenUpdate", out createdNew))
+            foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
             {
-                Directory.CreateDirectory(Base.Base.UserStore);
-                RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
-                Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
-                Base.Base.SerializationErrorEventHandler += Base_SerializationError_EventHandler;
-                foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
-                {
-                    AddSua(t);
-                    return;
-                }
-                if (!createdNew)
-                    return;
-                var id = WindowsIdentity.GetCurrent();
-                if (id != null)
-                {
-                    var p = new WindowsPrincipal(id);
-                    IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
-                }
-
-                if (args.Length > 0)
-                {
-                    if (args[0] == "Auto")
-                        IsAutoCheck = true;
-                    if (args[0] == "Reconnect")
-                        IsReconnect = true;
-                }
-
-                if (Process.GetProcessesByName("SevenUpdate.Admin").Length > 0)
-                {
-                    IsReconnect = true;
-                    IsAutoCheck = false;
-                }
-
-                var app = new Application();
-                app.Run(new MainWindow());
-            }
-        }
-
-        /// <summary>
-        ///   Occurs when there is a serialization method. This is a temporary method for testing purposes and will not included in the public release.
-        /// </summary>
-        private static void Base_SerializationError_EventHandler(object sender, SerializationErrorEventArgs e)
-        {
-            if (e.File == Base.Base.AppsFile)
-            {
+                string suaLoc = t;
                 try
                 {
-                    File.Delete(Base.Base.AppsFile);
+                    suaLoc = suaLoc.Replace("sevenupdate://", null);
+                    var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
+                    if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        AdminClient.AddSua(sua);
                 }
                 catch
                 {
                 }
+                Environment.Exit(0);
             }
 
-            Base.Base.ReportError(e.Exception, Base.Base.UserStore);
+            Directory.CreateDirectory(Base.Base.UserStore);
+            Base.Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
+            RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
+            var id = WindowsIdentity.GetCurrent();
+
+            if (id != null)
+            {
+                var p = new WindowsPrincipal(id);
+                IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+
+            if (args.Length > 0)
+            {
+                if (args[0] == "Auto")
+                    IsAutoCheck = true;
+                if (args[0] == "Reconnect")
+                    IsReconnect = true;
+            }
+
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length > 0)
+            {
+                IsReconnect = true;
+                IsAutoCheck = false;
+            }
         }
 
-        /// <summary>
-        ///   Adds an Application for use with Seven Update
-        /// </summary>
-        /// <param name = "suaLoc">the location of the SUA file</param>
-        private static void AddSua(string suaLoc)
-        {
-            try
-            {
-                suaLoc = suaLoc.Replace("sevenupdate://", null);
-                var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
-                File.Delete(Base.Base.UserStore + "add.sua");
-                if (
-                    MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
-                                    MessageBoxImage.Question) == MessageBoxResult.Yes)
-                    AdminClient.AddSua(sua);
-            }
-            catch
-            {
-            }
-        }
+
+
 
         #region Recount Methods
 
@@ -207,5 +164,38 @@ namespace SevenUpdate
         #endregion
 
         #endregion
+    }
+
+    public class StartUp
+    {
+        private static void InitResources()
+        {
+            if (Application.Current.Resources.MergedDictionaries.Count >= 1)
+                return;
+            // merge in your application resources
+            Application.Current.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
+            App.Resources = Application.Current.Resources;
+        }
+
+        /// <summary>
+        ///   The main entry point for the application.
+        /// </summary>
+        /// <param name = "args">Command line <c>args</c></param>
+        [STAThread]
+        private static void Main(string[] args)
+        {
+            bool createdNew;
+            // Makes sure only 1 copy of Seven Update is allowed to run
+            using (new Mutex(true, "SevenUpdate", out createdNew))
+            {
+              App.Init(args);
+
+                if (!createdNew)
+                    return;
+                var app = new Application();
+                InitResources();
+                app.Run(new MainWindow());
+            }
+        }
     }
 }

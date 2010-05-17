@@ -10,9 +10,9 @@ using SharpBits.Base.Job;
 namespace SharpBits.Base
 {
     /// <summary>
-    /// Use the IBackgroundCopyManager interface to create transfer jobs, 
-    /// retrieve an enumerator object that contains the jobs in the queue, 
-    /// and to retrieve individual jobs from the queue.
+    ///   Use the IBackgroundCopyManager interface to create transfer jobs, 
+    ///   retrieve an enumerator object that contains the jobs in the queue, 
+    ///   and to retrieve individual jobs from the queue.
     /// </summary>
     public class BitsManager : IDisposable
     {
@@ -85,22 +85,13 @@ namespace SharpBits.Base
 
         #endregion
 
-        public BitsJobs Jobs
-        {
-            get { return jobs; }
-        }
+        public BitsJobs Jobs { get { return jobs; } }
 
-        internal IBackgroundCopyManager BackgroundCopyManager
-        {
-            get { return manager; }
-        }
+        internal IBackgroundCopyManager BackgroundCopyManager { get { return manager; } }
 
         #region util methods
 
-        public BitsVersion BitsVersion
-        {
-            get { return Utils.BITSVersion; }
-        }
+        public BitsVersion BitsVersion { get { return Utils.BITSVersion; } }
 
         #endregion
 
@@ -119,10 +110,7 @@ namespace SharpBits.Base
 
         #region internal notification handling
 
-        internal BitsNotification NotificationHandler
-        {
-            get { return notificationHandler; }
-        }
+        internal BitsNotification NotificationHandler { get { return notificationHandler; } }
 
         internal void NotifyOnJobRemoval(BitsJob job)
         {
@@ -143,41 +131,17 @@ namespace SharpBits.Base
 
         #region public events
 
-        public event EventHandler<NotificationEventArgs> OnJobModified
-        {
-            add { onJobModified += value; }
-            remove { onJobModified -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobModified { add { onJobModified += value; } remove { onJobModified -= value; } }
 
-        public event EventHandler<NotificationEventArgs> OnJobTransferred
-        {
-            add { onJobTransfered += value; }
-            remove { onJobTransfered -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobTransferred { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
 
-        public event EventHandler<ErrorNotificationEventArgs> OnJobError
-        {
-            add { onJobErrored += value; }
-            remove { onJobErrored -= value; }
-        }
+        public event EventHandler<ErrorNotificationEventArgs> OnJobError { add { onJobErrored += value; } remove { onJobErrored -= value; } }
 
-        public event EventHandler<NotificationEventArgs> OnJobAdded
-        {
-            add { onJobAdded += value; }
-            remove { onJobAdded -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobAdded { add { onJobAdded += value; } remove { onJobAdded -= value; } }
 
-        public event EventHandler<NotificationEventArgs> OnJobRemoved
-        {
-            add { onJobRemoved += value; }
-            remove { onJobRemoved -= value; }
-        }
+        public event EventHandler<NotificationEventArgs> OnJobRemoved { add { onJobRemoved += value; } remove { onJobRemoved -= value; } }
 
-        public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
-        {
-            add { onInterfaceError += value; }
-            remove { onInterfaceError -= value; }
-        }
+        public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError { add { onInterfaceError += value; } remove { onInterfaceError -= value; } }
 
         #endregion
 
@@ -214,13 +178,13 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        /// Creates a new transfer job.
+        ///   Creates a new transfer job.
         /// </summary>
-        /// <param name="displayName">Null-terminated string that contains a display name for the job. 
-        /// Typically, the display name is used to identify the job in a user interface. 
-        /// Note that more than one job may have the same display name. Must not be NULL. 
-        /// The name is limited to 256 characters, not including the null terminator.</param>
-        /// <param name="jobType"> Type of transfer job, such as JobType.Download. For a list of transfer types, see the JobType enumeration</param>
+        /// <param name = "displayName">Null-terminated string that contains a display name for the job. 
+        ///   Typically, the display name is used to identify the job in a user interface. 
+        ///   Note that more than one job may have the same display name. Must not be NULL. 
+        ///   The name is limited to 256 characters, not including the null terminator.</param>
+        /// <param name = "jobType"> Type of transfer job, such as JobType.Download. For a list of transfer types, see the JobType enumeration</param>
         /// <returns></returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
         {

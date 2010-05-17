@@ -56,7 +56,7 @@ namespace SharpBits.Base.Job
         #region IBackgroundCopyJob
 
         /// <summary>
-        /// Display Name, max 256 chars
+        ///   Display Name, max 256 chars
         /// </summary>
         public string DisplayName
         {
@@ -88,7 +88,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Description, max 1024 chars
+        ///   Description, max 1024 chars
         /// </summary>
         public string Description
         {
@@ -120,7 +120,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// SID of the job owner
+        ///   SID of the job owner
         /// </summary>
         public string Owner
         {
@@ -141,7 +141,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// resolved owner name from job owner SID
+        ///   resolved owner name from job owner SID
         /// </summary>
         public string OwnerName
         {
@@ -160,8 +160,8 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Job priority
-        /// can not be set for jobs already in state Canceled or Acknowledged
+        ///   Job priority
+        ///   can not be set for jobs already in state Canceled or Acknowledged
         /// </summary>
         public JobPriority Priority
         {
@@ -209,10 +209,7 @@ namespace SharpBits.Base.Job
             }
         }
 
-        public BitsFiles Files
-        {
-            get { return files; }
-        }
+        public BitsFiles Files { get { return files; } }
 
         public ulong ErrorCount
         {
@@ -245,7 +242,7 @@ namespace SharpBits.Base.Job
                             IBackgroundCopyError copyError;
                             job.GetError(out copyError);
                             if (null != copyError)
-                                this.error = new BitsError(this, copyError);
+                                error = new BitsError(this, copyError);
                         }
                     }
                 }
@@ -382,10 +379,7 @@ namespace SharpBits.Base.Job
             }
         }
 
-        public ProxySettings ProxySettings
-        {
-            get { return proxySettings ?? (proxySettings = new ProxySettings(job)); }
-        }
+        public ProxySettings ProxySettings { get { return proxySettings ?? (proxySettings = new ProxySettings(job)); } }
 
         public NotificationFlags NotificationFlags
         {
@@ -586,32 +580,17 @@ namespace SharpBits.Base.Job
 
         #region public events
 
-        public event EventHandler<JobNotificationEventArgs> OnJobModified
-        {
-            add { onJobModified += value; }
-            remove { onJobModified -= value; }
-        }
+        public event EventHandler<JobNotificationEventArgs> OnJobModified { add { onJobModified += value; } remove { onJobModified -= value; } }
 
-        public event EventHandler<JobNotificationEventArgs> OnJobTransferred
-        {
-            add { onJobTransfered += value; }
-            remove { onJobTransfered -= value; }
-        }
+        public event EventHandler<JobNotificationEventArgs> OnJobTransferred { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
 
-        public event EventHandler<JobErrorNotificationEventArgs> OnJobError
-        {
-            add { onJobErrored += value; }
-            remove { onJobErrored -= value; }
-        }
+        public event EventHandler<JobErrorNotificationEventArgs> OnJobError { add { onJobErrored += value; } remove { onJobErrored -= value; } }
 
         #endregion
 
         #region internal
 
-        internal IBackgroundCopyJob Job
-        {
-            get { return job; }
-        }
+        internal IBackgroundCopyJob Job { get { return job; } }
 
         internal void PublishException(COMException exception)
         {

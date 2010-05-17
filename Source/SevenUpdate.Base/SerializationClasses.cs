@@ -1,4 +1,4 @@
-﻿#region GNU Public License Version 3
+#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
@@ -20,7 +20,6 @@
 
 #region
 
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -31,14 +30,13 @@ using ProtoBuf;
 
 namespace SevenUpdate.Base
 {
-
     #region Application Settings
 
     /// <summary>
     ///   Configuration options
     /// </summary>
     [ProtoContract, DataContract(IsReference = true)]
-    public class Config
+    public class Config : INotifyPropertyChanged
     {
         /// <summary>
         ///   Specifies which update setting Seven Update should use
@@ -52,11 +50,19 @@ namespace SevenUpdate.Base
         [ProtoMember(2), DataMember]
         public bool IncludeRecommended { get; set; }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
-        ///   Specifies the language Seven Update uses
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        [ProtoMember(3), DataMember]
-        public string Locale { get; set; }
+        /// <param name = "name"></param>
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
     }
 
     #region Enums
@@ -70,22 +76,26 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Download and Installs updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember] Install = 0,
+        [ProtoEnum, EnumMember]
+        Install = 0,
 
         /// <summary>
         ///   Downloads Updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember] Download = 1,
+        [ProtoEnum, EnumMember]
+        Download = 1,
 
         /// <summary>
         ///   Only checks and notifies the user of updates
         /// </summary>
-        [ProtoEnum, EnumMember] Notify = 2,
+        [ProtoEnum, EnumMember]
+        Notify = 2,
 
         /// <summary>
         ///   No automatic checking
         /// </summary>
-        [ProtoEnum, EnumMember] Never = 3
+        [ProtoEnum, EnumMember]
+        Never = 3
     }
 
     #endregion

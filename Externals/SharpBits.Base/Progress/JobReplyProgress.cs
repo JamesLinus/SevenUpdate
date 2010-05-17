@@ -19,9 +19,6 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        public ulong BytesTransferred
-        {
-            get { return jobReplyProgress.BytesTransferred; }
-        }
+        public ulong BytesTransferred { get { return jobReplyProgress.BytesTransferred; } }
     }
 }

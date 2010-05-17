@@ -163,7 +163,8 @@ namespace SevenUpdate.Admin
                             catch
                             {
                             }
-                            var url = new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
+                            var url =
+                                new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
                                                               App.AppUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));

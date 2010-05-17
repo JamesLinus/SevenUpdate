@@ -132,13 +132,6 @@ namespace SevenUpdate.Admin
                     {
                         try
                         {
-                            Process.GetProcessesByName(@"Seven Update.Helper")[0].Kill();
-                        }
-                        catch
-                        {
-                        }
-                        try
-                        {
                             Process.GetProcessesByName(@"SevenUpdate.Helper")[0].Kill();
                         }
                         catch

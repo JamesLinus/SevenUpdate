@@ -80,8 +80,8 @@
       <xs:element minOccurs="0" name="Action" type="tns:FileAction" />
       <xs:element minOccurs="0" name="Args" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Destination" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileSize" type="xs:unsignedLong" />
       <xs:element minOccurs="0" name="Hash" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Size" type="xs:unsignedLong" />
       <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
@@ -176,8 +176,8 @@
       <xs:element minOccurs="0" name="Publisher" nillable="true" type="tns:ArrayOfLocaleString" />
       <xs:element minOccurs="0" name="PublisherUrl" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ReleaseDate" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Size" type="xs:unsignedLong" />
       <xs:element minOccurs="0" name="Status" type="tns:UpdateStatus" />
+      <xs:element minOccurs="0" name="UpdateSize" type="xs:unsignedLong" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />
@@ -208,7 +208,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="AutoOption" type="tns:AutoUpdateOption" />
       <xs:element minOccurs="0" name="IncludeRecommended" type="xs:boolean" />
-      <xs:element minOccurs="0" name="Locale" nillable="true" type="xs:string" />
     </xs:sequence>
     <xs:attribute ref="ser:Id" />
     <xs:attribute ref="ser:Ref" />

@@ -20,9 +20,7 @@
 
 #region
 
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
 
 #endregion
@@ -33,21 +31,7 @@ namespace SevenUpdate.Pages
     ///   Interaction logic for InfoBar.xaml
     /// </summary>
     public partial class InfoBar : UserControl
-    {
-        #region Global Properties
-
-        /// <summary>
-        ///   The shield icon uri
-        /// </summary>
-        internal ImageSource ShieldIcon { set { shieldIcon.Source = value; } }
-
-        /// <summary>
-        ///   The side image uri
-        /// </summary>
-        internal ImageSource SideImage { set { sideImage.Source = value; } }
-
-        #endregion
-
+{
         /// <summary>
         ///   A Control that displays update progress and information
         /// </summary>

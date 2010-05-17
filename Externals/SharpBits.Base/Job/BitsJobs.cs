@@ -29,10 +29,7 @@ namespace SharpBits.Base.Job
             Update();
         }
 
-        internal IEnumBackgroundCopyJobs Jobs
-        {
-            get { return jobList; }
-        }
+        internal IEnumBackgroundCopyJobs Jobs { get { return jobList; } }
 
         #region IDisposable Members
 

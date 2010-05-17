@@ -72,7 +72,7 @@ namespace SevenUpdate.Pages
             if (updateHistory == null)
                 return;
 
-            listView.ItemsSource = updateHistory;
+            lvUpdateHistory.ItemsSource = updateHistory;
             updateHistory.CollectionChanged += History_CollectionChanged;
             AddSortBinding();
         }
@@ -82,7 +82,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void AddSortBinding()
         {
-            var gv = (GridView) listView.View;
+            var gv = (GridView) lvUpdateHistory.View;
 
             var col = gv.Columns[0];
             ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
@@ -96,7 +96,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
 
-            ListViewSorter.SetCustomSorter(listView, new ListViewExtensions.SuhSorter());
+            ListViewSorter.SetCustomSorter(lvUpdateHistory, new ListViewExtensions.SuhSorter());
         }
 
         #endregion
@@ -129,7 +129,7 @@ namespace SevenUpdate.Pages
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
                 return;
-            var dataView = CollectionViewSource.GetDefaultView(listView.ItemsSource);
+            var dataView = CollectionViewSource.GetDefaultView(lvUpdateHistory.ItemsSource);
             dataView.Refresh();
         }
 
@@ -138,10 +138,10 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount != 2 || listView.SelectedIndex == -1)
+            if (e.ClickCount != 2 || lvUpdateHistory.SelectedIndex == -1)
                 return;
             var details = new UpdateDetails();
-            details.ShowDialog(updateHistory[listView.SelectedIndex]);
+            details.ShowDialog(updateHistory[lvUpdateHistory.SelectedIndex]);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace SevenUpdate.Pages
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
-            details.ShowDialog(updateHistory[listView.SelectedIndex]);
+            details.ShowDialog(updateHistory[lvUpdateHistory.SelectedIndex]);
         }
 
         #endregion

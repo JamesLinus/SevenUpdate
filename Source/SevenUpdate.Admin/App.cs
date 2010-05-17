@@ -91,7 +91,7 @@ namespace SevenUpdate.Admin
             get
             {
                 var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
-                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false, Locale = "en"};
+                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
             }
         }
 
@@ -157,8 +157,6 @@ namespace SevenUpdate.Admin
                     Base.Base.ReportError(e, Base.Base.AllUserStore);
                     ShutdownApp();
                 }
-
-                Base.Base.Locale = Base.Base.Locale == null ? "en" : Settings.Locale;
 
                 if (!Directory.Exists(Base.Base.AllUserStore))
                     Directory.CreateDirectory(Base.Base.AllUserStore);
