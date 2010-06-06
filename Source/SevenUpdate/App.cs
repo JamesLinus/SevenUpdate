@@ -102,6 +102,10 @@ namespace SevenUpdate
 
         #region Methods
 
+        /// <summary>
+        ///   Gets the app ready for startup
+        /// </summary>
+        /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
             foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
@@ -111,7 +115,9 @@ namespace SevenUpdate
                 {
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
                     var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
-                    if (MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    if (
+                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
                         AdminClient.AddSua(sua);
                 }
                 catch
@@ -122,7 +128,7 @@ namespace SevenUpdate
 
             Directory.CreateDirectory(Base.Base.UserStore);
             Base.Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
-            RM = new ResourceManager("SevenUpdate.Resources.UIStrings", typeof (App).Assembly);
+            RM = new ResourceManager("SevenUpdate.Resources.UIStrings", ResourceAssembly);
             var id = WindowsIdentity.GetCurrent();
 
             if (id != null)
@@ -146,9 +152,6 @@ namespace SevenUpdate
             }
         }
 
-
-
-
         #region Recount Methods
 
         /// <summary>
@@ -166,14 +169,24 @@ namespace SevenUpdate
         #endregion
     }
 
-    public class StartUp
+    /// <summary>
+    ///   Interaction logic to load the app
+    /// </summary>
+    public static class StartUp
     {
+        /// <summary>
+        ///   Initializes the app resources
+        /// </summary>
         private static void InitResources()
         {
-            if (Application.Current.Resources.MergedDictionaries.Count >= 1)
+            if (Application.Current == null)
+                return;
+
+            if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 return;
             // merge in your application resources
-            Application.Current.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
+            Application.Current.Resources.MergedDictionaries.Add(
+                Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
             App.Resources = Application.Current.Resources;
         }
 
@@ -188,7 +201,7 @@ namespace SevenUpdate
             // Makes sure only 1 copy of Seven Update is allowed to run
             using (new Mutex(true, "SevenUpdate", out createdNew))
             {
-              App.Init(args);
+                App.Init(args);
 
                 if (!createdNew)
                     return;

@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <StartupObject>SevenUpdate.Sdk.App</StartupObject>
+    <StartupObject>SevenUpdate.Sdk.StartUp</StartupObject>
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -83,6 +83,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
     <Page Include="Controls\CommandLink.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -128,6 +132,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.cs" />
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CommandLink.xaml.cs">
       <DependentUpon>CommandLink.xaml</DependentUpon>
     </Compile>
@@ -161,8 +168,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SDK.cs" />
-    <Compile Include="UIStrings.Designer.cs">
+    <Compile Include="Resources\UIStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>UIStrings.resx</DependentUpon>
@@ -185,7 +191,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UIStrings.resx">
+    <EmbeddedResource Include="Resources\UIStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UIStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -203,6 +209,10 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Windows.Shell\Windows.Shell.csproj">
+      <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
+      <Name>Windows.Shell</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
       <Name>SevenUpdate.Base</Name>

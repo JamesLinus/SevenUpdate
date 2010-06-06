@@ -59,8 +59,6 @@ namespace SevenUpdate.Pages
         /// </summary>
         private static ObservableCollection<Sua> machineAppList;
 
-        private static Config AppConfig = App.Settings;
-
         /// <summary>
         ///   The shield Icon uri
         /// </summary>

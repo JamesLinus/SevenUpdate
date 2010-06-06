@@ -20,9 +20,11 @@
 
 #region
 
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
+using Microsoft.Windows.Dialogs;
 
 #endregion
 
@@ -43,11 +45,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxAppLocation.Text = Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked ));
         }
 
         private void FileSystem_Checked(object sender, RoutedEventArgs e)

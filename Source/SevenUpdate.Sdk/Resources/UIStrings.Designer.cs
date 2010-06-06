@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SevenUpdate.Sdk {
+namespace SevenUpdate.Sdk.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SevenUpdate.Sdk {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SevenUpdate.Sdk.UIStrings", typeof(UIStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SevenUpdate.Sdk.Resources.UIStrings", typeof(UIStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

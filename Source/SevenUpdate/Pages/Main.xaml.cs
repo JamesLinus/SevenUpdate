@@ -1039,7 +1039,7 @@ namespace SevenUpdate.Pages
                 infoBar.lblSelectedUpdates.Height = Double.NaN;
                 infoBar.lblSelectedUpdates.FontWeight = FontWeights.Normal;
                 infoBar.btnAction.Visibility = Visibility.Collapsed;
-                infoBar
+               
             }
 
             #endregion
