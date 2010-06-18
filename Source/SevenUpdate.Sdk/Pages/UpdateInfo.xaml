@@ -1,6 +1,6 @@
 ﻿<Page x:Class="SevenUpdate.Sdk.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls" mc:Ignorable="d" MinWidth="850" MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" d:DesignHeight="467" d:DesignWidth="800" KeepAlive="True">
-    <!-- Grid-->
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
+	<!-- Grid-->
+	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="24" />
 			<ColumnDefinition Width="800*" />
@@ -12,21 +12,36 @@
 			<RowDefinition Height="405*" />
 		</Grid.RowDefinitions>
 		<Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="3" />
-		<TextBlock Text="1. Update information" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
+		<TextBlock Text="Update information" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
 		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,10,0,0">
 			<TextBlock Text="Update Title:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." />
 			<Controls:InfoTextBox Height="23" x:Name="tbUpdateTitle" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="1" />
 			<TextBlock Text="Update Information URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Should be a web page with information about this update." />
-			<Controls:InfoTextBox Height="23" x:Name="tbInfoUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="2" />
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+				<Controls:InfoTextBox Height="23" x:Name="tbInfoUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="2" TextChanged="Textbox_TextChanged" Tag="info" />
+				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgUpdateInfo" ToolTip="The Url entered is not valid."
+                        Visibility="Collapsed"></Image>
+			</StackPanel>
 			<TextBlock Text="Software License URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="A url pointing to txt or rtf document containing the software license." />
-			<Controls:InfoTextBox Height="23" x:Name="tbSLUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="3" />
-			<TextBlock Text="Update Download Location:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="A public directory on your server, in that directory will be the update files, it needs to be a valid http or UNC url" />
-			<Controls:InfoTextBox Height="23" Label="http://myapp.com/updates/upd1" x:Name="tbDownloadUrl" TabIndex="4" Width="650" HorizontalAlignment="Left" />
-			<TextBlock Text="Update Details:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Controls:InfoTextBox Height="23" x:Name="tbSLUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="3"
+                        TextChanged="Textbox_TextChanged"
+                        Tag="eula" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgLicense" ToolTip="The Url entered is not valid."
+                        Visibility="Collapsed"></Image>
+            </StackPanel>
+            <TextBlock Text="Update Download Location:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="A public directory on your server, in that directory will be the update files, it needs to be a valid http or UNC url" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Controls:InfoTextBox Height="23" Label="http://myapp.com/updates/upd1" x:Name="tbDownloadUrl" TabIndex="4" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Tag="download" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgDownloadLoc" ToolTip="The path entered is not valid."
+                        Visibility="Collapsed"></Image>
+            </StackPanel>
+            <TextBlock Text="Update Details:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" />
 			<Controls:InfoTextBox x:Name="tbUpdateDetails" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="83" Width="650" Label="Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters" HorizontalAlignment="Left" TabIndex="5" />
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10">
 				<TextBlock Text="Release Date:" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="The date the update was released to the public." />
-				<DatePicker IsTodayHighlighted="True" DisplayDateStart="1/1/2008" DisplayDateEnd="12/21/2012" TabIndex="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,50,0" MaxWidth="250"></DatePicker>
+				<DatePicker IsTodayHighlighted="True" DisplayDateEnd="12/21/2012" TabIndex="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,50,0" MaxWidth="115" Name="dpReleaseDate" DisplayDateStart="1/1/2006" HorizontalContentAlignment="Left"
+                        SelectedDateChanged="dpReleaseDate_SelectedDateChanged"></DatePicker>
 				<TextBlock Text="Update Type:" Padding="2" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="Categorize this update by importance." />
 				<ComboBox Height="23" Name="comboBox1" SelectedIndex="0" TabIndex="7" MinWidth="65" HorizontalAlignment="Left" VerticalAlignment="Center">
 					<ComboBoxItem Content="Important" />

@@ -20,7 +20,10 @@
 
 #region
 
+using System;
+using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Windows.Controls;
 
 #endregion
 
@@ -37,6 +40,57 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateInfo()
         {
             InitializeComponent();
+        }
+
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+
+            try
+            {
+                if (source.Text.Length > 0)
+                    new Uri(source.Text);
+                switch (source.Tag.ToString())
+                {
+                    case "eula":
+                        imgLicense.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "download":
+                        imgDownloadLoc.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "info":
+                        imgUpdateInfo.Visibility = Visibility.Collapsed;
+                        break;
+                }
+            }
+            catch
+            {
+                imgLicense.Visibility = Visibility.Collapsed;
+                imgUpdateInfo.Visibility = Visibility.Collapsed;
+                imgDownloadLoc.Visibility = Visibility.Collapsed;
+
+                switch (source.Tag.ToString())
+                {
+                    case "eula":
+                        imgLicense.Visibility = Visibility.Visible;
+                        break;
+
+                    case "download":
+                        imgDownloadLoc.Visibility = Visibility.Visible;
+                        break;
+
+                    case "info":
+                        imgUpdateInfo.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
+        }
+
+        private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

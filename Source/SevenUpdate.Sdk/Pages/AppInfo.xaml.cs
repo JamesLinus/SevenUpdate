@@ -21,10 +21,11 @@
 #region
 
 using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows;
 using Microsoft.Windows.Dialogs;
+
 
 #endregion
 
@@ -45,9 +46,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxAppLocation.Text = Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked ));
+                tbxAppLocation.Text = Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
         }
 
         private void FileSystem_Checked(object sender, RoutedEventArgs e)
@@ -69,6 +70,28 @@ namespace SevenUpdate.Sdk.Pages
             tbxValueName.Visibility = Visibility.Visible;
             tbBrowse.Visibility = Visibility.Collapsed;
             
+        }
+
+        private void AppLocation_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (((bool)rbtnRegistry.IsChecked))
+            {
+                if (tbxAppLocation.Text.StartsWith(@"HKLM\") || tbxAppLocation.Text.StartsWith(@"HKCR\") || tbxAppLocation.Text.StartsWith(@"HKCU\") || tbxAppLocation.Text.StartsWith(@"HKU\") ||
+                    tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\") || tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\") ||
+                    tbxAppLocation.Text.StartsWith(@"HKEY_USERS\"))
+                {
+                    imgAppPath.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    imgAppPath.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, (bool) cxbIs64Bit.IsChecked) ? Visibility.Visible : Visibility.Collapsed;
+            }
+
         }
     }
 }

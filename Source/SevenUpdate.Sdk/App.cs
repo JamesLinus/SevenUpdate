@@ -23,8 +23,10 @@
 using System;
 using System.IO;
 using System.Resources;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Shell;
+using Microsoft.Win32;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
@@ -52,6 +54,9 @@ namespace SevenUpdate.Sdk
             MessageBox.Show(RM.GetString("SuiInvalid") + " - " + e.Exception.Message);
         }
 
+        /// <summary>
+        /// Sets the Windows 7 JumpList
+        /// </summary>
         private static void SetJumpLists()
         {
             // Create JumpTask
@@ -90,6 +95,7 @@ namespace SevenUpdate.Sdk
                                Arguments = "TestProject"
                            };
             jumpList.JumpItems.Add(jumpTask);
+
             jumpTask = new JumpTask
                            {
                                ApplicationPath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
@@ -100,6 +106,8 @@ namespace SevenUpdate.Sdk
                                Arguments = "TestProject"
                            };
             jumpList.JumpItems.Add(jumpTask);
+
+            
 
             JumpList.SetJumpList(Current, jumpList);
         }
@@ -117,6 +125,19 @@ namespace SevenUpdate.Sdk
                 SuiFile = args[0];
 
             SetJumpLists();
+        }
+
+        /// <summary>
+        /// Checks if a file or UNC is valid
+        /// </summary>
+        /// <param name="path">The path we want to check</param>
+        /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
+        public static bool IsValidFilePath(string path, bool is64Bit)
+        {
+            path = Base.Base.ConvertPath(path, true, is64Bit);
+            const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
+            var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            return reg.IsMatch(path);
         }
 
         #endregion

@@ -28,13 +28,15 @@
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
 				<TextBlock Text="Registry key:" ToolTip="The name of the value that contains the install location of the application" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed" />
-				<TextBox Height="23" x:Name="tbxAppLocation" TabIndex="9" Width="650" HorizontalAlignment="Left" />
+				<TextBox Height="23" x:Name="tbxAppLocation" TabIndex="9" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" />
 				<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Focusable="True" Cursor="Hand" />
-			</StackPanel>
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center"
+                        VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgAppPath" ToolTip="The path entered is not valid."></Image>
+            </StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
 				<TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Name="lblValue" Visibility="Collapsed" HorizontalAlignment="Left" Margin="20,0,5,0" />
 				<TextBox x:Name="tbxValueName" TabIndex="11" Width="387" Height="23" MaxLength="50" Visibility="Collapsed" HorizontalAlignment="Left" />
-			</StackPanel>
+            </StackPanel>
 			<TextBlock Text="Application description:" Padding="2" Margin="25,5,0,0" HorizontalAlignment="Left" />
 			<Controls:InfoTextBox x:Name="tbxAppDescription" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="62" Label="Write a summary about the application here, but make it no longer than 300 characters" TabIndex="6" HorizontalAlignment="Left" Margin="25,2" Width="750" />
 
