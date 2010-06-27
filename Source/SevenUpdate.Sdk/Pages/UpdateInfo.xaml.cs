@@ -87,10 +87,5 @@ namespace SevenUpdate.Sdk.Pages
                 }
             }
         }
-
-        private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

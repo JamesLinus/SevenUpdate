@@ -24,6 +24,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 
 
@@ -92,6 +93,43 @@ namespace SevenUpdate.Sdk.Pages
                 imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, (bool) cxbIs64Bit.IsChecked) ? Visibility.Visible : Visibility.Collapsed;
             }
 
+        }
+
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+
+            try
+            {
+                if (source.Text.Length > 0)
+                    new Uri(source.Text);
+                switch (source.Tag.ToString())
+                {
+                    case "publisherurl":
+                        imgPublisherUrl.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "helpurl":
+                        imgHelpUrl.Visibility = Visibility.Collapsed;
+                        break;
+                }
+            }
+            catch
+            {
+                imgPublisherUrl.Visibility = Visibility.Collapsed;
+                imgHelpUrl.Visibility = Visibility.Collapsed;
+
+                switch (source.Tag.ToString())
+                {
+                    case "publisherurl":
+                        imgPublisherUrl.Visibility = Visibility.Visible;
+                        break;
+
+                    case "helpurl":
+                        imgHelpUrl.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
         }
     }
 }

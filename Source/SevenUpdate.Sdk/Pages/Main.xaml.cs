@@ -47,7 +47,7 @@ namespace SevenUpdate.Sdk.Pages
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
-            //MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+           // MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
 
         private void Help_MouseDown(object sender, MouseButtonEventArgs e)
