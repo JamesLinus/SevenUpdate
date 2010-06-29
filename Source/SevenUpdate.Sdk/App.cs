@@ -22,6 +22,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -173,6 +174,37 @@ namespace SevenUpdate.Sdk
             App.Init(args);
             InitResources();
             app.Run(new MainWindow());
+        }
+    }
+
+    public static class StringExtensions
+    {
+        /// <summary>
+        /// Checks if a given string contains any of the strings in the passed array of strings.
+        /// </summary>
+        /// <param name="str">The string to check against values</param>
+        /// <param name="values">An array of strings to compare to the given string</param>
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
+        public static bool ContainsAny(this string str, params string[] values)
+        {
+            if (!string.IsNullOrEmpty(str) || values.Length == 0)
+                return values.Any(str.Contains);
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if a given string contains any of the characters in the passed array of <c>characters</c>.
+        /// </summary>
+        /// <param name="str">The string to check against values</param>
+        /// <param name="values">An array of characters to compare to the given string</param>
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
+        public static bool ContainsAny(this string str, params char[] values)
+        {
+            if (!string.IsNullOrEmpty(str) || values.Length == 0)
+                return values.Any(str.Contains);
+
+            return false;
         }
     }
 }

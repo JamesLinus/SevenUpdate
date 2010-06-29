@@ -9,13 +9,13 @@
 		<!-- Sidebar image -->
 		<Image HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
-			<TextBlock Style="{StaticResource underlineTextBlock}" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" />
 
-			<TextBlock Style="{StaticResource underlineTextBlock}" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" Focusable="True" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" />
 		</StackPanel>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Focusable="True" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Cursor="Hand" Padding="5" MouseDown="About_MouseDown" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Cursor="Hand" Padding="5" MouseDown="About_MouseDown" />
 		<StackPanel Grid.Column="2" HorizontalAlignment="Right">
 			<TextBlock FontSize="16" Foreground="#FF003399" Padding="5" Text="Seven Update" Margin="0,20" />
 			<!-- InfoBar control -->

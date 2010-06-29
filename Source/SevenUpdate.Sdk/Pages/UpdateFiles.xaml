@@ -3,14 +3,32 @@
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24" />
-            <ColumnDefinition Width="800*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="648*" />
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="405*" />
         </Grid.RowDefinitions>
-        <Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="3" />
-        <TextBlock Text="Files" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
+        <Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="4" />
+        <TextBlock Text="Files" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" Margin="0,13" />
+        <ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="150" Margin="0,12" />
+        <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="12">
+            <TextBlock Text="Download URL:" HorizontalAlignment="Left" Padding="2" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Controls:InfoTextBox DataContext="{Binding}" Label="(Optional) An absolute url that will download the file (file must have public read access)" MaxLength="75" x:Name="tbxDownloadUrl"
+                    TabIndex="1" HorizontalAlignment="Stretch" Margin="2,0,0,0" Width="600" TextChanged="Textbox_TextChanged" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgDownloadUrl" ToolTip="The path entered is not valid." Visibility="Collapsed"></Image>
+            </StackPanel>
+            <TextBlock Text="Install location:" HorizontalAlignment="Left" Padding="2"
+                    ToolTip="Standard windows variables are allowed ex. %USERNAME% and also these custom variables: %APPDIR%" />
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <Controls:InfoTextBox DataContext="{Binding}" Label="An absolute Uri pointing to the installed location of the file on a system" MaxLength="75" x:Name="tbxInstallUri" TabIndex="2" HorizontalAlignment="Stretch" Margin="2,0,0,0" Width="555"
+                        TextChanged="Textbox_TextChanged" />
+                <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgInstallUri" ToolTip="The path entered is not valid." Visibility="Visible"></Image>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>

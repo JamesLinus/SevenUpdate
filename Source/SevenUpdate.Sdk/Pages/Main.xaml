@@ -2,7 +2,6 @@
 	<!-- Grid-->
 	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ShowGridLines="False">
 		<Grid.RowDefinitions>
-
 			<RowDefinition Height="48" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="358*" />
@@ -11,7 +10,7 @@
 		<StackPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="250,30,250,41">
 			<Controls:CommandLink x:Name="clNewProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new project" Note="Enables Seven Update to update your software" Width="350" UseShield="False" TabIndex="0" Click="NewProject_Click" />
 			<Controls:CommandLink x:Name="clEditProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Open an existing Project" Note="Release a new update with an existing project" Width="350" TabIndex="1" />
-			<Controls:CommandLink x:Name="clTestProject" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Test your project" Note="Test your updates with the simulator" Width="350" TabIndex="2" Margin="0,0,0,12" />
+			<Controls:CommandLink x:Name="clTestProject" Link="Test your project" Note="Test your updates with the simulator" Width="350" TabIndex="2" Margin="0,0,0,12" />
 			<Controls:CommandLink x:Name="clReleaseUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Release an update" Note="Release your software updates" Width="350" TabIndex="3" Margin="0" />
 		</StackPanel>
 		<TextBlock Text="Welcome to the Seven Update SDK" FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Margin="24,0,0,0" VerticalAlignment="Center" />

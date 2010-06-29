@@ -18,23 +18,23 @@
             </StackPanel>
             <TextBlock Text="Application name:" Padding="2" HorizontalAlignment="Left" ToolTip="The name of the application to be updated." Margin="25,5,0,0" />
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="25,0,0,0">
-                <Controls:InfoTextBox Height="23" x:Name="tbxAppName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Seven Update SDK (max 75 characters)" TabIndex="1" DataContext="{Binding}" />
-                <CheckBox Content="64-bit application" Name="cxbIs64Bit" Margin="10,0,0,0" HorizontalAlignment="Left" Padding="4,0,0,0" VerticalAlignment="Center" ToolTip="Check this box if your software is native x64." TabIndex="2" />
+                <Controls:InfoTextBox x:Name="tbxAppName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Seven Update SDK (max 75 characters)" TabIndex="0" DataContext="{Binding}" />
+                <CheckBox Content="64-bit application" Name="cxbIs64Bit" Margin="10,0,0,0" HorizontalAlignment="Left" Padding="4,0,0,0" VerticalAlignment="Center" ToolTip="Check this box if your software is native x64." TabIndex="1" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
                 <TextBlock Padding="2" Text="Application install location:" ToolTip="The directory where your application is is installed. It is best to use variables when available" />
-                <RadioButton Content="File System" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" Checked="FileSystem_Checked" TabIndex="7" />
-                <RadioButton Content="Registry" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Checked="Registry_Checked" TabIndex="8" />
+                <RadioButton Content="File System" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" Checked="FileSystem_Checked" TabIndex="2" />
+                <RadioButton Content="Registry" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Checked="Registry_Checked" TabIndex="3" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
                 <TextBlock Text="Registry key:" ToolTip="The name of the value that contains the install location of the application" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed" />
-                <TextBox Height="23" x:Name="tbxAppLocation" TabIndex="9" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" />
-                <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Focusable="True" Cursor="Hand" />
+                <TextBox x:Name="tbxAppLocation" TabIndex="4" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" />
+                <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgAppPath" ToolTip="The path entered is not valid."></Image>
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
                 <TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Name="lblValue" Visibility="Collapsed" HorizontalAlignment="Left" Margin="20,0,5,0" />
-                <TextBox x:Name="tbxValueName" TabIndex="11" Width="387" Height="23" MaxLength="50" Visibility="Collapsed" HorizontalAlignment="Left" />
+                <TextBox x:Name="tbxValueName" TabIndex="5" Width="387" MaxLength="50" Visibility="Collapsed" HorizontalAlignment="Left" />
             </StackPanel>
             <TextBlock Text="Application description:" Padding="2" Margin="25,5,0,0" HorizontalAlignment="Left" />
             <Controls:InfoTextBox x:Name="tbxAppDescription" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="62" Label="Write a summary about the application here, but make it no longer than 300 characters" TabIndex="6" HorizontalAlignment="Left" Margin="25,2" Width="750" />
@@ -43,16 +43,16 @@
                 <Separator MinWidth="200" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
             </StackPanel>
             <TextBlock Text="Publisher:" Padding="2" Margin="25,5,0,0" ToolTip="The software company or development team." HorizontalAlignment="Left" />
-            <Controls:InfoTextBox Height="23" x:Name="tbxPublisher" Width="412" Label="Seven Software" TabIndex="3" HorizontalAlignment="Left" Margin="25,0,0,0" />
+            <Controls:InfoTextBox x:Name="tbxPublisher" Width="412" Label="Seven Software" TabIndex="7" HorizontalAlignment="Left" Margin="25,0,0,0" />
             <TextBlock Text="Publisher web site:" Padding="2" Margin="25,5,0,0" ToolTip="A url pointing to the web site of the publisher or the software." HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
-                <Controls:InfoTextBox x:Name="tbxPublisherUrl" Width="650" Label="http://sevenupdate.com" TabIndex="4" Height="23" HorizontalAlignment="Left"
-                        TextChanged="Textbox_TextChanged" Tag="publisherurl" />
+                <Controls:InfoTextBox x:Name="tbxPublisherUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left"
+                        TextChanged="Textbox_TextChanged" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgPublisherUrl" ToolTip="The path entered is not valid." Visibility="Collapsed"></Image>
             </StackPanel>
             <TextBlock Text="Help &amp; Support web site:" Padding="2" Margin="25,5,0,0" ToolTip="A url pointing to the support area for this software." HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="20,0,0,0">
-                <Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="5" Width="650" Height="23" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Tag="helpurl" />
+                <Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" MaxWidth="24" MaxHeight="24" HorizontalAlignment="Center" VerticalAlignment="Center" StretchDirection="UpOnly" Margin="4,0" Name="imgHelpUrl" ToolTip="The path entered is not valid." Visibility="Collapsed"></Image>
             </StackPanel>
         </StackPanel>

@@ -11,6 +11,6 @@
             <RowDefinition Height="405*" />
         </Grid.RowDefinitions>
         <Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="3" />
-        <TextBlock Text="Update Review" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
+        <TextBlock Text="Review" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
     </Grid>
 </Page>

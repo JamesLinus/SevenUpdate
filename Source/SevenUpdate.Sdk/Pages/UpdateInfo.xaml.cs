@@ -50,38 +50,35 @@ namespace SevenUpdate.Sdk.Pages
             {
                 if (source.Text.Length > 0)
                     new Uri(source.Text);
-                switch (source.Tag.ToString())
+                switch (source.Name)
                 {
-                    case "eula":
+                    case "tbxLicenseUrl":
                         imgLicense.Visibility = Visibility.Collapsed;
                         break;
 
-                    case "download":
-                        imgDownloadLoc.Visibility = Visibility.Collapsed;
+                    case "tbxDownloadUrl":
+                        if (source.Text.Length > 2)
+                            imgDownloadLoc.Visibility = Visibility.Collapsed;
                         break;
 
-                    case "info":
+                    case "tbxInfoUrl":
                         imgUpdateInfo.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
             catch
             {
-                imgLicense.Visibility = Visibility.Collapsed;
-                imgUpdateInfo.Visibility = Visibility.Collapsed;
-                imgDownloadLoc.Visibility = Visibility.Collapsed;
-
-                switch (source.Tag.ToString())
+                switch (source.Name)
                 {
-                    case "eula":
+                    case "tbxLicenseUrl":
                         imgLicense.Visibility = Visibility.Visible;
                         break;
 
-                    case "download":
+                    case "tbxDownloadUrl":
                         imgDownloadLoc.Visibility = Visibility.Visible;
                         break;
 
-                    case "info":
+                    case "tbxInfoUrl":
                         imgUpdateInfo.Visibility = Visibility.Visible;
                         break;
                 }

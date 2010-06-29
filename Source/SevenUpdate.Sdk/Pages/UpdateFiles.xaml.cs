@@ -20,7 +20,13 @@
 
 #region
 
+using System;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Microsoft.Windows.Controls;
+using Microsoft.Windows.Dialogs;
 
 #endregion
 
@@ -37,6 +43,49 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateFiles()
         {
             InitializeComponent();
+        }
+
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+            
+            try
+            {
+                if (source.Text.Length > 0)
+                    new Uri(source.Text);
+                switch (source.Name)
+                {
+                    case "tbxDownloadUrl":
+                        imgDownloadUrl.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "tbxInstallUri":
+                        if (source.Text.Length > 2 && Path.GetFileName(source.Text).ContainsAny(Path.GetInvalidPathChars()) == false)
+                            imgInstallUri.Visibility = Visibility.Collapsed;
+                        break;
+                }
+            }
+            catch
+            {
+
+                switch (source.Name)
+                {
+                    case "tbxDownloadUrl":
+                        imgDownloadUrl.Visibility = Visibility.Visible;
+                        break;
+
+                    case "tbxInstallUri":
+                        imgInstallUri.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
+        }
+
+        private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxInstallUri.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
         }
     }
 }

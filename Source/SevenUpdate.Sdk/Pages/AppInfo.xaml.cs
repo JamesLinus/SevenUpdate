@@ -103,29 +103,26 @@ namespace SevenUpdate.Sdk.Pages
             {
                 if (source.Text.Length > 0)
                     new Uri(source.Text);
-                switch (source.Tag.ToString())
+                switch (source.Name)
                 {
-                    case "publisherurl":
+                    case "tbxPublisherUrl":
                         imgPublisherUrl.Visibility = Visibility.Collapsed;
                         break;
 
-                    case "helpurl":
+                    case "tbxHelpUrl":
                         imgHelpUrl.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
             catch
             {
-                imgPublisherUrl.Visibility = Visibility.Collapsed;
-                imgHelpUrl.Visibility = Visibility.Collapsed;
-
-                switch (source.Tag.ToString())
+                switch (source.Name)
                 {
-                    case "publisherurl":
+                    case "tbxPublisherUrl":
                         imgPublisherUrl.Visibility = Visibility.Visible;
                         break;
 
-                    case "helpurl":
+                    case "tbxHelpUrl":
                         imgHelpUrl.Visibility = Visibility.Visible;
                         break;
                 }
