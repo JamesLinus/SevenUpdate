@@ -123,14 +123,6 @@ namespace SevenUpdate.Pages
         #region Buttons
 
         /// <summary>
-        ///   Navigates to the Main page
-        /// </summary>
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.GoBack();
-        }
-
-        /// <summary>
         ///   Unhides one or more updates and navigates to the Main page
         /// </summary>
         private void Restore_Click(object sender, RoutedEventArgs e)

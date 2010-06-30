@@ -46,7 +46,7 @@
 					<TextBlock Text="Restore"></TextBlock>
 				</StackPanel>
 			</Button>
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" Click="Cancel_Click" />
+			<Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" Command="NavigationCommands.BrowseBack" />
 		</StackPanel>
 		<TextBlock Grid.Row="2" HorizontalAlignment="Left" Name="lblSelectedUpdates" Text="Total Selected: 0 updates" VerticalAlignment="Center" Margin="20,0,0,0" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />

@@ -352,7 +352,6 @@ namespace SevenUpdate.Pages
         {
             if (CanceledSelectionEventHandler != null && AreHiddenUpdates)
                 CanceledSelectionEventHandler(this, new EventArgs());
-            MainWindow.NavService.GoBack();
         }
 
         /// <summary>
@@ -362,7 +361,6 @@ namespace SevenUpdate.Pages
         {
             IterateVisualChild(lvUpdates);
             SaveUpdateSelection();
-            MainWindow.NavService.GoBack();
         }
 
         #endregion

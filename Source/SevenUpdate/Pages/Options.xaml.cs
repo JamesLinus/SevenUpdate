@@ -326,17 +326,6 @@ namespace SevenUpdate.Pages
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();
-            MainWindow.NavService.GoBack();
-        }
-
-        /// <summary>
-        ///   Goes back to the Main page without saving the settings
-        /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.GoBack();
         }
 
         #endregion

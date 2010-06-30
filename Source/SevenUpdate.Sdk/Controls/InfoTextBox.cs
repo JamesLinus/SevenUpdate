@@ -41,8 +41,7 @@ namespace Microsoft.Windows.Controls
         // Using a DependencyProperty as the backing store for LabelStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LabelStyleProperty = DependencyProperty.Register("LabelStyle", typeof (Style), typeof (InfoTextBox), new UIPropertyMetadata(null));
 
-        private static readonly DependencyPropertyKey HasTextPropertyKey = DependencyProperty.RegisterReadOnly("HasText", typeof (bool), typeof (InfoTextBox),
-                                                                                                               new PropertyMetadata(false));
+        private static readonly DependencyPropertyKey HasTextPropertyKey = DependencyProperty.RegisterReadOnly("HasText", typeof (bool), typeof (InfoTextBox), new PropertyMetadata(false));
 
         public static readonly DependencyProperty HasTextProperty = HasTextPropertyKey.DependencyProperty;
         public string Label { get { return (string) GetValue(LabelProperty); } set { SetValue(LabelProperty, value); } }

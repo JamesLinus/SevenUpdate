@@ -111,14 +111,6 @@ namespace SevenUpdate.Pages
             GetHistory();
         }
 
-        /// <summary>
-        ///   Navigates back to the Main page
-        /// </summary>
-        private void Ok_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.GoBack();
-        }
-
         #region ListView Related
 
         /// <summary>

@@ -90,8 +90,8 @@
 
 		<Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Grid.Row="6" DataContext="{Binding}" />
 		<StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="6">
-			<Button Content="OK" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" VerticalContentAlignment="Center" Click="Ok_Click" />
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Click="Cancel_Click" />
+			<Button Content="_OK" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" VerticalContentAlignment="Center" Click="Ok_Click" Command="NavigationCommands.BrowseBack" />
+			<Button Content="Cancel" HorizontalContentAlignment="Center" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Click="Cancel_Click" Command="NavigationCommands.BrowseBack" />
 		</StackPanel>
 
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="6" Stretch="Fill" StrokeThickness="1" Grid.ColumnSpan="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />

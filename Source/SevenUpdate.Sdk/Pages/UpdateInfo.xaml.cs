@@ -24,6 +24,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Windows.Controls;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -83,6 +84,16 @@ namespace SevenUpdate.Sdk.Pages
                         break;
                 }
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
     }
 }

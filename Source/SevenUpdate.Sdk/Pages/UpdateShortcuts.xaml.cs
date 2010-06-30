@@ -20,7 +20,10 @@
 
 #region
 
+using System;
+using System.Windows;
 using System.Windows.Controls;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -37,6 +40,16 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateShortcuts()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
     }
 }

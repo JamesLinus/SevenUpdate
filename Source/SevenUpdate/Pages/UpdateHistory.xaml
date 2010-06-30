@@ -32,7 +32,7 @@
 			</ListView.View>
 		</ListView>
 		<Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
-		<Button Content="OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Click="Ok_Click" />
+		<Button Content="_OK" HorizontalAlignment="Right" HorizontalContentAlignment="Center" IsDefault="True" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2" MinWidth="75" MinHeight="23" Command="NavigationCommands.BrowseBack" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
 	</Grid>
 </Page>

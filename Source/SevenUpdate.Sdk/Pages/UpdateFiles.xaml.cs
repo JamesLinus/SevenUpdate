@@ -27,6 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -48,7 +49,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
-            
+
             try
             {
                 if (source.Text.Length > 0)
@@ -67,7 +68,6 @@ namespace SevenUpdate.Sdk.Pages
             }
             catch
             {
-
                 switch (source.Name)
                 {
                     case "tbxDownloadUrl":
@@ -86,6 +86,16 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbxInstallUri.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
     }
 }

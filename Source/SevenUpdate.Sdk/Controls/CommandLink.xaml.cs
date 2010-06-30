@@ -1,4 +1,5 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
+
 #region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
