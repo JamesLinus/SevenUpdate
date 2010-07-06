@@ -2,20 +2,18 @@
 	<!-- Grid-->
 	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="24" />
-			<ColumnDefinition Width="800*" />
+			<ColumnDefinition Width="826*" />
 			<ColumnDefinition Width="24" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="48" />
+			<RowDefinition Height="44" />
 			<RowDefinition Height="452*" />
 			<RowDefinition Height="44" />
 		</Grid.RowDefinitions>
-		<Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="3" />
-		<TextBlock Text="Registry" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
-		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" />
-		<Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" />
-		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
+		<TextBlock Text="Registry" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF003399" FontSize="16" Margin="24,0,0,0" />
+		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="2" />
+		<Rectangle Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" />
+		<StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click"></Button>
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" />
 		</StackPanel>

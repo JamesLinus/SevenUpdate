@@ -97,5 +97,12 @@ namespace SevenUpdate.Sdk.Pages
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
+
+        private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbHash.Text = Base.Base.GetHash(cfd.FileName);
+        }
     }
 }

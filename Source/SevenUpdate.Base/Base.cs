@@ -488,25 +488,25 @@ namespace SevenUpdate.Base
         #endregion
 
         /// <summary>
-        ///   Gets the SHA1 Hash of a file
+        ///   Gets the SHA-2 Hash of a file
         /// </summary>
-        /// <param name = "fileLoc">the full path to the file to get the hash from</param>
-        /// <returns>a SHA1 value</returns>
+        /// <param name = "fileLoc">The full path to the file to calculate the hash</param>
+        /// <returns>a SHA-2 hash</returns>
         public static string GetHash(string fileLoc)
         {
             if (!File.Exists(fileLoc))
                 return null;
             var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
 
-            var sha1 = new SHA1CryptoServiceProvider();
+            var sha2 = new SHA256Managed();
 
-            sha1.ComputeHash(stream);
+            sha2.ComputeHash(stream);
 
             stream.Close();
 
             var buff = new StringBuilder();
 
-            foreach (var hashByte in sha1.Hash)
+            foreach (var hashByte in sha2.Hash)
                 buff.Append(String.Format("{0:X1}", hashByte));
             return buff.ToString();
         }

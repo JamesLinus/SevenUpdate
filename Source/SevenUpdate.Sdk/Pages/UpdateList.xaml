@@ -2,18 +2,16 @@
 	<!-- Grid-->
 	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="24" />
-			<ColumnDefinition Width="800*" />
+			<ColumnDefinition Width="826*" />
 			<ColumnDefinition Width="24" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="48" />
+			<RowDefinition Height="44" />
 			<RowDefinition Height="405*" />
 		</Grid.RowDefinitions>
-		<Line StrokeThickness="1" Stroke="LightGray" HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Row="1" Y1="0" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.ColumnSpan="3" />
-		<TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
-		<ListBox Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Margin="0,24" VerticalAlignment="Stretch" Width="250" MinHeight="100" TabIndex="0" />
-		<StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Margin="150,0,0,0">
+		<TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF003399" FontSize="16" Margin="24,0,0,0" />
+		<ListBox Grid.Row="1" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Stretch" Width="250" MinHeight="100" TabIndex="0" BorderBrush="LightGray" />
+		<StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="325,0,151,0">
 			<Controls:CommandLink x:Name="clEditUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Edit selected update" Width="350" UseShield="False" TabIndex="1" Height="63" />
 			<Controls:CommandLink x:Name="clNewUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new update" Width="350" TabIndex="2" Height="63" />
 			<Controls:CommandLink x:Name="clDeleteUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Delete selected update" Width="350" TabIndex="2" Margin="0,0,0,12" Height="63" />
