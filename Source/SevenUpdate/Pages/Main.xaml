@@ -7,7 +7,7 @@
 			<ColumnDefinition Width="Auto" />
 		</Grid.ColumnDefinitions>
 		<!-- Sidebar image -->
-		<Image HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
+		<Image  HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" />
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" />

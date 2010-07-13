@@ -20,4 +20,8 @@
 			</Trigger>
 		</Style.Triggers>
 	</Style>
+
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+    </Style>
 </ResourceDictionary>

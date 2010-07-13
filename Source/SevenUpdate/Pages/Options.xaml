@@ -66,7 +66,7 @@
 		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,10,0">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnSave" Padding="5,1" VerticalContentAlignment="Center" Click="Save_Click" Command="NavigationCommands.BrowseBack">
 				<StackPanel Orientation="Horizontal">
-					<Image Source="{Binding Path=ShieldIcon}" Stretch="None" Margin="0,0,2,0" />
+					<Image  Source="{Binding Path=ShieldIcon}" Stretch="None" Margin="0,0,2,0" />
 					<TextBlock Text="Save"></TextBlock>
 				</StackPanel>
 			</Button>
@@ -74,7 +74,7 @@
 		</StackPanel>
         <CheckBox Content="Give me recommended updates the same way I receive important updates" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" MinHeight="5" Margin="70,0,0,10" Name="cbxRecommended" />
 		<StackPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,10">
-			<Image Height="48" Name="imgShieldIcon" Stretch="None" StretchDirection="UpOnly" Width="48" />
+			<Image  Height="48" Name="imgShieldIcon" Stretch="None" StretchDirection="UpOnly" Width="48" />
             <ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120" Name="cmbUpdateOption" SelectedIndex="0" Margin="20,0,0,0"
                     SelectionChanged="AutoUpdateMethod_SelectionChanged">
 				<ComboBoxItem Content="Install updates automatically" />
