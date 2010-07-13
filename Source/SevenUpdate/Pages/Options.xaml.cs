@@ -36,7 +36,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using SevenUpdate.Base;
 using SevenUpdate.Controls;
-using SevenUpdate.Windows;
 
 #endregion
 

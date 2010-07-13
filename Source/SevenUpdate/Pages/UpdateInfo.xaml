@@ -11,17 +11,29 @@
 			<ColumnDefinition Width="650*" />
 			<ColumnDefinition Width="200*" />
 		</Grid.ColumnDefinitions>
+		<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Stretch="Fill" />
+		<Image RenderOptions.BitmapScalingMode="HighQuality" IsEnabled="True" Name="imgIcon" Source="/SevenUpdate;component/Images/Icon128.png" Stretch="None" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" Width="128" Height="128" />
+		<StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" Name="spnlInfoPanel">
+			<TextBlock FontWeight="Bold" Padding="5" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel, AncestorLevel=1}}" Name="lblUpdateName" />
+			<TextBlock Text="" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" TextWrapping="Wrap" Margin="0,0,5,0" Name="lblDescription" />
+			<StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,10">
+				<TextBlock FontWeight="Bold" Padding="5" Text="Published:" MaxWidth="120" Visibility="Hidden" Name="lblPublished" />
+				<TextBlock FontWeight="Normal" Padding="5" Text="" MaxWidth="90" Name="lblPublishedDate" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Margin="0,0,5,0">
+				<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Images/BlueArrow.png" Name="imgArrow" Visibility="Hidden" Stretch="None" Width="48" Height="48" />
+				<TextBlock Name="lblStatus" Padding="5" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0" Visibility="Hidden" />
+			</StackPanel>
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" Name="lblInfoUrl" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" Name="lblHelpUrl" />
+		</StackPanel>
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="5" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
-
-		<Image  Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Stretch="Fill" />
-		<Image  IsEnabled="True" Name="imgIcon" Source="/icon.ico" Stretch="None" Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
-
 		<ListView ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" AlternationCount="2" Grid.Row="1" Grid.RowSpan="5" Name="lvUpdates" SelectionChanged="ListView_SelectionChanged" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black" BorderThickness="0" SelectedIndex="0">
 			<ListView.ContextMenu>
 				<ContextMenu>
 					<MenuItem x:Name="cmiHideUpdate" Header="Hide update" Click="MenuItem_MouseClick">
 						<MenuItem.Icon>
-							<Image  Source="/Images/Shield.png" />
+							<Image Source="/Images/Shield.png" />
 						</MenuItem.Icon>
 					</MenuItem>
 				</ContextMenu>
@@ -70,24 +82,6 @@
 				</GridView>
 			</ListView.View>
 		</ListView>
-
-		<StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" Name="spnlInfoPanel">
-			<TextBlock FontWeight="Bold" Padding="5" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0" DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel, AncestorLevel=1}}" Name="lblUpdateName" />
-			<TextBlock Text="" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" TextWrapping="Wrap" Margin="0,0,5,0" Name="lblDescription" />
-
-			<StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,10">
-				<TextBlock FontWeight="Bold" Padding="5" Text="Published:" MaxWidth="120" Visibility="Hidden" Name="lblPublished" />
-				<TextBlock FontWeight="Normal" Padding="5" Text="" MaxWidth="90" Name="lblPublishedDate" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Margin="0,0,5,0">
-				<Image  Width="48" Height="48" HorizontalAlignment="Left" VerticalAlignment="Top" Source="/Images/BlueArrow.png" Name="imgArrow" Visibility="Hidden" />
-				<TextBlock Name="lblStatus" Padding="5" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0" Visibility="Hidden" />
-			</StackPanel>
-
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="5" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfo_MouseDown" Visibility="Hidden" Cursor="Hand" Name="lblInfoUrl" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="5" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="5" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelp_MouseDown" Visibility="Hidden" Cursor="Hand" Name="lblHelpUrl" />
-		</StackPanel>
-
 		<Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Grid.Row="6" DataContext="{Binding}" />
 		<StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="6">
 			<Button Content="_OK" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" VerticalContentAlignment="Center" Click="Ok_Click" Command="NavigationCommands.BrowseBack" />

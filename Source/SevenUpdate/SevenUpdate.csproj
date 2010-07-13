@@ -231,15 +231,11 @@
     <Resource Include="Images\GreenSide.png" />
     <Resource Include="Images\RedShield.png" />
     <Resource Include="Images\RedSide.png" />
-    <Resource Include="Images\SevenUpdate.png" />
     <Resource Include="Images\Shield.png" />
     <Resource Include="Images\SideBar.jpg" />
     <Resource Include="Images\SideBar2.jpg" />
     <Resource Include="Images\YellowShield.png" />
     <Resource Include="Images\YellowSide.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BlueArrow.png" />
@@ -302,6 +298,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icon128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

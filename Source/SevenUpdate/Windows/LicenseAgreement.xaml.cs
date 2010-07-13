@@ -136,13 +136,7 @@ namespace SevenUpdate.Windows
                         continue;
                     if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new Eula
-                                  {
-                                      LicenseUrl = App.Applications[x].Updates[y].LicenseUrl,
-                                      Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name),
-                                      AppIndex = x,
-                                      UpdateIndex = y
-                                  };
+                    var sla = new Eula {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Base.Base.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
 
                     licenseInformation.Add(sla);
                 }

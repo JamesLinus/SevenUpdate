@@ -31,7 +31,7 @@
 				<TextBlock Text="Registry key:" ToolTip="The name of the value that contains the install location of the application" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed" />
 				<TextBox x:Name="tbxAppLocation" TabIndex="4" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" FontSize="14" />
 				<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
-				<Image  Margin="4,0" Name="imgAppPath" ToolTip="The path entered is not valid." SnapsToDevicePixels="False" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Width="16" Height="16"></Image>
+				<Image Margin="4,0" Name="imgAppPath" ToolTip="The path entered is not valid." SnapsToDevicePixels="False" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Width="16" Height="16"></Image>
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="25,5,0,0">
 				<TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Name="lblValue" Visibility="Collapsed" HorizontalAlignment="Left" Margin="20,0,5,0" VerticalAlignment="Center" />
@@ -48,12 +48,12 @@
 			<TextBlock Text="Publisher web site:" Padding="2" Margin="25,5,0,0" ToolTip="A url pointing to the web site of the publisher or the software." HorizontalAlignment="Left" />
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="25,0,0,0">
 				<Controls:InfoTextBox x:Name="tbxPublisherUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="0" />
-				<Image  Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgPublisherUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" Width="16" Height="16"></Image>
+				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgPublisherUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" Width="16" Height="16"></Image>
 			</StackPanel>
 			<TextBlock Text="Help &amp; Support web site:" Padding="2" Margin="25,5,0,0" ToolTip="A url pointing to the support area for this software." HorizontalAlignment="Left" />
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="25,0,0,0">
 				<Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="0" />
-				<Image  Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgHelpUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" SnapsToDevicePixels="False" Width="16" Height="16"></Image>
+				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgHelpUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" SnapsToDevicePixels="False" Width="16" Height="16"></Image>
 			</StackPanel>
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" />

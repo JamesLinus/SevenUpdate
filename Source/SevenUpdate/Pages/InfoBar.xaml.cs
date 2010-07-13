@@ -21,7 +21,6 @@
 #region
 
 using System.Windows.Controls;
-using System.Windows.Media;
 
 #endregion
 
@@ -31,7 +30,7 @@ namespace SevenUpdate.Pages
     ///   Interaction logic for InfoBar.xaml
     /// </summary>
     public partial class InfoBar : UserControl
-{
+    {
         /// <summary>
         ///   A Control that displays update progress and information
         /// </summary>

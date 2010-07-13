@@ -168,10 +168,8 @@ namespace SevenUpdate.Pages
                 infoBar.lblStatus.Text = App.RM.GetString("Installing") + " " + e.UpdateName;
 
                 if (e.TotalUpdates > 1)
-                {
                     infoBar.lblStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + App.RM.GetString("OutOf") + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
                                               App.RM.GetString("Complete");
-                }
                 else
                     infoBar.lblStatus.Text += ", " + e.CurrentProgress + "% " + App.RM.GetString("Complete");
             }
@@ -190,13 +188,13 @@ namespace SevenUpdate.Pages
             }
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
             {
-                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " +
-                                         (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") + ")";
+                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
+                                         App.RM.GetString("Complete") + ")";
             }
             else
             {
-                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " +
-                                         App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")";
+                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + e.FilesTransferred + " " + App.RM.GetString("OutOf") + " " + e.FilesTotal + " " + App.RM.GetString("Files") +
+                                         " " + App.RM.GetString("Complete") + ")";
             }
         }
 
@@ -510,8 +508,7 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
                     lblRecentCheck.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
                 else
-                    lblRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " +
-                                          Settings.Default.lastUpdateCheck.ToShortTimeString();
+                    lblRecentCheck.Text = Settings.Default.lastUpdateCheck.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastUpdateCheck.ToShortTimeString();
             }
             else
                 lblRecentCheck.Text = App.RM.GetString("Never");
@@ -521,8 +518,7 @@ namespace SevenUpdate.Pages
                 if (Settings.Default.lastInstall.Equals(DateTime.Now))
                     lblUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + Settings.Default.lastInstall.ToShortTimeString();
                 else
-                    lblUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " +
-                                               Settings.Default.lastInstall.ToShortTimeString();
+                    lblUpdatesInstalled.Text = Settings.Default.lastInstall.ToShortDateString() + " " + App.RM.GetString("At") + " " + Settings.Default.lastInstall.ToShortTimeString();
             }
             else
                 lblUpdatesInstalled.Text = App.RM.GetString("Never");
@@ -579,7 +575,7 @@ namespace SevenUpdate.Pages
             infoBar.btnAction.Visibility = Visibility.Collapsed;
             infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
             infoBar.lblStatus.Visibility = Visibility.Collapsed;
-            
+
 
             switch (layout)
             {
@@ -604,7 +600,6 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
-
                     infoBar.btnAction.Visibility = Visibility.Visible;
                     infoBar.lblActionText.Text = App.RM.GetString("CheckForUpdates");
 
@@ -623,7 +618,7 @@ namespace SevenUpdate.Pages
                     #region GUI Code
 
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
-                    
+
 
                     infoBar.lblSelectedUpdates.FontWeight = FontWeights.Normal;
 
@@ -631,7 +626,6 @@ namespace SevenUpdate.Pages
                     lblRecentCheck.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
 
                     infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["SUIcon"];
-
 
                     #endregion
 
@@ -645,7 +639,6 @@ namespace SevenUpdate.Pages
                 case UILayout.ConnectingToService:
 
                     #region GUI Code
-
 
                     infoBar.lblStatus.Visibility = Visibility.Visible;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
@@ -807,6 +800,7 @@ namespace SevenUpdate.Pages
                 case UILayout.NoUpdates:
 
                     #region GUI Code
+
                     infoBar.lblStatus.Visibility = Visibility.Visible;
 
                     infoBar.lblHeading.Text = App.RM.GetString("ProgramsUpToDate");
@@ -961,8 +955,8 @@ namespace SevenUpdate.Pages
             infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
 
             foreach (Update t1 in
-                App.Applications.TakeWhile(t => infoBar.lblViewImportantUpdates.Visibility != Visibility.Visible || 
-                    infoBar.lblViewOptionalUpdates.Visibility != Visibility.Visible).SelectMany(t => t.Updates.TakeWhile(t1 => infoBar.lblViewImportantUpdates.Visibility != Visibility.Visible || infoBar.lblViewOptionalUpdates.Visibility != Visibility.Visible)))
+                App.Applications.TakeWhile(t => infoBar.lblViewImportantUpdates.Visibility != Visibility.Visible || infoBar.lblViewOptionalUpdates.Visibility != Visibility.Visible).SelectMany(
+                    t => t.Updates.TakeWhile(t1 => infoBar.lblViewImportantUpdates.Visibility != Visibility.Visible || infoBar.lblViewOptionalUpdates.Visibility != Visibility.Visible)))
             {
                 switch (t1.Importance)
                 {
@@ -982,7 +976,8 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            if (infoBar.lblViewOptionalUpdates.Visibility == Visibility.Collapsed || infoBar.lblViewImportantUpdates.Visibility == Visibility.Collapsed || infoBar.spnlUpdateInfo.Visibility == System.Windows.Visibility.Collapsed)
+            if (infoBar.lblViewOptionalUpdates.Visibility == Visibility.Collapsed || infoBar.lblViewImportantUpdates.Visibility == Visibility.Collapsed ||
+                infoBar.spnlUpdateInfo.Visibility == Visibility.Collapsed)
                 infoBar.line.Y1 = 25;
             else
                 infoBar.line.Y1 = 50;
@@ -1033,13 +1028,12 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                infoBar.imgSideBanner.Source = (BitmapImage)App.Resources["YellowSide"];
+                infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
 
                 infoBar.lblSelectedUpdates.Text = App.RM.GetString("NoUpdatesSelected");
                 infoBar.lblSelectedUpdates.Height = Double.NaN;
                 infoBar.lblSelectedUpdates.FontWeight = FontWeights.Normal;
                 infoBar.btnAction.Visibility = Visibility.Collapsed;
-               
             }
 
             #endregion

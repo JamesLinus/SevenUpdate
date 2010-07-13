@@ -56,7 +56,6 @@ namespace SevenUpdate.Windows
         {
             Height = Settings.Default.windowHeight;
             Width = Settings.Default.windowWidth;
-            
         }
 
         /// <summary>

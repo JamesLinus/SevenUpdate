@@ -9,7 +9,7 @@
 						<Canvas>
 							<Canvas Name="Normal" Opacity="1">
 								<StackPanel Margin="7,7,7,7" Orientation="Horizontal">
-									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="19" Height="20">
+									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20">
 										<Image.Style>
 											<Style>
 												<Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrow.png" />
@@ -38,7 +38,7 @@
 							<Canvas Opacity="0" Name="Selected">
 								<Rectangle Stroke="Cyan" RadiusX="2" RadiusY="2" StrokeThickness="1.5" Width="{Binding ActualWidth, ElementName=button}" Height="{Binding ActualHeight, ElementName=button}" />
 								<StackPanel Margin="7,7,7,7" Orientation="Horizontal">
-									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="19" Height="20">
+									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20">
 										<Image.Style>
 											<Style>
 												<Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrow.png" />
@@ -76,7 +76,7 @@
 									</Rectangle.Fill>
 								</Rectangle>
 								<StackPanel Margin="7,7,7,7" Orientation="Horizontal">
-									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="19" Height="20">
+									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20">
 										<Image.Style>
 											<Style>
 												<Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrowHover.png" />
@@ -109,7 +109,7 @@
 									</Rectangle.BitmapEffect>
 								</Rectangle>
 								<StackPanel Margin="7,7,7,7" Orientation="Horizontal">
-									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="19" Height="20">
+									<Image RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20">
 										<Image.Style>
 											<Style>
 												<Setter Property="Image.Source" Value="/SevenUpdate.Sdk;component/Images/GreenArrow.png" />
