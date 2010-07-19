@@ -74,6 +74,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -139,6 +140,7 @@
       <DependentUpon>CommandLink.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InfoTextBox.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Pages\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>
@@ -228,6 +230,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LeftArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\DeleteFile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Files.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

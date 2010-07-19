@@ -24,7 +24,9 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using SevenUpdate.Sdk.Properties;
 
@@ -56,6 +58,46 @@ namespace SevenUpdate.Sdk.Windows
         {
             Height = Settings.Default.windowHeight;
             Width = Settings.Default.windowWidth;
+            EnableGlass();
+        }
+
+        private void EnableGlass()
+        {
+            try
+            {
+                // Obtain the window handle for WPF application
+                var mainWindowPtr = new WindowInteropHelper(this).Handle;
+                var mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
+                mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 0, 0, 0);
+
+                // Get System Dpi
+                var desktop = System.Drawing.Graphics.FromHwnd(mainWindowPtr);
+                float desktopDpiX = desktop.DpiX;
+
+                // Set Margins
+                var margins = new NativeMethods.Margins
+                                  {
+                                      Left = Convert.ToInt32(5*(desktopDpiX/96)),
+                                      Right = Convert.ToInt32(5*(desktopDpiX/96)),
+                                      Top = Convert.ToInt32(45*(desktopDpiX/96)),
+                                      Bottom = Convert.ToInt32(5*(desktopDpiX/96))
+                                  };
+
+                // Extend glass frame into client area
+                // Note that the default desktop Dpi is 96dpi. The margins are adjusted for the system Dpi.
+
+                int hr = NativeMethods.DwmExtendFrameIntoClientArea(mainWindowSrc.Handle, ref margins);
+                //
+                if (hr < 0)
+                {
+                    //DwmExtendFrameIntoClientArea Failed
+                }
+            }
+                // If not Vista, paint background white.
+            catch (DllNotFoundException)
+            {
+                Background = Brushes.White;
+            }
         }
 
         /// <summary>
