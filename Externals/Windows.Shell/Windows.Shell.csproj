@@ -201,6 +201,10 @@
     <Compile Include="Controls\Behaviors\ButtonBaseBehavior.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\CommandLink.xaml.cs">
+      <DependentUpon>CommandLink.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InfoTextBox.cs" />
     <Compile Include="DWM\DWMNativeMethods.cs" />
     <Compile Include="DWM\GlassCompositionChangedEvent.cs" />
     <Compile Include="DWM\GlassEvents.cs" />
@@ -334,6 +338,12 @@
   <ItemGroup>
     <Resource Include="Images\GreenArrow.png" />
     <Resource Include="Images\GreenArrowHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\CommandLink.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -24,7 +24,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Windows.DWM;
 
-
 #endregion
 
 namespace SevenUpdate.Sdk.Pages

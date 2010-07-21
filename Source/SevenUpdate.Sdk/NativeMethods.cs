@@ -1,10 +1,6 @@
 ﻿#region
 
-using System;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
+
 
 #endregion
 
@@ -44,7 +40,6 @@ namespace SevenUpdate.Sdk
 
     //        NativeMethods.SetWindowThemeAttribute(hwnd, NativeMethods.WINDOWTHEMEATTRIBUTETYPE.WTA_NONCLIENT, ref options, NativeMethods.WTA_OPTIONS.Size);
     //    }
-
 
     //    private void EnableGlass(Window window)
     //    {

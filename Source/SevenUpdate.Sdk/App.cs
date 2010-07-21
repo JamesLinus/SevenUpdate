@@ -27,7 +27,6 @@ using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Shell;
-using Microsoft.Win32;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
@@ -56,7 +55,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Sets the Windows 7 JumpList
+        ///   Sets the Windows 7 JumpList
         /// </summary>
         private static void SetJumpLists()
         {
@@ -108,7 +107,6 @@ namespace SevenUpdate.Sdk
                            };
             jumpList.JumpItems.Add(jumpTask);
 
-            
 
             JumpList.SetJumpList(Current, jumpList);
         }
@@ -129,9 +127,9 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Checks if a file or UNC is valid
+        ///   Checks if a file or UNC is valid
         /// </summary>
-        /// <param name="path">The path we want to check</param>
+        /// <param name = "path">The path we want to check</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
@@ -180,10 +178,10 @@ namespace SevenUpdate.Sdk
     public static class StringExtensions
     {
         /// <summary>
-        /// Checks if a given string contains any of the strings in the passed array of strings.
+        ///   Checks if a given string contains any of the strings in the passed array of strings.
         /// </summary>
-        /// <param name="str">The string to check against values</param>
-        /// <param name="values">An array of strings to compare to the given string</param>
+        /// <param name = "str">The string to check against values</param>
+        /// <param name = "values">An array of strings to compare to the given string</param>
         /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
         public static bool ContainsAny(this string str, params string[] values)
         {
@@ -194,10 +192,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Checks if a given string contains any of the characters in the passed array of <c>characters</c>.
+        ///   Checks if a given string contains any of the characters in the passed array of <c>characters</c>.
         /// </summary>
-        /// <param name="str">The string to check against values</param>
-        /// <param name="values">An array of characters to compare to the given string</param>
+        /// <param name = "str">The string to check against values</param>
+        /// <param name = "values">An array of characters to compare to the given string</param>
         /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
         public static bool ContainsAny(this string str, params char[] values)
         {

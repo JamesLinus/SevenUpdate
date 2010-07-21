@@ -88,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Controls\CommandLink.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\AppInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -136,10 +132,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CommandLink.xaml.cs">
-      <DependentUpon>CommandLink.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\InfoTextBox.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Pages\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
@@ -221,8 +213,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\GreenArrow.png" />
-    <Resource Include="Images\GreenArrowHover.png" />
     <Resource Include="Images\Shield.png" />
   </ItemGroup>
   <ItemGroup>
