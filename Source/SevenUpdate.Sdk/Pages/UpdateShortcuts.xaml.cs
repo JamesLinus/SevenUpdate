@@ -23,6 +23,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Windows.DWM;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -40,6 +41,10 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateShortcuts()
         {
             InitializeComponent();
+            if (!AeroGlass.IsEnabled)
+                return;
+            line.Visibility = Visibility.Collapsed;
+            rectangle.Visibility = Visibility.Collapsed;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

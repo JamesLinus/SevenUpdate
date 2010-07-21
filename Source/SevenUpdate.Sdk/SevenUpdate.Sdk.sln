@@ -5,7 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate.Sdk", "SevenUpd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate.Base", "..\SevenUpdate.Base\SevenUpdate.Base.csproj", "{918773CA-2A8D-4825-9516-DD1B4AFB8B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.Shell", "..\..\..\Windows.Shell\Windows.Shell.csproj", "{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows.Shell", "..\..\Externals\Windows.Shell\Windows.Shell.csproj", "{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{A1E4BCB3-E10C-43B3-B0DD-A2CC65162F7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6A3B046-B13E-4BF5-A141-077E5A12B8C3} = {A1E4BCB3-E10C-43B3-B0DD-A2CC65162F7B}
 	EndGlobalSection
 EndGlobal

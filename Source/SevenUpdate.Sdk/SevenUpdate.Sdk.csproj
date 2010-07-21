@@ -211,7 +211,7 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Windows.Shell\Windows.Shell.csproj">
+    <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
       <Name>Windows.Shell</Name>
     </ProjectReference>

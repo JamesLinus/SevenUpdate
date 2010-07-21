@@ -24,6 +24,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Windows.Controls;
+using Microsoft.Windows.DWM;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -41,6 +42,11 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateInfo()
         {
             InitializeComponent();
+            if (!AeroGlass.IsEnabled)
+                return;
+            ;
+            line.Visibility = Visibility.Collapsed;
+            rectangle.Visibility = Visibility.Collapsed;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)

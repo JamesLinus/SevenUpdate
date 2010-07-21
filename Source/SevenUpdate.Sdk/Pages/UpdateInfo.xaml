@@ -9,12 +9,12 @@
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="44
-                           " />
-            <RowDefinition Height="458*" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="420*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Update information" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Foreground="#FF003399" FontSize="16" />
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White"></Rectangle>
+        <TextBlock Text="Update information" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Foreground="#FF003399" FontSize="16" Margin="0,5,0,0" />
         <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <TextBlock Text="Update title:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." />
             <Controls:InfoTextBox x:Name="tbUpdateTitle" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="0" />
@@ -56,8 +56,8 @@
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal"></StackPanel>
         </StackPanel>
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
-                Grid.ColumnSpan="4" />
-        <Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" />
+                Grid.ColumnSpan="4" Name="line" />
+        <Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />
         <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click"></Button>
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"

@@ -26,6 +26,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
+using Microsoft.Windows.DWM;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -43,6 +44,10 @@ namespace SevenUpdate.Sdk.Pages
         public AppInfo()
         {
             InitializeComponent();
+            if (!AeroGlass.IsEnabled)
+                return;
+            line.Visibility = Visibility.Collapsed;
+            rectangle.Visibility = Visibility.Collapsed;
         }
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
@@ -129,6 +134,10 @@ namespace SevenUpdate.Sdk.Pages
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
+        {
         }
     }
 }

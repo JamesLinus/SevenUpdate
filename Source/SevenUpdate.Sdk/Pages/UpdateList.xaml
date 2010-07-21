@@ -8,15 +8,17 @@
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="420*" />
             <RowDefinition Height="44" />
-            <RowDefinition Height="405*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF003399" FontSize="16" Margin="24,0,0,0" />
-        <ListBox Grid.Row="1" HorizontalAlignment="Left" Margin="10" VerticalAlignment="Stretch" Width="250" MinHeight="100" TabIndex="0" BorderBrush="LightGray" />
-        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="325,0,151,0">
+        <TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF003399" FontSize="16" Margin="24,5,0,0" />
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="325,122,151,84">
             <Controls:CommandLink x:Name="clEditUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Edit selected update" Width="350" UseShield="False" TabIndex="1" Height="63" />
             <Controls:CommandLink x:Name="clNewUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new update" Width="350" TabIndex="2" Height="63" />
-            <Controls:CommandLink x:Name="clDeleteUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Delete selected update" Width="350" TabIndex="2" Margin="0,0,0,12" Height="63" />
+            <Controls:CommandLink x:Name="clDeleteUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Delete selected update" Width="350" TabIndex="2" Height="63" />
         </StackPanel>
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="2" Fill="White" />
+        <ListBox Grid.Row="1" HorizontalAlignment="Left" Margin="10,10,0,10" VerticalAlignment="Stretch" Width="250" MinHeight="100" TabIndex="0" BorderBrush="LightGray" />
     </Grid>
 </Page>

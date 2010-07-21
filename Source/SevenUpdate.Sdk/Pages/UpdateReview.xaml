@@ -8,9 +8,11 @@
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="420*" />
             <RowDefinition Height="44" />
-            <RowDefinition Height="502*" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Review" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF003399" FontSize="16" Margin="24,0,0,0" />
+        <TextBlock Text="Review" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF003399" FontSize="16" Margin="24,5,0,0" />
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" Name="rectangle" Stroke="Black" VerticalAlignment="Stretch" Grid.ColumnSpan="2" />
     </Grid>
 </Page>

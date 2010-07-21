@@ -20,7 +20,10 @@
 
 #region
 
+using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Windows.DWM;
+
 
 #endregion
 
@@ -37,6 +40,9 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateReview()
         {
             InitializeComponent();
+            if (!AeroGlass.IsEnabled)
+                return;
+            rectangle.Visibility = Visibility.Collapsed;
         }
     }
 }
