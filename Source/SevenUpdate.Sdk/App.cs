@@ -26,6 +26,7 @@ using System.Linq;
 using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Shell;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
@@ -140,6 +141,11 @@ namespace SevenUpdate.Sdk
         }
 
         #endregion
+
+        internal static void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 
     /// <summary>

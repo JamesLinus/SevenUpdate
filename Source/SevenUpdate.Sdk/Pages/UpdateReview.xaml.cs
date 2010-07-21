@@ -42,6 +42,7 @@ namespace SevenUpdate.Sdk.Pages
             if (!AeroGlass.IsEnabled)
                 return;
             rectangle.Visibility = Visibility.Collapsed;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
     }
 }

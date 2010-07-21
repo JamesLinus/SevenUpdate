@@ -47,6 +47,7 @@ namespace SevenUpdate.Sdk.Pages
             ;
             line.Visibility = Visibility.Collapsed;
             rectangle.Visibility = Visibility.Collapsed;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)

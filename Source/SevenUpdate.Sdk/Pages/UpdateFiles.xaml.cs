@@ -49,6 +49,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             line.Visibility = Visibility.Collapsed;
             rectangle.Visibility = Visibility.Collapsed;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
@@ -109,5 +110,7 @@ namespace SevenUpdate.Sdk.Pages
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbHash.Text = Base.Base.GetHash(cfd.FileName);
         }
+
+
     }
 }

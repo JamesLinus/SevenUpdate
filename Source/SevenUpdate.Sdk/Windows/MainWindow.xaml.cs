@@ -75,5 +75,11 @@ namespace SevenUpdate.Sdk.Windows
             Settings.Default.Save();
             Environment.Exit(0);
         }
+
+        private void NavigationWindow_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (AeroGlass.IsEnabled)
+                DragMove();
+        }
     }
 }

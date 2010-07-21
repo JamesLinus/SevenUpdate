@@ -40,6 +40,7 @@ namespace SevenUpdate.Sdk.Pages
             InitializeComponent();
             if (!AeroGlass.IsEnabled)
                 return;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
     }
 }

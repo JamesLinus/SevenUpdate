@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Windows.DWM;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -42,6 +43,8 @@ namespace SevenUpdate.Sdk.Pages
         public Main()
         {
             InitializeComponent();
+            if (AeroGlass.IsEnabled)
+                MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void NewProject_Click(object sender, RoutedEventArgs e)

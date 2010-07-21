@@ -45,6 +45,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             line.Visibility = Visibility.Collapsed;
             rectangle.Visibility = Visibility.Collapsed;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

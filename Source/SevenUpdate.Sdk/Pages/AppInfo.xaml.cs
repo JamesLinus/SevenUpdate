@@ -48,6 +48,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             line.Visibility = Visibility.Collapsed;
             rectangle.Visibility = Visibility.Collapsed;
+            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
@@ -134,10 +135,6 @@ namespace SevenUpdate.Sdk.Pages
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
-
-        private void Rectangle_MouseMove(object sender, MouseEventArgs e)
-        {
         }
     }
 }
