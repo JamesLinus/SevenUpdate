@@ -15,7 +15,11 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White"></Rectangle>
-        <TextBlock Text="Update information" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Foreground="#FF003399" FontSize="16" Margin="0,5,0,0" />
+        <TextBlock Text="Update information" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" FontSize="16" Margin="0,5,0,0">
+			<TextBlock.Effect>
+				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
+			</TextBlock.Effect>
+        </TextBlock>
         <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <TextBlock Text="Update title:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." />
             <Controls:InfoTextBox x:Name="tbUpdateTitle" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="0" />

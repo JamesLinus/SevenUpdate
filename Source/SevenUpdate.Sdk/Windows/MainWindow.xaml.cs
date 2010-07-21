@@ -58,7 +58,11 @@ namespace SevenUpdate.Sdk.Windows
         {
             Height = Settings.Default.windowHeight;
             Width = Settings.Default.windowWidth;
+        }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
             AeroGlass.ResetAeroGlass(new MARGINS(0, 32, 0, 44), this);
         }

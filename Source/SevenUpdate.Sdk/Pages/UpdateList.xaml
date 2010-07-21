@@ -13,7 +13,11 @@
             <RowDefinition Height="420*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF003399" FontSize="16" Margin="24,5,0,0" />
+        <TextBlock Text="Software updates" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="24,5,0,0">
+			<TextBlock.Effect>
+				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
+			</TextBlock.Effect>
+        </TextBlock>
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="325,122,151,84">
             <Controls:CommandLink x:Name="clEditUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Edit selected update" Width="350" UseShield="False" TabIndex="1" Height="63" />
             <Controls:CommandLink x:Name="clNewUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Create a new update" Width="350" TabIndex="2" Height="63" />

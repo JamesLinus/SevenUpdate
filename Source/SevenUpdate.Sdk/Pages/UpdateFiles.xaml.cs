@@ -110,7 +110,5 @@ namespace SevenUpdate.Sdk.Pages
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbHash.Text = Base.Base.GetHash(cfd.FileName);
         }
-
-
     }
 }
