@@ -25,5 +25,37 @@
 		<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor"/>
 	</Style>
 
-
+    <Style x:Key="backButton" TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter x:Name="img" ContentTemplate="{TemplateBinding Content}" Opacity="1" />
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            <Setter TargetName="img" Property="Content">
+                                <Setter.Value>
+                                    <OuterGlowBitmapEffect GlowColor="Black" GlowSize="5" Noise="0" Opacity=".5" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsDefaulted" Value="true">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="img" Property="BitmapEffect">
+                                <Setter.Value>
+                                    <OuterGlowBitmapEffect GlowColor="Black" GlowSize="5" Noise="0" Opacity=".5" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="img" Property="Margin" Value="1,1,-1,-1" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="img" Property="Opacity" Value=".2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

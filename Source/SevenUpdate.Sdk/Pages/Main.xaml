@@ -20,12 +20,20 @@
             <Controls:CommandLink x:Name="clReleaseUpdate" HorizontalAlignment="Center" VerticalAlignment="Center" Link="Release an update" Note="Release your software updates" Width="350"
                     TabIndex="3" />
         </StackPanel>
-        <TextBlock Text="Welcome to the Seven Update SDK" FontSize="16" HorizontalAlignment="Left" Margin="24,5,0,0" VerticalAlignment="Top" Background="{x:Null}">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <Controls:BackButton Grid.RowSpan="3" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" IsEnabled="False" />
+        <TextBlock Text="Welcome to the Seven Update SDK" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,-2,0,0">
 			<TextBlock.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
 			</TextBlock.Effect>
         </TextBlock>
-        <TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,2" Padding="2" Foreground="#FF0066CC"
-                MouseDown="Help_MouseDown" Cursor="Hand" />
+        </StackPanel>
+        <TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,2" Padding="2" MouseDown="Help_MouseDown"
+                Cursor="Hand">
+			<TextBlock.Effect>
+				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
+			</TextBlock.Effect>
+        </TextBlock>
+
     </Grid>
 </Page>

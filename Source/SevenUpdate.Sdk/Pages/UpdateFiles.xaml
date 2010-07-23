@@ -15,11 +15,14 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White"></Rectangle>
-        <TextBlock Text="Files" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="16" Margin="24,5,0,0">
-			<TextBlock.Effect>
-				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
-			</TextBlock.Effect>
-        </TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+            <Controls:BackButton Grid.RowSpan="3" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" IsEnabled="True" />
+            <TextBlock Text="Files" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0">
+				<TextBlock.Effect>
+					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
+				</TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
         <ListBox Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="150" Margin="10" SelectedIndex="0" BorderBrush="LightGray">
             <ListBox.ContextMenu>
                 <ContextMenu>

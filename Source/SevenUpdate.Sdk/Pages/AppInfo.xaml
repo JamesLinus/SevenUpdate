@@ -15,16 +15,19 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White"></Rectangle>
-        <TextBlock Text="Software information" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" FontSize="16" Margin="0,5,0,0">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                <Controls:BackButton Grid.RowSpan="3" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" IsEnabled="True" />
+                <TextBlock Text="Software information" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" FontSize="14" Margin="15,-2,0,0">
 			<TextBlock.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0"></DropShadowEffect>
 			</TextBlock.Effect>
         </TextBlock>
+        </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <TextBlock Text="Application name:" Padding="2" HorizontalAlignment="Left" ToolTip="The name of the application to be updated." Margin="0,5,0,0" />
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
                 <Controls:InfoTextBox x:Name="tbxAppName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Seven Update SDK (max 75 characters)" TabIndex="0" DataContext="{Binding}"
-                        Margin="0" />
+                        Margin="5,0" />
                 <CheckBox Content="64-bit application" Name="cxbIs64Bit" Margin="10,0,0,0" HorizontalAlignment="Left" Padding="4,0,0,0" VerticalAlignment="Center"
                         ToolTip="Check this box if your software is native x64." TabIndex="1" />
             </StackPanel>
@@ -55,15 +58,15 @@
                 <Separator MinWidth="200" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
             </StackPanel>
             <TextBlock Text="Publisher:" Padding="2" ToolTip="The software company or development team." HorizontalAlignment="Left" />
-            <Controls:InfoTextBox x:Name="tbxPublisher" Width="412" Label="Seven Software" TabIndex="7" HorizontalAlignment="Left" Margin="0" />
+            <Controls:InfoTextBox x:Name="tbxPublisher" Width="412" Label="Seven Software" TabIndex="7" HorizontalAlignment="Left" Margin="5,0" />
             <TextBlock Text="Publisher web site:" Padding="2" Margin="0,5,0,0" ToolTip="A url pointing to the web site of the publisher or the software." HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Controls:InfoTextBox x:Name="tbxPublisherUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="0" />
+                <Controls:InfoTextBox x:Name="tbxPublisherUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="5,0" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgPublisherUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" Width="16" Height="16"></Image>
             </StackPanel>
             <TextBlock Text="Help &amp; Support web site:" Padding="2" Margin="0,5,0,0" ToolTip="A url pointing to the support area for this software." HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="0" />
+                <Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" Margin="5,0" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgHelpUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" SnapsToDevicePixels="False"
                         Width="16" Height="16"></Image>
             </StackPanel>
