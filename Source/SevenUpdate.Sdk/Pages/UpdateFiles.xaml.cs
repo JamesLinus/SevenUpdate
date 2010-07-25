@@ -55,11 +55,11 @@ namespace SevenUpdate.Sdk.Pages
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
-
+            string path = Base.Base.ConvertPath(source.Text, true, true);
             try
             {
                 if (source.Text.Length > 0)
-                    new Uri(source.Text);
+                    new Uri(path);
                 switch (source.Name)
                 {
                     case "tbxDownloadUrl":
@@ -67,7 +67,7 @@ namespace SevenUpdate.Sdk.Pages
                         break;
 
                     case "tbxInstallUri":
-                        if (source.Text.Length > 2 && Path.GetFileName(source.Text).ContainsAny(Path.GetInvalidPathChars()) == false)
+                        if (path.Length > 2 && Path.GetFileName(path).ContainsAny(Path.GetInvalidPathChars()) == false)
                             imgInstallUri.Visibility = Visibility.Collapsed;
                         break;
                 }
@@ -109,6 +109,39 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbHash.Text = Base.Base.GetHash(cfd.FileName);
+        }
+
+        private void AddFile_Click(object sender, RoutedEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                AddFile(cfd.FileName);
+        }
+
+        private void AddFile(string fileName)
+        {
+            SPHelp.Visibility = Visibility.Collapsed;
+            SPInput.Visibility = Visibility.Visible;
+            tbxInstallUri.Text = Base.Base.ConvertPath(fileName, false, true);
+            tbHash.Text = Base.Base.GetHash(fileName);
+            cbxUpdateType.SelectedIndex = 0;
+            listBox.Items.Add(Path.GetFileName(fileName));
+        }
+
+        private void AddFiles(string[] files)
+        {
+            for (int x = 0; x < files.Length; x++)
+                AddFile(files[x]);
+        }
+
+        private void AddFolder_Click(object sender, RoutedEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            {
+                AddFiles(Directory.GetFiles(cfd.FileName));
+            }
+            
         }
     }
 }

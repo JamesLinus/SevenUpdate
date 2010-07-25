@@ -23,6 +23,8 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -56,6 +58,34 @@ namespace SevenUpdate.Sdk.Pages
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        private void AddShortcut_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ImportShortcut_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxShortcutTarget.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+
+        private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+               tbxShortcutPath.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+        private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxShortcutIcon.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
         }
     }
 }

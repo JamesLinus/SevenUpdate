@@ -46,6 +46,8 @@ namespace SevenUpdate.Sdk
 
         internal static string SuiFile { get; set; }
 
+        internal static Sui SuiProject { get; set; }
+
         #endregion
 
         #region Methods

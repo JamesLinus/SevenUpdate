@@ -57,5 +57,13 @@ namespace SevenUpdate.Sdk.Pages
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
+
+        private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }
