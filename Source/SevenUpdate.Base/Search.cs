@@ -132,9 +132,8 @@ namespace SevenUpdate.Base
                                         break;
                                     z--;
                                 }
-                                else if (
-                                    Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
-                                    app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                         app.Updates[y].Files[z].Hash)
                                 {
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
                                         size += app.Updates[y].Files[z].FileSize;
@@ -177,9 +176,8 @@ namespace SevenUpdate.Base
                                         break;
                                     z--;
                                 }
-                                else if (
-                                    Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
-                                    app.Updates[y].Files[z].Hash)
+                                else if (Base.GetHash(Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" + Path.GetFileName(app.Updates[y].Files[z].Destination)) !=
+                                         app.Updates[y].Files[z].Hash)
                                     size += app.Updates[y].Files[z].FileSize;
                                 break;
                         }

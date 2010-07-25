@@ -27,7 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
-using Microsoft.Windows.DWM;
+using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
 #endregion

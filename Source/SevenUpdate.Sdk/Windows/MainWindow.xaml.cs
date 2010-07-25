@@ -24,9 +24,10 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using Microsoft.Windows.DWM;
+using Microsoft.Windows.Dwm;
 using Microsoft.Windows.Internal;
 using SevenUpdate.Sdk.Properties;
 
@@ -64,7 +65,7 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new MARGINS(0, 32, 0, 44), this);
+            AeroGlass.ResetAeroGlass(new Margins(0, 32, 0, 44), this);
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace SevenUpdate.Sdk.Windows
             Environment.Exit(0);
         }
 
-        private void NavigationWindow_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void NavigationWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsEnabled)
                 DragMove();

@@ -4,15 +4,12 @@ using System;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Microsoft.Windows.Internal;
-using Microsoft.Windows.Shell;
 
 #endregion
 
-namespace Microsoft.Windows.DWM
+namespace Microsoft.Windows.Dwm
 {
-
     /// <summary>
     ///   WPF Glass Window
     ///   Inherit from this window class to enable glass on a WPF window
@@ -24,7 +21,7 @@ namespace Microsoft.Windows.DWM
         /// <summary>
         ///   Get determines if AeroGlass is enabled on the desktop. Set enables/disables AreoGlass on the desktop.
         /// </summary>
-        public static bool IsEnabled { set { DwmNativeMethods.DwmEnableComposition(value ? CompositionEnable.DWM_EC_ENABLECOMPOSITION : CompositionEnable.DWM_EC_DISABLECOMPOSITION); } get { return DwmNativeMethods.DwmIsCompositionEnabled(); } }
+        public static bool IsEnabled { set { DwmNativeMethods.DwmEnableComposition(value ? CompositionEnable.DwmEcEnableComposition : CompositionEnable.DwmEcDisableComposition); } get { return DwmNativeMethods.DwmIsCompositionEnabled(); } }
 
         #endregion
 
@@ -34,8 +31,9 @@ namespace Microsoft.Windows.DWM
         ///   Excludes a UI element from the AeroGlass frame.
         /// </summary>
         /// <param name = "element">The element to exclude.</param>
-        /// <param name="window">The window the element resides in</param>
+        /// <param name = "window">The window the element resides in</param>
         /// <remarks>
+        ///   c
         ///   Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not 
         ///   render properly on top of an AeroGlass frame.
         /// </remarks>
@@ -60,7 +58,7 @@ namespace Microsoft.Windows.DWM
             Point bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new MARGINS
+            var margins = new Margins
                               {
                                   cxLeftWidth = (int) topLeftFrame.X,
                                   cxRightWidth = (int) (window.ActualWidth - bottomRightFrame.X),
@@ -75,7 +73,7 @@ namespace Microsoft.Windows.DWM
         /// <summary>
         ///   Resets the AeroGlass exclusion area.
         /// </summary>
-        public static void ResetAeroGlass(MARGINS margins, Window window)
+        public static void ResetAeroGlass(Margins margins, Window window)
         {
             ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
         }
@@ -83,20 +81,20 @@ namespace Microsoft.Windows.DWM
         /// <summary>
         ///   Resets the AeroGlass exclusion area.
         /// </summary>
-        public static void ResetAeroGlass(MARGINS margins, IntPtr windowHandle)
+        public static void ResetAeroGlass(Margins margins, IntPtr windowHandle)
         {
             DwmNativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins);
         }
 
         /// <summary>
-        /// Enables Aero Glass on a WPF window
+        ///   Enables Aero Glass on a WPF window
         /// </summary>
-        /// <param name="window">The window to enable glass</param>
-        /// <param name="margins">The region to add glass</param>
-        public static void EnableGlass(Window window, MARGINS margins = new MARGINS())
+        /// <param name = "window">The window to enable glass</param>
+        /// <param name = "margins">The region to add glass</param>
+        public static void EnableGlass(Window window, Margins margins = new Margins())
         {
             if (margins.cyTopHeight == 0 && margins.cyBottomHeight == 0 && margins.cxRightWidth == 0 && margins.cxLeftWidth == 0)
-                margins = new MARGINS(true);
+                margins = new Margins(true);
             var windowHandle = new WindowInteropHelper(window).Handle;
 
             // add Window Proc hook to capture DWM messages
@@ -110,31 +108,29 @@ namespace Microsoft.Windows.DWM
             window.Background = Brushes.Transparent;
 
             ResetAeroGlass(margins, windowHandle);
-            
         }
 
         /// <summary>
-        /// Enables Blur on Aero Glass for a WPF window
+        ///   Enables Blur on Aero Glass for a WPF window
         /// </summary>
-        /// <param name="window">The window object to add blur to</param>
-        /// <param name="region">The area to add the blur to</param>
+        /// <param name = "window">The window object to add blur to</param>
+        /// <param name = "region">The area to add the blur to</param>
         public static void EnableBlur(Window window, IntPtr region)
         {
             EnableBlur(new WindowInteropHelper(window).Handle, region);
         }
 
         /// <summary>
-        /// Enables Blur on Aero Glass
+        ///   Enables Blur on Aero Glass
         /// </summary>
-        /// <param name="windowHandle">The windows handle to add the blur to</param>
-        /// <param name="region">The area to add the blur to</param>
+        /// <param name = "windowHandle">The windows handle to add the blur to</param>
+        /// <param name = "region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new DWM_BLURBEHIND {hRgnBlur = region, dwFlags = DwmBlurBehindDwFlags.DWM_BB_BLURREGION };
-            
+            var blur = new DwmBlurBehind {hRgnBlur = region, dwFlags = DwmBlurBehindDwFlags.DwmBbBlurregion};
+
             DwmNativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
         }
-
 
         #endregion
 
@@ -142,7 +138,7 @@ namespace Microsoft.Windows.DWM
 
         private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == DWMMessages.WM_DWMCOMPOSITIONCHANGED || msg == DWMMessages.WM_DWMNCRENDERINGCHANGED)
+            if (msg == DwmMessages.WmDwmCompositionChanged || msg == DwmMessages.WmDwmnRenderingChanged)
             {
                 if (AeroGlassCompositionChanged != null)
                     AeroGlassCompositionChanged.Invoke(null, new AeroGlassCompositionChangedEvenArgs(IsEnabled));

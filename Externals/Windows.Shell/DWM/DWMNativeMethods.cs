@@ -10,26 +10,51 @@ using System.Security;
 
 namespace Microsoft.Windows.Internal
 {
-    internal static class DWMMessages
+    internal static class DwmMessages
     {
-        internal const int WM_DWMCOMPOSITIONCHANGED = 0x031E;
-        internal const int WM_DWMNCRENDERINGCHANGED = 0x031F;
+        internal const int WmDwmCompositionChanged = 0x031E;
+        internal const int WmDwmnRenderingChanged = 0x031F;
     }
 
+    struct POINTAPI
+    {
+        public int x;
+        public int y;
+    };
+
+    struct DTTOPTS
+    {
+        public uint dwSize;
+        public uint dwFlags;
+        public uint crText;
+        public uint crBorder;
+        public uint crShadow;
+        public int iTextShadowType;
+        public POINTAPI ptShadowOffset;
+        public int iBorderSize;
+        public int iFontPropId;
+        public int iColorPropId;
+        public int iStateId;
+        public int fApplyOverlay;
+        public int iGlowSize;
+        public IntPtr pfnDrawTextCallback;
+        public int lParam;
+    };
+
     [StructLayout(LayoutKind.Sequential)]
-    public struct MARGINS
+    public struct Margins
     {
         public int cxLeftWidth; // width of left border that retains its size
         public int cxRightWidth; // width of right border that retains its size
         public int cyTopHeight; // height of top border that retains its size
         public int cyBottomHeight; // height of bottom border that retains its size
 
-        public MARGINS(bool fullWindow)
+        public Margins(bool fullWindow)
         {
             cxLeftWidth = cxRightWidth = cyTopHeight = cyBottomHeight = (fullWindow ? -1 : 0);
         }
 
-        public MARGINS(int left, int top, int right,int bottom )
+        public Margins(int left, int top, int right, int bottom)
         {
             cxLeftWidth = left;
             cxRightWidth = right;
@@ -40,13 +65,13 @@ namespace Microsoft.Windows.Internal
 
     internal enum DwmBlurBehindDwFlags : uint
     {
-        DWM_BB_ENABLE = 0x00000001,
-        DWM_BB_BLURREGION = 0x00000002,
-        DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004
+        DwmBbEnable = 0x00000001,
+        DwmBbBlurregion = 0x00000002,
+        DwmBbTransitiononMaximized = 0x00000004
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct DWM_BLURBEHIND
+    internal struct DwmBlurBehind
     {
         public DwmBlurBehindDwFlags dwFlags;
         public bool fEnable;
@@ -56,8 +81,8 @@ namespace Microsoft.Windows.Internal
 
     internal enum CompositionEnable : uint
     {
-        DWM_EC_DISABLECOMPOSITION = 0,
-        DWM_EC_ENABLECOMPOSITION = 1
+        DwmEcDisableComposition = 0,
+        DwmEcEnableComposition = 1
     }
 
     /// <summary>
@@ -68,10 +93,10 @@ namespace Microsoft.Windows.Internal
     public static class DwmNativeMethods
     {
         [DllImport("DwmApi.dll")]
-        internal static extern int DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND bb);
+        internal static extern int DwmEnableBlurBehindWindow(IntPtr hwnd, ref DwmBlurBehind bb);
 
         [DllImport("DwmApi.dll")]
-        internal static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS m);
+        internal static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref Margins m);
 
         [DllImport("DwmApi.dll", PreserveSig = false)]
         internal static extern bool DwmIsCompositionEnabled();
@@ -92,5 +117,14 @@ namespace Microsoft.Windows.Internal
 
         [DllImport("gdi32")]
         public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+        [DllImport("gdi32.dll")]
+        private static extern bool BitBlt(IntPtr hdc, int nXDest, int nYDest, int nWidth, int nHeight, IntPtr hdcSrc, int nXSrc, int nYSrc, uint dwRop);
+
+        [DllImport("UxTheme.dll", ExactSpelling = true, SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref CoreNativeMethods.RECT pRect, ref DTTOPTS pOptions);
+        
+        [DllImport("UxTheme.dll", ExactSpelling = true, SetLastError = true)]
+        private static extern int DrawThemeText(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags1, int dwFlags2, ref CoreNativeMethods.RECT pRect);
     }
 }

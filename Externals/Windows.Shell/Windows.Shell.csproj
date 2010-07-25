@@ -208,10 +208,9 @@
       <DependentUpon>CommandLink.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InfoTextBox.cs" />
-    <Compile Include="DWM\DWMNativeMethods.cs" />
-    <Compile Include="DWM\GlassCompositionChangedEvent.cs" />
-    <Compile Include="DWM\GlassEvents.cs" />
-    <Compile Include="DWM\AeroGlass.cs" />
+    <Compile Include="Dwm\DWMNativeMethods.cs" />
+    <Compile Include="Dwm\GlassEvents.cs" />
+    <Compile Include="Dwm\AeroGlass.cs" />
     <Compile Include="Dialogs\Common\DialogControl.cs" />
     <Compile Include="Dialogs\Common\DialogControlCollection.cs" />
     <Compile Include="Dialogs\Common\DialogsDefaults.cs" />

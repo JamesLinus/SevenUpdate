@@ -30,6 +30,7 @@ using ProtoBuf;
 
 namespace SevenUpdate.Base
 {
+
     #region Application Settings
 
     /// <summary>
@@ -50,7 +51,11 @@ namespace SevenUpdate.Base
         [ProtoMember(2), DataMember]
         public bool IncludeRecommended { get; set; }
 
+        #region INotifyPropertyChanged Members
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
 
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
@@ -76,26 +81,22 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Download and Installs updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember]
-        Install = 0,
+        [ProtoEnum, EnumMember] Install = 0,
 
         /// <summary>
         ///   Downloads Updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember]
-        Download = 1,
+        [ProtoEnum, EnumMember] Download = 1,
 
         /// <summary>
         ///   Only checks and notifies the user of updates
         /// </summary>
-        [ProtoEnum, EnumMember]
-        Notify = 2,
+        [ProtoEnum, EnumMember] Notify = 2,
 
         /// <summary>
         ///   No automatic checking
         /// </summary>
-        [ProtoEnum, EnumMember]
-        Never = 3
+        [ProtoEnum, EnumMember] Never = 3
     }
 
     #endregion

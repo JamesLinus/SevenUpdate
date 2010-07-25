@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace Microsoft.Windows.Shell
+namespace Microsoft.Windows.Dwm
 {
     /// <summary>
     ///   Event argument for The GlassAvailabilityChanged event

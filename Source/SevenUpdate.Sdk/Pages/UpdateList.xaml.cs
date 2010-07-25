@@ -21,7 +21,7 @@
 #region
 
 using System.Windows.Controls;
-using Microsoft.Windows.DWM;
+using Microsoft.Windows.Dwm;
 
 #endregion
 
