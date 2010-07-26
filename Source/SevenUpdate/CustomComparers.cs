@@ -1,4 +1,4 @@
-#region GNU Public License Version 3
+﻿#region GNU Public License Version 3
 
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
@@ -22,38 +22,15 @@
 
 using System;
 using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+using Microsoft.Windows.Controls;
 using SevenUpdate.Base;
 
 #endregion
 
-namespace SevenUpdate.Controls
+namespace SevenUpdate
 {
-    /// <summary>
-    ///   Contains methods that extend the <see cref = "ListView" /> control
-    /// </summary>
-    internal static class ListViewExtensions
+    internal class CustomComparers
     {
-        /// <summary>
-        ///   Limits resizing of a <see cref = "GridViewColumn" />
-        /// </summary>
-        /// <param name = "e">The Thumb object of the <see cref = "GridViewColumn" /> to limit it's size</param>
-        internal static void LimitColumnSize(Thumb e)
-        {
-            var senderAsThumb = e;
-            var header = senderAsThumb.TemplatedParent as GridViewColumnHeader;
-            if (header == null)
-                return;
-            if (!string.IsNullOrEmpty(((string) header.Column.Header)))
-            {
-                if (header.Column.ActualWidth < 125)
-                    header.Column.Width = 125;
-            }
-            else
-                header.Column.Width = 25;
-        }
-
         /// <summary>
         ///   Compares two <see cref = "Importance" /> objects
         /// </summary>

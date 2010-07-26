@@ -92,8 +92,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ListViewExtensions.cs" />
     <Compile Include="Converters.cs" />
+    <Compile Include="CustomComparers.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
       <DependentUpon>InfoBar.xaml</DependentUpon>
     </Compile>
@@ -176,8 +176,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\ListViewCustomComparer.cs" />
-    <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Pages\Options.xaml.cs">
       <DependentUpon>Options.xaml</DependentUpon>
     </Compile>
@@ -231,7 +229,6 @@
     <Resource Include="Images\GreenSide.png" />
     <Resource Include="Images\RedShield.png" />
     <Resource Include="Images\RedSide.png" />
-    <Resource Include="Images\Shield.png" />
     <Resource Include="Images\SideBar.jpg" />
     <Resource Include="Images\SideBar2.jpg" />
     <Resource Include="Images\YellowShield.png" />
@@ -240,9 +237,6 @@
   <ItemGroup>
     <Resource Include="Images\BlueArrow.png" />
     <Resource Include="Images\GreenArrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\ShieldDisabled.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -268,6 +262,10 @@
     <Resource Include="Images\wicon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
+      <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
+      <Name>Windows.Shell</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Admin\SevenUpdate.Admin.csproj">
       <Project>{762D246E-1DF7-4C49-8169-413AD897F8BD}</Project>
       <Name>SevenUpdate.Admin</Name>

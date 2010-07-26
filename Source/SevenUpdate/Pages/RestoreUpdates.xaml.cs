@@ -29,9 +29,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
+using Microsoft.Windows.Controls;
 using SevenUpdate.Base;
-using SevenUpdate.Controls;
 using SevenUpdate.Windows;
 
 #endregion
@@ -46,16 +45,6 @@ namespace SevenUpdate.Pages
         #region Global Vars
 
         /// <summary>
-        ///   The disabled shield image
-        /// </summary>
-        private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
-
-        /// <summary>
-        ///   The UAC shield
-        /// </summary>
-        private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
-
-        /// <summary>
         ///   Gets or Sets a collection of SUH items
         /// </summary>
         private ObservableCollection<Suh> hiddenUpdates;
@@ -68,8 +57,6 @@ namespace SevenUpdate.Pages
         public RestoreUpdates()
         {
             InitializeComponent();
-            if (App.IsAdmin)
-                imgShield.Visibility = Visibility.Collapsed;
             lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
         }
 
@@ -113,7 +100,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            ListViewSorter.SetCustomSorter(lvHiddenUpdates, new ListViewExtensions.SuhSorter());
+            ListViewSorter.SetCustomSorter(lvHiddenUpdates, new CustomComparers.SuhSorter());
         }
 
         #endregion
@@ -172,13 +159,11 @@ namespace SevenUpdate.Pages
             {
                 lblSelectedUpdates.Text += checkedCount == 1 ? App.RM.GetString("Updates") : App.RM.GetString("Update");
                 btnRestore.IsEnabled = true;
-                imgShield.Source = shield;
             }
             else
             {
                 lblSelectedUpdates.Text += App.RM.GetString("Updates");
                 btnRestore.IsEnabled = false;
-                imgShield.Source = disabledShield;
             }
         }
 

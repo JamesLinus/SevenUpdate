@@ -34,8 +34,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using Microsoft.Windows.Controls;
 using SevenUpdate.Base;
-using SevenUpdate.Controls;
+
 
 #endregion
 
@@ -72,8 +73,6 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-            if (App.IsAdmin)
-                btnSave.Content = App.RM.GetString("Save");
         }
 
         #region Methods
@@ -250,7 +249,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Architecture"));
 
-            ListViewSorter.SetCustomSorter(lvApps, new ListViewExtensions.SuaSorter());
+            ListViewSorter.SetCustomSorter(lvApps, new CustomComparers.SuaSorter());
         }
 
         #endregion

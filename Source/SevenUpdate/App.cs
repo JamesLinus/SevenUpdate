@@ -70,11 +70,11 @@ namespace SevenUpdate
         /// </summary>
         internal static Collection<Sui> Applications { get; set; }
 
-        /// <summary>
-        ///   Gets a value indicating if the current user is running on admin privileges
-        /// </summary>
-        /// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
-        internal static bool IsAdmin { get; private set; }
+        ///// <summary>
+        /////   Gets a value indicating if the current user is running on admin privileges
+        ///// </summary>
+        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
+        //internal static bool IsAdmin { get; private set; }
 
         /// <summary>
         ///   Gets a value indicating if an auto check is being performed
@@ -129,13 +129,6 @@ namespace SevenUpdate
             Directory.CreateDirectory(Base.Base.UserStore);
             Base.Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
             RM = new ResourceManager("SevenUpdate.Resources.UIStrings", ResourceAssembly);
-            var id = WindowsIdentity.GetCurrent();
-
-            if (id != null)
-            {
-                var p = new WindowsPrincipal(id);
-                IsAdmin = p.IsInRole(WindowsBuiltInRole.Administrator);
-            }
 
             if (args.Length > 0)
             {

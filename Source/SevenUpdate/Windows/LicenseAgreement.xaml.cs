@@ -27,7 +27,6 @@ using System.Net;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 
 #endregion
 
@@ -39,16 +38,6 @@ namespace SevenUpdate.Windows
     public sealed partial class LicenseAgreement : Window
     {
         #region Global Vars
-
-        /// <summary>
-        ///   The disabled shield image
-        /// </summary>
-        private readonly BitmapImage disabledShield = new BitmapImage(new Uri("/Images/ShieldDisabled.png", UriKind.Relative));
-
-        /// <summary>
-        ///   The UAC shield
-        /// </summary>
-        private readonly BitmapImage shield = new BitmapImage(new Uri("/Images/Shield.png", UriKind.Relative));
 
         /// <summary>
         ///   Current index
@@ -154,7 +143,7 @@ namespace SevenUpdate.Windows
             if (licenseInformation.Count < 1 || licenseInformation == null)
                 return true;
             if (licenseInformation.Count > 1)
-                tbAction.Text = App.RM.GetString("Next");
+                btnAction.Content = App.RM.GetString("Next");
 
             return ShowDialog();
         }
@@ -207,10 +196,6 @@ namespace SevenUpdate.Windows
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
             Cursor = Cursors.Arrow;
-            if (licenseInformation.Count == 1 && !App.IsAdmin)
-                imgAdminShield.Visibility = Visibility.Visible;
-            else
-                imgAdminShield.Visibility = Visibility.Collapsed;
         }
 
         #region Buttons
@@ -240,7 +225,6 @@ namespace SevenUpdate.Windows
         private void Accept_Checked(object sender, RoutedEventArgs e)
         {
             btnAction.IsEnabled = true;
-            imgAdminShield.Source = shield;
         }
 
         /// <summary>
@@ -250,13 +234,11 @@ namespace SevenUpdate.Windows
         {
             if (App.Applications.Count != 1)
             {
-                btnAction.IsEnabled = true;
-                imgAdminShield.Source = shield;
+                btnAction.IsEnabled = true;;
             }
             else
             {
                 btnAction.IsEnabled = false;
-                imgAdminShield.Source = disabledShield;
             }
         }
 
@@ -273,7 +255,7 @@ namespace SevenUpdate.Windows
             }
             index++;
 
-            if ((tbAction.Text) == App.RM.GetString("Next"))
+            if (btnAction.Content.ToString() == App.RM.GetString("Next"))
             {
                 tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[index].Title;
                 var mcFlowDoc = new FlowDocument();
@@ -285,16 +267,14 @@ namespace SevenUpdate.Windows
                 rbAccept.IsChecked = false;
                 rbDecline.IsChecked = false;
             }
-            if ((tbAction.Text) == App.RM.GetString("Finish"))
+            if (btnAction.Content.ToString() == App.RM.GetString("Finish"))
             {
                 DialogResult = App.Applications.Count > 0;
                 Close();
             }
             if (index != licenseInformation.Count - 1)
                 return;
-            tbAction.Text = App.RM.GetString("Finish");
-            if (!App.IsAdmin && App.Applications.Count > 0)
-                imgAdminShield.Visibility = Visibility.Visible;
+            btnAction.Content = App.RM.GetString("Finish");
         }
 
         #endregion

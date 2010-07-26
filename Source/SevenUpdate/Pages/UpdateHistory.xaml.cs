@@ -26,8 +26,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Windows.Controls;
 using SevenUpdate.Base;
-using SevenUpdate.Controls;
 using SevenUpdate.Windows;
 
 #endregion
@@ -96,7 +96,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
 
-            ListViewSorter.SetCustomSorter(lvUpdateHistory, new ListViewExtensions.SuhSorter());
+            ListViewSorter.SetCustomSorter(lvUpdateHistory, new CustomComparers.SuhSorter());
         }
 
         #endregion

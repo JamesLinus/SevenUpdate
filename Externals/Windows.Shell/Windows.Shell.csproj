@@ -208,7 +208,10 @@
       <DependentUpon>CommandLink.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\InfoTextBox.cs" />
-    <Compile Include="Dwm\DWMNativeMethods.cs" />
+    <Compile Include="Controls\ListViewCustomComparer.cs" />
+    <Compile Include="Controls\ListViewExtensions.cs" />
+    <Compile Include="Controls\ListViewSorter.cs" />
+    <Compile Include="Controls\UacButton.cs" />
     <Compile Include="Dwm\GlassEvents.cs" />
     <Compile Include="Dwm\AeroGlass.cs" />
     <Compile Include="Dialogs\Common\DialogControl.cs" />
@@ -358,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\BackArrowDisabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShieldDisabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

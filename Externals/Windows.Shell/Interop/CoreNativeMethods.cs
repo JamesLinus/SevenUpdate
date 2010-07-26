@@ -17,9 +17,6 @@ namespace Microsoft.Windows.Internal
     /// </summary>
     public static class CoreNativeMethods
     {
-        #region Common Defintions
-
-        #endregion
 
         #region General Definitions
 
@@ -114,6 +111,35 @@ namespace Microsoft.Windows.Internal
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
+        [DllImport("shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern bool IsUserAnAdmin();
+
+        [DllImport("DwmApi.dll")]
+        internal static extern int DwmEnableBlurBehindWindow(IntPtr hwnd, ref DwmBlurBehind bb);
+
+        [DllImport("DwmApi.dll")]
+        internal static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS m);
+
+        [DllImport("DwmApi.dll", PreserveSig = false)]
+        internal static extern bool DwmIsCompositionEnabled();
+
+        [DllImport("DwmApi.dll")]
+        internal static extern int DwmEnableComposition(CompositionEnable compositionAction);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowRect(IntPtr hwnd, ref RECT rect);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetClientRect(IntPtr hwnd, ref RECT rect);
+
+        [DllImport("gdi32")]
+        public static extern IntPtr CreateEllipticRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+        [DllImport("gdi32")]
+        public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
         #endregion
 
         #region Window Handling
@@ -184,10 +210,16 @@ namespace Microsoft.Windows.Internal
         internal const int DWM_BB_BLURREGION = 0x00000002; // hRgnBlur has been specified
         internal const int DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004; // fTransitionOnMaximized has been specified
 
-        #region Nested type: DWM_BLURBEHIND
+        internal static class DwmMessages
+        {
+            internal const int WmDwmCompositionChanged = 0x031E;
+            internal const int WmDwmnRenderingChanged = 0x031F;
+        }
+
+        #region Nested type: DwmBlurBehind
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct DWM_BLURBEHIND
+        internal struct DwmBlurBehind
         {
             public DwmBlurBehindDwFlags dwFlags;
             public bool fEnable;
@@ -200,7 +232,7 @@ namespace Microsoft.Windows.Internal
         #region Nested type: DWM_PRESENT_PARAMETERS
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct DWM_PRESENT_PARAMETERS
+        internal struct DwmPresentParameters
         {
             internal int cbSize;
             internal bool fQueue;
@@ -215,7 +247,7 @@ namespace Microsoft.Windows.Internal
         #region Nested type: DWM_THUMBNAIL_PROPERTIES
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct DWM_THUMBNAIL_PROPERTIES
+        internal struct DwmThumbnailProperties
         {
             internal DwmThumbnailFlags dwFlags;
             internal RECT rcDestination;
@@ -231,9 +263,9 @@ namespace Microsoft.Windows.Internal
 
         internal enum DwmBlurBehindDwFlags : uint
         {
-            DWM_BB_ENABLE = 0x00000001,
-            DWM_BB_BLURREGION = 0x00000002,
-            DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004
+            DwmBBEnable = 0x00000001,
+            DwmBBBlurRegion = 0x00000002,
+            DwmBBTransitiononMaximized = 0x00000004
         }
 
         #endregion
@@ -251,15 +283,34 @@ namespace Microsoft.Windows.Internal
 
         #endregion
 
+        internal enum CompositionEnable : uint
+        {
+            DwmEcDisableComposition = 0,
+            DwmEcEnableComposition = 1
+        }
+
         #region Nested type: MARGINS
 
         [StructLayout(LayoutKind.Sequential)]
-        internal struct MARGINS
+        public struct MARGINS
         {
             public int cxLeftWidth; // width of left border that retains its size
             public int cxRightWidth; // width of right border that retains its size
             public int cyTopHeight; // height of top border that retains its size
             public int cyBottomHeight; // height of bottom border that retains its size
+
+            public MARGINS(bool fullWindow)
+            {
+                cxLeftWidth = cxRightWidth = cyTopHeight = cyBottomHeight = (fullWindow ? -1 : 0);
+            }
+
+            public MARGINS(int left, int top, int right, int bottom)
+            {
+                cxLeftWidth = left;
+                cxRightWidth = right;
+                cyTopHeight = top;
+                cyBottomHeight = bottom;
+            }
         } ;
 
         #endregion

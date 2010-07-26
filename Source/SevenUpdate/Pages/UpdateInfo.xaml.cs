@@ -32,8 +32,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Microsoft.Windows.Controls;
 using SevenUpdate.Base;
-using SevenUpdate.Controls;
 using SevenUpdate.Converters;
 
 #endregion
@@ -149,7 +149,7 @@ namespace SevenUpdate.Pages
         public UpdateInfo()
         {
             InitializeComponent();
-            if (App.IsAdmin)
+            if (Microsoft.Windows.Internal.CoreNativeMethods.IsUserAnAdmin())
                 cmiHideUpdate.Icon = null;
         }
 
@@ -282,7 +282,8 @@ namespace SevenUpdate.Pages
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
             var myView = (CollectionView) CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
-            myView.GroupDescriptions.Add(groupDescription);
+            if (myView.GroupDescriptions != null)
+                myView.GroupDescriptions.Add(groupDescription);
 
             AddSortBinding();
         }
@@ -303,7 +304,7 @@ namespace SevenUpdate.Pages
             col = gv.Columns[3];
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
-            ListViewSorter.SetCustomSorter(lvUpdates, new ListViewExtensions.UpdateSorter());
+            ListViewSorter.SetCustomSorter(lvUpdates, new CustomComparers.UpdateSorter());
         }
 
         /// <summary>

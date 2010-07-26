@@ -1,30 +1,30 @@
-﻿<Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Software License Agreement" MinWidth="640" MinHeight="390" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" SizeToContent="Manual" Width="640" Height="390" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" Icon="/Images/wicon.ico">
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="246*" />
-			<RowDefinition Height="21*" />
-			<RowDefinition Height="44" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="12" />
-			<ColumnDefinition Width="596*" />
-			<ColumnDefinition Width="10" />
-		</Grid.ColumnDefinitions>
-		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Downloading License Agreement, please wait..." VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
-		<StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" VerticalContentAlignment="Center" Click="Action_Click" IsEnabled="False">
-				<StackPanel Orientation="Horizontal">
-					<Image Name="imgAdminShield" Source="pack://application:,,,./Images/ShieldDisabled.png" Stretch="None" Margin="0,0,2,0" IsEnabled="True" Visibility="Collapsed" />
-					<TextBlock Name="tbAction" Text="Finish"></TextBlock>
-				</StackPanel>
-			</Button>
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" IsCancel="True" Click="Cancel_Click" />
-		</StackPanel>
-		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Top" Grid.RowSpan="2" Margin="20,0.944,0,0">
-			<RadioButton Content="Accept the terms" Name="rbAccept" Padding="4,0,0,7" MinHeight="17" Checked="Accept_Checked" IsEnabled="False" />
-			<RadioButton Content="Decline" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
-		</StackPanel>
-		<RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait"></RichTextBox>
-	</Grid>
+﻿<Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Software License Agreement" MinWidth="640" MinHeight="390" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" SizeToContent="Manual" Width="640"
+        Height="390" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" Icon="/Images/wicon.ico">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="246*" />
+            <RowDefinition Height="21*" />
+            <RowDefinition Height="44" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="12" />
+            <ColumnDefinition Width="596*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Downloading License Agreement, please wait..." VerticalAlignment="Bottom"
+                Grid.Column="1" Margin="0,0,0,12" />
+        <StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3">
+            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="Action_Click" IsEnabled="False" Content="Finish" />
+            <Button Content="Cancel" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel_Click" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Top" Grid.RowSpan="2" Margin="20,0.944,0,0">
+            <RadioButton Content="Accept the terms" Name="rbAccept" Padding="4,0,0,7" MinHeight="17" Checked="Accept_Checked" IsEnabled="False" />
+            <RadioButton Content="Decline" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
+        </StackPanel>
+        <RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False"
+                IsUndoEnabled="False" Focusable="False" Cursor="Wait"></RichTextBox>
+    </Grid>
 </Window>
