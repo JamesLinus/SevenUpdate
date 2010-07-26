@@ -1,6 +1,6 @@
 ﻿#region GNU Public License Version 3
 
-// Copyright 2007-2010 Robert Baker, Seven Software.
+// Copyright 2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //   
 //      Seven Update is free software: you can redistribute it and/or modify

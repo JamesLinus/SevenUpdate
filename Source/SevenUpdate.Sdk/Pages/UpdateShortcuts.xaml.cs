@@ -77,13 +77,14 @@ namespace SevenUpdate.Sdk.Pages
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-               tbxShortcutPath.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxShortcutPath.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
         }
+
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbxShortcutIcon.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
         }

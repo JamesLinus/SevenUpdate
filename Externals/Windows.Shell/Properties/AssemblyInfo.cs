@@ -10,11 +10,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("Windows.Shell")]
-[assembly: AssemblyDescription("Windows.Shell")]
+[assembly: AssemblyTitle("WPF Shell Integration Library")]
+[assembly: AssemblyDescription("WPF Shell Integration Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
-[assembly: AssemblyProduct("Windows.Shell")]
+[assembly: AssemblyProduct("WPF Shell Integration Library")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -138,10 +138,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-            {
                 AddFiles(Directory.GetFiles(cfd.FileName));
-            }
-            
         }
     }
 }

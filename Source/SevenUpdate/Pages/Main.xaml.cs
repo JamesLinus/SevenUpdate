@@ -571,6 +571,7 @@ namespace SevenUpdate.Pages
             infoBar.lblSelectedUpdates.Visibility = Visibility.Collapsed;
             infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
             infoBar.btnAction.Visibility = Visibility.Collapsed;
+            infoBar.btnAction.IsShieldNeeded = false;
             infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
             infoBar.lblStatus.Visibility = Visibility.Collapsed;
 
@@ -586,7 +587,7 @@ namespace SevenUpdate.Pages
 
                     infoBar.lblHeading.Text = App.RM.GetString("UpdatesCanceled");
                     infoBar.lblStatus.Text = App.RM.GetString("CancelInstallation");
-                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("TryAgain");
 
                     infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["RedShield"];
                     infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["RedSide"];
@@ -599,7 +600,7 @@ namespace SevenUpdate.Pages
                     #region GUI Code
 
                     infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Content = App.RM.GetString("CheckForUpdates");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("CheckForUpdates");
 
                     infoBar.lblStatus.Visibility = Visibility.Visible;
                     infoBar.lblHeading.Text = App.RM.GetString("CheckForUpdatesHeading");
@@ -664,10 +665,11 @@ namespace SevenUpdate.Pages
                     infoBar.lblStatus.Visibility = Visibility.Visible;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
                     infoBar.btnAction.Visibility = Visibility.Visible;
+                    infoBar.btnAction.IsShieldNeeded = true;
 
                     infoBar.lblHeading.Text = App.RM.GetString("DownloadingUpdates") + "...";
                     infoBar.lblStatus.Text = App.RM.GetString("PreparingDownload");
-                    infoBar.btnAction.Content = App.RM.GetString("StopDownload");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("StopDownload");
 
                     infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
                     infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
@@ -680,11 +682,12 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
+                    infoBar.btnAction.IsShieldNeeded = true;
                     infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
                     infoBar.line.Visibility = Visibility.Visible;
 
                     infoBar.lblHeading.Text = App.RM.GetString("UpdatesReadyInstalled");
-                    infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("InstallUpdates");
 
                     infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
                     infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
@@ -701,7 +704,7 @@ namespace SevenUpdate.Pages
                     infoBar.lblStatus.Visibility = Visibility.Visible;
 
                     infoBar.lblHeading.Text = App.RM.GetString("ErrorOccurred");
-                    infoBar.btnAction.Content = App.RM.GetString("TryAgain");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("TryAgain");
                     infoBar.lblStatus.Text = errorDescription ?? App.RM.GetString("UnknownErrorOccurred");
 
                     infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["RedSide"];
@@ -715,11 +718,12 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
+                    infoBar.btnAction.IsShieldNeeded = true;
                     infoBar.btnAction.Visibility = Visibility.Visible;
                     infoBar.pbProgressBar.Visibility = Visibility.Visible;
                     infoBar.lblStatus.Visibility = Visibility.Visible;
 
-                    infoBar.btnAction.Content = App.RM.GetString("StopInstallation");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("StopInstallation");
                     infoBar.lblStatus.Text = App.RM.GetString("PreparingInstall");
                     infoBar.lblHeading.Text = App.RM.GetString("InstallingUpdates") + "...";
 
@@ -739,6 +743,7 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
+                    infoBar.btnAction.IsShieldNeeded = true;
                     infoBar.lblStatus.Visibility = Visibility.Visible;
 
                     infoBar.lblHeading.Text = App.RM.GetString("UpdatesInstalled");
@@ -810,7 +815,7 @@ namespace SevenUpdate.Pages
                     infoBar.btnAction.Visibility = Visibility.Visible;
                     infoBar.lblStatus.Visibility = Visibility.Visible;
 
-                    infoBar.btnAction.Content = App.RM.GetString("RestartNow");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("RestartNow");
                     infoBar.lblHeading.Text = App.RM.GetString("RebootNeeded");
                     infoBar.lblStatus.Text = App.RM.GetString("SaveAndReboot");
 
@@ -825,16 +830,16 @@ namespace SevenUpdate.Pages
 
                     #region GUI Code
 
-                    infoBar.spnlUpdateInfo.Visibility = Visibility.Visible;
+                    infoBar.btnAction.IsShieldNeeded = true;
                     infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
                     infoBar.lblViewOptionalUpdates.Visibility = Visibility.Visible;
                     infoBar.lblViewImportantUpdates.Visibility = Visibility.Visible;
                     infoBar.line.Visibility = Visibility.Visible;
-
+                    infoBar.spnlUpdateInfo.Visibility = Visibility.Visible;
                     infoBar.line.Y1 = 25;
 
                     infoBar.lblHeading.Text = App.RM.GetString("DownloadAndInstallUpdates");
-                    infoBar.btnAction.Content = App.RM.GetString("InstallUpdates");
+                    infoBar.btnAction.ButtonText = App.RM.GetString("InstallUpdates");
 
                     infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
                     infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
@@ -1038,18 +1043,18 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Action_Click(object sender, RoutedEventArgs e)
         {
-            if (infoBar.btnAction.Content.ToString() == App.RM.GetString("InstallUpdates"))
+            if (infoBar.btnAction.ButtonText == App.RM.GetString("InstallUpdates"))
                 DownloadInstallUpdates();
-            else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("StopDownload") || infoBar.btnAction.Content.ToString() == App.RM.GetString("StopInstallation"))
+            else if (infoBar.btnAction.ButtonText == App.RM.GetString("StopDownload") || infoBar.btnAction.ButtonText == App.RM.GetString("StopInstallation"))
             {
                 //Cancel installation of updates
                 if (AdminClient.AbortInstall())
                     SetUI(UILayout.Canceled);
                 return;
             }
-            else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("TryAgain") || infoBar.btnAction.Content.ToString() == App.RM.GetString("CheckForUpdates"))
+            else if (infoBar.btnAction.ButtonText == App.RM.GetString("TryAgain") || infoBar.btnAction.ButtonText == App.RM.GetString("CheckForUpdates"))
                 CheckForUpdates();
-            else if (infoBar.btnAction.Content.ToString() == App.RM.GetString("RestartNow"))
+            else if (infoBar.btnAction.ButtonText == App.RM.GetString("RestartNow"))
                 Base.Base.StartProcess("shutdown.exe", "-r -t 00");
         }
 

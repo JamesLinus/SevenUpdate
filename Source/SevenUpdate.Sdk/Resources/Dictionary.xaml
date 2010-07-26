@@ -38,8 +38,7 @@
 								</Setter.Value>
 							</Setter>
 						</Trigger>
-						<Trigger Property="IsDefaulted" Value="true">
-						</Trigger>
+						<Trigger Property="IsDefaulted" Value="true"></Trigger>
 						<Trigger Property="IsMouseOver" Value="true">
 							<Setter TargetName="img" Property="BitmapEffect">
 								<Setter.Value>

@@ -1,3 +1,4 @@
+<!-- Copyright (c) Robert Baker, Seven Software -->
 <Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="Update History" MinWidth="850" MinHeight="500" ShowsNavigationUI="False"
@@ -44,7 +45,7 @@
         </ListView>
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
-            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore" Click="Restore_Click" IsEnabled="False" Content="Restore" Padding="5,1" />
+            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore" Click="Restore_Click" Padding="5,1" ButtonText="Restore" IsEnabled="False" />
             <Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" Command="NavigationCommands.BrowseBack" />
         </StackPanel>
         <TextBlock Grid.Row="2" HorizontalAlignment="Left" Name="lblSelectedUpdates" Text="Total Selected: 0 updates" VerticalAlignment="Center" Margin="20,0,0,0" />

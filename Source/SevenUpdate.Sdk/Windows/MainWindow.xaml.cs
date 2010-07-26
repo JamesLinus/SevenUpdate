@@ -28,7 +28,6 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Windows.Dwm;
-using Microsoft.Windows.Internal;
 using SevenUpdate.Sdk.Properties;
 
 #endregion

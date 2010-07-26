@@ -1,42 +1,50 @@
-﻿<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" mc:Ignorable="d" MinWidth="850" MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="Seven Update" KeepAlive="True">
-	<!-- Grid-->
-	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="24" />
-			<ColumnDefinition Width="Auto" />
-		</Grid.ColumnDefinitions>
-		<!-- Sidebar image -->
-		<Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
-		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" />
+﻿<!-- Copyright (c) Robert Baker, Seven Software -->
+<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" mc:Ignorable="d"
+        MinWidth="850" MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="Seven Update" KeepAlive="True">
+    <!-- Grid-->
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="24" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <!-- Sidebar image -->
+        <Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" />
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="5" Foreground="White" Cursor="Hand"
+                    MouseDown="CheckForUpdates_MouseDown" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="5" Foreground="White" Cursor="Hand"
+                    MouseDown="ChangeSettings_MouseDown" />
 
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="5" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="5" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" />
-		</StackPanel>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Cursor="Hand" Padding="5" MouseDown="About_MouseDown" />
-		<StackPanel Grid.Column="2" HorizontalAlignment="Right">
-			<TextBlock FontSize="16" Foreground="#FF003399" Padding="5" Text="Seven Update" Margin="0,20" />
-			<!-- InfoBar control -->
-			<Border BorderThickness="1" BorderBrush="LightGray">
-				<ib:InfoBar x:Name="infoBar" MinWidth="600" />
-			</Border>
-			<Grid Margin="0,20">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<TextBlock FontWeight="Normal" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,10,0" Padding="5" Text="Most recent check for updates:" VerticalAlignment="Top" />
-				<TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="lblUpdatesInstalled" Padding="5" Text="Never" VerticalAlignment="Top" />
-				<TextBlock FontWeight="Normal" Grid.Row="2" HorizontalAlignment="Left" Padding="5" Text="Updates were installed:" VerticalAlignment="Top" />
-				<TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="lblRecentCheck" Padding="5" Text="Never" VerticalAlignment="Top" DataContext="{Binding}" />
-			</Grid>
-		</StackPanel>
-	</Grid>
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="5" Foreground="White" Cursor="Hand"
+                    MouseDown="ViewUpdateHistory_MouseDown" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="5" Foreground="White"
+                    Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" />
+        </StackPanel>
+        <TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,20" VerticalAlignment="Bottom" Cursor="Hand"
+                Padding="5" MouseDown="About_MouseDown" />
+        <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+            <TextBlock FontSize="16" Foreground="#FF003399" Padding="5" Text="Seven Update" Margin="0,20" />
+            <!-- InfoBar control -->
+            <Border BorderThickness="1" BorderBrush="LightGray">
+                <ib:InfoBar x:Name="infoBar" MinWidth="600" />
+            </Border>
+            <Grid Margin="0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock FontWeight="Normal" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,10,0" Padding="5" Text="Most recent check for updates:" VerticalAlignment="Top" />
+                <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="lblUpdatesInstalled" Padding="5" Text="Never" VerticalAlignment="Top" />
+                <TextBlock FontWeight="Normal" Grid.Row="2" HorizontalAlignment="Left" Padding="5" Text="Updates were installed:" VerticalAlignment="Top" />
+                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="lblRecentCheck" Padding="5" Text="Never" VerticalAlignment="Top" DataContext="{Binding}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
 </Page>

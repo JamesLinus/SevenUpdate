@@ -143,7 +143,7 @@ namespace SevenUpdate.Windows
             if (licenseInformation.Count < 1 || licenseInformation == null)
                 return true;
             if (licenseInformation.Count > 1)
-                btnAction.Content = App.RM.GetString("Next");
+                btnAction.ButtonText = App.RM.GetString("Next");
 
             return ShowDialog();
         }
@@ -190,7 +190,7 @@ namespace SevenUpdate.Windows
             para.Inlines.Add(r);
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
-
+            btnAction.IsShieldNeeded = licenseInformation.Count == 1;
             tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[0].Title;
             rbAccept.IsEnabled = true;
             rbDecline.IsEnabled = true;
@@ -255,7 +255,7 @@ namespace SevenUpdate.Windows
             }
             index++;
 
-            if (btnAction.Content.ToString() == App.RM.GetString("Next"))
+            if (btnAction.ButtonText == App.RM.GetString("Next"))
             {
                 tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[index].Title;
                 var mcFlowDoc = new FlowDocument();
@@ -267,14 +267,16 @@ namespace SevenUpdate.Windows
                 rbAccept.IsChecked = false;
                 rbDecline.IsChecked = false;
             }
-            if (btnAction.Content.ToString() == App.RM.GetString("Finish"))
+            if (btnAction.ButtonText == App.RM.GetString("Finish"))
             {
                 DialogResult = App.Applications.Count > 0;
                 Close();
             }
             if (index != licenseInformation.Count - 1)
                 return;
-            btnAction.Content = App.RM.GetString("Finish");
+            btnAction.ButtonText = App.RM.GetString("Finish");
+            if(App.Applications.Count > 0)
+                btnAction.IsShieldNeeded = true;
         }
 
         #endregion

@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -46,14 +66,23 @@ namespace Microsoft.Windows.Controls
                                                                                                                                       FrameworkPropertyMetadataOptions.Inherits |
                                                                                                                                       FrameworkPropertyMetadataOptions.AffectsRender,
                                                                                                                                       OnIsShieldNeededChanged));
+
+
+        /// <summary>
+        ///   Dependency Property - Specifies the text to dispay on the button
+        /// </summary>
+        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register("ButtonText", typeof(string), typeof(UacButton),
+                                                                                                        new FrameworkPropertyMetadata(null,
+                                                                                                                                      FrameworkPropertyMetadataOptions.Inherits |
+                                                                                                                                      FrameworkPropertyMetadataOptions.AffectsRender,
+                                                                                                                                      OnButtonTextChanged));
         /// <summary>
         ///   Dependency Property - The shield icon to display
         /// </summary>
         private static readonly DependencyProperty ShieldIconProperty;
 
         private static bool isShieldNeeded;
-        private UacShieldAdorner adorner;
-        private bool isShieldVisible;
+        private static string buttonText = "";
 
         #endregion
 
@@ -86,6 +115,11 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Indicates thst the shield is desired and the OS supports elevation
         /// </summary>
+        public string ButtonText { get { return ((string) GetValue(ButtonTextProperty)); } set { SetValue(ButtonTextProperty, value); } }
+
+        /// <summary>
+        ///   Indicates thst the shield is desired and the OS supports elevation
+        /// </summary>
         public bool IsShieldDisplayed { get { return isShieldNeeded && IsShieldNeeded; } }
 
         /// <summary>
@@ -111,8 +145,11 @@ namespace Microsoft.Windows.Controls
         {
             ShieldIconProperty = DependencyProperty.Register("ShieldIcon", typeof (ImageSource), typeof (Button),
                                                              new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
+
+            ButtonTextProperty = DependencyProperty.Register("ButtonText", typeof(string), typeof(Button),
+                                                 new FrameworkPropertyMetadata(buttonText, FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
 /*
- *			uacsb_needs_shield_display indicates if the current OS/application/user needs a UAC shield displayed.
+ *			indicates if the current OS/application/user needs a UAC shield displayed.
  *			If the OS is not UAC enabled or the users is already elevated then no shield is required.
  *			If IsShieldDisplayed is false (no shield required) the most of this class becomes a no-op.
  *			
@@ -121,6 +158,8 @@ namespace Microsoft.Windows.Controls
  * */
             if (Environment.OSVersion.Version.Major >= 6) // Vista or higher
                 isShieldNeeded = !Internal.CoreNativeMethods.IsUserAnAdmin(); // If already an admin don't bother
+
+            
         }
 
         /// <summary>
@@ -129,7 +168,16 @@ namespace Microsoft.Windows.Controls
         public UacButton()
         {
             Loaded += OnLoaded;
-            
+            IsEnabledChanged+=UacButton_IsEnabledChanged;
+            var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
+
+            var imgShield = new System.Windows.Controls.Image {Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0,0,5,0)};
+            stackPanel.Children.Add(imgShield);
+
+            var textBlock = new TextBlock {Text = buttonText};
+            stackPanel.Children.Add(textBlock);
+            Content = stackPanel;
+
         }
 
         void UacButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -145,18 +193,6 @@ namespace Microsoft.Windows.Controls
 
         #region UACShieldButton - Methods
 
-        /// <summary>
-        ///   Creates/Gets current UACShieldAdorner based on the <see cref = "ShieldIcon" />
-        /// </summary>
-        /// <remarks>
-        ///   If there is no current, a new UACShieldAdorner is created wit the current <see cref = "ShieldIcon" />
-        ///   and made current.  The current UACShieldAdorner is returned.
-        /// </remarks>
-        private UacShieldAdorner GetUacShieldAdorner()
-        {
-            //Content = "     " + Content;
-            return adorner ?? (adorner = new UacShieldAdorner(this, ShieldIcon));
-        }
 
         /// <summary>
         ///   Returns current "actual" ToolTip
@@ -178,58 +214,50 @@ namespace Microsoft.Windows.Controls
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (IsShieldDisplayed)
-                ShieldAdormentAdd();
             ToolTip = GetToolTip();
-        }
-
-        /// <summary>
-        ///   Add the shield image as an adorner
-        /// </summary>
-        private void ShieldAdormentAdd()
-        {
-            if (!isShieldVisible)
-            {
-                try
-                {
-                    var adornerLayer = AdornerLayer.GetAdornerLayer(this);
-                    if (adornerLayer != null)
-                        adornerLayer.Add(GetUacShieldAdorner());
-                }
-                catch
-                {
-                }
-                isShieldVisible = true;
-                IsEnabledChanged += UacButton_IsEnabledChanged;
-                ShieldIcon = IsEnabled ? Shield : ShieldDisabled;
-
-            }
-        }
-
-        /// <summary>
-        ///   Removes the shield image adorner
-        /// </summary>
-        private void ShieldAdormentRemove()
-        {
-            if (isShieldVisible)
-            {
-                try
-                {
-                    var adornerLayer = AdornerLayer.GetAdornerLayer(this);
-                    if (adornerLayer != null)
-                        adornerLayer.Remove(GetUacShieldAdorner());
-                }
-                catch
-                {
-                }
-                isShieldVisible = false;
-                IsEnabledChanged -= UacButton_IsEnabledChanged;
-            }
         }
 
         #endregion
 
         #region UACShieldButton - Methods - Dependency Property Callbacks
+
+        /// <summary>
+        ///   Handles a change to the <see cref = "ShieldIcon" /> property
+        /// </summary>
+        /// <param name = "obj"></param>
+        /// <param name = "e"></param>
+        private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+            var me = (UacButton)obj;
+            var sp = ((StackPanel)me.Content);
+            var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
+            if (imageShield != null)
+            {
+                imageShield.Source = (ImageSource) e.NewValue;
+            }
+            me.ToolTip = me.GetToolTip();;
+            me.FirePropertyChangedEvent("ShieldIcon");
+        }
+
+        /// <summary>
+        ///   Handles a change to the <see cref = "ButtonText" /> property
+        /// </summary>
+        /// <param name = "obj"></param>
+        /// <param name = "e"></param>
+        private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        {
+
+            var me = (UacButton)obj;
+            var stackPanel = ((StackPanel)me.Content);
+            if (stackPanel != null)
+            {
+                var textBlock = ((TextBlock)stackPanel.Children[1]);
+                if (textBlock != null)
+                    textBlock.Text = e.NewValue.ToString();
+            }
+            me.ToolTip = me.GetToolTip();
+            me.FirePropertyChangedEvent("ButtonText");
+        }
 
         /// <summary>
         ///   Handles a change to the <see cref = "IsShieldNeeded" /> property
@@ -244,47 +272,16 @@ namespace Microsoft.Windows.Controls
         /// </remarks>
         private static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            bool showShield = (bool) e.NewValue && isShieldNeeded;
+            var showShield = (bool) e.NewValue && isShieldNeeded;
             var me = (UacButton) obj;
-
-            if (showShield)
-                me.ShieldAdormentAdd();
-            else
-                me.ShieldAdormentRemove();
+            var sp = ((StackPanel) me.Content);
+            var imageShield = ((System.Windows.Controls.Image) sp.Children[0]);
+           if(imageShield != null)
+            {
+                imageShield.Visibility = showShield ? Visibility.Visible : Visibility.Collapsed;
+            }
             me.ToolTip = me.GetToolTip();
             me.FirePropertyChangedEvent("IsShieldNeeded");
-            me.MinWidth = me.ActualWidth + 16;
-        }
-
-        /// <summary>
-        ///   Handles a change to the <see cref = "ShieldIcon" /> property
-        /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
-        /// <remarks>
-        ///   Removes any exising adorner
-        ///   <para>
-        ///     Clears the adorner to force a new one to be created when needed.
-        ///   </para>
-        ///   <para>
-        ///     If <see cref = "IsShieldNeeded" /> is ture, it adds the new UACShieldAdorner
-        ///   </para>
-        /// </remarks>
-        private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
-        {
-            var me = (UacButton) obj;
-
-/*
- *			Remove any existing adorner with the old image
- * */
-            me.ShieldAdormentRemove();
-/*
- *			Force a new UACShieldAdorner to be created on next use
- * */
-            me.adorner = null;
-            if (me.IsShieldDisplayed)
-                me.ShieldAdormentAdd();
-            me.FirePropertyChangedEvent("ShieldIcon");
         }
 
         #endregion
@@ -297,68 +294,6 @@ namespace Microsoft.Windows.Controls
     }
 
     #endregion
-
-    #endregion
-
-    #region Class UACShieldAdorner
-
-    /// <summary>
-    ///   Provides an adorner to display the provided shield icon
-    /// </summary>
-    public class UacShieldAdorner : Adorner
-    {
-
-        #region UACShieldAdorner - Fields
-
-        private FrameworkElement adornedElement;
-        private ImageSource imageSource;
-
-        #endregion
-
-        #region UACShieldAdorner - Constructors
-
-        /// <summary>
-        ///   Creates an instance of the <see cref = "UacShieldAdorner" /> class
-        /// </summary>
-        /// <param name = "adornedElement">The <see cref = "FrameworkElement" />to adorn.
-        ///   Typically this will be an instance of the <see cref = "UacButton" />class</param>
-        /// <param name = "shieldImage"></param>
-        public UacShieldAdorner(FrameworkElement adornedElement, ImageSource shieldImage) : base(adornedElement)
-        {
-            this.adornedElement = adornedElement;
-            imageSource = shieldImage;
-        }
-
-        #endregion
-
-        #region UACShieldAdorner - Methods
-
-        /// <summary>
-        ///   Overrides <see cref = "Adorner.OnRender" />to draw the shield image
-        ///   at a given size and location.
-        /// </summary>
-        /// <param name = "drawingContext"></param>
-        /// <remarks>
-        ///   The size of the rectangle to use to display the image is determined here
-        ///   instead of once in the constructor so that it will automaticaly
-        ///   resize as its hosting element resizes.
-        /// </remarks>
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            double maxHeight = adornedElement.ActualHeight - 4;
-
-            base.OnRender(drawingContext);
-            if (adornedElement.Visibility == Visibility.Visible && maxHeight > 0)
-            {
-                double imageHeight = Math.Min(maxHeight, imageSource.Height);
-                double yOffset = (adornedElement.ActualHeight - imageHeight)/2.0;
-                var rect = new Rect(5, yOffset, (imageSource.Width*imageHeight)/imageSource.Height, imageHeight);
-                drawingContext.DrawImage(imageSource, rect);
-            }
-        }
-
-        #endregion
-    }
 
     #endregion
 }
