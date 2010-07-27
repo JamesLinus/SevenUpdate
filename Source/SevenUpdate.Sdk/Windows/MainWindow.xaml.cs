@@ -28,6 +28,7 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using Microsoft.Windows.Dwm;
+using Microsoft.Windows.Internal;
 using SevenUpdate.Sdk.Properties;
 
 #endregion
@@ -47,6 +48,18 @@ namespace SevenUpdate.Sdk.Windows
             InitializeComponent();
 
             NavService = NavigationService;
+
+            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+        }
+
+        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            Background = e.IsGlassEnabled ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.White;
+
+            if (!e.IsGlassEnabled)
+                return;
+            AeroGlass.EnableGlass(this);
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
         }
 
         /// <summary>
@@ -64,7 +77,8 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new Margins(0, 32, 0, 44), this);
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
+            Background = AeroGlass.IsEnabled ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.White;
         }
 
         /// <summary>

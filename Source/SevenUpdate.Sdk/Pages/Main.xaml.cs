@@ -43,8 +43,6 @@ namespace SevenUpdate.Sdk.Pages
         public Main()
         {
             InitializeComponent();
-            if (AeroGlass.IsEnabled)
-                MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
         }
 
         private void NewProject_Click(object sender, RoutedEventArgs e)

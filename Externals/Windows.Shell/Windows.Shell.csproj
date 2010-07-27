@@ -212,7 +212,6 @@
     <Compile Include="Controls\ListViewExtensions.cs" />
     <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Controls\UacButton.cs" />
-    <Compile Include="Dwm\GlassEvents.cs" />
     <Compile Include="Dwm\AeroGlass.cs" />
     <Compile Include="Dialogs\Common\DialogControl.cs" />
     <Compile Include="Dialogs\Common\DialogControlCollection.cs" />

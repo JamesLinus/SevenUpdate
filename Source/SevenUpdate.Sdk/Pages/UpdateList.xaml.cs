@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Windows.Controls;
 using Microsoft.Windows.Dwm;
 
@@ -38,9 +39,17 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateList()
         {
             InitializeComponent();
-            if (!AeroGlass.IsEnabled)
+
+            if (Environment.OSVersion.Version.Major < 6)
                 return;
+
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+        }
+
+        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+
         }
     }
 }

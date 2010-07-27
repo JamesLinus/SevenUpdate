@@ -45,11 +45,17 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateFiles()
         {
             InitializeComponent();
-            if (!AeroGlass.IsEnabled)
+
+            if (Environment.OSVersion.Version.Major < 6)
                 return;
-            line.Visibility = Visibility.Collapsed;
-            rectangle.Visibility = Visibility.Collapsed;
+
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+        }
+
+        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)

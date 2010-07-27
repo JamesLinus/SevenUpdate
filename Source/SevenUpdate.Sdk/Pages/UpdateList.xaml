@@ -15,7 +15,7 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-            <Controls:BackButton Grid.RowSpan="3" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" IsEnabled="True">
+            <Controls:BackButton Grid.RowSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="True">
                 <Controls:BackButton.CommandBindings>
                     <CommandBinding />
                     <CommandBinding Command="NavigationCommands.BrowseBack" />

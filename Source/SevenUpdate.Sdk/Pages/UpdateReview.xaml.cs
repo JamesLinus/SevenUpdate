@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Windows.Dwm;
@@ -39,10 +40,17 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateReview()
         {
             InitializeComponent();
-            if (!AeroGlass.IsEnabled)
+
+            if (Environment.OSVersion.Version.Major < 6)
                 return;
-            rectangle.Visibility = Visibility.Collapsed;
+
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+        }
+
+        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+
         }
     }
 }

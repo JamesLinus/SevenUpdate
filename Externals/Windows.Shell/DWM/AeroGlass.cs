@@ -147,7 +147,7 @@ namespace Microsoft.Windows.Dwm
         /// <param name = "region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new CoreNativeMethods.DwmBlurBehind { hRgnBlur = region, dwFlags = CoreNativeMethods.DwmBlurBehindDwFlags.DwmBBBlurRegion };
+            var blur = new CoreNativeMethods.DwmBlurBehind {hRgnBlur = region, dwFlags = CoreNativeMethods.DwmBlurBehindDwFlags.DwmBBBlurRegion};
 
             CoreNativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
         }
@@ -160,8 +160,8 @@ namespace Microsoft.Windows.Dwm
         {
             if (msg == CoreNativeMethods.DwmMessages.WmDwmCompositionChanged || msg == CoreNativeMethods.DwmMessages.WmDwmnRenderingChanged)
             {
-                if (AeroGlassCompositionChanged != null)
-                    AeroGlassCompositionChanged.Invoke(null, new AeroGlassCompositionChangedEvenArgs(IsEnabled));
+                if (DwmCompositionChangedEventHandler != null)
+                    DwmCompositionChangedEventHandler.Invoke(null, new DwmCompositionChangedEventArgs(IsEnabled));
 
                 handled = true;
             }
@@ -171,11 +171,37 @@ namespace Microsoft.Windows.Dwm
         #region events
 
         /// <summary>
-        ///   Fires when the availability of Glass effect changes.
+        ///   Occurs when DWM becomes enabled or disabled on the system
         /// </summary>
-        public static event AeroGlassCompositionChangedEvent AeroGlassCompositionChanged;
+        public static event EventHandler<DwmCompositionChangedEventArgs> DwmCompositionChangedEventHandler;
 
         #endregion
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        ///   Event argument for The DwmCompositionChanged event
+        /// </summary>
+        public class DwmCompositionChangedEventArgs : EventArgs
+        {
+            /// <summary>
+            ///   Event argument for DwmCompositionChanged event
+            /// </summary>
+            /// <param name = "isGlassEnabled"></param>
+            internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
+            {
+                IsGlassEnabled = isGlassEnabled;
+            }
+
+            /// <summary>
+            ///   Gets a bool specifying if DWM/Glass is currently enabled.
+            /// </summary>
+            public bool IsGlassEnabled { get; private set; }
+        }
+
+        
 
         #endregion
     }
