@@ -12,15 +12,15 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="650*" />
+            <ColumnDefinition Width="650*" MaxWidth="900" />
             <ColumnDefinition Width="200*" />
         </Grid.ColumnDefinitions>
         <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="6" Stretch="Fill" />
         <Image RenderOptions.BitmapScalingMode="HighQuality" IsEnabled="True" Name="imgIcon" Source="/SevenUpdate;component/Images/Icon128.png" Stretch="None" Grid.Column="1" Grid.Row="2"
                 Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,75,0,0" />
-        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" Name="spnlInfoPanel">
-            <TextBlock FontWeight="Bold" Padding="5" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0"
-                    DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel, AncestorLevel=1}}" Name="lblUpdateName" />
+        <StackPanel Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" Name="spnlInfoPanel" UseLayoutRounding="False">
+            <TextBlock FontWeight="Bold" Text="" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" Margin="0,0,5,0"
+                    DataContext="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StackPanel, AncestorLevel=1}}" Name="lblUpdateName" Padding="2" />
             <TextBlock Text="" MaxWidth="{Binding ActualWidth, ElementName=spnlInfoPanel}" TextWrapping="Wrap" Margin="0,0,5,0" Name="lblDescription" />
             <StackPanel Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,10">
                 <TextBlock FontWeight="Bold" Padding="5" Text="Published:" MaxWidth="120" Visibility="Hidden" Name="lblPublished" />
