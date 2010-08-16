@@ -65,36 +65,36 @@
                 <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutPath" Label="%DESKTOP%\My Shortcut.lnk" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbPath" MouseDown="BrowsePath_MouseDown" Cursor="Hand" />
-                <Image Height="16" HorizontalAlignment="Center" Margin="4,0" Name="imgShortcutPath" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None"
-                        ToolTip="The path entered is not valid." VerticalAlignment="Center" Visibility="Collapsed" Width="16" />
+                <Image Margin="4,0" Name="imgShortcutPath" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut target:" ToolTip="The app or path the shortcut points to" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutTarget" Label="%PROGRAMFILES%\MyApp\MyApp.exe" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowseTarget" MouseDown="BrowseTarget_MouseDown" Cursor="Hand" />
-                <Image Height="16" HorizontalAlignment="Center" Margin="4,0" Name="imgShortcutTarget" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None"
-                        ToolTip="The path entered is not valid." VerticalAlignment="Center" Visibility="Collapsed" Width="16" />
+                <Image Margin="4,0" Name="imgShortcutTarget" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut icon:" ToolTip="A path pointing to an ico to use as the shortcut icon" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutIcon" Label="%PROGRAMFILES%\MyApp\MyApp.exe,0" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowseIcon" MouseDown="BrowseIcon_MouseDown" Cursor="Hand" />
-                <Image Height="16" HorizontalAlignment="Center" Margin="4,0" Name="imgShortcutIcon" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None"
-                        ToolTip="The path entered is not valid." VerticalAlignment="Center" Visibility="Collapsed" Width="16" />
+                <Image Margin="4,0" Name="imgShortcutIcon" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut description:" ToolTip="A simple description of the target exe" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Label="TestValue" Margin="2,0,0,0" MinWidth="625" Name="tbxShortcutDescription" />
-                <Image Height="16" HorizontalAlignment="Center" Margin="4,0" Name="imgShortcutDescription" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None"
-                        ToolTip="The path entered is not valid." VerticalAlignment="Center" Visibility="Collapsed" Width="16" />
+                <Image Margin="4,0" Name="imgShortcutDescription" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut arguments:" HorizontalAlignment="Left" Margin="0,10,0,0" ToolTip="The command line arguments for the shortcut" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Label="TestValue" Margin="2,0,0,0" MinWidth="625" Name="infoTextBox1" ToolTip="-myarg" />
-                <Image Height="16" HorizontalAlignment="Center" Margin="4,0" Name="imgShortcutArgs" Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None"
-                        ToolTip="The path entered is not valid." VerticalAlignment="Center" Visibility="Collapsed" Width="16" />
+                <Image Margin="4,0" Name="imgShortcutArgs" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True" />
             </StackPanel>
         </StackPanel>
     </Grid>

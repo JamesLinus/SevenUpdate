@@ -66,20 +66,20 @@
             <TextBlock Text="Keypath:" HorizontalAlignment="Left" Margin="2" ToolTip="Specify the full path to the keypath to create" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Name="tbxKeyPath" Margin="2,0,0,0" Label="HKLM\SOFTWARE\MyCompany\MyApp" MinWidth="625" />
-                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" Name="imgKeyPath"
-                        ToolTip="The path entered is not valid." Visibility="Collapsed" Height="16" Width="16" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgKeyPath"
+                        ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Value name:" HorizontalAlignment="Left" Margin="0,10,0,0" ToolTip="Specify a the value located in the keypath" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Name="tbxKeyValue" Margin="2,0,0,0" Label="My Value Name" MinWidth="625" />
-                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" Name="imgValueName"
-                        ToolTip="The path entered is not valid." Visibility="Collapsed" Height="16" Width="16" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgValueName"
+                        ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Value data:" HorizontalAlignment="Left" Margin="0,10,0,0" ToolTip="Specify data for the value" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Name="tbxData" Margin="2,0,0,0" Label="TestValue" MinWidth="625" />
-                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" Name="imgValueData"
-                        ToolTip="The path entered is not valid." Visibility="Collapsed" Height="16" Width="16" />
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgValueData"
+                        ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Data type:" Margin="0,10,0,2" HorizontalAlignment="Left" />
             <ComboBox MinWidth="75" SelectedIndex="0" HorizontalAlignment="Left">

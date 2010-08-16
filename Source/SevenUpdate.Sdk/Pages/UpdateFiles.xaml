@@ -76,8 +76,9 @@
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Label="(Optional) An absolute url that will download the file (file must have public read access)" x:Name="tbxDownloadUrl" TabIndex="1" Margin="2,0,0,0"
                         Width="620" TextChanged="Textbox_TextChanged" />
-                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" Name="imgDownloadUrl"
-                        ToolTip="The path entered is not valid." Visibility="Collapsed" Height="16" Width="16"></Image>
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgDownloadUrl"
+                        ToolTip="The path entered is not valid." Visibility="Collapsed"
+                        UseLayoutRounding="True"></Image>
             </StackPanel>
             <TextBlock Text="Install location:" HorizontalAlignment="Left" Padding="2" ToolTip="Standard windows variables are allowed ex. %USERNAME% and also these custom variables: %APPDIR%"
                     Margin="0,10,0,0" />
@@ -86,8 +87,8 @@
                         TextChanged="Textbox_TextChanged" MinWidth="575" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
-                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="4,0" Name="imgInstallUri"
-                        ToolTip="The path entered is not valid." Visibility="Visible" Height="16" Width="16"></Image>
+                <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgInstallUri"
+                        ToolTip="The path entered is not valid." Visibility="Visible" UseLayoutRounding="True"></Image>
             </StackPanel>
             <TextBlock Text="Command args:" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" ToolTip="Enter any arguments to be executed with the file" />
             <Controls:InfoTextBox Label="(Optional) Enter command line arguments to be passed when file is executed during update" x:Name="tbxArgs" TextChanged="Textbox_TextChanged" Margin="2,0,0,0" />

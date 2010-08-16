@@ -61,56 +61,11 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You must calculate an updated SHA1 Hash for the current file.
+        ///   Looks up a localized string similar to Fix all errors to continue.
         /// </summary>
-        internal static string CalculateHash {
+        internal static string CorrectErrors {
             get {
-                return ResourceManager.GetString("CalculateHash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Calculate Hash &amp; Size.
-        /// </summary>
-        internal static string CalculateHashSize {
-            get {
-                return ResourceManager.GetString("CalculateHashSize", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please choose an update name!.
-        /// </summary>
-        internal static string ChooseUpdateName {
-            get {
-                return ResourceManager.GetString("ChooseUpdateName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Could not load.
-        /// </summary>
-        internal static string CouldNotLoad {
-            get {
-                return ResourceManager.GetString("CouldNotLoad", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create.
-        /// </summary>
-        internal static string Create {
-            get {
-                return ResourceManager.GetString("Create", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        internal static string Delete {
-            get {
-                return ResourceManager.GetString("Delete", resourceCulture);
+                return ResourceManager.GetString("CorrectErrors", resourceCulture);
             }
         }
         
@@ -124,20 +79,11 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
+        ///   Looks up a localized string similar to An exclamation mark next to a value denotes an error..
         /// </summary>
-        internal static string Edit {
+        internal static string ErrorHelp {
             get {
-                return ResourceManager.GetString("Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You must enter the file size in bytes for the current file.
-        /// </summary>
-        internal static string EnterFileSize {
-            get {
-                return ResourceManager.GetString("EnterFileSize", resourceCulture);
+                return ResourceManager.GetString("ErrorHelp", resourceCulture);
             }
         }
         
@@ -151,47 +97,11 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expanded Path.
-        /// </summary>
-        internal static string ExpandedPath {
-            get {
-                return ResourceManager.GetString("ExpandedPath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The file name you have entered contains an invalid character:.
-        /// </summary>
-        internal static string FileNameInvalid {
-            get {
-                return ResourceManager.GetString("FileNameInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Before you can continue please fill in the required information.
-        /// </summary>
-        internal static string FillRequiredInformation {
-            get {
-                return ResourceManager.GetString("FillRequiredInformation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If you exit now you will lose unsaved progress..
         /// </summary>
         internal static string LoseProgress {
             get {
                 return ResourceManager.GetString("LoseProgress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to New File.
-        /// </summary>
-        internal static string NewFile {
-            get {
-                return ResourceManager.GetString("NewFile", resourceCulture);
             }
         }
         
@@ -214,29 +124,11 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The directory path you have entered contains an invalid character:.
-        /// </summary>
-        internal static string PathInvalid {
-            get {
-                return ResourceManager.GetString("PathInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Registry Item.
         /// </summary>
         internal static string RegistryItem {
             get {
                 return ResourceManager.GetString("RegistryItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Please save the current item or remove it to continue.
-        /// </summary>
-        internal static string SaveItemOrRemoveIt {
-            get {
-                return ResourceManager.GetString("SaveItemOrRemoveIt", resourceCulture);
             }
         }
         
@@ -250,38 +142,20 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seven Update SDK.
+        /// </summary>
+        internal static string SevenUpdateSDK {
+            get {
+                return ResourceManager.GetString("SevenUpdateSDK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shortcut.
         /// </summary>
         internal static string Shortcut {
             get {
                 return ResourceManager.GetString("Shortcut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The path you provided for the shortcut is not valid..
-        /// </summary>
-        internal static string ShortcutNotValid {
-            get {
-                return ResourceManager.GetString("ShortcutNotValid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The SUI is not valid or has been corrupted..
-        /// </summary>
-        internal static string SuiInvalid {
-            get {
-                return ResourceManager.GetString("SuiInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Update.
-        /// </summary>
-        internal static string Update {
-            get {
-                return ResourceManager.GetString("Update", resourceCulture);
             }
         }
         

@@ -38,6 +38,18 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class AppInfo : Page
     {
+
+        #region Properties
+
+        private bool IsInfoValid
+        {
+            get {
+                return (imgPublisherUrl.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible);
+            }
+        }
+
+        #endregion
+
         /// <summary>
         ///   The constructor for the AppInfo page
         /// </summary>
@@ -50,11 +62,14 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
@@ -102,7 +117,8 @@ namespace SevenUpdate.Sdk.Pages
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
-
+            if (source == null)
+                return;
             try
             {
                 if (source.Text.Length > 0)
@@ -135,7 +151,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            else
+            {
+                App.ShowInputErrorMessage();
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

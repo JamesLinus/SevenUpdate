@@ -98,13 +98,11 @@ namespace Microsoft.Windows.Controls
             if (((InfoTextBox) elem).HasText || elem.IsFocused)
             {
                 // Hide the Shadowed Label
-                ToolTip = Label;
                 myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
             }
             else
             {
                 // Show the Shadowed Label
-                ToolTip = null;
                 if (!myAdornerLayer.Contains<AdornerLabel>(elem))
                     myAdornerLayer.Add(myAdornerLabel);
             }
@@ -114,14 +112,12 @@ namespace Microsoft.Windows.Controls
     // Adorners must subclass the abstract base class Adorner.
     public class AdornerLabel : Adorner
     {
-        private TextBlock _textBlock;
+        private TextBlock textBlock;
 
         // Be sure to call the base class constructor.
         public AdornerLabel(UIElement adornedElement, string label, Style labelStyle) : base(adornedElement)
         {
-            _textBlock = new TextBlock();
-            _textBlock.Style = labelStyle;
-            _textBlock.Text = label;
+            textBlock = new TextBlock {Style = labelStyle, Text = label};
         }
 
         protected override int VisualChildrenCount { get { return 1; } }
@@ -129,21 +125,21 @@ namespace Microsoft.Windows.Controls
         //make sure that the layout system knows of the element
         protected override Size MeasureOverride(Size constraint)
         {
-            _textBlock.Measure(constraint);
+            textBlock.Measure(constraint);
             return constraint;
         }
 
         //make sure that the layout system knows of the element
         protected override Size ArrangeOverride(Size finalSize)
         {
-            _textBlock.Arrange(new Rect(finalSize));
+            textBlock.Arrange(new Rect(finalSize));
             return finalSize;
         }
 
         //return the visual that we want to display
         protected override Visual GetVisualChild(int index)
         {
-            return _textBlock;
+            return textBlock;
         }
 
         //return the count of the visuals

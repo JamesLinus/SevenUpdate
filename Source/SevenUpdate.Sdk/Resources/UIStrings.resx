@@ -112,55 +112,19 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CalculateHash" xml:space="preserve">
-    <value>You must calculate an updated SHA1 Hash for the current file</value>
-  </data>
-  <data name="CalculateHashSize" xml:space="preserve">
-    <value>Calculate Hash &amp; Size</value>
-  </data>
-  <data name="ChooseUpdateName" xml:space="preserve">
-    <value>Please choose an update name!</value>
-  </data>
-  <data name="CouldNotLoad" xml:space="preserve">
-    <value>Could not load</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
   <data name="DontShowMessage" xml:space="preserve">
     <value>Don't show me this message again.</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="EnterFileSize" xml:space="preserve">
-    <value>You must enter the file size in bytes for the current file</value>
   </data>
   <data name="ExitConfirm" xml:space="preserve">
     <value>Are you sure you would like to exit?</value>
   </data>
-  <data name="ExpandedPath" xml:space="preserve">
-    <value>Expanded Path</value>
-  </data>
-  <data name="FileNameInvalid" xml:space="preserve">
-    <value>The file name you have entered contains an invalid character:</value>
-  </data>
-  <data name="FillRequiredInformation" xml:space="preserve">
-    <value>Before you can continue please fill in the required information</value>
-  </data>
   <data name="LoseProgress" xml:space="preserve">
     <value>If you exit now you will lose unsaved progress.</value>
-  </data>
-  <data name="NewFile" xml:space="preserve">
-    <value>New File</value>
   </data>
   <data name="NewRegistryItem" xml:space="preserve">
     <value>New Registry Item</value>
@@ -168,23 +132,11 @@
   <data name="NewShortcut" xml:space="preserve">
     <value>New Shortcut</value>
   </data>
-  <data name="PathInvalid" xml:space="preserve">
-    <value>The directory path you have entered contains an invalid character:</value>
-  </data>
   <data name="RegistryItem" xml:space="preserve">
     <value>Registry Item</value>
   </data>
-  <data name="SaveItemOrRemoveIt" xml:space="preserve">
-    <value>Please save the current item or remove it to continue</value>
-  </data>
   <data name="Shortcut" xml:space="preserve">
     <value>Shortcut</value>
-  </data>
-  <data name="ShortcutNotValid" xml:space="preserve">
-    <value>The path you provided for the shortcut is not valid.</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Update</value>
   </data>
   <data name="UrlNotValid" xml:space="preserve">
     <value>The url you have entered is not valid.</value>
@@ -198,7 +150,13 @@
   <data name="SevenSoftware" xml:space="preserve">
     <value>Seven Software</value>
   </data>
-  <data name="SuiInvalid" xml:space="preserve">
-    <value>The SUI is not valid or has been corrupted.</value>
+  <data name="SevenUpdateSDK" xml:space="preserve">
+    <value>Seven Update SDK</value>
+  </data>
+  <data name="CorrectErrors" xml:space="preserve">
+    <value>Fix all errors to continue</value>
+  </data>
+  <data name="ErrorHelp" xml:space="preserve">
+    <value>An exclamation mark next to a value denotes an error.</value>
   </data>
 </root>

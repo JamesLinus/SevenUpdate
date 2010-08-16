@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
+using Microsoft.Windows.Dialogs;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
@@ -140,6 +141,27 @@ namespace SevenUpdate.Sdk
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);
+        }
+
+        internal static void ShowInputErrorMessage()
+        {
+            if (TaskDialog.IsPlatformSupported)
+            {
+                var td = new TaskDialog
+                             {
+                                 Caption = RM.GetString("SevenUpdateSDK"),
+                                 InstructionText = RM.GetString("CorrectErrors"),
+                                 Icon = TaskDialogStandardIcon.Warning,
+                                 FooterText = RM.GetString("ErrorHelp"),
+                                 FooterIcon = TaskDialogStandardIcon.Information,
+                             };
+                td.Show();
+            }
+            else
+            {
+                MessageBox.Show(RM.GetString("CorrectErrors") + Environment.NewLine + RM.GetString("ErrorHelp"), RM.GetString("SevenUpdateSDK"), MessageBoxButton.OK,
+                                MessageBoxImage.Exclamation);
+            }
         }
 
         #endregion

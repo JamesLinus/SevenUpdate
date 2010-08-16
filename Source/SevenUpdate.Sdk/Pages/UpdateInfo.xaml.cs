@@ -36,6 +36,19 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateInfo : Page
     {
+
+        #region Properties
+
+        private bool IsInfoValid
+        {
+            get
+            {
+                return (imgUpdateInfo.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible && imgLicense.Visibility != Visibility.Visible && imgDownloadLoc.Visibility != Visibility.Visible);
+            }
+        }
+
+        #endregion
+
         /// <summary>
         ///   The constructor for the UpdateInfo page
         /// </summary>
@@ -48,16 +61,21 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
+            if (source == null)
+                return;
 
             try
             {
@@ -71,7 +89,11 @@ namespace SevenUpdate.Sdk.Pages
 
                     case "tbxDownloadUrl":
                         if (source.Text.Length > 2)
-                            imgDownloadLoc.Visibility = Visibility.Collapsed;
+                        {
+                            var url = new Uri(source.Text);
+                            if (url.HostNameType != UriHostNameType.Unknown && url.IsAbsoluteUri)
+                                imgDownloadLoc.Visibility = Visibility.Collapsed;
+                        }
                         break;
 
                     case "tbxInfoUrl":
@@ -100,12 +122,22 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            else
+            {
+                App.ShowInputErrorMessage();
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
         }
     }
 }

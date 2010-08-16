@@ -51,11 +51,14 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
