@@ -55,7 +55,7 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;

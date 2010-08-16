@@ -80,7 +80,8 @@ namespace SevenUpdate.Sdk.Pages
             try
             {
                 if (source.Text.Length > 0)
-                    new Uri(source.Text);
+                    //TODO implement the Is64Bit properly
+                    new Uri(Base.Base.ConvertPath(source.Text, true, true));
                 switch (source.Name)
                 {
                     case "tbxLicenseUrl":
@@ -90,9 +91,7 @@ namespace SevenUpdate.Sdk.Pages
                     case "tbxDownloadUrl":
                         if (source.Text.Length > 2)
                         {
-                            var url = new Uri(source.Text);
-                            if (url.HostNameType != UriHostNameType.Unknown && url.IsAbsoluteUri)
-                                imgDownloadLoc.Visibility = Visibility.Collapsed;
+                            imgDownloadLoc.Visibility = Visibility.Collapsed;
                         }
                         break;
 

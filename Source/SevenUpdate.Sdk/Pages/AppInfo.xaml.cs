@@ -38,15 +38,9 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class AppInfo : Page
     {
-
         #region Properties
 
-        private bool IsInfoValid
-        {
-            get {
-                return (imgPublisherUrl.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible);
-            }
-        }
+        private bool IsInfoValid { get { return (imgPublisherUrl.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible); } }
 
         #endregion
 
@@ -66,7 +60,7 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -103,9 +97,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (((bool) rbtnRegistry.IsChecked))
             {
-                if (tbxAppLocation.Text.StartsWith(@"HKLM\") || tbxAppLocation.Text.StartsWith(@"HKCR\") || tbxAppLocation.Text.StartsWith(@"HKCU\") || tbxAppLocation.Text.StartsWith(@"HKU\") ||
-                    tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\") || tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\") ||
-                    tbxAppLocation.Text.StartsWith(@"HKEY_USERS\"))
+                if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
+                    tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
+                    tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
                     imgAppPath.Visibility = Visibility.Collapsed;
                 else
                     imgAppPath.Visibility = Visibility.Visible;
@@ -154,9 +148,7 @@ namespace SevenUpdate.Sdk.Pages
             if (IsInfoValid)
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
             else
-            {
                 App.ShowInputErrorMessage();
-            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

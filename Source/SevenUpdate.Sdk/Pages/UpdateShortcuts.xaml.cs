@@ -24,6 +24,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -96,6 +97,52 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 tbxShortcutIcon.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+            if (source == null)
+                return;
+
+            try
+            {
+                if (source.Text.Length > 0)
+                    new Uri(source.Text);
+                switch (source.Name)
+                {
+                    case "tbxShortcutPath":
+                        if (source.Text.Length > 2 && source.Text.EndsWith(".lnk", true, null))
+                            imgShortcutPath.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "tbxShortcutTarget":
+                        if (source.Text.Length > 2)
+                            imgShortcutTarget.Visibility = Visibility.Collapsed;
+                        break;
+
+                    case "tbxShortcutIcon":
+                        if (source.Text.Length > 2)
+                            imgShortcutIcon.Visibility = Visibility.Collapsed;
+                        break;
+                }
+            }
+            catch
+            {
+                switch (source.Name)
+                {
+                    case "tbxShortcutPath":
+                        imgShortcutPath.Visibility = Visibility.Visible;
+                        break;
+
+                    case "tbxShortcutTarget":
+                        imgShortcutTarget.Visibility = Visibility.Visible;
+                        break;
+
+                    case "tbxShortcutIcon":
+                        imgShortcutIcon.Visibility = Visibility.Visible;
+                        break;
+                }
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 <Page x:Class="SevenUpdate.Sdk.Pages.UpdateShortcuts" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-        Title="SevenUpdate" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="800">
+        Title="SevenUpdate" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850">
     <!-- Grid-->
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
         <Grid.ColumnDefinitions>
@@ -55,14 +55,14 @@
         <StackPanel Grid.Column="1" Grid.Row="1">
             <GroupBox Grid.Column="1" Grid.Row="1" Header="Shortcut Action" HorizontalAlignment="Left" Margin="10">
                 <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Add/Update" Height="16" Margin="10" ToolTip="Creates or updates the shortcut" />
+                    <RadioButton Content="Add/Update" Height="16" Margin="10" ToolTip="Creates or updates the shortcut" IsChecked="True" />
                     <RadioButton Content="Update only" Height="16" Margin="10" ToolTip="Updates the shortcut only if it exists on the system" />
                     <RadioButton Content="Delete shortcut" Height="16" Margin="10" ToolTip="Deletes the shortcut on the system" />
                 </StackPanel>
             </GroupBox>
-            <TextBlock Text="Shortcut path:" ToolTip="The location where the shortcut resides, example: startmenu or desktop" HorizontalAlignment="Left" />
+            <TextBlock Text="Shortcut save location:" ToolTip="The location where the shortcut resides, example: startmenu or desktop" HorizontalAlignment="Left" />
             <StackPanel Orientation="Horizontal">
-                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutPath" Label="%DESKTOP%\My Shortcut.lnk" />
+                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutPath" Label="%DESKTOP%\My Shortcut.lnk" TextChanged="Textbox_TextChanged" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbPath" MouseDown="BrowsePath_MouseDown" Cursor="Hand" />
                 <Image Margin="4,0" Name="imgShortcutPath" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
@@ -70,15 +70,15 @@
             </StackPanel>
             <TextBlock Text="Shortcut target:" ToolTip="The app or path the shortcut points to" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
-                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutTarget" Label="%PROGRAMFILES%\MyApp\MyApp.exe" />
+                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutTarget" Label="%PROGRAMFILES%\MyApp\MyApp.exe" TextChanged="Textbox_TextChanged" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowseTarget" MouseDown="BrowseTarget_MouseDown" Cursor="Hand" />
                 <Image Margin="4,0" Name="imgShortcutTarget" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
-                        UseLayoutRounding="True" />
+                        SnapsToDevicePixels="True" UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut icon:" ToolTip="A path pointing to an ico to use as the shortcut icon" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
-                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutIcon" Label="%PROGRAMFILES%\MyApp\MyApp.exe,0" />
+                <Controls:InfoTextBox Margin="2,0,0,0" MinWidth="580" Name="tbxShortcutIcon" Label="%PROGRAMFILES%\MyApp\MyApp.exe,0" TextChanged="Textbox_TextChanged" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowseIcon" MouseDown="BrowseIcon_MouseDown" Cursor="Hand" />
                 <Image Margin="4,0" Name="imgShortcutIcon" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
@@ -87,14 +87,10 @@
             <TextBlock Text="Shortcut description:" ToolTip="A simple description of the target exe" HorizontalAlignment="Left" Margin="0,10,0,0" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Label="TestValue" Margin="2,0,0,0" MinWidth="625" Name="tbxShortcutDescription" />
-                <Image Margin="4,0" Name="imgShortcutDescription" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
-                        UseLayoutRounding="True" />
             </StackPanel>
             <TextBlock Text="Shortcut arguments:" HorizontalAlignment="Left" Margin="0,10,0,0" ToolTip="The command line arguments for the shortcut" />
             <StackPanel Orientation="Horizontal">
                 <Controls:InfoTextBox Label="TestValue" Margin="2,0,0,0" MinWidth="625" Name="infoTextBox1" ToolTip="-myarg" />
-                <Image Margin="4,0" Name="imgShortcutArgs" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The path entered is not valid." Visibility="Collapsed"
-                        UseLayoutRounding="True" />
             </StackPanel>
         </StackPanel>
     </Grid>

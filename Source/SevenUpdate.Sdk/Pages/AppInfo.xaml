@@ -33,14 +33,15 @@
                         ToolTip="Check this box if your software is native x64." TabIndex="1" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,10,0,0">
-                <TextBlock Padding="2" Text="Application install location:" ToolTip="The directory where your application is is installed. It is best to use variables when available" />
+                <TextBlock Padding="2" Text="Application install location:" ToolTip="The directory where the application is is installed. It is best to use system path variabes when applicable." />
                 <RadioButton Content="File System" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" Checked="FileSystem_Checked"
                         TabIndex="2" />
                 <RadioButton Content="Registry" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Checked="Registry_Checked" TabIndex="3" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,5,0,0">
-                <TextBlock Text="Registry key:" ToolTip="The name of the value that contains the install location of the application" HorizontalAlignment="Left" VerticalAlignment="Center"
-                        Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed" />
+                <TextBlock Text="Registry key:" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed"
+                        ToolTip="The full key path where the value containing the install location of the application is stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" />
                 <TextBox x:Name="tbxAppLocation" TabIndex="4" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" FontSize="14" />
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left"
                         VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />

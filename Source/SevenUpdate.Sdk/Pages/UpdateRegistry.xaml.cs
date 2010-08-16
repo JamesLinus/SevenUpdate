@@ -23,6 +23,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -52,7 +53,7 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -74,6 +75,72 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if (tbxKeyPath.Text.Length > 0)
+                    new Uri(tbxKeyPath.Text);
+                if (tbxKeyPath.Text.Length > 0)
+                {
+                    if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
+                        tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
+                        tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
+                        imgKeyPath.Visibility = Visibility.Collapsed;
+                }
+                else
+                    imgKeyPath.Visibility = Visibility.Collapsed;
+            }
+            catch
+            {
+                imgKeyPath.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void ValueData_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (cbxDataType.SelectedIndex != 0 && cbxDataType.SelectedIndex != 1 && cbxDataType.SelectedIndex != 4)
+                return;
+            var converter = new KeyConverter();
+            var key = converter.ConvertToString(e.Key);
+
+            switch (key)
+            {
+                case "0":
+                case "1":
+                case "2":
+                case "3":
+                case "4":
+                case "5":
+                case "6":
+                case "7":
+                case "8":
+                case "9":
+                case "A":
+                case "a":
+                case "B":
+                case "b":
+                case "C":
+                case "c":
+                case "D":
+                case "d":
+                case "E":
+                case "e":
+                case "F":
+                case "f":
+                    break;
+                default:
+                    e.Handled = true;
+                    break;
+            }
+        }
+
+        private void cbxDataType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbxValueData != null)
+                tbxValueData.Text = null;
         }
     }
 }
