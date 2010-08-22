@@ -36,6 +36,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateRegistry : Page
     {
+        #region Properties
+
+        private bool IsInfoValid { get { return (imgKeyPath.Visibility != Visibility.Visible); } }
+
+        #endregion
+
         /// <summary>
         ///   The constructor for the UpdateRegistry page
         /// </summary>
@@ -61,7 +67,11 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
+            
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

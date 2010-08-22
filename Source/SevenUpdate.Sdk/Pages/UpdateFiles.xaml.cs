@@ -39,6 +39,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateFiles : Page
     {
+        #region Properties
+
+        private bool IsInfoValid { get { return (imgDownloadUrl.Visibility != Visibility.Visible && imgInstallUri.Visibility != Visibility.Visible); } }
+
+        #endregion
+
         /// <summary>
         ///   The constructor for the UpdateFiles page
         /// </summary>
@@ -72,7 +78,8 @@ namespace SevenUpdate.Sdk.Pages
                 switch (source.Name)
                 {
                     case "tbxDownloadUrl":
-                        imgDownloadUrl.Visibility = Visibility.Collapsed;
+                        if (path.Length > 2)
+                            imgDownloadUrl.Visibility = Visibility.Collapsed;
                         break;
 
                     case "tbxInstallUri":
@@ -105,7 +112,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -148,6 +158,24 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
                 AddFiles(Directory.GetFiles(cfd.FileName));
+        }
+
+        private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbxDownloadUrl == null)
+                return;
+            if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
+            {
+                tbxDownloadUrl.IsEnabled = true;
+                tbxArgs.IsEnabled = true;
+            }
+            else
+            {
+                tbxDownloadUrl.Text = null;
+                tbxDownloadUrl.IsEnabled = false;
+                tbxArgs.IsEnabled = false;
+                tbxArgs.Text = null;
+            }
         }
     }
 }

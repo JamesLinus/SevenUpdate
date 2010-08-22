@@ -52,17 +52,17 @@ namespace Microsoft.Windows.Controls
         public RoutedUICommand Command { get; set; }
 
         /// <summary>
-        ///   Specifies the main instruction text
+        ///   Gets or sets the main instruction text
         /// </summary>
         public string Link { get; set; }
 
         /// <summary>
-        ///   Specifies the supporting note text
+        ///  Gets or sets the supporting note text
         /// </summary>
         public string Note { get; set; }
 
         /// <summary>
-        ///   Indicates if the button is in a checked state
+        ///   Gets or sets if the button is in a checked state
         /// </summary>
         public bool? IsCheck { get { return button.IsChecked; } set { button.IsChecked = value; } }
 

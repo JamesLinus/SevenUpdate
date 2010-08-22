@@ -38,6 +38,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateShortcuts : Page
     {
+        #region Properties
+
+        private bool IsInfoValid { get { return (imgShortcutIcon.Visibility != Visibility.Visible && imgShortcutPath.Visibility != Visibility.Visible && imgShortcutTarget.Visibility != Visibility.Visible); } }
+
+        #endregion
+
         /// <summary>
         ///   The constructor for the UpdateShortcuts page
         /// </summary>
@@ -62,7 +68,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (IsInfoValid)
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

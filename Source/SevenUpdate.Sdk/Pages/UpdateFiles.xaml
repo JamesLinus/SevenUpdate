@@ -60,7 +60,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10" Visibility="Collapsed" Name="SPInput">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <TextBlock Text="File action:" HorizontalAlignment="Left" Padding="2" Margin="0,0,10,0" ToolTip="The action to take on this file" />
-                <ComboBox Name="cbxUpdateType" SelectedIndex="0" MinWidth="75" HorizontalAlignment="Left">
+                <ComboBox Name="cbxUpdateType" SelectedIndex="0" MinWidth="75" HorizontalAlignment="Left" SelectionChanged="UpdateType_SelectionChanged">
                     <ComboBoxItem Content="Update" />
                     <ComboBoxItem Content="Update if file exists" />
                     <ComboBoxItem Content="Update &amp; register dll file" />
@@ -88,7 +88,7 @@
                 <TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
                 <Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgInstallUri"
-                        ToolTip="The path entered is not valid." Visibility="Visible" UseLayoutRounding="True"></Image>
+                        ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True"></Image>
             </StackPanel>
             <TextBlock Text="Command args:" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" ToolTip="Enter any arguments to be executed with the file" />
             <Controls:InfoTextBox Label="(Optional) Enter command line arguments to be passed when file is executed during update" x:Name="tbxArgs" TextChanged="Textbox_TextChanged" Margin="2,0,0,0" />
