@@ -70,7 +70,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
-            string path = Base.Base.ConvertPath(source.Text, true, true);
+            string path = SevenUpdate.Base.Base.ConvertPath(source.Text, true, true);
             try
             {
                 if (source.Text.Length > 0)
@@ -107,7 +107,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxInstallUri.Text = Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxInstallUri.Text =SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -127,7 +127,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbHash.Text = Base.Base.GetHash(cfd.FileName);
+                tbHash.Text =SevenUpdate.Base.Base.GetHash(cfd.FileName);
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
@@ -141,8 +141,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             SPHelp.Visibility = Visibility.Collapsed;
             SPInput.Visibility = Visibility.Visible;
-            tbxInstallUri.Text = Base.Base.ConvertPath(fileName, false, true);
-            tbHash.Text = Base.Base.GetHash(fileName);
+            tbxInstallUri.Text =SevenUpdate.Base.Base.ConvertPath(fileName, false, true);
+            tbHash.Text =SevenUpdate.Base.Base.GetHash(fileName);
             cbxUpdateType.SelectedIndex = 0;
             listBox.Items.Add(Path.GetFileName(fileName));
         }

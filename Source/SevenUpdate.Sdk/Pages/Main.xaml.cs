@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -47,6 +48,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
+            Base.Sua = new Sua();
+            Base.Sui = new Sui();
+            Base.Update = new Update();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

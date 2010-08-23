@@ -69,8 +69,8 @@ namespace SevenUpdate.Sdk
             //Configure a new JumpTask
             var jumpTask = new JumpTask
                                {
-                                   ApplicationPath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
                                    Title = "Seven Update SDK",
                                    Description = "Create new project",
                                    CustomCategory = "Tasks",
@@ -80,8 +80,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Edit an existing project",
                                CustomCategory = "Tasks",
@@ -91,8 +91,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -102,8 +102,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -121,9 +121,9 @@ namespace SevenUpdate.Sdk
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
-            Directory.CreateDirectory(Base.Base.UserStore);
+            Directory.CreateDirectory(SevenUpdate.Base.Base.UserStore);
             RM = new ResourceManager("SevenUpdate.Sdk.Resources.UIStrings", ResourceAssembly);
-            Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+           SevenUpdate.Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
             if (args.Length > 0)
                 SuiFile = args[0];
 
@@ -137,7 +137,7 @@ namespace SevenUpdate.Sdk
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
-            path = Base.Base.ConvertPath(path, true, is64Bit);
+            path =SevenUpdate.Base.Base.ConvertPath(path, true, is64Bit);
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);

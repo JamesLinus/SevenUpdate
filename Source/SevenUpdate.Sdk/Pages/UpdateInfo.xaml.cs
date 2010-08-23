@@ -21,10 +21,14 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -36,6 +40,11 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateInfo : Page
     {
+        #region Fields
+
+        private string locale;
+
+        #endregion
 
         #region Properties
 
@@ -43,7 +52,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             get
             {
-                return (imgUpdateInfo.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible && imgLicense.Visibility != Visibility.Visible && imgDownloadLoc.Visibility != Visibility.Visible);
+                return (imgUpdateInfo.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible && imgLicense.Visibility != Visibility.Visible &&
+                        imgDownloadLoc.Visibility != Visibility.Visible);
             }
         }
 
@@ -65,7 +75,7 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -77,44 +87,49 @@ namespace SevenUpdate.Sdk.Pages
             if (source == null)
                 return;
 
-            try
+            if (source.Name == "tbxUpdateName" || source.Name == "tbxUpdateDetails")
             {
-                if (source.Text.Length > 0)
-                    //TODO implement the Is64Bit properly
-                    new Uri(Base.Base.ConvertPath(source.Text, true, true));
-                switch (source.Name)
-                {
-                    case "tbxLicenseUrl":
-                        imgLicense.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "tbxDownloadUrl":
-                        if (source.Text.Length > 2)
-                        {
-                            imgDownloadLoc.Visibility = Visibility.Collapsed;
-                        }
-                        break;
-
-                    case "tbxInfoUrl":
-                        imgUpdateInfo.Visibility = Visibility.Collapsed;
-                        break;
-                }
+                imgUpdateName.Visibility = tbxUpdateName.Text.Length > 5 ? Visibility.Collapsed : Visibility.Visible;
+                imgUpdateDetails.Visibility = tbxUpdateDetails.Text.Length > 5 ? Visibility.Collapsed : Visibility.Visible;
             }
-            catch
+            else
             {
-                switch (source.Name)
+                try
                 {
-                    case "tbxLicenseUrl":
-                        imgLicense.Visibility = Visibility.Visible;
-                        break;
+                    if (source.Text.Length > 0)
+                        new Uri(SevenUpdate.Base.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit));
+                    switch (source.Name)
+                    {
+                        case "tbxLicenseUrl":
+                            imgLicense.Visibility = Visibility.Collapsed;
+                            break;
 
-                    case "tbxDownloadUrl":
-                        imgDownloadLoc.Visibility = Visibility.Visible;
-                        break;
+                        case "tbxDownloadUrl":
+                            if (source.Text.Length > 2)
+                                imgDownloadLoc.Visibility = Visibility.Collapsed;
+                            break;
 
-                    case "tbxInfoUrl":
-                        imgUpdateInfo.Visibility = Visibility.Visible;
-                        break;
+                        case "tbxInfoUrl":
+                            imgUpdateInfo.Visibility = Visibility.Collapsed;
+                            break;
+                    }
+                }
+                catch
+                {
+                    switch (source.Name)
+                    {
+                        case "tbxLicenseUrl":
+                            imgLicense.Visibility = Visibility.Visible;
+                            break;
+
+                        case "tbxDownloadUrl":
+                            imgDownloadLoc.Visibility = Visibility.Visible;
+                            break;
+
+                        case "tbxInfoUrl":
+                            imgUpdateInfo.Visibility = Visibility.Visible;
+                            break;
+                    }
                 }
             }
         }
@@ -124,9 +139,7 @@ namespace SevenUpdate.Sdk.Pages
             if (IsInfoValid)
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
             else
-            {
                 App.ShowInputErrorMessage();
-            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -134,9 +147,72 @@ namespace SevenUpdate.Sdk.Pages
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
+        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
+            tbxUpdateName.Text = null;
+            tbxUpdateDetails.Text = null;
+
+            if (Base.Update.Description == null)
+                Base.Update.Description = new ObservableCollection<LocaleString>();
+            else
+            {
+                // Load Values
+                foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+                    tbxUpdateDetails.Text = t.Value;
+            }
+
+            if (Base.Update.Name == null)
+                Base.Update.Name = new ObservableCollection<LocaleString>();
+            else
+            {
+                // Load Values
+                foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == locale))
+                    tbxUpdateName.Text = t.Value;
+            }
+        }
+
         private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
+        }
+
+        private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (Base.Update.Name == null)
+                Base.Update.Name = new ObservableCollection<LocaleString>();
+
+            bool found = false;
+            foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == locale))
+            {
+                t.Value = tbxUpdateName.Text;
+                found = true;
+            }
+
+            if (found)
+                return;
+
+            var ls = new LocaleString {Lang = locale, Value = tbxUpdateName.Text};
+            Base.Update.Name.Add(ls);
+        }
+
+        private void UpdateDetails_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (Base.Update.Description == null)
+                Base.Update.Description = new ObservableCollection<LocaleString>();
+
+            bool found = false;
+            foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+            {
+                t.Value = tbxUpdateDetails.Text;
+                found = true;
+            }
+
+            if (found)
+                return;
+
+            var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
+            Base.Update.Description.Add(ls);
         }
     }
 }
