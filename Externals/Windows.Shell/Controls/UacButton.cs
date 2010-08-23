@@ -38,14 +38,12 @@ using Image = System.Drawing.Image;
 
 namespace Microsoft.Windows.Controls
 {
-    #region Class UACShieldButton
-
     /// <summary>
     ///   Provides a WPF button that displays a UAC Shield icon when required
     /// </summary>
     public class UacButton : Button, INotifyPropertyChanged
     {
-        #region UACShieldButton - Fields
+        #region Fields
 
         /// <summary>
         ///   The disabled shield image
@@ -61,7 +59,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Dependency Property - Indicates if the UAC Shield is desired on the button
         /// </summary>
-        private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register("IsShieldNeeded", typeof (bool), typeof (UacButton),
+        private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register("IsShieldNeeded", typeof(bool), typeof(UacButton),
                                                                                                         new FrameworkPropertyMetadata(true,
                                                                                                                                       FrameworkPropertyMetadataOptions.Inherits |
                                                                                                                                       FrameworkPropertyMetadataOptions.AffectsRender,
@@ -86,80 +84,73 @@ namespace Microsoft.Windows.Controls
 
         #endregion
 
-        #region UACShieldButton - Methods - INotifyPropetyChanged
+        #region Methods - INotifyPropertyChanged
 
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region UACShieldButton - Properties
+        #region Properties
 
         /// <summary>
-        ///   Gets/Sets if the caller desires the <see cref = "ShieldIcon" /> to be displayed.  This is a dependency property.
+        ///   Gets or sets if the caller desires the <see cref = "ShieldIcon" /> to be displayed.  This is a dependency property.
         /// </summary>
         /// <value>A bool that indicates if the <see cref = "ShieldIcon" /> caller wants the <see cref = "ShieldIcon" />  displayed</value>
         /// <remarks>
         ///   This is only an indication of desire.  If the operating system does not support UAC or the user is already
         ///   elevated, any request to display is ignored.
         /// </remarks>
-        public bool IsShieldNeeded { get { return (bool) GetValue(IsShieldNeededProperty); } set { SetValue(IsShieldNeededProperty, value); } }
+        public bool IsShieldNeeded { get { return (bool)GetValue(IsShieldNeededProperty); } set { SetValue(IsShieldNeededProperty, value); } }
 
         /// <summary>
-        ///   Gets/Sets the icon so show when elevation is required.  This is a dependency property.
+        ///   Gets or sets the icon so show when elevation is required.  This is a dependency property.
         /// </summary>
         /// <value>An ImageSoruce that represents a graphic to be displayed </value>
-        public ImageSource ShieldIcon { get { return (ImageSource) GetValue(ShieldIconProperty); } set { SetValue(ShieldIconProperty, value); } }
+        public ImageSource ShieldIcon { get { return (ImageSource)GetValue(ShieldIconProperty); } set { SetValue(ShieldIconProperty, value); } }
 
         /// <summary>
-        ///   Indicates thst the shield is desired and the OS supports elevation
+        ///   Gets or sets the text to display on the button
         /// </summary>
-        public string ButtonText { get { return ((string) GetValue(ButtonTextProperty)); } set { SetValue(ButtonTextProperty, value); } }
+        public string ButtonText { get { return ((string)GetValue(ButtonTextProperty)); } set { SetValue(ButtonTextProperty, value); } }
 
         /// <summary>
-        ///   Indicates thst the shield is desired and the OS supports elevation
+        ///   Gets or sets a value indicating if the shield is desired and the OS supports elevation
         /// </summary>
         public bool IsShieldDisplayed { get { return isShieldNeeded && IsShieldNeeded; } }
 
         /// <summary>
-        ///   Gets/Sets ToolTip shown when elevation has been preformed
+        ///   Gets or sets ToolTip shown when elevation has been preformed
         /// </summary>
         /// <value>A string that is used as the ToolTip when elevation is complete</value>
         public object ToolTipElevated { get; set; }
 
         /// <summary>
-        ///   Gets/Sets ToolTip shown when elevation has not been preformed
+        ///   Gets or sets ToolTip shown when elevation has not been preformed
         /// </summary>
         /// <value>A string that is used as the ToolTip when elevation is required</value>
         public object ToolTipNotElevated { get; set; }
 
         #endregion
 
-        #region UACShieldButton - Constructors
+        #region Constructors
 
         /// <summary>
         ///   Creates the default shield icon and registers the dependency property with it
         /// </summary>
         static UacButton()
         {
-            ShieldIconProperty = DependencyProperty.Register("ShieldIcon", typeof (ImageSource), typeof (Button),
+            ShieldIconProperty = DependencyProperty.Register("ShieldIcon", typeof(ImageSource), typeof(Button),
                                                              new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
             ButtonTextProperty = DependencyProperty.Register("ButtonText", typeof(string), typeof(Button),
                                                  new FrameworkPropertyMetadata(buttonText, FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
-/*
- *			indicates if the current OS/application/user needs a UAC shield displayed.
- *			If the OS is not UAC enabled or the users is already elevated then no shield is required.
- *			If IsShieldDisplayed is false (no shield required) the most of this class becomes a no-op.
- *			
- *			The use of the call to IsUserAnAdmin is intential to detect elevation on Vista and above, not
- *			membership in the Administrator group.
- * */
+            /*
+             *			indicates if the current OS/application/user needs a UAC shield displayed.
+             *			If the OS is not UAC enabled or the users is already elevated then no shield is required.
+             *			If IsShieldDisplayed is false (no shield required) the most of this class becomes a no-op.
+             *			
+             *			The use of the call to IsUserAnAdmin is intential to detect elevation on Vista and above, not
+             *			membership in the Administrator group.
+             * */
             if (Environment.OSVersion.Version.Major >= 6) // Vista or higher
                 isShieldNeeded = !Internal.CoreNativeMethods.IsUserAnAdmin(); // If already an admin don't bother
 
-            
         }
 
         /// <summary>
@@ -168,17 +159,21 @@ namespace Microsoft.Windows.Controls
         public UacButton()
         {
             Loaded += OnLoaded;
-            IsEnabledChanged+=UacButton_IsEnabledChanged;
-            var stackPanel = new StackPanel {Orientation = Orientation.Horizontal};
+            IsEnabledChanged += UacButton_IsEnabledChanged;
+            var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
-            var imgShield = new System.Windows.Controls.Image {Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0,0,5,0)};
+            var imgShield = new System.Windows.Controls.Image { Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
             stackPanel.Children.Add(imgShield);
 
-            var textBlock = new TextBlock {Text = buttonText};
+            var textBlock = new TextBlock { Text = buttonText };
             stackPanel.Children.Add(textBlock);
             Content = stackPanel;
 
         }
+
+        #endregion
+
+        #region Methods
 
         void UacButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -188,11 +183,6 @@ namespace Microsoft.Windows.Controls
                 else
                     ShieldIcon = ShieldDisabled;
         }
-
-        #endregion
-
-        #region UACShieldButton - Methods
-
 
         /// <summary>
         ///   Returns current "actual" ToolTip
@@ -219,7 +209,7 @@ namespace Microsoft.Windows.Controls
 
         #endregion
 
-        #region UACShieldButton - Methods - Dependency Property Callbacks
+        #region Methods - Dependency Property Callbacks
 
         /// <summary>
         ///   Handles a change to the <see cref = "ShieldIcon" /> property
@@ -233,10 +223,10 @@ namespace Microsoft.Windows.Controls
             var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
             if (imageShield != null)
             {
-                imageShield.Source = (ImageSource) e.NewValue;
+                imageShield.Source = (ImageSource)e.NewValue;
             }
-            me.ToolTip = me.GetToolTip();;
-            me.FirePropertyChangedEvent("ShieldIcon");
+            me.ToolTip = me.GetToolTip(); ;
+            me.OnPropertyChanged("ShieldIcon");
         }
 
         /// <summary>
@@ -256,7 +246,7 @@ namespace Microsoft.Windows.Controls
                     textBlock.Text = e.NewValue.ToString();
             }
             me.ToolTip = me.GetToolTip();
-            me.FirePropertyChangedEvent("ButtonText");
+            me.OnPropertyChanged("ButtonText");
         }
 
         /// <summary>
@@ -272,28 +262,41 @@ namespace Microsoft.Windows.Controls
         /// </remarks>
         private static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
-            var showShield = (bool) e.NewValue && isShieldNeeded;
-            var me = (UacButton) obj;
-            var sp = ((StackPanel) me.Content);
-            var imageShield = ((System.Windows.Controls.Image) sp.Children[0]);
-           if(imageShield != null)
+            var showShield = (bool)e.NewValue && isShieldNeeded;
+            var me = (UacButton)obj;
+            var sp = ((StackPanel)me.Content);
+            var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
+            if (imageShield != null)
             {
                 imageShield.Visibility = showShield ? Visibility.Visible : Visibility.Collapsed;
             }
             me.ToolTip = me.GetToolTip();
-            me.FirePropertyChangedEvent("IsShieldNeeded");
+            me.OnPropertyChanged("IsShieldNeeded");
         }
 
         #endregion
 
-        private void FirePropertyChangedEvent(string propertyName)
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name"></param>
+        protected void OnPropertyChanged(string name)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
         }
+
+        #endregion
     }
 
-    #endregion
-
-    #endregion
+        #endregion
 }

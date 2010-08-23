@@ -1,4 +1,4 @@
-﻿#region GNU Public License Version 3
+#region GNU Public License Version 3
 
 // Copyright 2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
@@ -20,20 +20,37 @@
 
 #region
 
+using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 #endregion
 
 namespace Microsoft.Windows.Controls
 {
     /// <summary>
-    ///   Interaction logic for BackButton.xaml
+    ///   Implements BackButton that can be used in WPF user interfaces.
     /// </summary>
-    public partial class BackButton : UserControl
+    public class BackButton : Button
     {
+        #region Constructors
+
+        static BackButton()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
+        }
+
         public BackButton()
         {
-            InitializeComponent();
+            if (Resources.Count != 0)
+                return;
+            var resourceDictionary = new ResourceDictionary {Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative)};
+            Resources.MergedDictionaries.Add(resourceDictionary);
+            Command = NavigationCommands.BrowseBack;
         }
-    }
+
+        #endregion
+        }
 }

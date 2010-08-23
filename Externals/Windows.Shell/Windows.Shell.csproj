@@ -174,9 +174,6 @@
     <Compile Include="Common\SortColumn.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\BackButton.xaml.cs">
-      <DependentUpon>BackButton.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\Behaviors\ControlBehavior.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -204,9 +201,8 @@
     <Compile Include="Controls\Behaviors\ButtonBaseBehavior.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\CommandLink.xaml.cs">
-      <DependentUpon>CommandLink.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Controls\CommandLink.cs" />
+    <Compile Include="Controls\BackButton.cs" />
     <Compile Include="Controls\InfoTextBox.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\ListViewExtensions.cs" />
@@ -344,13 +340,9 @@
     <Resource Include="Images\GreenArrowHover.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\BackButton.xaml">
+    <Page Include="Resources\Dictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\CommandLink.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

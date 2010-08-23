@@ -59,7 +59,7 @@ namespace SevenUpdate.Sdk.Windows
             if (!e.IsGlassEnabled)
                 return;
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
         }
 
         /// <summary>
@@ -77,7 +77,8 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
+           // 0, 32, 0, 44
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
             Background = AeroGlass.IsEnabled ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.White;
         }
 
