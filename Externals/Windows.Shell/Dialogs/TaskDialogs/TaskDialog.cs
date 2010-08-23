@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
+using System.Windows;
 using Microsoft.Windows.Internal;
 
 #endregion
@@ -424,6 +425,16 @@ namespace Microsoft.Windows.Dialogs
         /// <returns>The dialog result.</returns>
         public TaskDialogResult Show()
         {
+            return ShowCore();
+        }
+
+        /// <summary>
+        ///   Creates and shows a modal task dialog.
+        /// </summary>
+        /// <returns>The dialog result.</returns>
+        public TaskDialogResult ShowDialog(Window window)
+        {
+            OwnerWindowHandle = new System.Windows.Interop.WindowInteropHelper(window).Handle;
             return ShowCore();
         }
 

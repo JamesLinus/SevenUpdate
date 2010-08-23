@@ -3,7 +3,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" d:DesignHeight="500" d:DesignWidth="850" KeepAlive="True">
     <!-- Grid-->
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Name="grid">
+    <Grid Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="24" />
             <ColumnDefinition Width="774*" />

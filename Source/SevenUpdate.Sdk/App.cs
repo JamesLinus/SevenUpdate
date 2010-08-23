@@ -154,8 +154,9 @@ namespace SevenUpdate.Sdk
                                  Icon = TaskDialogStandardIcon.Warning,
                                  FooterText = RM.GetString("ErrorHelp"),
                                  FooterIcon = TaskDialogStandardIcon.Information,
+                                 Cancelable = false
                              };
-                td.Show();
+                td.ShowDialog(Current.MainWindow);
             }
             else
             {
