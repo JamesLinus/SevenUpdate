@@ -28,6 +28,14 @@
 				</TextBlock.Effect>
             </TextBlock>
         </StackPanel>
+        <!--Help Text-->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="30,0,0,0" Name="spHelp">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            <TextBlock Text="To get started, right click the list box and create or import a registry item" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center"
+                    FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
+        </StackPanel>
+        <!--Naviation Buttons-->
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
                 Grid.ColumnSpan="3" Name="line" />
         <Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />
@@ -36,17 +44,18 @@
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
                     Click="Cancel_Click" />
         </StackPanel>
-        <ListBox BorderBrush="LightGray" HorizontalAlignment="Left" Name="listBox" SelectedIndex="0" VerticalAlignment="Stretch" Width="150" Margin="10" Grid.Row="1">
+        <ListBox BorderBrush="LightGray" HorizontalAlignment="Left" Name="listBox" SelectedIndex="0" VerticalAlignment="Stretch" Width="150" Margin="10" Grid.Row="1"
+                SelectionChanged="listBox_SelectionChanged">
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item">
+                    <MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" Name="miAdd">
                     </MenuItem>
-                    <MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File">
+                    <MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File" Name="miImport">
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Remove Registry Item">
+                    <MenuItem Header="Remove Registry Item" Name="miRemove" Click="miRemove_Click">
                     </MenuItem>
-                    <MenuItem Header="Remove All Registry Items">
+                    <MenuItem Header="Remove All Registry Items" Name="miRemoveAll" Click="miRemoveAll_Click">
                         <MenuItem.Icon>
                             <Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
                         </MenuItem.Icon>
@@ -54,7 +63,7 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        <StackPanel Grid.Column="1" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1" Visibility="Collapsed" Name="spInput">
             <GroupBox Grid.Column="1" Grid.Row="1" Header="Registry Action" HorizontalAlignment="Left" Name="groupBox1" VerticalAlignment="Top" Margin="10">
                 <StackPanel Name="stackPanel1" Orientation="Horizontal">
                     <RadioButton Content="Add/Update" Height="16" Margin="10" />
@@ -73,7 +82,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0,10,0,4" HorizontalAlignment="Left">
                 <TextBlock Text="Value data:" ToolTip="Specify data for the value" VerticalAlignment="Center" />
-                <ComboBox MinWidth="75" SelectedIndex="5" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="cbxDataType" SelectionChanged="cbxDataType_SelectionChanged">
+                <ComboBox MinWidth="75" SelectedIndex="5" Margin="10,0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="cbxDataType" SelectionChanged="DataType_SelectionChanged">
                     <ComboBoxItem Content="Binary" />
                     <ComboBoxItem Content="DWord" />
                     <ComboBoxItem Content="ExpandString" />

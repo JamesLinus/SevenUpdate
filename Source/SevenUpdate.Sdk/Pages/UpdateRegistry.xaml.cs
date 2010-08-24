@@ -147,10 +147,41 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void cbxDataType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DataType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tbxValueData != null)
                 tbxValueData.Text = null;
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox.Items.Count > 0)
+            {
+                spHelp.Visibility = Visibility.Collapsed;
+                spInput.Visibility = Visibility.Visible;
+                miRemove.IsEnabled = listBox.SelectedIndex > -1;
+                miRemoveAll.IsEnabled = true;
+            }
+            else
+            {
+                spHelp.Visibility = Visibility.Visible;
+                spInput.Visibility = Visibility.Collapsed;
+                miRemove.IsEnabled = false;
+               miRemoveAll.IsEnabled = false;
+            }
+        }
+
+        private void miRemove_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Remove(listBox.SelectedItem);
+        }
+
+        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            miRemoveAll.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            spInput.Visibility = Visibility.Collapsed;
         }
     }
 }

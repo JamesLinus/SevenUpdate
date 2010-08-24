@@ -153,5 +153,36 @@ namespace SevenUpdate.Sdk.Pages
                 }
             }
         }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox.Items.Count > 0)
+            {
+                spHelp.Visibility = Visibility.Collapsed;
+                spInput.Visibility = Visibility.Visible;
+                miRemoveAll.IsEnabled = true;
+                miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            }
+            else
+            {
+                spHelp.Visibility = Visibility.Visible;
+                spInput.Visibility = Visibility.Collapsed;
+                miRemove.IsEnabled = false;
+                miRemoveAll.IsEnabled = false;
+            }
+        }
+
+        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+        }
+
+        private void miRemove_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            miRemoveAll.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            spInput.Visibility = Visibility.Collapsed;
+        }
     }
 }

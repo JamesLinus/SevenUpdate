@@ -28,6 +28,14 @@
 				</TextBlock.Effect>
             </TextBlock>
         </StackPanel>
+        <!--Help Text-->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="30,0,0,0" Name="spHelp">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            <TextBlock Text="To get started, right click the list box and create or import a shortcut" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center"
+                    FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
+        </StackPanel>
+        <!--Navigation Buttons-->
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
                 Grid.ColumnSpan="3" Name="line" />
         <Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />
@@ -36,14 +44,15 @@
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
                     Click="Cancel_Click" />
         </StackPanel>
-        <ListBox BorderBrush="LightGray" HorizontalAlignment="Left" Margin="10" Name="listBox" SelectedIndex="0" VerticalAlignment="Stretch" Width="150" Grid.Row="1">
+        <ListBox BorderBrush="LightGray" HorizontalAlignment="Left" Margin="10" Name="listBox" SelectedIndex="0" VerticalAlignment="Stretch" Width="150" Grid.Row="1"
+                SelectionChanged="listBox_SelectionChanged">
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Click="AddShortcut_Click" Header="Add Registry Item" />
-                    <MenuItem Click="ImportShortcut_Click" Header="Import Registry File" />
+                    <MenuItem Click="AddShortcut_Click" Header="Add Registry Item" Name="miAddShortcut" />
+                    <MenuItem Click="ImportShortcut_Click" Header="Import Registry File" Name="miImportShortcut" />
                     <Separator />
-                    <MenuItem Header="Remove Shortcut" />
-                    <MenuItem Header="Remove All Shortcuts">
+                    <MenuItem Header="Remove Shortcut" Name="miRemove" Click="miRemove_Click" />
+                    <MenuItem Header="Remove All Shortcuts" Name="miRemoveAll" Click="miRemoveAll_Click">
                         <MenuItem.Icon>
                             <Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
                         </MenuItem.Icon>
@@ -51,7 +60,7 @@
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        <StackPanel Grid.Column="1" Grid.Row="1">
+        <StackPanel Grid.Column="1" Grid.Row="1" Name="spInput" Visibility="Collapsed">
             <GroupBox Grid.Column="1" Grid.Row="1" Header="Shortcut Action" HorizontalAlignment="Left" Margin="10">
                 <StackPanel Orientation="Horizontal">
                     <RadioButton Content="Add/Update" Height="16" Margin="10" ToolTip="Creates or updates the shortcut" IsChecked="True" />

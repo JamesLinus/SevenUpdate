@@ -49,7 +49,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Properties
 
-        private bool IsInfoValid { get { return (imgPublisherUrl.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible); } }
+        private bool IsInfoValid { get { return (imgPublisherUrl.Visibility != Visibility.Visible && imgAppName.Visibility  != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible); } }
 
         #endregion
 

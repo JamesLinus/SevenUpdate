@@ -42,7 +42,7 @@ namespace Microsoft.Windows.Controls
                                                                                                                                 OnUseShieldChanged));
 
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof (string), typeof (CommandLink),
-                                                                                             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+                                                                                             new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
         #endregion
 
         #region Constructors

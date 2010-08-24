@@ -139,18 +139,20 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile(string fileName)
         {
-            SPHelp.Visibility = Visibility.Collapsed;
-            SPInput.Visibility = Visibility.Visible;
+            spHelp.Visibility = Visibility.Collapsed;
+            spInput.Visibility = Visibility.Visible;
             tbxInstallUri.Text =SevenUpdate.Base.Base.ConvertPath(fileName, false, true);
             tbHash.Text =SevenUpdate.Base.Base.GetHash(fileName);
             cbxUpdateType.SelectedIndex = 0;
             listBox.Items.Add(Path.GetFileName(fileName));
+            listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
         private void AddFiles(string[] files)
         {
             for (int x = 0; x < files.Length; x++)
                 AddFile(files[x]);
+            listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
@@ -176,6 +178,37 @@ namespace SevenUpdate.Sdk.Pages
                 tbxArgs.IsEnabled = false;
                 tbxArgs.Text = null;
             }
+        }
+
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (listBox.Items.Count > 0)
+            {
+                spHelp.Visibility = Visibility.Collapsed;
+                spInput.Visibility = Visibility.Visible;
+                miRemoveAll.IsEnabled = true;
+                miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            }
+            else
+            {
+                spHelp.Visibility = Visibility.Visible;
+                spInput.Visibility = Visibility.Collapsed;
+                miRemoveAll.IsEnabled = false;
+                miRemove.IsEnabled = false;
+            }
+        }
+
+        private void miRemove_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Remove(listBox.SelectedItem);
+        }
+
+        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            miRemoveAll.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            spInput.Visibility = Visibility.Collapsed;
         }
     }
 }

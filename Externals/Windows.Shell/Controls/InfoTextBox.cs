@@ -44,6 +44,7 @@ namespace Microsoft.Windows.Controls
         private static readonly DependencyPropertyKey HasTextPropertyKey = DependencyProperty.RegisterReadOnly("HasText", typeof (bool), typeof (InfoTextBox), new PropertyMetadata(false));
 
         public static readonly DependencyProperty HasTextProperty = HasTextPropertyKey.DependencyProperty;
+
         public string Label { get { return (string) GetValue(LabelProperty); } set { SetValue(LabelProperty, value); } }
         public Style LabelStyle { get { return (Style) GetValue(LabelStyleProperty); } set { SetValue(LabelStyleProperty, value); } }
         public bool HasText { get { return (bool) GetValue(HasTextProperty); } private set { SetValue(HasTextPropertyKey, value); } }
@@ -59,15 +60,15 @@ namespace Microsoft.Windows.Controls
 
             myAdornerLayer = AdornerLayer.GetAdornerLayer(this);
             myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
-            UpdateAdorner(this);
+            UpdateAdorner(this, false);
 
             DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof (FrameworkElement));
             if (focusProp != null)
-                focusProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
+                focusProp.AddValueChanged(this, delegate { UpdateAdorner(this, false); });
 
             DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof (InfoTextBox));
             if (containsTextProp != null)
-                containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
+                containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this, false); });
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -86,16 +87,16 @@ namespace Microsoft.Windows.Controls
 
         protected override void OnDragLeave(DragEventArgs e)
         {
-            UpdateAdorner(this);
+            UpdateAdorner(this, false);
 
             base.OnDragLeave(e);
         }
 
-        private void UpdateAdorner(FrameworkElement elem)
+        private void UpdateAdorner(FrameworkElement elem, bool hide)
         {
             if (elem == null || myAdornerLayer == null)
                 return;
-            if (((InfoTextBox) elem).HasText || elem.IsFocused)
+            if (((InfoTextBox) elem).HasText || elem.IsFocused || hide)
             {
                 // Hide the Shadowed Label
                 myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
