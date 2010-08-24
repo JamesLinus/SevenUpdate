@@ -184,7 +184,7 @@ namespace Microsoft.Windows.Dialogs
         ///   specified by pList.
         ///   <param name = "propertyList">List of properties to collect. This parameter can be null.</param>
         /// </param>
-        /// <param name = "propertyList"></param>
+        /// <param name = "propertyList" />
         /// <remarks>
         ///   SetCollectedPropertyKeys can be called at any time before the dialog is displayed or while it 
         ///   is visible. If different properties are to be collected depending on the chosen filetype, 

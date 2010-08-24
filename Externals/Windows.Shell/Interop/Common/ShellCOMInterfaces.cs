@@ -709,7 +709,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Convert form System.DateTime
         /// </summary>
-        /// <param name = "time"></param>
+        /// <param name = "time" />
         internal void FromDateTime(DateTime time)
         {
             wYear = (ushort) time.Year;
@@ -725,7 +725,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Convert to System.DateTime
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         internal DateTime ToDateTime()
         {
             return new DateTime(wYear, wMonth, wDay, wHour, wMinute, wSecond, wMilliseconds);
@@ -734,8 +734,8 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Convert to System.DateTime
         /// </summary>
-        /// <param name = "time"></param>
-        /// <returns></returns>
+        /// <param name = "time" />
+        /// <returns />
         internal static DateTime ToDateTime(SYSTEMTIME time)
         {
             return time.ToDateTime();

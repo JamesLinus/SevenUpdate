@@ -26,6 +26,6 @@
             <RadioButton Content="Decline" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
         </StackPanel>
         <RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False"
-                IsUndoEnabled="False" Focusable="False" Cursor="Wait"></RichTextBox>
+                IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
     </Grid>
 </Window>

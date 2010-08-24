@@ -146,7 +146,7 @@ namespace SharpBits.Base
         ///   6.7.xxxx = BITS 2.5
         ///   7.0.xxxx = BITS 3.0
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         private static BitsVersion GetBitsVersion()
         {
             try

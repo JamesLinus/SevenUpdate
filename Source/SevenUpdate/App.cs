@@ -73,7 +73,7 @@ namespace SevenUpdate
         ///// <summary>
         /////   Gets a value indicating if the current user is running on admin privileges
         ///// </summary>
-        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
+        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c />
         //internal static bool IsAdmin { get; private set; }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line <c>args</c></param>
+        /// <param name = "args">Command line <c>args</c />
         [STAThread]
         private static void Main(string[] args)
         {

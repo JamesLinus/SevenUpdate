@@ -86,9 +86,9 @@ namespace Microsoft.Windows.Controls
         ///   Given a base type, which may be an interface, and a target type, this returns the most-base type (not an interface)
         ///   of type that implements or is equal to the base type.
         /// </summary>
-        /// <param name = "baseType"></param>
-        /// <param name = "targetType"></param>
-        /// <returns></returns>
+        /// <param name = "baseType" />
+        /// <param name = "targetType" />
+        /// <returns />
         protected static Type GetImplementingType(Type baseType, Type targetType)
         {
             Debug.Assert(DoesTypeImplement(baseType, targetType), "GetImplementingType should be given a target type that implements the base type.");

@@ -19,8 +19,8 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Returns the native known folder (IKnownFolderNative) given a PID list
         /// </summary>
-        /// <param name = "pidl"></param>
-        /// <returns></returns>
+        /// <param name = "pidl" />
+        /// <returns />
         internal static IKnownFolderNative FromPIDL(IntPtr pidl)
         {
             IKnownFolderManager knownFolderManager = new KnownFolderManagerClass();
@@ -72,7 +72,7 @@ namespace Microsoft.Windows.Shell
         ///   IKnownFolder object (FileSystemKnownFolder or NonFileSystemKnownFolder)
         /// </summary>
         /// <param name = "knownFolderNative">Native Known Folder</param>
-        /// <returns></returns>
+        /// <returns />
         private static IKnownFolder GetKnownFolder(IKnownFolderNative knownFolderNative)
         {
             Debug.Assert(knownFolderNative != null, "Native IKnownFolder should not be null.");

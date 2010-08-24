@@ -195,7 +195,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line <c>args</c></param>
+        /// <param name = "args">Command line <c>args</c />
         [STAThread]
         private static void Main(string[] args)
         {
@@ -213,7 +213,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         /// <param name = "str">The string to check against values</param>
         /// <param name = "values">An array of strings to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c />
         public static bool ContainsAny(this string str, params string[] values)
         {
             if (!string.IsNullOrEmpty(str) || values.Length == 0)
@@ -227,7 +227,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         /// <param name = "str">The string to check against values</param>
         /// <param name = "values">An array of characters to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c />
         public static bool ContainsAny(this string str, params char[] values)
         {
             if (!string.IsNullOrEmpty(str) || values.Length == 0)

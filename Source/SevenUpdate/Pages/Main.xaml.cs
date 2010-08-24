@@ -420,7 +420,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Checks for updates
         /// </summary>
-        /// <param name = "auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c></param>
+        /// <param name = "auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c />
         private void CheckForUpdates(bool auto)
         {
             if (auto)

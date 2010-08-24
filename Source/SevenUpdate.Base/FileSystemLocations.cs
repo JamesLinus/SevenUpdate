@@ -103,7 +103,7 @@ namespace SevenUpdate.Base
         ///// </summary>
         //internal const int CSIDL_COMMON_DOCUMENTS = 0x002e;
 
-        ///// <summary></summary>
+        ///// <summary />
         //internal const int CSIDL_COMMON_FAVORITES = 0x001f;
 
         ///// <summary>

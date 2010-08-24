@@ -78,7 +78,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <param name = "app">a collection of applications to check for updates</param>
         /// <param name = "hidden">a collection of hidden updates</param>
-        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
+        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c />
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.AppInfo.Directory = Base.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
@@ -362,8 +362,8 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Searches for updates on a new thread
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "f"></param>
+        /// <param name = "sender" />
+        /// <param name = "f" />
         private static void WorkerDoWork(object sender, DoWorkEventArgs f)
         {
             SearchForUpdates(((Collection<Sua>) f.Argument));

@@ -399,7 +399,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Returns the hash code of the object.
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public override int GetHashCode()
         {
             if (!hashValue.HasValue)

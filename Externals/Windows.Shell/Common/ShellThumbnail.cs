@@ -40,7 +40,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Internal constructor that takes in a parent ShellObject.
         /// </summary>
-        /// <param name = "shellObject"></param>
+        /// <param name = "shellObject" />
         internal ShellThumbnail(ShellObject shellObject)
         {
             if (shellObject == null || shellObject.NativeShellItem == null)

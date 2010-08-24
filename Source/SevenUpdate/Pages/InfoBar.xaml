@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <Image RenderOptions.BitmapScalingMode="HighQuality" Name="imgSideBanner" Stretch="Fill" StretchDirection="Both" Grid.RowSpan="2"
-                MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" MinHeight="70" Width="20"></Image>
+                MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" MinHeight="70" Width="20" />
         <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" Margin="0,0,2,0">
             <ProgressBar Height="15" IsIndeterminate="True" Name="pbProgressBar" VerticalAlignment="Top" Visibility="Collapsed" HorizontalAlignment="Left" Width="250" Margin="0,5,0,0" />
             <TextBlock Name="lblStatus" Padding="5" Text="No new updates are avaliable for your programs" Visibility="Visible" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left"

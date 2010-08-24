@@ -130,7 +130,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Collection enumeration
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public IEnumerator GetEnumerator()
         {
             for (int index = 0; index < Count; index++)

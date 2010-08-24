@@ -106,9 +106,9 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <summary>
         ///   Constructs a new Property object
         /// </summary>
-        /// <param name = "propertyKey"></param>
-        /// <param name = "description"></param>
-        /// <param name = "parent"></param>
+        /// <param name = "propertyKey" />
+        /// <param name = "description" />
+        /// <param name = "parent" />
         internal ShellProperty(PropertyKey propertyKey, ShellPropertyDescription description, ShellObject parent)
         {
             this.propertyKey = propertyKey;
@@ -120,9 +120,9 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <summary>
         ///   Constructs a new Property object
         /// </summary>
-        /// <param name = "propertyKey"></param>
-        /// <param name = "description"></param>
-        /// <param name = "propertyStore"></param>
+        /// <param name = "propertyKey" />
+        /// <param name = "description" />
+        /// <param name = "propertyStore" />
         internal ShellProperty(PropertyKey propertyKey, ShellPropertyDescription description, IPropertyStore propertyStore)
         {
             this.propertyKey = propertyKey;

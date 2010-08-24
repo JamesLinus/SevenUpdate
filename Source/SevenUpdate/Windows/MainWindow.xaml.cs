@@ -50,8 +50,8 @@ namespace SevenUpdate.Windows
         /// <summary>
         ///   Sets the Height and Width of the window from the settings
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void NavigationWindow_Loaded(object sender, RoutedEventArgs e)
         {
             Height = Settings.Default.windowHeight;
@@ -61,8 +61,8 @@ namespace SevenUpdate.Windows
         /// <summary>
         ///   When Seven Update is closing, save the Window Width and Height in the settings
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void NavigationWindow_Closing(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = Height;

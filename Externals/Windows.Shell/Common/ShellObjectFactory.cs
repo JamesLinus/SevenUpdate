@@ -19,7 +19,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Creates a ShellObject given a native IShellItem interface
         /// </summary>
-        /// <param name = "nativeShellItem"></param>
+        /// <param name = "nativeShellItem" />
         /// <returns>A newly constructed ShellObject object</returns>
         [SuppressMessage("Microsoft.Globalization", "CA1304:SpecifyCultureInfo", MessageId = "System.String.ToLower", Justification = "We are not currently handling globalization or localization")]
         internal static ShellObject Create(IShellItem nativeShellItem)
@@ -136,7 +136,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Creates a ShellObject given a parsing name
         /// </summary>
-        /// <param name = "parsingName"></param>
+        /// <param name = "parsingName" />
         /// <returns>A newly constructed ShellObject object</returns>
         internal static ShellObject Create(string parsingName)
         {
@@ -156,8 +156,8 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Constructs a new Shell object from IDList pointer
         /// </summary>
-        /// <param name = "idListPtr"></param>
-        /// <returns></returns>
+        /// <param name = "idListPtr" />
+        /// <returns />
         internal static ShellObject Create(IntPtr idListPtr)
         {
             // Throw exception if not running on Win7 or newer.
@@ -172,9 +172,9 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   Constructs a new Shell object from IDList pointer
         /// </summary>
-        /// <param name = "idListPtr"></param>
-        /// <param name = "parent"></param>
-        /// <returns></returns>
+        /// <param name = "idListPtr" />
+        /// <param name = "parent" />
+        /// <returns />
         internal static ShellObject Create(IntPtr idListPtr, ShellContainer parent)
         {
             IShellItem nativeShellItem;

@@ -99,7 +99,7 @@ namespace Microsoft.Windows.Shell
 
         /// <summary>
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public IEnumerator<ShellObject> GetEnumerator()
         {
             if (NativeShellFolder == null)

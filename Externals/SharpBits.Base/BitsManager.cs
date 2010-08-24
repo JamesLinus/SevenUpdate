@@ -185,7 +185,7 @@ namespace SharpBits.Base
         ///   Note that more than one job may have the same display name. Must not be NULL. 
         ///   The name is limited to 256 characters, not including the null terminator.</param>
         /// <param name = "jobType"> Type of transfer job, such as JobType.Download. For a list of transfer types, see the JobType enumeration</param>
-        /// <returns></returns>
+        /// <returns />
         public BitsJob CreateJob(string displayName, JobType jobType)
         {
             Guid guid;

@@ -259,8 +259,8 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   When the AutoUpdate selection changes update the shield image
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (cmbUpdateOption.SelectedIndex)
@@ -319,8 +319,8 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Saves the settings and goes back to the Main page
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings();

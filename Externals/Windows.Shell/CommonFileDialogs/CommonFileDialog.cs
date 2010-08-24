@@ -797,7 +797,7 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         ///   Gets the selected item as a ShellObject.
         /// </summary>
-        /// <value>A <see cref = "Microsoft.Windows.Shell.ShellObject"></see> object.</value>
+        /// <value>A <see cref = "Microsoft.Windows.Shell.ShellObject" /> object.</value>
         /// <exception cref = "System.InvalidOperationException">This property cannot be used when multiple files
         ///   are selected.</exception>
         public ShellObject FileAsShellObject

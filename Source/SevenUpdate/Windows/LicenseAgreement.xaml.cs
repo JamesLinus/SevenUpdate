@@ -135,7 +135,7 @@ namespace SevenUpdate.Windows
         /// <summary>
         ///   Loads the licenseInformation and shows the form
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         internal bool? LoadLicenses()
         {
             GetLicenseAgreements();
@@ -151,8 +151,8 @@ namespace SevenUpdate.Windows
         /// <summary>
         ///   Downloads the license agreements of the updates
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void WorkerDoWork(object sender, DoWorkEventArgs e)
         {
             licenseText = new string[licenseInformation.Count];
@@ -203,8 +203,8 @@ namespace SevenUpdate.Windows
         /// <summary>
         ///   Closes the window, declining all EULA's
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;

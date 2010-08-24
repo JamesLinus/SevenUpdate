@@ -14,7 +14,7 @@
             <RowDefinition Height="420*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White"></Rectangle>
+        <Rectangle Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.ColumnSpan="3" Fill="White" />
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3">
             <Controls:BackButton Grid.RowSpan="3">
                 <Controls:BackButton.CommandBindings>
@@ -40,7 +40,7 @@
                 Grid.ColumnSpan="3" Name="line" />
         <Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2" Grid.Column="1">
-            <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click"></Button>
+            <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" />
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
                     Click="Cancel_Click" />
         </StackPanel>

@@ -136,8 +136,8 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Updates the <see cref = "CollectionView" /> when the <c>hiddenUpdates</c> collection changes
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void HiddenUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -200,8 +200,8 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Loads the collection of hidden updates when the page is loaded
         /// </summary>
-        /// <param name = "sender"></param>
-        /// <param name = "e"></param>
+        /// <param name = "sender" />
+        /// <param name = "e" />
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             GetHiddenUpdates();

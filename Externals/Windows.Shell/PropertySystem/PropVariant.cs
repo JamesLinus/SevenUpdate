@@ -498,7 +498,7 @@ namespace Microsoft.Windows.Internal
         /// <summary>
         ///   Checks if this has an empty or null value
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public bool IsNullOrEmpty { get { return (valueType == (ushort) VarEnum.VT_EMPTY || valueType == (ushort) VarEnum.VT_NULL); } }
 
         #endregion

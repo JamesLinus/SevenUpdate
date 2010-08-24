@@ -27,10 +27,10 @@
 		<Style.Triggers>
 			<!-- setting up triggers for alternate background colors -->
 			<Trigger Property="ItemsControl.AlternationIndex" Value="0">
-				<Setter Property="Background" Value="#F3F7FB"></Setter>
+				<Setter Property="Background" Value="#F3F7FB" />
 			</Trigger>
 			<Trigger Property="ItemsControl.AlternationIndex" Value="1">
-				<Setter Property="Background" Value="White"></Setter>
+				<Setter Property="Background" Value="White" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>

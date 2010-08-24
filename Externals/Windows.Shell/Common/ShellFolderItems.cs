@@ -57,7 +57,7 @@ namespace Microsoft.Windows.Shell
 
         /// <summary>
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public bool MoveNext()
         {
             if (nativeEnumIdList == null)

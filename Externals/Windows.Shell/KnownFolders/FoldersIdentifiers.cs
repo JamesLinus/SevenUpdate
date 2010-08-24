@@ -571,7 +571,7 @@ namespace Microsoft.Windows.Shell
         ///   Returns a sorted list of name, guid pairs for 
         ///   all known folders.
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         internal static SortedList<string, Guid> GetAllFolders()
         {
             // Make a copy of the dictionary

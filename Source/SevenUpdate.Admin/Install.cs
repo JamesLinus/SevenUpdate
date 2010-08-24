@@ -70,7 +70,7 @@ namespace SevenUpdate.Admin
         /// <param name = "lpExistingFileName">The source filename</param>
         /// <param name = "lpNewFileName">The destination filename</param>
         /// <param name = "dwFlags">A int indicating the move operation to perform</param>
-        /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if successful, otherwise <c>false</c />
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
@@ -336,7 +336,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name = "shortcuts">the shortcuts to install on the system</param>
         /// <param name = "appDirectory">the directory where the application is installed</param>
-        /// <param name = "is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
+        /// <param name = "is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c />
         private static void SetShortcuts(IList<Shortcut> shortcuts, string appDirectory, bool is64Bit)
         {
             if (shortcuts == null)
@@ -395,7 +395,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name = "files">the collection of files to update</param>
         /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
-        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c />
         private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             var error = false;
@@ -532,7 +532,7 @@ namespace SevenUpdate.Admin
         ///   Adds an update to the update history
         /// </summary>
         /// <param name = "updateInfo">the update information</param>
-        /// <param name = "failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
+        /// <param name = "failed"><c>true</c> if the update failed, otherwise <c>false</c />
         /// <param name = "appInfo">the application information</param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {

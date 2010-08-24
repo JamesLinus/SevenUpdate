@@ -79,7 +79,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <summary>
         ///   Returns the hash code of the object. This is vital for performance of value types.
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         public override int GetHashCode()
         {
             return FormatId.GetHashCode() ^ PropertyId;

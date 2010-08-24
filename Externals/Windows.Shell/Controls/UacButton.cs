@@ -214,8 +214,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "ShieldIcon" /> property
         /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
+        /// <param name = "obj" />
+        /// <param name = "e" />
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -232,8 +232,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "ButtonText" /> property
         /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
+        /// <param name = "obj" />
+        /// <param name = "e" />
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
 
@@ -252,8 +252,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "IsShieldNeeded" /> property
         /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
+        /// <param name = "obj" />
+        /// <param name = "e" />
         /// <remarks>
         ///   Adds or removes the UACShieldAdorner as appropriate
         ///   <para>
@@ -286,7 +286,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;

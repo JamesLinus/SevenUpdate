@@ -78,8 +78,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "UseShield" /> property
         /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
+        /// <param name = "obj" />
+        /// <param name = "e" />
         private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink) obj;
@@ -90,8 +90,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "Note" /> property
         /// </summary>
-        /// <param name = "obj"></param>
-        /// <param name = "e"></param>
+        /// <param name = "obj" />
+        /// <param name = "e" />
         private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink) obj;
@@ -111,7 +111,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;

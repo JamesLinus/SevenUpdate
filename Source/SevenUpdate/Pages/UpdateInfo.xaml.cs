@@ -172,7 +172,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Loops through the <see cref = "ListView" /> and updates the source when the update selection has been saved
         /// </summary>
-        /// <param name = "element">The <see cref = "DependencyObject" /></param>
+        /// <param name = "element">The <see cref = "DependencyObject" / />
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)

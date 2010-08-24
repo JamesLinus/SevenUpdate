@@ -44,7 +44,7 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         ///   Returns a string representation of this object.
         /// </summary>
-        /// <returns>A <see cref = "System.String" /></returns>
+        /// <returns>A <see cref = "System.String" / />
         public override string ToString()
         {
             string instructionString = (instruction == null ? "" : instruction);

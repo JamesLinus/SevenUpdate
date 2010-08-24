@@ -60,7 +60,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Gets a List of strings from a column that needs to be sorted
         /// </summary>
-        /// <returns></returns>
+        /// <returns />
         protected IEnumerable<string> GetSortColumnList()
         {
             var result = new List<string>();

@@ -27,8 +27,8 @@
 				http://sevenupdate.com/support
 			</Hyperlink>
         </TextBlock>
-        <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" VerticalAlignment="Top"></Separator>
-        <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Top"></Separator>
+        <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3" VerticalAlignment="Top" />
+        <Separator Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="4" VerticalAlignment="Top" />
         <TextBlock Foreground="#FF0066CC" HorizontalAlignment="Left" Name="tbLicense" Padding="5" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
 			<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://www.gnu.org/licenses/gpl-3.0.txt">
 				Seven Update is licensed under the GNU GPL 3.0 © 2007-2010

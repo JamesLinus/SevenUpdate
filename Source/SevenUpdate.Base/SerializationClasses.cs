@@ -60,7 +60,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -198,7 +198,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -396,7 +396,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -615,7 +615,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
@@ -774,7 +774,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name"></param>
+        /// <param name = "name" />
         protected void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;

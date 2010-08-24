@@ -189,7 +189,7 @@ namespace Microsoft.Windows.Dwm
             /// <summary>
             ///   Event argument for DwmCompositionChanged event
             /// </summary>
-            /// <param name = "isGlassEnabled"></param>
+            /// <param name = "isGlassEnabled" />
             internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
             {
                 IsGlassEnabled = isGlassEnabled;

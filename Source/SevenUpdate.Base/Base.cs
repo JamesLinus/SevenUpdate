@@ -518,7 +518,7 @@ namespace SevenUpdate.Base
         /// <param name = "arguments">The arguments to execute with the file</param>
         /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
         /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
-        /// <returns></returns>
+        /// <returns />
         public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
             var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true, Arguments = arguments}};
@@ -558,7 +558,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c />
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
@@ -590,7 +590,7 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
         /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c />
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
@@ -613,7 +613,7 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object</typeparam>
         /// <param name = "item">the object to serialize</param>
         /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
+        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c />
         public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
             try

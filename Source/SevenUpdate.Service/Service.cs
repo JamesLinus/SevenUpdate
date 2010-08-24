@@ -215,7 +215,7 @@ namespace SevenUpdate.Service
         /// <summary>
         ///   A callback delegate for the <see cref = "DownloadCompleted" /> event
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c />
         public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>

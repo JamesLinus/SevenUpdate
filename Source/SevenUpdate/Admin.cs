@@ -43,7 +43,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Contains event data associated with this event
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c></param>
+        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c />
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             ErrorOccurred = errorOccurred;
@@ -199,7 +199,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when the download of updates has completed
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c />
         public void OnDownloadCompleted(bool errorOccurred)
         {
             if (DownloadDoneEventHandler != null)
@@ -279,7 +279,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Connects to the SevenUpdate.Admin sub program
         /// </summary>
-        /// <returns><c>true</c> if connected to the admin process, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if connected to the admin process, otherwise <c>false</c />
         internal static bool Connect()
         {
             wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
@@ -352,7 +352,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Aborts the installation of updates
         /// </summary>
-        /// <returns><c>true</c> if the install was aborted, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the install was aborted, otherwise <c>false</c />
         internal static bool AbortInstall()
         {
             bool abort = false;
@@ -375,7 +375,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Installs selected updates
         /// </summary>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
         internal static bool Install()
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
@@ -391,7 +391,7 @@ namespace SevenUpdate
         ///   Hides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the update to hide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c />
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
@@ -408,7 +408,7 @@ namespace SevenUpdate
         ///   Hides multiple updates
         /// </summary>
         /// <param name = "hiddenUpdates">the list of updates to hide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
@@ -424,7 +424,7 @@ namespace SevenUpdate
         ///   Unhides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the hidden update to unhide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
             bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
@@ -454,7 +454,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Save the settings and call SevenUpdate.Admin to commit them.
         /// </summary>
-        /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
+        /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c />
         /// <param name = "options">the options to save</param>
         /// <param name = "sul">the list of application to update to save</param>
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)

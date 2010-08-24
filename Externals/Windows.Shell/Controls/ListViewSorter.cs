@@ -101,7 +101,7 @@ namespace Microsoft.Windows.Controls
         ///   Sets the sorting binding member of the <see cref = "GridViewColumn" />
         /// </summary>
         /// <param name = "obj">The <see cref = "DependencyObject" /> to set the Binding Member to</param>
-        /// <param name = "value"></param>
+        /// <param name = "value" />
         public static void SetSortBindingMember(DependencyObject obj, BindingBase value)
         {
             obj.SetValue(SortBindingMemberProperty, value);
@@ -111,7 +111,7 @@ namespace Microsoft.Windows.Controls
         ///   Sets a value indicating if the <see cref = "ListView" /> is sortable
         /// </summary>
         /// <param name = "obj">The <see cref = "DependencyObject" /> to set the IsListViewSortable property to</param>
-        /// <param name = "value"></param>
+        /// <param name = "value" />
         public static void SetIsListViewSortable(DependencyObject obj, Boolean value)
         {
             obj.SetValue(IsListviewSortableProperty, value);
@@ -132,8 +132,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Registers the <see cref = "ListView" /> to be sortable
         /// </summary>
-        /// <param name = "grid"></param>
-        /// <param name = "args"></param>
+        /// <param name = "grid" />
+        /// <param name = "args" />
         private static void RegisterSortableGridView(IInputElement grid, DependencyPropertyChangedEventArgs args)
         {
             if (args.NewValue is Boolean && (Boolean) args.NewValue)
