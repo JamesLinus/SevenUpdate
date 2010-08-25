@@ -42,6 +42,8 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Contructors
+
         /// <summary>
         ///   The constructor for the UpdateRegistry page
         /// </summary>
@@ -59,33 +61,11 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
-        {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-        }
+        #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsInfoValid)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
-            else
-                App.ShowInputErrorMessage();
-            
-        }
+        #region UI Events
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
-
-        private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        #region TextBox - Text Changed
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -108,6 +88,14 @@ namespace SevenUpdate.Sdk.Pages
                 imgKeyPath.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
+
+        #endregion
+
+        #region TextBox - Key Down
 
         private void ValueData_KeyDown(object sender, KeyEventArgs e)
         {
@@ -147,6 +135,60 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        #endregion
+
+        #region RadioButton - Checked
+
+        #endregion
+
+        #region Button - Click
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        #endregion
+
+        #region TextBlock - Mouse Down
+
+        #endregion
+
+        #region MenuItem - Click
+
+        private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void miRemove_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Remove(listBox.SelectedItem);
+        }
+
+        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            miRemoveAll.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            spInput.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
         private void DataType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (tbxValueData != null)
@@ -167,21 +209,22 @@ namespace SevenUpdate.Sdk.Pages
                 spHelp.Visibility = Visibility.Visible;
                 spInput.Visibility = Visibility.Collapsed;
                 miRemove.IsEnabled = false;
-               miRemoveAll.IsEnabled = false;
+                miRemoveAll.IsEnabled = false;
             }
         }
 
-        private void miRemove_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            listBox.Items.Remove(listBox.SelectedItem);
+            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
-        {
-            listBox.Items.Clear();
-            miRemoveAll.IsEnabled = false;
-            miRemove.IsEnabled = false;
-            spInput.Visibility = Visibility.Collapsed;
-        }
+        #endregion
+
+        #endregion
     }
 }

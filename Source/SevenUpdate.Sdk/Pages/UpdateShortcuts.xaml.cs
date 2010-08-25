@@ -44,6 +44,8 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Contructors
+
         /// <summary>
         ///   The constructor for the UpdateShortcuts page
         /// </summary>
@@ -60,53 +62,16 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
-        {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-        }
+        #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsInfoValid)
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
-            else
-                App.ShowInputErrorMessage();
-        }
+        #region Methods
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
+        #endregion
 
-        private void AddShortcut_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        #region UI Events
 
-        private void ImportShortcut_Click(object sender, RoutedEventArgs e)
-        {
-        }
+        #region TextBox - Text Changed Events
 
-        private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutTarget.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
-        }
-
-        private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutPath.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
-        }
-
-        private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutIcon.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
-        }
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
@@ -154,6 +119,85 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
+
+        #endregion
+
+        #region RadioButton - Checked
+
+        #endregion
+
+        #region Button - Click
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        #endregion
+
+        #region TextBlock - Mouse Down
+
+        private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxShortcutTarget.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+
+        private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxShortcutPath.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+
+        private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxShortcutIcon.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+        }
+
+        #endregion
+
+        #region MenuItem - Click
+
+        private void AddShortcut_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void ImportShortcut_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+        }
+
+        private void miRemove_Click(object sender, RoutedEventArgs e)
+        {
+            listBox.Items.Clear();
+            miRemoveAll.IsEnabled = false;
+            miRemove.IsEnabled = false;
+            spInput.Visibility = Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listBox.Items.Count > 0)
@@ -172,17 +216,18 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void miRemoveAll_Click(object sender, RoutedEventArgs e)
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            listBox.Items.Clear();
+            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void miRemove_Click(object sender, RoutedEventArgs e)
-        {
-            listBox.Items.Clear();
-            miRemoveAll.IsEnabled = false;
-            miRemove.IsEnabled = false;
-            spInput.Visibility = Visibility.Collapsed;
-        }
+        #endregion
+
+        #endregion
     }
 }

@@ -59,6 +59,8 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Constructors
+
         /// <summary>
         ///   The constructor for the UpdateInfo page
         /// </summary>
@@ -75,11 +77,28 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        #endregion
+
+        #region UI Events
+
+        #region Button - Click
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            if (IsInfoValid)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            else
+                App.ShowInputErrorMessage();
         }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        #endregion
+
+        #region TextBox - Text Changed
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -134,18 +153,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (IsInfoValid)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
-            else
-                App.ShowInputErrorMessage();
-        }
+        #endregion
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
+        #region ComboBox Selection Changed
 
         private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -176,6 +186,10 @@ namespace SevenUpdate.Sdk.Pages
         {
             imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
         }
+
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
 
         private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -214,5 +228,19 @@ namespace SevenUpdate.Sdk.Pages
             var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
             Base.Update.Description.Add(ls);
         }
+
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

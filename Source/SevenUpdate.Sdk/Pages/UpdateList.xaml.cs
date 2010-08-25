@@ -33,6 +33,8 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateList : Page
     {
+        #region Constructors
+
         /// <summary>
         ///   The constructor for the UpdateList page
         /// </summary>
@@ -47,9 +49,46 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
-        {
+        #endregion
 
+        #region UI Events
+
+        #region TextBox - Text Changed Events
+
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
+
+        #endregion
+
+        #region RadioButton - Checked
+
+        #endregion
+
+        #region Button - Click
+
+        #endregion
+
+        #region TextBlock - Mouse Down
+
+        #endregion
+
+        #region MenuItem - Click
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
         }
+
+        #endregion
+
+        #endregion
     }
 }

@@ -25,7 +25,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Windows.Dwm;
 using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
@@ -38,6 +37,8 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class Main : Page
     {
+        #region Constructors
+
         /// <summary>
         ///   The constructor for the Main page
         /// </summary>
@@ -45,6 +46,28 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region UI Events
+
+        #region TextBox - Text Changed Events
+
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
+
+        #endregion
+
+        #region RadioButton - Checked
+
+        #endregion
+
+        #region Button - Click
+
+        #endregion
+
+        #region Commandlink - Click
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
@@ -54,9 +77,29 @@ namespace SevenUpdate.Sdk.Pages
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 
+        #endregion
+
+        #region TextBlock - Mouse Down
+
         private void Help_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Process.Start(@"http://sevenupdate.com/support");
         }
+
+        #endregion
+
+        #region MenuItem - Click
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
+        #endregion
+
+        #region Aero
+
+        #endregion
+
+        #endregion
     }
 }

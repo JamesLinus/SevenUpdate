@@ -49,9 +49,18 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Properties
 
-        private bool IsInfoValid { get { return (imgPublisherUrl.Visibility != Visibility.Visible && imgAppName.Visibility  != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppPath.Visibility != Visibility.Visible); } }
+        private bool IsInfoValid
+        {
+            get
+            {
+                return (imgPublisherUrl.Visibility != Visibility.Visible && imgAppName.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible &&
+                        imgAppPath.Visibility != Visibility.Visible);
+            }
+        }
 
         #endregion
+
+        #region Constructors
 
         /// <summary>
         ///   The constructor for the AppInfo page
@@ -59,7 +68,7 @@ namespace SevenUpdate.Sdk.Pages
         public AppInfo()
         {
             InitializeComponent();
-
+            LoadInfo();
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
@@ -69,42 +78,43 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        #endregion
+
+        #region Methods
+
+        private void LoadInfo()
         {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            cxbIs64Bit.IsChecked = Base.Sua.Is64Bit;
+            tbxAppUrl.Text = Base.Sua.AppUrl;
+            tbxHelpUrl.Text = Base.Sua.HelpUrl;
+            char[] split = {'|'};
+            if (Base.Sua.Directory != null)
+            {
+                tbxAppLocation.Text = Base.Sua.Directory.Split(split)[0];
+                tbxValueName.Text = Base.Sua.Directory.Split(split)[1];
+            }
         }
 
-        private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
+        private void SaveInfo()
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxAppLocation.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
+            Base.Sua.Is64Bit = cxbIs64Bit.IsChecked.GetValueOrDefault();
+            Base.Sua.AppUrl = tbxAppUrl.Text;
+            Base.Sua.HelpUrl = tbxHelpUrl.Text;
+            if (rbtnFileSystem.IsChecked.GetValueOrDefault())
+                Base.Sua.Directory = tbxAppLocation.Text;
+            else
+                Base.Sua.Directory = tbxAppLocation.Text + "|" + tbxValueName.Text;
         }
 
-        private void FileSystem_Checked(object sender, RoutedEventArgs e)
-        {
-            if (lblValue == null)
-                return;
-            lblRegistry.Visibility = Visibility.Collapsed;
-            lblValue.Visibility = Visibility.Collapsed;
-            tbxValueName.Visibility = Visibility.Collapsed;
-            tbBrowse.Visibility = Visibility.Visible;
-        }
+        #endregion
 
-        private void Registry_Checked(object sender, RoutedEventArgs e)
-        {
-            if (lblValue == null)
-                return;
-            lblRegistry.Visibility = Visibility.Visible;
-            lblValue.Visibility = Visibility.Visible;
-            tbxValueName.Visibility = Visibility.Visible;
-            tbBrowse.Visibility = Visibility.Collapsed;
-        }
+        #region UI Events
+
+        #region TextBox - Text Changed
 
         private void AppLocation_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (((bool) rbtnRegistry.IsChecked))
+            if (rbtnRegistry.IsChecked.GetValueOrDefault())
             {
                 if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
                     tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
@@ -114,129 +124,59 @@ namespace SevenUpdate.Sdk.Pages
                     imgAppPath.Visibility = Visibility.Visible;
             }
             else
-                imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, (bool) cxbIs64Bit.IsChecked) ? Visibility.Visible : Visibility.Collapsed;
+                imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
+        private void UrlTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
             if (source == null)
                 return;
 
-            if (source.Name == "tbxAppName")
+            try
             {
-                imgAppName.Visibility = tbxAppName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
-            }
-            else
-            {
-                try
+                if (source.Text.Length > 0)
+                    new Uri(source.Text);
+                switch (source.Name)
                 {
-                    if (source.Text.Length > 0)
-                        new Uri(source.Text);
-                    switch (source.Name)
-                    {
-                        case "tbxPublisherUrl":
-                            imgPublisherUrl.Visibility = Visibility.Collapsed;
-                            break;
+                    case "tbxPublisherUrl":
+                        imgPublisherUrl.Visibility = Visibility.Collapsed;
+                        break;
 
-                        case "tbxHelpUrl":
-                            imgHelpUrl.Visibility = Visibility.Collapsed;
-                            break;
-                    }
+                    case "tbxHelpUrl":
+                        imgHelpUrl.Visibility = Visibility.Collapsed;
+                        break;
                 }
-                catch
+            }
+            catch
+            {
+                switch (source.Name)
                 {
-                    switch (source.Name)
-                    {
-                        case "tbxPublisherUrl":
-                            imgPublisherUrl.Visibility = Visibility.Visible;
-                            break;
+                    case "tbxPublisherUrl":
+                        imgPublisherUrl.Visibility = Visibility.Visible;
+                        break;
 
-                        case "tbxHelpUrl":
-                            imgHelpUrl.Visibility = Visibility.Visible;
-                            break;
-                    }
+                    case "tbxHelpUrl":
+                        imgHelpUrl.Visibility = Visibility.Visible;
+                        break;
                 }
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void StringTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (IsInfoValid)
-            {
-                SaveInfo();
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
-                
-            }
+            if (rbtnRegistry.IsChecked.GetValueOrDefault())
+                imgValueName.Visibility = tbxValueName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
             else
-                App.ShowInputErrorMessage();
-            
+                imgValueName.Visibility = Visibility.Collapsed;
+
+            imgPublisher.Visibility = tbxPublisher.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
+            imgAppName.Visibility = tbxAppName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void LoadInfo()
-        {
+        #endregion
 
-        }
-
-        private void SaveInfo()
-        {
-            Base.Sua.Is64Bit = cxbIs64Bit.IsChecked.GetValueOrDefault();
-            Base.Sua.AppUrl = tbxAppUrl.Text;
-            Base.Sua.HelpUrl = tbxHelpUrl.Text;
-            Base.Sua.Directory = tbxAppLocation.Text;
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
-
-        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
-            tbxAppDescription.Text = null;
-            tbxPublisher.Text = null;
-            tbxAppName.Text = null;
-
-            if (Base.Sua.Description == null)
-            {
-                Base.Sua.Description = new ObservableCollection<LocaleString>();
-            }
-            else
-            {
-                // Load Values
-                foreach (LocaleString t in Base.Sua.Description.Where(t => t.Lang == locale))
-                {
-                    tbxAppDescription.Text = t.Value;
-                }
-            }
-
-            if (Base.Sua.Name == null)
-            {
-                Base.Sua.Name = new ObservableCollection<LocaleString>();
-            }
-            else
-            {
-                // Load Values
-                foreach (LocaleString t in Base.Sua.Name.Where(t => t.Lang == locale))
-                {
-                    tbxAppName.Text = t.Value;
-                }
-            }
-
-            if (Base.Sua.Publisher == null)
-            {
-                Base.Sua.Publisher= new ObservableCollection<LocaleString>();
-            }
-            else
-            {
-                // Load Values
-                foreach (LocaleString t in Base.Sua.Publisher.Where(t => t.Lang == locale))
-                {
-                    tbxPublisher.Text = t.Value;
-                }
-            }
-        }
+        #region TextBox - Lost Keyboard Focus
 
         private void AppName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -253,7 +193,7 @@ namespace SevenUpdate.Sdk.Pages
             if (found)
                 return;
 
-            var ls = new LocaleString { Lang = locale, Value = tbxAppName.Text };
+            var ls = new LocaleString {Lang = locale, Value = tbxAppName.Text};
             Base.Sua.Name.Add(ls);
         }
 
@@ -272,7 +212,7 @@ namespace SevenUpdate.Sdk.Pages
             if (found)
                 return;
 
-            var ls = new LocaleString { Lang = locale, Value = tbxAppDescription.Text };
+            var ls = new LocaleString {Lang = locale, Value = tbxAppDescription.Text};
             Base.Sua.Description.Add(ls);
         }
 
@@ -293,5 +233,124 @@ namespace SevenUpdate.Sdk.Pages
             var ls = new LocaleString {Lang = locale, Value = tbxPublisher.Text};
             Base.Sua.Publisher.Add(ls);
         }
+
+        #endregion
+
+        #region RadioButton - Checked
+
+        private void FileSystem_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lblValue == null)
+                return;
+            lblRegistry.Visibility = Visibility.Collapsed;
+            lblValue.Visibility = Visibility.Collapsed;
+            tbxValueName.Visibility = Visibility.Collapsed;
+            tbBrowse.Visibility = Visibility.Visible;
+            imgValueName.Visibility = Visibility.Collapsed;
+            imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Registry_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lblValue == null)
+                return;
+            lblRegistry.Visibility = Visibility.Visible;
+            lblValue.Visibility = Visibility.Visible;
+            tbxValueName.Visibility = Visibility.Visible;
+            tbBrowse.Visibility = Visibility.Collapsed;
+
+            if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
+                tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
+                tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
+                imgAppPath.Visibility = Visibility.Collapsed;
+            else
+                imgAppPath.Visibility = Visibility.Visible;
+
+            imgValueName.Visibility = tbxValueName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Button - Click
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (IsInfoValid)
+            {
+                SaveInfo();
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            }
+            else
+                App.ShowInputErrorMessage();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
+
+        #endregion
+
+        #region TextBlock - Mouse Down
+
+        private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+                tbxAppLocation.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
+        }
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
+        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
+            tbxAppDescription.Text = null;
+            tbxPublisher.Text = null;
+            tbxAppName.Text = null;
+
+            if (Base.Sua.Description == null)
+                Base.Sua.Description = new ObservableCollection<LocaleString>();
+            else
+            {
+                // Load Values
+                foreach (LocaleString t in Base.Sua.Description.Where(t => t.Lang == locale))
+                    tbxAppDescription.Text = t.Value;
+            }
+
+            if (Base.Sua.Name == null)
+                Base.Sua.Name = new ObservableCollection<LocaleString>();
+            else
+            {
+                // Load Values
+                foreach (LocaleString t in Base.Sua.Name.Where(t => t.Lang == locale))
+                    tbxAppName.Text = t.Value;
+            }
+
+            if (Base.Sua.Publisher == null)
+                Base.Sua.Publisher = new ObservableCollection<LocaleString>();
+            else
+            {
+                // Load Values
+                foreach (LocaleString t in Base.Sua.Publisher.Where(t => t.Lang == locale))
+                    tbxPublisher.Text = t.Value;
+            }
+        }
+
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        #endregion
+
+        #endregion
     }
 }

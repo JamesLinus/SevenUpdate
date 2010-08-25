@@ -26,6 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Microsoft.Windows.Dwm;
 using Microsoft.Windows.Internal;
@@ -41,7 +42,13 @@ namespace SevenUpdate.Sdk.Windows
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
     public sealed partial class MainWindow : NavigationWindow
     {
+        #region Fields
+
         internal static NavigationService NavService;
+
+        #endregion
+
+        #region Constructors
 
         public MainWindow()
         {
@@ -52,15 +59,23 @@ namespace SevenUpdate.Sdk.Windows
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
         }
 
-        void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        #endregion
+
+        #region Aero
+
+        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            Background = e.IsGlassEnabled ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.White;
+            Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
 
             if (!e.IsGlassEnabled)
                 return;
             AeroGlass.EnableGlass(this);
             AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
         }
+
+        #endregion
+
+        #region Window - Loaded
 
         /// <summary>
         ///   Sets the Height and Width of the window from the settings
@@ -77,10 +92,14 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-           // 0, 32, 0, 44
+            // 0, 32, 0, 44
             AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
-            Background = AeroGlass.IsEnabled ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.White;
+            Background = AeroGlass.IsEnabled ? Brushes.Transparent : Brushes.White;
         }
+
+        #endregion
+
+        #region Window - Closing
 
         /// <summary>
         ///   When Seven Update is closing, save the Window Width and Height in the settings
@@ -95,10 +114,16 @@ namespace SevenUpdate.Sdk.Windows
             Environment.Exit(0);
         }
 
+        #endregion
+
+        #region Window - Mouse Left Button Down
+
         private void NavigationWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsEnabled)
                 DragMove();
         }
+
+        #endregion
     }
 }
