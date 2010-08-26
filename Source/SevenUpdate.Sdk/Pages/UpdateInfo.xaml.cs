@@ -52,8 +52,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             get
             {
-                return (imgUpdateInfo.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible && imgLicense.Visibility != Visibility.Visible &&
-                        imgDownloadLoc.Visibility != Visibility.Visible);
+                return (imgUpdateInfo.Visibility != Visibility.Visible && imgUpdateDetails.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible &&
+                        imgLicense.Visibility != Visibility.Visible && imgDownloadLoc.Visibility != Visibility.Visible);
             }
         }
 
@@ -86,7 +86,10 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (IsInfoValid)
+            {
+                SaveInfo();
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            }
             else
                 App.ShowInputErrorMessage();
         }
@@ -113,10 +116,8 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                try
+                if (Base.CheckUrl(SevenUpdate.Base.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit)))
                 {
-                    if (source.Text.Length > 0)
-                        new Uri(SevenUpdate.Base.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit));
                     switch (source.Name)
                     {
                         case "tbxLicenseUrl":
@@ -133,7 +134,7 @@ namespace SevenUpdate.Sdk.Pages
                             break;
                     }
                 }
-                catch
+                else
                 {
                     switch (source.Name)
                     {
@@ -242,5 +243,38 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #endregion
+
+        #region Methods
+
+        private void LoadInfo()
+        {
+            tbxLicenseUrl.Text = Base.Update.LicenseUrl;
+            tbxInfoUrl.Text = Base.Update.InfoUrl;
+            if (Base.Update.ReleaseDate != null)
+                dpReleaseDate.SelectedDate = DateTime.Parse(Base.Update.ReleaseDate);
+            cbxUpdateImportance.SelectedIndex = (int) Base.Update.Importance;
+
+            // Load Values
+            foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == "en"))
+                tbxUpdateDetails.Text = t.Value;
+
+            foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == "en"))
+                tbxUpdateName.Text = t.Value;
+        }
+
+        private void SaveInfo()
+        {
+            Base.Update.LicenseUrl = tbxLicenseUrl.Text;
+            Base.Update.InfoUrl = tbxInfoUrl.Text;
+            Base.Update.Importance = (Importance) cbxUpdateImportance.SelectedIndex;
+            Base.Update.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
+        }
+
+        #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
     }
 }

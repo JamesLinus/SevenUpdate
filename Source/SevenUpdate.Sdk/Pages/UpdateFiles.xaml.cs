@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,6 +29,7 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -73,24 +75,35 @@ namespace SevenUpdate.Sdk.Pages
         {
             var source = e.Source as InfoTextBox;
             string path = SevenUpdate.Base.Base.ConvertPath(source.Text, true, true);
-            try
+
+            if (Base.CheckUrl(path))
             {
-                if (source.Text.Length > 0)
-                    new Uri(path);
                 switch (source.Name)
                 {
                     case "tbxDownloadUrl":
-                        if (path.Length > 2)
-                            imgDownloadUrl.Visibility = Visibility.Collapsed;
+                        if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
+                        {
+                            if (listBox.SelectedIndex > -1)
+                                Base.Update.Files[listBox.SelectedIndex].Source = SevenUpdate.Base.Base.ConvertPath(tbxDownloadUrl.Text, false, Base.Sua.Is64Bit);
+
+                            if (Path.GetFileName(tbxDownloadUrl.Text) != "")
+                                imgDownloadUrl.Visibility = Visibility.Collapsed;
+                        }
                         break;
 
                     case "tbxInstallUri":
-                        if (path.Length > 2 && Path.GetFileName(path).ContainsAny(Path.GetInvalidPathChars()) == false)
-                            imgInstallUri.Visibility = Visibility.Collapsed;
+                        if (Path.GetFileName(path).ContainsAny(Path.GetInvalidPathChars()) == false)
+                        {
+                            if (listBox.SelectedIndex > -1)
+                                Base.Update.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.Base.ConvertPath(tbxInstallUri.Text, false, Base.Sua.Is64Bit);
+
+                            if (Path.GetFileName(tbxInstallUri.Text) != "")
+                                imgInstallUri.Visibility = Visibility.Collapsed;
+                        }
                         break;
                 }
             }
-            catch
+            else
             {
                 switch (source.Name)
                 {
@@ -108,6 +121,15 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region TextBox - Lost Keyboard Focus
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+            if (source == null)
+                return;
+
+            source.Text = SevenUpdate.Base.Base.ConvertPath(source.Text, false, Base.Sua.Is64Bit);
+        }
 
         #endregion
 
@@ -144,8 +166,11 @@ namespace SevenUpdate.Sdk.Pages
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbHash.Text = SevenUpdate.Base.Base.GetHash(cfd.FileName);
+            if (cfd.ShowDialog() != CommonFileDialogResult.OK)
+                return;
+            tbHash.Text = SevenUpdate.Base.Base.GetHash(cfd.FileName);
+            Base.Update.Files[listBox.SelectedIndex].Hash = tbHash.Text;
+            Base.Update.Files[listBox.SelectedIndex].FileSize = (ulong) new FileInfo(cfd.FileName).Length;
         }
 
         #endregion
@@ -185,16 +210,25 @@ namespace SevenUpdate.Sdk.Pages
 
         private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (Base.Update.Files != null)
+            {
+                if (Base.Update.Files.Count > 0)
+                    Base.Update.Files[listBox.SelectedIndex].Action = (FileAction) cbxUpdateType.SelectedIndex;
+            }
+
             if (tbxDownloadUrl == null)
                 return;
             if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
             {
+                imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
+
                 tbxDownloadUrl.IsEnabled = true;
                 tbxArgs.IsEnabled = true;
             }
             else
             {
                 tbxDownloadUrl.Text = null;
+                imgDownloadUrl.Visibility = Visibility.Collapsed;
                 tbxDownloadUrl.IsEnabled = false;
                 tbxArgs.IsEnabled = false;
                 tbxArgs.Text = null;
@@ -209,6 +243,11 @@ namespace SevenUpdate.Sdk.Pages
                 spInput.Visibility = Visibility.Visible;
                 miRemoveAll.IsEnabled = true;
                 miRemove.IsEnabled = listBox.SelectedIndex > -1;
+                if (listBox.SelectedIndex > -1 && Base.Update.Files != null)
+                {
+                    if (Base.Update.Files.Count > 0)
+                        LoadFileInfo(listBox.SelectedIndex);
+                }
             }
             else
             {
@@ -235,14 +274,39 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        private void AddFile(string fileName)
+        /// <summary>
+        ///   Loads the file information into the ui
+        /// </summary>
+        /// <param name = "index"></param>
+        private void LoadFileInfo(int index)
         {
+            tbxInstallUri.Text = Base.Update.Files[index].Destination;
+            tbxDownloadUrl.Text = Base.Update.Files[index].Source;
+            tbxArgs.Text = Base.Update.Files[index].Args;
+            tbHash.Text = Base.Update.Files[index].Hash;
+            cbxUpdateType.SelectedIndex = (int) Base.Update.Files[index].Action;
+        }
+
+        /// <summary>
+        ///   Adds a file to the list
+        /// </summary>
+        /// <param name = "fullName">The fullpath to the file</param>
+        private void AddFile(string fullName)
+        {
+            string filename = Path.GetFileName(fullName);
+            string hash = SevenUpdate.Base.Base.GetHash(fullName);
+            string installUrl = SevenUpdate.Base.Base.ConvertPath(fullName, false, true);
             spHelp.Visibility = Visibility.Collapsed;
             spInput.Visibility = Visibility.Visible;
-            tbxInstallUri.Text = SevenUpdate.Base.Base.ConvertPath(fileName, false, true);
-            tbHash.Text = SevenUpdate.Base.Base.GetHash(fileName);
+            tbxInstallUri.Text = installUrl;
+            tbHash.Text = hash;
             cbxUpdateType.SelectedIndex = 0;
-            listBox.Items.Add(Path.GetFileName(fileName));
+            listBox.Items.Add(filename);
+
+            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = hash, FileSize = (ulong) new FileInfo(fullName).Length};
+            if (Base.Update.Files == null)
+                Base.Update.Files = new ObservableCollection<UpdateFile>();
+            Base.Update.Files.Add(file);
             listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
@@ -253,6 +317,21 @@ namespace SevenUpdate.Sdk.Pages
             listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
+        private void LoadInfo()
+        {
+            if (Base.Update.Files != null)
+            {
+                for (int x = 0; x < Base.Update.Files.Count; x++)
+                    listBox.Items.Add(Path.GetFileName(Base.Update.Files[x].Destination));
+            }
+            listBox.SelectedIndex = 0;
+        }
+
         #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
     }
 }

@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -53,8 +54,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             get
             {
-                return (imgPublisherUrl.Visibility != Visibility.Visible && imgAppName.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible &&
-                        imgAppPath.Visibility != Visibility.Visible);
+                return (imgPublisherUrl.Visibility != Visibility.Visible && imgValueName.Visibility != Visibility.Visible && imgAppDescription.Visibility != Visibility.Visible &&
+                        imgAppName.Visibility != Visibility.Visible && imgHelpUrl.Visibility != Visibility.Visible && imgAppLocation.Visibility != Visibility.Visible);
             }
         }
 
@@ -119,12 +120,12 @@ namespace SevenUpdate.Sdk.Pages
                 if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
                     tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
                     tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
-                    imgAppPath.Visibility = Visibility.Collapsed;
+                    imgAppLocation.Visibility = Visibility.Collapsed;
                 else
-                    imgAppPath.Visibility = Visibility.Visible;
+                    imgAppLocation.Visibility = Visibility.Visible;
             }
             else
-                imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
+                imgAppLocation.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void UrlTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -133,10 +134,8 @@ namespace SevenUpdate.Sdk.Pages
             if (source == null)
                 return;
 
-            try
+            if (Base.CheckUrl(source.Text))
             {
-                if (source.Text.Length > 0)
-                    new Uri(source.Text);
                 switch (source.Name)
                 {
                     case "tbxPublisherUrl":
@@ -148,7 +147,7 @@ namespace SevenUpdate.Sdk.Pages
                         break;
                 }
             }
-            catch
+            else
             {
                 switch (source.Name)
                 {
@@ -172,11 +171,22 @@ namespace SevenUpdate.Sdk.Pages
 
             imgPublisher.Visibility = tbxPublisher.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
             imgAppName.Visibility = tbxAppName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
+            imgAppDescription.Visibility = tbxAppDescription.Text.Length > 5 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         #endregion
 
         #region TextBox - Lost Keyboard Focus
+
+        private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (!rbtnFileSystem.IsChecked.GetValueOrDefault())
+                return;
+
+            tbxAppLocation.Text = SevenUpdate.Base.Base.ConvertPath(tbxAppLocation.Text, false, Base.Sua.Is64Bit);
+            if (Path.GetFileName(tbxAppLocation.Text) == "")
+                imgAppLocation.Visibility = Visibility.Visible;
+        }
 
         private void AppName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -247,7 +257,7 @@ namespace SevenUpdate.Sdk.Pages
             tbxValueName.Visibility = Visibility.Collapsed;
             tbBrowse.Visibility = Visibility.Visible;
             imgValueName.Visibility = Visibility.Collapsed;
-            imgAppPath.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
+            imgAppLocation.Visibility = !App.IsValidFilePath(tbxAppLocation.Text, cxbIs64Bit.IsChecked.GetValueOrDefault()) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Registry_Checked(object sender, RoutedEventArgs e)
@@ -262,9 +272,9 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
                 tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
                 tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
-                imgAppPath.Visibility = Visibility.Collapsed;
+                imgAppLocation.Visibility = Visibility.Collapsed;
             else
-                imgAppPath.Visibility = Visibility.Visible;
+                imgAppLocation.Visibility = Visibility.Visible;
 
             imgValueName.Visibility = tbxValueName.Text.Length > 2 ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -350,6 +360,11 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
 
         #endregion
     }

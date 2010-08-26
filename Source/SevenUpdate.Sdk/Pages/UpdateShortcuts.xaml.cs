@@ -77,30 +77,25 @@ namespace SevenUpdate.Sdk.Pages
             var source = e.Source as InfoTextBox;
             if (source == null)
                 return;
-
-            try
+            if (Base.CheckUrl(source.Text))
             {
-                if (source.Text.Length > 0)
-                    new Uri(source.Text);
                 switch (source.Name)
                 {
                     case "tbxShortcutPath":
-                        if (source.Text.Length > 2 && source.Text.EndsWith(".lnk", true, null))
+                        if (source.Text.EndsWith(".lnk", true, null))
                             imgShortcutPath.Visibility = Visibility.Collapsed;
                         break;
 
                     case "tbxShortcutTarget":
-                        if (source.Text.Length > 2)
-                            imgShortcutTarget.Visibility = Visibility.Collapsed;
+                        imgShortcutTarget.Visibility = Visibility.Collapsed;
                         break;
 
                     case "tbxShortcutIcon":
-                        if (source.Text.Length > 2)
-                            imgShortcutIcon.Visibility = Visibility.Collapsed;
+                        imgShortcutIcon.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
-            catch
+            else
             {
                 switch (source.Name)
                 {

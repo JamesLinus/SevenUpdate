@@ -41,13 +41,10 @@
 		<ListBox BorderBrush="LightGray" HorizontalAlignment="Left" Name="listBox" SelectedIndex="0" VerticalAlignment="Stretch" Width="150" Margin="10" Grid.Row="1" SelectionChanged="listBox_SelectionChanged">
 			<ListBox.ContextMenu>
 				<ContextMenu>
-					<MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" Name="miAdd">
-					</MenuItem>
-					<MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File" Name="miImport">
-					</MenuItem>
+					<MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" Name="miAdd"></MenuItem>
+					<MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File" Name="miImport"></MenuItem>
 					<Separator />
-					<MenuItem Header="Remove Registry Item" Name="miRemove" Click="miRemove_Click">
-					</MenuItem>
+					<MenuItem Header="Remove Registry Item" Name="miRemove" Click="miRemove_Click"></MenuItem>
 					<MenuItem Header="Remove All Registry Items" Name="miRemoveAll" Click="miRemoveAll_Click">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />

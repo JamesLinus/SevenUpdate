@@ -69,24 +69,15 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            if (tbxKeyPath.Text.Length > 0)
             {
-                if (tbxKeyPath.Text.Length > 0)
-                    new Uri(tbxKeyPath.Text);
-                if (tbxKeyPath.Text.Length > 0)
-                {
-                    if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
-                        tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
-                        tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
-                        imgKeyPath.Visibility = Visibility.Collapsed;
-                }
-                else
+                if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
+                    tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
+                    tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
                     imgKeyPath.Visibility = Visibility.Collapsed;
             }
-            catch
-            {
-                imgKeyPath.Visibility = Visibility.Visible;
-            }
+            else
+                imgKeyPath.Visibility = Visibility.Collapsed;
         }
 
         #endregion
