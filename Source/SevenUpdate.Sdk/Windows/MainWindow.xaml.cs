@@ -70,7 +70,7 @@ namespace SevenUpdate.Sdk.Windows
             if (!e.IsGlassEnabled)
                 return;
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
         }
 
         #endregion
@@ -92,8 +92,7 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-            // 0, 32, 0, 44
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(true), this);
+            AeroGlass.ResetAeroGlass(new CoreNativeMethods.MARGINS(0, 32, 0, 44), this);
             Background = AeroGlass.IsEnabled ? Brushes.Transparent : Brushes.White;
         }
 

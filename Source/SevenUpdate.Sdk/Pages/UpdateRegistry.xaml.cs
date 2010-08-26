@@ -63,6 +63,23 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Methods
+
+        private void LoadInfo()
+        {
+            if (Base.Update.RegistryItems != null)
+            {
+                for (int x = 0; x < Base.Update.Shortcuts.Count; x++)
+                    listBox.Items.Add(App.RM.GetString("RegistryItem") + " " + x);
+            }
+        }
+
+        private void LoadRegistryInfo(int index)
+        {
+        }
+
+        #endregion
+
         #region UI Events
 
         #region TextBox - Text Changed
@@ -186,6 +203,10 @@ namespace SevenUpdate.Sdk.Pages
                 tbxValueData.Text = null;
         }
 
+        #endregion
+
+        #region ListBox - Selection Changed
+
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listBox.Items.Count > 0)
@@ -194,6 +215,12 @@ namespace SevenUpdate.Sdk.Pages
                 spInput.Visibility = Visibility.Visible;
                 miRemove.IsEnabled = listBox.SelectedIndex > -1;
                 miRemoveAll.IsEnabled = true;
+
+                if (listBox.SelectedIndex > -1 && Base.Update.RegistryItems != null)
+                {
+                    if (Base.Update.Files.Count > 0)
+                        LoadRegistryInfo(listBox.SelectedIndex);
+                }
             }
             else
             {
@@ -215,6 +242,11 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
 
         #endregion
     }

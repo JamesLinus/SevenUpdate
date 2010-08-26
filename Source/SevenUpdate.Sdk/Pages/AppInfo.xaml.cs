@@ -316,6 +316,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (tbxAppName == null)
+                return;
+
             locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
             tbxAppDescription.Text = null;
             tbxPublisher.Text = null;

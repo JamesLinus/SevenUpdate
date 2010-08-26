@@ -235,6 +235,10 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        #endregion
+
+        #region ListBox - Selection Changed
+
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listBox.Items.Count > 0)

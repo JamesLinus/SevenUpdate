@@ -21,12 +21,16 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Base;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -38,6 +42,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateShortcuts : Page
     {
+        #region Fields
+
+        private string locale;
+
+        #endregion
+
         #region Properties
 
         private bool IsInfoValid { get { return (imgShortcutIcon.Visibility != Visibility.Visible && imgShortcutPath.Visibility != Visibility.Visible && imgShortcutTarget.Visibility != Visibility.Visible); } }
@@ -65,6 +75,30 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region Methods
+
+        private void LoadInfo()
+        {
+            if (Base.Update.Shortcuts != null)
+            {
+                for (int x = 0; x < Base.Update.Shortcuts.Count; x++)
+                    listBox.Items.Add(Path.GetFileNameWithoutExtension(Base.Update.Shortcuts[x].Location) + " " + x);
+            }
+        }
+
+        private void LoadShortcutInfo(int index)
+        {
+            tbxShortcutTarget.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Target;
+            tbxShortcutPath.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Location;
+            tbxShortcutIcon.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Icon;
+            tbxShortcutArguments.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Arguments;
+
+            if (rbtnAddShortcut.IsChecked.GetValueOrDefault())
+                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Add;
+            if (rbtnUpdateShortcut.IsChecked.GetValueOrDefault())
+                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Update;
+            if (rbtnDeleteShortcut.IsChecked.GetValueOrDefault())
+                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Delete;
+        }
 
         #endregion
 
@@ -191,7 +225,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #region ComboBox - Selection Changed
+        #region ListBox - Selection Changed
 
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -201,6 +235,12 @@ namespace SevenUpdate.Sdk.Pages
                 spInput.Visibility = Visibility.Visible;
                 miRemoveAll.IsEnabled = true;
                 miRemove.IsEnabled = listBox.SelectedIndex > -1;
+
+                if (listBox.SelectedIndex > -1 && Base.Update.Files != null)
+                {
+                    if (Base.Update.Shortcuts.Count > 0)
+                        LoadShortcutInfo(listBox.SelectedIndex);
+                }
             }
             else
             {
@@ -208,6 +248,36 @@ namespace SevenUpdate.Sdk.Pages
                 spInput.Visibility = Visibility.Collapsed;
                 miRemove.IsEnabled = false;
                 miRemoveAll.IsEnabled = false;
+            }
+        }
+
+        #endregion
+
+        #region ComboBox - Selection Changed
+
+        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbxShortcutDescription == null)
+                return;
+
+            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
+
+            tbxShortcutDescription.Text = null;
+
+            if (Base.Update.Shortcuts != null)
+                return;
+            Base.Update.Shortcuts = new ObservableCollection<Shortcut>();
+
+            if (Base.Update.Shortcuts.Count < 0)
+                return;
+
+            try
+            {
+                foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+                    tbxShortcutDescription.Text = t.Value;
+            }
+            catch
+            {
             }
         }
 
@@ -223,6 +293,33 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
+
         #endregion
+
+        private void tbxShortcutArguments_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (Base.Update.Shortcuts == null)
+                Base.Update.Shortcuts = new ObservableCollection<Shortcut>();
+
+            if (Base.Update.Shortcuts.Count < 0)
+                return;
+
+            bool found = false;
+            foreach (LocaleString t in Base.Update.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == locale))
+            {
+                t.Value = tbxShortcutDescription.Text;
+                found = true;
+            }
+
+            if (found)
+                return;
+
+            var ls = new LocaleString {Lang = locale, Value = tbxShortcutDescription.Text};
+            Base.Update.Description.Add(ls);
+        }
     }
 }
