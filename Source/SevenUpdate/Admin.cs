@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
-using SevenUpdate.Base;
+
 using SevenUpdate.WCF;
 
 #endregion
@@ -43,7 +43,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Contains event data associated with this event
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c />
+        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c></param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             ErrorOccurred = errorOccurred;
@@ -199,7 +199,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when the download of updates has completed
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c />
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public void OnDownloadCompleted(bool errorOccurred)
         {
             if (DownloadDoneEventHandler != null)
@@ -279,7 +279,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Connects to the SevenUpdate.Admin sub program
         /// </summary>
-        /// <returns><c>true</c> if connected to the admin process, otherwise <c>false</c />
+        /// <returns><c>true</c> if connected to the admin process, otherwise <c>false</c></returns>
         internal static bool Connect()
         {
             wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
@@ -312,7 +312,7 @@ namespace SevenUpdate
 
         private static void AdminError(Exception e)
         {
-            Base.Base.ReportError(e, Base.Base.UserStore);
+            Base.ReportError(e, Base.UserStore);
             if (ServiceErrorEventHandler != null)
                 ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
             var processes = Process.GetProcessesByName("SevenUpdate.Admin");
@@ -342,7 +342,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e, Base.Base.UserStore);
+                    Base.ReportError(e, Base.UserStore);
                 }
             }
         }
@@ -352,13 +352,13 @@ namespace SevenUpdate
         /// <summary>
         ///   Aborts the installation of updates
         /// </summary>
-        /// <returns><c>true</c> if the install was aborted, otherwise <c>false</c />
+        /// <returns><c>true</c> if the install was aborted, otherwise <c>false</c></returns>
         internal static bool AbortInstall()
         {
             bool abort = false;
             try
             {
-                abort = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
+                abort = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
                 if (abort && wcfClient != null)
                 {
                     if (wcfClient.State == CommunicationState.Opened)
@@ -367,7 +367,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.Base.ReportError(e, Base.Base.UserStore);
+                Base.ReportError(e, Base.UserStore);
             }
             return abort;
         }
@@ -375,10 +375,10 @@ namespace SevenUpdate
         /// <summary>
         ///   Installs selected updates
         /// </summary>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 if (Connect())
@@ -391,10 +391,10 @@ namespace SevenUpdate
         ///   Hides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the update to hide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c />
+        /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 if (Connect())
@@ -408,10 +408,10 @@ namespace SevenUpdate
         ///   Hides multiple updates
         /// </summary>
         /// <param name = "hiddenUpdates">the list of updates to hide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
             if (success)
             {
                 if (Connect())
@@ -424,10 +424,10 @@ namespace SevenUpdate
         ///   Unhides an update
         /// </summary>
         /// <param name = "hiddenUpdate">the hidden update to unhide</param>
-        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c />
+        /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
             if (success)
             {
@@ -443,7 +443,7 @@ namespace SevenUpdate
         /// <param name = "app">the application to add to Seven Update</param>
         internal static void AddSua(Sua app)
         {
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
             if (!success)
                 return;
@@ -454,13 +454,13 @@ namespace SevenUpdate
         /// <summary>
         ///   Save the settings and call SevenUpdate.Admin to commit them.
         /// </summary>
-        /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c />
+        /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
         /// <param name = "options">the options to save</param>
         /// <param name = "sul">the list of application to update to save</param>
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             // Launch SevenUpdate.Admin to save the settings to the AppStore.
-            bool success = Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
 
             if (!success)
                 return;

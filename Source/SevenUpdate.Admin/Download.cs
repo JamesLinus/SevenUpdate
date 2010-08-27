@@ -24,7 +24,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using SevenUpdate.Base;
+
 using SharpBits.Base;
 
 #endregion
@@ -58,7 +58,7 @@ namespace SevenUpdate.Admin
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
-                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
+                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
                 App.ShutdownApp();
             }
             else
@@ -68,7 +68,7 @@ namespace SevenUpdate.Admin
                     if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                         Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
 
-                    Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
+                    Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
                     App.ShutdownApp();
                 }
             }
@@ -141,7 +141,7 @@ namespace SevenUpdate.Admin
                 for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of appname and update title
-                    var downloadDir = Base.Base.AllUserStore + @"downloads\" + App.AppUpdates[x].Updates[y].Name[0].Value;
+                    var downloadDir = Base.AllUserStore + @"downloads\" + App.AppUpdates[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
 
@@ -152,7 +152,7 @@ namespace SevenUpdate.Admin
                         if (App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
                             App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
                             continue;
-                        if (Base.Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == App.AppUpdates[x].Updates[y].Files[z].Hash)
+                        if (Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == App.AppUpdates[x].Updates[y].Files[z].Hash)
                             continue;
                         try
                         {
@@ -164,7 +164,7 @@ namespace SevenUpdate.Admin
                             {
                             }
                             var url =
-                                new Uri(Base.Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
+                                new Uri(Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
                                                               App.AppUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
@@ -173,7 +173,7 @@ namespace SevenUpdate.Admin
                         {
                             if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                                 Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
-                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            Base.ReportError(e, Base.AllUserStore);
                         }
                     }
                 }
@@ -195,7 +195,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                     if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                         Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
                     App.ShutdownApp();
@@ -220,9 +220,9 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+            if (File.Exists(Base.AllUserStore + "abort.lock"))
             {
-                File.Delete(Base.Base.AllUserStore + "abort.lock");
+                File.Delete(Base.AllUserStore + "abort.lock");
                 App.ShutdownApp();
             }
 
@@ -244,7 +244,7 @@ namespace SevenUpdate.Admin
             if (e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                           App.RM.GetString("DownloadingUpdates") + " (" + Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
                                                            (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") +
                                                            ")");
             }
@@ -272,13 +272,13 @@ namespace SevenUpdate.Admin
 
             if (e.Job.Error.File != null)
             {
-                Base.Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore);
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
             else
             {
-                Base.Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.Base.AllUserStore);
+                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore);
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, ErrorType.DownloadError);
             }
@@ -300,9 +300,9 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
+            if (File.Exists(Base.AllUserStore + "abort.lock"))
             {
-                File.Delete(Base.Base.AllUserStore + "abort.lock");
+                File.Delete(Base.AllUserStore + "abort.lock");
                 App.ShutdownApp();
             }
 

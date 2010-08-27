@@ -29,7 +29,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Microsoft.Windows.Dialogs;
-using SevenUpdate.Base;
+
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -69,8 +69,8 @@ namespace SevenUpdate.Sdk
             //Configure a new JumpTask
             var jumpTask = new JumpTask
                                {
-                                   ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                    Title = "Seven Update SDK",
                                    Description = "Create new project",
                                    CustomCategory = "Tasks",
@@ -80,8 +80,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Edit an existing project",
                                CustomCategory = "Tasks",
@@ -91,8 +91,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -102,8 +102,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -121,9 +121,9 @@ namespace SevenUpdate.Sdk
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
-            Directory.CreateDirectory(SevenUpdate.Base.Base.UserStore);
+            Directory.CreateDirectory(SevenUpdate.Base.UserStore);
             RM = new ResourceManager("SevenUpdate.Sdk.Resources.UIStrings", ResourceAssembly);
-           SevenUpdate.Base.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+           SevenUpdate.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
             if (args.Length > 0)
                 SuiFile = args[0];
 
@@ -137,7 +137,7 @@ namespace SevenUpdate.Sdk
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
-            path =SevenUpdate.Base.Base.ConvertPath(path, true, is64Bit);
+            path =SevenUpdate.Base.ConvertPath(path, true, is64Bit);
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);
@@ -195,7 +195,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line <c>args</c />
+        /// <param name = "args">Command line <c>args</c></param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -213,7 +213,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         /// <param name = "str">The string to check against values</param>
         /// <param name = "values">An array of strings to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c />
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
         public static bool ContainsAny(this string str, params string[] values)
         {
             if (!string.IsNullOrEmpty(str) || values.Length == 0)
@@ -227,7 +227,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         /// <param name = "str">The string to check against values</param>
         /// <param name = "values">An array of characters to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c />
+        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
         public static bool ContainsAny(this string str, params char[] values)
         {
             if (!string.IsNullOrEmpty(str) || values.Length == 0)

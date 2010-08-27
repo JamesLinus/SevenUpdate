@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
-using SevenUpdate.Base;
+
 using File = System.IO.File;
 
 #endregion
@@ -70,7 +70,7 @@ namespace SevenUpdate.Admin
         /// <param name = "lpExistingFileName">The source filename</param>
         /// <param name = "lpNewFileName">The destination filename</param>
         /// <param name = "dwFlags">A int indicating the move operation to perform</param>
-        /// <returns><c>true</c> if successful, otherwise <c>false</c />
+        /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
@@ -95,7 +95,7 @@ namespace SevenUpdate.Admin
             {
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.FatalError);
-                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
+                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
                 App.ShutdownApp();
                 return;
             }
@@ -103,7 +103,7 @@ namespace SevenUpdate.Admin
             {
                 if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
                     Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
-                Base.Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.Base.AllUserStore);
+                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
                 App.ShutdownApp();
             }
 
@@ -121,14 +121,14 @@ namespace SevenUpdate.Admin
             {
                 for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
                 {
-                    if (File.Exists(Base.Base.AllUserStore + @"abort.lock"))
+                    if (File.Exists(Base.AllUserStore + @"abort.lock"))
                     {
-                        File.Delete(Base.Base.AllUserStore + @"abort.lock");
+                        File.Delete(Base.AllUserStore + @"abort.lock");
                         App.ShutdownApp();
                     }
 
-                    currentUpdateName = Base.Base.GetLocaleString(App.AppUpdates[x].Updates[y].Name);
-                    if (App.AppUpdates[x].AppInfo.Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
+                    currentUpdateName = Base.GetLocaleString(App.AppUpdates[x].Updates[y].Name);
+                    if (App.AppUpdates[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
                     {
                         try
                         {
@@ -153,7 +153,7 @@ namespace SevenUpdate.Admin
 
                     #region Files
 
-                    errorOccurred = UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    errorOccurred = UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     #endregion
 
@@ -180,7 +180,7 @@ namespace SevenUpdate.Admin
 
                     #region If Seven Update
 
-                    if (App.AppUpdates[x].AppInfo.Directory == Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.Base.RebootNeeded)
+                    if (App.AppUpdates[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
                     {
                         for (var z = 0; z < App.AppUpdates[x].Updates[y].Files.Count; z++)
                         {
@@ -202,7 +202,7 @@ namespace SevenUpdate.Admin
                             }
                         }
 
-                        Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
+                        Base.StartProcess(Base.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
 
                         App.ShutdownApp();
                     }
@@ -217,23 +217,23 @@ namespace SevenUpdate.Admin
 
             ReportProgress(100);
 
-            if (Base.Base.RebootNeeded)
+            if (Base.RebootNeeded)
             {
-                MoveFileEx(Base.Base.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                MoveFileEx(Base.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
-                if (Directory.Exists(Base.Base.AllUserStore + "downloads"))
-                    MoveFileEx(Base.Base.AllUserStore + "downloads", null, MoveOnReboot);
+                if (Directory.Exists(Base.AllUserStore + "downloads"))
+                    MoveFileEx(Base.AllUserStore + "downloads", null, MoveOnReboot);
             }
             else
             {
                 // Delete the downloads directory if no errors were found and no reboot is needed
                 if (!errorOccurred)
                 {
-                    if (Directory.Exists(Base.Base.AllUserStore + "downloads"))
+                    if (Directory.Exists(Base.AllUserStore + "downloads"))
                     {
                         try
                         {
-                            Directory.Delete(Base.Base.AllUserStore + "downloads", true);
+                            Directory.Delete(Base.AllUserStore + "downloads", true);
                         }
                         catch
                         {
@@ -288,7 +288,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            Base.ReportError(e, Base.AllUserStore);
                             Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             error = true;
                         }
@@ -300,7 +300,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            Base.ReportError(e, Base.AllUserStore);
                             Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
@@ -311,7 +311,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.Base.ReportError(e, Base.Base.AllUserStore);
+                            Base.ReportError(e, Base.AllUserStore);
                             Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
@@ -336,7 +336,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name = "shortcuts">the shortcuts to install on the system</param>
         /// <param name = "appDirectory">the directory where the application is installed</param>
-        /// <param name = "is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c />
+        /// <param name = "is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, string appDirectory, bool is64Bit)
         {
             if (shortcuts == null)
@@ -348,7 +348,7 @@ namespace SevenUpdate.Admin
             {
                 try
                 {
-                    var linkLocation = Base.Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
+                    var linkLocation = Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
                     if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation)))
                     {
                         if (!Directory.Exists(Path.GetDirectoryName(linkLocation)))
@@ -356,11 +356,11 @@ namespace SevenUpdate.Admin
                         File.Delete(linkLocation);
                         var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation);
                         // Where the shortcut should point to
-                        shortcut.TargetPath = Base.Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
+                        shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
                         // Description for the shortcut
-                        shortcut.Description = Base.Base.GetLocaleString(shortcuts[x].Description);
+                        shortcut.Description = Base.GetLocaleString(shortcuts[x].Description);
                         // Location for the shortcut's icon
-                        shortcut.IconLocation = Base.Base.ConvertPath(shortcuts[x].Icon, appDirectory, is64Bit);
+                        shortcut.IconLocation = Base.ConvertPath(shortcuts[x].Icon, appDirectory, is64Bit);
                         // The arguments to be used for the shortcut
                         shortcut.Arguments = shortcuts[x].Arguments;
                         // The working directory to be used for the shortcut
@@ -374,7 +374,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                     Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                 }
 
@@ -395,7 +395,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name = "files">the collection of files to update</param>
         /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
-        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c />
+        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
         private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             var error = false;
@@ -409,7 +409,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                     Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                     return false;
                 }
@@ -424,11 +424,11 @@ namespace SevenUpdate.Admin
                         if (files[x].Action == FileAction.ExecuteThenDelete)
                         {
                             if (File.Exists(sourceFile))
-                                Base.Base.StartProcess(sourceFile, files[x].Args, true);
+                                Base.StartProcess(sourceFile, files[x].Args, true);
                         }
 
                         if (files[x].Action == FileAction.UnregisterThenDelete)
-                            Base.Base.StartProcess("regsvr32", "/u /s" + destinationFile);
+                            Base.StartProcess("regsvr32", "/u /s" + destinationFile);
 
                         try
                         {
@@ -446,11 +446,11 @@ namespace SevenUpdate.Admin
                     case FileAction.Execute:
                         try
                         {
-                            Base.Base.StartProcess(destinationFile, files[x].Args);
+                            Base.StartProcess(destinationFile, files[x].Args);
                         }
                         catch (Exception e)
                         {
-                            Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
+                            Base.ReportError(e + sourceFile, Base.AllUserStore);
                             Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                         }
                         break;
@@ -477,8 +477,8 @@ namespace SevenUpdate.Admin
                             }
                             catch
                             {
-                                if (!File.Exists(Base.Base.AllUserStore + "reboot.lock"))
-                                    File.Create(Base.Base.AllUserStore + "reboot.lock").WriteByte(0);
+                                if (!File.Exists(Base.AllUserStore + "reboot.lock"))
+                                    File.Create(Base.AllUserStore + "reboot.lock").WriteByte(0);
 
                                 MoveFileEx(sourceFile, destinationFile, MoveOnReboot);
                                 File.Delete(destinationFile + ".bak");
@@ -486,7 +486,7 @@ namespace SevenUpdate.Admin
                         }
                         else
                         {
-                            Base.Base.ReportError("FileNotFound: " + sourceFile, Base.Base.AllUserStore);
+                            Base.ReportError("FileNotFound: " + sourceFile, Base.AllUserStore);
                             Service.Service.ErrorOccurred(@"FileNotFound: " + sourceFile, ErrorType.InstallationError);
                             error = true;
                         }
@@ -495,17 +495,17 @@ namespace SevenUpdate.Admin
                         {
                             try
                             {
-                                Base.Base.StartProcess(destinationFile, files[x].Args);
+                                Base.StartProcess(destinationFile, files[x].Args);
                             }
                             catch (Exception e)
                             {
-                                Base.Base.ReportError(e + sourceFile, Base.Base.AllUserStore);
+                                Base.ReportError(e + sourceFile, Base.AllUserStore);
                                 Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
                             }
                         }
 
                         if (files[x].Action == FileAction.UpdateThenRegister)
-                            Base.Base.StartProcess("regsvr32", "/s" + destinationFile);
+                            Base.StartProcess("regsvr32", "/s" + destinationFile);
                         break;
 
                         #endregion
@@ -532,11 +532,11 @@ namespace SevenUpdate.Admin
         ///   Adds an update to the update history
         /// </summary>
         /// <param name = "updateInfo">the update information</param>
-        /// <param name = "failed"><c>true</c> if the update failed, otherwise <c>false</c />
+        /// <param name = "failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
         /// <param name = "appInfo">the application information</param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var history = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HistoryFile) ?? new Collection<Suh>();
+            var history = Base.Deserialize<Collection<Suh>>(Base.HistoryFile) ?? new Collection<Suh>();
             var hist = new Suh
                            {
                                HelpUrl = appInfo.AppInfo.HelpUrl,
@@ -554,7 +554,7 @@ namespace SevenUpdate.Admin
 
             history.Add(hist);
 
-            Base.Base.Serialize(history, Base.Base.HistoryFile);
+            Base.Serialize(history, Base.HistoryFile);
         }
 
         #endregion

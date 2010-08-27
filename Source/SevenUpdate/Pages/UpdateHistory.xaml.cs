@@ -27,7 +27,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
-using SevenUpdate.Base;
+
 using SevenUpdate.Windows;
 
 #endregion
@@ -44,7 +44,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   The location of the update history file
         /// </summary>
-        private static readonly string HistoryFile = Base.Base.AllUserStore + "History.suh";
+        private static readonly string HistoryFile = Base.AllUserStore + "History.suh";
 
         /// <summary>
         ///   Gets or Sets a collection of SUH items
@@ -68,7 +68,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHistory()
         {
-            updateHistory = Base.Base.Deserialize<ObservableCollection<Suh>>(HistoryFile);
+            updateHistory = Base.Deserialize<ObservableCollection<Suh>>(HistoryFile);
             if (updateHistory == null)
                 return;
 

@@ -30,7 +30,7 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-using SevenUpdate.Base;
+
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -181,21 +181,21 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutTarget.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxShortcutTarget.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutPath.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxShortcutPath.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxShortcutIcon.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxShortcutIcon.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         #endregion

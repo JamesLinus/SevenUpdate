@@ -29,7 +29,7 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-using SevenUpdate.Base;
+
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -74,7 +74,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
-            string path = SevenUpdate.Base.Base.ConvertPath(source.Text, true, true);
+            string path = SevenUpdate.Base.ConvertPath(source.Text, true, true);
 
             if (Base.CheckUrl(path))
             {
@@ -84,7 +84,7 @@ namespace SevenUpdate.Sdk.Pages
                         if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
                         {
                             if (listBox.SelectedIndex > -1)
-                                Base.Update.Files[listBox.SelectedIndex].Source = SevenUpdate.Base.Base.ConvertPath(tbxDownloadUrl.Text, false, Base.Sua.Is64Bit);
+                                Base.Update.Files[listBox.SelectedIndex].Source = SevenUpdate.Base.ConvertPath(tbxDownloadUrl.Text, false, Base.Sua.Is64Bit);
 
                             if (Path.GetFileName(tbxDownloadUrl.Text) != "")
                                 imgDownloadUrl.Visibility = Visibility.Collapsed;
@@ -95,7 +95,7 @@ namespace SevenUpdate.Sdk.Pages
                         if (Path.GetFileName(path).ContainsAny(Path.GetInvalidPathChars()) == false)
                         {
                             if (listBox.SelectedIndex > -1)
-                                Base.Update.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.Base.ConvertPath(tbxInstallUri.Text, false, Base.Sua.Is64Bit);
+                                Base.Update.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.ConvertPath(tbxInstallUri.Text, false, Base.Sua.Is64Bit);
 
                             if (Path.GetFileName(tbxInstallUri.Text) != "")
                                 imgInstallUri.Visibility = Visibility.Collapsed;
@@ -128,7 +128,7 @@ namespace SevenUpdate.Sdk.Pages
             if (source == null)
                 return;
 
-            source.Text = SevenUpdate.Base.Base.ConvertPath(source.Text, false, Base.Sua.Is64Bit);
+            source.Text = SevenUpdate.Base.ConvertPath(source.Text, false, Base.Sua.Is64Bit);
         }
 
         #endregion
@@ -160,7 +160,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxInstallUri.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, true);
+                tbxInstallUri.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
@@ -168,7 +168,7 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {Multiselect = false};
             if (cfd.ShowDialog() != CommonFileDialogResult.OK)
                 return;
-            tbHash.Text = SevenUpdate.Base.Base.GetHash(cfd.FileName);
+            tbHash.Text = SevenUpdate.Base.GetHash(cfd.FileName);
             Base.Update.Files[listBox.SelectedIndex].Hash = tbHash.Text;
             Base.Update.Files[listBox.SelectedIndex].FileSize = (ulong) new FileInfo(cfd.FileName).Length;
         }
@@ -298,8 +298,8 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile(string fullName)
         {
             string filename = Path.GetFileName(fullName);
-            string hash = SevenUpdate.Base.Base.GetHash(fullName);
-            string installUrl = SevenUpdate.Base.Base.ConvertPath(fullName, false, true);
+            string hash = SevenUpdate.Base.GetHash(fullName);
+            string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
             spHelp.Visibility = Visibility.Collapsed;
             spInput.Visibility = Visibility.Visible;
             tbxInstallUri.Text = installUrl;

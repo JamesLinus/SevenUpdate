@@ -30,7 +30,7 @@ using System.Net.Sockets;
 
 #endregion
 
-namespace SevenUpdate.Base
+namespace SevenUpdate
 {
 
     #region Event Args
@@ -78,7 +78,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <param name = "app">a collection of applications to check for updates</param>
         /// <param name = "hidden">a collection of hidden updates</param>
-        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c />
+        /// <returns>returns <c>true</c> if found updates, otherwise <c>false</c></returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.AppInfo.Directory = Base.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);

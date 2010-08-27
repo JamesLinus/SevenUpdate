@@ -22,22 +22,22 @@ namespace SevenUpdate.WCF {
         void UnSubscribe();
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/AddApp")]
-        void AddApp(SevenUpdate.Base.Sua app);
+        void AddApp(SevenUpdate.Sua app);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/InstallUpdates")]
-        void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates);
+        void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/ShowUpdate")]
-        void ShowUpdate(SevenUpdate.Base.Suh hiddenUpdate);
+        void ShowUpdate(SevenUpdate.Suh hiddenUpdate);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/HideUpdate")]
-        void HideUpdate(SevenUpdate.Base.Suh hiddenUpdate);
+        void HideUpdate(SevenUpdate.Suh hiddenUpdate);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/HideUpdates")]
-        void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Suh> hiddenUpdates);
+        void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/ChangeSettings")]
-        void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sua> apps, SevenUpdate.Base.Config options, bool autoCheck);
+        void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> apps, SevenUpdate.Config options, bool autoCheck);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -50,7 +50,7 @@ namespace SevenUpdate.WCF {
         void OnInstallCompleted(int updatesInstalled, int updatesFailed);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnErrorOccurred")]
-        void OnErrorOccurred(string exception, SevenUpdate.Base.ErrorType type);
+        void OnErrorOccurred(string exception, SevenUpdate.ErrorType type);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnDownloadProgressChanged")]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
@@ -95,27 +95,27 @@ namespace SevenUpdate.WCF {
             base.Channel.UnSubscribe();
         }
         
-        public void AddApp(SevenUpdate.Base.Sua app) {
+        public void AddApp(SevenUpdate.Sua app) {
             base.Channel.AddApp(app);
         }
         
-        public void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sui> appUpdates) {
+        public void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates) {
             base.Channel.InstallUpdates(appUpdates);
         }
         
-        public void ShowUpdate(SevenUpdate.Base.Suh hiddenUpdate) {
+        public void ShowUpdate(SevenUpdate.Suh hiddenUpdate) {
             base.Channel.ShowUpdate(hiddenUpdate);
         }
         
-        public void HideUpdate(SevenUpdate.Base.Suh hiddenUpdate) {
+        public void HideUpdate(SevenUpdate.Suh hiddenUpdate) {
             base.Channel.HideUpdate(hiddenUpdate);
         }
         
-        public void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Suh> hiddenUpdates) {
+        public void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates) {
             base.Channel.HideUpdates(hiddenUpdates);
         }
         
-        public void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Base.Sua> apps, SevenUpdate.Base.Config options, bool autoCheck) {
+        public void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> apps, SevenUpdate.Config options, bool autoCheck) {
             base.Channel.ChangeSettings(apps, options, autoCheck);
         }
     }

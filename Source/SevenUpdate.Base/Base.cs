@@ -34,7 +34,7 @@ using ProtoBuf;
 
 #endregion
 
-namespace SevenUpdate.Base
+namespace SevenUpdate
 {
 
     #region Event Args
@@ -121,7 +121,7 @@ namespace SevenUpdate.Base
         /// <summary>
         ///   Gets the full path of the file
         /// </summary>
-        public string File { get; private set; }
+        public string File { get; set; }
     }
 
     #endregion
@@ -392,7 +392,7 @@ namespace SevenUpdate.Base
         /// <param name = "find">a string to find in the complete string</param>
         /// <param name = "replace">a string to use to replace the find string in the complete string</param>
         /// <returns>a string that has the find value replace by the new value</returns>
-        public static string Replace(string complete, string find, string replace)
+        private static string Replace(string complete, string find, string replace)
         {
             // Get input string length
             var expressionLength = complete.Length;
@@ -558,7 +558,7 @@ namespace SevenUpdate.Base
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c />
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
@@ -590,7 +590,7 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
         /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c />
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
@@ -613,7 +613,7 @@ namespace SevenUpdate.Base
         /// <typeparam name = "T">the object</typeparam>
         /// <param name = "item">the object to serialize</param>
         /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c />
+        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
         public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
             try

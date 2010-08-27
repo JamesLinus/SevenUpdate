@@ -29,7 +29,7 @@ using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
-using SevenUpdate.Base;
+
 using SharpBits.Base;
 using Application = System.Windows.Application;
 
@@ -90,7 +90,7 @@ namespace SevenUpdate.Admin
         {
             get
             {
-                var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
+                var t = Base.Deserialize<Config>(Base.ConfigFile);
                 return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
             }
         }
@@ -143,7 +143,7 @@ namespace SevenUpdate.Admin
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                     ShutdownApp();
                 }
                 catch (Exception e)
@@ -154,12 +154,12 @@ namespace SevenUpdate.Admin
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                     ShutdownApp();
                 }
 
-                if (!Directory.Exists(Base.Base.AllUserStore))
-                    Directory.CreateDirectory(Base.Base.AllUserStore);
+                if (!Directory.Exists(Base.AllUserStore))
+                    Directory.CreateDirectory(Base.AllUserStore);
 
                 NotifyIcon.Icon = Resources.icon;
                 NotifyIcon.Visible = false;
@@ -176,7 +176,7 @@ namespace SevenUpdate.Admin
                         switch (args[0])
                         {
                             case "Abort":
-                                using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
+                                using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
                                 {
                                     fs.WriteByte(0);
                                     fs.Close();
@@ -189,14 +189,14 @@ namespace SevenUpdate.Admin
 
                                 if (createdNew)
                                 {
-                                    if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
-                                        File.Delete(Base.Base.AllUserStore + "abort.lock");
+                                    if (File.Exists(Base.AllUserStore + "abort.lock"))
+                                        File.Delete(Base.AllUserStore + "abort.lock");
 
                                     NotifyIcon.Text = RM.GetString("CheckingForUpdates");
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDone_EventHandler;
                                     Search.ErrorOccurredEventHandler += Search_ErrorOccurred_EventHandler;
-                                    Search.SearchForUpdates(Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile));
+                                    Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
 
                                     app.Run();
                                 }
@@ -215,7 +215,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.Base.ReportError(e, Base.Base.AllUserStore);
+                    Base.ReportError(e, Base.AllUserStore);
                 }
 
                 #endregion
@@ -320,12 +320,12 @@ namespace SevenUpdate.Admin
             {
                 if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
                     NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
-                    Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Auto");
+                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
                 else
-                    Base.Base.StartProcess(Base.Base.AppDir + "SevenUpdate.exe", "Reconnect");
+                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
             }
             else
-                Base.Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
+                Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
 
             if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
                 NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
@@ -354,7 +354,7 @@ namespace SevenUpdate.Admin
                 }
             }
 
-            using (FileStream fs = File.Create(Base.Base.AllUserStore + "abort.lock"))
+            using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
                 fs.Close();
@@ -368,7 +368,7 @@ namespace SevenUpdate.Admin
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
-            Base.Base.ReportError("Host Fault", Base.Base.AllUserStore);
+            Base.ReportError("Host Fault", Base.AllUserStore);
             if (Service.Service.ErrorOccurred != null)
                 Service.Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
             try
@@ -384,7 +384,7 @@ namespace SevenUpdate.Admin
 
         private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
-            Base.Base.ReportError(e.Message.ToString(), Base.Base.AllUserStore);
+            Base.ReportError(e.Message.ToString(), Base.AllUserStore);
         }
 
         /// <summary>
@@ -436,14 +436,14 @@ namespace SevenUpdate.Admin
 
         private static void Service_OnShowUpdate(object sender, Service.Service.OnShowUpdateEventArgs e)
         {
-            var show = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+            var show = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
 
             if (show.Count == 0)
-                File.Delete(Base.Base.HiddenFile);
+                File.Delete(Base.HiddenFile);
             else
             {
                 show.Remove(e.HiddenUpdate);
-                Base.Base.Serialize(show, Base.Base.HiddenFile);
+                Base.Serialize(show, Base.HiddenFile);
             }
             ShutdownApp();
         }
@@ -454,12 +454,12 @@ namespace SevenUpdate.Admin
             AppUpdates = e.AppUpdates;
             try
             {
-                if (File.Exists(Base.Base.AllUserStore + "abort.lock"))
-                    File.Delete(Base.Base.AllUserStore + "abort.lock");
+                if (File.Exists(Base.AllUserStore + "abort.lock"))
+                    File.Delete(Base.AllUserStore + "abort.lock");
             }
             catch (Exception f)
             {
-                Base.Base.ReportError(f, Base.Base.AllUserStore);
+                Base.ReportError(f, Base.AllUserStore);
             }
             Download.DownloadUpdates(JobPriority.ForeGround);
         }
@@ -471,44 +471,44 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                     Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
                 else
-                    Base.Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
+                    Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
             }
             else
             {
                 if (Environment.OSVersion.Version.Major < 6)
                     Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
-                                      Base.Base.AppDir + @"SevenUpdate.Helper.exe ");
+                                      Base.AppDir + @"SevenUpdate.Helper.exe ");
                 else
-                    Base.Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
+                    Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
             }
-            Base.Base.Serialize(e.Apps, Base.Base.AppsFile);
-            Base.Base.Serialize(e.Options, Base.Base.ConfigFile);
+            Base.Serialize(e.Apps, Base.AppsFile);
+            Base.Serialize(e.Options, Base.ConfigFile);
             ShutdownApp();
         }
 
         private static void Service_OnHideUpdates(object sender, Service.Service.OnHideUpdatesEventArgs e)
         {
-            Base.Base.Serialize(e.HiddenUpdates, Base.Base.HiddenFile);
+            Base.Serialize(e.HiddenUpdates, Base.HiddenFile);
             ShutdownApp();
         }
 
         private static void Service_OnHideUpdate(object sender, Service.Service.OnHideUpdateEventArgs e)
         {
-            var hidden = Base.Base.Deserialize<Collection<Suh>>(Base.Base.HiddenFile) ?? new Collection<Suh>();
+            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
             hidden.Add(e.HiddenUpdate);
 
-            Base.Base.Serialize(hidden, Base.Base.HiddenFile);
+            Base.Serialize(hidden, Base.HiddenFile);
             ShutdownApp();
         }
 
         private static void Service_OnAddApp(object sender, Service.Service.OnAddAppEventArgs e)
         {
-            var sul = Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile);
+            var sul = Base.Deserialize<Collection<Sua>>(Base.AppsFile);
             var index = sul.IndexOf(e.App);
             if (index < 0)
                 sul.Add(e.App);
 
-            Base.Base.Serialize(sul, Base.Base.AppsFile);
+            Base.Serialize(sul, Base.AppsFile);
             ShutdownApp();
         }
 

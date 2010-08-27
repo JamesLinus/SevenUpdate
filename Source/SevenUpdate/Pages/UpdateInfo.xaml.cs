@@ -33,7 +33,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Windows.Controls;
-using SevenUpdate.Base;
+
 using SevenUpdate.Converters;
 
 #endregion
@@ -474,9 +474,9 @@ namespace SevenUpdate.Pages
             {
                 var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
                 var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
-                lblDescription.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
+                lblDescription.Text = Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
                 lblPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                lblUpdateName.Text = Base.Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
+                lblUpdateName.Text = Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
                 if (string.IsNullOrEmpty(App.Applications[appIndex].AppInfo.HelpUrl))
                     lblHelpUrl.Visibility = Visibility.Collapsed;
                 else
@@ -493,7 +493,7 @@ namespace SevenUpdate.Pages
                     lblInfoUrl.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 }
 
-                // cmiHideUpdate.IsEnabled = Base.Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+                // cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
 
                 var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
 

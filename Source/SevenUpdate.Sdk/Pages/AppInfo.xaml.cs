@@ -30,7 +30,7 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-using SevenUpdate.Base;
+
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -183,7 +183,7 @@ namespace SevenUpdate.Sdk.Pages
             if (!rbtnFileSystem.IsChecked.GetValueOrDefault())
                 return;
 
-            tbxAppLocation.Text = SevenUpdate.Base.Base.ConvertPath(tbxAppLocation.Text, false, Base.Sua.Is64Bit);
+            tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.Sua.Is64Bit);
             if (Path.GetFileName(tbxAppLocation.Text) == "")
                 imgAppLocation.Visibility = Visibility.Visible;
         }
@@ -307,7 +307,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                tbxAppLocation.Text = SevenUpdate.Base.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
+                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
         }
 
         #endregion

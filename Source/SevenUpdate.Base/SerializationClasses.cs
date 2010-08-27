@@ -28,7 +28,7 @@ using ProtoBuf;
 
 #endregion
 
-namespace SevenUpdate.Base
+namespace SevenUpdate
 {
 
     #region Application Settings

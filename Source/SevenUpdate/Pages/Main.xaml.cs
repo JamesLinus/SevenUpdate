@@ -26,7 +26,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using SevenUpdate.Base;
+
 using SevenUpdate.Properties;
 using SevenUpdate.Windows;
 
@@ -187,7 +187,7 @@ namespace SevenUpdate.Pages
             }
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
             {
-                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
+                infoBar.lblStatus.Text = App.RM.GetString("DownloadingUpdates") + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
                                          App.RM.GetString("Complete") + ")";
             }
             else
@@ -206,7 +206,7 @@ namespace SevenUpdate.Pages
             Settings.Default.lastInstall = DateTime.Now;
             lblUpdatesInstalled.Text = App.RM.GetString("TodayAt") + " " + DateTime.Now.ToShortTimeString();
             // if a reboot is needed lets say it
-            if (!Base.Base.RebootNeeded)
+            if (!Base.RebootNeeded)
                 SetUI(UILayout.InstallationCompleted, e.UpdatesInstalled, e.UpdatesFailed);
             else
                 SetUI(UILayout.RebootNeeded);
@@ -420,12 +420,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Checks for updates
         /// </summary>
-        /// <param name = "auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c />
+        /// <param name = "auto"><c>true</c> if it's called because of an auto update check, otherwise <c>false</c></param>
         private void CheckForUpdates(bool auto)
         {
             if (auto)
             {
-                if (!App.IsInstallInProgress && !Base.Base.RebootNeeded)
+                if (!App.IsInstallInProgress && !Base.RebootNeeded)
                     CheckForUpdates();
             }
             else
@@ -439,7 +439,7 @@ namespace SevenUpdate.Pages
         {
             if (!App.IsInstallInProgress)
             {
-                if (Base.Base.RebootNeeded == false)
+                if (Base.RebootNeeded == false)
                 {
                     SetUI(UILayout.CheckingForUpdates);
                     Settings.Default.lastUpdateCheck = DateTime.Now;
@@ -522,7 +522,7 @@ namespace SevenUpdate.Pages
             else
                 lblUpdatesInstalled.Text = App.RM.GetString("Never");
 
-            SetUI(Base.Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
+            SetUI(Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
         }
 
         /// <summary>
@@ -978,7 +978,7 @@ namespace SevenUpdate.Pages
                     infoBar.lblSelectedUpdates.Text = e.ImportantUpdates + " " + App.RM.GetString("ImportantUpdatesSelected");
 
                 if (e.ImportantDownloadSize > 0)
-                    infoBar.lblSelectedUpdates.Text += ", " + Base.Base.ConvertFileSize(e.ImportantDownloadSize);
+                    infoBar.lblSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.ImportantDownloadSize);
             }
 
             if (e.OptionalUpdates > 0)
@@ -999,7 +999,7 @@ namespace SevenUpdate.Pages
                 }
 
                 if (e.OptionalDownloadSize > 0)
-                    infoBar.lblSelectedUpdates.Text += ", " + Base.Base.ConvertFileSize(e.OptionalDownloadSize);
+                    infoBar.lblSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.OptionalDownloadSize);
             }
 
             if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
@@ -1055,7 +1055,7 @@ namespace SevenUpdate.Pages
             else if (infoBar.btnAction.ButtonText == App.RM.GetString("TryAgain") || infoBar.btnAction.ButtonText == App.RM.GetString("CheckForUpdates"))
                 CheckForUpdates();
             else if (infoBar.btnAction.ButtonText == App.RM.GetString("RestartNow"))
-                Base.Base.StartProcess("shutdown.exe", "-r -t 00");
+                Base.StartProcess("shutdown.exe", "-r -t 00");
         }
 
         #endregion

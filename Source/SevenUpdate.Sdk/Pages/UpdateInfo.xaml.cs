@@ -28,7 +28,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dwm;
-using SevenUpdate.Base;
+
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -116,7 +116,7 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                if (Base.CheckUrl(SevenUpdate.Base.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit)))
+                if (Base.CheckUrl(SevenUpdate.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit)))
                 {
                     switch (source.Name)
                     {

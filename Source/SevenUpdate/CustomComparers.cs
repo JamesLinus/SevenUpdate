@@ -23,7 +23,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.Windows.Controls;
-using SevenUpdate.Base;
+
 
 #endregion
 
@@ -108,13 +108,13 @@ namespace SevenUpdate
                         {
                             case "ApplicationName":
 
-                                valx = Base.Base.GetLocaleString(xc.Name);
-                                valy = Base.Base.GetLocaleString(yc.Name);
+                                valx = Base.GetLocaleString(xc.Name);
+                                valy = Base.GetLocaleString(yc.Name);
                                 break;
 
                             case "Publisher":
-                                valx = Base.Base.GetLocaleString(xc.Publisher);
-                                valy = Base.Base.GetLocaleString(yc.Publisher);
+                                valx = Base.GetLocaleString(xc.Publisher);
+                                valy = Base.GetLocaleString(yc.Publisher);
                                 break;
                             case "Architecture":
                                 valx = xc.Is64Bit.ToString();
@@ -173,8 +173,8 @@ namespace SevenUpdate
                         switch (sortColumn)
                         {
                             case "Name":
-                                valx = Base.Base.GetLocaleString(xc.Name);
-                                valy = Base.Base.GetLocaleString(yc.Name);
+                                valx = Base.GetLocaleString(xc.Name);
+                                valy = Base.GetLocaleString(yc.Name);
                                 break;
                             case "DateInstalled":
                                 valx = xc.InstallDate;
@@ -257,8 +257,8 @@ namespace SevenUpdate
                         {
                             case "Name":
 
-                                valx = Base.Base.GetLocaleString(xc.Name);
-                                valy = Base.Base.GetLocaleString(yc.Name);
+                                valx = Base.GetLocaleString(xc.Name);
+                                valy = Base.GetLocaleString(yc.Name);
                                 break;
                         }
 

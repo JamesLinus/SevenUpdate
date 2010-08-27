@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
-using SevenUpdate.Base;
+
 
 #endregion
 
@@ -119,7 +119,7 @@ namespace SevenUpdate.Converters
             // Loops through the collection of LocaleStrings
             if (localeStrings != null)
             {
-                foreach (LocaleString t in localeStrings.Where(t => t.Lang == Base.Base.Locale))
+                foreach (LocaleString t in localeStrings.Where(t => t.Lang == Base.Locale))
                     return t.Value;
 
                 // Returns an english string if the specified locale is not avaliable
@@ -158,13 +158,13 @@ namespace SevenUpdate.Converters
             {
                 var files = value as Collection<UpdateFile>;
                 // Gets the full size of the update then converts it into a string format
-                return Base.Base.ConvertFileSize(App.GetUpdateSize(files));
+                return Base.ConvertFileSize(App.GetUpdateSize(files));
             }
             catch (Exception)
             {
                 var size = System.Convert.ToUInt64(value);
                 // Converts the ulong into a readable file size string
-                return Base.Base.ConvertFileSize(size);
+                return Base.ConvertFileSize(size);
             }
         }
 

@@ -23,7 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ServiceModel;
-using SevenUpdate.Base;
+
 
 #endregion
 
@@ -215,7 +215,7 @@ namespace SevenUpdate.Service
         /// <summary>
         ///   A callback delegate for the <see cref = "DownloadCompleted" /> event
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c />
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
 
         /// <summary>

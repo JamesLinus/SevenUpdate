@@ -24,7 +24,7 @@ using System;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using SevenUpdate.Base;
+
 
 #endregion
 
@@ -47,17 +47,17 @@ namespace SevenUpdate.Windows
         ///   Shows the window and displays the update information
         /// </summary>
         /// <param name = "updateInfo">The update information to display</param>
-        /// <returns><c>true</c />
+        /// <returns><c>true</c></returns>
         internal bool? ShowDialog(Suh updateInfo)
         {
-            tbUpdateName.Text = Base.Base.GetLocaleString(updateInfo.Name);
+            tbUpdateName.Text = Base.GetLocaleString(updateInfo.Name);
             tbUpdateType.Text = updateInfo.Importance.ToString();
-            tbUpdateDescription.Text = Base.Base.GetLocaleString(updateInfo.Description);
+            tbUpdateDescription.Text = Base.GetLocaleString(updateInfo.Description);
 
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
-                tbStatus.Text = Base.Base.ConvertFileSize(updateInfo.UpdateSize);
+                tbStatus.Text = Base.ConvertFileSize(updateInfo.UpdateSize);
             }
             else
                 tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;

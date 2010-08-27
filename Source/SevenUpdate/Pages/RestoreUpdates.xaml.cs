@@ -30,7 +30,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
-using SevenUpdate.Base;
+
 using SevenUpdate.Windows;
 
 #endregion
@@ -76,7 +76,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHiddenUpdates()
         {
-            hiddenUpdates = Base.Base.Deserialize<ObservableCollection<Suh>>(Base.Base.HiddenFile);
+            hiddenUpdates = Base.Deserialize<ObservableCollection<Suh>>(Base.HiddenFile);
             if (hiddenUpdates == null)
                 return;
             lvHiddenUpdates.ItemsSource = hiddenUpdates;

@@ -107,6 +107,7 @@
     <Compile Include="Search.cs" />
     <Compile Include="SerializationClasses.cs" />
     <AppDesigner Include="Properties\" />
+    <Compile Include="Shortcut.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

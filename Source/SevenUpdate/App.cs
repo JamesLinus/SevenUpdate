@@ -27,10 +27,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Resources;
-using System.Security.Principal;
 using System.Threading;
 using System.Windows;
-using SevenUpdate.Base;
+
 using SevenUpdate.Windows;
 
 #endregion
@@ -51,7 +50,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets or Sets a collection of software that Seven Update can check for updates
         /// </summary>
-        public static IEnumerable<Sua> AppsToUpdate { get { return Base.Base.Deserialize<Collection<Sua>>(Base.Base.AppsFile); } }
+        public static IEnumerable<Sua> AppsToUpdate { get { return Base.Deserialize<Collection<Sua>>(Base.AppsFile); } }
 
         /// <summary>
         ///   Gets the update configuration settings
@@ -60,7 +59,7 @@ namespace SevenUpdate
         {
             get
             {
-                var t = Base.Base.Deserialize<Config>(Base.Base.ConfigFile);
+                var t = Base.Deserialize<Config>(Base.ConfigFile);
                 return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
             }
         }
@@ -73,7 +72,7 @@ namespace SevenUpdate
         ///// <summary>
         /////   Gets a value indicating if the current user is running on admin privileges
         ///// </summary>
-        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c />
+        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
         //internal static bool IsAdmin { get; private set; }
 
         /// <summary>
@@ -114,9 +113,9 @@ namespace SevenUpdate
                 try
                 {
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
-                    var sua = Base.Base.Deserialize<Sua>(Base.Base.DownloadFile(suaLoc), suaLoc);
+                    var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
                     if (
-                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
                                         MessageBoxImage.Question) == MessageBoxResult.Yes)
                         AdminClient.AddSua(sua);
                 }
@@ -126,8 +125,8 @@ namespace SevenUpdate
                 Environment.Exit(0);
             }
 
-            Directory.CreateDirectory(Base.Base.UserStore);
-            Base.Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
+            Directory.CreateDirectory(Base.UserStore);
+            Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
             RM = new ResourceManager("SevenUpdate.Resources.UIStrings", ResourceAssembly);
 
             if (args.Length > 0)
@@ -186,7 +185,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The main entry point for the application.
         /// </summary>
-        /// <param name = "args">Command line <c>args</c />
+        /// <param name = "args">Command line <c>args</c></param>
         [STAThread]
         private static void Main(string[] args)
         {

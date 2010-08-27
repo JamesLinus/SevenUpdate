@@ -23,7 +23,7 @@
 using System.Collections.ObjectModel;
 using System.ServiceModel;
 using ProtoBuf.ServiceModel;
-using SevenUpdate.Base;
+
 
 #endregion
 
@@ -77,7 +77,7 @@ namespace SevenUpdate.Service
         /// <summary>
         ///   Occurs when the download has completed
         /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c />
+        /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         [OperationContract(IsOneWay = true), ProtoBehavior]
         void OnDownloadCompleted(bool errorOccurred);
 
