@@ -29,7 +29,6 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -61,8 +60,83 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            SevenUpdate.Base.HashGeneratedEventHandler += Base_HashGeneratedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///   Loads the file information into the ui
+        /// </summary>
+        /// <param name = "index"></param>
+        private void LoadFileInfo(int index)
+        {
+            tbxInstallUri.Text = Base.Update.Files[index].Destination;
+            tbxDownloadUrl.Text = Base.Update.Files[index].Source;
+            tbxArgs.Text = Base.Update.Files[index].Args;
+            tbHash.Text = Base.Update.Files[index].Hash;
+            cbxUpdateType.SelectedIndex = (int) Base.Update.Files[index].Action;
+        }
+
+        /// <summary>
+        ///   Adds a file to the list
+        /// </summary>
+        /// <param name = "fullName">The fullpath to the file</param>
+        private void AddFile(string fullName)
+        {
+            string filename = Path.GetFileName(fullName);
+
+            string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
+            spHelp.Visibility = Visibility.Collapsed;
+            spInput.Visibility = Visibility.Visible;
+            tbxInstallUri.Text = installUrl;
+
+            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = App.RM.GetString("CalculatingHash") + "...", FileSize = (ulong) new FileInfo(fullName).Length};
+
+            if (Base.Update.Files == null)
+                Base.Update.Files = new ObservableCollection<UpdateFile>();
+
+            Base.Update.Files.Add(file);
+
+            cbxUpdateType.SelectedIndex = 0;
+            listBox.Items.Add(filename);
+            listBox.SelectedIndex = (listBox.Items.Count - 1);
+
+            piHashProgress.IsRunning = true;
+            tbHash.Text = App.RM.GetString("CalculatingHash");
+            tbHash.IsEnabled = false;
+            listBox.IsEnabled = false;
+            SevenUpdate.Base.GetHashAsync(fullName);
+        }
+
+        private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
+        {
+            piHashProgress.IsRunning = false;
+            listBox.IsEnabled = true;
+            Base.Update.Files[listBox.SelectedIndex].Hash = e.Hash;
+            tbHash.Text = e.Hash;
+            tbHash.IsEnabled = true;
+        }
+
+        private void AddFiles(string[] files)
+        {
+            for (int x = 0; x < files.Length; x++)
+                AddFile(files[x]);
+            listBox.SelectedIndex = (listBox.Items.Count - 1);
+        }
+
+        private void LoadInfo()
+        {
+            if (Base.Update.Files != null)
+            {
+                for (int x = 0; x < Base.Update.Files.Count; x++)
+                    listBox.Items.Add(Path.GetFileName(Base.Update.Files[x].Destination));
+            }
+            listBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -159,16 +233,20 @@ namespace SevenUpdate.Sdk.Pages
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxInstallUri.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false};
-            if (cfd.ShowDialog() != CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            tbHash.Text = SevenUpdate.Base.GetHash(cfd.FileName);
+            piHashProgress.IsRunning = true;
+            tbHash.Text = App.RM.GetString("CalculatingHash") + "...";
+            tbHash.IsEnabled = false;
+            listBox.IsEnabled = false;
+            SevenUpdate.Base.GetHashAsync(cfd.FileName);
             Base.Update.Files[listBox.SelectedIndex].Hash = tbHash.Text;
             Base.Update.Files[listBox.SelectedIndex].FileSize = (ulong) new FileInfo(cfd.FileName).Length;
         }
@@ -193,15 +271,15 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 AddFile(cfd.FileName);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
-                AddFiles(Directory.GetFiles(cfd.FileName));
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
         }
 
         #endregion
@@ -212,7 +290,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (Base.Update.Files != null)
             {
-                if (Base.Update.Files.Count > 0)
+                if (Base.Update.Files.Count > 0 && listBox.SelectedIndex > -1)
                     Base.Update.Files[listBox.SelectedIndex].Action = (FileAction) cbxUpdateType.SelectedIndex;
             }
 
@@ -273,63 +351,6 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///   Loads the file information into the ui
-        /// </summary>
-        /// <param name = "index"></param>
-        private void LoadFileInfo(int index)
-        {
-            tbxInstallUri.Text = Base.Update.Files[index].Destination;
-            tbxDownloadUrl.Text = Base.Update.Files[index].Source;
-            tbxArgs.Text = Base.Update.Files[index].Args;
-            tbHash.Text = Base.Update.Files[index].Hash;
-            cbxUpdateType.SelectedIndex = (int) Base.Update.Files[index].Action;
-        }
-
-        /// <summary>
-        ///   Adds a file to the list
-        /// </summary>
-        /// <param name = "fullName">The fullpath to the file</param>
-        private void AddFile(string fullName)
-        {
-            string filename = Path.GetFileName(fullName);
-            string hash = SevenUpdate.Base.GetHash(fullName);
-            string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
-            spHelp.Visibility = Visibility.Collapsed;
-            spInput.Visibility = Visibility.Visible;
-            tbxInstallUri.Text = installUrl;
-            tbHash.Text = hash;
-            cbxUpdateType.SelectedIndex = 0;
-            listBox.Items.Add(filename);
-
-            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = hash, FileSize = (ulong) new FileInfo(fullName).Length};
-            if (Base.Update.Files == null)
-                Base.Update.Files = new ObservableCollection<UpdateFile>();
-            Base.Update.Files.Add(file);
-            listBox.SelectedIndex = (listBox.Items.Count - 1);
-        }
-
-        private void AddFiles(string[] files)
-        {
-            for (int x = 0; x < files.Length; x++)
-                AddFile(files[x]);
-            listBox.SelectedIndex = (listBox.Items.Count - 1);
-        }
-
-        private void LoadInfo()
-        {
-            if (Base.Update.Files != null)
-            {
-                for (int x = 0; x < Base.Update.Files.Count; x++)
-                    listBox.Items.Add(Path.GetFileName(Base.Update.Files[x].Destination));
-            }
-            listBox.SelectedIndex = 0;
-        }
 
         #endregion
 

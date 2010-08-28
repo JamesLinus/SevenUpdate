@@ -61,6 +61,15 @@ namespace SevenUpdate.Sdk.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calculating hash.
+        /// </summary>
+        internal static string CalculatingHash {
+            get {
+                return ResourceManager.GetString("CalculatingHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fix all errors to continue.
         /// </summary>
         internal static string CorrectErrors {

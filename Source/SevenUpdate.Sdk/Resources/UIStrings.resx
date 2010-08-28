@@ -159,4 +159,7 @@
   <data name="ErrorHelp" xml:space="preserve">
     <value>An exclamation mark next to a value denotes an error.</value>
   </data>
+  <data name="CalculatingHash" xml:space="preserve">
+    <value>Calculating hash</value>
+  </data>
 </root>

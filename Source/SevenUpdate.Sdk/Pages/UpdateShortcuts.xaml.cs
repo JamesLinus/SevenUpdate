@@ -30,7 +30,6 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -75,6 +74,10 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region Methods
+
+        private void SaveShortcut()
+        {
+        }
 
         private void LoadInfo()
         {
@@ -180,21 +183,21 @@ namespace SevenUpdate.Sdk.Pages
         private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxShortcutTarget.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxShortcutPath.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxShortcutIcon.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
@@ -204,6 +207,17 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddShortcut_Click(object sender, RoutedEventArgs e)
         {
+            var cfd = new CommonSaveFileDialog
+                          {
+                              AlwaysAppendDefaultExtension = true,
+                              DefaultExtension = "lnk",
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              DefaultFileName = Base.Sua.Name[0].Value,
+                              EnsureValidNames = true
+                          };
+            cfd.Filters.Add(new CommonFileDialogFilter(App.RM.GetString("Shortcut"), "*.lnk"));
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                SaveShortcut();
         }
 
         private void ImportShortcut_Click(object sender, RoutedEventArgs e)

@@ -85,8 +85,9 @@
 			<Controls:InfoTextBox Label="(Optional) Enter command line arguments to be passed when file is executed during update" x:Name="tbxArgs" TextChanged="Textbox_TextChanged" Margin="2,0,0,0" />
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0,10,0,0">
 				<TextBlock Text="SHA-2 hash:" HorizontalAlignment="Left" Padding="2" />
-				<TextBlock Padding="2" Margin="5,0,0,0" Name="tbHash" Foreground="#FF0066CC" MouseDown="Hash_MouseDown" Cursor="Hand" Style="{StaticResource underlineTextBlock}" Text="" ToolTip="Click here to update the hash, it must be correct for the file for Seven Update to work properly" />
+				<TextBlock Padding="2" Margin="5,0,0,0" Name="tbHash" Foreground="#FF0066CC" MouseDown="Hash_MouseDown" Style="{StaticResource underlineTextBlock}" Text="Calculating hash..." ToolTip="Click here to update the hash, it must be correct for the file for Seven Update to work properly" Cursor="Hand" />
 			</StackPanel>
+			<Controls:ProgressIndicator Name="piHashProgress" IsIndeterminate="True" IsRunning="True" Margin="0,25,0,0" Width="80" Height="80" IndeterminateText="Calculating hash..." />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="3" Name="line" />
 		<Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />

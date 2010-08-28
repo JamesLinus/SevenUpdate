@@ -30,7 +30,6 @@ using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
-
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -306,7 +305,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog() == CommonFileDialogResult.OK)
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
         }
 

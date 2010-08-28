@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -124,6 +125,33 @@ namespace SevenUpdate
         public string File { get; set; }
     }
 
+    /// <summary>
+    ///   Provides event data for the HashGenerated event
+    /// </summary>
+    public sealed class HashGeneratedEventArgs : EventArgs
+    {
+        /// <summary>
+        ///   Contains event data associated with this event
+        /// </summary>
+        /// <param name = "fileLocation">The location of the file the hash was generated for</param>
+        /// <param name = "hash">The SHA-2 Hash of the file</param>
+        public HashGeneratedEventArgs(string fileLocation, string hash)
+        {
+            FileLocation = fileLocation;
+            Hash = hash;
+        }
+
+        /// <summary>
+        ///   Gets the full path of the file the hash was generated for
+        /// </summary>
+        public string FileLocation { get; private set; }
+
+        /// <summary>
+        ///   Gets the SHA-2 hash of the file
+        /// </summary>
+        public string Hash { get; set; }
+    }
+
     #endregion
 
     /// <summary>
@@ -131,7 +159,7 @@ namespace SevenUpdate
     /// </summary>
     public static class Base
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   The application directory of Seven Update
@@ -167,6 +195,10 @@ namespace SevenUpdate
         ///   The user application data location
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Specifies if a reboot is needed
@@ -488,15 +520,27 @@ namespace SevenUpdate
         #endregion
 
         /// <summary>
+        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
+        /// </summary>
+        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        public static void GetHashAsync(string fileLocation)
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(fileLocation);
+        }
+
+        /// <summary>
         ///   Gets the SHA-2 Hash of a file
         /// </summary>
-        /// <param name = "fileLoc">The full path to the file to calculate the hash</param>
-        /// <returns>a SHA-2 hash</returns>
-        public static string GetHash(string fileLoc)
+        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        /// <returns>The SHA-2 Hash of the file</returns>
+        public static string GetHash(string fileLocation)
         {
-            if (!File.Exists(fileLoc))
+            if (!File.Exists(fileLocation))
                 return null;
-            var stream = new FileStream(fileLoc, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
 
             var sha2 = new SHA256Managed();
 
@@ -504,11 +548,28 @@ namespace SevenUpdate
 
             stream.Close();
 
-            var buff = new StringBuilder();
+            var buff = new StringBuilder(10);
 
             foreach (var hashByte in sha2.Hash)
                 buff.Append(String.Format("{0:X1}", hashByte));
+
             return buff.ToString();
+        }
+
+        private static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var data = e.Result as string[];
+
+            if (HashGeneratedEventHandler != null && data != null)
+                    HashGeneratedEventHandler(null, new HashGeneratedEventArgs(data[0], data[1]));
+        }
+
+        private static void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var fileLocation = e.Argument as string;
+
+            string[] data = {fileLocation, GetHash(fileLocation)};
+            e.Result = data;
         }
 
         /// <summary>
@@ -656,6 +717,11 @@ namespace SevenUpdate
         ///   Occurs when an error occurs while serializing or deserializing a object/file
         /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
+
+        /// <summary>
+        ///   Occurs when a SHA-2 Hash has been generated
+        /// </summary>
+        public static event EventHandler<HashGeneratedEventArgs> HashGeneratedEventHandler;
 
         #endregion
     }

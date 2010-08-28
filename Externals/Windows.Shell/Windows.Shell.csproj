@@ -207,6 +207,7 @@
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\ListViewExtensions.cs" />
     <Compile Include="Controls\ListViewSorter.cs" />
+    <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Controls\UacButton.cs" />
     <Compile Include="Dwm\AeroGlass.cs" />
     <Compile Include="Dialogs\Common\DialogControl.cs" />
@@ -322,6 +323,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
