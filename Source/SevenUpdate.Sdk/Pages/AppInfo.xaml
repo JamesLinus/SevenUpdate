@@ -24,9 +24,8 @@
 		<StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
 			<TextBlock Text="Application name:" Padding="2" HorizontalAlignment="Left" ToolTip="The name of the application to be updated." Margin="0,5,0,0" />
 			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
-				<Controls:InfoTextBox x:Name="tbxAppName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Seven Update SDK (max 75 characters)" TabIndex="0" DataContext="{Binding}" Margin="5,0" LostKeyboardFocus="AppName_LostKeyboardFocus" TextChanged="StringTextBox_TextChanged" />
-				<Image Name="imgAppName" Source="/SevenUpdate.Sdk;component/Images/Caution.png" ToolTip="The application name entered is not valid." UseLayoutRounding="True" Margin="4,0" />
-				<CheckBox Content="64-bit application" Name="cxbIs64Bit" Margin="10,0,0,0" HorizontalAlignment="Left" Padding="4,0,0,0" VerticalAlignment="Center" ToolTip="Check this box if your software is native x64." TabIndex="1" />
+				<Controls:InfoTextBox x:Name="tbxAppName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Seven Update SDK (max 75 characters)" TabIndex="0" Margin="5,0" LostKeyboardFocus="AppName_LostKeyboardFocus" Text="{Controls:ValidationBinding RequiredInputRule, Name}" />
+				<CheckBox Content="64-bit application" Name="cxbIs64Bit" Margin="10,0,0,0" HorizontalAlignment="Left" Padding="4,0,0,0" VerticalAlignment="Center" ToolTip="Check this box if your software is native x64." TabIndex="1" IsChecked="{Binding Path=Is64Bit, Mode=TwoWay}" />
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,10,0,0">
 				<TextBlock Padding="2" Text="Application install location:" ToolTip="The directory where the application is is installed. It is best to use system path variabes when applicable." />
@@ -35,41 +34,25 @@
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,5,0,0">
 				<TextBlock Text="Registry key:" HorizontalAlignment="Left" VerticalAlignment="Center" Name="lblRegistry" Margin="20,0,5,0" Visibility="Collapsed" ToolTip="The full key path where the value containing the install location of the application is stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" />
-				<TextBox x:Name="tbxAppLocation" TabIndex="4" Width="600" HorizontalAlignment="Left" TextChanged="AppLocation_TextChanged" FontSize="14" LostKeyboardFocus="tbxAppLocation_LostKeyboardFocus" />
+				<TextBox x:Name="tbxAppLocation" TabIndex="4" Width="600" HorizontalAlignment="Left" FontSize="14" LostKeyboardFocus="tbxAppLocation_LostKeyboardFocus" />
 				<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Foreground="#FF0066CC" Name="tbBrowse" MouseDown="Browse_MouseDown" Cursor="Hand" />
-				<Image Margin="8,0,4,0" Name="imgAppLocation" ToolTip="The path entered is not valid." Source="/SevenUpdate.Sdk;component/Images/Caution.png" UseLayoutRounding="True" />
 			</StackPanel>
 			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,5,0,0">
 				<TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Name="lblValue" Visibility="Collapsed" HorizontalAlignment="Left" Margin="20,0,5,0" VerticalAlignment="Center" />
-				<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-					<TextBox x:Name="tbxValueName" TabIndex="5" Width="387" Visibility="Collapsed" HorizontalAlignment="Left" FontSize="14" TextChanged="StringTextBox_TextChanged" />
-					<Image Margin="8,0,4,0" Name="imgValueName" ToolTip="The value name is required." Source="/SevenUpdate.Sdk;component/Images/Caution.png" UseLayoutRounding="True" Visibility="Collapsed" />
-				</StackPanel>
+				<TextBox x:Name="tbxValueName" TabIndex="5" Width="387" Visibility="Collapsed" HorizontalAlignment="Left" FontSize="14" />
 			</StackPanel>
 			<TextBlock Text="Application description:" Padding="2" Margin="0,10,0,0" HorizontalAlignment="Left" />
-			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-				<Controls:InfoTextBox x:Name="tbxAppDescription" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="62" Label="Write a summary about the application here, but make it no longer than 300 characters" TabIndex="6" HorizontalAlignment="Left" Width="750" LostKeyboardFocus="AppDescription_LostKeyboardFocus" TextChanged="StringTextBox_TextChanged" />
-				<Image Margin="4,0" Name="imgAppDescription" ToolTip="A application description is required." Source="/SevenUpdate.Sdk;component/Images/Caution.png" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxAppDescription" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="62" Label="Write a summary about the application here, but make it no longer than 300 characters" TabIndex="6" HorizontalAlignment="Left" Width="750" LostKeyboardFocus="AppDescription_LostKeyboardFocus" />
 			<StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,20,0,10">
 				<TextBlock Text="Publisher information" VerticalAlignment="Center" Padding="2" Foreground="#FF003399" />
 				<Separator MinWidth="200" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
 			</StackPanel>
 			<TextBlock Text="Publisher:" Padding="2" ToolTip="The software company or development team." HorizontalAlignment="Left" />
-			<StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Margin="0,5,0,0">
-				<Controls:InfoTextBox x:Name="tbxPublisher" Width="412" Label="Seven Software" TabIndex="7" HorizontalAlignment="Left" Margin="5,0" LostKeyboardFocus="Publisher_LostKeyboardFocus" TextChanged="StringTextBox_TextChanged" />
-				<Image Margin="4,0" Name="imgPublisher" ToolTip="A publisher name is required." Source="/SevenUpdate.Sdk;component/Images/Caution.png" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxPublisher" Width="412" Text="{Controls:ValidationBinding RequiredInputRule, Path=Publisher}" Label="Seven Software" TabIndex="7" HorizontalAlignment="Left" Margin="5,0" LostKeyboardFocus="Publisher_LostKeyboardFocus" />
 			<TextBlock Text="Application web site:" Padding="2" Margin="0,5,0,0" ToolTip="A url pointing to the web site of the publisher or the software." HorizontalAlignment="Left" />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox x:Name="tbxAppUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left" TextChanged="UrlTextBox_TextChanged" Margin="5,0" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgPublisherUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxAppUrl" Width="650" Label="http://sevenupdate.com" TabIndex="8" HorizontalAlignment="Left" Margin="5,0" Text="{Controls:ValidationBinding UrlInputRule, Path=AppUrl}"></Controls:InfoTextBox>
 			<TextBlock Text="Help &amp; Support web site:" Padding="2" Margin="0,5,0,0" ToolTip="A url pointing to the support area for this software." HorizontalAlignment="Left" />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" TextChanged="UrlTextBox_TextChanged" Margin="5,0" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgHelpUrl" ToolTip="The path entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox Label="http://sevenupdate.com/support" x:Name="tbxHelpUrl" TabIndex="9" Width="650" HorizontalAlignment="Left" Margin="5,0" Text="{Controls:ValidationBinding UrlInputRule, Path=HelpUrl}" />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" Name="line" />
 		<Rectangle Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" Name="rectangle" />

@@ -81,7 +81,7 @@ namespace SevenUpdate.Admin
             if (Service.Service.InstallProgressChanged != null && App.IsClientConnected)
                 Service.Service.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
             if (App.NotifyIcon != null)
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.RM.GetString("InstallingUpdates") + " " + installProgress + " " + App.RM.GetString("Complete"));
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, SevenUpdate.Admin.Properties.Resources.InstallingUpdates + " " + installProgress + " " + SevenUpdate.Admin.Properties.Resources.Complete);
         }
 
         #region Update Installation

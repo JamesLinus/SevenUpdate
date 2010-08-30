@@ -26,10 +26,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Resources;
 using System.Threading;
 using System.Windows;
-
 using SevenUpdate.Windows;
 
 #endregion
@@ -92,11 +90,6 @@ namespace SevenUpdate
 
         #endregion
 
-        /// <summary>
-        ///   Gets the resources for the application
-        /// </summary>
-        internal static ResourceManager RM { get; private set; }
-
         #endregion
 
         #region Methods
@@ -115,7 +108,7 @@ namespace SevenUpdate
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
                     var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
                     if (
-                        MessageBox.Show(RM.GetString("AllowUpdates") + " " + Base.GetLocaleString(sua.Name) + "?", RM.GetString("SevenUpdate"), MessageBoxButton.YesNo,
+                        MessageBox.Show(SevenUpdate.Properties.Resources.AllowUpdates + " " + Base.GetLocaleString(sua.Name) + "?", SevenUpdate.Properties.Resources.SevenUpdate, MessageBoxButton.YesNo,
                                         MessageBoxImage.Question) == MessageBoxResult.Yes)
                         AdminClient.AddSua(sua);
                 }
@@ -127,7 +120,6 @@ namespace SevenUpdate
 
             Directory.CreateDirectory(Base.UserStore);
             Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
-            RM = new ResourceManager("SevenUpdate.Resources.UIStrings", ResourceAssembly);
 
             if (args.Length > 0)
             {
@@ -177,8 +169,7 @@ namespace SevenUpdate
             if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 return;
             // merge in your application resources
-            Application.Current.Resources.MergedDictionaries.Add(
-                Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
+            Application.Current.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
             App.Resources = Application.Current.Resources;
         }
 

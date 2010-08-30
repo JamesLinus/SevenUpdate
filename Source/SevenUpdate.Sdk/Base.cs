@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
+using System;
+
+#endregion
 
 namespace SevenUpdate.Sdk
 {
     internal static class Base
     {
         /// <summary>
-        /// The update information of the project
+        ///   The application information of the project
         /// </summary>
-        internal static SevenUpdate.Sui Sui { get; set; }
+        internal static Sua AppInfo { get; set; }
 
         /// <summary>
-        /// The application information of the project
+        ///   The current update being edited
         /// </summary>
-        internal static SevenUpdate.Sua Sua { get; set; }
+        internal static Update UpdateInfo { get; set; }
 
         /// <summary>
-        /// The current update being edited
+        ///   Checks to see if a Url is valid
         /// </summary>
-        internal static SevenUpdate.Update Update { get; set; }
-
-        /// <summary>
-        /// Checks to see if a Url is valid
-        /// </summary>
-        /// <param name="url">A url to check</param>
+        /// <param name = "url">A url to check</param>
         /// <returns>True if url is valid, otherwise false</returns>
         internal static bool CheckUrl(string url)
         {
@@ -40,5 +36,4 @@ namespace SevenUpdate.Sdk
             return true;
         }
     }
-
 }

@@ -36,12 +36,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateRegistry : Page
     {
-        #region Properties
-
-        private bool IsInfoValid { get { return (imgKeyPath.Visibility != Visibility.Visible); } }
-
-        #endregion
-
         #region Contructors
 
         /// <summary>
@@ -67,10 +61,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
-            if (Base.Update.RegistryItems != null)
+            if (Base.UpdateInfo.RegistryItems != null)
             {
-                for (int x = 0; x < Base.Update.Shortcuts.Count; x++)
-                    listBox.Items.Add(App.RM.GetString("RegistryItem") + " " + x);
+                for (int x = 0; x < Base.UpdateInfo.Shortcuts.Count; x++)
+                    listBox.Items.Add(Properties.Resources.RegistryItem + " " + x);
             }
         }
 
@@ -86,15 +80,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tbxKeyPath.Text.Length > 0)
-            {
-                if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
-                    tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
-                    tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
-                    imgKeyPath.Visibility = Visibility.Collapsed;
-            }
-            else
-                imgKeyPath.Visibility = Visibility.Collapsed;
+            //if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
+            //        tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
+            //        tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
         }
 
         #endregion
@@ -153,10 +141,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInfoValid)
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
-            else
-                App.ShowInputErrorMessage();
+               // App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -174,10 +160,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
+                App.ShowInputErrorMessage();
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
@@ -188,8 +176,6 @@ namespace SevenUpdate.Sdk.Pages
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
             listBox.Items.Clear();
-            miRemoveAll.IsEnabled = false;
-            miRemove.IsEnabled = false;
             spInput.Visibility = Visibility.Collapsed;
         }
 
@@ -213,12 +199,10 @@ namespace SevenUpdate.Sdk.Pages
             {
                 spHelp.Visibility = Visibility.Collapsed;
                 spInput.Visibility = Visibility.Visible;
-                miRemove.IsEnabled = listBox.SelectedIndex > -1;
-                miRemoveAll.IsEnabled = true;
 
-                if (listBox.SelectedIndex > -1 && Base.Update.RegistryItems != null)
+                if (listBox.SelectedIndex > -1 && Base.UpdateInfo.RegistryItems != null)
                 {
-                    if (Base.Update.Files.Count > 0)
+                    if (Base.UpdateInfo.Files.Count > 0)
                         LoadRegistryInfo(listBox.SelectedIndex);
                 }
             }
@@ -226,8 +210,6 @@ namespace SevenUpdate.Sdk.Pages
             {
                 spHelp.Visibility = Visibility.Visible;
                 spInput.Visibility = Visibility.Collapsed;
-                miRemove.IsEnabled = false;
-                miRemoveAll.IsEnabled = false;
             }
         }
 
@@ -249,5 +231,19 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private void listBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (listBox.Items.Count > -1)
+            {
+                miRemoveAll.IsEnabled = true;
+                miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            }
+            else
+            {
+                miRemove.IsEnabled = false;
+                miRemoveAll.IsEnabled = false;
+            }
+        }
     }
 }

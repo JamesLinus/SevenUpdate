@@ -33,6 +33,18 @@ namespace Microsoft.Windows.Controls
 {
     public class InfoTextBox : TextBox
     {
+        #region Constructors
+
+        public InfoTextBox()
+        {
+            if (Resources.Count != 0)
+                return;
+            var resourceDictionary = new ResourceDictionary {Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative)};
+            Resources.MergedDictionaries.Add(resourceDictionary);
+        }
+
+        #endregion
+
         #region Properties
 
         // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...

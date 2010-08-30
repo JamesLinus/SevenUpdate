@@ -8,115 +8,137 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SevenUpdate.WCF {
+#region
+
+using System.CodeDom.Compiler;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+
+#endregion
+
+namespace SevenUpdate.WCF
+{
+    [GeneratedCode("System.ServiceModel", "4.0.0.0"), ServiceContract(ConfigurationName = "WCF.IService", CallbackContract = typeof (IServiceCallback), SessionMode = SessionMode.Required)]
     
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WCF.IService", CallbackContract=typeof(SevenUpdate.WCF.IServiceCallback), SessionMode=System.ServiceModel.SessionMode.Required)]
-    public interface IService {
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/Subscribe")]
+    public interface IService
+    {
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/Subscribe")]
         void Subscribe();
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/UnSubscribe")]
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/UnSubscribe")]
         void UnSubscribe();
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/AddApp")]
-        void AddApp(SevenUpdate.Sua app);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/InstallUpdates")]
-        void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/ShowUpdate")]
-        void ShowUpdate(SevenUpdate.Suh hiddenUpdate);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/HideUpdate")]
-        void HideUpdate(SevenUpdate.Suh hiddenUpdate);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/HideUpdates")]
-        void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/ChangeSettings")]
-        void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> apps, SevenUpdate.Config options, bool autoCheck);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/AddApp")]
+        void AddApp(Sua app);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/InstallUpdates")]
+        void InstallUpdates(Collection<Sui> appUpdates);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/ShowUpdate")]
+        void ShowUpdate(Suh hiddenUpdate);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/HideUpdate")]
+        void HideUpdate(Suh hiddenUpdate);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/HideUpdates")]
+        void HideUpdates(Collection<Suh> hiddenUpdates);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/ChangeSettings")]
+        void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck);
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceCallback {
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnDownloadCompleted")]
+
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public interface IServiceCallback
+    {
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnDownloadCompleted")]
         void OnDownloadCompleted(bool errorOccurred);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnInstallCompleted")]
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnInstallCompleted")]
         void OnInstallCompleted(int updatesInstalled, int updatesFailed);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnErrorOccurred")]
-        void OnErrorOccurred(string exception, SevenUpdate.ErrorType type);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnDownloadProgressChanged")]
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnErrorOccurred")]
+        void OnErrorOccurred(string exception, ErrorType type);
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnDownloadProgressChanged")]
         void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
-        
-        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IService/OnInstallProgressChanged")]
+
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnInstallProgressChanged")]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
     }
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceChannel : SevenUpdate.WCF.IService, System.ServiceModel.IClientChannel {
+
+    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
+    public interface IServiceChannel : IService, IClientChannel
+    {
     }
+
+    [DebuggerStepThrough, GeneratedCode("System.ServiceModel", "4.0.0.0")]
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServiceClient : System.ServiceModel.DuplexClientBase<SevenUpdate.WCF.IService>, SevenUpdate.WCF.IService {
-        
-        public ServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
-                base(callbackInstance) {
+    public class ServiceClient : DuplexClientBase<IService>, IService
+    {
+        public ServiceClient(InstanceContext callbackInstance) : base(callbackInstance)
+        {
         }
-        
-        public ServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
-                base(callbackInstance, endpointConfigurationName) {
+
+        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName) : base(callbackInstance, endpointConfigurationName)
+        {
         }
-        
-        public ServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+
+        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress)
+        {
         }
-        
-        public ServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, endpointConfigurationName, remoteAddress) {
+
+        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName, EndpointAddress remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress)
+        {
         }
-        
-        public ServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
-                base(callbackInstance, binding, remoteAddress) {
+
+        public ServiceClient(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : base(callbackInstance, binding, remoteAddress)
+        {
         }
-        
-        public void Subscribe() {
+
+        #region IService Members
+
+        public void Subscribe()
+        {
             base.Channel.Subscribe();
         }
-        
-        public void UnSubscribe() {
+
+        public void UnSubscribe()
+        {
             base.Channel.UnSubscribe();
         }
-        
-        public void AddApp(SevenUpdate.Sua app) {
+
+        public void AddApp(Sua app)
+        {
             base.Channel.AddApp(app);
         }
-        
-        public void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates) {
+
+        public void InstallUpdates(Collection<Sui> appUpdates)
+        {
             base.Channel.InstallUpdates(appUpdates);
         }
-        
-        public void ShowUpdate(SevenUpdate.Suh hiddenUpdate) {
+
+        public void ShowUpdate(Suh hiddenUpdate)
+        {
             base.Channel.ShowUpdate(hiddenUpdate);
         }
-        
-        public void HideUpdate(SevenUpdate.Suh hiddenUpdate) {
+
+        public void HideUpdate(Suh hiddenUpdate)
+        {
             base.Channel.HideUpdate(hiddenUpdate);
         }
-        
-        public void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates) {
+
+        public void HideUpdates(Collection<Suh> hiddenUpdates)
+        {
             base.Channel.HideUpdates(hiddenUpdates);
         }
-        
-        public void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> apps, SevenUpdate.Config options, bool autoCheck) {
+
+        public void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck)
+        {
             base.Channel.ChangeSettings(apps, options, autoCheck);
         }
+
+        #endregion
     }
 }

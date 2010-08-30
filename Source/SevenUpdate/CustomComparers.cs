@@ -24,7 +24,6 @@ using System;
 using System.ComponentModel;
 using Microsoft.Windows.Controls;
 
-
 #endregion
 
 namespace SevenUpdate

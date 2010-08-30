@@ -30,7 +30,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
-
 using SevenUpdate.Windows;
 
 #endregion
@@ -154,15 +153,15 @@ namespace SevenUpdate.Pages
         {
             var checkedCount = hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            lblSelectedUpdates.Text = App.RM.GetString("TotalSelected") + " " + checkedCount + " ";
+            lblSelectedUpdates.Text = Properties.Resources.TotalSelected + " " + checkedCount + " ";
             if (checkedCount > 0)
             {
-                lblSelectedUpdates.Text += checkedCount == 1 ? App.RM.GetString("Updates") : App.RM.GetString("Update");
+                lblSelectedUpdates.Text += checkedCount == 1 ? Properties.Resources.Updates : Properties.Resources.Update;
                 btnRestore.IsEnabled = true;
             }
             else
             {
-                lblSelectedUpdates.Text += App.RM.GetString("Updates");
+                lblSelectedUpdates.Text += Properties.Resources.Updates;
                 btnRestore.IsEnabled = false;
             }
         }

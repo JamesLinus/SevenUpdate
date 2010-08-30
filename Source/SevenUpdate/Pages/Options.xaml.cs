@@ -36,8 +36,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Windows.Controls;
 
-
-
 #endregion
 
 namespace SevenUpdate.Pages
@@ -230,7 +228,7 @@ namespace SevenUpdate.Pages
                 lblListStatus.Text = null;
             }
             else
-                lblListStatus.Text = App.RM.GetString("CouldNotConnect");
+                lblListStatus.Text = Properties.Resources.CouldNotConnect;
         }
 
         /// <summary>

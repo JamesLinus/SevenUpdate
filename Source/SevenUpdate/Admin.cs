@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
-
 using SevenUpdate.WCF;
 
 #endregion

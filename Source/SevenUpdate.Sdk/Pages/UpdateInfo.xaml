@@ -23,30 +23,15 @@
 		</StackPanel>
 		<StackPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
 			<TextBlock Text="Update name:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." Margin="0,5,0,0" />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox x:Name="tbxUpdateName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="0" LostKeyboardFocus="UpdateTitle_LostKeyboardFocus" TextChanged="Textbox_TextChanged" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgUpdateName" ToolTip="The update name entered is not valid." Visibility="Visible" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxUpdateName" Width="412" HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="0" LostKeyboardFocus="UpdateTitle_LostKeyboardFocus"/>
 			<TextBlock Text="Update details:" Padding="2" Margin="0,5,0,0" />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox x:Name="tbxUpdateDetails" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="83" Width="650" Label="Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters" TabIndex="4" LostKeyboardFocus="UpdateDetails_LostKeyboardFocus" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgUpdateDetails" ToolTip="Update details are required." Visibility="Visible" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxUpdateDetails" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="83" Width="650" Label="Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters" TabIndex="4" LostKeyboardFocus="UpdateDetails_LostKeyboardFocus" HorizontalAlignment="Left" />
 			<TextBlock Text="Update information URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Should be a web page with information about this update." />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox x:Name="tbxInfoUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="1" TextChanged="Textbox_TextChanged" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgUpdateInfo" ToolTip="The Url entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxInfoUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="1" />
 			<TextBlock Text="Software license URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="A url pointing to txt or rtf document containing the software license." />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox x:Name="tbxLicenseUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="2" TextChanged="Textbox_TextChanged" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgLicense" ToolTip="The Url entered is not valid." Visibility="Collapsed" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox x:Name="tbxLicenseUrl" Width="650" HorizontalAlignment="Left" Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="2" />
 			<TextBlock Text="Download directory URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access" />
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-				<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" x:Name="tbxDownloadUrl" TabIndex="3" Width="650" HorizontalAlignment="Left" TextChanged="Textbox_TextChanged" />
-				<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" Name="imgDownloadLoc" ToolTip="The path entered is not valid." Visibility="Visible" UseLayoutRounding="True" />
-			</StackPanel>
+			<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" x:Name="tbxDownloadUrl" TabIndex="3" Width="650" HorizontalAlignment="Left" />
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10">
 				<TextBlock Text="Release date:" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="The date the update was released to the public." />
 				<DatePicker IsTodayHighlighted="True" DisplayDateEnd="12/21/2012" TabIndex="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,4,0" MaxWidth="115" Name="dpReleaseDate" DisplayDateStart="1/1/2006" HorizontalContentAlignment="Left" SelectedDateChanged="dpReleaseDate_SelectedDateChanged" />

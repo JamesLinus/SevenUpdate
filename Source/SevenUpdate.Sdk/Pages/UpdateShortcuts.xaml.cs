@@ -47,12 +47,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #region Properties
-
-        private bool IsInfoValid { get { return (imgShortcutIcon.Visibility != Visibility.Visible && imgShortcutPath.Visibility != Visibility.Visible && imgShortcutTarget.Visibility != Visibility.Visible); } }
-
-        #endregion
-
         #region Contructors
 
         /// <summary>
@@ -81,77 +75,31 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
-            if (Base.Update.Shortcuts != null)
+            if (Base.UpdateInfo.Shortcuts != null)
             {
-                for (int x = 0; x < Base.Update.Shortcuts.Count; x++)
-                    listBox.Items.Add(Path.GetFileNameWithoutExtension(Base.Update.Shortcuts[x].Location) + " " + x);
+                for (int x = 0; x < Base.UpdateInfo.Shortcuts.Count; x++)
+                    listBox.Items.Add(Path.GetFileNameWithoutExtension(Base.UpdateInfo.Shortcuts[x].Location) + " " + x);
             }
         }
 
         private void LoadShortcutInfo(int index)
         {
-            tbxShortcutTarget.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Target;
-            tbxShortcutPath.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Location;
-            tbxShortcutIcon.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Icon;
-            tbxShortcutArguments.Text = Base.Update.Shortcuts[listBox.SelectedIndex].Arguments;
+            tbxShortcutTarget.Text = Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target;
+            tbxShortcutPath.Text = Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location;
+            tbxShortcutIcon.Text = Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon;
+            tbxShortcutArguments.Text = Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Arguments;
 
             if (rbtnAddShortcut.IsChecked.GetValueOrDefault())
-                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Add;
+                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Add;
             if (rbtnUpdateShortcut.IsChecked.GetValueOrDefault())
-                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Update;
+                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Update;
             if (rbtnDeleteShortcut.IsChecked.GetValueOrDefault())
-                Base.Update.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Delete;
+                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Action = ShortcutAction.Delete;
         }
 
         #endregion
 
         #region UI Events
-
-        #region TextBox - Text Changed Events
-
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var source = e.Source as InfoTextBox;
-            if (source == null)
-                return;
-            if (Base.CheckUrl(source.Text))
-            {
-                switch (source.Name)
-                {
-                    case "tbxShortcutPath":
-                        if (source.Text.EndsWith(".lnk", true, null))
-                            imgShortcutPath.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "tbxShortcutTarget":
-                        imgShortcutTarget.Visibility = Visibility.Collapsed;
-                        break;
-
-                    case "tbxShortcutIcon":
-                        imgShortcutIcon.Visibility = Visibility.Collapsed;
-                        break;
-                }
-            }
-            else
-            {
-                switch (source.Name)
-                {
-                    case "tbxShortcutPath":
-                        imgShortcutPath.Visibility = Visibility.Visible;
-                        break;
-
-                    case "tbxShortcutTarget":
-                        imgShortcutTarget.Visibility = Visibility.Visible;
-                        break;
-
-                    case "tbxShortcutIcon":
-                        imgShortcutIcon.Visibility = Visibility.Visible;
-                        break;
-                }
-            }
-        }
-
-        #endregion
 
         #region TextBox - Lost Keyboard Focus
 
@@ -165,10 +113,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInfoValid)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
-            else
-                App.ShowInputErrorMessage();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
+          
+            //App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -207,21 +154,25 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddShortcut_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonSaveFileDialog
-                          {
-                              AlwaysAppendDefaultExtension = true,
-                              DefaultExtension = "lnk",
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              DefaultFileName = Base.Sua.Name[0].Value,
-                              EnsureValidNames = true
-                          };
-            cfd.Filters.Add(new CommonFileDialogFilter(App.RM.GetString("Shortcut"), "*.lnk"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                SaveShortcut();
+            //App.ShowInputErrorMessage();
+
+                var cfd = new CommonSaveFileDialog
+                              {
+                                  AlwaysAppendDefaultExtension = true,
+                                  DefaultExtension = "lnk",
+                                  DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                                  DefaultFileName = Base.AppInfo.Name[0].Value,
+                                  EnsureValidNames = true
+                              };
+                cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
+                if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                    SaveShortcut();
+            
         }
 
         private void ImportShortcut_Click(object sender, RoutedEventArgs e)
         {
+
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
@@ -232,8 +183,6 @@ namespace SevenUpdate.Sdk.Pages
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
             listBox.Items.Clear();
-            miRemoveAll.IsEnabled = false;
-            miRemove.IsEnabled = false;
             spInput.Visibility = Visibility.Collapsed;
         }
 
@@ -247,12 +196,10 @@ namespace SevenUpdate.Sdk.Pages
             {
                 spHelp.Visibility = Visibility.Collapsed;
                 spInput.Visibility = Visibility.Visible;
-                miRemoveAll.IsEnabled = true;
-                miRemove.IsEnabled = listBox.SelectedIndex > -1;
 
-                if (listBox.SelectedIndex > -1 && Base.Update.Files != null)
+                if (listBox.SelectedIndex > -1 && Base.UpdateInfo.Files != null)
                 {
-                    if (Base.Update.Shortcuts.Count > 0)
+                    if (Base.UpdateInfo.Shortcuts.Count > 0)
                         LoadShortcutInfo(listBox.SelectedIndex);
                 }
             }
@@ -260,8 +207,6 @@ namespace SevenUpdate.Sdk.Pages
             {
                 spHelp.Visibility = Visibility.Visible;
                 spInput.Visibility = Visibility.Collapsed;
-                miRemove.IsEnabled = false;
-                miRemoveAll.IsEnabled = false;
             }
         }
 
@@ -278,16 +223,16 @@ namespace SevenUpdate.Sdk.Pages
 
             tbxShortcutDescription.Text = null;
 
-            if (Base.Update.Shortcuts != null)
+            if (Base.UpdateInfo.Shortcuts != null)
                 return;
-            Base.Update.Shortcuts = new ObservableCollection<Shortcut>();
+            Base.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
 
-            if (Base.Update.Shortcuts.Count < 0)
+            if (Base.UpdateInfo.Shortcuts.Count < 0)
                 return;
 
             try
             {
-                foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
                     tbxShortcutDescription.Text = t.Value;
             }
             catch
@@ -316,14 +261,14 @@ namespace SevenUpdate.Sdk.Pages
 
         private void tbxShortcutArguments_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (Base.Update.Shortcuts == null)
-                Base.Update.Shortcuts = new ObservableCollection<Shortcut>();
+            if (Base.UpdateInfo.Shortcuts == null)
+                Base.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
 
-            if (Base.Update.Shortcuts.Count < 0)
+            if (Base.UpdateInfo.Shortcuts.Count < 0)
                 return;
 
             bool found = false;
-            foreach (LocaleString t in Base.Update.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == locale))
+            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == locale))
             {
                 t.Value = tbxShortcutDescription.Text;
                 found = true;
@@ -333,7 +278,21 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             var ls = new LocaleString {Lang = locale, Value = tbxShortcutDescription.Text};
-            Base.Update.Description.Add(ls);
+            Base.UpdateInfo.Description.Add(ls);
+        }
+
+        private void listBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            if (listBox.Items.Count > -1)
+            {
+                miRemoveAll.IsEnabled = true;
+                miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            }
+            else
+            {
+                miRemove.IsEnabled = false;
+                miRemoveAll.IsEnabled = false;
+            }
         }
     }
 }

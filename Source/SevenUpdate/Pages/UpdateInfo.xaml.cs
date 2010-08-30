@@ -33,7 +33,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Windows.Controls;
-
+using Microsoft.Windows.Internal;
 using SevenUpdate.Converters;
 
 #endregion
@@ -149,7 +149,7 @@ namespace SevenUpdate.Pages
         public UpdateInfo()
         {
             InitializeComponent();
-            if (Microsoft.Windows.Internal.CoreNativeMethods.IsUserAnAdmin())
+            if (CoreNativeMethods.IsUserAnAdmin())
                 cmiHideUpdate.Icon = null;
         }
 
@@ -443,11 +443,11 @@ namespace SevenUpdate.Pages
                           };
 
             var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
-            if (cmiHideUpdate.Header.ToString() == App.RM.GetString("HideUpdate"))
+            if (cmiHideUpdate.Header.ToString() == Properties.Resources.HideUpdate)
             {
                 if (AdminClient.HideUpdate(hnh))
                 {
-                    cmiHideUpdate.Header = App.RM.GetString("ShowUpdate");
+                    cmiHideUpdate.Header = Properties.Resources.ShowUpdate;
                     item.Foreground = Brushes.Gray;
                     item.Tag = false;
                 }
@@ -456,7 +456,7 @@ namespace SevenUpdate.Pages
             {
                 if (AdminClient.ShowUpdate(hnh))
                 {
-                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
+                    cmiHideUpdate.Header = Properties.Resources.HideUpdate;
                     item.Foreground = Brushes.Black;
                     item.Tag = true;
                 }
@@ -498,18 +498,18 @@ namespace SevenUpdate.Pages
                 var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
 
                 if (item.Tag != null)
-                    cmiHideUpdate.Header = ((bool) item.Tag) ? App.RM.GetString("HideUpdate") : App.RM.GetString("ShowUpdate");
+                    cmiHideUpdate.Header = ((bool) item.Tag) ? Properties.Resources.HideUpdate : Properties.Resources.ShowUpdate;
                 else
-                    cmiHideUpdate.Header = App.RM.GetString("HideUpdate");
+                    cmiHideUpdate.Header = Properties.Resources.HideUpdate;
 
                 if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
                 {
-                    lblStatus.Text = App.RM.GetString("ReadyToDownload");
+                    lblStatus.Text = Properties.Resources.ReadyToDownload;
                     imgArrow.Source = blueArrow;
                 }
                 else
                 {
-                    lblStatus.Text = App.RM.GetString("ReadyToInstall");
+                    lblStatus.Text = Properties.Resources.ReadyToInstall;
                     imgArrow.Source = greenArrow;
                 }
                 ShowLabels();
@@ -525,9 +525,9 @@ namespace SevenUpdate.Pages
             if (expander == null)
                 return;
             if (DisplayOptionalUpdates)
-                expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Optional");
+                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Optional;
             else
-                expander.IsExpanded = expander.Tag.ToString() == App.RM.GetString("Important");
+                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Important;
         }
 
         private void CheckBoxIsEnabled_Changed(object sender, DependencyPropertyChangedEventArgs e)

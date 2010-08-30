@@ -197,9 +197,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\UIStrings.resx">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
     <None Include="Service References\WCF\Mex.xsd">

@@ -27,7 +27,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
-
 using SevenUpdate.Windows;
 
 #endregion

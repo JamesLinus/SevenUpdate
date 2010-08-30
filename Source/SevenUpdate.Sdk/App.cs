@@ -23,13 +23,11 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Resources;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using Microsoft.Windows.Dialogs;
-
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -39,11 +37,6 @@ namespace SevenUpdate.Sdk
     public partial class App
     {
         #region Global Vars
-
-        /// <summary>
-        ///   Gets the resources for the application
-        /// </summary>
-        internal static ResourceManager RM { get; private set; }
 
         internal static string SuiFile { get; set; }
 
@@ -55,7 +48,7 @@ namespace SevenUpdate.Sdk
 
         private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
         {
-            MessageBox.Show(RM.GetString("SuiInvalid") + " - " + e.Exception.Message);
+            MessageBox.Show(Sdk.Properties.Resources.ProjectLoadError + " - " + e.Exception.Message);
         }
 
         /// <summary>
@@ -69,8 +62,8 @@ namespace SevenUpdate.Sdk
             //Configure a new JumpTask
             var jumpTask = new JumpTask
                                {
-                                   ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                    Title = "Seven Update SDK",
                                    Description = "Create new project",
                                    CustomCategory = "Tasks",
@@ -80,8 +73,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Edit an existing project",
                                CustomCategory = "Tasks",
@@ -91,8 +84,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -102,8 +95,8 @@ namespace SevenUpdate.Sdk
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath =SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = "Seven Update SDK",
                                Description = "Test project",
                                CustomCategory = "Tasks",
@@ -122,8 +115,7 @@ namespace SevenUpdate.Sdk
         internal static void Init(string[] args)
         {
             Directory.CreateDirectory(SevenUpdate.Base.UserStore);
-            RM = new ResourceManager("SevenUpdate.Sdk.Resources.UIStrings", ResourceAssembly);
-           SevenUpdate.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+            SevenUpdate.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
             if (args.Length > 0)
                 SuiFile = args[0];
 
@@ -137,7 +129,7 @@ namespace SevenUpdate.Sdk
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
-            path =SevenUpdate.Base.ConvertPath(path, true, is64Bit);
+            path = SevenUpdate.Base.ConvertPath(path, true, is64Bit);
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);
@@ -149,10 +141,10 @@ namespace SevenUpdate.Sdk
             {
                 var td = new TaskDialog
                              {
-                                 Caption = RM.GetString("SevenUpdateSDK"),
-                                 InstructionText = RM.GetString("CorrectErrors"),
+                                 Caption = Sdk.Properties.Resources.SevenUpdateSDK,
+                                 InstructionText = Sdk.Properties.Resources.CorrectErrors,
                                  Icon = TaskDialogStandardIcon.Warning,
-                                 FooterText = RM.GetString("ErrorHelp"),
+                                 FooterText = Sdk.Properties.Resources.ErrorHelp,
                                  FooterIcon = TaskDialogStandardIcon.Information,
                                  Cancelable = false
                              };
@@ -160,7 +152,7 @@ namespace SevenUpdate.Sdk
             }
             else
             {
-                MessageBox.Show(RM.GetString("CorrectErrors") + Environment.NewLine + RM.GetString("ErrorHelp"), RM.GetString("SevenUpdateSDK"), MessageBoxButton.OK,
+                MessageBox.Show(Sdk.Properties.Resources.CorrectErrors + Environment.NewLine + Sdk.Properties.Resources.ErrorHelp, Sdk.Properties.Resources.SevenUpdateSDK, MessageBoxButton.OK,
                                 MessageBoxImage.Exclamation);
             }
         }

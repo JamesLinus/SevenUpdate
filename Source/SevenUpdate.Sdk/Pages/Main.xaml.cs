@@ -70,9 +70,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
-            Base.Sua = new Sua();
-            Base.Sui = new Sui();
-            Base.Update = new Update();
+            Base.AppInfo = new Sua();
+            Base.UpdateInfo = new Update();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

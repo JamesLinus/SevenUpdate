@@ -47,15 +47,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Properties
 
-        private bool IsInfoValid
-        {
-            get
-            {
-                return (imgUpdateInfo.Visibility != Visibility.Visible && imgUpdateDetails.Visibility != Visibility.Visible && imgReleaseDate.Visibility != Visibility.Visible &&
-                        imgLicense.Visibility != Visibility.Visible && imgDownloadLoc.Visibility != Visibility.Visible);
-            }
-        }
-
         #endregion
 
         #region Constructors
@@ -74,6 +65,7 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            dpReleaseDate.SelectedDate = DateTime.Today;
         }
 
         #endregion
@@ -84,73 +76,18 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (IsInfoValid)
-            {
-                SaveInfo();
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
-            }
-            else
-                App.ShowInputErrorMessage();
+            //if (IsInfoValid)
+            //{
+            SaveInfo();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            //}
+            //else
+            //    App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-        }
-
-        #endregion
-
-        #region TextBox - Text Changed
-
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var source = e.Source as InfoTextBox;
-            if (source == null)
-                return;
-
-            if (source.Name == "tbxUpdateName" || source.Name == "tbxUpdateDetails")
-            {
-                imgUpdateName.Visibility = tbxUpdateName.Text.Length > 5 ? Visibility.Collapsed : Visibility.Visible;
-                imgUpdateDetails.Visibility = tbxUpdateDetails.Text.Length > 5 ? Visibility.Collapsed : Visibility.Visible;
-            }
-            else
-            {
-                if (Base.CheckUrl(SevenUpdate.Base.ConvertPath(source.Text, true, Base.Sua.Is64Bit)))
-                {
-                    switch (source.Name)
-                    {
-                        case "tbxLicenseUrl":
-                            imgLicense.Visibility = Visibility.Collapsed;
-                            break;
-
-                        case "tbxDownloadUrl":
-                            if (source.Text.Length > 2)
-                                imgDownloadLoc.Visibility = Visibility.Collapsed;
-                            break;
-
-                        case "tbxInfoUrl":
-                            imgUpdateInfo.Visibility = Visibility.Collapsed;
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (source.Name)
-                    {
-                        case "tbxLicenseUrl":
-                            imgLicense.Visibility = Visibility.Visible;
-                            break;
-
-                        case "tbxDownloadUrl":
-                            imgDownloadLoc.Visibility = Visibility.Visible;
-                            break;
-
-                        case "tbxInfoUrl":
-                            imgUpdateInfo.Visibility = Visibility.Visible;
-                            break;
-                    }
-                }
-            }
         }
 
         #endregion
@@ -166,21 +103,21 @@ namespace SevenUpdate.Sdk.Pages
             tbxUpdateName.Text = null;
             tbxUpdateDetails.Text = null;
 
-            if (Base.Update.Description == null)
-                Base.Update.Description = new ObservableCollection<LocaleString>();
+            if (Base.UpdateInfo.Description == null)
+                Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
             else
             {
                 // Load Values
-                foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
                     tbxUpdateDetails.Text = t.Value;
             }
 
-            if (Base.Update.Name == null)
-                Base.Update.Name = new ObservableCollection<LocaleString>();
+            if (Base.UpdateInfo.Name == null)
+                Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
             else
             {
                 // Load Values
-                foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
                     tbxUpdateName.Text = t.Value;
             }
         }
@@ -196,11 +133,11 @@ namespace SevenUpdate.Sdk.Pages
 
         private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (Base.Update.Name == null)
-                Base.Update.Name = new ObservableCollection<LocaleString>();
+            if (Base.UpdateInfo.Name == null)
+                Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
 
             bool found = false;
-            foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == locale))
+            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
             {
                 t.Value = tbxUpdateName.Text;
                 found = true;
@@ -210,16 +147,16 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             var ls = new LocaleString {Lang = locale, Value = tbxUpdateName.Text};
-            Base.Update.Name.Add(ls);
+            Base.UpdateInfo.Name.Add(ls);
         }
 
         private void UpdateDetails_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (Base.Update.Description == null)
-                Base.Update.Description = new ObservableCollection<LocaleString>();
+            if (Base.UpdateInfo.Description == null)
+                Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
 
             bool found = false;
-            foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == locale))
+            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
             {
                 t.Value = tbxUpdateDetails.Text;
                 found = true;
@@ -229,7 +166,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
-            Base.Update.Description.Add(ls);
+            Base.UpdateInfo.Description.Add(ls);
         }
 
         #endregion
@@ -250,26 +187,26 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
-            tbxLicenseUrl.Text = Base.Update.LicenseUrl;
-            tbxInfoUrl.Text = Base.Update.InfoUrl;
-            if (Base.Update.ReleaseDate != null)
-                dpReleaseDate.SelectedDate = DateTime.Parse(Base.Update.ReleaseDate);
-            cbxUpdateImportance.SelectedIndex = (int) Base.Update.Importance;
+            tbxLicenseUrl.Text = Base.UpdateInfo.LicenseUrl;
+            tbxInfoUrl.Text = Base.UpdateInfo.InfoUrl;
+            if (Base.UpdateInfo.ReleaseDate != null)
+                dpReleaseDate.SelectedDate = DateTime.Parse(Base.UpdateInfo.ReleaseDate);
+            cbxUpdateImportance.SelectedIndex = (int) Base.UpdateInfo.Importance;
 
             // Load Values
-            foreach (LocaleString t in Base.Update.Description.Where(t => t.Lang == "en"))
+            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
                 tbxUpdateDetails.Text = t.Value;
 
-            foreach (LocaleString t in Base.Update.Name.Where(t => t.Lang == "en"))
+            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == "en"))
                 tbxUpdateName.Text = t.Value;
         }
 
         private void SaveInfo()
         {
-            Base.Update.LicenseUrl = tbxLicenseUrl.Text;
-            Base.Update.InfoUrl = tbxInfoUrl.Text;
-            Base.Update.Importance = (Importance) cbxUpdateImportance.SelectedIndex;
-            Base.Update.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
+            Base.UpdateInfo.LicenseUrl = tbxLicenseUrl.Text;
+            Base.UpdateInfo.InfoUrl = tbxInfoUrl.Text;
+            Base.UpdateInfo.Importance = (Importance) cbxUpdateImportance.SelectedIndex;
+            Base.UpdateInfo.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
         }
 
         #endregion

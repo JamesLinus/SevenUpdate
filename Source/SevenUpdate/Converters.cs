@@ -25,7 +25,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
-
+using SevenUpdate.Properties;
 
 #endregion
 
@@ -45,47 +45,21 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var imp = ((Importance) value);
-
-            if (imp == Importance.Recommended)
+            switch (value is Importance ? (Importance) value : Importance.Important)
             {
-                if (App.Settings.IncludeRecommended)
-                    imp = Importance.Important;
+                case Importance.Important:
+                    return Resources.Important;
+                case Importance.Recommended:
+                    return App.Settings.IncludeRecommended ? Resources.Important : Resources.Recommended;
+                case Importance.Optional:
+                    return Resources.Optional;
+
+                case Importance.Locale:
+                    return Resources.Locale;
+
+                default:
+                    return Resources.Important;
             }
-            if (imp == Importance.Locale)
-                imp = Importance.Optional;
-
-            return App.RM.GetString(imp.ToString());
-        }
-
-        /// <summary>
-        ///   Converts a converted object back into it's original form
-        /// </summary>
-        /// <returns>The original object</returns>
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return new NotImplementedException();
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    ///   Converts a string to a localized string
-    /// </summary>
-    [ValueConversion(typeof (string), typeof (string))]
-    public sealed class StringToLocaleConverter : IValueConverter
-    {
-        #region IValueConverter Members
-
-        /// <summary>
-        ///   Converts a object into another object
-        /// </summary>
-        /// <returns>the converted object</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            // Returns the localized string found in the resource dictionary
-            return value == null ? null : App.RM.GetString(value.ToString());
         }
 
         /// <summary>
@@ -125,7 +99,7 @@ namespace SevenUpdate.Converters
                 // Returns an english string if the specified locale is not avaliable
                 return localeStrings[0].Value;
             }
-            return App.RM.GetString("NotAvailable");
+            return Resources.NotAvailable;
         }
 
         /// <summary>

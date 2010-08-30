@@ -79,11 +79,6 @@ namespace SevenUpdate.Admin
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
 
         /// <summary>
-        ///   The UI Resource Strings
-        /// </summary>
-        internal static ResourceManager RM = new ResourceManager("SevenUpdate.Admin.Resources.UIStrings", typeof (App).Assembly);
-
-        /// <summary>
         ///   Gets the update configuration settings
         /// </summary>
         public static Config Settings
@@ -192,7 +187,7 @@ namespace SevenUpdate.Admin
                                     if (File.Exists(Base.AllUserStore + "abort.lock"))
                                         File.Delete(Base.AllUserStore + "abort.lock");
 
-                                    NotifyIcon.Text = RM.GetString("CheckingForUpdates");
+                                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.CheckingForUpdates;
                                     NotifyIcon.Visible = true;
                                     Search.SearchDoneEventHandler += Search_SearchDone_EventHandler;
                                     Search.ErrorOccurredEventHandler += Search_ErrorOccurred_EventHandler;
@@ -295,18 +290,18 @@ namespace SevenUpdate.Admin
             switch (filter)
             {
                 case NotifyType.DownloadStarted:
-                    NotifyIcon.Text = RM.GetString("DownloadingUpdates");
+                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.DownloadingUpdates;
                     break;
                 case NotifyType.DownloadComplete:
-                    NotifyIcon.Text = RM.GetString("UpdatesDownloadedViewThem");
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesDownloaded"), RM.GetString("UpdatesDownloadedViewThem"), ToolTipIcon.Info);
+                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem;
+                    NotifyIcon.ShowBalloonTip(5000, SevenUpdate.Admin.Properties.Resources.UpdatesDownloaded, SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
                     break;
                 case NotifyType.InstallStarted:
-                    NotifyIcon.Text = RM.GetString("InstallingUpdates");
+                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.InstallingUpdates;
                     break;
                 case NotifyType.SearchComplete:
-                    NotifyIcon.Text = RM.GetString("UpdatesFoundViewThem");
-                    NotifyIcon.ShowBalloonTip(5000, RM.GetString("UpdatesFound"), RM.GetString("UpdatesFoundViewThem"), ToolTipIcon.Info);
+                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem;
+                    NotifyIcon.ShowBalloonTip(5000, SevenUpdate.Admin.Properties.Resources.UpdatesFound, SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
                     break;
             }
         }
@@ -318,8 +313,8 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
-                    NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
+                if (NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem || NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem ||
+                    NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.CheckingForUpdates)
                     Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
                 else
                     Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
@@ -327,8 +322,8 @@ namespace SevenUpdate.Admin
             else
                 Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
 
-            if (NotifyIcon.Text == RM.GetString("UpdatesFoundViewThem") || NotifyIcon.Text == RM.GetString("UpdatesDownloadedViewThem") ||
-                NotifyIcon.Text == RM.GetString("CheckingForUpdates"))
+            if (NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem || NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem ||
+                NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.CheckingForUpdates)
                 ShutdownApp();
         }
 

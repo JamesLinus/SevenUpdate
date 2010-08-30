@@ -19,16 +19,16 @@ namespace Microsoft.Windows.Controls
     /// </summary>
     internal static class SR
     {
-        private static ResourceManager _resourceManager = new ResourceManager("ExceptionStringTable", typeof (SR).Assembly);
+        private static ResourceManager resourceManager = new ResourceManager("ExceptionStringTable", typeof (SR).Assembly);
 
         internal static string Get(SRID id)
         {
-            return _resourceManager.GetString(id.String);
+            return resourceManager.GetString(id.String);
         }
 
         internal static string Get(SRID id, params object[] args)
         {
-            string message = _resourceManager.GetString(id.String);
+            string message = resourceManager.GetString(id.String);
             if (message != null)
             {
                 // Apply arguments to formatted string (if applicable)

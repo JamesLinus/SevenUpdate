@@ -244,15 +244,15 @@ namespace SevenUpdate.Admin
             if (e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           App.RM.GetString("DownloadingUpdates") + " (" + Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + App.RM.GetString("Complete") +
+                                                           SevenUpdate.Admin.Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
+                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + SevenUpdate.Admin.Properties.Resources.Complete +
                                                            ")");
             }
             else
             {
                 Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           App.RM.GetString("DownloadingUpdates") + " (" + e.Job.Progress.FilesTransferred + " " + App.RM.GetString("OutOf") + " " +
-                                                           e.Job.Progress.FilesTotal + " " + App.RM.GetString("Files") + " " + App.RM.GetString("Complete") + ")");
+                                                           SevenUpdate.Admin.Properties.Resources.DownloadingUpdates + " (" + e.Job.Progress.FilesTransferred + " " + SevenUpdate.Admin.Properties.Resources.OutOf + " " +
+                                                           e.Job.Progress.FilesTotal + " " + SevenUpdate.Admin.Properties.Resources.Files + " " + SevenUpdate.Admin.Properties.Resources.Complete + ")");
             }
         }
 

@@ -25,7 +25,6 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
-
 #endregion
 
 namespace SevenUpdate.Windows
@@ -56,11 +55,11 @@ namespace SevenUpdate.Windows
 
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
-                tbStatusLabel.Text = App.RM.GetString("DownloadSize") + ":";
+                tbStatusLabel.Text = Properties.Resources.DownloadSize + ":";
                 tbStatus.Text = Base.ConvertFileSize(updateInfo.UpdateSize);
             }
             else
-                tbStatus.Text = updateInfo.Status + ", " + App.RM.GetString("InstalledOn") + " " + updateInfo.InstallDate;
+                tbStatus.Text = updateInfo.Status + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
 
             if (String.IsNullOrEmpty(updateInfo.InfoUrl))
             {

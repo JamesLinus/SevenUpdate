@@ -143,7 +143,7 @@ namespace SevenUpdate.Windows
             if (licenseInformation.Count < 1 || licenseInformation == null)
                 return true;
             if (licenseInformation.Count > 1)
-                btnAction.ButtonText = App.RM.GetString("Next");
+                btnAction.ButtonText = Properties.Resources.Next;
 
             return ShowDialog();
         }
@@ -191,7 +191,7 @@ namespace SevenUpdate.Windows
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
             btnAction.IsShieldNeeded = licenseInformation.Count == 1;
-            tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[0].Title;
+            tbHeading.Text = Properties.Resources.AcceptLicenseTerms + " " + licenseInformation[0].Title;
             rbAccept.IsEnabled = true;
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
@@ -234,12 +234,11 @@ namespace SevenUpdate.Windows
         {
             if (App.Applications.Count != 1)
             {
-                btnAction.IsEnabled = true;;
+                btnAction.IsEnabled = true;
+                ;
             }
             else
-            {
                 btnAction.IsEnabled = false;
-            }
         }
 
         /// <summary>
@@ -255,9 +254,9 @@ namespace SevenUpdate.Windows
             }
             index++;
 
-            if (btnAction.ButtonText == App.RM.GetString("Next"))
+            if (btnAction.ButtonText == Properties.Resources.Next)
             {
-                tbHeading.Text = App.RM.GetString("AcceptLicenseTerms") + " " + licenseInformation[index].Title;
+                tbHeading.Text = Properties.Resources.AcceptLicenseTerms + " " + licenseInformation[index].Title;
                 var mcFlowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(licenseText[index]);
@@ -267,15 +266,15 @@ namespace SevenUpdate.Windows
                 rbAccept.IsChecked = false;
                 rbDecline.IsChecked = false;
             }
-            if (btnAction.ButtonText == App.RM.GetString("Finish"))
+            if (btnAction.ButtonText == Properties.Resources.Finish)
             {
                 DialogResult = App.Applications.Count > 0;
                 Close();
             }
             if (index != licenseInformation.Count - 1)
                 return;
-            btnAction.ButtonText = App.RM.GetString("Finish");
-            if(App.Applications.Count > 0)
+            btnAction.ButtonText = Properties.Resources.Finish;
+            if (App.Applications.Count > 0)
                 btnAction.IsShieldNeeded = true;
         }
 
