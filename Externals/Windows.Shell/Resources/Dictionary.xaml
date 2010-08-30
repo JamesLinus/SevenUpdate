@@ -375,7 +375,7 @@
 				<ControlTemplate>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 						<AdornedElementPlaceholder />
-						<Image Source="/SevenUpdate.Sdk;component/Images/Caution.png" Margin="4,0" UseLayoutRounding="True" />
+                        <Image Source="/Windows.Shell;component/Images/Caution.png" Margin="4,0" UseLayoutRounding="True"/>
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>
@@ -383,7 +383,7 @@
 		<Style.Triggers>
 			<Trigger Property="Validation.HasError" Value="true">
 				<Setter Property="BorderBrush" Value="DarkOrange" />
-				<Setter Property="Image.Visibility" Value="Visible" />
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
 			</Trigger>
 		</Style.Triggers>
 	</Style>

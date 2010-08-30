@@ -26,6 +26,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -39,11 +40,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class AppInfo : Page
     {
-        #region Fields
-
-        private string locale;
-
-        #endregion
 
         #region Properties
 
@@ -67,6 +63,9 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+
+            
+
         }
 
         #endregion
@@ -110,9 +109,6 @@ namespace SevenUpdate.Sdk.Pages
             //    if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
             //        tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
             //        tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
-            //        imgAppLocation.Visibility = Visibility.Collapsed;
-            //    else
-            //        imgAppLocation.Visibility = Visibility.Visible;
             //}
         }
 
@@ -120,69 +116,68 @@ namespace SevenUpdate.Sdk.Pages
 
         #region TextBox - Lost Keyboard Focus
 
-        private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (!rbtnFileSystem.IsChecked.GetValueOrDefault())
-                return;
+        //private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (!rbtnFileSystem.IsChecked.GetValueOrDefault())
+        //        return;
 
-            tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
-        }
+        //    tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
+        //}
 
-        private void AppName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (Base.AppInfo.Name == null)
-                Base.AppInfo.Name = new ObservableCollection<LocaleString>();
+        //private void AppName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (Base.AppInfo.Name == null)
+        //        Base.AppInfo.Name = new ObservableCollection<LocaleString>();
 
-            bool found = false;
-            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == locale))
-            {
-                t.Value = tbxAppName.Text;
-                found = true;
-            }
+        //    bool found = false;
+        //    foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
+        //    {
+        //        t.Value = tbxAppName.Text;
+        //        found = true;
+        //    }
+        //    if (found)
+        //        return;
 
-            if (found)
-                return;
+        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxAppName.Text };
+        //    Base.AppInfo.Name.Add(ls);
+        //}
 
-            var ls = new LocaleString {Lang = locale, Value = tbxAppName.Text};
-            Base.AppInfo.Name.Add(ls);
-        }
+        //private void AppDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (Base.AppInfo.Description == null)
+        //        Base.AppInfo.Description = new ObservableCollection<LocaleString>();
 
-        private void AppDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (Base.AppInfo.Description == null)
-                Base.AppInfo.Description = new ObservableCollection<LocaleString>();
+        //    bool found = false;
+        //    foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
+        //    {
+        //        t.Value = tbxAppDescription.Text;
+        //        found = true;
+        //    }
 
-            bool found = false;
-            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == locale))
-            {
-                t.Value = tbxAppDescription.Text;
-                found = true;
-            }
+        //    if (found)
+        //        return;
 
-            if (found)
-                return;
+        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxAppDescription.Text };
+        //    Base.AppInfo.Description.Add(ls);
+        //}
 
-            var ls = new LocaleString {Lang = locale, Value = tbxAppDescription.Text};
-            Base.AppInfo.Description.Add(ls);
-        }
+        //private void Publisher_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (Base.AppInfo.Publisher == null)
+        //        Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
 
-        private void Publisher_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (Base.AppInfo.Publisher == null)
-                Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
+        //    bool found = false;
+        //    foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
+        //    {
+        //        t.Value = tbxPublisher.Text;
+        //        found = true;
+        //    }
 
-            bool found = false;
-            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == locale))
-            {
-                t.Value = tbxPublisher.Text;
-                found = true;
-            }
-
-            if (found)
-                return;
-            var ls = new LocaleString {Lang = locale, Value = tbxPublisher.Text};
-            Base.AppInfo.Publisher.Add(ls);
-        }
+        //    if (found)
+        //        return;
+        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxPublisher.Text };
+        //    Base.AppInfo.Publisher.Add(ls);
+        //}
 
         #endregion
 
@@ -252,37 +247,52 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (tbxAppName == null)
                 return;
-
-            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
-            tbxAppDescription.Text = null;
-            tbxPublisher.Text = null;
-            tbxAppName.Text = null;
+            
+            Base.SelectedLocale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
 
             if (Base.AppInfo.Description == null)
                 Base.AppInfo.Description = new ObservableCollection<LocaleString>();
             else
             {
+                bool found = false;
                 // Load Values
-                foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
+                {
                     tbxAppDescription.Text = t.Value;
+                    found = true;
+                }
+                if (!found)
+                    tbxAppDescription.Text = null;
             }
 
             if (Base.AppInfo.Name == null)
                 Base.AppInfo.Name = new ObservableCollection<LocaleString>();
             else
             {
+                bool found = false;
                 // Load Values
-                foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
+                {
                     tbxAppName.Text = t.Value;
+                    found = true;
+                }
+                if (!found)
+                    tbxAppName.Text = null;
             }
 
             if (Base.AppInfo.Publisher == null)
                 Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
             else
             {
+                bool found = false;
                 // Load Values
-                foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == locale))
+                foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
+                {
                     tbxPublisher.Text = t.Value;
+                    found = true;
+                }
+                if (!found)
+                    tbxPublisher.Text = null;
             }
         }
 

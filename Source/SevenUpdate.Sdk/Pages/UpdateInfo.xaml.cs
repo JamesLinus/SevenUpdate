@@ -57,6 +57,7 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateInfo()
         {
             InitializeComponent();
+            DataContext = Base.UpdateInfo;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
@@ -131,43 +132,43 @@ namespace SevenUpdate.Sdk.Pages
 
         #region TextBox - Lost Keyboard Focus
 
-        private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (Base.UpdateInfo.Name == null)
-                Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
+        //private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (Base.UpdateInfo.Name == null)
+        //        Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
 
-            bool found = false;
-            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
-            {
-                t.Value = tbxUpdateName.Text;
-                found = true;
-            }
+        //    bool found = false;
+        //    foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
+        //    {
+        //        t.Value = tbxUpdateName.Text;
+        //        found = true;
+        //    }
 
-            if (found)
-                return;
+        //    if (found)
+        //        return;
 
-            var ls = new LocaleString {Lang = locale, Value = tbxUpdateName.Text};
-            Base.UpdateInfo.Name.Add(ls);
-        }
+        //    var ls = new LocaleString {Lang = locale, Value = tbxUpdateName.Text};
+        //    Base.UpdateInfo.Name.Add(ls);
+        //}
 
-        private void UpdateDetails_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (Base.UpdateInfo.Description == null)
-                Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
+        //private void UpdateDetails_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    if (Base.UpdateInfo.Description == null)
+        //        Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
 
-            bool found = false;
-            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
-            {
-                t.Value = tbxUpdateDetails.Text;
-                found = true;
-            }
+        //    bool found = false;
+        //    foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
+        //    {
+        //        t.Value = tbxUpdateDetails.Text;
+        //        found = true;
+        //    }
 
-            if (found)
-                return;
+        //    if (found)
+        //        return;
 
-            var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
-            Base.UpdateInfo.Description.Add(ls);
-        }
+        //    var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
+        //    Base.UpdateInfo.Description.Add(ls);
+        //}
 
         #endregion
 

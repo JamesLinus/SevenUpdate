@@ -136,6 +136,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Pages\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
@@ -211,9 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Shield.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Caution.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\LeftArrow.png" />

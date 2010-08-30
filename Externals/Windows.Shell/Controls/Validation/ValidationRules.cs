@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
+using System.Net;
 using System.Windows.Controls;
+using Microsoft.Windows.Properties;
 
 namespace Microsoft.Windows.Controls
 {
@@ -10,10 +13,7 @@ namespace Microsoft.Windows.Controls
         {
             var input = value as string;
 
-            if (input != null && input.Length == 0)
-                return new ValidationResult(false, "Validation error. Input required.");
-
-            return new ValidationResult(true, null);
+            return !String.IsNullOrWhiteSpace(input) ? new ValidationResult(false, Resources.InputRequired) : new ValidationResult(true, null);
         }
     }
 
@@ -25,25 +25,41 @@ namespace Microsoft.Windows.Controls
             {
                 var url = value as string;
                 if (!String.IsNullOrEmpty(url))
-                    new Uri(value.ToString());
-                return new ValidationResult(true, null);
+                {
+                    var uri = new Uri(value.ToString());
+                    var irequest = WebRequest.Create(uri);
+                    var iresponse = irequest.GetResponse();
+                    return iresponse == null ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
+                }
+                return new ValidationResult(false, Resources.UrilInvalid);
             }
             catch
             {
-                return new ValidationResult(false, "Validation error. The Url is not valid");
+                return new ValidationResult(false, Resources.UrilInvalid);
             }
         }
     }
 
-    public class ValidPathInputRule : ValidationRule
+    public class FileNameInputRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
 
-            if (input != null && input.Length == 0)
-                return new ValidationResult(false, "Validation error. The path entered is not valid.");
+            if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0 || input.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                return new ValidationResult(false, Resources.FilePathInvalid);
+            return new ValidationResult(true, null);
+        }
+    }
 
+    public class DirectoryInputRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var input = value as string;
+
+            if(string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+                return new ValidationResult(false, Resources.FilePathInvalid);
             return new ValidationResult(true, null);
         }
     }

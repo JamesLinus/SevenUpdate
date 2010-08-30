@@ -78,7 +78,7 @@
 				<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
 					<GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
 					<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Width="400" />
-					<GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Width="100" />
+                    <GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceConverter}}" Width="100" />
 					<GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=Files, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="85" />
 				</GridView>
 			</ListView.View>

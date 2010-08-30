@@ -35,7 +35,7 @@ namespace SevenUpdate.Converters
     ///   Converts Importance to a localized string
     /// </summary>
     [ValueConversion(typeof (Importance), typeof (string))]
-    public sealed class ImportanceGroupConverter : IValueConverter
+    public sealed class ImportanceConverter : IValueConverter
     {
         #region IValueConverter Members
 

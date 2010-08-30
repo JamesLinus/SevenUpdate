@@ -281,7 +281,7 @@ namespace SevenUpdate.Pages
             lvUpdates.SetBinding(ItemsControl.ItemsSourceProperty, items);
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
             var myView = (CollectionView) CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
-            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceGroupConverter());
+            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceConverter());
             if (myView.GroupDescriptions != null)
                 myView.GroupDescriptions.Add(groupDescription);
 

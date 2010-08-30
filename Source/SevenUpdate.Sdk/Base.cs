@@ -1,6 +1,11 @@
 ﻿#region
 
 using System;
+using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
+using System.Windows.Data;
+using SevenUpdate.Sdk.Properties;
 
 #endregion
 
@@ -8,10 +13,12 @@ namespace SevenUpdate.Sdk
 {
     internal static class Base
     {
+        internal static string SelectedLocale;
+
         /// <summary>
         ///   The application information of the project
         /// </summary>
-        internal static Sua AppInfo { get; set; }
+        public static Sua AppInfo { get; set; }
 
         /// <summary>
         ///   The current update being edited

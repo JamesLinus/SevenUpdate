@@ -3,7 +3,8 @@
 	<converters:LocaleStringConverter x:Key="localeStringConverter" />
 	<converters:BoolToStringConverter x:Key="is64BitConverter" />
 	<converters:EnumToBoolConverter x:Key="enumConverter" />
-
+    <converters:ImportanceConverter x:Key="importanceConverter" />
+    
 	<DataTemplate x:Key="HeaderTemplateSortDesc">
 		<DockPanel>
 			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />
