@@ -156,12 +156,13 @@ namespace SevenUpdate.Pages
         private void LoadSul(ObservableCollection<Sua> officialAppList = null)
         {
             machineAppList = Base.Deserialize<ObservableCollection<Sua>>(Base.AppsFile);
-
+           
             if (machineAppList != null)
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (Directory.Exists(Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
+                    if (Directory.Exists(Base.IsRegistryKey(machineAppList[x].Directory) ? Base.GetRegistryPath(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit) 
+                        : Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                         continue;
                     // Remove the application from the list if it is no longer installed or not enabled
                     machineAppList.RemoveAt(x);
@@ -174,7 +175,8 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialAppList.Count; x++)
                 {
-                    if (!Directory.Exists(Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
+
+                    if (!Directory.Exists(Base.IsRegistryKey(officialAppList[x].Directory) ? Base.GetRegistryPath(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit) : Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
                     {
                         // Remove the application from the applist if it is not installed
                         officialAppList.RemoveAt(x);

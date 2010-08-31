@@ -165,4 +165,10 @@
   <data name="ProjectLoadError" xml:space="preserve">
     <value>There was an error loading the project.</value>
   </data>
+  <data name="FilePathInvalid" xml:space="preserve">
+    <value>The path entered is not valid.</value>
+  </data>
+  <data name="InstallLocation" xml:space="preserve">
+    <value>Install Location</value>
+  </data>
 </root>

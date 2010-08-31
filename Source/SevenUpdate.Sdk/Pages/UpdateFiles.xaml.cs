@@ -200,8 +200,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
-               // App.ShowInputErrorMessage();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            // App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -251,21 +251,20 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
-               // App.ShowInputErrorMessage();
+            // App.ShowInputErrorMessage();
 
-                var cfd = new CommonOpenFileDialog {Multiselect = false};
-                if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                    AddFile(cfd.FileName);
+            var cfd = new CommonOpenFileDialog {Multiselect = false};
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                AddFile(cfd.FileName);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-              //  App.ShowInputErrorMessage();
+            //  App.ShowInputErrorMessage();
 
-                var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
-                if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                    AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
-            
+            var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
         }
 
         #endregion
@@ -284,7 +283,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
             {
-               // imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
+                // imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
 
                 tbxDownloadUrl.IsEnabled = true;
                 tbxArgs.IsEnabled = true;

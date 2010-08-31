@@ -136,8 +136,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters.cs" />
-    <Compile Include="NativeMethods.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\NativeMethods.cs" />
+    <Compile Include="Helpers\ValidationRules.cs" />
     <Compile Include="Pages\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>

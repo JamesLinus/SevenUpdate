@@ -25,8 +25,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -77,13 +75,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (IsInfoValid)
-            //{
             SaveInfo();
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
-            //}
-            //else
-            //    App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -125,6 +118,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (dpReleaseDate == null || imgReleaseDate == null)
+                return;
             imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
         }
 
@@ -188,11 +183,11 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
-            tbxLicenseUrl.Text = Base.UpdateInfo.LicenseUrl;
-            tbxInfoUrl.Text = Base.UpdateInfo.InfoUrl;
+            tbxUpdateName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
             if (Base.UpdateInfo.ReleaseDate != null)
                 dpReleaseDate.SelectedDate = DateTime.Parse(Base.UpdateInfo.ReleaseDate);
-            cbxUpdateImportance.SelectedIndex = (int) Base.UpdateInfo.Importance;
 
             // Load Values
             foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
@@ -204,10 +199,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void SaveInfo()
         {
-            Base.UpdateInfo.LicenseUrl = tbxLicenseUrl.Text;
-            Base.UpdateInfo.InfoUrl = tbxInfoUrl.Text;
-            Base.UpdateInfo.Importance = (Importance) cbxUpdateImportance.SelectedIndex;
-            Base.UpdateInfo.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
+            if (dpReleaseDate.SelectedDate != null)
+                Base.UpdateInfo.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
         }
 
         #endregion

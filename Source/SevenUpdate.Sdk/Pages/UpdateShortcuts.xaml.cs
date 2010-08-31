@@ -27,7 +27,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -114,7 +113,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
-          
+
             //App.ShowInputErrorMessage();
         }
 
@@ -156,23 +155,21 @@ namespace SevenUpdate.Sdk.Pages
         {
             //App.ShowInputErrorMessage();
 
-                var cfd = new CommonSaveFileDialog
-                              {
-                                  AlwaysAppendDefaultExtension = true,
-                                  DefaultExtension = "lnk",
-                                  DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                                  DefaultFileName = Base.AppInfo.Name[0].Value,
-                                  EnsureValidNames = true
-                              };
-                cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
-                if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                    SaveShortcut();
-            
+            var cfd = new CommonSaveFileDialog
+                          {
+                              AlwaysAppendDefaultExtension = true,
+                              DefaultExtension = "lnk",
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              DefaultFileName = Base.AppInfo.Name[0].Value,
+                              EnsureValidNames = true
+                          };
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+                SaveShortcut();
         }
 
         private void ImportShortcut_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)

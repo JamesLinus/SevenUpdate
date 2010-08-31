@@ -493,7 +493,7 @@ namespace SevenUpdate.Pages
                     lblInfoUrl.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
                 }
 
-                // cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+                cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
 
                 var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
 

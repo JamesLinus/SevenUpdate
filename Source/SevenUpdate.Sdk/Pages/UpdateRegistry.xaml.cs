@@ -141,8 +141,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
-               // App.ShowInputErrorMessage();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            // App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -160,12 +160,11 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
-                App.ShowInputErrorMessage();
+            App.ShowInputErrorMessage();
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)

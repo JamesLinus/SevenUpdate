@@ -48,7 +48,7 @@ namespace Microsoft.Windows.Controls
         #region Properties
 
         // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof (string), typeof (InfoTextBox), new UIPropertyMetadata("Label"));
+        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof (string), typeof (InfoTextBox), new UIPropertyMetadata("", LabelPropertyChanged));
 
         // Using a DependencyProperty as the backing store for LabelStyle.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty LabelStyleProperty = DependencyProperty.Register("LabelStyle", typeof (Style), typeof (InfoTextBox), new UIPropertyMetadata(null));
@@ -63,6 +63,23 @@ namespace Microsoft.Windows.Controls
 
         #endregion
 
+        #region Callbacks
+
+        private static void LabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            DependencyPropertyDescriptor isVisiblePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof(InfoTextBox));
+            isVisiblePropertyDescriptor.AddValueChanged(d, IsVisibleChanged);
+        }
+
+        #endregion
+
+        private static void IsVisibleChanged(object sender, EventArgs e)
+        {
+            var infoTextBox = sender as InfoTextBox;
+            if (infoTextBox != null)
+                infoTextBox.UpdateAdorner(infoTextBox, !infoTextBox.IsVisible);
+        }
+
         private AdornerLabel myAdornerLabel;
         private AdornerLayer myAdornerLayer;
 
@@ -72,15 +89,15 @@ namespace Microsoft.Windows.Controls
 
             myAdornerLayer = AdornerLayer.GetAdornerLayer(this);
             myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
-            UpdateAdorner(this, false);
+            UpdateAdorner(this);
 
             DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof (FrameworkElement));
             if (focusProp != null)
-                focusProp.AddValueChanged(this, delegate { UpdateAdorner(this, false); });
+                focusProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
 
             DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof (InfoTextBox));
             if (containsTextProp != null)
-                containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this, false); });
+                containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
         }
 
         protected override void OnTextChanged(TextChangedEventArgs e)
@@ -99,12 +116,12 @@ namespace Microsoft.Windows.Controls
 
         protected override void OnDragLeave(DragEventArgs e)
         {
-            UpdateAdorner(this, false);
+            UpdateAdorner(this);
 
             base.OnDragLeave(e);
         }
 
-        private void UpdateAdorner(FrameworkElement elem, bool hide)
+        private void UpdateAdorner(FrameworkElement elem, bool hide = false)
         {
             if (elem == null || myAdornerLayer == null)
                 return;

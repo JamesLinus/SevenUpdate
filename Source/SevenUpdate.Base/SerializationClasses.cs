@@ -153,39 +153,45 @@ namespace SevenUpdate
         public string Directory { get; set; }
 
         /// <summary>
+        ///   The name of the value to the registry key that contains the application directory location
+        /// </summary>
+        [ProtoMember(4, IsRequired = false), DataMember]
+        public string ValueName { get; set; }
+
+        /// <summary>
         ///   Specifies if the application is 64 bit
         /// </summary>
-        [ProtoMember(4), DataMember]
+        [ProtoMember(5), DataMember]
         public bool Is64Bit { get; set; }
 
         /// <summary>
         ///   Gets or Sets a value Indicating if the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
-        [ProtoMember(5), DataMember]
+        [ProtoMember(6), DataMember]
         public bool IsEnabled { get; set; }
 
         /// <summary>
         ///   The publisher of the application
         /// </summary>
-        [ProtoMember(6), DataMember]
+        [ProtoMember(7), DataMember]
         public ObservableCollection<LocaleString> Publisher { get; set; }
 
         /// <summary>
-        ///   The SUI file of the application
+        ///   The url pointing to the sui file containing the app updates
         /// </summary>
-        [ProtoMember(7), DataMember]
+        [ProtoMember(8), DataMember]
         public string SuiUrl { get; set; }
 
         /// <summary>
-        ///   The url for the application
+        ///   The url for the application: Optional
         /// </summary>
-        [ProtoMember(8), DataMember]
+        [ProtoMember(9, IsRequired = false), DataMember]
         public string AppUrl { get; set; }
 
         /// <summary>
         ///   The help url of the update: Optional
         /// </summary>
-        [ProtoMember(9), DataMember]
+        [ProtoMember(10, IsRequired = false), DataMember]
         public string HelpUrl { get; set; }
 
         #region Implementation of INotifyPropertyChanged
@@ -496,7 +502,7 @@ namespace SevenUpdate
         public bool Selected { get; set; }
 
         /// <summary>
-        ///   The download size of the update in bytes, not used by the SDK
+        ///   The download size of the update in bytes (not used in the SDK)
         /// </summary>
         [ProtoIgnore, IgnoreDataMember]
         public ulong Size { get; set; }

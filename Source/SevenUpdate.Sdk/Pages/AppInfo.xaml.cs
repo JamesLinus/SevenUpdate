@@ -26,7 +26,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -40,7 +39,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class AppInfo : Page
     {
-
         #region Properties
 
         #endregion
@@ -54,7 +52,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
             DataContext = Base.AppInfo;
-            LoadInfo();
+
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
@@ -63,56 +61,34 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
 
-            
+        private void LoadInfo()
+        {
+            tbxPublisher.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxAppDescription.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxAppName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
+            // Load Values
+            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == "en"))
+                tbxAppName.Text = t.Value;
+
+            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == "en"))
+                tbxAppDescription.Text = t.Value;
+
+            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
+                tbxPublisher.Text = t.Value;
         }
 
         #endregion
 
         #region Methods
 
-        private void LoadInfo()
-        {
-            //cxbIs64Bit.IsChecked = Base.AppInfo.Is64Bit;
-            //tbxAppUrl.Text = Base.AppInfo.AppUrl;
-            //tbxHelpUrl.Text = Base.AppInfo.HelpUrl;
-            //char[] split = {'|'};
-            //if (Base.AppInfo.Directory != null)
-            //{
-            //    tbxAppLocation.Text = Base.AppInfo.Directory.Split(split)[0];
-            //    tbxValueName.Text = Base.AppInfo.Directory.Split(split)[1];
-            //}
-        }
-
-        private void SaveInfo()
-        {
-            Base.AppInfo.Is64Bit = cxbIs64Bit.IsChecked.GetValueOrDefault();
-            Base.AppInfo.AppUrl = tbxAppUrl.Text;
-            Base.AppInfo.HelpUrl = tbxHelpUrl.Text;
-            if (rbtnFileSystem.IsChecked.GetValueOrDefault())
-                Base.AppInfo.Directory = tbxAppLocation.Text;
-            else
-                Base.AppInfo.Directory = tbxAppLocation.Text + "|" + tbxValueName.Text;
-        }
-
         #endregion
 
         #region UI Events
-
-        #region TextBox - Text Changed
-
-        private void AppLocation_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //if (rbtnRegistry.IsChecked.GetValueOrDefault())
-            //{
-            //    if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
-            //        tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
-            //        tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
-            //}
-        }
-
-        #endregion
 
         #region TextBox - Lost Keyboard Focus
 
@@ -181,46 +157,11 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #region RadioButton - Checked
-
-        private void FileSystem_Checked(object sender, RoutedEventArgs e)
-        {
-            if (lblValue == null)
-                return;
-            lblRegistry.Visibility = Visibility.Collapsed;
-            lblValue.Visibility = Visibility.Collapsed;
-            tbxValueName.Visibility = Visibility.Collapsed;
-            tbBrowse.Visibility = Visibility.Visible;
-        }
-
-        private void Registry_Checked(object sender, RoutedEventArgs e)
-        {
-            if (lblValue == null)
-                return;
-            lblRegistry.Visibility = Visibility.Visible;
-            lblValue.Visibility = Visibility.Visible;
-            tbxValueName.Visibility = Visibility.Visible;
-            tbBrowse.Visibility = Visibility.Collapsed;
-
-            //if (tbxAppLocation.Text.StartsWith(@"HKLM\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCR\", true, null) || tbxAppLocation.Text.StartsWith(@"HKCU\", true, null) ||
-            //    tbxAppLocation.Text.StartsWith(@"HKU\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxAppLocation.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
-            //    tbxAppLocation.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxAppLocation.Text.StartsWith(@"HKEY_USERS\", true, null))
-            //    imgAppLocation.Visibility = Visibility.Collapsed;
-        }
-
-        #endregion
-
         #region Button - Click
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (IsInfoValid)
-            //{
-            SaveInfo();
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
-            //}
-            //else
-            //    App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -236,7 +177,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Convert.ToBoolean(cxbIs64Bit.IsChecked));
+                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Base.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -245,9 +186,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tbxAppName == null)
+            if (tbxAppName == null || cbxLanguage.SelectedIndex < 0)
                 return;
-            
+
             Base.SelectedLocale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
 
             if (Base.AppInfo.Description == null)
@@ -308,11 +249,16 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
+        }
+
+        #endregion
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             LoadInfo();
         }
-
-        #endregion
     }
 }

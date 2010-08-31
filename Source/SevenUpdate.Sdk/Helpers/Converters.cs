@@ -1,15 +1,20 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Windows;
 using System.Windows.Data;
+
+#endregion
 
 namespace SevenUpdate.Sdk
 {
     /// <summary>
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
-    [ValueConversion(typeof(LocaleString), typeof(string))]
+    [ValueConversion(typeof (LocaleString), typeof (string))]
     public sealed class LocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -55,8 +60,6 @@ namespace SevenUpdate.Sdk
             }
 
 
-
-
             if (localeStrings != null)
             {
                 if (!String.IsNullOrEmpty(valueString))
@@ -98,4 +101,32 @@ namespace SevenUpdate.Sdk
         #endregion
     }
 
+    /// <summary>
+    ///   Converts a Bool to a Label
+    /// </summary>
+    [ValueConversion(typeof(Visibility), typeof(string))]
+    public sealed class BoolToLabelConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool) value ? Properties.Resources.InstallLocation : null;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+    }
 }
