@@ -62,7 +62,7 @@ namespace SevenUpdate.Sdk
 
             if (localeStrings != null)
             {
-                if (!String.IsNullOrEmpty(valueString))
+                if (!String.IsNullOrWhiteSpace(valueString))
                 {
                     var found = false;
 
@@ -88,7 +88,7 @@ namespace SevenUpdate.Sdk
             }
             else
             {
-                if (!String.IsNullOrEmpty(valueString))
+                if (!String.IsNullOrWhiteSpace(valueString))
                 {
                     localeStrings = new ObservableCollection<LocaleString>();
                     var ls = new LocaleString {Lang = Base.SelectedLocale, Value = valueString};

@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
@@ -87,6 +86,12 @@ namespace SevenUpdate.Sdk.Pages
             foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
                 tbxPublisher.Text = t.Value;
         }
+
+        private bool ValidateInfo()
+        {
+            return Base.AppInfo.Name.Count > 0 && Base.AppInfo.Publisher.Count > 0 && Base.AppInfo.Description.Count > 0;
+        }
+
         #endregion
 
         #region UI Events
@@ -95,7 +100,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            if (!ValidateInfo())
+                App.ShowInputErrorMessage();
+            else
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -190,7 +198,7 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxAppLocation == null)
                 return;
             tbxAppLocation.Text = null;
-            var rule = new AppDirectoryRule { IsRegistryPath = true };
+            var rule = new AppDirectoryRule {IsRegistryPath = true};
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
         }
@@ -200,10 +208,9 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxAppLocation == null)
                 return;
             tbxAppLocation.Text = null;
-            var rule = new AppDirectoryRule { IsRegistryPath = false };
+            var rule = new AppDirectoryRule {IsRegistryPath = false};
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
-
         }
 
         #endregion

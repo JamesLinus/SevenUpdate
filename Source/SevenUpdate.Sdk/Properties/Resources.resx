@@ -168,4 +168,7 @@
   <data name="FilePathInvalid" xml:space="preserve">
     <value>The path entered is not valid.</value>
   </data>
+  <data name="InputRequired" xml:space="preserve">
+    <value>A value is required for this field.</value>
+  </data>
 </root>

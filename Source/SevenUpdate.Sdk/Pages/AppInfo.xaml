@@ -28,7 +28,7 @@
 					<Controls:InfoTextBox.Text>
 						<Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Name">
 							<Binding.ValidationRules>
-								<Controls:RequiredInputRule />
+								<Helpers:LocaleStringRule PropertyName="App.Name"  />
 							</Binding.ValidationRules>
 						</Binding>
 					</Controls:InfoTextBox.Text>
@@ -71,8 +71,8 @@
 				<Controls:InfoTextBox.Text>
 					<Binding Path="Description" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Description" UpdateSourceTrigger="PropertyChanged">
 						<Binding.ValidationRules>
-							<Controls:RequiredInputRule />
-						</Binding.ValidationRules>
+                            <Helpers:LocaleStringRule PropertyName="App.Description"  />
+                        </Binding.ValidationRules>
 					</Binding>
 				</Controls:InfoTextBox.Text>
 			</Controls:InfoTextBox>
@@ -85,8 +85,8 @@
 				<Controls:InfoTextBox.Text>
 					<Binding Path="Publisher" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Publisher" UpdateSourceTrigger="PropertyChanged">
 						<Binding.ValidationRules>
-							<Controls:RequiredInputRule />
-						</Binding.ValidationRules>
+                            <Helpers:LocaleStringRule PropertyName="App.Publisher"  />
+                        </Binding.ValidationRules>
 					</Binding>
 				</Controls:InfoTextBox.Text>
 			</Controls:InfoTextBox>

@@ -115,6 +115,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A value is required for this field..
+        /// </summary>
+        public static string InputRequired {
+            get {
+                return ResourceManager.GetString("InputRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to If you exit now you will lose unsaved progress..
         /// </summary>
         public static string LoseProgress {
