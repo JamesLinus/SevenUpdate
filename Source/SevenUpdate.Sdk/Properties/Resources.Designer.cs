@@ -115,15 +115,6 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Install Location.
-        /// </summary>
-        public static string InstallLocation {
-            get {
-                return ResourceManager.GetString("InstallLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to If you exit now you will lose unsaved progress..
         /// </summary>
         public static string LoseProgress {

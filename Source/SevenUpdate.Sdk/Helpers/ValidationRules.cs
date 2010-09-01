@@ -3,6 +3,7 @@
 using System;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using SevenUpdate.Sdk.Properties;
 
@@ -10,21 +11,23 @@ using SevenUpdate.Sdk.Properties;
 
 namespace SevenUpdate.Sdk.Helpers
 {
-    public class AppLocationRule : ValidationRule
+    public class AppDirectoryRule : ValidationRule
     {
+        public bool IsRegistryPath { get; set; }
+
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
             if (input == null)
                 return new ValidationResult(false, Resources.FilePathInvalid);
 
-            if (input.StartsWith(@"HKLM\", true, null) || input.StartsWith(@"HKCR\", true, null) || input.StartsWith(@"HKCU\", true, null) || input.StartsWith(@"HKU\", true, null) ||
-                input.StartsWith(@"HKEY_CLASSES_ROOT\") || input.StartsWith(@"HKEY_CURRENT_USER\", true, null) || input.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) ||
-                input.StartsWith(@"HKEY_USERS\", true, null))
-                return new ValidationResult(true, null);
-
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
                 return new ValidationResult(false, Resources.FilePathInvalid);
+
+            const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+            if (IsRegistryPath)
+                return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
+
 
             try
             {
@@ -38,6 +41,20 @@ namespace SevenUpdate.Sdk.Helpers
 
 
             return new ValidationResult(true, null);
+        }
+    }
+
+    public class RegistryPathRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var input = value as string;
+            if (input == null)
+                return new ValidationResult(false, Resources.FilePathInvalid);
+
+            const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+
+            return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
         }
     }
 }

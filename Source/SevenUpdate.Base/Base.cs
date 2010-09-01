@@ -213,9 +213,9 @@ namespace SevenUpdate
         #endregion
 
         /// <summary>
-        /// Checks to see if path is a registry key
+        ///   Checks to see if path is a registry key
         /// </summary>
-        /// <param name="path">The path to check</param>
+        /// <param name = "path">The path to check</param>
         /// <returns>True if path is a registry key, otherwise false</returns>
         public static bool IsRegistryKey(string path)
         {
@@ -223,6 +223,212 @@ namespace SevenUpdate
                    path.StartsWith(@"HKEY_CLASSES_ROOT\") || path.StartsWith(@"HKEY_CURRENT_USER\", true, null) || path.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) ||
                    path.StartsWith(@"HKEY_USERS\", true, null);
         }
+
+        /// <summary>
+        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
+        /// </summary>
+        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        public static void GetHashAsync(string fileLocation)
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(fileLocation);
+        }
+
+        /// <summary>
+        ///   Gets the SHA-2 Hash of a file
+        /// </summary>
+        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        /// <returns>The SHA-2 Hash of the file</returns>
+        public static string GetHash(string fileLocation)
+        {
+            if (!File.Exists(fileLocation))
+                return null;
+            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+
+            var sha2 = new SHA256Managed();
+
+            sha2.ComputeHash(stream);
+
+            stream.Close();
+
+            var buff = new StringBuilder(10);
+
+            foreach (var hashByte in sha2.Hash)
+                buff.Append(String.Format("{0:X1}", hashByte));
+
+            return buff.ToString();
+        }
+
+        private static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            var data = e.Result as string[];
+
+            if (HashGeneratedEventHandler != null && data != null)
+                HashGeneratedEventHandler(null, new HashGeneratedEventArgs(data[0], data[1]));
+        }
+
+        private static void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var fileLocation = e.Argument as string;
+
+            string[] data = {fileLocation, GetHash(fileLocation)};
+            e.Result = data;
+        }
+
+        /// <summary>
+        ///   Starts a process on the system
+        /// </summary>
+        /// <param name = "fileName">The file to execute</param>
+        /// <param name = "arguments">The arguments to execute with the file</param>
+        /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
+        /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
+        /// <returns />
+        public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
+        {
+            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true, Arguments = arguments}};
+            if (hidden)
+            {
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            }
+
+            try
+            {
+                proc.Start();
+                if (wait)
+                    proc.WaitForExit();
+                proc.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                ReportError(e, UserStore);
+                proc.Dispose();
+                return false;
+            }
+        }
+
+        public static Stream DownloadFile(string url)
+        {
+            //Get a data stream from the url
+            var wc = new WebClient();
+            return new MemoryStream(wc.DownloadData(url));
+        }
+
+        #region Serialization Methods
+
+        /// <summary>
+        ///   DeSerializes an object
+        /// </summary>
+        /// <typeparam name = "T">the object to deserialize</typeparam>
+        /// <param name = "fileName">the file that contains the object to DeSerialize</param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <returns>returns the object</returns>
+        public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
+        {
+            if (File.Exists(fileName))
+            {
+                try
+                {
+                    using (var file = File.OpenRead(fileName))
+                    {
+                        T obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
+
+                        file.Close();
+                        return obj;
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (SerializationErrorEventHandler != null)
+                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///   DeSerializes an object
+        /// </summary>
+        /// <typeparam name = "T">the object to deserialize</typeparam>
+        /// <param name = "stream">The Stream to deserialize</param>
+        /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
+        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
+        /// <returns>returns the object</returns>
+        public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
+        {
+            try
+            {
+                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
+            }
+            catch (Exception e)
+            {
+                if (SerializationErrorEventHandler != null)
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, sourceUrl));
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///   Serializes an object into a file
+        /// </summary>
+        /// <typeparam name = "T">the object</typeparam>
+        /// <param name = "item">the object to serialize</param>
+        /// <param name = "fileName">the location of a file that will be serialized</param>
+        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
+        public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
+        {
+            try
+            {
+                if (File.Exists(fileName))
+                {
+                    using (var file = File.Open(fileName, FileMode.Truncate))
+                    {
+                        if (usePrefix)
+                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        else
+                            Serializer.Serialize(file, item);
+                        file.Close();
+                    }
+                }
+                else
+                {
+                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                    {
+                        if (usePrefix)
+                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
+                        else
+                            Serializer.Serialize(file, item);
+                        file.Close();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (SerializationErrorEventHandler != null)
+                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
+            }
+        }
+
+        #endregion
+
+        #region Event Handlers
+
+        /// <summary>
+        ///   Occurs when an error occurs while serializing or deserializing a object/file
+        /// </summary>
+        public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
+
+        /// <summary>
+        ///   Occurs when a SHA-2 Hash has been generated
+        /// </summary>
+        public static event EventHandler<HashGeneratedEventArgs> HashGeneratedEventHandler;
+
+        #endregion
 
         #region Conversions
 
@@ -239,11 +445,11 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets a string from a registry path
+        ///   Gets a string from a registry path
         /// </summary>
-        /// <param name="registryKey">The path to the registry key</param>
-        /// <param name="valueName">The value name to get the data from</param>
-        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name = "registryKey">The path to the registry key</param>
+        /// <param name = "valueName">The value name to get the data from</param>
+        /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns></returns>
         public static string GetRegistryPath(string registryKey, string valueName, bool is64Bit)
         {
@@ -532,212 +738,6 @@ namespace SevenUpdate
 
             tw.Close();
         }
-
-        #endregion
-
-        /// <summary>
-        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
-        /// </summary>
-        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
-        public static void GetHashAsync(string fileLocation)
-        {
-            var worker = new BackgroundWorker();
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.RunWorkerAsync(fileLocation);
-        }
-
-        /// <summary>
-        ///   Gets the SHA-2 Hash of a file
-        /// </summary>
-        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
-        /// <returns>The SHA-2 Hash of the file</returns>
-        public static string GetHash(string fileLocation)
-        {
-            if (!File.Exists(fileLocation))
-                return null;
-            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
-
-            var sha2 = new SHA256Managed();
-
-            sha2.ComputeHash(stream);
-
-            stream.Close();
-
-            var buff = new StringBuilder(10);
-
-            foreach (var hashByte in sha2.Hash)
-                buff.Append(String.Format("{0:X1}", hashByte));
-
-            return buff.ToString();
-        }
-
-        private static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            var data = e.Result as string[];
-
-            if (HashGeneratedEventHandler != null && data != null)
-                    HashGeneratedEventHandler(null, new HashGeneratedEventArgs(data[0], data[1]));
-        }
-
-        private static void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var fileLocation = e.Argument as string;
-
-            string[] data = {fileLocation, GetHash(fileLocation)};
-            e.Result = data;
-        }
-
-        /// <summary>
-        ///   Starts a process on the system
-        /// </summary>
-        /// <param name = "fileName">The file to execute</param>
-        /// <param name = "arguments">The arguments to execute with the file</param>
-        /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
-        /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
-        /// <returns />
-        public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
-        {
-            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true, Arguments = arguments}};
-            if (hidden)
-            {
-                proc.StartInfo.CreateNoWindow = true;
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            }
-
-            try
-            {
-                proc.Start();
-                if (wait)
-                    proc.WaitForExit();
-                proc.Dispose();
-                return true;
-            }
-            catch (Exception e)
-            {
-                ReportError(e, UserStore);
-                proc.Dispose();
-                return false;
-            }
-        }
-
-        public static Stream DownloadFile(string url)
-        {
-            //Get a data stream from the url
-            var wc = new WebClient();
-            return new MemoryStream(wc.DownloadData(url));
-        }
-
-        #region Serialization Methods
-
-        /// <summary>
-        ///   DeSerializes an object
-        /// </summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
-        /// <returns>returns the object</returns>
-        public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
-        {
-            if (File.Exists(fileName))
-            {
-                try
-                {
-                    using (var file = File.OpenRead(fileName))
-                    {
-                        T obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
-
-                        file.Close();
-                        return obj;
-                    }
-                }
-                catch (Exception e)
-                {
-                    if (SerializationErrorEventHandler != null)
-                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///   DeSerializes an object
-        /// </summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "stream">The Stream to deserialize</param>
-        /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
-        /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
-        {
-            try
-            {
-                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
-            }
-            catch (Exception e)
-            {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, sourceUrl));
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        ///   Serializes an object into a file
-        /// </summary>
-        /// <typeparam name = "T">the object</typeparam>
-        /// <param name = "item">the object to serialize</param>
-        /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
-        public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
-        {
-            try
-            {
-                if (File.Exists(fileName))
-                {
-                    using (var file = File.Open(fileName, FileMode.Truncate))
-                    {
-                        if (usePrefix)
-                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
-                        else
-                            Serializer.Serialize(file, item);
-                        file.Close();
-                    }
-                }
-                else
-                {
-                    using (var file = File.Open(fileName, FileMode.CreateNew))
-                    {
-                        if (usePrefix)
-                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
-                        else
-                            Serializer.Serialize(file, item);
-                        file.Close();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
-            }
-        }
-
-        #endregion
-
-        #region Event Handlers
-
-        /// <summary>
-        ///   Occurs when an error occurs while serializing or deserializing a object/file
-        /// </summary>
-        public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
-
-        /// <summary>
-        ///   Occurs when a SHA-2 Hash has been generated
-        /// </summary>
-        public static event EventHandler<HashGeneratedEventArgs> HashGeneratedEventHandler;
 
         #endregion
     }

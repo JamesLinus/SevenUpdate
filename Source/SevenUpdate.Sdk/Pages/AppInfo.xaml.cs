@@ -25,9 +25,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Sdk.Helpers;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -63,6 +65,10 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        #endregion
+
+        #region Methods
+
         private void LoadInfo()
         {
             tbxPublisher.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -81,81 +87,9 @@ namespace SevenUpdate.Sdk.Pages
             foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
                 tbxPublisher.Text = t.Value;
         }
-
-        #endregion
-
-        #region Methods
-
         #endregion
 
         #region UI Events
-
-        #region TextBox - Lost Keyboard Focus
-
-        //private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (!rbtnFileSystem.IsChecked.GetValueOrDefault())
-        //        return;
-
-        //    tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
-        //}
-
-        //private void AppName_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (Base.AppInfo.Name == null)
-        //        Base.AppInfo.Name = new ObservableCollection<LocaleString>();
-
-        //    bool found = false;
-        //    foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
-        //    {
-        //        t.Value = tbxAppName.Text;
-        //        found = true;
-        //    }
-        //    if (found)
-        //        return;
-
-        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxAppName.Text };
-        //    Base.AppInfo.Name.Add(ls);
-        //}
-
-        //private void AppDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (Base.AppInfo.Description == null)
-        //        Base.AppInfo.Description = new ObservableCollection<LocaleString>();
-
-        //    bool found = false;
-        //    foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
-        //    {
-        //        t.Value = tbxAppDescription.Text;
-        //        found = true;
-        //    }
-
-        //    if (found)
-        //        return;
-
-        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxAppDescription.Text };
-        //    Base.AppInfo.Description.Add(ls);
-        //}
-
-        //private void Publisher_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (Base.AppInfo.Publisher == null)
-        //        Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
-
-        //    bool found = false;
-        //    foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
-        //    {
-        //        t.Value = tbxPublisher.Text;
-        //        found = true;
-        //    }
-
-        //    if (found)
-        //        return;
-        //    var ls = new LocaleString { Lang = Base.SelectedLocale, Value = tbxPublisher.Text };
-        //    Base.AppInfo.Publisher.Add(ls);
-        //}
-
-        #endregion
 
         #region Button - Click
 
@@ -178,6 +112,16 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Base.AppInfo.Is64Bit);
+        }
+
+        #endregion
+
+        #region TextBlock - Lost Focus
+
+        private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (rbtnFileSystem.IsChecked.GetValueOrDefault())
+                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -239,6 +183,40 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Radio Button - Checked
+
+        private void rbtnRegistry_Checked(object sender, RoutedEventArgs e)
+        {
+            if (tbxAppLocation == null)
+                return;
+            tbxAppLocation.Text = null;
+            var rule = new AppDirectoryRule { IsRegistryPath = true };
+            tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
+            tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+        }
+
+        private void rbtnFileSystem_Checked(object sender, RoutedEventArgs e)
+        {
+            if (tbxAppLocation == null)
+                return;
+            tbxAppLocation.Text = null;
+            var rule = new AppDirectoryRule { IsRegistryPath = false };
+            tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
+            tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+
+        }
+
+        #endregion
+
+        #region Page
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
+
+        #endregion
+
         #region Aero
 
         private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
@@ -249,16 +227,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
-        }
-
         #endregion
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadInfo();
-        }
     }
 }

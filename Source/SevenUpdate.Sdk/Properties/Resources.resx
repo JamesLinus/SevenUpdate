@@ -168,7 +168,4 @@
   <data name="FilePathInvalid" xml:space="preserve">
     <value>The path entered is not valid.</value>
   </data>
-  <data name="InstallLocation" xml:space="preserve">
-    <value>Install Location</value>
-  </data>
 </root>

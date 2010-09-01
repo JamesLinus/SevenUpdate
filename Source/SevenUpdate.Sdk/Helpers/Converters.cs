@@ -104,7 +104,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts a Bool to a Label
     /// </summary>
-    [ValueConversion(typeof(Visibility), typeof(string))]
+    [ValueConversion(typeof(bool), typeof(string))]
     public sealed class BoolToLabelConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -115,7 +115,7 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool) value ? Properties.Resources.InstallLocation : null;
+            return (bool) value ? @"HKLM\Software\MyCompany\MyApp" : @"%PROGRAMFILES%\Seven Software\Seven Update";
         }
 
         /// <summary>

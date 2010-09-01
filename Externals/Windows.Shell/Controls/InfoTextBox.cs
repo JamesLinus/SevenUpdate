@@ -67,21 +67,27 @@ namespace Microsoft.Windows.Controls
 
         private static void LabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DependencyPropertyDescriptor isVisiblePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof(InfoTextBox));
+            var infoTextBox = d as InfoTextBox;
+
+            if (infoTextBox != null)
+                infoTextBox.UpdateAdorner(infoTextBox);
+            DependencyPropertyDescriptor isVisiblePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof (InfoTextBox));
             isVisiblePropertyDescriptor.AddValueChanged(d, IsVisibleChanged);
         }
 
         #endregion
 
+        private AdornerLabel myAdornerLabel;
+        private AdornerLayer myAdornerLayer;
+
         private static void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
-            if (infoTextBox != null)
-                infoTextBox.UpdateAdorner(infoTextBox, !infoTextBox.IsVisible);
-        }
+            if (infoTextBox == null)
+                return;
 
-        private AdornerLabel myAdornerLabel;
-        private AdornerLayer myAdornerLayer;
+            infoTextBox.UpdateAdorner(infoTextBox, !infoTextBox.IsVisible);
+        }
 
         public override void OnApplyTemplate()
         {
@@ -125,17 +131,12 @@ namespace Microsoft.Windows.Controls
         {
             if (elem == null || myAdornerLayer == null)
                 return;
-            if (((InfoTextBox) elem).HasText || elem.IsFocused || hide)
-            {
-                // Hide the Shadowed Label
-                myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
-            }
-            else
-            {
-                // Show the Shadowed Label
-                if (!myAdornerLayer.Contains<AdornerLabel>(elem))
-                    myAdornerLayer.Add(myAdornerLabel);
-            }
+
+            myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
+            myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
+
+            if (!((InfoTextBox) elem).HasText && !elem.IsFocused && !hide)
+                myAdornerLayer.Add(myAdornerLabel);
         }
     }
 
