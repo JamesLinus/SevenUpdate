@@ -99,9 +99,6 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (!ValidateInfo())
-            //    App.ShowInputErrorMessage();
-            //else
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
 

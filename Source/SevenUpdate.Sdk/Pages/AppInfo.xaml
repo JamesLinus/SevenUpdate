@@ -46,8 +46,8 @@
 					<Controls:InfoTextBox.Text>
 						<Binding Path="Directory" UpdateSourceTrigger="PropertyChanged">
 							<Binding.ValidationRules>
-								<Helpers:AppDirectoryRule></Helpers:AppDirectoryRule>
-							</Binding.ValidationRules>
+                                <Helpers:AppDirectoryRule />
+                            </Binding.ValidationRules>
 						</Binding>
 					</Controls:InfoTextBox.Text>
 				</Controls:InfoTextBox>

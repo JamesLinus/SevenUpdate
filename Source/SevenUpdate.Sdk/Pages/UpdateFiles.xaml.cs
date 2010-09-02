@@ -168,9 +168,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
-            if (Base.UpdateInfo.Files.Count < 1)
-                App.ShowInputErrorMessage();
+            //if (Base.UpdateInfo.Files.Count < 1)
+            //    App.ShowInputErrorMessage();
+            //else
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

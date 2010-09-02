@@ -24,6 +24,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -45,6 +46,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
+            listBox.ItemsSource = Base.UpdateInfo.RegistryItems;
+
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
@@ -59,43 +62,16 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        private void LoadInfo()
-        {
-            if (Base.UpdateInfo.RegistryItems != null)
-            {
-                for (int x = 0; x < Base.UpdateInfo.Shortcuts.Count; x++)
-                    listBox.Items.Add(Properties.Resources.RegistryItem + " " + x);
-            }
-        }
-
-        private void LoadRegistryInfo(int index)
-        {
-        }
-
         #endregion
 
         #region UI Events
-
-        #region TextBox - Text Changed
-
-        private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //if (tbxKeyPath.Text.StartsWith(@"HKLM\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCR\", true, null) || tbxKeyPath.Text.StartsWith(@"HKCU\", true, null) ||
-            //        tbxKeyPath.Text.StartsWith(@"HKU\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_CLASSES_ROOT\") || tbxKeyPath.Text.StartsWith(@"HKEY_CURRENT_USER\", true, null) ||
-            //        tbxKeyPath.Text.StartsWith(@"HKEY_LOCAL_MACHINE\", true, null) || tbxKeyPath.Text.StartsWith(@"HKEY_USERS\", true, null))
-        }
-
-        #endregion
-
-        #region TextBox - Lost Keyboard Focus
-
-        #endregion
 
         #region TextBox - Key Down
 
         private void ValueData_KeyDown(object sender, KeyEventArgs e)
         {
-            if (cbxDataType.SelectedIndex != 0 && cbxDataType.SelectedIndex != 1 && cbxDataType.SelectedIndex != 4)
+            if (Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary && Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.DWord &&
+                Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.QWord)
                 return;
             var converter = new KeyConverter();
             var key = converter.ConvertToString(e.Key);
@@ -142,7 +118,6 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
-            // App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -164,7 +139,6 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
-            App.ShowInputErrorMessage();
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
@@ -175,42 +149,11 @@ namespace SevenUpdate.Sdk.Pages
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
             listBox.Items.Clear();
-            spInput.Visibility = Visibility.Collapsed;
         }
 
         #endregion
 
         #region ComboBox - Selection Changed
-
-        private void DataType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (tbxValueData != null)
-                tbxValueData.Text = null;
-        }
-
-        #endregion
-
-        #region ListBox - Selection Changed
-
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (listBox.Items.Count > 0)
-            {
-                spHelp.Visibility = Visibility.Collapsed;
-                spInput.Visibility = Visibility.Visible;
-
-                if (listBox.SelectedIndex > -1 && Base.UpdateInfo.RegistryItems != null)
-                {
-                    if (Base.UpdateInfo.Files.Count > 0)
-                        LoadRegistryInfo(listBox.SelectedIndex);
-                }
-            }
-            else
-            {
-                spHelp.Visibility = Visibility.Visible;
-                spInput.Visibility = Visibility.Collapsed;
-            }
-        }
 
         #endregion
 
@@ -223,11 +166,6 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadInfo();
-        }
 
         #endregion
 

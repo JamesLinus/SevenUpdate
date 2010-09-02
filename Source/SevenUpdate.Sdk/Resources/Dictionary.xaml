@@ -5,6 +5,7 @@
     <Sdk:FileActionConverter x:Key="fileActionConverter" />
     <Sdk:HashToBoolConverter x:Key="hashToBoolConverter" />
     <Sdk:IntToVisibilityConverter x:Key="intToVisibility" />
+    <Sdk:EnumToBooleanConverter x:Key="enumToBooleanConverter" />
     
     <Style x:Key="underlineTextBlock" TargetType="TextBlock">
 		<Style.Triggers>

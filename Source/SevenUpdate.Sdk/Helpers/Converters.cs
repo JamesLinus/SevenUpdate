@@ -105,7 +105,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts a Bool to a Label
     /// </summary>
-    [ValueConversion(typeof(bool), typeof(string))]
+    [ValueConversion(typeof (bool), typeof (string))]
     public sealed class BoolToLabelConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -134,7 +134,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts the FileAction to an int
     /// </summary>
-    [ValueConversion(typeof(FileAction), typeof(int))]
+    [ValueConversion(typeof (FileAction), typeof (int))]
     public sealed class FileActionConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -145,8 +145,8 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var val = value is FileAction ? (FileAction)value : FileAction.Update;
-            return (int)val;
+            var val = value is FileAction ? (FileAction) value : FileAction.Update;
+            return (int) val;
         }
 
         /// <summary>
@@ -155,8 +155,8 @@ namespace SevenUpdate.Sdk
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var enumIndex = value is int ? (int)value : 0;
-            return (FileAction)Enum.Parse(typeof(FileAction), enumIndex.ToString());
+            var enumIndex = value is int ? (int) value : 0;
+            return (FileAction) Enum.Parse(typeof (FileAction), enumIndex.ToString());
         }
 
         #endregion
@@ -165,7 +165,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts the hash string to a bool
     /// </summary>
-    [ValueConversion(typeof(string), typeof(bool))]
+    [ValueConversion(typeof (string), typeof (bool))]
     public sealed class HashToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -201,11 +201,10 @@ namespace SevenUpdate.Sdk
         #endregion
     }
 
-
-        /// <summary>
+    /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(Visibility))]
+    [ValueConversion(typeof (int), typeof (Visibility))]
     public sealed class IntToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -235,7 +234,24 @@ namespace SevenUpdate.Sdk
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-           return new NotImplementedException();
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    public class EnumToBooleanConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.Equals(parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value.Equals(false) ? DependencyProperty.UnsetValue : parameter;
         }
 
         #endregion
