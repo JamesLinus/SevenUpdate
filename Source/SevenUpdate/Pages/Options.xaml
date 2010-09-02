@@ -23,7 +23,7 @@
 		</Grid.RowDefinitions>
 		<TextBlock HorizontalAlignment="Left" Text="Choose how Seven Update can install updates" VerticalAlignment="Top" FontSize="16" Foreground="#FF003399" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,12,0,0" Padding="5" />
 		<TextBlock HorizontalAlignment="Left" Text="When your computer is online, Seven Update can automatically check for updates and download them using these settings." VerticalAlignment="Top" Padding="5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0,5" />
-		<Rectangle Grid.ColumnSpan="4" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="#FFF0F0F0" />
+		<Rectangle Grid.ColumnSpan="4" Grid.Row="10" Fill="#FFF0F0F0" />
 		<TextBlock HorizontalAlignment="Left" Padding="5" Text="Select the programs that will be updated with Seven Update." VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" />
 		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="4" Grid.Row="9" Grid.RowSpan="1">

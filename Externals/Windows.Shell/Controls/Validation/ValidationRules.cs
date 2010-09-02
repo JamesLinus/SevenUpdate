@@ -33,9 +33,7 @@ namespace Microsoft.Windows.Controls
                 if (!String.IsNullOrEmpty(url))
                 {
                     var uri = new Uri(value.ToString());
-                    var irequest = WebRequest.Create(uri);
-                    var iresponse = irequest.GetResponse();
-                    return iresponse == null ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
+                    return new ValidationResult(true, null);
                 }
 
                 return IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);

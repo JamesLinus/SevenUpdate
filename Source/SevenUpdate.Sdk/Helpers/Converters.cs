@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using SevenUpdate.Sdk.Properties;
 
 #endregion
 
@@ -125,6 +126,100 @@ namespace SevenUpdate.Sdk
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the FileAction to an int
+    /// </summary>
+    [ValueConversion(typeof(FileAction), typeof(int))]
+    public sealed class FileActionConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var val = value is FileAction ? (FileAction)value : FileAction.Update;
+            return (int)val;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var enumIndex = value is int ? (int)value : 0;
+            return (FileAction)Enum.Parse(typeof(FileAction), enumIndex.ToString());
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the FileAction to an int
+    /// </summary>
+    [ValueConversion(typeof(string), typeof(Visibility))]
+    public sealed class StringToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var visibility = value as string;
+            if (visibility == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(visibility))
+                return Visibility.Visible;
+
+            return Visibility.Collapsed;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+           return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the FileAction to an int
+    /// </summary>
+    [ValueConversion(typeof(string), typeof(bool))]
+    public sealed class StringToBoolConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var visibility = value as string;
+            return visibility != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(visibility);
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
         }
 
         #endregion

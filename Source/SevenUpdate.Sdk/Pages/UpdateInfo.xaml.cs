@@ -21,7 +21,6 @@
 #region
 
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,12 +36,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateInfo : Page
     {
-        #region Fields
-
-        private string locale;
-
-        #endregion
-
         #region Properties
 
         #endregion
@@ -88,32 +81,33 @@ namespace SevenUpdate.Sdk.Pages
 
         #region ComboBox Selection Changed
 
-        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Locale_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tbxUpdateName == null)
+            if (tbxUpdateName == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            locale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
-            tbxUpdateName.Text = null;
-            tbxUpdateDetails.Text = null;
+            Base.SelectedLocale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
-            if (Base.UpdateInfo.Description == null)
-                Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
-            else
+            bool found = false;
+            // Load Values
+            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
             {
-                // Load Values
-                foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
-                    tbxUpdateDetails.Text = t.Value;
+                tbxUpdateName.Text = t.Value;
+                found = true;
             }
+            if (!found)
+                tbxUpdateName.Text = null;
 
-            if (Base.UpdateInfo.Name == null)
-                Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
-            else
+
+            found = false;
+            // Load Values
+            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
             {
-                // Load Values
-                foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
-                    tbxUpdateName.Text = t.Value;
+                tbxUpdateDetails.Text = t.Value;
+                found = true;
             }
+            if (!found)
+                tbxUpdateDetails.Text = null;
         }
 
         private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -122,48 +116,6 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
         }
-
-        #endregion
-
-        #region TextBox - Lost Keyboard Focus
-
-        //private void UpdateTitle_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (Base.UpdateInfo.Name == null)
-        //        Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
-
-        //    bool found = false;
-        //    foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == locale))
-        //    {
-        //        t.Value = tbxUpdateName.Text;
-        //        found = true;
-        //    }
-
-        //    if (found)
-        //        return;
-
-        //    var ls = new LocaleString {Lang = locale, Value = tbxUpdateName.Text};
-        //    Base.UpdateInfo.Name.Add(ls);
-        //}
-
-        //private void UpdateDetails_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        //{
-        //    if (Base.UpdateInfo.Description == null)
-        //        Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
-
-        //    bool found = false;
-        //    foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == locale))
-        //    {
-        //        t.Value = tbxUpdateDetails.Text;
-        //        found = true;
-        //    }
-
-        //    if (found)
-        //        return;
-
-        //    var ls = new LocaleString {Lang = locale, Value = tbxUpdateDetails.Text};
-        //    Base.UpdateInfo.Description.Add(ls);
-        //}
 
         #endregion
 

@@ -2,6 +2,9 @@
     <Sdk:LocaleStringConverter x:Key="localeStringConverter" />
     <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
     <Sdk:BoolToLabelConverter x:Key="boolToLabelConverter" />
+    <Sdk:FileActionConverter x:Key="fileActionConverter" />
+    <Sdk:StringToVisibilityConverter x:Key="stringToVisibilityConverter" />
+    <Sdk:StringToBoolConverter x:Key="stringToBoolConverter" />
     
     <Style x:Key="underlineTextBlock" TargetType="TextBlock">
 		<Style.Triggers>

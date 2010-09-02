@@ -1,7 +1,7 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" mc:Ignorable="d" MinWidth="850" MinHeight="467" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Title="Seven Update" KeepAlive="True">
+<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" mc:Ignorable="d" MinWidth="850" MinHeight="467" Title="Seven Update" KeepAlive="True">
 	<!-- Grid-->
-	<Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" ShowGridLines="False">
+	<Grid VerticalAlignment="Top" ShowGridLines="False">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="24" />

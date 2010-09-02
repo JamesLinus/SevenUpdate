@@ -40,6 +40,10 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateFiles : Page
     {
+        #region Properties
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -48,6 +52,10 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateFiles()
         {
             InitializeComponent();
+            if (Base.UpdateInfo.Files == null)
+                Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+
+            listBox.ItemsSource = Base.UpdateInfo.Files;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
@@ -64,56 +72,28 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        ///   Loads the file information into the ui
-        /// </summary>
-        /// <param name = "index"></param>
-        private void LoadFileInfo(int index)
-        {
-            tbxInstallUri.Text = Base.UpdateInfo.Files[index].Destination;
-            tbxDownloadUrl.Text = Base.UpdateInfo.Files[index].Source;
-            tbxArgs.Text = Base.UpdateInfo.Files[index].Args;
-            tbHash.Text = Base.UpdateInfo.Files[index].Hash;
-            cbxUpdateType.SelectedIndex = (int) Base.UpdateInfo.Files[index].Action;
-        }
-
-        /// <summary>
         ///   Adds a file to the list
         /// </summary>
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            string filename = Path.GetFileName(fullName);
-
             string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
             spHelp.Visibility = Visibility.Collapsed;
             spInput.Visibility = Visibility.Visible;
-            tbxInstallUri.Text = installUrl;
 
-            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", FileSize = (ulong) new FileInfo(fullName).Length};
-
-            if (Base.UpdateInfo.Files == null)
-                Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            var file = new UpdateFile
+                           {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", FileSize = (ulong) new FileInfo(fullName).Length};
 
             Base.UpdateInfo.Files.Add(file);
 
-            cbxUpdateType.SelectedIndex = 0;
-            listBox.Items.Add(filename);
             listBox.SelectedIndex = (listBox.Items.Count - 1);
 
-            piHashProgress.IsRunning = true;
-            tbHash.Text = Properties.Resources.CalculatingHash;
-            tbHash.IsEnabled = false;
-            listBox.IsEnabled = false;
             SevenUpdate.Base.GetHashAsync(fullName);
         }
 
         private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
         {
-            piHashProgress.IsRunning = false;
-            listBox.IsEnabled = true;
             Base.UpdateInfo.Files[listBox.SelectedIndex].Hash = e.Hash;
-            tbHash.Text = e.Hash;
-            tbHash.IsEnabled = true;
         }
 
         private void AddFiles(string[] files)
@@ -121,16 +101,6 @@ namespace SevenUpdate.Sdk.Pages
             for (int x = 0; x < files.Length; x++)
                 AddFile(files[x]);
             listBox.SelectedIndex = (listBox.Items.Count - 1);
-        }
-
-        private void LoadInfo()
-        {
-            if (Base.UpdateInfo.Files != null)
-            {
-                for (int x = 0; x < Base.UpdateInfo.Files.Count; x++)
-                    listBox.Items.Add(Path.GetFileName(Base.UpdateInfo.Files[x].Destination));
-            }
-            listBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -201,7 +171,8 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
-            // App.ShowInputErrorMessage();
+            if (Base.UpdateInfo.Files.Count < 1)
+                App.ShowInputErrorMessage();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -217,7 +188,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                tbxInstallUri.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
+                Base.UpdateInfo.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
@@ -225,12 +196,9 @@ namespace SevenUpdate.Sdk.Pages
             var cfd = new CommonOpenFileDialog {Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            piHashProgress.IsRunning = true;
-            tbHash.Text = Properties.Resources.CalculatingHash + "...";
-            tbHash.IsEnabled = false;
+
             listBox.IsEnabled = false;
             SevenUpdate.Base.GetHashAsync(cfd.FileName);
-            Base.UpdateInfo.Files[listBox.SelectedIndex].Hash = tbHash.Text;
             Base.UpdateInfo.Files[listBox.SelectedIndex].FileSize = (ulong) new FileInfo(cfd.FileName).Length;
         }
 
@@ -273,28 +241,25 @@ namespace SevenUpdate.Sdk.Pages
 
         private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Base.UpdateInfo.Files != null)
-            {
-                if (Base.UpdateInfo.Files.Count > 0 && listBox.SelectedIndex > -1)
-                    Base.UpdateInfo.Files[listBox.SelectedIndex].Action = (FileAction) cbxUpdateType.SelectedIndex;
-            }
-
-            if (tbxDownloadUrl == null)
+            if (Base.UpdateInfo.Files == null)
                 return;
-            if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
-            {
-                // imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
+            if (Base.UpdateInfo.Files.Count > 0 && listBox.SelectedIndex > -1)
+                Base.UpdateInfo.Files[listBox.SelectedIndex].Action = (FileAction) cbxUpdateType.SelectedIndex;
 
-                tbxDownloadUrl.IsEnabled = true;
-                tbxArgs.IsEnabled = true;
-            }
-            else
-            {
-                tbxDownloadUrl.Text = null;
-                tbxDownloadUrl.IsEnabled = false;
-                tbxArgs.IsEnabled = false;
-                tbxArgs.Text = null;
-            }
+            //if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
+            //{
+            //    // imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
+
+            //    tbxDownloadUrl.IsEnabled = true;
+            //    tbxArgs.IsEnabled = true;
+            //}
+            //else
+            //{
+            //    tbxDownloadUrl.Text = null;
+            //    tbxDownloadUrl.IsEnabled = false;
+            //    tbxArgs.IsEnabled = false;
+            //    tbxArgs.Text = null;
+            //}
         }
 
         #endregion
@@ -307,12 +272,6 @@ namespace SevenUpdate.Sdk.Pages
             {
                 spHelp.Visibility = Visibility.Collapsed;
                 spInput.Visibility = Visibility.Visible;
-
-                if (listBox.SelectedIndex > -1 && Base.UpdateInfo.Files != null)
-                {
-                    if (Base.UpdateInfo.Files.Count > 0)
-                        LoadFileInfo(listBox.SelectedIndex);
-                }
             }
             else
             {
@@ -352,10 +311,5 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #endregion
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadInfo();
-        }
     }
 }

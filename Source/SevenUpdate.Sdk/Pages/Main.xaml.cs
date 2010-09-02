@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -72,6 +73,11 @@ namespace SevenUpdate.Sdk.Pages
         {
             Base.AppInfo = new Sua();
             Base.UpdateInfo = new Update();
+            Base.AppInfo.Description = new ObservableCollection<LocaleString>();
+            Base.AppInfo.Name = new ObservableCollection<LocaleString>();
+            Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
+            Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
+            Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

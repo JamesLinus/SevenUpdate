@@ -21,7 +21,6 @@
 #region
 
 using System;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -100,10 +99,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!ValidateInfo())
-                App.ShowInputErrorMessage();
-            else
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            //if (!ValidateInfo())
+            //    App.ShowInputErrorMessage();
+            //else
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -136,57 +135,43 @@ namespace SevenUpdate.Sdk.Pages
 
         #region ComboBox - Selection Changed
 
-        private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Locale_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tbxAppName == null || cbxLanguage.SelectedIndex < 0)
+            if (tbxAppName == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            Base.SelectedLocale = ((ComboBoxItem) cbxLanguage.SelectedItem).Tag.ToString();
+            Base.SelectedLocale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
-            if (Base.AppInfo.Description == null)
-                Base.AppInfo.Description = new ObservableCollection<LocaleString>();
-            else
+            bool found = false;
+            // Load Values
+            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
             {
-                bool found = false;
-                // Load Values
-                foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
-                {
-                    tbxAppDescription.Text = t.Value;
-                    found = true;
-                }
-                if (!found)
-                    tbxAppDescription.Text = null;
+                tbxAppDescription.Text = t.Value;
+                found = true;
             }
+            if (!found)
+                tbxAppDescription.Text = null;
 
-            if (Base.AppInfo.Name == null)
-                Base.AppInfo.Name = new ObservableCollection<LocaleString>();
-            else
+            found = false;
+            // Load Values
+            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
             {
-                bool found = false;
-                // Load Values
-                foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
-                {
-                    tbxAppName.Text = t.Value;
-                    found = true;
-                }
-                if (!found)
-                    tbxAppName.Text = null;
+                tbxAppName.Text = t.Value;
+                found = true;
             }
+            if (!found)
+                tbxAppName.Text = null;
 
-            if (Base.AppInfo.Publisher == null)
-                Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
-            else
+
+            found = false;
+            // Load Values
+            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
             {
-                bool found = false;
-                // Load Values
-                foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
-                {
-                    tbxPublisher.Text = t.Value;
-                    found = true;
-                }
-                if (!found)
-                    tbxPublisher.Text = null;
+                tbxPublisher.Text = t.Value;
+                found = true;
             }
+            if (!found)
+                tbxPublisher.Text = null;
         }
 
         #endregion
@@ -211,6 +196,8 @@ namespace SevenUpdate.Sdk.Pages
             var rule = new AppDirectoryRule {IsRegistryPath = false};
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+            Base.AppInfo.ValueName = null;
+            tbxValueName.Text = null;
         }
 
         #endregion

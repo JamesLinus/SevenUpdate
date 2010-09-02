@@ -39,17 +39,42 @@ namespace SevenUpdate
     [ProtoContract, DataContract(IsReference = true)]
     public class Config : INotifyPropertyChanged
     {
+        #region Fields
+
+        private AutoUpdateOption autoOption;
+        private bool includeRecommended;
+
+        #endregion
+
         /// <summary>
         ///   Specifies which update setting Seven Update should use
         /// </summary>
         [ProtoMember(1), DataMember]
-        public AutoUpdateOption AutoOption { get; set; }
+        public AutoUpdateOption AutoOption
+        {
+            get { return autoOption; }
+            set
+            {
+                autoOption = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("AutoOption");
+            }
+        }
 
         /// <summary>
         ///   Gets or Sets a value indicating if Seven Update is to included recommended updates when automatically downloading updates
         /// </summary>
         [ProtoMember(2), DataMember]
-        public bool IncludeRecommended { get; set; }
+        public bool IncludeRecommended
+        {
+            get { return includeRecommended; }
+            set
+            {
+                includeRecommended = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("IncludeRecommended");
+            }
+        }
 
         #region INotifyPropertyChanged Members
 
@@ -109,19 +134,64 @@ namespace SevenUpdate
     ///   Contains a string indicating the language and a value
     /// </summary>
     [ProtoContract, DataContract]
-    public class LocaleString
+    public class LocaleString : INotifyPropertyChanged
     {
+        #region Fields
+
+        private string lang, value;
+
+        #endregion
+
         /// <summary>
         ///   an ISO language code
         /// </summary>
         [ProtoMember(1), DataMember]
-        public string Lang { get; set; }
+        public string Lang
+        {
+            get { return lang; }
+            set
+            {
+                lang = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Lang");
+            }
+        }
 
         /// <summary>
         ///   The value of the string
         /// </summary>
         [ProtoMember(2), DataMember]
-        public string Value { get; set; }
+        public string Value
+        {
+            get { return value; }
+            set
+            {
+                this.value = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Value");
+            }
+        }
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
 
     #endregion
@@ -134,65 +204,169 @@ namespace SevenUpdate
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>))]
     public class Sua : INotifyPropertyChanged
     {
+        #region Fields
+
+        private string appUrl;
+        private ObservableCollection<LocaleString> description;
+        private string directory;
+        private string helpUrl;
+        private bool is64Bit, isEnabled;
+        private ObservableCollection<LocaleString> name;
+        private ObservableCollection<LocaleString> publisher;
+        private string suiUrl;
+        private string valueName;
+
+        #endregion
+
         /// <summary>
         ///   The application name
         /// </summary>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name { get; set; }
+        public ObservableCollection<LocaleString> Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Name");
+            }
+        }
 
         /// <summary>
         ///   Gets or Sets release information about the update
         /// </summary>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description { get; set; }
+        public ObservableCollection<LocaleString> Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Description");
+            }
+        }
 
         /// <summary>
         ///   The directory where the application is installed
         /// </summary>
         [ProtoMember(3), DataMember]
-        public string Directory { get; set; }
+        public string Directory
+        {
+            get { return directory; }
+            set
+            {
+                directory = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Directory");
+            }
+        }
 
         /// <summary>
         ///   The name of the value to the registry key that contains the application directory location
         /// </summary>
         [ProtoMember(4, IsRequired = false), DataMember]
-        public string ValueName { get; set; }
+        public string ValueName
+        {
+            get { return valueName; }
+            set
+            {
+                valueName = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("ValueName");
+            }
+        }
 
         /// <summary>
         ///   Specifies if the application is 64 bit
         /// </summary>
         [ProtoMember(5), DataMember]
-        public bool Is64Bit { get; set; }
+        public bool Is64Bit
+        {
+            get { return is64Bit; }
+            set
+            {
+                is64Bit = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Is64Bit");
+            }
+        }
 
         /// <summary>
         ///   Gets or Sets a value Indicating if the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
         [ProtoMember(6), DataMember]
-        public bool IsEnabled { get; set; }
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set
+            {
+                isEnabled = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("IsEnabled");
+            }
+        }
 
         /// <summary>
         ///   The publisher of the application
         /// </summary>
         [ProtoMember(7), DataMember]
-        public ObservableCollection<LocaleString> Publisher { get; set; }
+        public ObservableCollection<LocaleString> Publisher
+        {
+            get { return publisher; }
+            set
+            {
+                publisher = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Publisher");
+            }
+        }
 
         /// <summary>
         ///   The url pointing to the sui file containing the app updates
         /// </summary>
         [ProtoMember(8), DataMember]
-        public string SuiUrl { get; set; }
+        public string SuiUrl
+        {
+            get { return suiUrl; }
+            set
+            {
+                suiUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("SuiUrl");
+            }
+        }
 
         /// <summary>
         ///   The url for the application: Optional
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
-        public string AppUrl { get; set; }
+        public string AppUrl
+        {
+            get { return appUrl; }
+            set
+            {
+                appUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("AppUrl");
+            }
+        }
 
         /// <summary>
         ///   The help url of the update: Optional
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
-        public string HelpUrl { get; set; }
+        public string HelpUrl
+        {
+            get { return helpUrl; }
+            set
+            {
+                helpUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("HelpUrl");
+            }
+        }
 
         #region Implementation of INotifyPropertyChanged
 
@@ -380,17 +554,42 @@ namespace SevenUpdate
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
     public class Sui : INotifyPropertyChanged
     {
+        #region Fields
+
+        private Sua appInfo;
+        private ObservableCollection<Update> updates;
+
+        #endregion
+
         /// <summary>
         ///   Software information for the app updates.
         /// </summary>
         [ProtoMember(2), DataMember]
-        public Sua AppInfo { get; set; }
+        public Sua AppInfo
+        {
+            get { return appInfo; }
+            set
+            {
+                appInfo = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("AppInfo");
+            }
+        }
 
         /// <summary>
         ///   Collection of updates for the application
         /// </summary>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<Update> Updates { get; set; }
+        public ObservableCollection<Update> Updates
+        {
+            get { return updates; }
+            set
+            {
+                updates = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Updates");
+            }
+        }
 
         #region Implementation of INotifyPropertyChanged
 
@@ -419,39 +618,100 @@ namespace SevenUpdate
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>)), KnownType(typeof (UpdateFile)), KnownType(typeof (RegistryItem)),
      KnownType(typeof (Shortcut))]
-    public class Update
+    public class Update : INotifyPropertyChanged
     {
+        #region Fields
+
+        private ObservableCollection<LocaleString> description;
+        private string downloadUrl;
+        private ObservableCollection<UpdateFile> files;
+        private Importance importance;
+        private string infoUrl, licenseUrl;
+        private ObservableCollection<LocaleString> name;
+        private ObservableCollection<RegistryItem> registryItems;
+        private string releaseDate;
+        private bool selected;
+        private ObservableCollection<Shortcut> shortcuts;
+        private ulong size;
+
+        #endregion
+
         #region Required Properties
 
         /// <summary>
         ///   The name of the update
         /// </summary>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name { get; set; }
+        public ObservableCollection<LocaleString> Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Name");
+            }
+        }
 
         /// <summary>
         ///   Release information about the update
         /// </summary>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description { get; set; }
+        public ObservableCollection<LocaleString> Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Description");
+            }
+        }
 
         /// <summary>
         ///   The default download directory where the updates files are stored
         /// </summary>
         [ProtoMember(3), DataMember]
-        public string DownloadUrl { get; set; }
+        public string DownloadUrl
+        {
+            get { return downloadUrl; }
+            set
+            {
+                downloadUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("DownloadUrl");
+            }
+        }
 
         /// <summary>
         ///   The update type of the update: Important, Recommended, Optional, Locale, Installation.
         /// </summary>
         [ProtoMember(4), DataMember]
-        public Importance Importance { get; set; }
+        public Importance Importance
+        {
+            get { return importance; }
+            set
+            {
+                importance = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Importance");
+            }
+        }
 
         /// <summary>
         ///   The date when the update was released
         /// </summary>
         [ProtoMember(5), DataMember]
-        public string ReleaseDate { get; set; }
+        public string ReleaseDate
+        {
+            get { return releaseDate; }
+            set
+            {
+                releaseDate = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("ReleaseDate");
+            }
+        }
 
         #endregion
 
@@ -461,35 +721,80 @@ namespace SevenUpdate
         ///   The information/change log url of the update: Optional
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        public string InfoUrl { get; set; }
+        public string InfoUrl
+        {
+            get { return infoUrl; }
+            set
+            {
+                infoUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("InfoUrl");
+            }
+        }
 
         /// <summary>
         ///   The Software License Agreement Url
         /// </summary>
         [ProtoMember(7, IsRequired = false), DataMember]
-        public string LicenseUrl { get; set; }
+        public string LicenseUrl
+        {
+            get { return licenseUrl; }
+            set
+            {
+                licenseUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("LicenseUrl");
+            }
+        }
 
         #endregion
-
-        #region Optional SubProperties
 
         /// <summary>
         ///   The files of the current update
         /// </summary>
         [ProtoMember(8, IsRequired = false), DataMember]
-        public ObservableCollection<UpdateFile> Files { get; set; }
+        public ObservableCollection<UpdateFile> Files
+        {
+            get { return files; }
+            set
+            {
+                files = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Files");
+            }
+        }
+
+        #region Optional SubProperties
 
         /// <summary>
         ///   The registry entries of the current update
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
-        public ObservableCollection<RegistryItem> RegistryItems { get; set; }
+        public ObservableCollection<RegistryItem> RegistryItems
+        {
+            get { return registryItems; }
+            set
+            {
+                registryItems = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("RegistryItems");
+            }
+        }
 
         /// <summary>
         ///   The shortcuts to create for the update
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
-        public ObservableCollection<Shortcut> Shortcuts { get; set; }
+        public ObservableCollection<Shortcut> Shortcuts
+        {
+            get { return shortcuts; }
+            set
+            {
+                shortcuts = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Shortcuts");
+            }
+        }
 
         #endregion
 
@@ -499,13 +804,52 @@ namespace SevenUpdate
         ///   Gets or Sets a value Indicating if the update is selected (not used in the SDK)
         /// </summary>
         [ProtoIgnore, IgnoreDataMember]
-        public bool Selected { get; set; }
+        public bool Selected
+        {
+            get { return selected; }
+            set
+            {
+                selected = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Selected");
+            }
+        }
 
         /// <summary>
         ///   The download size of the update in bytes (not used in the SDK)
         /// </summary>
         [ProtoIgnore, IgnoreDataMember]
-        public ulong Size { get; set; }
+        public ulong Size
+        {
+            get { return size; }
+            set
+            {
+                size = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Size");
+            }
+        }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
 
         #endregion
     }
@@ -514,39 +858,95 @@ namespace SevenUpdate
     ///   Information about a file within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (FileAction))]
-    public class UpdateFile
+    public class UpdateFile : INotifyPropertyChanged
     {
+        #region Fields
+
+        private FileAction action;
+        private string args;
+        private string destination;
+        private ulong fileSize;
+        private string hash;
+        private string source;
+
+        #endregion
+
         #region Required Properties
 
         /// <summary>
         ///   The action to perform on a file
         /// </summary>
         [ProtoMember(1), DataMember]
-        public FileAction Action { get; set; }
+        public FileAction Action
+        {
+            get { return action; }
+            set
+            {
+                action = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Action");
+            }
+        }
 
         /// <summary>
         ///   The source location of the current file with the filename
         /// </summary>
         [ProtoMember(2), DataMember]
-        public string Source { get; set; }
+        public string Source
+        {
+            get { return source; }
+            set
+            {
+                source = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Source");
+            }
+        }
 
         /// <summary>
         ///   The destination location of the current file with the filename
         /// </summary>
         [ProtoMember(3), DataMember]
-        public string Destination { get; set; }
+        public string Destination
+        {
+            get { return destination; }
+            set
+            {
+                destination = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Destination");
+            }
+        }
 
         /// <summary>
         ///   The SHA1 hash of the current file
         /// </summary>
         [ProtoMember(4), DataMember]
-        public string Hash { get; set; }
+        public string Hash
+        {
+            get { return hash; }
+            set
+            {
+                hash = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Hash");
+            }
+        }
 
         /// <summary>
         ///   File size in bytes
         /// </summary>
         [ProtoMember(5), DataMember]
-        public ulong FileSize { get; set; }
+        public ulong FileSize
+        {
+            get { return fileSize; }
+            set
+            {
+                fileSize = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("FileSize");
+            }
+        }
 
         #endregion
 
@@ -556,7 +956,37 @@ namespace SevenUpdate
         ///   Command line arguments for the file
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        public string Args { get; set; }
+        public string Args
+        {
+            get { return args; }
+            set
+            {
+                args = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Args");
+            }
+        }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
 
         #endregion
     }
@@ -567,25 +997,62 @@ namespace SevenUpdate
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (RegistryAction)), KnownType(typeof (RegistryHive)), KnownType(typeof (RegistryValueKind))]
     public class RegistryItem : INotifyPropertyChanged
     {
+        #region Fields
+
+        private RegistryAction action;
+        private string data;
+        private RegistryHive hive;
+        private string key, keyValue;
+        private RegistryValueKind valueKind;
+
+        #endregion
+
         #region Required Properties
 
         /// <summary>
         ///   The action to perform to the registry item
         /// </summary>
         [ProtoMember(1), DataMember]
-        public RegistryAction Action { get; set; }
+        public RegistryAction Action
+        {
+            get { return action; }
+            set
+            {
+                action = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Action");
+            }
+        }
 
         /// <summary>
         ///   The hive of the current registry item
         /// </summary>
         [ProtoMember(2), DefaultValue(RegistryHive.LocalMachine), DataMember]
-        public RegistryHive Hive { get; set; }
+        public RegistryHive Hive
+        {
+            get { return hive; }
+            set
+            {
+                hive = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Hive");
+            }
+        }
 
         /// <summary>
         ///   The Key path of the current registry item
         /// </summary>
         [ProtoMember(3), DataMember]
-        public string Key { get; set; }
+        public string Key
+        {
+            get { return key; }
+            set
+            {
+                key = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Key");
+            }
+        }
 
         #endregion
 
@@ -595,19 +1062,46 @@ namespace SevenUpdate
         ///   Name of the Value in the specified key
         /// </summary>
         [ProtoMember(4, IsRequired = false), DataMember]
-        public string KeyValue { get; set; }
+        public string KeyValue
+        {
+            get { return keyValue; }
+            set
+            {
+                keyValue = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("KeyValue");
+            }
+        }
 
         /// <summary>
         ///   The ValueKind of the value in the specified key
         /// </summary>
         [ProtoMember(5, IsRequired = false), DataMember]
-        public RegistryValueKind ValueKind { get; set; }
+        public RegistryValueKind ValueKind
+        {
+            get { return valueKind; }
+            set
+            {
+                valueKind = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("ValueKind");
+            }
+        }
 
         /// <summary>
         ///   The data of the value in the specified key
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        public string Data { get; set; }
+        public string Data
+        {
+            get { return data; }
+            set
+            {
+                data = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Data");
+            }
+        }
 
         #endregion
 
@@ -637,21 +1131,50 @@ namespace SevenUpdate
     ///   A shortcut to be created within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ShortcutAction))]
-    public class Shortcut
+    public class Shortcut : INotifyPropertyChanged
     {
+        #region Fields
+
+        private ShortcutAction action;
+        private string arguments;
+        private ObservableCollection<LocaleString> description;
+        private string icon;
+        private string location;
+        private string target;
+
+        #endregion
+
         #region Required Properties
 
         /// <summary>
         ///   The location of where the shortcut is to be stored.
         /// </summary>
         [ProtoMember(1), DataMember]
-        public string Location { get; set; }
+        public string Location
+        {
+            get { return location; }
+            set
+            {
+                location = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Location");
+            }
+        }
 
         /// <summary>
         ///   The action to peform on the shortcut
         /// </summary>
         [ProtoMember(2), DataMember]
-        public ShortcutAction Action { get; set; }
+        public ShortcutAction Action
+        {
+            get { return action; }
+            set
+            {
+                action = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Action");
+            }
+        }
 
         #endregion
 
@@ -661,25 +1184,82 @@ namespace SevenUpdate
         ///   Any arguments to be used with the shortcut
         /// </summary>
         [ProtoMember(3, IsRequired = false), DataMember]
-        public string Arguments { get; set; }
+        public string Arguments
+        {
+            get { return arguments; }
+            set
+            {
+                arguments = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Arguments");
+            }
+        }
 
         /// <summary>
         ///   Description of the shortcut
         /// </summary>
         [ProtoMember(4, IsRequired = false), DataMember]
-        public ObservableCollection<LocaleString> Description { get; set; }
+        public ObservableCollection<LocaleString> Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Description");
+            }
+        }
 
         /// <summary>
         ///   The full path to the icon or exe containing an icon
         /// </summary>
         [ProtoMember(5, IsRequired = false), DataMember]
-        public string Icon { get; set; }
+        public string Icon
+        {
+            get { return icon; }
+            set
+            {
+                icon = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Icon");
+            }
+        }
 
         /// <summary>
         ///   The full path of the target to the shortcut.
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
-        public string Target { get; set; }
+        public string Target
+        {
+            get { return target; }
+            set
+            {
+                target = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Target");
+            }
+        }
+
+        #endregion
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        protected void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
 
         #endregion
     }
@@ -696,55 +1276,142 @@ namespace SevenUpdate
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (UpdateStatus)), KnownType(typeof (Importance)), KnownType(typeof (ObservableCollection<LocaleString>))]
     public class Suh : INotifyPropertyChanged
     {
+        #region Fields
+
+        private ObservableCollection<LocaleString> description;
+        private string helpUrl;
+        private Importance importance;
+        private string infoUrl, installDate;
+        private ObservableCollection<LocaleString> name;
+        private ObservableCollection<LocaleString> publisher;
+        private string publisherUrl;
+        private string releaseDate;
+        private UpdateStatus status;
+        private ulong updateSize;
+
+        #endregion
+
         #region Required Properties
 
         /// <summary>
         ///   The name of the update
         /// </summary>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name { get; set; }
+        public ObservableCollection<LocaleString> Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Name");
+            }
+        }
 
         /// <summary>
         ///   A description of the update, usually list new features or changes the update brings.
         /// </summary>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description { get; set; }
+        public ObservableCollection<LocaleString> Description
+        {
+            get { return description; }
+            set
+            {
+                description = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Description");
+            }
+        }
 
         /// <summary>
         ///   The update type of the update: Critical, Recommended, Optional, Locale
         /// </summary>
         [ProtoMember(3), DataMember]
-        public Importance Importance { get; set; }
+        public Importance Importance
+        {
+            get { return importance; }
+            set
+            {
+                importance = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Importance");
+            }
+        }
 
         /// <summary>
         ///   The current status of the update
         /// </summary>
         [ProtoMember(4), DataMember]
-        public UpdateStatus Status { get; set; }
+        public UpdateStatus Status
+        {
+            get { return status; }
+            set
+            {
+                status = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Status");
+            }
+        }
 
         /// <summary>
         ///   The date when the update was released
         /// </summary>
         [ProtoMember(5), DataMember]
-        public string ReleaseDate { get; set; }
+        public string ReleaseDate
+        {
+            get { return releaseDate; }
+            set
+            {
+                releaseDate = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("ReleaseDate");
+            }
+        }
 
         /// <summary>
         ///   The full size of the update
         /// </summary>
         [ProtoMember(6), DataMember]
-        public ulong UpdateSize { get; set; }
+        public ulong UpdateSize
+        {
+            get { return updateSize; }
+            set
+            {
+                updateSize = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("UpdateSize");
+            }
+        }
 
         /// <summary>
         ///   The Publisher of the update/application
         /// </summary>
         [ProtoMember(7), DataMember]
-        public ObservableCollection<LocaleString> Publisher { get; set; }
+        public ObservableCollection<LocaleString> Publisher
+        {
+            get { return publisher; }
+            set
+            {
+                publisher = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Publisher");
+            }
+        }
 
         /// <summary>
         ///   The website of the publisher
         /// </summary>
         [ProtoMember(8), DataMember]
-        public string PublisherUrl { get; set; }
+        public string PublisherUrl
+        {
+            get { return publisherUrl; }
+            set
+            {
+                publisherUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("PublisherUrl");
+            }
+        }
 
         #endregion
 
@@ -754,19 +1421,46 @@ namespace SevenUpdate
         ///   The help url of the update: Optional
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
-        public string HelpUrl { get; set; }
+        public string HelpUrl
+        {
+            get { return helpUrl; }
+            set
+            {
+                helpUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("HelpUrl");
+            }
+        }
 
         /// <summary>
         ///   The information/change log url of the update: Optional
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
-        public string InfoUrl { get; set; }
+        public string InfoUrl
+        {
+            get { return infoUrl; }
+            set
+            {
+                infoUrl = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("InfoUrl");
+            }
+        }
 
         /// <summary>
         ///   The date when the update was installed
         /// </summary>
         [ProtoMember(11), DataMember]
-        public string InstallDate { get; set; }
+        public string InstallDate
+        {
+            get { return installDate; }
+            set
+            {
+                installDate = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("InstallDate");
+            }
+        }
 
         #endregion
 

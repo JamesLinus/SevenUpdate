@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Windows.Data;
 using SevenUpdate.Sdk.Properties;
 
@@ -13,7 +14,7 @@ namespace SevenUpdate.Sdk
 {
     internal static class Base
     {
-        internal static string SelectedLocale;
+        public static string SelectedLocale;
 
         /// <summary>
         ///   The application information of the project
@@ -26,7 +27,7 @@ namespace SevenUpdate.Sdk
         internal static Update UpdateInfo { get; set; }
 
         /// <summary>
-        ///   Checks to see if a Url is valid
+        ///   Checks to see if a Url is valid and on the internet
         /// </summary>
         /// <param name = "url">A url to check</param>
         /// <returns>True if url is valid, otherwise false</returns>
@@ -35,6 +36,9 @@ namespace SevenUpdate.Sdk
             try
             {
                 new Uri(url);
+                var request = WebRequest.Create(url);
+                request.Timeout = 15000;
+                request.GetResponse();
             }
             catch
             {
