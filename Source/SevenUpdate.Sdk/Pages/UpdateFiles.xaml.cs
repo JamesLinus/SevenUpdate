@@ -78,8 +78,6 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile(string fullName)
         {
             string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
-            spHelp.Visibility = Visibility.Collapsed;
-            spInput.Visibility = Visibility.Visible;
 
             var file = new UpdateFile
                            {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", FileSize = (ulong) new FileInfo(fullName).Length};
@@ -214,7 +212,6 @@ namespace SevenUpdate.Sdk.Pages
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
             listBox.Items.Clear();
-            spInput.Visibility = Visibility.Collapsed;
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
@@ -260,24 +257,6 @@ namespace SevenUpdate.Sdk.Pages
             //    tbxArgs.IsEnabled = false;
             //    tbxArgs.Text = null;
             //}
-        }
-
-        #endregion
-
-        #region ListBox - Selection Changed
-
-        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (listBox.Items.Count > 0)
-            {
-                spHelp.Visibility = Visibility.Collapsed;
-                spInput.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                spHelp.Visibility = Visibility.Visible;
-                spInput.Visibility = Visibility.Collapsed;
-            }
         }
 
         #endregion

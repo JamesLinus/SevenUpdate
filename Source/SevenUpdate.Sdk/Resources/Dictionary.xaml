@@ -3,8 +3,8 @@
     <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
     <Sdk:BoolToLabelConverter x:Key="boolToLabelConverter" />
     <Sdk:FileActionConverter x:Key="fileActionConverter" />
-    <Sdk:StringToVisibilityConverter x:Key="stringToVisibilityConverter" />
-    <Sdk:StringToBoolConverter x:Key="stringToBoolConverter" />
+    <Sdk:HashToBoolConverter x:Key="hashToBoolConverter" />
+    <Sdk:IntToVisibilityConverter x:Key="intToVisibility" />
     
     <Style x:Key="underlineTextBlock" TargetType="TextBlock">
 		<Style.Triggers>

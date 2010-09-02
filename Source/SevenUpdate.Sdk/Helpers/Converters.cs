@@ -163,43 +163,10 @@ namespace SevenUpdate.Sdk
     }
 
     /// <summary>
-    ///   Converts the FileAction to an int
-    /// </summary>
-    [ValueConversion(typeof(string), typeof(Visibility))]
-    public sealed class StringToVisibilityConverter : IValueConverter
-    {
-        #region IValueConverter Members
-
-        /// <summary>
-        ///   Converts a object into another object
-        /// </summary>
-        /// <returns>the converted object</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var visibility = value as string;
-            if (visibility == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(visibility))
-                return Visibility.Visible;
-
-            return Visibility.Collapsed;
-        }
-
-        /// <summary>
-        ///   Converts a converted object back into it's original form
-        /// </summary>
-        /// <returns>The original object</returns>
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-           return new NotImplementedException();
-        }
-
-        #endregion
-    }
-
-    /// <summary>
-    ///   Converts the FileAction to an int
+    ///   Converts the hash string to a bool
     /// </summary>
     [ValueConversion(typeof(string), typeof(bool))]
-    public sealed class StringToBoolConverter : IValueConverter
+    public sealed class HashToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -209,8 +176,17 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var visibility = value as string;
-            return visibility != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(visibility);
+            var hash = value as string;
+            // If no hash value should return false
+            if (parameter != null)
+            {
+                if (System.Convert.ToBoolean(parameter))
+                    // If  no hash or hash is generating return true, otherwise false
+                    return hash != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(hash);
+            }
+
+            // If  no hash or hash is generating return true, otherwise false
+            return hash == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(hash);
         }
 
         /// <summary>
@@ -220,6 +196,46 @@ namespace SevenUpdate.Sdk
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+
+        /// <summary>
+    ///   Converts the Int to Visibility
+    /// </summary>
+    [ValueConversion(typeof(int), typeof(Visibility))]
+    public sealed class IntToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var count = value is int ? (int) value : 0;
+
+            if (parameter != null)
+            {
+                // If count is less then 1 and should return visible
+                if (count < 1 && System.Convert.ToBoolean(parameter))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+
+            return count < 1 ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+           return new NotImplementedException();
         }
 
         #endregion
