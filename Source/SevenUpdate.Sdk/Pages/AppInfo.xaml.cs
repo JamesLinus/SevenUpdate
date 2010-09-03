@@ -189,6 +189,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (tbxAppLocation == null)
                 return;
+
             tbxAppLocation.Text = null;
             var rule = new AppDirectoryRule {IsRegistryPath = false};
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();

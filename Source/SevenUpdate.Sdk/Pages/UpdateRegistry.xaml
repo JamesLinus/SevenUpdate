@@ -4,7 +4,7 @@
 	<Grid Name="grid">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="176*" MaxWidth="420" />
-			<ColumnDefinition Width="71" />
+			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="579*" />
 			<ColumnDefinition Width="24" />
 		</Grid.ColumnDefinitions>
@@ -64,13 +64,14 @@
 		</ListBox>
 		<GroupBox Grid.Column="1" Grid.Row="1" Header="Registry Action" HorizontalAlignment="Left" Margin="0,10" Grid.ColumnSpan="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<StackPanel Orientation="Horizontal">
-                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Add/Update" Height="16" Margin="10" />
-                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Delete key" Height="16" Margin="10" />
-                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Delete value" Height="16" Margin="10" />
+                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Add/Update" Margin="10" />
+                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Delete key" Margin="10" />
+                <RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBooleanConverter}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Delete value" Margin="10" />
 			</StackPanel>
 		</GroupBox>
 		<TextBlock Text="Key path:" HorizontalAlignment="Left" ToolTip="The full key path where the value will be stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-        <Controls:InfoTextBox Label="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Margin="5,2,2,2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" >
+        <Controls:InfoTextBox Label="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" >
             <Controls:InfoTextBox.Text>
                 <Binding ElementName="listBox" Path="SelectedItem.Key" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
                     <Binding.ValidationRules>
@@ -80,9 +81,9 @@
             </Controls:InfoTextBox.Text>
         </Controls:InfoTextBox>
         <TextBlock Text="Value name:" HorizontalAlignment="Left" ToolTip="Specify a the value located in the keypath" Grid.Column="1" Grid.Row="4" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="My Value Name" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Margin="5,2,2,2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<TextBlock Text="Value data:" ToolTip="Specify data for the value" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                VerticalAlignment="Center" />
+        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="My Value Name" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"
+                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock Text="Value data:" ToolTip="Specify data for the value" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
         <ComboBox MinWidth="75" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" SelectedValue="{Binding Path=ValueKind}" SelectedValuePath="Tag">
             <ComboBoxItem Content="Binary" Tag="Binary" />
             <ComboBoxItem Content="DWord" Tag="DWord"/>
@@ -91,6 +92,6 @@
 			<ComboBoxItem Content="QWord" Tag="QWord" />
 			<ComboBoxItem Content="String" Tag="String" />
 		</ComboBox>
-        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="TestValue" TextWrapping="Wrap" MaxHeight="220" VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="2" Grid.Row="8" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="TestValue" TextWrapping="Wrap" MaxHeight="400" VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="2" Grid.Row="8" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
 	</Grid>
 </Page>

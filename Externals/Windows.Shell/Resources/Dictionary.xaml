@@ -368,7 +368,6 @@
 	<!--Validation TextBox-->
 	<Style TargetType="controls:InfoTextBox">
 		<Setter Property="FontSize" Value="14" />
-		<Setter Property="Margin" Value="5,2,2,2" />
 		<Setter Property="LabelStyle" Value="{StaticResource shadowedLabelStyle}" />
 		<Setter Property="Validation.ErrorTemplate">
 			<Setter.Value>

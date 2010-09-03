@@ -4,15 +4,26 @@
 	<Grid Name="grid">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="24" />
-			<ColumnDefinition Width="800*" />
-			<ColumnDefinition Width="24" />
+			<ColumnDefinition Width="762*" />
+            <ColumnDefinition Width="64*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="32" />
-			<RowDefinition Height="420*" />
-			<RowDefinition Height="44" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+            <RowDefinition Height="129*" />
+            <RowDefinition Height="44" />
 		</Grid.RowDefinitions>
-		<Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="White" />
+		<Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="White" Grid.RowSpan="12" />
 		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Left">
 			<Controls:BackButton Grid.RowSpan="3"></Controls:BackButton>
 			<TextBlock Text="Update information" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0">
@@ -21,78 +32,13 @@
 				</TextBlock.Effect>
 			</TextBlock>
 		</StackPanel>
-		<StackPanel Grid.Column="1" Grid.Row="1">
-			<TextBlock Text="Update name:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." Margin="0,5,0,0" />
-			<Controls:InfoTextBox HorizontalAlignment="Left" MaxLength="75" Label="Performance update for MyAppName (max 75 characters)" TabIndex="0" MinWidth="412" Name="tbxUpdateName">
-				<Controls:InfoTextBox.Text>
-					<Binding Path="Name" Converter="{StaticResource localeStringConverter}" ConverterParameter="Update.Name" UpdateSourceTrigger="PropertyChanged">
-						<Binding.ValidationRules>
-							<Helpers:LocaleStringRule PropertyName="Update.Name" />
-						</Binding.ValidationRules>
-					</Binding>
-				</Controls:InfoTextBox.Text>
-			</Controls:InfoTextBox>
-			<TextBlock Text="Update details:" Padding="2" Margin="0,5,0,0" />
-			<Controls:InfoTextBox MaxLength="300" TextWrapping="Wrap" MaxLines="7" Height="83" Width="650" Label="Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters" TabIndex="4" HorizontalAlignment="Left" Name="tbxUpdateDetails">
-				<Controls:InfoTextBox.Text>
-					<Binding Path="Description" Converter="{StaticResource localeStringConverter}" ConverterParameter="Update.Description" UpdateSourceTrigger="PropertyChanged">
-						<Binding.ValidationRules>
-							<Helpers:LocaleStringRule PropertyName="Update.Description" />
-						</Binding.ValidationRules>
-					</Binding>
-				</Controls:InfoTextBox.Text>
-			</Controls:InfoTextBox>
-			<TextBlock Text="Update information URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="Should be a web page with information about this update." />
-			<Controls:InfoTextBox Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="1" MinWidth="650">
-				<Controls:InfoTextBox.Text>
-					<Binding Path="InfoUrl" UpdateSourceTrigger="PropertyChanged">
-						<Binding.ValidationRules>
-							<Controls:UrlInputRule />
-						</Binding.ValidationRules>
-					</Binding>
-				</Controls:InfoTextBox.Text>
-			</Controls:InfoTextBox>
-			<TextBlock Text="Software license URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="A url pointing to txt or rtf document containing the software license." />
-			<Controls:InfoTextBox Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="2" MinWidth="650">
-				<Controls:InfoTextBox.Text>
-					<Binding Path="LicenseUrl" UpdateSourceTrigger="PropertyChanged">
-						<Binding.ValidationRules>
-							<Controls:UrlInputRule />
-						</Binding.ValidationRules>
-					</Binding>
-				</Controls:InfoTextBox.Text>
-			</Controls:InfoTextBox>
-			<TextBlock Text="Source download directory URL:" Padding="2" HorizontalAlignment="Left" Margin="0,5,0,0" ToolTip="The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access" />
-			<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" TabIndex="3" MinWidth="650">
-				<Controls:InfoTextBox.Text>
-					<Binding Path="DownloadUrl" UpdateSourceTrigger="PropertyChanged">
-						<Binding.ValidationRules>
-							<Controls:UrlInputRule />
-						</Binding.ValidationRules>
-					</Binding>
-				</Controls:InfoTextBox.Text>
-			</Controls:InfoTextBox>
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,10">
-				<TextBlock Text="Release date:" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="The date the update was released to the public." />
-				<DatePicker IsTodayHighlighted="True" DisplayDateEnd="12/21/2012" SelectedDate="{x:Static System:DateTime.Now}" TabIndex="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,4,0" MaxWidth="100" Name="dpReleaseDate" DisplayDateStart="1/1/2006" HorizontalContentAlignment="Left" SelectedDateChanged="dpReleaseDate_SelectedDateChanged" />
-				<Image Name="imgReleaseDate" Source="/Windows.Shell;component/Images/Caution.png" ToolTip="A valid date is required." UseLayoutRounding="True" Margin="4,0,45,0" Visibility="Hidden" />
-				<TextBlock Text="Update importance:" Padding="2" Margin="0,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="Categorize this update by importance." />
-				<ComboBox Height="23" TabIndex="6" MinWidth="65" SelectedValue="{Binding Path=Importance}" SelectedValuePath="Tag">
-					<ComboBoxItem Content="Important" Tag="Important" />
-					<ComboBoxItem Content="Recommended" Tag="Recommended" />
-					<ComboBoxItem Content="Optional" Tag="Optional" />
-					<ComboBoxItem Content="Locale" Tag="Locale" />
-				</ComboBox>
-			</StackPanel>
-			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" />
-		</StackPanel>
-		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" Name="line" />
-		<Rectangle Grid.ColumnSpan="3" Grid.Row="2" Fill="#FFF0F0F0" Name="rectangle" />
-		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
+		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="13" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="3" Name="line" />
+		<Rectangle Grid.ColumnSpan="3" Grid.Row="13" Fill="#FFF0F0F0" Name="rectangle" />
+		<StackPanel Grid.Column="1" Grid.Row="13" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" />
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" />
 		</StackPanel>
-		<ComboBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="80" SelectionChanged="Locale_SelectionChanged" SelectedIndex="0" Name="cbxLocale">
+		<ComboBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="80" SelectionChanged="Locale_SelectionChanged" SelectedIndex="0" Name="cbxLocale" Grid.ColumnSpan="2" Margin="0,5,24,5">
 			<ComboBoxItem Content="English" Tag="en" />
 			<ComboBoxItem Content="Arabic" Tag="ar" />
 			<ComboBoxItem Content="Bengali" Tag="bn" />
@@ -106,5 +52,70 @@
 			<ComboBoxItem Content="Russian" Tag="ru" />
 			<ComboBoxItem Content="Spanish" Tag="es" />
 		</ComboBox>
-	</Grid>
+		<TextBlock Text="Update name:" Padding="2" HorizontalAlignment="Left" ToolTip="This should describe your update and include the name of the software." Margin="0,10,0,0" Grid.Column="1" Grid.Row="1" />
+		<Controls:InfoTextBox MaxLength="100" Label="Performance update for MyAppName (max 100 characters)" TabIndex="0" Name="tbxUpdateName" Grid.Column="1" Grid.Row="2">
+			<Controls:InfoTextBox.Text>
+				<Binding Path="Name" Converter="{StaticResource localeStringConverter}" ConverterParameter="Update.Name" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<Helpers:LocaleStringRule PropertyName="Update.Name" />
+					</Binding.ValidationRules>
+				</Binding>
+			</Controls:InfoTextBox.Text>
+		</Controls:InfoTextBox>
+		<TextBlock Text="Update details:" Padding="2" Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" />
+		<Controls:InfoTextBox MaxLength="300" TextWrapping="Wrap" MaxLines="7" Label="Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters" TabIndex="4" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4">
+			<Controls:InfoTextBox.Text>
+				<Binding Path="Description" Converter="{StaticResource localeStringConverter}" ConverterParameter="Update.Description" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<Helpers:LocaleStringRule PropertyName="Update.Description" />
+					</Binding.ValidationRules>
+				</Binding>
+			</Controls:InfoTextBox.Text>
+		</Controls:InfoTextBox>
+		<TextBlock Text="Update information URL:" Padding="2" HorizontalAlignment="Left" ToolTip="Should be a web page with information about this update." Grid.Column="1" Grid.Row="5" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Label="(Optional) http://sevenupdate.com/SDK-Update" TabIndex="1" Grid.Column="1" Grid.Row="6">
+			<Controls:InfoTextBox.Text>
+				<Binding Path="InfoUrl" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<Controls:UrlInputRule />
+					</Binding.ValidationRules>
+				</Binding>
+			</Controls:InfoTextBox.Text>
+		</Controls:InfoTextBox>
+		<TextBlock Text="Software license URL:" Padding="2" HorizontalAlignment="Left" ToolTip="A url pointing to txt or rtf document containing the software license." Grid.Column="1" Grid.Row="7" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Label="(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)" TabIndex="2" Grid.Column="1" Grid.Row="8">
+			<Controls:InfoTextBox.Text>
+				<Binding Path="LicenseUrl" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<Controls:UrlInputRule />
+					</Binding.ValidationRules>
+				</Binding>
+			</Controls:InfoTextBox.Text>
+		</Controls:InfoTextBox>
+		<TextBlock Text="Source download directory URL:" Padding="2" HorizontalAlignment="Left" ToolTip="The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" TabIndex="3" Grid.Column="1" Grid.Row="10">
+			<Controls:InfoTextBox.Text>
+				<Binding Path="DownloadUrl" UpdateSourceTrigger="PropertyChanged">
+					<Binding.ValidationRules>
+						<Controls:UrlInputRule />
+					</Binding.ValidationRules>
+				</Binding>
+			</Controls:InfoTextBox.Text>
+		</Controls:InfoTextBox>
+		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" Margin="0,20,0,0">
+			<TextBlock Text="Release date:" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="The date the update was released to the public." />
+			<DatePicker IsTodayHighlighted="True" DisplayDateEnd="12/21/2012" SelectedDate="{x:Static System:DateTime.Now}" TabIndex="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,4,0" MaxWidth="100" Name="dpReleaseDate" DisplayDateStart="1/1/2006" SelectedDateChanged="dpReleaseDate_SelectedDateChanged" />
+			<Image Name="imgReleaseDate" Source="/Windows.Shell;component/Images/Caution.png" ToolTip="A valid date is required." UseLayoutRounding="True" Margin="4,0,0,0" Visibility="Hidden" VerticalAlignment="Center" />
+			<TextBlock Text="Update importance:" Padding="2" Margin="50,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="Categorize this update by importance." />
+			<ComboBox TabIndex="6" MinWidth="65" SelectedValue="{Binding Path=Importance}" SelectedValuePath="Tag"
+                    VerticalAlignment="Center" MinHeight="23">
+				<ComboBoxItem Content="Important" Tag="Important" />
+				<ComboBoxItem Content="Recommended" Tag="Recommended" />
+				<ComboBoxItem Content="Optional" Tag="Optional" />
+				<ComboBoxItem Content="Locale" Tag="Locale" />
+			</ComboBox>
+		</StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left"
+VerticalAlignment="Top" Width="200" Margin="0,32,0,0" />
+    </Grid>
 </Page>
