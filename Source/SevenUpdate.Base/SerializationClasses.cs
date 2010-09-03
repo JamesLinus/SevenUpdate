@@ -919,7 +919,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The SHA1 hash of the current file
+        ///   The SHA-2 hash of the current file
         /// </summary>
         [ProtoMember(4), DataMember]
         public string Hash

@@ -283,8 +283,8 @@ namespace SevenUpdate
             LPTSTR szComponentCode
         );
         */
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
+
+        #region InstallState enum
 
         public enum InstallState
         {
@@ -304,9 +304,14 @@ namespace SevenUpdate
             Default = 5
         }
 
+        #endregion
+
         public const int MaxFeatureLength = 38;
         public const int MaxGuidLength = 38;
         public const int MaxPathLength = 1024;
+
+        [DllImport("msi.dll", CharSet = CharSet.Auto)]
+        private static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
 
         /*
         INSTALLSTATE MsiGetComponentPath(
@@ -316,29 +321,26 @@ namespace SevenUpdate
           DWORD* pcchBuf
         );
         */
+
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+        private static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
 
         public static string ParseShortcut(string file)
         {
-            StringBuilder product = new StringBuilder(MaxGuidLength + 1);
-            StringBuilder feature = new StringBuilder(MaxFeatureLength + 1);
-            StringBuilder component = new StringBuilder(MaxGuidLength + 1);
+            var product = new StringBuilder(MaxGuidLength + 1);
+            var feature = new StringBuilder(MaxFeatureLength + 1);
+            var component = new StringBuilder(MaxGuidLength + 1);
 
             MsiGetShortcutTarget(file, product, feature, component);
 
             int pathLength = MaxPathLength;
-            StringBuilder path = new StringBuilder(pathLength);
+            var path = new StringBuilder(pathLength);
 
             InstallState installState = MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
             if (installState == InstallState.Local)
-            {
                 return path.ToString();
-            }
             else
-            {
                 return null;
-            }
         }
     }
 }

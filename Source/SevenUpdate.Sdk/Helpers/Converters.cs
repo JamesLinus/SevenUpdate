@@ -16,7 +16,7 @@ namespace SevenUpdate.Sdk
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
-    public sealed class LocaleStringConverter : IValueConverter
+    public sealed class StringToLocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -132,10 +132,10 @@ namespace SevenUpdate.Sdk
     }
 
     /// <summary>
-    ///   Converts the FileAction to an int
+    ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof (FileAction), typeof (int))]
-    public sealed class FileActionConverter : IValueConverter
+    [ValueConversion(typeof (string), typeof (bool))]
+    public sealed class StringToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -145,8 +145,17 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var val = value is FileAction ? (FileAction) value : FileAction.Update;
-            return (int) val;
+            var stringValue = value as string;
+            // If no value should return false
+            if (parameter != null)
+            {
+                if (System.Convert.ToBoolean(parameter))
+                    // If  no value or hash is generating return true, otherwise false
+                    return stringValue != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(stringValue);
+            }
+
+            // If  no value or hash is generating return true, otherwise false
+            return stringValue == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(stringValue);
         }
 
         /// <summary>
@@ -155,18 +164,17 @@ namespace SevenUpdate.Sdk
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var enumIndex = value is int ? (int) value : 0;
-            return (FileAction) Enum.Parse(typeof (FileAction), enumIndex.ToString());
+            return new NotImplementedException();
         }
 
         #endregion
     }
 
     /// <summary>
-    ///   Converts the hash string to a bool
+    ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof (string), typeof (bool))]
-    public sealed class HashToBoolConverter : IValueConverter
+    [ValueConversion(typeof (string), typeof (Visibility))]
+    public sealed class StringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -176,17 +184,22 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var hash = value as string;
-            // If no hash value should return false
+            var stringValue = value as string;
+            // If no value should return false
             if (parameter != null)
             {
                 if (System.Convert.ToBoolean(parameter))
-                    // If  no hash or hash is generating return true, otherwise false
-                    return hash != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(hash);
+                {
+                    // If  no value or hash is generating return true, otherwise false
+                    if (stringValue != (Resources.CalculatingHash + "...") && !String.IsNullOrEmpty(stringValue))
+                        return Visibility.Visible;
+                    else
+                        return Visibility.Collapsed;
+                }
             }
 
-            // If  no hash or hash is generating return true, otherwise false
-            return hash == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(hash);
+            // If  no value or hash is generating return true, otherwise false
+            return stringValue == (Resources.CalculatingHash + "...") || String.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -240,7 +253,48 @@ namespace SevenUpdate.Sdk
         #endregion
     }
 
-    public class EnumToBooleanConverter : IValueConverter
+    /// <summary>
+    ///   Converts the Int to Visibility
+    /// </summary>
+    [ValueConversion(typeof (int), typeof (bool))]
+    public sealed class IntToBoolConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var count = value is int ? (int) value : 0;
+
+            if (parameter != null)
+            {
+                // If count is less then 1 and should return visible
+                return count < 1 && System.Convert.ToBoolean(parameter);
+            }
+
+            return count < 1 ? false : true;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the Enum to a Boolean
+    /// </summary>
+    [ValueConversion(typeof (Enum), typeof (bool))]
+    public sealed class StringToLocaleString : IValueConverter
     {
         #region IValueConverter Members
 
@@ -252,6 +306,27 @@ namespace SevenUpdate.Sdk
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value.Equals(false) ? DependencyProperty.UnsetValue : parameter;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the string to a DateTime
+    /// </summary>
+    [ValueConversion(typeof (DateTime), typeof (string))]
+    public sealed class DateConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value != null ? DateTime.Parse(value.ToString()) : DateTime.Now;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value == null ? DateTime.Now.ToShortDateString() : ((DateTime) value).ToShortDateString();
         }
 
         #endregion

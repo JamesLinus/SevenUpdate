@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -40,12 +39,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateShortcuts : Page
     {
-        #region Fields
-
-        private string locale;
-
-        #endregion
-
         #region Contructors
 
         /// <summary>
@@ -195,14 +188,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         #endregion
 
-        private void tbxShortcutArguments_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void ShortcutDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (Base.UpdateInfo.Shortcuts == null)
                 Base.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
@@ -211,7 +199,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             bool found = false;
-            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == locale))
+            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == Base.SelectedLocale))
             {
                 t.Value = tbxShortcutDescription.Text;
                 found = true;
@@ -220,22 +208,8 @@ namespace SevenUpdate.Sdk.Pages
             if (found)
                 return;
 
-            var ls = new LocaleString {Lang = locale, Value = tbxShortcutDescription.Text};
-            Base.UpdateInfo.Description.Add(ls);
-        }
-
-        private void listBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            if (listBox.Items.Count > -1)
-            {
-                miRemoveAll.IsEnabled = true;
-                miRemove.IsEnabled = listBox.SelectedIndex > -1;
-            }
-            else
-            {
-                miRemove.IsEnabled = false;
-                miRemoveAll.IsEnabled = false;
-            }
+            var ls = new LocaleString {Lang = Base.SelectedLocale, Value = tbxShortcutDescription.Text};
+            Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Add(ls);
         }
     }
 }

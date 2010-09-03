@@ -74,6 +74,7 @@ namespace SevenUpdate.Sdk.Helpers
             switch (PropertyName)
             {
                 case "App.Name":
+
                     #region Code
 
                     if (Base.AppInfo.Name == null)
@@ -86,11 +87,12 @@ namespace SevenUpdate.Sdk.Helpers
                         Base.AppInfo.Name.RemoveAt(x);
                         break;
                     }
-                    
+
                     #endregion
 
                     break;
                 case "App.Publisher":
+
                     #region Code
 
                     if (Base.AppInfo.Publisher == null)
@@ -103,11 +105,12 @@ namespace SevenUpdate.Sdk.Helpers
                         Base.AppInfo.Publisher.RemoveAt(x);
                         break;
                     }
-                                        
+
                     #endregion
 
                     break;
                 case "App.Description":
+
                     #region Code
 
                     if (Base.AppInfo.Description == null)
@@ -120,11 +123,12 @@ namespace SevenUpdate.Sdk.Helpers
                         Base.AppInfo.Description.RemoveAt(x);
                         break;
                     }
-                                        
+
                     #endregion
 
                     break;
                 case "Update.Description":
+
                     #region Code
 
                     if (Base.UpdateInfo.Description == null)
@@ -137,11 +141,12 @@ namespace SevenUpdate.Sdk.Helpers
                         Base.UpdateInfo.Description.RemoveAt(x);
                         break;
                     }
-                                        
+
                     #endregion
 
                     break;
                 case "Update.Name":
+
                     #region Code
 
                     if (Base.UpdateInfo.Name == null)
@@ -154,7 +159,7 @@ namespace SevenUpdate.Sdk.Helpers
                         Base.UpdateInfo.Name.RemoveAt(x);
                         break;
                     }
-                                        
+
                     #endregion
 
                     break;

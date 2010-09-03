@@ -52,6 +52,9 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateFiles()
         {
             InitializeComponent();
+
+            SevenUpdate.Base.HashGeneratedEventHandler += Base_HashGeneratedEventHandler;
+
             if (Base.UpdateInfo.Files == null)
                 Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
 
@@ -62,9 +65,13 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
-            SevenUpdate.Base.HashGeneratedEventHandler += Base_HashGeneratedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
+        {
+            tbHashCalculating.Visibility = e.IsHashGenerating ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion
@@ -86,12 +93,8 @@ namespace SevenUpdate.Sdk.Pages
 
             listBox.SelectedIndex = (listBox.Items.Count - 1);
 
-            SevenUpdate.Base.GetHashAsync(fullName);
-        }
-
-        private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
-        {
-            Base.UpdateInfo.Files[listBox.SelectedIndex].Hash = e.Hash;
+            tbHashCalculating.Visibility = Visibility.Visible;
+            SevenUpdate.Base.GetHashAsync(ref file);
         }
 
         private void AddFiles(string[] files)
@@ -104,48 +107,6 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region UI Events
-
-        #region TextBox - Text Changed
-
-        //private void Textbox_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    var source = e.Source as InfoTextBox;
-        //    string path = SevenUpdate.Base.ConvertPath(source.Text, true, true);
-
-        //    if (Base.CheckUrl(path))
-        //    {
-        //        switch (source.Name)
-        //        {
-        //            case "tbxDownloadUrl":
-        //                if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
-        //                {
-        //                    if (listBox.SelectedIndex > -1)
-        //                        Base.UpdateInfo.Files[listBox.SelectedIndex].Source = SevenUpdate.Base.ConvertPath(tbxDownloadUrl.Text, false, Base.AppInfo.Is64Bit);
-
-        //                    if (Path.GetFileName(tbxDownloadUrl.Text) != "")
-        //                        imgDownloadUrl.Visibility = Visibility.Collapsed;
-        //                }
-        //                break;
-
-        //            case "tbxInstallUri":
-        //                if (Path.GetFileName(path).ContainsAny(Path.GetInvalidPathChars()) == false)
-        //                {
-        //                    if (listBox.SelectedIndex > -1)
-        //                        Base.UpdateInfo.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.ConvertPath(tbxInstallUri.Text, false, Base.AppInfo.Is64Bit);
-
-        //                    if (Path.GetFileName(tbxInstallUri.Text) != "")
-        //                        imgInstallUri.Visibility = Visibility.Collapsed;
-        //                }
-        //                break;
-        //        }
-        //    }
-        //    else
-        //    {
-
-        //    }
-        //}
-
-        #endregion
 
         #region TextBox - Lost Keyboard Focus
 
@@ -160,18 +121,14 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #region RadioButton - Checked
-
-        #endregion
-
         #region Button - Click
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (Base.UpdateInfo.Files.Count < 1)
+            //if (Base.UpdateInfo.Files.Count < 1 || SevenUpdate.Base.IsHashGenerating)
             //    App.ShowInputErrorMessage();
             //else
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -196,9 +153,9 @@ namespace SevenUpdate.Sdk.Pages
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
-            listBox.IsEnabled = false;
-            SevenUpdate.Base.GetHashAsync(cfd.FileName);
-            Base.UpdateInfo.Files[listBox.SelectedIndex].FileSize = (ulong) new FileInfo(cfd.FileName).Length;
+            var selectedItem = listBox.SelectedItem as UpdateFile;
+            selectedItem.FileSize = (ulong) new FileInfo(cfd.FileName).Length;
+            SevenUpdate.Base.GetHashAsync(ref selectedItem, cfd.FileName);
         }
 
         #endregion
@@ -207,7 +164,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Remove(listBox.SelectedItem);
+            Base.UpdateInfo.Files.RemoveAt(listBox.SelectedIndex);
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
@@ -217,8 +174,6 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
-            // App.ShowInputErrorMessage();
-
             var cfd = new CommonOpenFileDialog {Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 AddFile(cfd.FileName);
@@ -226,56 +181,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            //  App.ShowInputErrorMessage();
-
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
-        }
-
-        #endregion
-
-        #region ComboBox - Selection Changed
-
-        private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Base.UpdateInfo.Files == null)
-                return;
-            if (Base.UpdateInfo.Files.Count > 0 && listBox.SelectedIndex > -1)
-                Base.UpdateInfo.Files[listBox.SelectedIndex].Action = (FileAction) cbxUpdateType.SelectedIndex;
-
-            //if (cbxUpdateType.SelectedIndex != 4 && cbxUpdateType.SelectedIndex != 6 && cbxUpdateType.SelectedIndex != 8)
-            //{
-            //    // imgDownloadUrl.Visibility = Base.CheckUrl(tbxDownloadUrl.Text) ? Visibility.Collapsed : Visibility.Visible;
-
-            //    tbxDownloadUrl.IsEnabled = true;
-            //    tbxArgs.IsEnabled = true;
-            //}
-            //else
-            //{
-            //    tbxDownloadUrl.Text = null;
-            //    tbxDownloadUrl.IsEnabled = false;
-            //    tbxArgs.IsEnabled = false;
-            //    tbxArgs.Text = null;
-            //}
-        }
-
-        #endregion
-
-        #region ContextMenu - Opening
-
-        private void listBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            if (listBox.Items.Count > -1)
-            {
-                miRemoveAll.IsEnabled = true;
-                miRemove.IsEnabled = listBox.SelectedIndex > -1;
-            }
-            else
-            {
-                miRemove.IsEnabled = false;
-                miRemoveAll.IsEnabled = false;
-            }
         }
 
         #endregion

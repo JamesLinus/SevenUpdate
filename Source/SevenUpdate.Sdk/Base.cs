@@ -1,12 +1,7 @@
 ﻿#region
 
 using System;
-using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Net;
-using System.Windows.Data;
-using SevenUpdate.Sdk.Properties;
 
 #endregion
 

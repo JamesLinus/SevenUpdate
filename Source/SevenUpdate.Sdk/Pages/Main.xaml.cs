@@ -78,6 +78,7 @@ namespace SevenUpdate.Sdk.Pages
             Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
             Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
             Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
+            Base.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

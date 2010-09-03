@@ -3,9 +3,8 @@
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="246*" />
-			<RowDefinition Height="21*" />
-			<RowDefinition Height="44" />
+			<RowDefinition Height="243*" />
+            <RowDefinition Height="65*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="12" />
@@ -13,11 +12,11 @@
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Downloading License Agreement, please wait..." VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
-		<StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3">
+		<StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
 			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="Action_Click" IsEnabled="False" ButtonText="Finish" />
 			<Button Content="Cancel" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel_Click" />
 		</StackPanel>
-		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Top" Grid.RowSpan="2" Margin="20,0.944,0,0">
+		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Top" Margin="20,1,0,0">
 			<RadioButton Content="Accept the terms" Name="rbAccept" Padding="4,0,0,7" MinHeight="17" Checked="Accept_Checked" IsEnabled="False" />
 			<RadioButton Content="Decline" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
 		</StackPanel>

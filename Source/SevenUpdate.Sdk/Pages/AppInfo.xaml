@@ -60,7 +60,7 @@
 		<TextBlock Text="Application name:" Padding="2" HorizontalAlignment="Left" ToolTip="The name of the application to be updated." Grid.Column="1" Grid.Row="1" Margin="0,10,0,0" Grid.ColumnSpan="2" />
 		<Controls:InfoTextBox MaxLength="100" Label="Seven Update SDK (max 100 characters)" TabIndex="0" Name="tbxAppName" Grid.Column="1" Grid.Row="2" Margin="0,0,40,0" Grid.ColumnSpan="2">
 			<Controls:InfoTextBox.Text>
-				<Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Name">
+				<Binding Path="Name" UpdateSourceTrigger="PropertyChanged" Converter="{StaticResource stringToLocaleString}" ConverterParameter="App.Name">
 					<Binding.ValidationRules>
 						<Helpers:LocaleStringRule PropertyName="App.Name" />
 					</Binding.ValidationRules>
@@ -73,9 +73,9 @@
 			<RadioButton Content="File System" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" TabIndex="2" Checked="rbtnFileSystem_Checked" />
 			<RadioButton Content="Registry" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TabIndex="3" Checked="rbtnRegistry_Checked" />
 		</StackPanel>
-		<TextBlock Text="Registry key:" HorizontalAlignment="Left" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource VisibilityOfBool}}" ToolTip="The full key path where the value containing the install location of the application is stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" Grid.Column="1" Grid.Row="4" Margin="0,10,10,0" VerticalAlignment="Center" Padding="2" />
-		<TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource VisibilityOfBool}}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,10,10,0" Padding="2" />
-		<Controls:InfoTextBox TabIndex="4" FontSize="14" Name="tbxAppLocation" LostKeyboardFocus="tbxAppLocation_LostKeyboardFocus" Label="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToLabelConverter}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="0,10,0,0">
+		<TextBlock Text="Registry key:" HorizontalAlignment="Left" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToVisibility}}" ToolTip="The full key path where the value containing the install location of the application is stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" Grid.Column="1" Grid.Row="4" Margin="0,10,10,0" VerticalAlignment="Center" Padding="2" />
+		<TextBlock Text="Value name:" ToolTip="The name of the value that contains the install location of the application" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToVisibility}}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,10,10,0" Padding="2" />
+		<Controls:InfoTextBox TabIndex="4" FontSize="14" Name="tbxAppLocation" LostKeyboardFocus="tbxAppLocation_LostKeyboardFocus" Label="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToLabel}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="0,10,0,0">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="Directory" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
@@ -84,8 +84,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" VerticalAlignment="Center" Foreground="#FF0066CC" MouseDown="Browse_MouseDown" Cursor="Hand" Visibility="{Binding ElementName=rbtnFileSystem, Path=IsChecked, Converter={StaticResource VisibilityOfBool}}" Grid.Column="3" Grid.Row="4" Margin="30,10,0,0" HorizontalAlignment="Left" />
-		<Controls:InfoTextBox TabIndex="5" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource VisibilityOfBool}}" FontSize="14" Name="tbxValueName" Label="Install Location" Grid.Column="2" Grid.Row="5" Margin="0,10,0,0">
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the application directory" VerticalAlignment="Center" Foreground="#FF0066CC" MouseDown="Browse_MouseDown" Cursor="Hand" Visibility="{Binding ElementName=rbtnFileSystem, Path=IsChecked, Converter={StaticResource boolToVisibility}}" Grid.Column="3" Grid.Row="4" Margin="30,10,0,0" HorizontalAlignment="Left" />
+		<Controls:InfoTextBox TabIndex="5" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToVisibility}}" FontSize="14" Name="tbxValueName" Label="Install Location" Grid.Column="2" Grid.Row="5" Margin="0,10,0,0">
 			<TextBox.Text>
 				<Binding Path="ValueName" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
@@ -97,7 +97,7 @@
 		<TextBlock Text="Application description:" Padding="2" HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Margin="0,10,0,0" />
 		<Controls:InfoTextBox MaxLength="300" TextWrapping="Wrap" MaxLines="7" Label="Write a summary about the application here, but make it no longer than 300 characters" TabIndex="6" Name="tbxAppDescription" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7" Margin="0,0,40,0">
 			<Controls:InfoTextBox.Text>
-				<Binding Path="Description" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Description" UpdateSourceTrigger="PropertyChanged">
+				<Binding Path="Description" Converter="{StaticResource stringToLocaleString}" ConverterParameter="App.Description" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
 						<Helpers:LocaleStringRule PropertyName="App.Description" />
 					</Binding.ValidationRules>
@@ -109,10 +109,9 @@
 			<Separator MinWidth="200" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
 		</StackPanel>
 		<TextBlock Text="Publisher name:" Padding="2" ToolTip="The software company or development team." HorizontalAlignment="Left" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" Grid.ColumnSpan="2" />
-		<Controls:InfoTextBox Label="Seven Software" TabIndex="7" Name="tbxPublisher" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10"
-                Margin="0,0,40,0">
+		<Controls:InfoTextBox Label="Seven Software" TabIndex="7" Name="tbxPublisher" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="10" Margin="0,0,40,0">
 			<Controls:InfoTextBox.Text>
-				<Binding Path="Publisher" Converter="{StaticResource localeStringConverter}" ConverterParameter="App.Publisher" UpdateSourceTrigger="PropertyChanged">
+				<Binding Path="Publisher" Converter="{StaticResource stringToLocaleString}" ConverterParameter="App.Publisher" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
 						<Helpers:LocaleStringRule PropertyName="App.Publisher" />
 					</Binding.ValidationRules>
@@ -120,8 +119,7 @@
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
 		<TextBlock Text="Application web site:" Padding="2" ToolTip="A url pointing to the web site of the publisher or the software." HorizontalAlignment="Left" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="11" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Label="(Optional) http://sevenupdate.com" TabIndex="8" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="12"
-                Margin="0,0,40,0">
+		<Controls:InfoTextBox Label="(Optional) http://sevenupdate.com" TabIndex="8" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="12" Margin="0,0,40,0">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="AppUrl" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>

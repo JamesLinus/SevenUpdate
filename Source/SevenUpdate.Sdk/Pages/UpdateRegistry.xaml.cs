@@ -168,19 +168,5 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #endregion
-
-        private void listBox_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            if (listBox.Items.Count > -1)
-            {
-                miRemoveAll.IsEnabled = true;
-                miRemove.IsEnabled = listBox.SelectedIndex > -1;
-            }
-            else
-            {
-                miRemove.IsEnabled = false;
-                miRemoveAll.IsEnabled = false;
-            }
-        }
     }
 }

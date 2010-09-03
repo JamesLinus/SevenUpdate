@@ -57,7 +57,6 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
-            dpReleaseDate.SelectedDate = DateTime.Today;
         }
 
         #endregion
@@ -68,7 +67,6 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SaveInfo();
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
         }
 
@@ -110,13 +108,6 @@ namespace SevenUpdate.Sdk.Pages
                 tbxUpdateDetails.Text = null;
         }
 
-        private void dpReleaseDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (dpReleaseDate == null || imgReleaseDate == null)
-                return;
-            imgReleaseDate.Visibility = dpReleaseDate.SelectedDate.HasValue ? Visibility.Hidden : Visibility.Visible;
-        }
-
         #endregion
 
         #region Aero
@@ -138,21 +129,12 @@ namespace SevenUpdate.Sdk.Pages
             tbxUpdateName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
-            if (Base.UpdateInfo.ReleaseDate != null)
-                dpReleaseDate.SelectedDate = DateTime.Parse(Base.UpdateInfo.ReleaseDate);
-
             // Load Values
             foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
                 tbxUpdateDetails.Text = t.Value;
 
             foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == "en"))
                 tbxUpdateName.Text = t.Value;
-        }
-
-        private void SaveInfo()
-        {
-            if (dpReleaseDate.SelectedDate != null)
-                Base.UpdateInfo.ReleaseDate = dpReleaseDate.SelectedDate.Value.ToShortDateString();
         }
 
         #endregion
