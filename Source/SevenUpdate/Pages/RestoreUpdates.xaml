@@ -18,7 +18,7 @@
 					<StackPanel Orientation="Horizontal">
 						<CheckBox Click="CheckBox_Click">
 							<CheckBox.IsChecked>
-								<Binding Path="Status" Converter="{StaticResource enumConverter}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
+								<Binding Path="Status" Converter="{StaticResource updateStatusToBool}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
 							</CheckBox.IsChecked>
 						</CheckBox>
 					</StackPanel>
@@ -33,8 +33,8 @@
 			<ListView.View>
 				<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
 					<GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-					<GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Header="Name" Width="400" />
-					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource stringLocaleConverter}}" Header="Importance" Width="125" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Name" Width="400" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Importance" Width="125" />
 					<GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100" />
 				</GridView>
 			</ListView.View>

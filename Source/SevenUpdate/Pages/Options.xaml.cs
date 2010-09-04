@@ -57,6 +57,8 @@ namespace SevenUpdate.Pages
         /// </summary>
         private static ObservableCollection<Sua> machineAppList;
 
+        private Config config;
+
         /// <summary>
         ///   The shield Icon uri
         /// </summary>
@@ -76,63 +78,11 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        ///   Loads the configuration and sets the UI
-        /// </summary>
-        private void LoadSettings()
-        {
-            cbxRecommended.IsChecked = App.Settings.IncludeRecommended;
-
-            switch (App.Settings.AutoOption)
-            {
-                case AutoUpdateOption.Install:
-                    cmbUpdateOption.SelectedIndex = 0;
-                    break;
-
-                case AutoUpdateOption.Download:
-                    cmbUpdateOption.SelectedIndex = 1;
-                    break;
-
-                case AutoUpdateOption.Notify:
-                    cmbUpdateOption.SelectedIndex = 2;
-                    break;
-
-                case AutoUpdateOption.Never:
-                    cmbUpdateOption.SelectedIndex = 3;
-                    break;
-            }
-        }
-
-        /// <summary>
         ///   Saves the Settings
         /// </summary>
         private void SaveSettings()
         {
-            var options = new Config();
-
-            if (cmbUpdateOption.SelectedIndex == 0)
-                options.AutoOption = AutoUpdateOption.Install;
-
-            if (cmbUpdateOption.SelectedIndex == 1)
-                options.AutoOption = AutoUpdateOption.Download;
-
-            if (cmbUpdateOption.SelectedIndex == 2)
-                options.AutoOption = AutoUpdateOption.Notify;
-
-            if (cmbUpdateOption.SelectedIndex == 3)
-                options.AutoOption = AutoUpdateOption.Never;
-
-            if (cbxRecommended.IsChecked != null)
-                options.IncludeRecommended = ((bool) cbxRecommended.IsChecked);
-
-
-            if (cmbUpdateOption.SelectedIndex == 3)
-            {
-                options.AutoOption = AutoUpdateOption.Never;
-
-                AdminClient.SaveSettings(false, options, machineAppList);
-            }
-            else
-                AdminClient.SaveSettings(true, options, machineAppList);
+            AdminClient.SaveSettings(config.AutoOption != AutoUpdateOption.Never, config, machineAppList);
         }
 
         /// <summary>
@@ -267,18 +217,16 @@ namespace SevenUpdate.Pages
         /// <param name = "e" />
         private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (cmbUpdateOption.SelectedIndex)
+            switch (config.AutoOption)
             {
-                case 0:
+                case AutoUpdateOption.Install:
+                case AutoUpdateOption.Download:
                     ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
                     break;
-                case 1:
-                    ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
-                    break;
-                case 2:
+                case AutoUpdateOption.Notify:
                     ShieldIcon = null;
                     break;
-                case 3:
+                case AutoUpdateOption.Never:
                     ShieldIcon = (BitmapImage) App.Resources["RedShield"];
                     break;
             }
@@ -290,7 +238,8 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             lvApps.Cursor = Cursors.Wait;
-            LoadSettings();
+            config = App.Settings;
+            DataContext = config;
             new Thread(DownloadSul).Start();
         }
 

@@ -1,12 +1,11 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.Options" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="Options" MinHeight="500" MinWidth="850" ShowsNavigationUI="False" d:DesignWidth="850" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Pages.Options" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" Title="Options" MinHeight="500" MinWidth="850" ShowsNavigationUI="False" d:DesignWidth="850" Loaded="Page_Loaded" d:DesignHeight="500">
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="24" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="622.761*" />
-			<ColumnDefinition Width="94.682" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="758*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -21,16 +20,16 @@
 			<RowDefinition Height="239.34*" />
 			<RowDefinition Height="44" />
 		</Grid.RowDefinitions>
-		<TextBlock HorizontalAlignment="Left" Text="Choose how Seven Update can install updates" VerticalAlignment="Top" FontSize="16" Foreground="#FF003399" Grid.ColumnSpan="2" Grid.Column="1" Margin="0,12,0,0" Padding="5" />
-		<TextBlock HorizontalAlignment="Left" Text="When your computer is online, Seven Update can automatically check for updates and download them using these settings." VerticalAlignment="Top" Padding="5" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" Margin="0,5" />
-		<Rectangle Grid.ColumnSpan="4" Grid.Row="10" Fill="#FFF0F0F0" />
-		<TextBlock HorizontalAlignment="Left" Padding="5" Text="Select the programs that will be updated with Seven Update." VerticalAlignment="Top" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="8" />
-		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" />
-		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="4" Grid.Row="9" Grid.RowSpan="1">
+		<TextBlock HorizontalAlignment="Left" Text="Choose how Seven Update can install updates" VerticalAlignment="Top" FontSize="16" Foreground="#FF003399" Grid.Column="1" Margin="0,12,0,0" Padding="5" Grid.ColumnSpan="2" />
+		<TextBlock HorizontalAlignment="Left" Text="When your computer is online, Seven Update can automatically check for updates and download them using these settings." VerticalAlignment="Top" Padding="5" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0" Grid.ColumnSpan="2" />
+		<Rectangle Grid.ColumnSpan="3" Grid.Row="10" Fill="#FFF0F0F0" />
+		<TextBlock HorizontalAlignment="Left" Padding="5" Text="Select the programs that will be updated with Seven Update." VerticalAlignment="Top" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" />
+		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="3" />
+		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3" Grid.Row="9">
 			<ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black" BorderThickness="0" AlternationCount="2">
 				<ListView.Resources>
 					<ToolTip x:Key="itemToolTip">
-						<TextBlock Text="{Binding Path=Description, Converter={StaticResource localeStringConverter}}" TextWrapping="Wrap" MaxWidth="500" />
+						<TextBlock Text="{Binding Path=Description, Converter={StaticResource localeStringToString}}" TextWrapping="Wrap" MaxWidth="500" />
 					</ToolTip>
 					<DataTemplate x:Key="itemCheckBox">
 						<StackPanel Orientation="Horizontal">
@@ -41,7 +40,7 @@
 						<StackPanel Orientation="Horizontal">
 							<TextBlock>
 								<Hyperlink NavigateUri="{Binding Path=AppUrl}" RequestNavigate="Hyperlink_RequestNavigate" Foreground="#FF0066CC">
-									<TextBlock Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringConverter}}" />
+									<TextBlock Text="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" />
 								</Hyperlink>
 							</TextBlock>
 						</StackPanel>
@@ -51,8 +50,8 @@
 					<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
 						<GridViewColumn CellTemplate="{StaticResource itemCheckBox}" Width="25" />
 						<GridViewColumn CellTemplate="{StaticResource itemLink}" Header="Program" Width="350" />
-						<GridViewColumn DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringConverter}}" Header="Publisher" Width="250" />
-						<GridViewColumn Header="Architecture" Width="100" DisplayMemberBinding="{Binding Path=Is64Bit, Mode=OneWay, Converter={StaticResource is64BitConverter}}" />
+						<GridViewColumn DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Publisher" Width="250" />
+						<GridViewColumn Header="Architecture" Width="100" DisplayMemberBinding="{Binding Path=Is64Bit, Mode=OneWay, Converter={StaticResource is64BitToString}}" />
 
 					</GridView>
 				</ListView.View>
@@ -63,25 +62,31 @@
 				</ListView.ItemContainerStyle>
 			</ListView>
 		</ScrollViewer>
-		<TextBlock HorizontalAlignment="Left" Name="lblListStatus" Padding="5" Text="Please wait, downloading the program list..." VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" />
-		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,0,10,0">
+		<TextBlock HorizontalAlignment="Left" Name="lblListStatus" Padding="5" Text="Please wait, downloading the program list..." VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" Margin="0,9" Grid.ColumnSpan="2" />
+		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal"
+                Margin="0,0,10,0">
 			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnSave" Padding="5,1" Click="Save_Click" Command="NavigationCommands.BrowseBack" ButtonText="Save" />
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Command="NavigationCommands.BrowseBack" />
 		</StackPanel>
-		<CheckBox Content="Give me recommended updates the same way I receive important updates" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" MinHeight="5" Margin="70,0,0,10" Name="cbxRecommended" />
-		<StackPanel Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Grid.ColumnSpan="2" Margin="0,10">
-			<Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" Name="imgShieldIcon" Stretch="None" StretchDirection="UpOnly" Width="48" />
-			<ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120" Name="cmbUpdateOption" SelectedIndex="0" Margin="20,0,0,0" SelectionChanged="AutoUpdateMethod_SelectionChanged">
-				<ComboBoxItem Content="Install updates automatically" />
-				<ComboBoxItem Content="Download updates but let me choose to install them (recommended)" />
-				<ComboBoxItem Content="Check for updates but let me choose to download and install them" />
-				<ComboBoxItem Content="Never check for updates (not recommended)" />
-			</ComboBox>
-		</StackPanel>
-		<StackPanel Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+        <CheckBox Content="Give me recommended updates the same way I receive important updates" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="5" IsChecked="{Binding Path=IncludeRecommended}"
+                Margin="0,0,0,5" />
+		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal"
+                Grid.ColumnSpan="2">
 			<TextBlock Padding="2" Text="Important updates" Foreground="#FF003399" VerticalAlignment="Center" />
 			<Separator MinWidth="200" MinHeight="5" Height="5" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
 		</StackPanel>
-		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="0.5" Grid.ColumnSpan="4" />
-	</Grid>
+		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="0.5" Grid.ColumnSpan="3" />
+        <ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120"
+                SelectionChanged="AutoUpdateMethod_SelectionChanged" SelectedValue="{Binding Path=AutoOption, Mode=TwoWay}"
+                SelectedValuePath="Tag" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,22">
+            <ComboBoxItem Content="Install updates automatically" Tag="{x:Static SevenUpdate:AutoUpdateOption.Install}" />
+            <ComboBoxItem Content="Download updates but let me choose to install them (recommended)"
+                    Tag="{x:Static SevenUpdate:AutoUpdateOption.Download}" />
+            <ComboBoxItem Content="Check for updates but let me choose to download and install them"
+                    Tag="{x:Static SevenUpdate:AutoUpdateOption.Notify}" />
+            <ComboBoxItem Content="Never check for updates (not recommended)" Tag="{x:Static SevenUpdate:AutoUpdateOption.Never}" />
+        </ComboBox>
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" Name="imgShieldIcon" Stretch="None" StretchDirection="UpOnly"
+                Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10" />
+    </Grid>
 </Page>

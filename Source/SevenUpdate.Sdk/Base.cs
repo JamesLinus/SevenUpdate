@@ -9,8 +9,6 @@ namespace SevenUpdate.Sdk
 {
     internal static class Base
     {
-        public static string SelectedLocale;
-
         /// <summary>
         ///   The application information of the project
         /// </summary>

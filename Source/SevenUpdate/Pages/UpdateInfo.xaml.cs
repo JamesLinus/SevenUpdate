@@ -281,7 +281,7 @@ namespace SevenUpdate.Pages
             lvUpdates.SetBinding(ItemsControl.ItemsSourceProperty, items);
             selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
             var myView = (CollectionView) CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
-            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceConverter());
+            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceToString());
             if (myView.GroupDescriptions != null)
                 myView.GroupDescriptions.Add(groupDescription);
 
@@ -305,38 +305,6 @@ namespace SevenUpdate.Pages
             ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
 
             ListViewSorter.SetCustomSorter(lvUpdates, new CustomComparers.UpdateSorter());
-        }
-
-        /// <summary>
-        ///   Shows the update information in the sidebar
-        /// </summary>
-        private void ShowLabels()
-        {
-            lblStatus.Visibility = Visibility.Visible;
-            lblPublishedDate.Visibility = Visibility.Visible;
-            lblPublished.Visibility = Visibility.Visible;
-            lblDescription.Visibility = Visibility.Visible;
-            lblUpdateName.Visibility = Visibility.Visible;
-            lblHelpUrl.Visibility = Visibility.Visible;
-            lblInfoUrl.Visibility = Visibility.Visible;
-            imgIcon.Visibility = Visibility.Hidden;
-            imgArrow.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        ///   Hides the update information in the sidebar
-        /// </summary>
-        private void HideLabels()
-        {
-            lblStatus.Visibility = Visibility.Hidden;
-            lblPublishedDate.Visibility = Visibility.Hidden;
-            lblPublished.Visibility = Visibility.Hidden;
-            lblDescription.Visibility = Visibility.Hidden;
-            lblUpdateName.Visibility = Visibility.Hidden;
-            lblHelpUrl.Visibility = Visibility.Hidden;
-            lblInfoUrl.Visibility = Visibility.Hidden;
-            imgIcon.Visibility = Visibility.Visible;
-            imgArrow.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -374,7 +342,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                Process.Start(lblInfoUrl.Tag.ToString());
+                Process.Start(((Update) lvUpdates.SelectedItem).InfoUrl);
             }
             catch
             {
@@ -388,7 +356,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                Process.Start(lblHelpUrl.Tag.ToString());
+                Process.Start(App.Applications[indices[lvUpdates.SelectedIndex].AppIndex].AppInfo.HelpUrl);
             }
             catch
             {
@@ -428,21 +396,24 @@ namespace SevenUpdate.Pages
             var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
             var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
 
+            var update = lvUpdates.SelectedItem as Update;
+            if (update == null)
+                return;
             var hnh = new Suh
                           {
                               HelpUrl = App.Applications[appIndex].AppInfo.HelpUrl,
-                              InfoUrl = App.Applications[appIndex].Updates[updateIndex].InfoUrl,
+                              InfoUrl = update.InfoUrl,
                               Publisher = App.Applications[appIndex].AppInfo.Publisher,
                               PublisherUrl = App.Applications[appIndex].AppInfo.AppUrl,
-                              ReleaseDate = App.Applications[appIndex].Updates[updateIndex].ReleaseDate,
+                              ReleaseDate = update.ReleaseDate,
                               Status = UpdateStatus.Hidden,
-                              UpdateSize = App.GetUpdateSize(App.Applications[appIndex].Updates[updateIndex].Files),
-                              Importance = App.Applications[appIndex].Updates[updateIndex].Importance,
-                              Description = App.Applications[appIndex].Updates[updateIndex].Description,
-                              Name = App.Applications[appIndex].Updates[updateIndex].Name
+                              UpdateSize = App.GetUpdateSize(update.Files),
+                              Importance = update.Importance,
+                              Description = update.Description,
+                              Name = update.Name
                           };
 
-            var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
+            var item = (ListViewItem) lvUpdates.SelectedItem;
             if (cmiHideUpdate.Header.ToString() == Properties.Resources.HideUpdate)
             {
                 if (AdminClient.HideUpdate(hnh))
@@ -469,50 +440,34 @@ namespace SevenUpdate.Pages
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (lvUpdates.SelectedIndex == -1)
-                HideLabels();
+                return;
+            var item = (ListViewItem)lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
+            if (item == null)
+                return;
+
+            var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
+
+            cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+
+            
+            
+
+            if (item.Tag != null)
+                cmiHideUpdate.Header = ((bool)item.Tag) ? Properties.Resources.HideUpdate : Properties.Resources.ShowUpdate;
+            else
+                cmiHideUpdate.Header = Properties.Resources.HideUpdate;
+
+            var update = lvUpdates.SelectedItem as Update;
+
+            if (update.Size > 0)
+            {
+                lblStatus.Text = Properties.Resources.ReadyToDownload;
+                imgArrow.Source = blueArrow;
+            }
             else
             {
-                var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
-                var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
-                lblDescription.Text = Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Description);
-                lblPublishedDate.Text = App.Applications[appIndex].Updates[updateIndex].ReleaseDate;
-                lblUpdateName.Text = Base.GetLocaleString(App.Applications[appIndex].Updates[updateIndex].Name);
-                if (string.IsNullOrEmpty(App.Applications[appIndex].AppInfo.HelpUrl))
-                    lblHelpUrl.Visibility = Visibility.Collapsed;
-                else
-                {
-                    lblHelpUrl.Visibility = Visibility.Visible;
-                    lblHelpUrl.Tag = App.Applications[appIndex].AppInfo.HelpUrl;
-                }
-
-                if (string.IsNullOrEmpty(App.Applications[appIndex].Updates[updateIndex].InfoUrl))
-                    lblInfoUrl.Visibility = Visibility.Collapsed;
-                else
-                {
-                    lblInfoUrl.Visibility = Visibility.Visible;
-                    lblInfoUrl.Tag = App.Applications[appIndex].Updates[updateIndex].InfoUrl;
-                }
-
-                cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
-
-                var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
-
-                if (item.Tag != null)
-                    cmiHideUpdate.Header = ((bool) item.Tag) ? Properties.Resources.HideUpdate : Properties.Resources.ShowUpdate;
-                else
-                    cmiHideUpdate.Header = Properties.Resources.HideUpdate;
-
-                if (App.Applications[appIndex].Updates[updateIndex].Size > 0)
-                {
-                    lblStatus.Text = Properties.Resources.ReadyToDownload;
-                    imgArrow.Source = blueArrow;
-                }
-                else
-                {
-                    lblStatus.Text = Properties.Resources.ReadyToInstall;
-                    imgArrow.Source = greenArrow;
-                }
-                ShowLabels();
+                lblStatus.Text = Properties.Resources.ReadyToInstall;
+                imgArrow.Source = greenArrow;
             }
         }
 

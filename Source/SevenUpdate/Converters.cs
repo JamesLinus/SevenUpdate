@@ -35,7 +35,7 @@ namespace SevenUpdate.Converters
     ///   Converts Importance to a localized string
     /// </summary>
     [ValueConversion(typeof (Importance), typeof (string))]
-    public sealed class ImportanceConverter : IValueConverter
+    public sealed class ImportanceToString : IValueConverter
     {
         #region IValueConverter Members
 
@@ -78,7 +78,7 @@ namespace SevenUpdate.Converters
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
-    public sealed class LocaleStringConverter : IValueConverter
+    public sealed class LocaleStringToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -158,7 +158,7 @@ namespace SevenUpdate.Converters
     ///   Converts an Enum to a bool value
     /// </summary>
     [ValueConversion(typeof (UpdateStatus), typeof (bool))]
-    public sealed class EnumToBoolConverter : IValueConverter
+    public sealed class UpdateStatusToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -188,7 +188,7 @@ namespace SevenUpdate.Converters
     ///   Converts a Bool to a readable string
     /// </summary>
     [ValueConversion(typeof (bool), typeof (string))]
-    public sealed class BoolToStringConverter : IValueConverter
+    public sealed class Is64BitToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 

@@ -23,6 +23,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 #endregion
@@ -34,6 +35,7 @@ namespace SevenUpdate.Windows
     /// </summary>
     public sealed partial class UpdateDetails : Window
     {
+        private string helpUrl, infoUrl;
         /// <summary>
         ///   Constructor for the Update Details window
         /// </summary>
@@ -49,10 +51,9 @@ namespace SevenUpdate.Windows
         /// <returns><c>true</c></returns>
         internal bool? ShowDialog(Suh updateInfo)
         {
-            tbUpdateName.Text = Base.GetLocaleString(updateInfo.Name);
-            tbUpdateType.Text = updateInfo.Importance.ToString();
-            tbUpdateDescription.Text = Base.GetLocaleString(updateInfo.Description);
-
+            DataContext = updateInfo;
+            helpUrl = updateInfo.HelpUrl;
+            infoUrl = updateInfo.InfoUrl;
             if (updateInfo.Status == UpdateStatus.Hidden)
             {
                 tbStatusLabel.Text = Properties.Resources.DownloadSize + ":";
@@ -61,20 +62,6 @@ namespace SevenUpdate.Windows
             else
                 tbStatus.Text = updateInfo.Status + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
 
-            if (String.IsNullOrEmpty(updateInfo.InfoUrl))
-            {
-                tbMoreInfoUrl.Visibility = Visibility.Collapsed;
-                textBlock3.Visibility = Visibility.Collapsed;
-            }
-            else
-                tbMoreInfoUrl.Text = updateInfo.InfoUrl;
-            if (String.IsNullOrEmpty(updateInfo.HelpUrl))
-            {
-                tbHelpUrl.Visibility = Visibility.Collapsed;
-                textBlock4.Visibility = Visibility.Collapsed;
-            }
-            else
-                tbHelpUrl.Text = updateInfo.HelpUrl;
 
             return ShowDialog();
         }
@@ -84,8 +71,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbMoreInfoUrl.Text != null)
-                Process.Start(tbMoreInfoUrl.Text);
+            Process.Start(infoUrl);
         }
 
         /// <summary>
@@ -93,8 +79,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (tbHelpUrl.Text != null)
-                Process.Start(tbHelpUrl.Text);
+            Process.Start(helpUrl);
         }
     }
 }

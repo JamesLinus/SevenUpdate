@@ -33,9 +33,9 @@
 					<ColumnDefinition Width="Auto" />
 					<ColumnDefinition Width="Auto" />
 				</Grid.ColumnDefinitions>
-				<TextBlock FontWeight="Normal" Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,10,0" Padding="5" Text="Most recent check for updates:" VerticalAlignment="Top" />
+				<TextBlock  Grid.Row="1" HorizontalAlignment="Left" Margin="0,0,10,0" Padding="5" Text="Most recent check for updates:" VerticalAlignment="Top" />
 				<TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="lblUpdatesInstalled" Padding="5" Text="Never" VerticalAlignment="Top" />
-				<TextBlock FontWeight="Normal" Grid.Row="2" HorizontalAlignment="Left" Padding="5" Text="Updates were installed:" VerticalAlignment="Top" />
+				<TextBlock  Grid.Row="2" HorizontalAlignment="Left" Padding="5" Text="Updates were installed:" VerticalAlignment="Top" />
 				<TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Name="lblRecentCheck" Padding="5" Text="Never" VerticalAlignment="Top" DataContext="{Binding}" />
 			</Grid>
 		</StackPanel>

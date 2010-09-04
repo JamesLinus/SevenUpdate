@@ -208,6 +208,16 @@ namespace SevenUpdate
         /// </summary>
         private static int hashGeneratingCount;
 
+        /// <summary>
+        ///   The current UpdateFile the hash is generating for
+        /// </summary>
+        private static UpdateFile hashFile;
+
+        /// <summary>
+        ///   The current UpdateFile the filesize is generating for
+        /// </summary>
+        private static UpdateFile fileSizeFile;
+
         #endregion
 
         #region Properties
@@ -229,8 +239,6 @@ namespace SevenUpdate
 
         #endregion
 
-        private static UpdateFile hashFile;
-
         /// <summary>
         ///   Checks to see if path is a registry key
         /// </summary>
@@ -240,62 +248,6 @@ namespace SevenUpdate
         {
             const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
             return Regex.IsMatch(path, pattern, RegexOptions.IgnoreCase);
-        }
-
-        /// <summary>
-        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
-        /// </summary>
-        /// <param name = "file">The UpdateFile to generate the hash for</param>
-        /// <param name = "fileLocation">The fullpath to the file to generate the hash for</param>
-        public static void GetHashAsync(ref UpdateFile file, string fileLocation = null)
-        {
-            var worker = new BackgroundWorker();
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            hashFile = file;
-            IsHashGenerating = true;
-            hashGeneratingCount++;
-            worker.RunWorkerAsync(fileLocation);
-        }
-
-        private static void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            hashGeneratingCount--;
-            if (hashGeneratingCount < 1)
-                IsHashGenerating = false;
-            if (HashGeneratedEventHandler != null)
-                HashGeneratedEventHandler(null, new HashGeneratedEventArgs(hashFile, hashFile.Hash, IsHashGenerating));
-        }
-
-        /// <summary>
-        ///   Gets the SHA-2 Hash of a file
-        /// </summary>
-        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
-        /// <returns>The SHA-2 Hash of the file</returns>
-        public static string GetHash(string fileLocation)
-        {
-            fileLocation = ConvertPath(fileLocation, true, false);
-            if (!File.Exists(fileLocation))
-                return null;
-            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
-
-            var sha2 = new SHA256Managed();
-
-            sha2.ComputeHash(stream);
-
-            stream.Close();
-
-            var buff = new StringBuilder(10);
-
-            foreach (var hashByte in sha2.Hash)
-                buff.Append(String.Format("{0:X1}", hashByte));
-
-            return buff.ToString();
-        }
-
-        private static void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            hashFile.Hash = GetHash(e.Argument == null ? hashFile.Destination : ConvertPath(e.Argument.ToString(), true, false));
         }
 
         /// <summary>
@@ -758,6 +710,99 @@ namespace SevenUpdate
             }
 
             tw.Close();
+        }
+
+        #endregion
+
+        #region File size Functions
+
+        /// <summary>
+        ///   Gets the File Size Asynchronously
+        /// </summary>
+        /// <param name = "file">The UpdateFile to generate the hash for</param>
+        /// <param name = "fileLocation">The fullpath to the file</param>
+        public static void GetFileSizeAsync(ref UpdateFile file, string fileLocation = null)
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += fileSize_DoWork;
+            fileSizeFile = file;
+            worker.RunWorkerAsync(fileLocation);
+        }
+
+        /// <summary>
+        ///   Gets the file size of a file
+        /// </summary>
+        /// <param name = "file">The fullpath to the file</param>
+        /// <returns>A ulong value indicating the file size</returns>
+        public static ulong GetFileSize(string file)
+        {
+            return (ulong) new FileInfo(file).Length;
+        }
+
+        private static void fileSize_DoWork(object sender, DoWorkEventArgs e)
+        {
+            fileSizeFile.FileSize = GetFileSize(e.Argument == null ? fileSizeFile.Destination : ConvertPath(e.Argument.ToString(), true, false));
+        }
+
+        #endregion
+
+        #region Hash Functions
+
+        /// <summary>
+        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
+        /// </summary>
+        /// <param name = "file">The UpdateFile to generate the hash for</param>
+        /// <param name = "fileLocation">The fullpath to the file</param>
+        public static void GetHashAsync(ref UpdateFile file, string fileLocation = null)
+        {
+            var worker = new BackgroundWorker();
+            worker.DoWork += hash_DoWork;
+            worker.RunWorkerCompleted += hash_RunWorkerCompleted;
+
+            IsHashGenerating = true;
+            hashGeneratingCount++;
+            hashFile = file;
+            worker.RunWorkerAsync(fileLocation);
+        }
+
+        private static void hash_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            hashGeneratingCount--;
+            if (hashGeneratingCount < 1)
+                IsHashGenerating = false;
+            if (HashGeneratedEventHandler != null)
+                HashGeneratedEventHandler(null, new HashGeneratedEventArgs(hashFile, hashFile.Hash, IsHashGenerating));
+        }
+
+        private static void hash_DoWork(object sender, DoWorkEventArgs e)
+        {
+            hashFile.Hash = GetHash(e.Argument == null ? hashFile.Destination : ConvertPath(e.Argument.ToString(), true, false));
+        }
+
+        /// <summary>
+        ///   Gets the SHA-2 Hash of a file
+        /// </summary>
+        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        /// <returns>The SHA-2 Hash of the file</returns>
+        public static string GetHash(string fileLocation)
+        {
+            fileLocation = ConvertPath(fileLocation, true, false);
+            if (!File.Exists(fileLocation))
+                return null;
+            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+
+            var sha2 = new SHA256Managed();
+
+            sha2.ComputeHash(stream);
+
+            stream.Close();
+
+            var buff = new StringBuilder(10);
+
+            foreach (var hashByte in sha2.Hash)
+                buff.Append(String.Format("{0:X1}", hashByte));
+
+            return buff.ToString();
         }
 
         #endregion

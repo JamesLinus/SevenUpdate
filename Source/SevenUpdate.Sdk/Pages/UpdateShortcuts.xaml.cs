@@ -162,12 +162,12 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxShortcutDescription == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            Base.SelectedLocale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
+            SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             bool found = false;
             var shortcutDescriptions = ((Shortcut) listBox.SelectedItem).Description;
             // Load Values
-            foreach (LocaleString t in shortcutDescriptions.Where(t => t.Lang == Base.SelectedLocale))
+            foreach (LocaleString t in shortcutDescriptions.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxShortcutDescription.Text = t.Value;
                 found = true;
@@ -199,7 +199,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             bool found = false;
-            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == Base.SelectedLocale))
+            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 t.Value = tbxShortcutDescription.Text;
                 found = true;
@@ -208,7 +208,7 @@ namespace SevenUpdate.Sdk.Pages
             if (found)
                 return;
 
-            var ls = new LocaleString {Lang = Base.SelectedLocale, Value = tbxShortcutDescription.Text};
+            var ls = new LocaleString {Lang = SevenUpdate.Base.Locale, Value = tbxShortcutDescription.Text};
             Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Add(ls);
         }
     }

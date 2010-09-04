@@ -1,11 +1,11 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base">
 	<Sdk:StringToLocaleStringConverter x:Key="stringToLocaleString" />
 	<BooleanToVisibilityConverter x:Key="boolToVisibility" />
 	<Sdk:BoolToLabelConverter x:Key="boolToLabel" />
-	<Sdk:StringToBoolConverter x:Key="stringToBool" />
-	<Sdk:StringToVisibilityConverter x:Key="stringToVisibility" />
-	<Sdk:IntToVisibilityConverter x:Key="intToVisibility" />
-	<Sdk:IntToBoolConverter x:Key="intToBool" />
+	<SevenUpdate:StringToBoolConverter x:Key="stringToBool" />
+	<SevenUpdate:StringToVisibilityConverter x:Key="stringToVisibility" />
+	<SevenUpdate:IntToVisibilityConverter x:Key="intToVisibility" />
+	<SevenUpdate:IntToBoolConverter x:Key="intToBool" />
 	<Sdk:DateConverter x:Key="dateConverter" />
 
 	<Style x:Key="underlineTextBlock" TargetType="TextBlock">

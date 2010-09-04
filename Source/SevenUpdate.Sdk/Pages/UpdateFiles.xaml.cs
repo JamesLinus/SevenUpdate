@@ -69,14 +69,14 @@ namespace SevenUpdate.Sdk.Pages
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        #endregion
+
+        #region Methods
+
         private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
         {
             tbHashCalculating.Visibility = e.IsHashGenerating ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///   Adds a file to the list
@@ -86,8 +86,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
 
-            var file = new UpdateFile
-                           {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", FileSize = (ulong) new FileInfo(fullName).Length};
+            var file = new UpdateFile { Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
 
             Base.UpdateInfo.Files.Add(file);
 
@@ -95,12 +94,15 @@ namespace SevenUpdate.Sdk.Pages
 
             tbHashCalculating.Visibility = Visibility.Visible;
             SevenUpdate.Base.GetHashAsync(ref file);
+            SevenUpdate.Base.GetFileSizeAsync(ref file);
         }
 
         private void AddFiles(string[] files)
         {
+            piFileProgress.IsRunning = true;
             for (int x = 0; x < files.Length; x++)
                 AddFile(files[x]);
+            piFileProgress.IsRunning = false;
             listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
@@ -154,7 +156,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             var selectedItem = listBox.SelectedItem as UpdateFile;
-            selectedItem.FileSize = (ulong) new FileInfo(cfd.FileName).Length;
+            SevenUpdate.Base.GetFileSizeAsync(ref selectedItem, cfd.FileName);
             SevenUpdate.Base.GetHashAsync(ref selectedItem, cfd.FileName);
         }
 

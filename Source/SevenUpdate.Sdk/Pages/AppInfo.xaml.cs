@@ -137,11 +137,11 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxAppName == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            Base.SelectedLocale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
+            SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             bool found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == Base.SelectedLocale))
+            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxAppDescription.Text = t.Value;
                 found = true;
@@ -151,7 +151,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == Base.SelectedLocale))
+            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxAppName.Text = t.Value;
                 found = true;
@@ -162,7 +162,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == Base.SelectedLocale))
+            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxPublisher.Text = t.Value;
                 found = true;

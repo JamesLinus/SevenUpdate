@@ -82,7 +82,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (int x = 0; x < Base.AppInfo.Name.Count; x++)
                     {
-                        if (Base.AppInfo.Name[x].Lang != Base.SelectedLocale)
+                        if (Base.AppInfo.Name[x].Lang != SevenUpdate.Base.Locale)
                             continue;
                         Base.AppInfo.Name.RemoveAt(x);
                         break;
@@ -100,7 +100,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (int x = 0; x < Base.AppInfo.Publisher.Count; x++)
                     {
-                        if (Base.AppInfo.Publisher[x].Lang != Base.SelectedLocale)
+                        if (Base.AppInfo.Publisher[x].Lang != SevenUpdate.Base.Locale)
                             continue;
                         Base.AppInfo.Publisher.RemoveAt(x);
                         break;
@@ -118,7 +118,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (int x = 0; x < Base.AppInfo.Description.Count; x++)
                     {
-                        if (Base.AppInfo.Description[x].Lang != Base.SelectedLocale)
+                        if (Base.AppInfo.Description[x].Lang != SevenUpdate.Base.Locale)
                             continue;
                         Base.AppInfo.Description.RemoveAt(x);
                         break;
@@ -136,7 +136,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (int x = 0; x < Base.UpdateInfo.Description.Count; x++)
                     {
-                        if (Base.UpdateInfo.Description[x].Lang != Base.SelectedLocale)
+                        if (Base.UpdateInfo.Description[x].Lang != SevenUpdate.Base.Locale)
                             continue;
                         Base.UpdateInfo.Description.RemoveAt(x);
                         break;
@@ -154,7 +154,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (int x = 0; x < Base.UpdateInfo.Name.Count; x++)
                     {
-                        if (Base.UpdateInfo.Name[x].Lang != Base.SelectedLocale)
+                        if (Base.UpdateInfo.Name[x].Lang != SevenUpdate.Base.Locale)
                             continue;
                         Base.UpdateInfo.Name.RemoveAt(x);
                         break;

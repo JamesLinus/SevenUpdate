@@ -64,7 +64,7 @@
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
 			<TextBlock Text="To get started, right click the list box and add a file or folder of files." HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
 		</StackPanel>
-		<Controls:ProgressIndicator IsIndeterminate="True" IsRunning="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}}" IndeterminateText="Calculating hash..." Grid.Column="2" Height="80" Width="80" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+		<Controls:ProgressIndicator IsIndeterminate="True" IndeterminateText="Adding files..." Grid.Column="2" Height="80" Width="80" Grid.Row="9" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" Name="piFileProgress" />
 		<!--Button Panel-->
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="5" Name="line" />
 		<Rectangle Grid.ColumnSpan="5" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />

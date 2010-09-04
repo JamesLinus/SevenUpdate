@@ -8,7 +8,7 @@
     <ProjectGuid>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SevenUpdate.Base</RootNamespace>
+    <RootNamespace>SevenUpdate</RootNamespace>
     <AssemblyName>SevenUpdate.Base</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -85,6 +85,8 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="protobuf-net">
       <HintPath>..\..\Externals\protobuf-net.dll</HintPath>
     </Reference>
@@ -99,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="FileSystemLocations.cs" />
     <Compile Include="InvokeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
