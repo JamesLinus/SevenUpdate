@@ -179,9 +179,9 @@ namespace SevenUpdate
         /// <param name = "type">the type of error that occurred</param>
         public void OnErrorOccurred(string exception, ErrorType type)
         {
-            if (ErrorOccurredEventHandler == null)
+            if (ErrorOccurred == null)
                 return;
-            ErrorOccurredEventHandler(this, new ErrorOccurredEventArgs(exception, type));
+            ErrorOccurred(this, new ErrorOccurredEventArgs(exception, type));
         }
 
         /// <summary>
@@ -191,8 +191,8 @@ namespace SevenUpdate
         /// <param name = "failedUpdates">the number of failed updates</param>
         public void OnInstallCompleted(int installedUpdates, int failedUpdates)
         {
-            if (InstallDoneEventHandler != null)
-                InstallDoneEventHandler(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
+            if (InstallDone != null)
+                InstallDone(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
         }
 
         /// <summary>
@@ -201,8 +201,8 @@ namespace SevenUpdate
         /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public void OnDownloadCompleted(bool errorOccurred)
         {
-            if (DownloadDoneEventHandler != null)
-                DownloadDoneEventHandler(this, new DownloadCompletedEventArgs(errorOccurred));
+            if (DownloadDone != null)
+                DownloadDone(this, new DownloadCompletedEventArgs(errorOccurred));
         }
 
         /// <summary>
@@ -214,8 +214,8 @@ namespace SevenUpdate
         /// <param name = "totalUpdates">the total number of updates being installed</param>
         public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
-            if (InstallProgressChangedEventHandler != null)
-                InstallProgressChangedEventHandler(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
+            if (InstallProgressChanged != null)
+                InstallProgressChanged(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
         }
 
         /// <summary>
@@ -227,8 +227,8 @@ namespace SevenUpdate
         /// <param name = "filesTotal">The total number of files to download</param>
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
-            if (DownloadProgressChangedEventHandler != null)
-                DownloadProgressChangedEventHandler(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
+            if (DownloadProgressChanged != null)
+                DownloadProgressChanged(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
         }
 
         #endregion
@@ -238,27 +238,27 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when an error has occurred when downloading or installing updates
         /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>
         ///   Occurs when the installation completed.
         /// </summary>
-        public static event EventHandler<InstallCompletedEventArgs> InstallDoneEventHandler;
+        public static event EventHandler<InstallCompletedEventArgs> InstallDone;
 
         /// <summary>
         ///   Occurs when the installation progress changed
         /// </summary>
-        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChangedEventHandler;
+        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
         /// <summary>
         ///   Occurs when the download completed.
         /// </summary>
-        public static event EventHandler<DownloadCompletedEventArgs> DownloadDoneEventHandler;
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
 
         /// <summary>
         ///   Occurs when the download progress changed
         /// </summary>
-        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChangedEventHandler;
+        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
 
         #endregion
     }
@@ -312,8 +312,8 @@ namespace SevenUpdate
         private static void AdminError(Exception e)
         {
             Base.ReportError(e, Base.UserStore);
-            if (ServiceErrorEventHandler != null)
-                ServiceErrorEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
+            if (ServiceError != null)
+                ServiceError(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
             var processes = Process.GetProcessesByName("SevenUpdate.Admin");
             foreach (var t in processes)
             {
@@ -346,7 +346,7 @@ namespace SevenUpdate
             }
         }
 
-        #region Install & Config Methods
+        #region Install Methods
 
         /// <summary>
         ///   Aborts the installation of updates
@@ -377,7 +377,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())
@@ -386,6 +386,10 @@ namespace SevenUpdate
             return success;
         }
 
+        #endregion
+
+        #region Hide/Show Update Methods
+
         /// <summary>
         ///   Hides an update
         /// </summary>
@@ -393,7 +397,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())
@@ -410,7 +414,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait:true);
             if (success)
             {
                 if (Connect())
@@ -426,7 +430,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait:true);
 
             if (success)
             {
@@ -436,13 +440,17 @@ namespace SevenUpdate
             return true;
         }
 
+        #endregion
+
+        #region Config Methods
+
         /// <summary>
         ///   Adds an application to Seven Update
         /// </summary>
         /// <param name = "app">the application to add to Seven Update</param>
         internal static void AddSua(Sua app)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
 
             if (!success)
                 return;
@@ -459,15 +467,15 @@ namespace SevenUpdate
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             // Launch SevenUpdate.Admin to save the settings to the AppStore.
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Wait");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
 
             if (!success)
                 return;
             if (Connect())
                 wcfClient.ChangeSettings(sul, options, autoOn);
 
-            if (SettingsChangedEventHandler != null)
-                SettingsChangedEventHandler(null, new EventArgs());
+            if (SettingsChanged != null)
+                SettingsChanged(null, new EventArgs());
         }
 
         #endregion
@@ -477,12 +485,12 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when one or more hidden updates have been restored
         /// </summary>
-        public static event EventHandler<EventArgs> SettingsChangedEventHandler;
+        public static event EventHandler<EventArgs> SettingsChanged;
 
         /// <summary>
         ///   Occurs when the SevenUpdate.Admin serice faults or encounters a serious error
         /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ServiceErrorEventHandler;
+        public static event EventHandler<ErrorOccurredEventArgs> ServiceError;
 
         #endregion
     }

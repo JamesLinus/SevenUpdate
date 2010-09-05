@@ -23,13 +23,11 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Resources;
 using System.ServiceModel;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
-
 using SharpBits.Base;
 using Application = System.Windows.Application;
 
@@ -69,7 +67,7 @@ namespace SevenUpdate.Admin
 
         #endregion
 
-        #region Global Vars
+        #region Fields
 
         private static ServiceHost host;
 
@@ -77,6 +75,10 @@ namespace SevenUpdate.Admin
         ///   The notifyIcon used only when Auto Updating
         /// </summary>
         internal static NotifyIcon NotifyIcon = new NotifyIcon();
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Gets the update configuration settings
@@ -95,9 +97,9 @@ namespace SevenUpdate.Admin
         /// </summary>
         internal static bool IsClientConnected { get; private set; }
 
-        internal static bool IsInstall { get; set; }
+        internal static bool IsInstall { get; private set; }
 
-        internal static Collection<Sui> AppUpdates { get; set; }
+        internal static Collection<Sui> AppUpdates { get; private set; }
 
         #endregion
 
@@ -187,10 +189,10 @@ namespace SevenUpdate.Admin
                                     if (File.Exists(Base.AllUserStore + "abort.lock"))
                                         File.Delete(Base.AllUserStore + "abort.lock");
 
-                                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.CheckingForUpdates;
+                                    NotifyIcon.Text = Resources.CheckingForUpdates;
                                     NotifyIcon.Visible = true;
-                                    Search.SearchDoneEventHandler += Search_SearchDone_EventHandler;
-                                    Search.ErrorOccurredEventHandler += Search_ErrorOccurred_EventHandler;
+                                    Search.SearchDone += Search_SearchDone;
+                                    Search.ErrorOccurred += Search_ErrorOccurred;
                                     Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
 
                                     app.Run();
@@ -290,18 +292,18 @@ namespace SevenUpdate.Admin
             switch (filter)
             {
                 case NotifyType.DownloadStarted:
-                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.DownloadingUpdates;
+                    NotifyIcon.Text = Resources.DownloadingUpdates;
                     break;
                 case NotifyType.DownloadComplete:
-                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem;
-                    NotifyIcon.ShowBalloonTip(5000, SevenUpdate.Admin.Properties.Resources.UpdatesDownloaded, SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
+                    NotifyIcon.Text = Resources.UpdatesDownloadedViewThem;
+                    NotifyIcon.ShowBalloonTip(5000, Resources.UpdatesDownloaded, Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
                     break;
                 case NotifyType.InstallStarted:
-                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.InstallingUpdates;
+                    NotifyIcon.Text = Resources.InstallingUpdates;
                     break;
                 case NotifyType.SearchComplete:
-                    NotifyIcon.Text = SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem;
-                    NotifyIcon.ShowBalloonTip(5000, SevenUpdate.Admin.Properties.Resources.UpdatesFound, SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
+                    NotifyIcon.Text = Resources.UpdatesFoundViewThem;
+                    NotifyIcon.ShowBalloonTip(5000, Resources.UpdatesFound, Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
                     break;
             }
         }
@@ -313,8 +315,7 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem || NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem ||
-                    NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.CheckingForUpdates)
+                if (NotifyIcon.Text == Resources.UpdatesFoundViewThem || NotifyIcon.Text == Resources.UpdatesDownloadedViewThem || NotifyIcon.Text == Resources.CheckingForUpdates)
                     Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
                 else
                     Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
@@ -322,8 +323,7 @@ namespace SevenUpdate.Admin
             else
                 Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
 
-            if (NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesFoundViewThem || NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.UpdatesDownloadedViewThem ||
-                NotifyIcon.Text == SevenUpdate.Admin.Properties.Resources.CheckingForUpdates)
+            if (NotifyIcon.Text == Resources.UpdatesFoundViewThem || NotifyIcon.Text == Resources.UpdatesDownloadedViewThem || NotifyIcon.Text == Resources.CheckingForUpdates)
                 ShutdownApp();
         }
 
@@ -385,7 +385,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Runs when the search for updates has completed for an auto update
         /// </summary>
-        private static void Search_SearchDone_EventHandler(object sender, SearchCompletedEventArgs e)
+        private static void Search_SearchDone(object sender, SearchCompletedEventArgs e)
         {
             AppUpdates = e.Applications;
             if (e.Applications.Count > 0)
@@ -405,7 +405,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Runs when there is an error searching for updates
         /// </summary>
-        private static void Search_ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
+        private static void Search_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.Type == ErrorType.FatalNetworkError)
                 ShutdownApp();
@@ -471,8 +471,7 @@ namespace SevenUpdate.Admin
             else
             {
                 if (Environment.OSVersion.Version.Major < 6)
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking",
-                                      Base.AppDir + @"SevenUpdate.Helper.exe ");
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Base.AppDir + @"SevenUpdate.Helper.exe ");
                 else
                     Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
             }

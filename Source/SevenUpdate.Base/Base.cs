@@ -22,7 +22,6 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -126,39 +125,6 @@ namespace SevenUpdate
         public string File { get; set; }
     }
 
-    /// <summary>
-    ///   Provides event data for the HashGenerated event
-    /// </summary>
-    public sealed class HashGeneratedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "file">The UpdateFile object of the file to generate the hash for</param>
-        /// <param name = "hash">The SHA-2 Hash of the file</param>
-        public HashGeneratedEventArgs(UpdateFile file, string hash, bool isHashGenerating)
-        {
-            Hash = hash;
-            SourceFile = file;
-            IsHashGenerating = isHashGenerating;
-        }
-
-        /// <summary>
-        ///   Gets the SHA-2 hash of the file
-        /// </summary>
-        public string Hash { get; private set; }
-
-        /// <summary>
-        ///   Gets the Update File for the generated hash
-        /// </summary>
-        public UpdateFile SourceFile { get; private set; }
-
-        /// <summary>
-        ///   Gets a value indicating if another hash is being generated
-        /// </summary>
-        public bool IsHashGenerating { get; private set; }
-    }
-
     #endregion
 
     /// <summary>
@@ -203,21 +169,6 @@ namespace SevenUpdate
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
 
-        /// <summary>
-        ///   The number of hashes being generated
-        /// </summary>
-        private static int hashGeneratingCount;
-
-        /// <summary>
-        ///   The current UpdateFile the hash is generating for
-        /// </summary>
-        private static UpdateFile hashFile;
-
-        /// <summary>
-        ///   The current UpdateFile the filesize is generating for
-        /// </summary>
-        private static UpdateFile fileSizeFile;
-
         #endregion
 
         #region Properties
@@ -258,9 +209,13 @@ namespace SevenUpdate
         /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
         /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
         /// <returns />
-        public static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
+        public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
-            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true, Arguments = arguments}};
+            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true}};
+
+            if (arguments != null)
+                proc.StartInfo.Arguments = arguments;
+
             if (hidden)
             {
                 proc.StartInfo.CreateNoWindow = true;
@@ -315,8 +270,8 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    if (SerializationErrorEventHandler != null)
-                        SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
+                    if (SerializationError != null)
+                        SerializationError(null, new SerializationErrorEventArgs(e, fileName));
                 }
             }
 
@@ -339,8 +294,8 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, sourceUrl));
+                if (SerializationError != null)
+                    SerializationError(null, new SerializationErrorEventArgs(e, sourceUrl));
             }
 
             return null;
@@ -382,8 +337,8 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                if (SerializationErrorEventHandler != null)
-                    SerializationErrorEventHandler(null, new SerializationErrorEventArgs(e, fileName));
+                if (SerializationError != null)
+                    SerializationError(null, new SerializationErrorEventArgs(e, fileName));
             }
         }
 
@@ -394,12 +349,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when an error occurs while serializing or deserializing a object/file
         /// </summary>
-        public static event EventHandler<SerializationErrorEventArgs> SerializationErrorEventHandler;
-
-        /// <summary>
-        ///   Occurs when a SHA-2 Hash has been generated
-        /// </summary>
-        public static event EventHandler<HashGeneratedEventArgs> HashGeneratedEventHandler;
+        public static event EventHandler<SerializationErrorEventArgs> SerializationError;
 
         #endregion
 
@@ -717,19 +667,6 @@ namespace SevenUpdate
         #region File size Functions
 
         /// <summary>
-        ///   Gets the File Size Asynchronously
-        /// </summary>
-        /// <param name = "file">The UpdateFile to generate the hash for</param>
-        /// <param name = "fileLocation">The fullpath to the file</param>
-        public static void GetFileSizeAsync(ref UpdateFile file, string fileLocation = null)
-        {
-            var worker = new BackgroundWorker();
-            worker.DoWork += fileSize_DoWork;
-            fileSizeFile = file;
-            worker.RunWorkerAsync(fileLocation);
-        }
-
-        /// <summary>
         ///   Gets the file size of a file
         /// </summary>
         /// <param name = "file">The fullpath to the file</param>
@@ -739,57 +676,21 @@ namespace SevenUpdate
             return (ulong) new FileInfo(file).Length;
         }
 
-        private static void fileSize_DoWork(object sender, DoWorkEventArgs e)
-        {
-            fileSizeFile.FileSize = GetFileSize(e.Argument == null ? fileSizeFile.Destination : ConvertPath(e.Argument.ToString(), true, false));
-        }
-
         #endregion
 
         #region Hash Functions
 
         /// <summary>
-        ///   Gets the SHA-2 Hash of a file Asynchronously, triggers an event when generated
-        /// </summary>
-        /// <param name = "file">The UpdateFile to generate the hash for</param>
-        /// <param name = "fileLocation">The fullpath to the file</param>
-        public static void GetHashAsync(ref UpdateFile file, string fileLocation = null)
-        {
-            var worker = new BackgroundWorker();
-            worker.DoWork += hash_DoWork;
-            worker.RunWorkerCompleted += hash_RunWorkerCompleted;
-
-            IsHashGenerating = true;
-            hashGeneratingCount++;
-            hashFile = file;
-            worker.RunWorkerAsync(fileLocation);
-        }
-
-        private static void hash_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            hashGeneratingCount--;
-            if (hashGeneratingCount < 1)
-                IsHashGenerating = false;
-            if (HashGeneratedEventHandler != null)
-                HashGeneratedEventHandler(null, new HashGeneratedEventArgs(hashFile, hashFile.Hash, IsHashGenerating));
-        }
-
-        private static void hash_DoWork(object sender, DoWorkEventArgs e)
-        {
-            hashFile.Hash = GetHash(e.Argument == null ? hashFile.Destination : ConvertPath(e.Argument.ToString(), true, false));
-        }
-
-        /// <summary>
         ///   Gets the SHA-2 Hash of a file
         /// </summary>
-        /// <param name = "fileLocation">The full path to the file to calculate the hash</param>
+        /// <param name = "file">The full path to the file to calculate the hash</param>
         /// <returns>The SHA-2 Hash of the file</returns>
-        public static string GetHash(string fileLocation)
+        public static string GetHash(string file)
         {
-            fileLocation = ConvertPath(fileLocation, true, false);
-            if (!File.Exists(fileLocation))
+            file = ConvertPath(file, true, false);
+            if (!File.Exists(file))
                 return null;
-            var stream = new FileStream(fileLocation, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
+            var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
 
             var sha2 = new SHA256Managed();
 

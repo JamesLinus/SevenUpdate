@@ -46,7 +46,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
-            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
         }
 
         #endregion
@@ -83,7 +83,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Aero
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
         }
 

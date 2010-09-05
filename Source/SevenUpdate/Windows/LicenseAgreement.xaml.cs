@@ -37,7 +37,7 @@ namespace SevenUpdate.Windows
     /// </summary>
     public sealed partial class LicenseAgreement : Window
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Current index
@@ -53,6 +53,10 @@ namespace SevenUpdate.Windows
         ///   An array of the strings that consist of the software licenses
         /// </summary>
         private string[] licenseText;
+
+        #endregion
+
+        #region Structs
 
         /// <summary>
         ///   Data containing the update's license agreement

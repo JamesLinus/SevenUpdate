@@ -46,7 +46,7 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        private static void Base_SerializationErrorEventHandler(object sender, SerializationErrorEventArgs e)
+        private static void Base_SerializationError(object sender, SerializationErrorEventArgs e)
         {
             MessageBox.Show(Sdk.Properties.Resources.ProjectLoadError + " - " + e.Exception.Message);
         }
@@ -115,7 +115,7 @@ namespace SevenUpdate.Sdk
         internal static void Init(string[] args)
         {
             Directory.CreateDirectory(SevenUpdate.Base.UserStore);
-            SevenUpdate.Base.SerializationErrorEventHandler += Base_SerializationErrorEventHandler;
+            SevenUpdate.Base.SerializationError += Base_SerializationError;
             if (args.Length > 0)
                 SuiFile = args[0];
 

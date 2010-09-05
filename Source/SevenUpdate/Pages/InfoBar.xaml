@@ -1,32 +1,44 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<UserControl x:Class="SevenUpdate.Pages.InfoBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="600" Name="Infobar">
-	<Grid MinWidth="500">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="502*" />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition Height="54.168*" />
-		</Grid.RowDefinitions>
+<UserControl x:Class="SevenUpdate.Pages.InfoBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="600" Name="Infobar">
+    <Grid MinWidth="500">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="502*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="54.168*" />
+        </Grid.RowDefinitions>
 
-		<Image RenderOptions.BitmapScalingMode="HighQuality" Name="imgSideBanner" Stretch="Fill" StretchDirection="Both" Grid.RowSpan="2" MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" MinHeight="70" Width="20" />
-		<StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" Margin="0,0,2,0">
-			<ProgressBar Height="15" IsIndeterminate="True" Name="pbProgressBar" VerticalAlignment="Top" Visibility="Collapsed" HorizontalAlignment="Left" Width="250" Margin="0,5,0,0" />
-			<TextBlock Name="lblStatus" Padding="5" Text="No new updates are avaliable for your programs" Visibility="Visible" MaxWidth="400" MinWidth="350" HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" />
-		</StackPanel>
-		<TextBlock FontSize="16" Foreground="#FF003399" Name="lblHeading" Text="Your programs are up to date" Grid.Column="2" Margin="0,15,2.46,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-		<Image RenderOptions.BitmapScalingMode="HighQuality" Name="imgShieldIcon" Height="48" HorizontalAlignment="Left" IsEnabled="True" Margin="15" Stretch="Fill" VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2" StretchDirection="Both" />
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Name="imgSideBanner" Stretch="Fill" StretchDirection="Both" Grid.RowSpan="2"
+                MaxHeight="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" MinHeight="70" Width="20" />
+        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" Margin="0,0,2,0">
+            <ProgressBar Height="15" IsIndeterminate="True" Name="pbProgressBar" VerticalAlignment="Top" Visibility="Collapsed" HorizontalAlignment="Left" Width="250"
+                    Margin="0,5,0,0" />
+            <TextBlock Name="lblStatus" Padding="5" Text="No new updates are avaliable for your programs" Visibility="Visible" MaxWidth="400" MinWidth="350"
+                    HorizontalAlignment="Left" VerticalAlignment="Top" TextWrapping="Wrap" />
+        </StackPanel>
+        <TextBlock FontSize="16" Foreground="#FF003399" Name="lblHeading" Text="Your programs are up to date" Grid.Column="2" Margin="0,15,2.46,0" VerticalAlignment="Top"
+                HorizontalAlignment="Left" />
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Name="imgShieldIcon" Height="48" HorizontalAlignment="Left" IsEnabled="True" Margin="15" Stretch="Fill"
+                VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2" StretchDirection="Both" />
 
-		<DockPanel Grid.Column="3" Grid.RowSpan="1" HorizontalAlignment="Right" Grid.Row="1">
-			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,8,6" Grid.Column="2" Grid.Row="1" DockPanel.Dock="Bottom" ButtonText="Install updates" />
-			<TextBlock HorizontalAlignment="Right" Name="lblSelectedUpdates" TextWrapping="Wrap" Visibility="Collapsed" MaxWidth="300" VerticalAlignment="Top" Grid.Column="2" LineHeight="25" Grid.Row="1" Margin="0,5,2,0" DockPanel.Dock="Top" Padding="5,5,5,0" Text="999 important updates selected, 888.99 MB" />
-		</DockPanel>
-		<Line X1="0" Grid.Column="2" StrokeThickness="1" Stroke="LightGray" Y1="50" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Name="line" Visibility="Hidden" Margin="0,7" />
-		<StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Name="spnlUpdateInfo" VerticalAlignment="Top" Margin="0,5,0,0">
-			<TextBlock Style="{StaticResource underlineTextBlock}" Name="lblViewImportantUpdates" Padding="5" Text="{}{99} important updates are available" Visibility="Collapsed" Foreground="#FF0066CC" Cursor="Hand" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" Name="lblViewOptionalUpdates" Padding="5" Text="{}{99} optional updates are available" Visibility="Collapsed" Foreground="#FF0066CC" Cursor="Hand" />
-		</StackPanel>
-	</Grid>
+        <DockPanel Grid.Column="3" Grid.RowSpan="1" HorizontalAlignment="Right" Grid.Row="1">
+            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Visibility="Collapsed" HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom" Margin="0,10,8,6" Grid.Column="2" Grid.Row="1" DockPanel.Dock="Bottom" ButtonText="Install updates" />
+            <TextBlock HorizontalAlignment="Right" Name="lblSelectedUpdates" TextWrapping="Wrap" Visibility="Collapsed" MaxWidth="300" VerticalAlignment="Top" Grid.Column="2"
+                    LineHeight="25" Grid.Row="1" Margin="0,5,2,0" DockPanel.Dock="Top" Padding="5,5,5,0" Text="999 important updates selected, 888.99 MB" />
+        </DockPanel>
+        <Line X1="0" Grid.Column="2" StrokeThickness="1" Stroke="LightGray" Y1="50" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Name="line"
+                Visibility="Hidden" Margin="0,7" />
+        <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Name="spnlUpdateInfo" VerticalAlignment="Top" Margin="0,5,0,0">
+            <TextBlock Style="{StaticResource underlineTextBlock}" Name="lblViewImportantUpdates" Padding="5" Text="{}{99} important updates are available" Visibility="Collapsed"
+                    Foreground="#FF0066CC" Cursor="Hand" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" Name="lblViewOptionalUpdates" Padding="5" Text="{}{99} optional updates are available" Visibility="Collapsed"
+                    Foreground="#FF0066CC" Cursor="Hand" />
+        </StackPanel>
+    </Grid>
 </UserControl>

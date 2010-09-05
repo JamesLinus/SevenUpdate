@@ -41,7 +41,7 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class RestoreUpdates : Page
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Gets or Sets a collection of SUH items
@@ -64,7 +64,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Occurs when one or more hidden updates have been restored
         /// </summary>
-        public static event EventHandler<EventArgs> RestoredHiddenUpdateEventHandler;
+        public static event EventHandler<EventArgs> RestoredHiddenUpdate;
 
         #endregion
 
@@ -122,8 +122,8 @@ namespace SevenUpdate.Pages
             }
             if (AdminClient.HideUpdates(hiddenUpdates))
             {
-                if (RestoredHiddenUpdateEventHandler != null)
-                    RestoredHiddenUpdateEventHandler(this, new EventArgs());
+                if (RestoredHiddenUpdate != null)
+                    RestoredHiddenUpdate(this, new EventArgs());
             }
             MainWindow.NavService.GoBack();
         }

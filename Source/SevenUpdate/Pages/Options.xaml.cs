@@ -45,7 +45,7 @@ namespace SevenUpdate.Pages
     /// </summary>
     public partial class Options : Page
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   The Seven Update list location
@@ -58,6 +58,10 @@ namespace SevenUpdate.Pages
         private static ObservableCollection<Sua> machineAppList;
 
         private Config config;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   The shield Icon uri
@@ -76,14 +80,6 @@ namespace SevenUpdate.Pages
         }
 
         #region Methods
-
-        /// <summary>
-        ///   Saves the Settings
-        /// </summary>
-        private void SaveSettings()
-        {
-            AdminClient.SaveSettings(config.AutoOption != AutoUpdateOption.Never, config, machineAppList);
-        }
 
         /// <summary>
         ///   Downloads the Seven Update Application List
@@ -276,10 +272,8 @@ namespace SevenUpdate.Pages
         /// <param name = "e" />
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            SaveSettings();
+            AdminClient.SaveSettings(config.AutoOption != AutoUpdateOption.Never, config, machineAppList);
         }
-
-        #endregion
 
         #endregion
 
@@ -294,5 +288,8 @@ namespace SevenUpdate.Pages
             }
             e.Handled = true;
         }
+
+        #endregion
+
     }
 }

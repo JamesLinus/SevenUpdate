@@ -62,7 +62,7 @@ namespace SevenUpdate
     /// </summary>
     public static class Search
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Location of the SUI for Seven Update
@@ -238,8 +238,8 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalNetworkError));
+                if (ErrorOccurred != null)
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalNetworkError));
                 return;
             }
 
@@ -275,8 +275,8 @@ namespace SevenUpdate
                     applications.Add(app);
 
                     // Search is complete!
-                    if (SearchDoneEventHandler != null)
-                        SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
+                    if (SearchDone != null)
+                        SearchDone(null, new SearchCompletedEventArgs(applications));
 
                     return;
                 }
@@ -286,8 +286,8 @@ namespace SevenUpdate
                 // If this happens i am the only one to blame lol.
                 Base.ReportError(e, Base.AllUserStore);
                 // Notify that there was an error that occurred.
-                if (ErrorOccurredEventHandler != null)
-                    ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                if (ErrorOccurred != null)
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
             }
 
             #endregion
@@ -297,8 +297,8 @@ namespace SevenUpdate
             if (apps == null)
             {
                 // Search is complete!
-                if (SearchDoneEventHandler != null)
-                    SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
+                if (SearchDone != null)
+                    SearchDone(null, new SearchCompletedEventArgs(applications));
 
                 return;
             }
@@ -330,15 +330,15 @@ namespace SevenUpdate
                     {
                         Base.ReportError("Error downloading file: " + t.SuiUrl, Base.AllUserStore);
                         // Notify that there was an error that occurred.
-                        if (ErrorOccurredEventHandler != null)
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                        if (ErrorOccurred != null)
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                     }
                     catch (Exception e)
                     {
                         Base.ReportError(e, Base.AllUserStore);
                         // Notify that there was an error that occurred.
-                        if (ErrorOccurredEventHandler != null)
-                            ErrorOccurredEventHandler(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                        if (ErrorOccurred != null)
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
                     }
                 }
             }
@@ -346,8 +346,8 @@ namespace SevenUpdate
             #endregion
 
             // Search is complete!
-            if (SearchDoneEventHandler != null)
-                SearchDoneEventHandler(null, new SearchCompletedEventArgs(applications));
+            if (SearchDone != null)
+                SearchDone(null, new SearchCompletedEventArgs(applications));
         }
 
         /// <summary>
@@ -379,12 +379,12 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs if an error occurred
         /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurredEventHandler;
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>
         ///   Occurs when the searching of updates has completed.
         /// </summary>
-        public static event EventHandler<SearchCompletedEventArgs> SearchDoneEventHandler;
+        public static event EventHandler<SearchCompletedEventArgs> SearchDone;
 
         #endregion
     }

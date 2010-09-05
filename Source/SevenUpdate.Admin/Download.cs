@@ -36,7 +36,7 @@ namespace SevenUpdate.Admin
     /// </summary>
     internal static class Download
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Manager for Background Intelligent Transfer Service

@@ -52,7 +52,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
-            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
 
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -131,6 +131,14 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region Content Menu
+
+        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            miRemoveAll.IsEnabled = listBox.Items.Count > 0;
+        }
+
         #region MenuItem - Click
 
         private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
@@ -153,13 +161,15 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #endregion
+
         #region ComboBox - Selection Changed
 
         #endregion
 
         #region Aero
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;

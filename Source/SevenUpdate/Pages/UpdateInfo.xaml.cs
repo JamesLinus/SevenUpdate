@@ -114,7 +114,7 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Gets an image of a blue arrow
@@ -130,6 +130,10 @@ namespace SevenUpdate.Pages
         ///   Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<Indices> indices;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Gets or Sets a value indicating if one or more updates were hidden
@@ -158,12 +162,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Occurs when the update selection has changed
         /// </summary>
-        internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChangedEventHandler;
+        internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChanged;
 
         /// <summary>
         ///   Occurs when the user cancels their update selection
         /// </summary>
-        internal static event EventHandler CanceledSelectionEventHandler;
+        internal static event EventHandler CanceledSelection;
 
         #endregion
 
@@ -253,8 +257,8 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            if (UpdateSelectionChangedEventHandler != null)
-                UpdateSelectionChangedEventHandler(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+            if (UpdateSelectionChanged != null)
+                UpdateSelectionChanged(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
         }
 
         /// <summary>
@@ -318,8 +322,8 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            if (CanceledSelectionEventHandler != null && AreHiddenUpdates)
-                CanceledSelectionEventHandler(this, new EventArgs());
+            if (CanceledSelection != null && AreHiddenUpdates)
+                CanceledSelection(this, new EventArgs());
         }
 
         /// <summary>

@@ -56,14 +56,14 @@ namespace SevenUpdate.Sdk.Windows
 
             NavService = NavigationService;
 
-            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
         }
 
         #endregion
 
         #region Aero
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
 

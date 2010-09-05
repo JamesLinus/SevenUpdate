@@ -38,7 +38,7 @@ namespace SevenUpdate.Pages
     /// </summary>
     public partial class UpdateHistory : Page
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   The location of the update history file

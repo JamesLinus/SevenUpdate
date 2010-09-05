@@ -160,8 +160,8 @@ namespace Microsoft.Windows.Dwm
         {
             if (msg == CoreNativeMethods.DwmMessages.WmDwmCompositionChanged || msg == CoreNativeMethods.DwmMessages.WmDwmnRenderingChanged)
             {
-                if (DwmCompositionChangedEventHandler != null)
-                    DwmCompositionChangedEventHandler.Invoke(null, new DwmCompositionChangedEventArgs(IsEnabled));
+                if (DwmCompositionChanged != null)
+                    DwmCompositionChanged.Invoke(null, new DwmCompositionChangedEventArgs(IsEnabled));
 
                 handled = true;
             }
@@ -173,7 +173,7 @@ namespace Microsoft.Windows.Dwm
         /// <summary>
         ///   Occurs when DWM becomes enabled or disabled on the system
         /// </summary>
-        public static event EventHandler<DwmCompositionChangedEventArgs> DwmCompositionChangedEventHandler;
+        public static event EventHandler<DwmCompositionChangedEventArgs> DwmCompositionChanged;
 
         #endregion
 

@@ -39,9 +39,11 @@ namespace SevenUpdate
     /// </summary>
     public partial class App
     {
-        #region Global Vars
+        #region Fields
 
         internal new static ResourceDictionary Resources;
+
+        #endregion
 
         #region Properties
 
@@ -87,8 +89,6 @@ namespace SevenUpdate
         ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
         /// </summary>
         internal static bool IsReconnect { get; set; }
-
-        #endregion
 
         #endregion
 

@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -40,6 +41,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class UpdateFiles : Page
     {
+        #region Fields
+
+        private int hashesGenerating;
+
+        #endregion
+
         #region Properties
 
         #endregion
@@ -53,18 +60,17 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
-            SevenUpdate.Base.HashGeneratedEventHandler += Base_HashGeneratedEventHandler;
-
             if (Base.UpdateInfo.Files == null)
                 Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
 
             listBox.ItemsSource = Base.UpdateInfo.Files;
 
+
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
             MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
-            AeroGlass.DwmCompositionChangedEventHandler += AeroGlass_DwmCompositionChangedEventHandler;
+            AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -72,11 +78,6 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region Methods
-
-        private void Base_HashGeneratedEventHandler(object sender, HashGeneratedEventArgs e)
-        {
-            tbHashCalculating.Visibility = e.IsHashGenerating ? Visibility.Visible : Visibility.Collapsed;
-        }
 
         /// <summary>
         ///   Adds a file to the list
@@ -86,24 +87,45 @@ namespace SevenUpdate.Sdk.Pages
         {
             string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
 
-            var file = new UpdateFile { Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
+            var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
 
             Base.UpdateInfo.Files.Add(file);
 
-            listBox.SelectedIndex = (listBox.Items.Count - 1);
-
             tbHashCalculating.Visibility = Visibility.Visible;
-            SevenUpdate.Base.GetHashAsync(ref file);
-            SevenUpdate.Base.GetFileSizeAsync(ref file);
+
+            CalculateHash(ref file);
+            GetFileSize(ref file);
+        }
+
+        private void CalculateHash(ref UpdateFile file, string fileLocation = null)
+        {
+            var context = TaskScheduler.FromCurrentSynchronizationContext();
+            var updateFile = file;
+            tbHashCalculating.Visibility = Visibility.Visible;
+            hashesGenerating++;
+            Task.Factory.StartNew(() => { updateFile.Hash = SevenUpdate.Base.GetHash(fileLocation ?? updateFile.Destination); }).ContinueWith(_ =>
+                                                                                                                                                  {
+                                                                                                                                                      hashesGenerating--;
+                                                                                                                                                      if (hashesGenerating < 1)
+                                                                                                                                                          tbHashCalculating.Visibility =
+                                                                                                                                                              Visibility.Collapsed;
+                                                                                                                                                  }, context);
+        }
+
+        private void GetFileSize(ref UpdateFile file, string fileLocation = null)
+        {
+            var updateFile = file;
+
+            Task.Factory.StartNew(() => { updateFile.FileSize = SevenUpdate.Base.GetFileSize(fileLocation ?? updateFile.Destination); });
         }
 
         private void AddFiles(string[] files)
         {
-            piFileProgress.IsRunning = true;
-            for (int x = 0; x < files.Length; x++)
+            AddFile(files[0]);
+
+            for (int x = 1; x < files.Length; x++)
                 AddFile(files[x]);
-            piFileProgress.IsRunning = false;
-            listBox.SelectedIndex = (listBox.Items.Count - 1);
+            listBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -156,11 +178,19 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             var selectedItem = listBox.SelectedItem as UpdateFile;
-            SevenUpdate.Base.GetFileSizeAsync(ref selectedItem, cfd.FileName);
-            SevenUpdate.Base.GetHashAsync(ref selectedItem, cfd.FileName);
+            CalculateHash(ref selectedItem, cfd.FileName);
+            GetFileSize(ref selectedItem, cfd.FileName);
         }
 
         #endregion
+
+        #region Content Menu
+
+        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            miRemove.IsEnabled = listBox.SelectedIndex > -1;
+            miRemoveAll.IsEnabled = listBox.Items.Count > 0;
+        }
 
         #region MenuItem - Click
 
@@ -177,8 +207,10 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                AddFile(cfd.FileName);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            AddFile(cfd.FileName);
+            listBox.SelectedIndex = (listBox.Items.Count - 1);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
@@ -190,9 +222,11 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #endregion
+
         #region Aero
 
-        private void AeroGlass_DwmCompositionChangedEventHandler(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;

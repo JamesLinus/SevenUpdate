@@ -117,21 +117,21 @@ namespace SevenUpdate.Pages
 
             #region Event Handler Declarations
 
-            UpdateInfo.CanceledSelectionEventHandler += CanceledSelection_EventHandler;
-            UpdateInfo.UpdateSelectionChangedEventHandler += UpdateSelectionChanged_EventHandler;
+            UpdateInfo.CanceledSelection += CanceledSelection;
+            UpdateInfo.UpdateSelectionChanged += UpdateSelectionChanged;
             infoBar.btnAction.Click += Action_Click;
             infoBar.lblViewImportantUpdates.MouseDown += ViewImportantUpdates_MouseDown;
             infoBar.lblViewOptionalUpdates.MouseDown += ViewOptionalUpdates_MouseDown;
-            Search.SearchDoneEventHandler += SearchCompleted_EventHandler;
-            Search.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
-            ServiceCallBack.DownloadProgressChangedEventHandler += DownloadProgressChanged_EventHandler;
-            ServiceCallBack.DownloadDoneEventHandler += DownloadCompleted_EventHandler;
-            ServiceCallBack.InstallProgressChangedEventHandler += InstallProgressChanged_EventHandler;
-            ServiceCallBack.InstallDoneEventHandler += InstallCompleted_EventHandler;
-            ServiceCallBack.ErrorOccurredEventHandler += ErrorOccurred_EventHandler;
-            RestoreUpdates.RestoredHiddenUpdateEventHandler += RestoredHiddenUpdate_EventHandler;
-            AdminClient.SettingsChangedEventHandler += Admin_SettingsChanged_EventHandler;
-            AdminClient.ServiceErrorEventHandler += ErrorOccurred_EventHandler;
+            Search.SearchDone += SearchCompleted;
+            Search.ErrorOccurred += ErrorOccurred;
+            ServiceCallBack.DownloadProgressChanged += DownloadProgressChanged;
+            ServiceCallBack.DownloadDone += DownloadCompleted;
+            ServiceCallBack.InstallProgressChanged += InstallProgressChanged;
+            ServiceCallBack.InstallDone += InstallCompleted;
+            ServiceCallBack.ErrorOccurred += ErrorOccurred;
+            RestoreUpdates.RestoredHiddenUpdate += RestoredHiddenUpdate;
+            AdminClient.SettingsChanged += Admin_SettingsChanged;
+            AdminClient.ServiceError += ErrorOccurred;
 
             #endregion
 
@@ -313,7 +313,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when an error occurs
         /// </summary>
-        private void ErrorOccurred_EventHandler(object sender, ErrorOccurredEventArgs e)
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             switch (e.Type)
             {
@@ -358,7 +358,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the install progress has changed
         /// </summary>
-        private void InstallProgressChanged_EventHandler(object sender, InstallProgressChangedEventArgs e)
+        private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallProgressChanged, e);
@@ -369,7 +369,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the download progress has changed
         /// </summary>
-        private void DownloadProgressChanged_EventHandler(object sender, DownloadProgressChangedEventArgs e)
+        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadProgressChanged, e);
@@ -380,7 +380,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the search for updates has completed
         /// </summary>
-        private void SearchCompleted_EventHandler(object sender, SearchCompletedEventArgs e)
+        private void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);
@@ -391,7 +391,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the installation of updates has completed
         /// </summary>
-        private void InstallCompleted_EventHandler(object sender, InstallCompletedEventArgs e)
+        private void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallCompleted, e);
@@ -402,7 +402,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the downloading of updates has completed
         /// </summary>
-        private void DownloadCompleted_EventHandler(object sender, DownloadCompletedEventArgs e)
+        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(DownloadCompleted, e);
@@ -920,7 +920,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   When the user cancels their selection of updates and also hides at least one update, let's re-check for updates
         /// </summary>
-        private void CanceledSelection_EventHandler(object sender, EventArgs e)
+        private void CanceledSelection(object sender, EventArgs e)
         {
             CheckForUpdates();
         }
@@ -928,7 +928,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Updates the UI after the user selects updates to install
         /// </summary>
-        private void UpdateSelectionChanged_EventHandler(object sender, UpdateSelectionChangedEventArgs e)
+        private void UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (App.Applications.Count == 0)
             {
@@ -1027,12 +1027,12 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Checks for updates after hidden updates have been restored
         /// </summary>
-        private void RestoredHiddenUpdate_EventHandler(object sender, EventArgs e)
+        private void RestoredHiddenUpdate(object sender, EventArgs e)
         {
             CheckForUpdates(true);
         }
 
-        private void Admin_SettingsChanged_EventHandler(object sender, EventArgs e)
+        private void Admin_SettingsChanged(object sender, EventArgs e)
         {
             CheckForUpdates(true);
         }

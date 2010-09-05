@@ -42,7 +42,7 @@ namespace SevenUpdate.Admin
     /// </summary>
     internal static class Install
     {
-        #region Global Vars
+        #region Fields
 
         /// <summary>
         ///   Gets an int that indicates to move a file on reboot
@@ -64,6 +64,8 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static int updateCount;
 
+        #endregion
+
         /// <summary>
         ///   Moves or deletes a file on reboot
         /// </summary>
@@ -74,7 +76,6 @@ namespace SevenUpdate.Admin
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
-        #endregion
 
         private static void ReportProgress(int installProgress)
         {
