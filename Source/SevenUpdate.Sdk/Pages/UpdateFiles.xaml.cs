@@ -60,9 +60,6 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
-            if (Base.UpdateInfo.Files == null)
-                Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
-
             listBox.ItemsSource = Base.UpdateInfo.Files;
 
 
@@ -119,10 +116,17 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(() => { updateFile.FileSize = SevenUpdate.Base.GetFileSize(fileLocation ?? updateFile.Destination); });
         }
 
+        private void AddFiles(Collection<string> files)
+        {
+            AddFile(files[0]);
+            for (int x = 1; x < files.Count; x++)
+                AddFile(files[x]);
+            listBox.SelectedIndex = 0;
+        }
+
         private void AddFiles(string[] files)
         {
             AddFile(files[0]);
-
             for (int x = 1; x < files.Length; x++)
                 AddFile(files[x]);
             listBox.SelectedIndex = 0;
@@ -206,11 +210,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {Multiselect = false};
+            var cfd = new CommonOpenFileDialog {DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), EnsureValidNames = true};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            AddFile(cfd.FileName);
-            listBox.SelectedIndex = (listBox.Items.Count - 1);
+            AddFiles(cfd.FileNames);
         }
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)

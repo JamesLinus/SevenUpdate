@@ -25,6 +25,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
+using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -147,6 +148,17 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
+            var cfd = new CommonOpenFileDialog {Multiselect = false, DefaultExtension="reg"};
+            cfd.Filters.Add(new CommonFileDialogFilter("Registry file", "*.reg"));
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            
+            var registryParser = new RegistryParser();
+            var results = registryParser.Parse(cfd.FileName);
+
+            for (int x = 0; x < results.Count; x++)
+                Base.UpdateInfo.RegistryItems.Add(results[x]);
+            
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)

@@ -23,7 +23,7 @@
 				</TextBlock.Effect>
 			</TextBlock>
 		</StackPanel>
-		<TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand">
+		<TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,24,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand" Foreground="Black">
 			<TextBlock.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
 			</TextBlock.Effect>

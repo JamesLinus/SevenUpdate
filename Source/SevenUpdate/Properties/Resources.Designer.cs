@@ -22,7 +22,7 @@ namespace SevenUpdate.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SevenUpdate.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SevenUpdate.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace SevenUpdate.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please read and accept the license terms for.
         /// </summary>
-        internal static string AcceptLicenseTerms {
+        public static string AcceptLicenseTerms {
             get {
                 return ResourceManager.GetString("AcceptLicenseTerms", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Would you like to allow Seven Update to search, download and install updates for.
         /// </summary>
-        internal static string AllowUpdates {
+        public static string AllowUpdates {
             get {
                 return ResourceManager.GetString("AllowUpdates", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update is currently already checking for, downloading, or installing updates..
         /// </summary>
-        internal static string AlreadyUpdating {
+        public static string AlreadyUpdating {
             get {
                 return ResourceManager.GetString("AlreadyUpdating", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to at.
         /// </summary>
-        internal static string At {
+        public static string At {
             get {
                 return ResourceManager.GetString("At", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to You have chosen to cancel the installation of updates..
         /// </summary>
-        internal static string CancelInstallation {
+        public static string CancelInstallation {
             get {
                 return ResourceManager.GetString("CancelInstallation", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cancel updates.
         /// </summary>
-        internal static string CancelUpdates {
+        public static string CancelUpdates {
             get {
                 return ResourceManager.GetString("CancelUpdates", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update cannot connect to the internet, please check your connection or firewall..
         /// </summary>
-        internal static string CheckConnection {
+        public static string CheckConnection {
             get {
                 return ResourceManager.GetString("CheckConnection", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Check for updates.
         /// </summary>
-        internal static string CheckForUpdates {
+        public static string CheckForUpdates {
             get {
                 return ResourceManager.GetString("CheckForUpdates", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Check for updates for your installed software.
         /// </summary>
-        internal static string CheckForUpdatesHeading {
+        public static string CheckForUpdatesHeading {
             get {
                 return ResourceManager.GetString("CheckForUpdatesHeading", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Checking for updates.
         /// </summary>
-        internal static string CheckingForUpdates {
+        public static string CheckingForUpdates {
             get {
                 return ResourceManager.GetString("CheckingForUpdates", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Check for updates but let me choose whether to download and install them.
         /// </summary>
-        internal static string CheckUpdatesOnly {
+        public static string CheckUpdatesOnly {
             get {
                 return ResourceManager.GetString("CheckUpdatesOnly", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to complete.
         /// </summary>
-        internal static string Complete {
+        public static string Complete {
             get {
                 return ResourceManager.GetString("Complete", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update has completed installing updates..
         /// </summary>
-        internal static string CompletedInstallingUpdates {
+        public static string CompletedInstallingUpdates {
             get {
                 return ResourceManager.GetString("CompletedInstallingUpdates", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Connecting to the Seven Update service.
         /// </summary>
-        internal static string ConnectingToService {
+        public static string ConnectingToService {
             get {
                 return ResourceManager.GetString("ConnectingToService", resourceCulture);
             }
@@ -189,7 +189,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not connect to the Seven Update server.
         /// </summary>
-        internal static string CouldNotConnect {
+        public static string CouldNotConnect {
             get {
                 return ResourceManager.GetString("CouldNotConnect", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Download and install your selected updates.
         /// </summary>
-        internal static string DownloadAndInstallUpdates {
+        public static string DownloadAndInstallUpdates {
             get {
                 return ResourceManager.GetString("DownloadAndInstallUpdates", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Downloading Updates.
         /// </summary>
-        internal static string DownloadingUpdates {
+        public static string DownloadingUpdates {
             get {
                 return ResourceManager.GetString("DownloadingUpdates", resourceCulture);
             }
@@ -216,7 +216,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update is downloading updates in the background..
         /// </summary>
-        internal static string DownloadingUpdatesBackground {
+        public static string DownloadingUpdatesBackground {
             get {
                 return ResourceManager.GetString("DownloadingUpdatesBackground", resourceCulture);
             }
@@ -225,7 +225,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Download size.
         /// </summary>
-        internal static string DownloadSize {
+        public static string DownloadSize {
             get {
                 return ResourceManager.GetString("DownloadSize", resourceCulture);
             }
@@ -234,7 +234,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Download updates but let me choose whether to install them (Recommended).
         /// </summary>
-        internal static string DownloadUpdatesOnly {
+        public static string DownloadUpdatesOnly {
             get {
                 return ResourceManager.GetString("DownloadUpdatesOnly", resourceCulture);
             }
@@ -243,7 +243,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An error occurred while searching, downloading, or installing updates..
         /// </summary>
-        internal static string ErrorOccurred {
+        public static string ErrorOccurred {
             get {
                 return ResourceManager.GetString("ErrorOccurred", resourceCulture);
             }
@@ -252,7 +252,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Are you sure you would like to exit?.
         /// </summary>
-        internal static string ExitConfirm {
+        public static string ExitConfirm {
             get {
                 return ResourceManager.GetString("ExitConfirm", resourceCulture);
             }
@@ -261,7 +261,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
-        internal static string Failed {
+        public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
             }
@@ -270,7 +270,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to files.
         /// </summary>
-        internal static string Files {
+        public static string Files {
             get {
                 return ResourceManager.GetString("Files", resourceCulture);
             }
@@ -279,7 +279,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Finish.
         /// </summary>
-        internal static string Finish {
+        public static string Finish {
             get {
                 return ResourceManager.GetString("Finish", resourceCulture);
             }
@@ -288,7 +288,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update has finish downloading updates, click here to view them..
         /// </summary>
-        internal static string FinishedDownloading {
+        public static string FinishedDownloading {
             get {
                 return ResourceManager.GetString("FinishedDownloading", resourceCulture);
             }
@@ -297,7 +297,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please wait, retrieving update installation status.
         /// </summary>
-        internal static string GettingInstallationStatus {
+        public static string GettingInstallationStatus {
             get {
                 return ResourceManager.GetString("GettingInstallationStatus", resourceCulture);
             }
@@ -306,7 +306,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Hidden.
         /// </summary>
-        internal static string Hidden {
+        public static string Hidden {
             get {
                 return ResourceManager.GetString("Hidden", resourceCulture);
             }
@@ -315,7 +315,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Hide update.
         /// </summary>
-        internal static string HideUpdate {
+        public static string HideUpdate {
             get {
                 return ResourceManager.GetString("HideUpdate", resourceCulture);
             }
@@ -324,7 +324,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Important.
         /// </summary>
-        internal static string Important {
+        public static string Important {
             get {
                 return ResourceManager.GetString("Important", resourceCulture);
             }
@@ -333,7 +333,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to important update available.
         /// </summary>
-        internal static string ImportantUpdateAvailable {
+        public static string ImportantUpdateAvailable {
             get {
                 return ResourceManager.GetString("ImportantUpdateAvailable", resourceCulture);
             }
@@ -342,7 +342,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to important updates are available.
         /// </summary>
-        internal static string ImportantUpdatesAvailable {
+        public static string ImportantUpdatesAvailable {
             get {
                 return ResourceManager.GetString("ImportantUpdatesAvailable", resourceCulture);
             }
@@ -351,7 +351,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to important update selected.
         /// </summary>
-        internal static string ImportantUpdateSelected {
+        public static string ImportantUpdateSelected {
             get {
                 return ResourceManager.GetString("ImportantUpdateSelected", resourceCulture);
             }
@@ -360,7 +360,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to important updates selected.
         /// </summary>
-        internal static string ImportantUpdatesSelected {
+        public static string ImportantUpdatesSelected {
             get {
                 return ResourceManager.GetString("ImportantUpdatesSelected", resourceCulture);
             }
@@ -369,7 +369,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to installed on.
         /// </summary>
-        internal static string InstalledOn {
+        public static string InstalledOn {
             get {
                 return ResourceManager.GetString("InstalledOn", resourceCulture);
             }
@@ -378,7 +378,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Installing.
         /// </summary>
-        internal static string Installing {
+        public static string Installing {
             get {
                 return ResourceManager.GetString("Installing", resourceCulture);
             }
@@ -387,7 +387,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Installing updates.
         /// </summary>
-        internal static string InstallingUpdates {
+        public static string InstallingUpdates {
             get {
                 return ResourceManager.GetString("InstallingUpdates", resourceCulture);
             }
@@ -396,7 +396,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update is installing updates in the background..
         /// </summary>
-        internal static string InstallingUpdatesBackground {
+        public static string InstallingUpdatesBackground {
             get {
                 return ResourceManager.GetString("InstallingUpdatesBackground", resourceCulture);
             }
@@ -405,7 +405,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Always install the latest updates to enhance your software security and performance..
         /// </summary>
-        internal static string InstallLatestUpdates {
+        public static string InstallLatestUpdates {
             get {
                 return ResourceManager.GetString("InstallLatestUpdates", resourceCulture);
             }
@@ -414,7 +414,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Install updates.
         /// </summary>
-        internal static string InstallUpdates {
+        public static string InstallUpdates {
             get {
                 return ResourceManager.GetString("InstallUpdates", resourceCulture);
             }
@@ -423,7 +423,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Install updates automatically.
         /// </summary>
-        internal static string InstallUpdatesAutomatically {
+        public static string InstallUpdatesAutomatically {
             get {
                 return ResourceManager.GetString("InstallUpdatesAutomatically", resourceCulture);
             }
@@ -432,7 +432,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Install updates for your programs.
         /// </summary>
-        internal static string InstallUpdatesForPrograms {
+        public static string InstallUpdatesForPrograms {
             get {
                 return ResourceManager.GetString("InstallUpdatesForPrograms", resourceCulture);
             }
@@ -441,7 +441,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Last updated:.
         /// </summary>
-        internal static string LastUpdated {
+        public static string LastUpdated {
             get {
                 return ResourceManager.GetString("LastUpdated", resourceCulture);
             }
@@ -450,7 +450,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Locale.
         /// </summary>
-        internal static string Locale {
+        public static string Locale {
             get {
                 return ResourceManager.GetString("Locale", resourceCulture);
             }
@@ -459,7 +459,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Never.
         /// </summary>
-        internal static string Never {
+        public static string Never {
             get {
                 return ResourceManager.GetString("Never", resourceCulture);
             }
@@ -468,7 +468,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Never check for updates (not recommended).
         /// </summary>
-        internal static string NeverCheckUpdates {
+        public static string NeverCheckUpdates {
             get {
                 return ResourceManager.GetString("NeverCheckUpdates", resourceCulture);
             }
@@ -477,7 +477,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Next.
         /// </summary>
-        internal static string Next {
+        public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
             }
@@ -486,7 +486,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No important updates available.
         /// </summary>
-        internal static string NoImportantUpdates {
+        public static string NoImportantUpdates {
             get {
                 return ResourceManager.GetString("NoImportantUpdates", resourceCulture);
             }
@@ -495,7 +495,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No new updates are available for your programs..
         /// </summary>
-        internal static string NoNewUpdates {
+        public static string NoNewUpdates {
             get {
                 return ResourceManager.GetString("NoNewUpdates", resourceCulture);
             }
@@ -504,7 +504,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Not Available.
         /// </summary>
-        internal static string NotAvailable {
+        public static string NotAvailable {
             get {
                 return ResourceManager.GetString("NotAvailable", resourceCulture);
             }
@@ -513,7 +513,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to No updates are currently selected..
         /// </summary>
-        internal static string NoUpdatesSelected {
+        public static string NoUpdatesSelected {
             get {
                 return ResourceManager.GetString("NoUpdatesSelected", resourceCulture);
             }
@@ -522,7 +522,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to on.
         /// </summary>
-        internal static string On {
+        public static string On {
             get {
                 return ResourceManager.GetString("On", resourceCulture);
             }
@@ -531,7 +531,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Optional.
         /// </summary>
-        internal static string Optional {
+        public static string Optional {
             get {
                 return ResourceManager.GetString("Optional", resourceCulture);
             }
@@ -540,7 +540,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to optional update available.
         /// </summary>
-        internal static string OptionalUpdateAvailable {
+        public static string OptionalUpdateAvailable {
             get {
                 return ResourceManager.GetString("OptionalUpdateAvailable", resourceCulture);
             }
@@ -549,7 +549,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to optional update are available.
         /// </summary>
-        internal static string OptionalUpdatesAvailable {
+        public static string OptionalUpdatesAvailable {
             get {
                 return ResourceManager.GetString("OptionalUpdatesAvailable", resourceCulture);
             }
@@ -558,7 +558,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to optional update selected.
         /// </summary>
-        internal static string OptionalUpdateSelected {
+        public static string OptionalUpdateSelected {
             get {
                 return ResourceManager.GetString("OptionalUpdateSelected", resourceCulture);
             }
@@ -567,7 +567,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to optional updates selected.
         /// </summary>
-        internal static string OptionalUpdatesSelected {
+        public static string OptionalUpdatesSelected {
             get {
                 return ResourceManager.GetString("OptionalUpdatesSelected", resourceCulture);
             }
@@ -576,7 +576,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to out of.
         /// </summary>
-        internal static string OutOf {
+        public static string OutOf {
             get {
                 return ResourceManager.GetString("OutOf", resourceCulture);
             }
@@ -585,7 +585,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Preparing to download updates....
         /// </summary>
-        internal static string PreparingDownload {
+        public static string PreparingDownload {
             get {
                 return ResourceManager.GetString("PreparingDownload", resourceCulture);
             }
@@ -594,7 +594,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Preparing to install updates....
         /// </summary>
-        internal static string PreparingInstall {
+        public static string PreparingInstall {
             get {
                 return ResourceManager.GetString("PreparingInstall", resourceCulture);
             }
@@ -603,7 +603,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your programs are up to date.
         /// </summary>
-        internal static string ProgramsUpToDate {
+        public static string ProgramsUpToDate {
             get {
                 return ResourceManager.GetString("ProgramsUpToDate", resourceCulture);
             }
@@ -612,7 +612,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ready to download.
         /// </summary>
-        internal static string ReadyToDownload {
+        public static string ReadyToDownload {
             get {
                 return ResourceManager.GetString("ReadyToDownload", resourceCulture);
             }
@@ -621,7 +621,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Ready to install.
         /// </summary>
-        internal static string ReadyToInstall {
+        public static string ReadyToInstall {
             get {
                 return ResourceManager.GetString("ReadyToInstall", resourceCulture);
             }
@@ -630,7 +630,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Your computer needs to be restarted to finish updates..
         /// </summary>
-        internal static string RebootNeeded {
+        public static string RebootNeeded {
             get {
                 return ResourceManager.GetString("RebootNeeded", resourceCulture);
             }
@@ -639,7 +639,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update cannot currently check for updates, because you must first restart the computer so that a previous installation may be completed..
         /// </summary>
-        internal static string RebootNeededFirst {
+        public static string RebootNeededFirst {
             get {
                 return ResourceManager.GetString("RebootNeededFirst", resourceCulture);
             }
@@ -648,7 +648,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Recommended.
         /// </summary>
-        internal static string Recommended {
+        public static string Recommended {
             get {
                 return ResourceManager.GetString("Recommended", resourceCulture);
             }
@@ -657,7 +657,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Restart now.
         /// </summary>
-        internal static string RestartNow {
+        public static string RestartNow {
             get {
                 return ResourceManager.GetString("RestartNow", resourceCulture);
             }
@@ -666,7 +666,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Restore.
         /// </summary>
-        internal static string Restore {
+        public static string Restore {
             get {
                 return ResourceManager.GetString("Restore", resourceCulture);
             }
@@ -675,7 +675,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string Save {
+        public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
             }
@@ -684,7 +684,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Please save your work and reboot your machine to complete the installation of updates..
         /// </summary>
-        internal static string SaveAndReboot {
+        public static string SaveAndReboot {
             get {
                 return ResourceManager.GetString("SaveAndReboot", resourceCulture);
             }
@@ -693,7 +693,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Software.
         /// </summary>
-        internal static string SevenSoftware {
+        public static string SevenSoftware {
             get {
                 return ResourceManager.GetString("SevenSoftware", resourceCulture);
             }
@@ -702,7 +702,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update.
         /// </summary>
-        internal static string SevenUpdate {
+        public static string SevenUpdate {
             get {
                 return ResourceManager.GetString("SevenUpdate", resourceCulture);
             }
@@ -711,7 +711,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Show update.
         /// </summary>
-        internal static string ShowUpdate {
+        public static string ShowUpdate {
             get {
                 return ResourceManager.GetString("ShowUpdate", resourceCulture);
             }
@@ -720,7 +720,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Stop download.
         /// </summary>
-        internal static string StopDownload {
+        public static string StopDownload {
             get {
                 return ResourceManager.GetString("StopDownload", resourceCulture);
             }
@@ -729,7 +729,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Stop installation.
         /// </summary>
-        internal static string StopInstallation {
+        public static string StopInstallation {
             get {
                 return ResourceManager.GetString("StopInstallation", resourceCulture);
             }
@@ -738,7 +738,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Succeeded.
         /// </summary>
-        internal static string Succeeded {
+        public static string Succeeded {
             get {
                 return ResourceManager.GetString("Succeeded", resourceCulture);
             }
@@ -747,7 +747,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Successful.
         /// </summary>
-        internal static string Successful {
+        public static string Successful {
             get {
                 return ResourceManager.GetString("Successful", resourceCulture);
             }
@@ -756,7 +756,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Today at.
         /// </summary>
-        internal static string TodayAt {
+        public static string TodayAt {
             get {
                 return ResourceManager.GetString("TodayAt", resourceCulture);
             }
@@ -765,7 +765,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Total.
         /// </summary>
-        internal static string Total {
+        public static string Total {
             get {
                 return ResourceManager.GetString("Total", resourceCulture);
             }
@@ -774,7 +774,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Total selected:.
         /// </summary>
-        internal static string TotalSelected {
+        public static string TotalSelected {
             get {
                 return ResourceManager.GetString("TotalSelected", resourceCulture);
             }
@@ -783,7 +783,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Try Again.
         /// </summary>
-        internal static string TryAgain {
+        public static string TryAgain {
             get {
                 return ResourceManager.GetString("TryAgain", resourceCulture);
             }
@@ -792,7 +792,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to An unknown error occurred.
         /// </summary>
-        internal static string UnknownErrorOccurred {
+        public static string UnknownErrorOccurred {
             get {
                 return ResourceManager.GetString("UnknownErrorOccurred", resourceCulture);
             }
@@ -801,7 +801,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to update.
         /// </summary>
-        internal static string Update {
+        public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
             }
@@ -810,7 +810,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to updates.
         /// </summary>
-        internal static string Updates {
+        public static string Updates {
             get {
                 return ResourceManager.GetString("Updates", resourceCulture);
             }
@@ -819,7 +819,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to There are updates available, click here to see them.
         /// </summary>
-        internal static string UpdatesAvailable {
+        public static string UpdatesAvailable {
             get {
                 return ResourceManager.GetString("UpdatesAvailable", resourceCulture);
             }
@@ -828,7 +828,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been canceled.
         /// </summary>
-        internal static string UpdatesCanceled {
+        public static string UpdatesCanceled {
             get {
                 return ResourceManager.GetString("UpdatesCanceled", resourceCulture);
             }
@@ -837,7 +837,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates are complete.
         /// </summary>
-        internal static string UpdatesComplete {
+        public static string UpdatesComplete {
             get {
                 return ResourceManager.GetString("UpdatesComplete", resourceCulture);
             }
@@ -846,7 +846,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been downloaded.
         /// </summary>
-        internal static string UpdatesDownloaded {
+        public static string UpdatesDownloaded {
             get {
                 return ResourceManager.GetString("UpdatesDownloaded", resourceCulture);
             }
@@ -855,7 +855,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to update selected.
         /// </summary>
-        internal static string UpdateSelected {
+        public static string UpdateSelected {
             get {
                 return ResourceManager.GetString("UpdateSelected", resourceCulture);
             }
@@ -864,7 +864,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to The updates were successfully installed.
         /// </summary>
-        internal static string UpdatesInstalled {
+        public static string UpdatesInstalled {
             get {
                 return ResourceManager.GetString("UpdatesInstalled", resourceCulture);
             }
@@ -873,7 +873,7 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates are ready to be installed.
         /// </summary>
-        internal static string UpdatesReadyInstalled {
+        public static string UpdatesReadyInstalled {
             get {
                 return ResourceManager.GetString("UpdatesReadyInstalled", resourceCulture);
             }

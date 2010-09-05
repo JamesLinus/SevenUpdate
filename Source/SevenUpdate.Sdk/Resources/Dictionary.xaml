@@ -7,16 +7,23 @@
 	<SevenUpdate:IntToVisibilityConverter x:Key="intToVisibility" />
 	<SevenUpdate:IntToBoolConverter x:Key="intToBool" />
 	<Sdk:DateConverter x:Key="dateConverter" />
+    <SevenUpdate:EnumToBool x:Key="enumToBool" />
+    <SevenUpdate:InverseEnumToBool x:Key="inverseEnumToBool" />
 
-	<Style x:Key="underlineTextBlock" TargetType="TextBlock">
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="TextDecorations" Value="Underline" />
-			</Trigger>
-		</Style.Triggers>
-	</Style>
+    <!--Underline TextBlock-->
+    <Style x:Key="underlineTextBlock" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="#FF0066CC" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
-	<Style TargetType="{x:Type Image}">
+    <Style TargetType="{x:Type Image}">
 		<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
 	</Style>
 </ResourceDictionary>

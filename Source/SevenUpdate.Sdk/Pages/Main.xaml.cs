@@ -79,6 +79,12 @@ namespace SevenUpdate.Sdk.Pages
             Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
             Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
             Base.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
+            if (Base.UpdateInfo.Files == null)
+                Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            if (Base.UpdateInfo.RegistryItems == null)
+                Base.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+            if (Base.UpdateInfo.Shortcuts== null)
+                Base.UpdateInfo.Shortcuts= new ObservableCollection<Shortcut>();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

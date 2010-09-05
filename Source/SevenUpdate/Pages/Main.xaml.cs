@@ -38,76 +38,6 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class Main : Page
     {
-        #region Enums
-
-        /// <summary>
-        ///   The layout for the Info Panel
-        /// </summary>
-        private enum UILayout
-        {
-            /// <summary>
-            ///   Canceled Updates
-            /// </summary>
-            Canceled,
-
-            /// <summary>
-            ///   Check for updates
-            /// </summary>
-            CheckForUpdates,
-
-            /// <summary>
-            ///   Checking for updates
-            /// </summary>
-            CheckingForUpdates,
-
-            /// <summary>
-            ///   When connecting to the admin service
-            /// </summary>
-            ConnectingToService,
-
-            /// <summary>
-            ///   When downloading of updates has been completed
-            /// </summary>
-            DownloadCompleted,
-
-            /// <summary>
-            ///   Downloading updates
-            /// </summary>
-            Downloading,
-
-            /// <summary>
-            ///   An Error Occurred when downloading/installing updates
-            /// </summary>
-            ErrorOccurred,
-
-            /// <summary>
-            ///   When installation of updates have completed
-            /// </summary>
-            InstallationCompleted,
-
-            /// <summary>
-            ///   Installing Updates
-            /// </summary>
-            Installing,
-
-            /// <summary>
-            ///   No updates have been found
-            /// </summary>
-            NoUpdates,
-
-            /// <summary>
-            ///   A reboot is needed to finish installing updates
-            /// </summary>
-            RebootNeeded,
-
-            /// <summary>
-            ///   No updates have been found
-            /// </summary>
-            UpdatesFound,
-        }
-
-        #endregion
-
         /// <summary>
         ///   The constructor for the Main page
         /// </summary>
@@ -138,11 +68,11 @@ namespace SevenUpdate.Pages
             LoadSettings();
 
             if (App.IsReconnect)
-                SetUI(UILayout.ConnectingToService);
+                infoBar.UiLayout = UILayout.ConnectingToService;
             else if (App.IsAutoCheck)
                 CheckForUpdates(true);
             else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
-                SetUI(UILayout.CheckForUpdates);
+                infoBar.UiLayout = UILayout.CheckForUpdates;
         }
 
         #region Update Event Methods
@@ -155,22 +85,22 @@ namespace SevenUpdate.Pages
         {
             if (App.IsReconnect)
             {
-                SetUI(UILayout.Installing);
+                infoBar.UiLayout = UILayout.Installing;
                 App.IsReconnect = false;
             }
 
-            if (e.CurrentProgress == -1)
-                infoBar.lblStatus.Text = Properties.Resources.PreparingInstall + "...";
-            else
-            {
-                infoBar.lblStatus.Text = Properties.Resources.Installing + " " + e.UpdateName;
+            //if (e.CurrentProgress == -1)
+            //    infoBar.lblStatus.Text = Properties.Resources.PreparingInstall + "...";
+            //else
+            //{
+            //    infoBar.lblStatus.Text = Properties.Resources.Installing + " " + e.UpdateName;
 
-                if (e.TotalUpdates > 1)
-                    infoBar.lblStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
-                                              Properties.Resources.Complete;
-                else
-                    infoBar.lblStatus.Text += ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
-            }
+            //    if (e.TotalUpdates > 1)
+            //        infoBar.lblStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
+            //                                  Properties.Resources.Complete;
+            //    else
+            //        infoBar.lblStatus.Text += ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
+            //}
         }
 
         /// <summary>
@@ -181,19 +111,19 @@ namespace SevenUpdate.Pages
         {
             if (App.IsReconnect)
             {
-                SetUI(UILayout.Downloading);
+                infoBar.UiLayout = UILayout.Downloading;
                 App.IsReconnect = false;
             }
-            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-            {
-                infoBar.lblStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
-                                         Properties.Resources.Complete + ")";
-            }
-            else
-            {
-                infoBar.lblStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files +
-                                         " " + Properties.Resources.Complete + ")";
-            }
+            //if (e.BytesTotal > 0 && e.BytesTransferred > 0)
+            //{
+            //    infoBar.lblStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
+            //                             Properties.Resources.Complete + ")";
+            //}
+            //else
+            //{
+            //    infoBar.lblStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files +
+            //                             " " + Properties.Resources.Complete + ")";
+            //}
         }
 
         /// <summary>
@@ -206,9 +136,9 @@ namespace SevenUpdate.Pages
             lblUpdatesInstalled.Text = Properties.Resources.TodayAt + " " + DateTime.Now.ToShortTimeString();
             // if a reboot is needed lets say it
             if (!Base.RebootNeeded)
-                SetUI(UILayout.InstallationCompleted, e.UpdatesInstalled, e.UpdatesFailed);
+                infoBar.UiLayout = UILayout.InstallationCompleted; // , e.UpdatesInstalled, e.UpdatesFailed);
             else
-                SetUI(UILayout.RebootNeeded);
+                infoBar.UiLayout = UILayout.RebootNeeded;
         }
 
         /// <summary>
@@ -218,9 +148,9 @@ namespace SevenUpdate.Pages
         private void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
-                SetUI(UILayout.ErrorOccurred);
+                infoBar.UiLayout = UILayout.ErrorOccurred;
             else
-                SetUI(App.IsAutoCheck ? UILayout.DownloadCompleted : UILayout.Installing);
+                infoBar.UiLayout = App.IsAutoCheck ? UILayout.DownloadCompleted : UILayout.Installing;
         }
 
         /// <summary>
@@ -260,7 +190,7 @@ namespace SevenUpdate.Pages
 
                 if (count[0] > 0 || count[1] > 0)
                 {
-                    SetUI(UILayout.UpdatesFound);
+                    infoBar.UiLayout = UILayout.UpdatesFound;
 
                     if (count[0] > 0 && count[1] > 0)
                         infoBar.line.Y1 = 50;
@@ -281,9 +211,9 @@ namespace SevenUpdate.Pages
                     {
                         if (count[0] == 0)
                         {
-                            infoBar.imgSideBanner.Source = null;
-                            infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["GreenSide"];
-                            infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["GreenShield"];
+                            //infoBar.imgSideBanner.Source = null;
+                            //infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["GreenSide"];
+                            //infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["GreenShield"];
                             infoBar.lblHeading.Text = Properties.Resources.NoImportantUpdates;
                         }
 
@@ -303,10 +233,7 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                if (!Dispatcher.CheckAccess())
-                    Dispatcher.BeginInvoke(SetUI, UILayout.NoUpdates);
-                else
-                    SetUI(UILayout.NoUpdates);
+                infoBar.UiLayout = UILayout.NoUpdates;
             }
         }
 
@@ -318,36 +245,24 @@ namespace SevenUpdate.Pages
             switch (e.Type)
             {
                 case ErrorType.FatalNetworkError:
-                    if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, Properties.Resources.CheckConnection);
-                    else
-                        SetUI(UILayout.ErrorOccurred, Properties.Resources.CheckConnection);
+                    infoBar.UiLayout = UILayout.ErrorOccurred;//, Properties.Resources.CheckConnection);
 
                     break;
                 case ErrorType.InstallationError:
-                    if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
-                    else
-                        SetUI(UILayout.ErrorOccurred, e.Exception);
+                    infoBar.UiLayout = UILayout.ErrorOccurred;//, e.Exception);
                     break;
 
 
                 case ErrorType.SearchError:
                     break;
                 case ErrorType.DownloadError:
-                    if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
-                    else
-                        SetUI(UILayout.ErrorOccurred, e.Exception);
+                        infoBar.UiLayout = UILayout.ErrorOccurred;//, e.Exception);
                     break;
                 case ErrorType.GeneralErrorNonFatal:
 
                     break;
                 case ErrorType.FatalError:
-                    if (!Dispatcher.CheckAccess())
-                        Dispatcher.BeginInvoke(SetUI, UILayout.ErrorOccurred, e.Exception);
-                    else
-                        SetUI(UILayout.ErrorOccurred, e.Exception);
+                        infoBar.UiLayout = UILayout.ErrorOccurred;//, e.Exception);
 
                     break;
             }
@@ -440,13 +355,13 @@ namespace SevenUpdate.Pages
             {
                 if (Base.RebootNeeded == false)
                 {
-                    SetUI(UILayout.CheckingForUpdates);
+                    infoBar.UiLayout = UILayout.CheckingForUpdates;
                     Settings.Default.lastUpdateCheck = DateTime.Now;
                     Search.SearchForUpdatesAync(App.AppsToUpdate);
                 }
                 else
                 {
-                    SetUI(UILayout.RebootNeeded);
+                    infoBar.UiLayout = UILayout.RebootNeeded;
                     MessageBox.Show(Properties.Resources.RebootNeededFirst, Properties.Resources.SevenUpdate, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
@@ -479,17 +394,17 @@ namespace SevenUpdate.Pages
                 var sla = new LicenseAgreement();
                 if (sla.LoadLicenses() == false)
                 {
-                    SetUI(UILayout.Canceled);
+                    infoBar.UiLayout = UILayout.Canceled;
                     return;
                 }
 
                 if (AdminClient.Install())
-                    SetUI(infoBar.lblHeading.Text == Properties.Resources.DownloadAndInstallUpdates ? UILayout.Downloading : UILayout.Installing);
+                    infoBar.UiLayout = infoBar.lblHeading.Text == Properties.Resources.DownloadAndInstallUpdates ? UILayout.Downloading : UILayout.Installing;
                 else
-                    SetUI(UILayout.Canceled);
+                    infoBar.UiLayout = UILayout.Canceled;
             }
             else
-                SetUI(UILayout.Canceled);
+                infoBar.UiLayout = UILayout.Canceled;
         }
 
         #endregion
@@ -521,333 +436,7 @@ namespace SevenUpdate.Pages
             else
                 lblUpdatesInstalled.Text = Properties.Resources.Never;
 
-            SetUI(Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates);
-        }
-
-        /// <summary>
-        ///   Sets the Main Page UI
-        /// </summary>
-        /// <param name = "layout">type of layout to set</param>
-        private void SetUI(UILayout layout)
-        {
-            SetUI(layout, null, 0, 0);
-        }
-
-        /// <summary>
-        ///   Sets the Main Page and <see cref = "InfoBar" /> UI
-        /// </summary>
-        /// <param name = "layout">The <see cref = "UILayout" /> to set the UI to</param>
-        /// <param name = "errorDescription">The description of the error that occurred</param>
-        private void SetUI(UILayout layout, string errorDescription)
-        {
-            SetUI(layout, errorDescription, 0, 0);
-        }
-
-        /// <summary>
-        ///   Sets the Main Page and <see cref = "InfoBar" /> UI
-        /// </summary>
-        /// <param name = "layout">The <see cref = "UILayout" /> to set the UI to</param>
-        /// <param name = "updatesInstalled">The number of updates installed</param>
-        /// <param name = "updatesFailed">The number of updates failed</param>
-        private void SetUI(UILayout layout, int updatesInstalled, int updatesFailed)
-        {
-            SetUI(layout, null, updatesInstalled, updatesFailed);
-        }
-
-        /// <summary>
-        ///   Sets the Main Page and <see cref = "InfoBar" /> UI
-        /// </summary>
-        /// <param name = "layout">The <see cref = "UILayout" /> to set the UI to</param>
-        /// <param name = "errorDescription">The description of the error that occurred</param>
-        /// <param name = "updatesInstalled">The number of updates installed</param>
-        /// <param name = "updatesFailed">The number of updates failed</param>
-        private void SetUI(UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
-        {
-            App.IsInstallInProgress = false;
-            infoBar.pbProgressBar.Visibility = Visibility.Collapsed;
-            infoBar.spnlUpdateInfo.Visibility = Visibility.Collapsed;
-            infoBar.line.Visibility = Visibility.Collapsed;
-            infoBar.lblSelectedUpdates.Visibility = Visibility.Collapsed;
-            infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
-            infoBar.btnAction.Visibility = Visibility.Collapsed;
-            infoBar.btnAction.IsShieldNeeded = false;
-            infoBar.lblViewImportantUpdates.Visibility = Visibility.Collapsed;
-            infoBar.lblStatus.Visibility = Visibility.Collapsed;
-
-
-            switch (layout)
-            {
-                case UILayout.Canceled:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.lblHeading.Text = Properties.Resources.UpdatesCanceled;
-                    infoBar.lblStatus.Text = Properties.Resources.CancelInstallation;
-                    infoBar.btnAction.ButtonText = Properties.Resources.TryAgain;
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["RedShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["RedSide"];
-
-                    #endregion
-
-                    break;
-                case UILayout.CheckForUpdates:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.ButtonText = Properties.Resources.CheckForUpdates;
-
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-                    infoBar.lblHeading.Text = Properties.Resources.CheckForUpdatesHeading;
-                    infoBar.lblStatus.Text = Properties.Resources.InstallLatestUpdates + Environment.NewLine;
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    break;
-                case UILayout.CheckingForUpdates:
-
-                    #region GUI Code
-
-                    infoBar.imgSideBanner.Visibility = Visibility.Collapsed;
-                    infoBar.pbProgressBar.Visibility = Visibility.Visible;
-
-                    infoBar.lblSelectedUpdates.FontWeight = FontWeights.Normal;
-
-                    infoBar.lblHeading.Text = Properties.Resources.CheckingForUpdates + "...";
-                    lblRecentCheck.Text = Properties.Resources.TodayAt + " " + DateTime.Now.ToShortTimeString();
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["SUIcon"];
-
-                    #endregion
-
-                    #region Code
-
-                    App.IsInstallInProgress = true;
-
-                    #endregion
-
-                    break;
-                case UILayout.ConnectingToService:
-
-                    #region GUI Code
-
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-                    infoBar.pbProgressBar.Visibility = Visibility.Visible;
-
-
-                    infoBar.lblStatus.Text = Properties.Resources.GettingInstallationStatus;
-                    infoBar.lblHeading.Text = Properties.Resources.ConnectingToService + "...";
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-
-                    #endregion
-
-                    #region Code
-
-                    AdminClient.Connect();
-
-                    #endregion
-
-                    break;
-                case UILayout.Downloading:
-
-                    #region GUI Code
-
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-                    infoBar.pbProgressBar.Visibility = Visibility.Visible;
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.btnAction.IsShieldNeeded = true;
-
-                    infoBar.lblHeading.Text = Properties.Resources.DownloadingUpdates + "...";
-                    infoBar.lblStatus.Text = Properties.Resources.PreparingDownload;
-                    infoBar.btnAction.ButtonText = Properties.Resources.StopDownload;
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    break;
-                case UILayout.DownloadCompleted:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.IsShieldNeeded = true;
-                    infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
-                    infoBar.line.Visibility = Visibility.Visible;
-
-                    infoBar.lblHeading.Text = Properties.Resources.UpdatesReadyInstalled;
-                    infoBar.btnAction.ButtonText = Properties.Resources.InstallUpdates;
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    break;
-                case UILayout.ErrorOccurred:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.lblHeading.Text = Properties.Resources.ErrorOccurred;
-                    infoBar.btnAction.ButtonText = Properties.Resources.TryAgain;
-                    infoBar.lblStatus.Text = errorDescription ?? Properties.Resources.UnknownErrorOccurred;
-
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["RedSide"];
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["RedShield"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    break;
-                case UILayout.Installing:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.IsShieldNeeded = true;
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.pbProgressBar.Visibility = Visibility.Visible;
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.btnAction.ButtonText = Properties.Resources.StopInstallation;
-                    infoBar.lblStatus.Text = Properties.Resources.PreparingInstall;
-                    infoBar.lblHeading.Text = Properties.Resources.InstallingUpdates + "...";
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["SUIcon"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    #region Code
-
-                    App.IsInstallInProgress = true;
-
-                    #endregion
-
-                    break;
-                case UILayout.InstallationCompleted:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.IsShieldNeeded = true;
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.lblHeading.Text = Properties.Resources.UpdatesInstalled;
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["GreenShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["GreenSide"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #region Update Status
-
-                    infoBar.lblStatus.Text = Properties.Resources.Succeeded + ": " + updatesInstalled + " ";
-
-                    if (updatesInstalled == 1)
-                        infoBar.lblStatus.Text += Properties.Resources.Update;
-                    else
-                        infoBar.lblStatus.Text += Properties.Resources.Updates;
-
-                    if (updatesFailed > 0)
-                    {
-                        if (updatesInstalled == 0)
-                            infoBar.lblStatus.Text = Properties.Resources.Failed + ": " + updatesFailed + " ";
-                        else
-                            infoBar.lblStatus.Text += ", " + Properties.Resources.Failed + ": " + updatesFailed + " ";
-
-                        if (updatesFailed == 1)
-                            infoBar.lblStatus.Text += Properties.Resources.Update;
-                        else
-                            infoBar.lblStatus.Text += Properties.Resources.Updates;
-                    }
-
-                    #endregion
-
-                    lblUpdatesInstalled.Text = Properties.Resources.TodayAt + " " + DateTime.Now.ToShortTimeString();
-
-                    #endregion
-
-                    #region Code
-
-                    Settings.Default.lastInstall = DateTime.Now;
-
-                    #endregion
-
-                    break;
-                case UILayout.NoUpdates:
-
-                    #region GUI Code
-
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.lblHeading.Text = Properties.Resources.ProgramsUpToDate;
-                    infoBar.lblStatus.Text = Properties.Resources.NoNewUpdates;
-
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["GreenSide"];
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["GreenShield"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    #region Code
-
-                    App.IsInstallInProgress = false;
-
-                    #endregion
-
-                    break;
-                case UILayout.RebootNeeded:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.Visibility = Visibility.Visible;
-                    infoBar.lblStatus.Visibility = Visibility.Visible;
-
-                    infoBar.btnAction.ButtonText = Properties.Resources.RestartNow;
-                    infoBar.lblHeading.Text = Properties.Resources.RebootNeeded;
-                    infoBar.lblStatus.Text = Properties.Resources.SaveAndReboot;
-
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-
-                    #endregion
-
-                    break;
-
-                case UILayout.UpdatesFound:
-
-                    #region GUI Code
-
-                    infoBar.btnAction.IsShieldNeeded = true;
-                    infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
-                    infoBar.lblViewOptionalUpdates.Visibility = Visibility.Visible;
-                    infoBar.lblViewImportantUpdates.Visibility = Visibility.Visible;
-                    infoBar.line.Visibility = Visibility.Visible;
-                    infoBar.spnlUpdateInfo.Visibility = Visibility.Visible;
-                    infoBar.line.Y1 = 25;
-
-                    infoBar.lblHeading.Text = Properties.Resources.DownloadAndInstallUpdates;
-                    infoBar.btnAction.ButtonText = Properties.Resources.InstallUpdates;
-
-                    infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
-                    infoBar.imgShieldIcon.Source = (BitmapImage) App.Resources["YellowShield"];
-                    infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-                    #endregion
-
-                    break;
-            }
+            infoBar.UiLayout = Base.RebootNeeded ? UILayout.RebootNeeded : UILayout.NoUpdates;
         }
 
         #endregion
@@ -1013,7 +602,7 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
+                //infoBar.imgSideBanner.Source = (BitmapImage) App.Resources["YellowSide"];
 
                 infoBar.lblSelectedUpdates.Text = Properties.Resources.NoUpdatesSelected;
                 infoBar.lblSelectedUpdates.Height = Double.NaN;
@@ -1048,7 +637,7 @@ namespace SevenUpdate.Pages
             {
                 //Cancel installation of updates
                 if (AdminClient.AbortInstall())
-                    SetUI(UILayout.Canceled);
+                    infoBar.UiLayout = UILayout.Canceled;
                 return;
             }
             else if (infoBar.btnAction.ButtonText == Properties.Resources.TryAgain || infoBar.btnAction.ButtonText == Properties.Resources.CheckForUpdates)

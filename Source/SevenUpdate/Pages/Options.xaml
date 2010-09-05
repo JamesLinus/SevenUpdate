@@ -84,7 +84,7 @@
         </StackPanel>
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="0.5" Grid.ColumnSpan="3" />
-        <ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120" SelectionChanged="AutoUpdateMethod_SelectionChanged"
+        <ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120"
                 SelectedValue="{Binding Path=AutoOption, Mode=TwoWay}" SelectedValuePath="Tag" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center"
                 Margin="0,22">
             <ComboBoxItem Content="Install updates automatically" Tag="{x:Static SevenUpdate:AutoUpdateOption.Install}" />
@@ -92,7 +92,20 @@
             <ComboBoxItem Content="Check for updates but let me choose to download and install them" Tag="{x:Static SevenUpdate:AutoUpdateOption.Notify}" />
             <ComboBoxItem Content="Never check for updates (not recommended)" Tag="{x:Static SevenUpdate:AutoUpdateOption.Never}" />
         </ComboBox>
-        <Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" Name="imgShieldIcon" Stretch="None" StretchDirection="UpOnly" Width="48" Grid.Column="1" Grid.Row="6"
-                HorizontalAlignment="Left" Margin="10" />
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" Stretch="None" StretchDirection="UpOnly" Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10">
+            <Image.Style>
+                <Style>
+                    <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenShield.png" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Never}">
+                            <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedShield.png" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Notify}">
+                            <Setter Property="Image.Source" Value="{x:Null}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
     </Grid>
 </Page>

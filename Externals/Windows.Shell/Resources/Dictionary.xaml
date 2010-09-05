@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:Microsoft.Windows.Controls">
 	<BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
     
-	<!--CommandLink Style-->
+    <!--CommandLink Style-->
 	<Style TargetType="controls:CommandLink">
 		<Setter Property="MinWidth" Value="325" />
 		<Setter Property="MinHeight" Value="63" />

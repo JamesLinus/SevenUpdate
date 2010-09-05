@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+
+#endregion
 
 namespace SevenUpdate
 {
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof(string), typeof(bool))]
+    [ValueConversion(typeof (string), typeof (bool))]
     public sealed class StringToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -47,7 +51,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof(string), typeof(Visibility))]
+    [ValueConversion(typeof (string), typeof (Visibility))]
     public sealed class StringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -65,7 +69,7 @@ namespace SevenUpdate
                 if (System.Convert.ToBoolean(parameter))
                 {
                     // If  no value return true, otherwise false
-                    return  !String.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
+                    return !String.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
 
@@ -88,7 +92,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(Visibility))]
+    [ValueConversion(typeof (int), typeof (Visibility))]
     public sealed class IntToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -99,7 +103,7 @@ namespace SevenUpdate
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int)value : 0;
+            var count = value is int ? (int) value : 0;
 
             if (parameter != null)
             {
@@ -127,7 +131,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(bool))]
+    [ValueConversion(typeof (int), typeof (bool))]
     public sealed class IntToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -138,7 +142,7 @@ namespace SevenUpdate
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int)value : 0;
+            var count = value is int ? (int) value : 0;
 
             if (parameter != null)
             {
@@ -164,8 +168,8 @@ namespace SevenUpdate
     /// <summary>
     ///   Converts the Enum to a Boolean
     /// </summary>
-    [ValueConversion(typeof(Enum), typeof(bool))]
-    public sealed class StringToLocaleString : IValueConverter
+    [ValueConversion(typeof (Enum), typeof (bool))]
+    public sealed class EnumToBool : IValueConverter
     {
         #region IValueConverter Members
 
@@ -177,6 +181,27 @@ namespace SevenUpdate
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value.Equals(false) ? DependencyProperty.UnsetValue : parameter;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the Enum to a Boolean
+    /// </summary>
+    [ValueConversion(typeof (Enum), typeof (bool))]
+    public sealed class InverseEnumToBool : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !value.Equals(parameter);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
         }
 
         #endregion

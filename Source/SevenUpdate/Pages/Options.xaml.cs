@@ -61,15 +61,6 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        ///   The shield Icon uri
-        /// </summary>
-        private ImageSource ShieldIcon { set { imgShieldIcon.Source = value; } }
-
-        #endregion
-
         /// <summary>
         ///   The constructor for the Options Page
         /// </summary>
@@ -205,28 +196,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region UI Events
-
-        /// <summary>
-        ///   When the AutoUpdate selection changes update the shield image
-        /// </summary>
-        /// <param name = "sender" />
-        /// <param name = "e" />
-        private void AutoUpdateMethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (config.AutoOption)
-            {
-                case AutoUpdateOption.Install:
-                case AutoUpdateOption.Download:
-                    ShieldIcon = (BitmapImage) App.Resources["GreenShield"];
-                    break;
-                case AutoUpdateOption.Notify:
-                    ShieldIcon = null;
-                    break;
-                case AutoUpdateOption.Never:
-                    ShieldIcon = (BitmapImage) App.Resources["RedShield"];
-                    break;
-            }
-        }
 
         /// <summary>
         ///   Loads the settings and SUA list when the page is loaded

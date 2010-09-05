@@ -2,14 +2,14 @@
 <Page x:Class="SevenUpdate.Sdk.Pages.UpdateRegistry" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers"
-        xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512"
-        d:DesignWidth="850">
+        xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850">
     <!-- Grid-->
     <Grid Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="176*" MaxWidth="420" />
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="579*" />
+            <ColumnDefinition Width="364*" />
+            <ColumnDefinition Width="217*" />
             <ColumnDefinition Width="24" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -25,9 +25,9 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <Rectangle Grid.Row="1" Grid.ColumnSpan="4" Fill="White" Grid.RowSpan="9" Margin="0,0,0,1" />
-        <Rectangle Grid.ColumnSpan="4" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
+        <Rectangle Grid.Row="1" Grid.ColumnSpan="5" Fill="White" Grid.RowSpan="9" Margin="0,0,0,1" />
+        <Rectangle Grid.ColumnSpan="5" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="5">
             <Controls:BackButton Grid.RowSpan="3">
                 <Controls:BackButton.CommandBindings>
                     <CommandBinding />
@@ -43,23 +43,22 @@
         <!--Help Text-->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1"
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility},ConverterParameter=True}"
-                Grid.ColumnSpan="2" Grid.Row="9">
-            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None"
-                    HorizontalAlignment="Center" VerticalAlignment="Center" />
-            <TextBlock Text="To get started, right click the list box and create or import a registry item" HorizontalAlignment="Left" Padding="2" Grid.Column="1"
-                    VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
+                Grid.ColumnSpan="3" Grid.Row="9" Margin="0,76">
+            <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            <TextBlock Text="To get started, right click the list box and create or import a registry item" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center"
+                    FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
         </StackPanel>
         <!--Naviation Buttons-->
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
-                StrokeThickness="1" Grid.ColumnSpan="4" Name="line" />
-        <StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2" Grid.Column="2">
-            <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next"
-                    Click="Button_Click" />
-            <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center"
-                    Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" />
+        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
+                Grid.ColumnSpan="5" Name="line" />
+        <StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2" Grid.Column="3">
+            <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" />
+            <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
+                    Click="Cancel_Click" />
         </StackPanel>
-        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9"
-                ContextMenuOpening="ContextMenu_ContextMenuOpening">
+        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" ContextMenuOpening="ContextMenu_ContextMenuOpening"
+                DisplayMemberPath="KeyValue">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" Name="miAdd" />
@@ -78,20 +77,19 @@
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
             <StackPanel Orientation="Horizontal">
                 <RadioButton
-                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource stringToLocaleString}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Content="Add/Update" Margin="10" />
                 <RadioButton
-                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource stringToLocaleString}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Content="Delete key" Margin="10" />
                 <RadioButton
-                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource stringToLocaleString}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Content="Delete value" Margin="10" />
             </StackPanel>
         </GroupBox>
-        <TextBlock Text="Key path:" HorizontalAlignment="Left"
-                ToolTip="The full key path where the value will be stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" Grid.Column="1" Grid.Row="2" Padding="2"
-                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-        <Controls:InfoTextBox Label="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2"
+        <TextBlock Text="Key path:" HorizontalAlignment="Left" ToolTip="The full key path where the value will be stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE" Grid.Column="1"
+                Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+        <Controls:InfoTextBox Label="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
             <Controls:InfoTextBox.Text>
                 <Binding ElementName="listBox" Path="SelectedItem.Key" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
@@ -102,15 +100,16 @@
             </Controls:InfoTextBox.Text>
         </Controls:InfoTextBox>
         <TextBlock Text="Value name:" HorizontalAlignment="Left" ToolTip="Specify a the value located in the keypath" Grid.Column="1" Grid.Row="4" Padding="2" Margin="0,10,0,0"
-                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="My Value Name"
-                Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2"
-                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=rbtnDeleteKey}" />
+        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="My Value Name" Grid.Column="1" Grid.Row="5"
+                Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
+                IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}}" />
         <TextBlock Text="Value data:" ToolTip="Specify data for the value" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0"
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
         <ComboBox MinWidth="75" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" Margin="0,10,0,0"
-                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                VerticalAlignment="Center" SelectedValue="{Binding Path=ValueKind}" SelectedValuePath="Tag">
+                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center"
+                SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.ValueKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag"
+                IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}">
             <ComboBoxItem Content="Binary" Tag="Binary" />
             <ComboBoxItem Content="DWord" Tag="DWord" />
             <ComboBoxItem Content="ExpandString" Tag="ExpandString" />
@@ -118,8 +117,9 @@
             <ComboBoxItem Content="QWord" Tag="QWord" />
             <ComboBoxItem Content="String" Tag="String" />
         </ComboBox>
-        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="TestValue" TextWrapping="Wrap"
-                MaxHeight="400" VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="2" Grid.Row="8" Grid.Column="1"
-                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,5,0,0" />
+        <Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="TestValue" TextWrapping="Wrap" MaxHeight="400"
+                VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="3" Grid.Row="8" Grid.Column="1"
+                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,5,0,0"
+                IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}" />
     </Grid>
 </Page>

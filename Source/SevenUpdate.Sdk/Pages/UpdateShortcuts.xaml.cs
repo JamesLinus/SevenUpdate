@@ -158,7 +158,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Clear();
+            listBox.Items.RemoveAt(listBox.SelectedIndex);
         }
 
         #endregion
