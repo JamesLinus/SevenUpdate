@@ -13,8 +13,8 @@
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="5" Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta"
-                Controls:ListViewSorter.IsListViewSortable="True" Foreground="Black" BorderThickness="0" MouseDoubleClick="ListView_MouseDoubleClick">
+        <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0"
+                MouseDoubleClick="ListView_MouseDoubleClick" Controls:ListViewSorter.CustomSorter="SevenUpdate.SuhSorter,SevenUpdate">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="View Details" Click="MenuItem_MouseClick" />
@@ -38,9 +38,12 @@
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
                     <GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Name" Width="400" />
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Importance" Width="125" />
-                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Name" Width="400"
+                            Controls:ListViewSorter.PropertyName="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="Importance" Width="125"
+                            Controls:ListViewSorter.PropertyName="Importance" />
+                    <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100"
+                            Controls:ListViewSorter.PropertyName="Size" />
                 </GridView>
             </ListView.View>
         </ListView>

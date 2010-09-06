@@ -21,7 +21,9 @@
 #region
 
 using System;
+using System.Diagnostics;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -50,28 +52,11 @@ namespace SevenUpdate.Pages
             UpdateInfo.UpdateSelectionChanged += UpdateSelectionChanged;
             RestoreUpdates.RestoredHiddenUpdate += RestoredHiddenUpdate;
             AdminClient.SettingsChanged += Admin_SettingsChanged;
-            
+
             #endregion
 
             Core.Instance.UpdateAction = Base.RebootNeeded ? UpdateAction.RebootNeeded : UpdateAction.NoUpdates;
-
-            if (Core.IsReconnect)
-            {
-                Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
-                AdminClient.Connect();
-            }
-            else if (Core.IsAutoCheck)
-                Core.CheckForUpdates(true);
-            else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
-                Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
         }
-
-        
-
-
-        #region UI Methods
-
-        #endregion
 
         #region UI Events
 
@@ -145,5 +130,40 @@ namespace SevenUpdate.Pages
 
 
         #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
+                var timer = new Timer {Enabled = true, Interval = 5000};
+                timer.Elapsed += timer_Elapsed;
+                AdminClient.Connect();
+            }
+            else if (Core.IsAutoCheck)
+                Core.CheckForUpdates(true);
+            else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
+                Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+        }
+
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (Core.Instance.UpdateAction == UpdateAction.ConnectingToService)
+            {
+                var process = Process.GetProcessesByName("SevenUpdate.Admin");
+
+                foreach (Process t in process)
+                {
+                    try
+                    {
+                        t.Kill();
+                    }
+                    catch
+                    {
+                    }
+                }
+                Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
+            }
+        }
     }
 }

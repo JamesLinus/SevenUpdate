@@ -87,7 +87,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (Base.UpdateInfo.Shortcuts.Count != -1)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateList.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateReview.xaml", UriKind.Relative));
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -124,12 +124,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Content Menu
 
-        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            miRemove.IsEnabled = listBox.SelectedIndex > -1;
-            miRemoveAll.IsEnabled = listBox.Items.Count > 0;
-        }
-
         #region MenuItem - Click
 
         private void AddShortcut_Click(object sender, RoutedEventArgs e)
@@ -153,7 +147,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Clear();
+            Base.UpdateInfo.Shortcuts.Clear();
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)

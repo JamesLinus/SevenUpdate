@@ -25,5 +25,5 @@
 			</TextBlock>
 		</StackPanel>
 		<Rectangle Grid.Row="1" Name="rectangle" Stroke="Black" Grid.ColumnSpan="2" />
-	</Grid>
+    </Grid>
 </Page>

@@ -1,18 +1,14 @@
-﻿#region
-
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-#endregion
-
-namespace SevenUpdate.Converters
+namespace Microsoft.Windows.Common
 {
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof (string), typeof (bool))]
+    [ValueConversion(typeof(string), typeof(bool))]
     public sealed class StringToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -51,7 +47,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof (string), typeof (Visibility))]
+    [ValueConversion(typeof(string), typeof(Visibility))]
     public sealed class StringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -92,7 +88,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof (int), typeof (Visibility))]
+    [ValueConversion(typeof(int), typeof(Visibility))]
     public sealed class IntToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -103,7 +99,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int) value : 0;
+            var count = value is int ? (int)value : 0;
 
             if (parameter != null)
             {
@@ -131,7 +127,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof (int), typeof (bool))]
+    [ValueConversion(typeof(int), typeof(bool))]
     public sealed class IntToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -142,7 +138,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int) value : 0;
+            var count = value is int ? (int)value : 0;
 
             if (parameter != null)
             {
@@ -168,7 +164,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the Enum to a Boolean
     /// </summary>
-    [ValueConversion(typeof (Enum), typeof (bool))]
+    [ValueConversion(typeof(Enum), typeof(bool))]
     public sealed class EnumToBool : IValueConverter
     {
         #region IValueConverter Members
@@ -189,7 +185,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the Enum to a Boolean
     /// </summary>
-    [ValueConversion(typeof (Enum), typeof (bool))]
+    [ValueConversion(typeof(Enum), typeof(bool))]
     public sealed class InverseEnumToBool : IValueConverter
     {
         #region IValueConverter Members
@@ -206,4 +202,34 @@ namespace SevenUpdate.Converters
 
         #endregion
     }
+
+    /// <summary>
+    ///   Converts a bool value to the opposite value
+    /// </summary>
+    [ValueConversion(typeof(bool), typeof(bool))]
+    public sealed class InverseBoolConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !System.Convert.ToBoolean(value);
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !System.Convert.ToBoolean(value);
+        }
+
+        #endregion
+    }
+
 }

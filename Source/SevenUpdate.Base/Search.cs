@@ -23,16 +23,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 #endregion
 
 namespace SevenUpdate
 {
-    //var t = Base.Deserialize<Config>(Base.ConfigFile);
     #region Event Args
 
     /// <summary>
@@ -285,28 +284,33 @@ namespace SevenUpdate
 
                 // Download the Seven Update SUI and load it.
                 var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-                app.AppInfo = new Sua
-                                  {
-                                      AppUrl = "http://sevenupdate.com/",
-                                      Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
-                                      Publisher = publisher,
-                                      Name = name,
-                                      HelpUrl = "http://sevenupdate.com/support/",
-                                      Is64Bit = true,
-                                      IsEnabled = true,
-                                      SuiUrl = SevenUpdateSui
-                                  };
-                // Check if there is a newer version of Seven Update
-                if (CheckForUpdates(ref app, null))
+
+                if (app != null)
                 {
-                    // If there are updates add it to the collection
-                    applications.Add(app);
 
-                    // Search is complete!
-                    if (SearchDone != null)
-                        SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                    app.AppInfo = new Sua
+                                      {
+                                          AppUrl = "http://sevenupdate.com/",
+                                          Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                                          Publisher = publisher,
+                                          Name = name,
+                                          HelpUrl = "http://sevenupdate.com/support/",
+                                          Is64Bit = true,
+                                          IsEnabled = true,
+                                          SuiUrl = SevenUpdateSui
+                                      };
+                    // Check if there is a newer version of Seven Update
+                    if (CheckForUpdates(ref app, null))
+                    {
+                        // If there are updates add it to the collection
+                        applications.Add(app);
 
-                    return;
+                        // Search is complete!
+                        if (SearchDone != null)
+                            SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+
+                        return;
+                    }
                 }
             }
             catch (Exception e)
@@ -346,13 +350,15 @@ namespace SevenUpdate
                     {
                         // Loads a SUI that was downloaded
                         var app = Base.Deserialize<Sui>(Base.DownloadFile(t.SuiUrl), t.SuiUrl);
+                        if (app != null)
+                        {
+                            app.AppInfo = t;
 
-                        app.AppInfo = t;
-
-                        // Check to see if any updates are avalible and exclude hidden updates
-                        // If there is an update avaliable, add it.
-                        if (CheckForUpdates(ref app, hidden))
-                            applications.Add(app);
+                            // Check to see if any updates are avalible and exclude hidden updates
+                            // If there is an update avaliable, add it.
+                            if (CheckForUpdates(ref app, hidden))
+                                applications.Add(app);
+                        }
                     }
                     catch (WebException e)
                     {
@@ -384,20 +390,7 @@ namespace SevenUpdate
         /// <param name = "apps">the list of Seven Update Admin.applications to check for updates</param>
         public static void SearchForUpdatesAync(IEnumerable<Sua> apps)
         {
-            var worker = new BackgroundWorker();
-            worker.DoWork -= WorkerDoWork;
-            worker.DoWork += WorkerDoWork;
-            worker.RunWorkerAsync(apps);
-        }
-
-        /// <summary>
-        ///   Searches for updates on a new thread
-        /// </summary>
-        /// <param name = "sender" />
-        /// <param name = "f" />
-        private static void WorkerDoWork(object sender, DoWorkEventArgs f)
-        {
-            SearchForUpdates(((Collection<Sua>) f.Argument));
+            Task.Factory.StartNew(() => SearchForUpdates(apps));
         }
 
         #endregion

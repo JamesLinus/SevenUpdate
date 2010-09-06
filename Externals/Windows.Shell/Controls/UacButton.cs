@@ -165,7 +165,7 @@ namespace Microsoft.Windows.Controls
             var imgShield = new System.Windows.Controls.Image { Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
             stackPanel.Children.Add(imgShield);
 
-            var textBlock = new TextBlock { Text = buttonText };
+            var textBlock = new TextBlock { Text = buttonText, VerticalAlignment = VerticalAlignment.Center };
             stackPanel.Children.Add(textBlock);
             Content = stackPanel;
 

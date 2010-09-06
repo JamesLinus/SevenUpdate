@@ -57,15 +57,14 @@
             <Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
                     Click="Cancel_Click" />
         </StackPanel>
-        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" ContextMenuOpening="ContextMenu_ContextMenuOpening"
-                DisplayMemberPath="KeyValue">
+        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue">
             <ListBox.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" Name="miAdd" />
-                    <MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File" Name="miImport" />
+                    <MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" />
+                    <MenuItem Click="ImportRegistryFile_Click" Header="Import Registry File" />
                     <Separator />
-                    <MenuItem Header="Remove Registry Item" Name="miRemove" Click="miRemove_Click" />
-                    <MenuItem Header="Remove All Registry Items" Click="miRemoveAll_Click" Name="miRemoveAll">
+                    <MenuItem Header="Remove Registry Item" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
+                    <MenuItem Header="Remove All Registry Items" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
                         <MenuItem.Icon>
                             <Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
                         </MenuItem.Icon>

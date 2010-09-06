@@ -22,6 +22,7 @@
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -73,29 +74,6 @@ namespace SevenUpdate.Pages
 
             lvUpdateHistory.ItemsSource = updateHistory;
             updateHistory.CollectionChanged += History_CollectionChanged;
-            AddSortBinding();
-        }
-
-        /// <summary>
-        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
-        /// </summary>
-        private void AddSortBinding()
-        {
-            var gv = (GridView) lvUpdateHistory.View;
-
-            var col = gv.Columns[0];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
-
-            col = gv.Columns[1];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Status"));
-
-            col = gv.Columns[2];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
-
-            col = gv.Columns[3];
-            ListViewSorter.SetSortBindingMember(col, new Binding("DateInstalled"));
-
-            ListViewSorter.SetCustomSorter(lvUpdateHistory, new CustomComparers.SuhSorter());
         }
 
         #endregion

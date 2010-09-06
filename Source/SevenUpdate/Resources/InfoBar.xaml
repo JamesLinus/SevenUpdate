@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Properties="clr-namespace:SevenUpdate.Properties" xmlns:Pages="clr-namespace:SevenUpdate.Pages" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Classes="clr-namespace:SevenUpdate">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Pages="clr-namespace:SevenUpdate.Pages">
     <Style x:Key="infoBarShield" TargetType="Image">
         <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenShield.png" />
         <Style.Triggers>

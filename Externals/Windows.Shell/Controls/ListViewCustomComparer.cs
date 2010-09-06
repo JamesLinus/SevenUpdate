@@ -80,20 +80,6 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        /// <returns>Value  Condition  Less than zero
-        ///   <paramref name = "x" />
-        ///   is less than
-        ///   <paramref name = "y" />
-        ///   . Zero
-        ///   <paramref name = "x" />
-        ///   equals
-        ///   <paramref name = "y" />
-        ///   .
-        ///   Greater than zero
-        ///   <paramref name = "x" />
-        ///   is greater than
-        ///   <paramref name = "y" />
-        ///   .</returns>
         /// <param name = "x">The first object to compare.</param>
         /// <param name = "y">The second object to compare.</param>
         public abstract int Compare(object x, object y);

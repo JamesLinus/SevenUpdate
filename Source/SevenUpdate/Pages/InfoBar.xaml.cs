@@ -32,7 +32,6 @@ using SevenUpdate.Windows;
 
 namespace SevenUpdate.Pages
 {
-
     #region Enums
 
     /// <summary>
@@ -131,12 +130,7 @@ namespace SevenUpdate.Pages
             ServiceCallBack.InstallProgressChanged += InstallProgressChanged;
             ServiceCallBack.InstallDone += InstallCompleted;
             UpdateInfo.UpdateSelectionChanged += UpdateInfo_UpdateSelectionChanged;
-            Core.UpdateActionChanged += Core_UpdateActionChanged;
-        }
-
-        void Core_UpdateActionChanged(object sender, EventArgs e)
-        {
-            SetUI(Core.Instance.UpdateAction);
+            Core.UpdateActionChanged += new EventHandler(UpdateAction_Changed);
         }
 
         #region Update Event Methods
@@ -147,6 +141,8 @@ namespace SevenUpdate.Pages
         /// <param name = "e">The SearchComplete data</param>
         private void SearchCompleted(SearchCompletedEventArgs e)
         {
+            if (Core.Instance.UpdateAction == UpdateAction.ErrorOccurred)
+                return;
             Core.IsInstallInProgress = false;
             if (e.Applications.Count > 0)
             {
@@ -181,8 +177,6 @@ namespace SevenUpdate.Pages
                     {
                         if (e.ImportantCount == 0)
                         {
-                            //imgSideBanner.Source = (BitmapImage) Core.Resources["GreenSide"];
-                            //imgShieldIcon.Source = (BitmapImage) Core.Resources["GreenShield"];
                             tbHeading.Text = Properties.Resources.NoImportantUpdates;
                         }
 
@@ -209,8 +203,9 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when an error occurs
         /// </summary>
-        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        private void ErrorOccurred(ErrorOccurredEventArgs e)
         {
+            Core.IsInstallInProgress = false;
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred; 
             switch (e.Type)
             {
@@ -314,7 +309,7 @@ namespace SevenUpdate.Pages
         ///   Updates the UI when the downloading of updates has completed
         /// </summary>
         /// <param name = "e">The DownloadCompleted data</param>
-        private void DownloadCompleted(DownloadCompletedEventArgs e)
+        private static void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
                 Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
@@ -323,6 +318,17 @@ namespace SevenUpdate.Pages
         }
 
         #region Invoker Events
+
+        /// <summary>
+        ///   Sets the UI when an error has occurred
+        /// </summary>
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(ErrorOccurred, e);
+            else
+                ErrorOccurred(e);
+        }
 
         /// <summary>
         ///   Sets the UI when the search for updates has completed
@@ -384,7 +390,7 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region Methods
-        
+
         private void SetUI(UpdateAction action)
         {
             btnAction.IsShieldNeeded = false;
@@ -429,10 +435,8 @@ namespace SevenUpdate.Pages
 
                 case UpdateAction.ConnectingToService:
                     tbHeading.Text = Properties.Resources.ConnectingToService;
-                    tbStatus.Text = Properties.Resources.GettingInstallationStatus;
 
                     tbHeading.Visibility = Visibility.Visible;
-                    tbStatus.Visibility = Visibility.Visible;
                     break;
 
                 case UpdateAction.DownloadCompleted:
@@ -462,7 +466,7 @@ namespace SevenUpdate.Pages
                 case UpdateAction.ErrorOccurred:
                     tbHeading.Text = Properties.Resources.ErrorOccurred;
                     tbStatus.Text = Properties.Resources.UnknownErrorOccurred;
-                    btnAction.ButtonText = Properties.Resources.ErrorOccurred;
+                    btnAction.ButtonText = Properties.Resources.TryAgain;
 
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
@@ -521,10 +525,61 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>
+        ///   Downloads updates
+        /// </summary>
+        private void DownloadInstallUpdates()
+        {
+            for (var x = 0; x < Core.Applications.Count; x++)
+            {
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                {
+                    if (Core.Applications[x].Updates[y].Selected)
+                        continue;
+                    Core.Applications[x].Updates.RemoveAt(y);
+                    y--;
+                }
+                if (Core.Applications[x].Updates.Count != 0)
+                    continue;
+                Core.Applications.RemoveAt(x);
+                x--;
+            }
+
+            if (Core.Applications.Count > 0)
+            {
+                var sla = new LicenseAgreement();
+                if (sla.LoadLicenses() == false)
+                {
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+                    return;
+                }
+
+                if (AdminClient.Install())
+                {
+                    Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
+                    Core.IsInstallInProgress = true;
+                }
+                else
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+            }
+            else
+                Core.Instance.UpdateAction = UpdateAction.Canceled;
+        }
+
+        #endregion
+
+        #region UI Events
+
+        /// <summary>
+        /// Sets the UI when the update action is changed
+        /// </summary>
+        void UpdateAction_Changed(object sender, EventArgs e)
+        {
+            SetUI(Core.Instance.UpdateAction);
+        }
+
         void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {
-            #region GUI Updating
-           
             if (e.ImportantUpdates > 0)
             {
                 tbViewImportantUpdates.Visibility = Visibility.Visible;
@@ -579,56 +634,12 @@ namespace SevenUpdate.Pages
             }
             else
             {
+                tbSelectedUpdates.Text = Properties.Resources.NoUpdatesSelected;
                 tbSelectedUpdates.FontWeight = FontWeights.Normal;
                 btnAction.Visibility = Visibility.Collapsed;
                 imgSideBanner.MaxHeight = imageHeight;
             }
         }
-
-        /// <summary>
-        ///   Downloads updates
-        /// </summary>
-        private void DownloadInstallUpdates()
-        {
-            for (var x = 0; x < Core.Applications.Count; x++)
-            {
-                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
-                {
-                    if (Core.Applications[x].Updates[y].Selected)
-                        continue;
-                    Core.Applications[x].Updates.RemoveAt(y);
-                    y--;
-                }
-                if (Core.Applications[x].Updates.Count != 0)
-                    continue;
-                Core.Applications.RemoveAt(x);
-                x--;
-            }
-
-            if (Core.Applications.Count > 0)
-            {
-                var sla = new LicenseAgreement();
-                if (sla.LoadLicenses() == false)
-                {
-                    Core.Instance.UpdateAction = UpdateAction.Canceled;
-                    return;
-                }
-
-                if (AdminClient.Install())
-                {
-                    Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
-                    Core.IsInstallInProgress = true;
-                }
-                else
-                    Core.Instance.UpdateAction = UpdateAction.Canceled;
-            }
-            else
-                Core.Instance.UpdateAction = UpdateAction.Canceled;
-        }
-
-            #endregion
-
-        #endregion
 
         private void Infobar_Loaded(object sender, RoutedEventArgs e)
         {
@@ -672,5 +683,7 @@ namespace SevenUpdate.Pages
             UpdateInfo.DisplayOptionalUpdates = false;
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
+
+        #endregion
     }
 }

@@ -61,7 +61,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please read and accept the license terms for.
+        ///   Looks up a localized string similar to Read and accept the license terms for.
         /// </summary>
         public static string AcceptLicenseTerms {
             get {
@@ -115,7 +115,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update cannot connect to the internet, please check your connection or firewall..
+        ///   Looks up a localized string similar to Seven Update cannot connect to the internet, check your connection or firewall..
         /// </summary>
         public static string CheckConnection {
             get {
@@ -142,7 +142,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checking for updates.
+        ///   Looks up a localized string similar to Checking for updates....
         /// </summary>
         public static string CheckingForUpdates {
             get {
@@ -178,7 +178,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Connecting to the Seven Update service.
+        ///   Looks up a localized string similar to Connecting to the Seven Update service....
         /// </summary>
         public static string ConnectingToService {
             get {
@@ -205,7 +205,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Downloading Updates.
+        ///   Looks up a localized string similar to Downloading Updates....
         /// </summary>
         public static string DownloadingUpdates {
             get {
@@ -295,15 +295,6 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please wait, retrieving update installation status.
-        /// </summary>
-        public static string GettingInstallationStatus {
-            get {
-                return ResourceManager.GetString("GettingInstallationStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Hidden.
         /// </summary>
         public static string Hidden {
@@ -385,7 +376,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Installing updates.
+        ///   Looks up a localized string similar to Installing updates....
         /// </summary>
         public static string InstallingUpdates {
             get {
@@ -682,7 +673,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please save your work and reboot your machine to complete the installation of updates..
+        ///   Looks up a localized string similar to Save your work and reboot your machine to complete the installation of updates..
         /// </summary>
         public static string SaveAndReboot {
             get {

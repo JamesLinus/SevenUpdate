@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AcceptLicenseTerms" xml:space="preserve">
-    <value>Please read and accept the license terms for</value>
+    <value>Read and accept the license terms for</value>
   </data>
   <data name="AllowUpdates" xml:space="preserve">
     <value>Would you like to allow Seven Update to search, download and install updates for</value>
@@ -136,10 +136,10 @@
     <value>Cancel updates</value>
   </data>
   <data name="CheckConnection" xml:space="preserve">
-    <value>Seven Update cannot connect to the internet, please check your connection or firewall.</value>
+    <value>Seven Update cannot connect to the internet, check your connection or firewall.</value>
   </data>
   <data name="CheckingForUpdates" xml:space="preserve">
-    <value>Checking for updates</value>
+    <value>Checking for updates...</value>
   </data>
   <data name="CheckUpdatesOnly" xml:space="preserve">
     <value>Check for updates but let me choose whether to download and install them</value>
@@ -157,7 +157,7 @@
     <value>Download and install your selected updates</value>
   </data>
   <data name="DownloadingUpdates" xml:space="preserve">
-    <value>Downloading Updates</value>
+    <value>Downloading Updates...</value>
   </data>
   <data name="DownloadingUpdatesBackground" xml:space="preserve">
     <value>Seven Update is downloading updates in the background.</value>
@@ -199,7 +199,7 @@
     <value>Installing</value>
   </data>
   <data name="InstallingUpdates" xml:space="preserve">
-    <value>Installing updates</value>
+    <value>Installing updates...</value>
   </data>
   <data name="InstallingUpdatesBackground" xml:space="preserve">
     <value>Seven Update is installing updates in the background.</value>
@@ -265,7 +265,7 @@
     <value>Restart now</value>
   </data>
   <data name="SaveAndReboot" xml:space="preserve">
-    <value>Please save your work and reboot your machine to complete the installation of updates.</value>
+    <value>Save your work and reboot your machine to complete the installation of updates.</value>
   </data>
   <data name="SevenSoftware" xml:space="preserve">
     <value>Seven Software</value>
@@ -370,10 +370,7 @@
     <value>installed on</value>
   </data>
   <data name="ConnectingToService" xml:space="preserve">
-    <value>Connecting to the Seven Update service</value>
-  </data>
-  <data name="GettingInstallationStatus" xml:space="preserve">
-    <value>Please wait, retrieving update installation status</value>
+    <value>Connecting to the Seven Update service...</value>
   </data>
   <data name="Files" xml:space="preserve">
     <value>files</value>

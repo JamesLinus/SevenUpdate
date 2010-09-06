@@ -24,6 +24,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -71,7 +72,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        ///   Gets the hidden updates and loads them in thelvHiddenUpdates
+        ///   Gets the hidden updates and loads them in the lvHiddenUpdates
         /// </summary>
         private void GetHiddenUpdates()
         {
@@ -79,27 +80,6 @@ namespace SevenUpdate.Pages
             if (hiddenUpdates == null)
                 return;
             lvHiddenUpdates.ItemsSource = hiddenUpdates;
-            hiddenUpdates.CollectionChanged += HiddenUpdates_CollectionChanged;
-            AddSortBinding();
-        }
-
-        /// <summary>
-        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
-        /// </summary>
-        private void AddSortBinding()
-        {
-            var gv = (GridView) lvHiddenUpdates.View;
-
-            var col = gv.Columns[1];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
-
-            col = gv.Columns[2];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
-
-            col = gv.Columns[3];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
-
-            ListViewSorter.SetCustomSorter(lvHiddenUpdates, new CustomComparers.SuhSorter());
         }
 
         #endregion
@@ -131,20 +111,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region ListView Related
-
-        /// <summary>
-        ///   Updates the <see cref = "CollectionView" /> when the <c>hiddenUpdates</c> collection changes
-        /// </summary>
-        /// <param name = "sender" />
-        /// <param name = "e" />
-        private void HiddenUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace)
-                return;
-            var dataView = CollectionViewSource.GetDefaultView(lvHiddenUpdates.ItemsSource);
-            dataView.Refresh();
-        }
 
         /// <summary>
         ///   Updates the UI when an update check box is clicked

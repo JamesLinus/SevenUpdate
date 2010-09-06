@@ -190,12 +190,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Content Menu
 
-        private void ContextMenu_ContextMenuOpening(object sender, ContextMenuEventArgs e)
-        {
-            miRemove.IsEnabled = listBox.SelectedIndex > -1;
-            miRemoveAll.IsEnabled = listBox.Items.Count > 0;
-        }
-
         #region MenuItem - Click
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
@@ -205,7 +199,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Clear();
+            Base.UpdateInfo.Files.Clear();
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)

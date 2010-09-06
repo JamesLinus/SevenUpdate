@@ -4,34 +4,15 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using Microsoft.Windows.Internal;
 using SevenUpdate.Pages;
 
 namespace SevenUpdate
 {
     public class Core : INotifyPropertyChanged
     {
-        /// <summary>
-        ///   Occurs when the user cancels their update selection
-        /// </summary>
-        internal static event EventHandler UpdateActionChanged;
+        #region Fields
 
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        /// <summary>
-        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name = "name" />
-        private void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
         private static Core instance;
 
         public static Core Instance
@@ -39,8 +20,6 @@ namespace SevenUpdate
 
             get { return instance ?? (instance = new Core()); }
         }
-
-        #region Fields
 
         private static UpdateAction updateAction;
 
@@ -60,6 +39,11 @@ namespace SevenUpdate
             }
         }
 
+        public static bool IsAdmin
+        {
+            get { return CoreNativeMethods.IsUserAnAdmin(); }
+        }
+        
         /// <summary>
         ///   Gets a collection of software that Seven Update can check for updates
         /// </summary>
@@ -98,7 +82,6 @@ namespace SevenUpdate
         internal static bool IsReconnect { get; set; }
 
         #endregion
-
 
         #region Recount Methods
 
@@ -152,5 +135,32 @@ namespace SevenUpdate
             else
                 MessageBox.Show(Properties.Resources.AlreadyUpdating, Properties.Resources.SevenUpdate, MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        #region Event Declarations
+
+        /// <summary>
+        ///   Occurs when the user cancels their update selection
+        /// </summary>
+        internal static event EventHandler UpdateActionChanged;
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        private void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
 }

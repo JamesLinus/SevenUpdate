@@ -28,7 +28,7 @@ using Microsoft.Windows.Controls;
 
 namespace SevenUpdate
 {
-    internal class CustomComparers
+    internal static class ImportanceSorter
     {
         /// <summary>
         ///   Compares two <see cref = "Importance" /> objects
@@ -37,7 +37,7 @@ namespace SevenUpdate
         /// <param name = "y">The second object to compare.</param>
         /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
         ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
-        private static int CompareImportance(Importance x, Importance y)
+        internal static int CompareImportance(Importance x, Importance y)
         {
             var xRank = 0;
 
@@ -76,226 +76,214 @@ namespace SevenUpdate
 
             return xRank > yRank ? 1 : (xRank == yRank ? 0 : -1);
         }
+    }
 
-        #region Nested type: SuaSorter
-
+    /// <summary>
+    ///   Sorts the SUA class
+    /// </summary>
+    internal sealed class SuaSorter : ListViewCustomComparer
+    {
         /// <summary>
-        ///   Sorts the SUA class
+        ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        internal sealed class SuaSorter : ListViewCustomComparer
+        /// <param name = "x">The first object to compare.</param>
+        /// <param name = "y">The second object to compare.</param>
+        /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+        ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
+        public override int Compare(object x, object y)
         {
-            /// <summary>
-            ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
-            /// </summary>
-            /// <param name = "x">The first object to compare.</param>
-            /// <param name = "y">The second object to compare.</param>
-            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
-            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
-            public override int Compare(object x, object y)
+            try
             {
-                try
+                var xc = (Sua) x;
+                var yc = (Sua) y;
+
+                string valx = String.Empty, valy = String.Empty;
+                var result = 0;
+
+                foreach (var sort in GetSortColumnList())
                 {
-                    var xc = (Sua) x;
-                    var yc = (Sua) y;
-
-                    string valx = String.Empty, valy = String.Empty;
-                    var result = 0;
-
-                    foreach (var sortColumn in GetSortColumnList())
+                    switch (sort)
                     {
-                        switch (sortColumn)
-                        {
-                            case "ApplicationName":
+                        case "Name":
 
-                                valx = Base.GetLocaleString(xc.Name);
-                                valy = Base.GetLocaleString(yc.Name);
-                                break;
+                            valx = Base.GetLocaleString(xc.Name);
+                            valy = Base.GetLocaleString(yc.Name);
+                            break;
 
-                            case "Publisher":
-                                valx = Base.GetLocaleString(xc.Publisher);
-                                valy = Base.GetLocaleString(yc.Publisher);
-                                break;
-                            case "Architecture":
-                                valx = xc.Is64Bit.ToString();
-                                valy = yc.Is64Bit.ToString();
+                        case "Publisher":
+                            valx = Base.GetLocaleString(xc.Publisher);
+                            valy = Base.GetLocaleString(yc.Publisher);
+                            break;
+                        case "Is64Bit":
+                            valx = xc.Is64Bit.ToString();
+                            valy = yc.Is64Bit.ToString();
 
-                                break;
-                        }
+                            break;
+                    }
 
-                        if (SortColumns[sortColumn] == ListSortDirection.Ascending)
+                    if (SortColumns[sort] == ListSortDirection.Ascending)
+                        result = String.Compare(valx, valy);
+                    else
+                        result = (-1)*String.Compare(valx, valy);
+
+                    if (result != 0)
+                        break;
+                    continue;
+                }
+
+                return result;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+    }
+
+    /// <summary>
+    ///   Sorts the SUH Class
+    /// </summary>
+    internal sealed class SuhSorter : ListViewCustomComparer
+    {
+        /// <summary>
+        ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+        /// </summary>
+        /// <param name = "x">The first object to compare.</param>
+        /// <param name = "y">The second object to compare.</param>
+        /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+        ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
+        public override int Compare(object x, object y)
+        {
+            try
+            {
+                var xc = (Suh) x;
+                var yc = (Suh) y;
+
+                string valx = String.Empty, valy = String.Empty;
+                var result = 0;
+
+                foreach (var sortColumn in GetSortColumnList())
+                {
+                    switch (sortColumn)
+                    {
+                        case "Name":
+                            valx = Base.GetLocaleString(xc.Name);
+                            valy = Base.GetLocaleString(yc.Name);
+                            break;
+                        case "DateInstalled":
+                            valx = xc.InstallDate;
+                            valy = yc.InstallDate;
+                            break;
+                    }
+
+                    switch (sortColumn)
+                    {
+                        case "Importance":
+                            result = ImportanceSorter.CompareImportance(xc.Importance, yc.Importance);
+                            break;
+                        case "Status":
+                            if (xc.Status == yc.Status)
+                                result = 0;
+                            else if (xc.Status == UpdateStatus.Successful)
+                                result = 1;
+                            else
+                                result = -1;
+                            break;
+                        case "Size":
+                            if (xc.UpdateSize > yc.UpdateSize)
+                                result = 1;
+                            else if (xc.UpdateSize == yc.UpdateSize)
+                                result = 0;
+                            else
+                                result = -1;
+                            break;
+                        default:
                             result = String.Compare(valx, valy);
-                        else
-                            result = (-1)*String.Compare(valx, valy);
-
-                        if (result != 0)
                             break;
-                        continue;
                     }
 
-                    return result;
+                    if (SortColumns[sortColumn] == ListSortDirection.Descending)
+                        result = (-1)*result;
+
+                    if (result != 0)
+                        break;
+                    continue;
                 }
-                catch
-                {
-                    return 0;
-                }
+
+                return result;
             }
-        }
-
-        #endregion
-
-        #region Nested type: SuhSorter
-
-        /// <summary>
-        ///   Sorts the SUH Class
-        /// </summary>
-        internal sealed class SuhSorter : ListViewCustomComparer
-        {
-            /// <summary>
-            ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
-            /// </summary>
-            /// <param name = "x">The first object to compare.</param>
-            /// <param name = "y">The second object to compare.</param>
-            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
-            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
-            public override int Compare(object x, object y)
+            catch
             {
-                try
-                {
-                    var xc = (Suh) x;
-                    var yc = (Suh) y;
-
-                    string valx = String.Empty, valy = String.Empty;
-                    var result = 0;
-
-                    foreach (var sortColumn in GetSortColumnList())
-                    {
-                        switch (sortColumn)
-                        {
-                            case "Name":
-                                valx = Base.GetLocaleString(xc.Name);
-                                valy = Base.GetLocaleString(yc.Name);
-                                break;
-                            case "DateInstalled":
-                                valx = xc.InstallDate;
-                                valy = yc.InstallDate;
-                                break;
-                        }
-
-                        switch (sortColumn)
-                        {
-                            case "Importance":
-                                result = CompareImportance(xc.Importance, yc.Importance);
-                                break;
-                            case "Status":
-                                if (xc.Status == yc.Status)
-                                    result = 0;
-                                else if (xc.Status == UpdateStatus.Successful)
-                                    result = 1;
-                                else
-                                    result = -1;
-                                break;
-                            case "Size":
-                                if (xc.UpdateSize > yc.UpdateSize)
-                                    result = 1;
-                                else if (xc.UpdateSize == yc.UpdateSize)
-                                    result = 0;
-                                else
-                                    result = -1;
-                                break;
-                            default:
-                                result = String.Compare(valx, valy);
-                                break;
-                        }
-
-                        if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1)*result;
-
-                        if (result != 0)
-                            break;
-                        continue;
-                    }
-
-                    return result;
-                }
-                catch
-                {
-                    return 0;
-                }
+                return 0;
             }
         }
+    }
 
-        #endregion
-
-        #region Nested type: UpdateSorter
-
+    /// <summary>
+    ///   Sorts the Update Class
+    /// </summary>
+    internal sealed class UpdateSorter : ListViewCustomComparer
+    {
         /// <summary>
-        ///   Sorts the Update Class
+        ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        internal sealed class UpdateSorter : ListViewCustomComparer
+        /// <param name = "x">The first object to compare.</param>
+        /// <param name = "y">The second object to compare.</param>
+        /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
+        ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
+        public override int Compare(object x, object y)
         {
-            /// <summary>
-            ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
-            /// </summary>
-            /// <param name = "x">The first object to compare.</param>
-            /// <param name = "y">The second object to compare.</param>
-            /// <returns>Value  Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name = "y" />.
-            ///   Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
-            public override int Compare(object x, object y)
+            try
             {
-                try
+                var xc = (Update) x;
+                var yc = (Update) y;
+
+                string valx = String.Empty, valy = String.Empty;
+                var result = 0;
+
+                foreach (var sortColumn in GetSortColumnList())
                 {
-                    var xc = (Update) x;
-                    var yc = (Update) y;
-
-                    string valx = String.Empty, valy = String.Empty;
-                    var result = 0;
-
-                    foreach (var sortColumn in GetSortColumnList())
+                    switch (sortColumn)
                     {
-                        switch (sortColumn)
-                        {
-                            case "Name":
+                        case "Name":
 
-                                valx = Base.GetLocaleString(xc.Name);
-                                valy = Base.GetLocaleString(yc.Name);
-                                break;
-                        }
-
-                        switch (sortColumn)
-                        {
-                            case "Importance":
-                                result = CompareImportance(xc.Importance, yc.Importance);
-                                break;
-                            case "Size":
-                                if (xc.Size > yc.Size)
-                                    result = 1;
-                                else if (xc.Size == yc.Size)
-                                    result = 0;
-                                else
-                                    result = -1;
-                                break;
-                            default:
-                                result = String.Compare(valx, valy);
-                                break;
-                        }
-
-                        if (SortColumns[sortColumn] == ListSortDirection.Descending)
-                            result = (-1)*result;
-
-                        if (result != 0)
+                            valx = Base.GetLocaleString(xc.Name);
+                            valy = Base.GetLocaleString(yc.Name);
                             break;
-                        continue;
                     }
 
-                    return result;
+                    switch (sortColumn)
+                    {
+                        case "Importance":
+                            result = ImportanceSorter.CompareImportance(xc.Importance, yc.Importance);
+                            break;
+                        case "Size":
+                            if (xc.Size > yc.Size)
+                                result = 1;
+                            else if (xc.Size == yc.Size)
+                                result = 0;
+                            else
+                                result = -1;
+                            break;
+                        default:
+                            result = String.Compare(valx, valy);
+                            break;
+                    }
+
+                    if (SortColumns[sortColumn] == ListSortDirection.Descending)
+                        result = (-1)*result;
+
+                    if (result != 0)
+                        break;
+                    continue;
                 }
-                catch
-                {
-                    return 0;
-                }
+
+                return result;
+            }
+            catch
+            {
+                return 0;
             }
         }
-
-        #endregion
     }
 }

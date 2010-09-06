@@ -630,7 +630,7 @@ namespace SevenUpdate
         private ObservableCollection<LocaleString> name;
         private ObservableCollection<RegistryItem> registryItems;
         private string releaseDate;
-        private bool selected;
+        private bool selected, hidden;
         private ObservableCollection<Shortcut> shortcuts;
         private ulong size;
 
@@ -799,6 +799,21 @@ namespace SevenUpdate
         #endregion
 
         #region UI Properties
+
+        /// <summary>
+        ///   Gets or Sets a value Indicating if the update is visible or hidden (not used in the SDK)
+        /// </summary>
+        [ProtoIgnore, IgnoreDataMember]
+        public bool Hidden
+        {
+            get { return hidden; }
+            set
+            {
+                hidden = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Hidden");
+            }
+        }
 
         /// <summary>
         ///   Gets or Sets a value Indicating if the update is selected (not used in the SDK)

@@ -34,8 +34,7 @@
             </TextBlock>
         </StackPanel>
         <!--ListBox-->
-        <ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9"
-                ContextMenuOpening="ContextMenu_ContextMenuOpening">
+        <ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Add File(s)" Click="AddFile_Click">
@@ -49,15 +48,16 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <Separator />
-                    <MenuItem Header="Remove File" Click="miRemove_Click" IsEnabled="False" Name="miRemove">
+                    <MenuItem Header="Remove File" Click="miRemove_Click" Style="{StaticResource RemoveMenu}">
                         <MenuItem.Icon>
                             <Image Source="/SevenUpdate.Sdk;component/Images/DeleteFile.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="Remove All Files" Click="miRemoveAll_Click" IsEnabled="False" Name="miRemoveAll">
+                    <MenuItem Header="Remove All Files" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
                         <MenuItem.Icon>
                             <Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
                         </MenuItem.Icon>
+                        
                     </MenuItem>
                 </ContextMenu>
             </ListBox.ContextMenu>

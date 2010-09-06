@@ -99,16 +99,6 @@ namespace SevenUpdate.Pages
         #region Fields
 
         /// <summary>
-        ///   Gets an image of a blue arrow
-        /// </summary>
-        private readonly BitmapImage blueArrow = new BitmapImage(new Uri("/Images/BlueArrow.png", UriKind.Relative));
-
-        /// <summary>
-        ///   Gets an image of a green arrow
-        /// </summary>
-        private readonly BitmapImage greenArrow = new BitmapImage(new Uri("/Images/GreenArrow.png", UriKind.Relative));
-
-        /// <summary>
         ///   Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<int> appIndices;
@@ -116,11 +106,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region Properties
-
-        /// <summary>
-        ///   Gets or Sets a value indicating if one or more updates were hidden
-        /// </summary>
-        private bool AreHiddenUpdates { get; set; }
 
         /// <summary>
         ///   Gets or Sets a value indicating to expand the Optional Updates Group by default.
@@ -135,8 +120,6 @@ namespace SevenUpdate.Pages
         public UpdateInfo()
         {
             InitializeComponent();
-            if (CoreNativeMethods.IsUserAnAdmin())
-                cmiHideUpdate.Icon = null;
         }
 
         #region Event Declarations
@@ -255,34 +238,11 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            var items = new Binding {Source = selectedUpdates};
-            lvUpdates.SetBinding(ItemsControl.ItemsSourceProperty, items);
-            selectedUpdates.CollectionChanged += SelectedUpdates_CollectionChanged;
+            lvUpdates.ItemsSource = selectedUpdates;
             var myView = (CollectionView) CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceToString());
             if (myView.GroupDescriptions != null)
                 myView.GroupDescriptions.Add(groupDescription);
-
-            AddSortBinding();
-        }
-
-        /// <summary>
-        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
-        /// </summary>
-        private void AddSortBinding()
-        {
-            var gv = (GridView) lvUpdates.View;
-
-            var col = gv.Columns[1];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Name"));
-
-            col = gv.Columns[2];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Importance"));
-
-            col = gv.Columns[3];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Size"));
-
-            ListViewSorter.SetCustomSorter(lvUpdates, new CustomComparers.UpdateSorter());
         }
 
         #endregion
@@ -354,18 +314,6 @@ namespace SevenUpdate.Pages
         #region ListView Related
 
         /// <summary>
-        ///   Updates the <see cref = "CollectionView" /> when the <c>updateHistory</c> collection changes
-        /// </summary>
-        private void SelectedUpdates_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace)
-                return;
-            var dataView = CollectionViewSource.GetDefaultView(lvUpdates.ItemsSource);
-            dataView.Refresh();
-        }
-
-        /// <summary>
         ///   Shows the selected update details
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
@@ -389,61 +337,20 @@ namespace SevenUpdate.Pages
                               Name = update.Name
                           };
 
-            var item = (ListViewItem) lvUpdates.SelectedItem;
-            if (cmiHideUpdate.Header.ToString() == Properties.Resources.HideUpdate)
+            if (!update.Hidden)
             {
                 if (AdminClient.HideUpdate(hnh))
                 {
-                    cmiHideUpdate.Header = Properties.Resources.ShowUpdate;
-                    item.Foreground = Brushes.Gray;
-                    item.Tag = false;
+                    update.Hidden = true;
+                    update.Selected = false;
                 }
             }
             else
             {
                 if (AdminClient.ShowUpdate(hnh))
                 {
-                    cmiHideUpdate.Header = Properties.Resources.HideUpdate;
-                    item.Foreground = Brushes.Black;
-                    item.Tag = true;
+                    update.Hidden = false;
                 }
-            }
-        }
-
-        /// <summary>
-        ///   Shows the selected update details in the sidebar when the selection changes
-        /// </summary>
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (lvUpdates.SelectedIndex == -1)
-                return;
-            var item = (ListViewItem)lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.SelectedItem);
-            if (item == null)
-                return;
-
-            var appIndex = appIndices[lvUpdates.SelectedIndex];
-
-            cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != Core.Applications[appIndex].AppInfo.Directory;
-
-            
-            
-
-            if (item.Tag != null)
-                cmiHideUpdate.Header = ((bool)item.Tag) ? Properties.Resources.HideUpdate : Properties.Resources.ShowUpdate;
-            else
-                cmiHideUpdate.Header = Properties.Resources.HideUpdate;
-
-            var update = lvUpdates.SelectedItem as Update;
-
-            if (update.Size > 0)
-            {
-                lblStatus.Text = Properties.Resources.ReadyToDownload;
-                imgArrow.Source = blueArrow;
-            }
-            else
-            {
-                lblStatus.Text = Properties.Resources.ReadyToInstall;
-                imgArrow.Source = greenArrow;
             }
         }
 
@@ -459,20 +366,6 @@ namespace SevenUpdate.Pages
                 expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Optional;
             else
                 expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Important;
-        }
-
-        private void CheckBoxIsEnabled_Changed(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (((bool) e.NewValue) == false)
-            {
-                var chkbox = sender as CheckBox;
-                if (chkbox != null)
-                {
-                    chkbox.IsChecked = false;
-                    chkbox.GetBindingExpression(ToggleButton.IsCheckedProperty).UpdateSource();
-                }
-                AreHiddenUpdates = true;
-            }
         }
 
         #endregion

@@ -112,6 +112,8 @@
     <Compile Include="CommonFileDialogs\CommonOpenFileDialog.cs" />
     <Compile Include="CommonFileDialogs\CommonSaveFileDialog.cs" />
     <Compile Include="CommonFileDialogs\ICommonFileDialogIndexedControls.cs" />
+    <Compile Include="Controls\ListViewCustomComparer.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="Common\DefaultShellImageSizes.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -171,6 +173,7 @@
     </Compile>
     <Compile Include="Common\ShellThumbnail.cs" />
     <Compile Include="Common\ShellThumbnailEnums.cs" />
+    <Compile Include="Interop\Common\Shortcut.cs" />
     <Compile Include="Common\SortColumn.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -204,7 +207,6 @@
     <Compile Include="Controls\CommandLink.cs" />
     <Compile Include="Controls\BackButton.cs" />
     <Compile Include="Controls\InfoTextBox.cs" />
-    <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\ListViewExtensions.cs" />
     <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Controls\ProgressIndicator.cs" />

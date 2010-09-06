@@ -22,17 +22,17 @@
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Microsoft.Windows.Controls;
 
@@ -166,31 +166,10 @@ namespace SevenUpdate.Pages
             if (machineAppList != null)
             {
                 lvApps.ItemsSource = machineAppList;
-                machineAppList.CollectionChanged += UserAppList_CollectionChanged;
-                AddSortBinding();
                 lblListStatus.Text = null;
             }
             else
                 lblListStatus.Text = Properties.Resources.CouldNotConnect;
-        }
-
-        /// <summary>
-        ///   Adds the <see cref = "GridViewColumn" />'s of the <see cref = "ListView" /> to be sorted
-        /// </summary>
-        private void AddSortBinding()
-        {
-            var gv = (GridView) lvApps.View;
-
-            var col = gv.Columns[1];
-            ListViewSorter.SetSortBindingMember(col, new Binding("ApplicationName"));
-
-            col = gv.Columns[2];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Publisher"));
-
-            col = gv.Columns[3];
-            ListViewSorter.SetSortBindingMember(col, new Binding("Architecture"));
-
-            ListViewSorter.SetCustomSorter(lvApps, new CustomComparers.SuaSorter());
         }
 
         #endregion
@@ -205,22 +184,11 @@ namespace SevenUpdate.Pages
             lvApps.Cursor = Cursors.Wait;
             config = Core.Settings;
             DataContext = config;
-            new Thread(DownloadSul).Start();
+
+            Task.Factory.StartNew(DownloadSul);
         }
 
         #region ListView Related
-
-        /// <summary>
-        ///   Updates the <see cref = "CollectionView" /> when the <c>userAppList</c> collection changes
-        /// </summary>
-        private void UserAppList_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            // update the view when item change is NOT caused by replacement
-            if (e.Action != NotifyCollectionChangedAction.Replace)
-                return;
-            var dataView = CollectionViewSource.GetDefaultView(lvApps.ItemsSource);
-            dataView.Refresh();
-        }
 
         /// <summary>
         ///   Limit the size of the <see cref = "GridViewColumn" /> when it's being resized

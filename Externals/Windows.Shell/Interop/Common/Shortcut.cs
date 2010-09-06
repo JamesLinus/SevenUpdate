@@ -6,13 +6,13 @@ using System.Text;
 
 #endregion
 
-namespace SevenUpdate
+namespace Microsoft.Windows.Shell
 {
     internal class ShortcutInterop
     {
         #region Signitures imported from http://pinvoke.net
 
-        private const uint STGM_READ = 0;
+        private const uint StgmRead = 0;
         private const int MaxPath = 260;
 
         [DllImport("shfolder.dll", CharSet = CharSet.Auto)]
@@ -65,7 +65,7 @@ namespace SevenUpdate
             /// <summary>
             ///   Retrieves the path and file name of a Shell link object
             /// </summary>
-            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out WIN32_FIND_DATAW pfd, SLGP_FLAGS fFlags);
+            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out WIN32_FIND_DATAW pfd, SlgpFlags fFlags);
 
             /// <summary>
             ///   Retrieves the list of item identifiers for a Shell link object
@@ -145,7 +145,7 @@ namespace SevenUpdate
             /// <summary>
             ///   Attempts to find the target of a Shell link, even if it has been moved or renamed
             /// </summary>
-            void Resolve(IntPtr hwnd, SLR_FLAGS fFlags);
+            void Resolve(IntPtr hwnd, SlrFlags fFlags);
 
             /// <summary>
             ///   Sets the path and file name of a Shell link object
@@ -158,20 +158,20 @@ namespace SevenUpdate
         #region Nested type: SLGP_FLAGS
 
         [Flags]
-        private enum SLGP_FLAGS
+        private enum SlgpFlags
         {
             /// <summary>
             ///   Retrieves the standard short (8.3 format) file name
             /// </summary>
-            SLGP_SHORTPATH = 0x1,
+            SlgpShortPath = 0x1,
             /// <summary>
             ///   Retrieves the Universal Naming Convention (UNC) path name of the file
             /// </summary>
-            SLGP_UNCPRIORITY = 0x2,
+            SlgpUncPriority = 0x2,
             /// <summary>
             ///   Retrieves the raw path name. A raw path is something that might not exist and may include environment variables that need to be expanded
             /// </summary>
-            SLGP_RAWPATH = 0x4
+            SlgpRawPath = 0x4
         }
 
         #endregion
@@ -179,7 +179,7 @@ namespace SevenUpdate
         #region Nested type: SLR_FLAGS
 
         [Flags]
-        private enum SLR_FLAGS
+        private enum SlrFlags
         {
             /// <summary>
             ///   Do not display a dialog box if the link cannot be resolved. When SLR_NO_UI is set,
@@ -190,40 +190,40 @@ namespace SevenUpdate
             ///   (3 seconds). To specify a value, set the high word of fFlags to the desired time-out
             ///   duration, in milliseconds.
             /// </summary>
-            SLR_NO_UI = 0x1,
+            SlrNoUI = 0x1,
             /// <summary>
             ///   Obsolete and no longer used
             /// </summary>
-            SLR_ANY_MATCH = 0x2,
+            SlrAnyMatch = 0x2,
             /// <summary>
             ///   If the link object has changed, update its path and list of identifiers.
             ///   If SLR_UPDATE is set, you do not need to call IPersistFile::IsDirty to determine
             ///   whether or not the link object has changed.
             /// </summary>
-            SLR_UPDATE = 0x4,
+            SlrUpdate = 0x4,
             /// <summary>
             ///   Do not update the link information
             /// </summary>
-            SLR_NOUPDATE = 0x8,
+            SlrNoUpdate = 0x8,
             /// <summary>
             ///   Do not execute the search heuristics
             /// </summary>
-            SLR_NOSEARCH = 0x10,
+            SlrNoSearch = 0x10,
             /// <summary>
             ///   Do not use distributed link tracking
             /// </summary>
-            SLR_NOTRACK = 0x20,
+            SlrNoTrack = 0x20,
             /// <summary>
             ///   Disable distributed link tracking. By default, distributed link tracking tracks
             ///   removable media across multiple devices based on the volume name. It also uses the
             ///   Universal Naming Convention (UNC) path to track remote file systems whose drive letter
             ///   has changed. Setting SLR_NOLINKINFO disables both types of tracking.
             /// </summary>
-            SLR_NOLINKINFO = 0x40,
+            SlrNoLinkInfo = 0x40,
             /// <summary>
             ///   Call the Microsoft Windows Installer
             /// </summary>
-            SLR_INVOKE_MSI = 0x80
+            SlrInvokeMsi = 0x80
         }
 
         #endregion
@@ -263,7 +263,7 @@ namespace SevenUpdate
         public static string ResolveShortcut(string filename)
         {
             var link = new ShellLink();
-            ((IPersistFile) link).Load(filename, STGM_READ);
+            ((IPersistFile) link).Load(filename, StgmRead);
             // TODO: if I can get hold of the hwnd call resolve first. This handles moved and renamed files.  
             // ((IShellLinkW)link).Resolve(hwnd, 0) 
             var sb = new StringBuilder(MaxPath);
@@ -286,7 +286,7 @@ namespace SevenUpdate
 
         #region InstallState enum
 
-        public enum InstallState
+        private enum InstallState
         {
             NotUsed = -7,
             BadConfig = -6,
@@ -306,9 +306,9 @@ namespace SevenUpdate
 
         #endregion
 
-        public const int MaxFeatureLength = 38;
-        public const int MaxGuidLength = 38;
-        public const int MaxPathLength = 1024;
+        private const int MaxFeatureLength = 38;
+        private const int MaxGuidLength = 38;
+        private const int MaxPathLength = 1024;
 
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
         private static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
@@ -336,11 +336,8 @@ namespace SevenUpdate
             int pathLength = MaxPathLength;
             var path = new StringBuilder(pathLength);
 
-            InstallState installState = MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
-            if (installState == InstallState.Local)
-                return path.ToString();
-            else
-                return null;
+            var installState = MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
+            return installState == InstallState.Local ? path.ToString() : null;
         }
     }
 }

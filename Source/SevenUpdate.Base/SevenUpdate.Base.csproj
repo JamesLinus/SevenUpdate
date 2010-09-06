@@ -101,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base.cs" />
-    <Compile Include="Converters.cs" />
     <Compile Include="FileSystemLocations.cs" />
     <Compile Include="InvokeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -110,7 +109,6 @@
     <Compile Include="Search.cs" />
     <Compile Include="SerializationClasses.cs" />
     <AppDesigner Include="Properties\" />
-    <Compile Include="Shortcut.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

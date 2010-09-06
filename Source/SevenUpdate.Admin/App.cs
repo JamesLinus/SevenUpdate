@@ -38,7 +38,7 @@ namespace SevenUpdate.Admin
     /// <summary>
     ///   The main class of the application
     /// </summary>
-    internal class App
+    internal static class App
     {
         #region Enums
 
@@ -166,10 +166,11 @@ namespace SevenUpdate.Admin
                 #region Arguments
 
                 try
-                {
+                {                        
+                    var app = new Application();
                     if (args.Length > 0)
                     {
-                        var app = new Application();
+
                         switch (args[0])
                         {
                             case "Abort":
@@ -203,11 +204,11 @@ namespace SevenUpdate.Admin
                                 #endregion
 
                                 break;
-
-                            case "Wait":
-                                app.Run();
-                                break;
                         }
+                    }
+                    else
+                    {
+                        app.Run();
                     }
                 }
                 catch (Exception e)
