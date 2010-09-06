@@ -20,20 +20,25 @@
 
 #region
 
-using System.ComponentModel;
+using System;
+using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Data;
+using System.Windows.Input;
+using SevenUpdate.Windows;
 
 #endregion
 
 namespace SevenUpdate.Pages
 {
+
     #region Enums
 
     /// <summary>
     ///   The layout for the Info Panel
     /// </summary>
-    public enum UILayout
+    public enum UpdateAction
     {
         /// <summary>
         ///   Canceled Updates
@@ -91,7 +96,7 @@ namespace SevenUpdate.Pages
         RebootNeeded,
 
         /// <summary>
-        ///   No updates have been found
+        ///   Updates have been found
         /// </summary>
         UpdatesFound,
     }
@@ -101,28 +106,13 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for InfoBar.xaml
     /// </summary>
-    public partial class InfoBar : UserControl, INotifyPropertyChanged
+    public partial class InfoBar : UserControl
     {
         #region Fields
 
-        private UILayout layout;
+        private double imageHeight;
 
-        #endregion
-
-        #region Properties
-        
-        public UILayout UiLayout
-        {
-            get { return layout; }
-            set
-            {
-                layout = value;
-                
-                // Call OnPropertyChanged whenever the property is updated
-                DataContext = UiLayout;
-                OnPropertyChanged("UiLayout");
-            }
-        }
+        private bool isInstallOnly;
 
         #endregion
 
@@ -132,261 +122,555 @@ namespace SevenUpdate.Pages
         public InfoBar()
         {
             InitializeComponent();
-            
+            Search.ErrorOccurred += ErrorOccurred;
+            ServiceCallBack.ErrorOccurred += ErrorOccurred;
+            AdminClient.ServiceError += ErrorOccurred;
+            Search.SearchDone += SearchCompleted;
+            ServiceCallBack.DownloadProgressChanged += DownloadProgressChanged;
+            ServiceCallBack.DownloadDone += DownloadCompleted;
+            ServiceCallBack.InstallProgressChanged += InstallProgressChanged;
+            ServiceCallBack.InstallDone += InstallCompleted;
+            UpdateInfo.UpdateSelectionChanged += UpdateInfo_UpdateSelectionChanged;
+            Core.UpdateActionChanged += Core_UpdateActionChanged;
         }
 
-        //private void infoBar.Layout = UILayout layout, string errorDescription, int updatesInstalled, int updatesFailed)
-        //{
-
-        //    switch (layout)
-        //    {
-        //        case UILayout.Canceled:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.UpdatesCanceled;
-        //            infoBar.btnAction.ButtonText = Properties.Resources.TryAgain;d
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.CheckForUpdates:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-        //            infoBar.btnAction.ButtonText = Properties.Resources.CheckForUpdates;
-        //            infoBar.lblHeading.Text = Properties.Resources.CheckForUpdatesHeading;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.CheckingForUpdates:
-
-        //            #region GUI Code
-
-        //            infoBar.imgSideBanner.Visibility = Visibility.Collapsed;
-        //            infoBar.pbProgressBar.Visibility = Visibility.Visible;
-
-        //            infoBar.lblSelectedUpdates.FontWeight = FontWeights.Normal;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.CheckingForUpdates + "...";
-        //            lblRecentCheck.Text = Properties.Resources.TodayAt + " " + DateTime.Now.ToShortTimeString();
-
-        //            #endregion
-
-        //            #region Code
-
-        //            App.IsInstallInProgress = true;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.ConnectingToService:
-
-        //            #region GUI Code
-
-        //            infoBar.pbProgressBar.Visibility = Visibility.Visible;
-        //            infoBar.lblHeading.Text = Properties.Resources.ConnectingToService + "...";
-
-
-        //            #endregion
-
-        //            #region Code
-
-        //            AdminClient.Connect();
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.Downloading:
-
-        //            #region GUI Code
-        //            infoBar.pbProgressBar.Visibility = Visibility.Visible;
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-        //            infoBar.btnAction.IsShieldNeeded = true;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.DownloadingUpdates + "...";
-        //            infoBar.btnAction.ButtonText = Properties.Resources.StopDownload;
-
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.DownloadCompleted:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.IsShieldNeeded = true;
-        //            infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
-        //            infoBar.line.Visibility = Visibility.Visible;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.UpdatesReadyInstalled;
-        //            infoBar.btnAction.ButtonText = Properties.Resources.InstallUpdates;
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.ErrorOccurred:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.ErrorOccurred;
-        //            infoBar.btnAction.ButtonText = Properties.Resources.TryAgain;
-        //            infoBar.lblStatus.Text = errorDescription ?? Properties.Resources.UnknownErrorOccurred;
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.Installing:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.IsShieldNeeded = true;
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-        //            infoBar.pbProgressBar.Visibility = Visibility.Visible;
-
-        //            infoBar.btnAction.ButtonText = Properties.Resources.StopInstallation;
-        //            infoBar.lblHeading.Text = Properties.Resources.InstallingUpdates + "...";
-
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            #region Code
-
-        //            App.IsInstallInProgress = true;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.InstallationCompleted:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.IsShieldNeeded = true;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.UpdatesInstalled;
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #region Update Status
-
-        //            infoBar.lblStatus.Text = Properties.Resources.Succeeded + ": " + updatesInstalled + " ";
-
-        //            if (updatesInstalled == 1)
-        //                infoBar.lblStatus.Text += Properties.Resources.Update;
-        //            else
-        //                infoBar.lblStatus.Text += Properties.Resources.Updates;
-
-        //            if (updatesFailed > 0)
-        //            {
-        //                if (updatesInstalled == 0)
-        //                    infoBar.lblStatus.Text = Properties.Resources.Failed + ": " + updatesFailed + " ";
-        //                else
-        //                    infoBar.lblStatus.Text += ", " + Properties.Resources.Failed + ": " + updatesFailed + " ";
-
-        //                if (updatesFailed == 1)
-        //                    infoBar.lblStatus.Text += Properties.Resources.Update;
-        //                else
-        //                    infoBar.lblStatus.Text += Properties.Resources.Updates;
-        //            }
-
-        //            #endregion
-
-        //            lblUpdatesInstalled.Text = Properties.Resources.TodayAt + " " + DateTime.Now.ToShortTimeString();
-
-        //            #endregion
-
-        //            #region Code
-
-        //            Settings.Default.lastInstall = DateTime.Now;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.NoUpdates:
-
-        //            #region GUI Code
-
-        //            infoBar.lblHeading.Text = Properties.Resources.ProgramsUpToDate;
-
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            #region Code
-
-        //            App.IsInstallInProgress = false;
-
-        //            #endregion
-
-        //            break;
-        //        case UILayout.RebootNeeded:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.Visibility = Visibility.Visible;
-
-        //            infoBar.btnAction.ButtonText = Properties.Resources.RestartNow;
-        //            infoBar.lblHeading.Text = Properties.Resources.RebootNeeded;
-
-
-        //            #endregion
-
-        //            break;
-
-        //        case UILayout.UpdatesFound:
-
-        //            #region GUI Code
-
-        //            infoBar.btnAction.IsShieldNeeded = true;
-        //            infoBar.lblSelectedUpdates.Visibility = Visibility.Visible;
-        //            infoBar.lblViewOptionalUpdates.Visibility = Visibility.Visible;
-        //            infoBar.lblViewImportantUpdates.Visibility = Visibility.Visible;
-        //            infoBar.line.Visibility = Visibility.Visible;
-        //            infoBar.spnlUpdateInfo.Visibility = Visibility.Visible;
-        //            infoBar.line.Y1 = 25;
-
-        //            infoBar.lblHeading.Text = Properties.Resources.DownloadAndInstallUpdates;
-        //            infoBar.btnAction.ButtonText = Properties.Resources.InstallUpdates;
-
-        //            infoBar.imgSideBanner.Visibility = Visibility.Visible;
-
-        //            #endregion
-
-        //            break;
-        //    }
-        //}
-
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        void Core_UpdateActionChanged(object sender, EventArgs e)
+        {
+            SetUI(Core.Instance.UpdateAction);
+        }
+
+        #region Update Event Methods
+
+        /// <summary>
+        ///   Updates the UI the search for updates has completed
+        /// </summary>
+        /// <param name = "e">The SearchComplete data</param>
+        private void SearchCompleted(SearchCompletedEventArgs e)
+        {
+            Core.IsInstallInProgress = false;
+            if (e.Applications.Count > 0)
+            {
+                Core.Applications = e.Applications;
+
+                if (Core.Settings.IncludeRecommended)
+                    e.ImportantCount += e.RecommendedCount;
+
+
+                #region GUI Updating
+
+                if (e.ImportantCount > 0 || e.OptionalCount > 0)
+                {
+                    Core.Instance.UpdateAction = UpdateAction.UpdatesFound;
+
+                    if (e.ImportantCount > 0 && e.OptionalCount > 0)
+                        line.Y1 = 50;
+
+                    if (e.ImportantCount > 0)
+                    {
+                        if (e.ImportantCount == 1)
+                            tbViewImportantUpdates.Text = e.ImportantCount + " " + Properties.Resources.ImportantUpdateAvailable + " ";
+                        else
+                            tbViewImportantUpdates.Text = e.ImportantCount + " " + Properties.Resources.ImportantUpdatesAvailable;
+
+                        tbViewImportantUpdates.Visibility = Visibility.Visible;
+                    }
+                    else
+                        tbViewImportantUpdates.Visibility = Visibility.Collapsed;
+
+                    if (e.OptionalCount > 0)
+                    {
+                        if (e.ImportantCount == 0)
+                        {
+                            //imgSideBanner.Source = (BitmapImage) Core.Resources["GreenSide"];
+                            //imgShieldIcon.Source = (BitmapImage) Core.Resources["GreenShield"];
+                            tbHeading.Text = Properties.Resources.NoImportantUpdates;
+                        }
+
+                        if (e.OptionalCount == 1)
+                            tbViewOptionalUpdates.Text = e.OptionalCount + " " + Properties.Resources.OptionalUpdateAvailable;
+                        else
+                            tbViewOptionalUpdates.Text = e.OptionalCount + " " + Properties.Resources.OptionalUpdatesAvailable;
+
+                        tbViewOptionalUpdates.Visibility = Visibility.Visible;
+                    }
+                    else
+                        tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
+                }
+                //End Code
+
+                #endregion
+            }
+            else
+                Core.Instance.UpdateAction = UpdateAction.NoUpdates;
+
+            imageHeight = imgSideBanner.MaxHeight;
+        }
+
+        /// <summary>
+        ///   Sets the UI when an error occurs
+        /// </summary>
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred; 
+            switch (e.Type)
+            {
+                case ErrorType.FatalNetworkError:
+                    tbStatus.Text = Properties.Resources.CheckConnection;
+                    break;
+                case ErrorType.InstallationError:
+                case ErrorType.SearchError:
+                case ErrorType.DownloadError:
+                case ErrorType.GeneralErrorNonFatal:
+                case ErrorType.FatalError:
+                    tbStatus.Text = e.Exception;
+                    break;
+            }
+        }
+
+        /// <summary>
+        ///   Updates the UI when the installation progress has changed
+        /// </summary>
+        /// <param name = "e">The InstallProgress data</param>
+        private void InstallProgressChanged(InstallProgressChangedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.Installing;
+                Core.IsReconnect = false;
+            }
+
+            if (e.CurrentProgress == -1)
+                tbStatus.Text = Properties.Resources.PreparingInstall + "...";
+            else
+            {
+                tbStatus.Text = Properties.Resources.Installing + " " + e.UpdateName;
+
+                if (e.TotalUpdates > 1)
+                    tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
+                                              Properties.Resources.Complete;
+                else
+                    tbStatus.Text += ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
+            }
+        }
+
+        /// <summary>
+        ///   Updates the UI when the download progress has changed
+        /// </summary>
+        /// <param name = "e">The DownloadProgress data</param>
+        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.Downloading;
+                Core.IsReconnect = false;
+            }
+            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
+            {
+                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
+                                         Properties.Resources.Complete + ")";
+            }
+            else
+            {
+                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files +
+                                         " " + Properties.Resources.Complete + ")";
+            }
+        }
+
+        /// <summary>
+        ///   Updates the UI when the installation has completed
+        /// </summary>
+        /// <param name = "e">The InstallCompleted data</param>
+        private void InstallCompleted(InstallCompletedEventArgs e)
+        {
+            // if a reboot is needed lets say it
+            Core.Instance.UpdateAction = !Base.RebootNeeded ? UpdateAction.InstallationCompleted : UpdateAction.RebootNeeded;
+
+            #region Update Status
+
+            tbStatus.Text = Properties.Resources.Succeeded + ": " + e.UpdatesInstalled+ " ";
+
+            if (e.UpdatesInstalled == 1)
+                tbStatus.Text += Properties.Resources.Update;
+            else
+                tbStatus.Text += Properties.Resources.Updates;
+
+            if (e.UpdatesFailed > 0)
+            {
+                if (e.UpdatesInstalled == 0)
+                    tbStatus.Text = Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
+                else
+                    tbStatus.Text += ", " + Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
+
+                if (e.UpdatesFailed == 1)
+                    tbStatus.Text += Properties.Resources.Update;
+                else
+                    tbStatus.Text += Properties.Resources.Updates;
+            }
+
+            #endregion
+        }
+
+        /// <summary>
+        ///   Updates the UI when the downloading of updates has completed
+        /// </summary>
+        /// <param name = "e">The DownloadCompleted data</param>
+        private void DownloadCompleted(DownloadCompletedEventArgs e)
+        {
+            if (e.ErrorOccurred)
+                Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
+            else
+                Core.Instance.UpdateAction = Core.IsAutoCheck ? UpdateAction.DownloadCompleted : UpdateAction.Installing;
+        }
+
+        #region Invoker Events
+
+        /// <summary>
+        ///   Sets the UI when the search for updates has completed
+        /// </summary>
+        private void SearchCompleted(object sender, SearchCompletedEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(SearchCompleted, e);
+            else
+                SearchCompleted(e);
+        }
+
+        /// <summary>
+        ///   Sets the UI when the install progress has changed
+        /// </summary>
+        private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(InstallProgressChanged, e);
+            else
+                InstallProgressChanged(e);
+        }
+
+        /// <summary>
+        ///   Sets the UI when the download progress has changed
+        /// </summary>
+        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(DownloadProgressChanged, e);
+            else
+                DownloadProgressChanged(e);
+        }
+
+        /// <summary>
+        ///   Sets the UI when the installation of updates has completed
+        /// </summary>
+        private void InstallCompleted(object sender, InstallCompletedEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(InstallCompleted, e);
+            else
+                InstallCompleted(e);
+        }
+
+        /// <summary>
+        ///   Sets the UI when the downloading of updates has completed
+        /// </summary>
+        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(DownloadCompleted, e);
+            else
+                DownloadCompleted(e);
+        }
 
         #endregion
 
-        /// <summary>
-        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name = "name" />
-        private void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
+        #endregion
 
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
+        #region Methods
+        
+        private void SetUI(UpdateAction action)
+        {
+            btnAction.IsShieldNeeded = false;
+            btnAction.Visibility = Visibility.Collapsed;
+            tbHeading.Visibility = Visibility.Collapsed;
+            tbStatus.Visibility = Visibility.Collapsed;
+            tbSelectedUpdates.Visibility = Visibility.Collapsed;
+            tbSelectedUpdates.FontWeight = FontWeights.Normal;
+            tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
+            tbViewImportantUpdates.Visibility = Visibility.Collapsed;
+            line.Visibility = Visibility.Collapsed;
+
+            switch (action)
+            {
+                case UpdateAction.Canceled:
+                    tbHeading.Text = Properties.Resources.UpdatesCanceled;
+                    tbStatus.Text = Properties.Resources.CancelInstallation;
+                    btnAction.ButtonText = Properties.Resources.TryAgain;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+                    break;
+
+                case UpdateAction.CheckForUpdates:
+                    tbHeading.Text = Properties.Resources.CheckForUpdatesHeading;
+                    tbStatus.Text = Properties.Resources.InstallLatestUpdates;
+                    btnAction.ButtonText = Properties.Resources.CheckForUpdates;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+
+                    break;
+
+                case UpdateAction.CheckingForUpdates:
+                    tbHeading.Text = Properties.Resources.CheckingForUpdates;
+
+                    tbHeading.Visibility = Visibility.Visible;
+
+                    break;
+
+                case UpdateAction.ConnectingToService:
+                    tbHeading.Text = Properties.Resources.ConnectingToService;
+                    tbStatus.Text = Properties.Resources.GettingInstallationStatus;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    break;
+
+                case UpdateAction.DownloadCompleted:
+                    tbHeading.Text = Properties.Resources.UpdatesReadyInstalled;
+                    btnAction.ButtonText = Properties.Resources.InstallUpdates;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbSelectedUpdates.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+                    line.Visibility = Visibility.Visible;
+                    line.Y1 = 25;
+                    btnAction.IsShieldNeeded = true;
+                    break;
+
+                case UpdateAction.Downloading:
+                    tbHeading.Text = Properties.Resources.DownloadingUpdates;
+                    tbStatus.Text = Properties.Resources.PreparingDownload;
+                    btnAction.ButtonText = Properties.Resources.StopDownload;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+
+                    btnAction.IsShieldNeeded = true;
+                    break;
+
+                case UpdateAction.ErrorOccurred:
+                    tbHeading.Text = Properties.Resources.ErrorOccurred;
+                    tbStatus.Text = Properties.Resources.UnknownErrorOccurred;
+                    btnAction.ButtonText = Properties.Resources.ErrorOccurred;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+                    break;
+
+                case UpdateAction.InstallationCompleted:
+                    tbHeading.Text = Properties.Resources.UpdatesInstalled;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+
+                    break;
+
+                case UpdateAction.Installing:
+                    tbHeading.Text = Properties.Resources.InstallingUpdates;
+                    tbStatus.Text = Properties.Resources.PreparingInstall;
+                    btnAction.ButtonText = Properties.Resources.StopInstallation;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+
+                    btnAction.IsShieldNeeded = true;
+                    break;
+
+                case UpdateAction.NoUpdates:
+                    tbHeading.Text = Properties.Resources.ProgramsUpToDate;
+                    tbStatus.Text = Properties.Resources.NoNewUpdates;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    break;
+
+                case UpdateAction.RebootNeeded:
+                    tbHeading.Text = Properties.Resources.RebootNeeded;
+                    tbStatus.Text = Properties.Resources.SaveAndReboot;
+                    btnAction.ButtonText = Properties.Resources.RestartNow;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbStatus.Visibility = Visibility.Visible;
+                    btnAction.Visibility = Visibility.Visible;
+                    break;
+
+                case UpdateAction.UpdatesFound:
+
+                    tbHeading.Text = Properties.Resources.DownloadAndInstallUpdates;
+                    tbSelectedUpdates.Text = Properties.Resources.NoUpdatesSelected;
+                    btnAction.ButtonText = Properties.Resources.InstallUpdates;
+
+                    tbHeading.Visibility = Visibility.Visible;
+                    tbSelectedUpdates.Visibility = Visibility.Visible;
+                    line.Visibility = Visibility.Visible;
+                    btnAction.IsShieldNeeded = true;
+                    break;
+            }
         }
 
-        private void Infobar_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {
-            DataContext = UiLayout;
+            #region GUI Updating
+           
+            if (e.ImportantUpdates > 0)
+            {
+                tbViewImportantUpdates.Visibility = Visibility.Visible;
+                if (e.ImportantUpdates == 1)
+                    tbSelectedUpdates.Text = e.ImportantUpdates + " " + Properties.Resources.ImportantUpdateSelected;
+                else
+                    tbSelectedUpdates.Text = e.ImportantUpdates + " " + Properties.Resources.ImportantUpdatesSelected;
+
+                if (e.ImportantDownloadSize > 0)
+                    tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.ImportantDownloadSize);
+            }
+
+            if (e.OptionalUpdates > 0)
+            {
+                tbViewOptionalUpdates.Visibility = Visibility.Visible;
+                if (e.ImportantUpdates == 0)
+                {
+                    if (e.OptionalUpdates == 1)
+                        tbSelectedUpdates.Text = e.OptionalUpdates + " " + Properties.Resources.OptionalUpdateSelected;
+                    else
+                        tbSelectedUpdates.Text = e.OptionalUpdates + " " + Properties.Resources.OptionalUpdatesSelected;
+                }
+                else
+                {
+                    if (e.OptionalUpdates == 1)
+                        tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + Properties.Resources.OptionalUpdateSelected;
+                    else
+                        tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + Properties.Resources.OptionalUpdatesSelected;
+                }
+
+                if (e.OptionalDownloadSize > 0)
+                    tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.OptionalDownloadSize);
+            }
+
+            if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
+            {
+                isInstallOnly = true;
+                tbHeading.Text = Properties.Resources.InstallUpdatesForPrograms;
+            }
+            else
+            {
+                tbHeading.Text = Properties.Resources.DownloadAndInstallUpdates;
+                isInstallOnly = false;
+            }
+
+            if (e.ImportantUpdates > 0 || e.OptionalUpdates > 0)
+            {
+                tbSelectedUpdates.FontWeight = FontWeights.Bold;
+                btnAction.Visibility = Visibility.Visible;
+                var binding = new Binding {Source = grid, Path = new PropertyPath("ActualHeight")};
+                imgSideBanner.SetBinding(MaxHeightProperty, binding);
+            }
+            else
+            {
+                tbSelectedUpdates.FontWeight = FontWeights.Normal;
+                btnAction.Visibility = Visibility.Collapsed;
+                imgSideBanner.MaxHeight = imageHeight;
+            }
+        }
+
+        /// <summary>
+        ///   Downloads updates
+        /// </summary>
+        private void DownloadInstallUpdates()
+        {
+            for (var x = 0; x < Core.Applications.Count; x++)
+            {
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                {
+                    if (Core.Applications[x].Updates[y].Selected)
+                        continue;
+                    Core.Applications[x].Updates.RemoveAt(y);
+                    y--;
+                }
+                if (Core.Applications[x].Updates.Count != 0)
+                    continue;
+                Core.Applications.RemoveAt(x);
+                x--;
+            }
+
+            if (Core.Applications.Count > 0)
+            {
+                var sla = new LicenseAgreement();
+                if (sla.LoadLicenses() == false)
+                {
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+                    return;
+                }
+
+                if (AdminClient.Install())
+                {
+                    Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
+                    Core.IsInstallInProgress = true;
+                }
+                else
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+            }
+            else
+                Core.Instance.UpdateAction = UpdateAction.Canceled;
+        }
+
+            #endregion
+
+        #endregion
+
+        private void Infobar_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataContext = Core.Instance;
+        }
+
+        private void UacButton_Click(object sender, RoutedEventArgs e)
+        {
+            switch (Core.Instance.UpdateAction)
+            {
+                case UpdateAction.DownloadCompleted:
+                case UpdateAction.UpdatesFound:
+                    DownloadInstallUpdates();
+                    break;
+                case UpdateAction.Downloading:
+                case UpdateAction.Installing:
+                    if (AdminClient.AbortInstall())
+                        Core.Instance.UpdateAction = UpdateAction.Canceled;
+                    break;
+
+                case UpdateAction.CheckForUpdates:
+                case UpdateAction.Canceled:
+                case UpdateAction.ErrorOccurred:
+                    Core.Instance.UpdateAction = UpdateAction.CheckingForUpdates;
+                    Core.CheckForUpdates();
+                    break;
+                case UpdateAction.RebootNeeded:
+                    Base.StartProcess("shutdown.exe", "-r -t 00");
+                    break;
+            }
+        }
+
+        private void OptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = true;
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+        }
+
+        private void ImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = false;
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
     }
 }

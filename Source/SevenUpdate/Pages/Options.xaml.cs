@@ -203,7 +203,7 @@ namespace SevenUpdate.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             lvApps.Cursor = Cursors.Wait;
-            config = App.Settings;
+            config = Core.Settings;
             DataContext = config;
             new Thread(DownloadSul).Start();
         }

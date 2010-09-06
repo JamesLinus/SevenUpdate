@@ -92,8 +92,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters.cs" />
-    <Compile Include="CustomComparers.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Helpers\CustomComparers.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
       <DependentUpon>InfoBar.xaml</DependentUpon>
     </Compile>
@@ -143,6 +144,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\UpdateInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\InfoBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

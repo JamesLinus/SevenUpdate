@@ -21,8 +21,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -39,61 +37,6 @@ namespace SevenUpdate
     /// </summary>
     public partial class App
     {
-        #region Fields
-
-        internal new static ResourceDictionary Resources;
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Gets or Sets a collection of software that Seven Update can check for updates
-        /// </summary>
-        public static IEnumerable<Sua> AppsToUpdate { get { return Base.Deserialize<Collection<Sua>>(Base.AppsFile); } }
-
-        /// <summary>
-        ///   Gets the update configuration settings
-        /// </summary>
-        public static Config Settings
-        {
-            get
-            {
-                var t = Base.Deserialize<Config>(Base.ConfigFile);
-                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
-            }
-        }
-
-        /// <summary>
-        ///   Gets or Sets a collection of applications to update
-        /// </summary>
-        internal static Collection<Sui> Applications { get; set; }
-
-        ///// <summary>
-        /////   Gets a value indicating if the current user is running on admin privileges
-        ///// </summary>
-        ///// <returns><c>true</c> if the current user is an admin, otherwise <c>false</c></returns>
-        //internal static bool IsAdmin { get; private set; }
-
-        /// <summary>
-        ///   Gets a value indicating if an auto check is being performed
-        /// </summary>
-        internal static bool IsAutoCheck { get; private set; }
-
-        /// <summary>
-        ///   Gets or Sets a value indicating if an install is currently in progress
-        /// </summary>
-        internal static bool IsInstallInProgress { get; set; }
-
-        /// <summary>
-        ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
-        /// </summary>
-        internal static bool IsReconnect { get; set; }
-
-        #endregion
-
-        #region Methods
-
         /// <summary>
         ///   Gets the app ready for startup
         /// </summary>
@@ -124,33 +67,17 @@ namespace SevenUpdate
             if (args.Length > 0)
             {
                 if (args[0] == "Auto")
-                    IsAutoCheck = true;
+                    Core.IsAutoCheck = true;
                 if (args[0] == "Reconnect")
-                    IsReconnect = true;
+                    Core.IsReconnect = true;
             }
 
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length > 0)
             {
-                IsReconnect = true;
-                IsAutoCheck = false;
+                Core.IsReconnect = true;
+                Core.IsAutoCheck = false;
             }
         }
-
-        #region Recount Methods
-
-        /// <summary>
-        ///   Gets the total size of a single update
-        /// </summary>
-        /// <param name = "files">the collection of files of an update</param>
-        /// <returns>a ulong value of the size of the update</returns>
-        internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
-        {
-            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
-        }
-
-        #endregion
-
-        #endregion
     }
 
     /// <summary>
@@ -170,7 +97,6 @@ namespace SevenUpdate
                 return;
             // merge in your application resources
             Application.Current.Resources.MergedDictionaries.Add(Application.LoadComponent(new Uri("SevenUpdate;component/Resources/Dictionary.xaml", UriKind.Relative)) as ResourceDictionary);
-            App.Resources = Application.Current.Resources;
         }
 
         /// <summary>

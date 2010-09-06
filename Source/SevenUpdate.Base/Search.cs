@@ -32,7 +32,7 @@ using System.Net.Sockets;
 
 namespace SevenUpdate
 {
-
+    //var t = Base.Deserialize<Config>(Base.ConfigFile);
     #region Event Args
 
     /// <summary>
@@ -44,15 +44,25 @@ namespace SevenUpdate
         ///   Contains event data associated with this event
         /// </summary>
         /// <param name = "applications">The collection of applications to update</param>
-        public SearchCompletedEventArgs(Collection<Sui> applications)
+        /// <param name="importantCount">The number of important updates</param>
+        /// <param name="recommendedCount">The number of recommended updates</param>
+        /// <param name="optionalCount">The number of optional updates</param>
+        public SearchCompletedEventArgs(Collection<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
         {
             Applications = applications;
+            ImportantCount = importantCount;
+            OptionalCount = optionalCount;
+            RecommendedCount = recommendedCount;
         }
 
         /// <summary>
         ///   Gets a collection of applications that contain updates to install
         /// </summary>
         public Collection<Sui> Applications { get; private set; }
+
+        public int ImportantCount { get; set; }
+        public int OptionalCount { get; set; }
+        public int RecommendedCount { get; set; }
     }
 
     #endregion
@@ -68,6 +78,8 @@ namespace SevenUpdate
         ///   Location of the SUI for Seven Update
         /// </summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
+
+        private static int importantCount, recommendedCount, optionalCount;
 
         #endregion
 
@@ -212,6 +224,19 @@ namespace SevenUpdate
                     continue;
                 }
                 app.Updates[y].Size = size;
+                switch (app.Updates[y].Importance)
+                {
+                    case Importance.Important:
+                        importantCount++;
+                        break;
+                    case Importance.Recommended:
+                        recommendedCount++;
+                        break;
+                    case Importance.Optional:
+                    case Importance.Locale:
+                        optionalCount++;
+                        break;
+                }
             }
             if (app.Updates.Count > 0)
             {
@@ -229,6 +254,9 @@ namespace SevenUpdate
         /// <param name = "apps">the list of applications to check for updates</param>
         public static void SearchForUpdates(IEnumerable<Sua> apps)
         {
+            importantCount = 0;
+            optionalCount = 0;
+            recommendedCount = 0;
             var applications = new Collection<Sui>();
             try
             {
@@ -276,7 +304,7 @@ namespace SevenUpdate
 
                     // Search is complete!
                     if (SearchDone != null)
-                        SearchDone(null, new SearchCompletedEventArgs(applications));
+                        SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
 
                     return;
                 }
@@ -298,7 +326,7 @@ namespace SevenUpdate
             {
                 // Search is complete!
                 if (SearchDone != null)
-                    SearchDone(null, new SearchCompletedEventArgs(applications));
+                    SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
 
                 return;
             }
@@ -347,7 +375,7 @@ namespace SevenUpdate
 
             // Search is complete!
             if (SearchDone != null)
-                SearchDone(null, new SearchCompletedEventArgs(applications));
+                SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
         }
 
         /// <summary>

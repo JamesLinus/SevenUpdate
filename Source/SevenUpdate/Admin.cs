@@ -381,7 +381,7 @@ namespace SevenUpdate
             if (success)
             {
                 if (Connect())
-                    wcfClient.InstallUpdates(App.Applications);
+                    wcfClient.InstallUpdates(Core.Applications);
             }
             return success;
         }

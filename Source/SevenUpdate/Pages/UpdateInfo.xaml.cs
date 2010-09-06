@@ -35,6 +35,7 @@ using System.Windows.Media.Imaging;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Internal;
 using SevenUpdate.Converters;
+using SevenUpdate.Windows;
 
 #endregion
 
@@ -94,25 +95,6 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class UpdateInfo : Page
     {
-        #region Structs
-
-        /// <summary>
-        ///   The indices of an update
-        /// </summary>
-        private struct Indices
-        {
-            /// <summary>
-            ///   Gets or Sets the position of the Application information of an update
-            /// </summary>
-            internal int AppIndex { get; set; }
-
-            /// <summary>
-            ///   Gets or Sets the position of the update information within the Application information of an update
-            /// </summary>
-            internal int UpdateIndex { get; set; }
-        }
-
-        #endregion
 
         #region Fields
 
@@ -129,7 +111,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Gets or Sets a list of indices relating to the current Update Collection
         /// </summary>
-        private List<Indices> indices;
+        private List<int> appIndices;
 
         #endregion
 
@@ -163,11 +145,6 @@ namespace SevenUpdate.Pages
         ///   Occurs when the update selection has changed
         /// </summary>
         internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChanged;
-
-        /// <summary>
-        ///   Occurs when the user cancels their update selection
-        /// </summary>
-        internal static event EventHandler CanceledSelection;
 
         #endregion
 
@@ -205,9 +182,9 @@ namespace SevenUpdate.Pages
             var count = new int[2];
             var downloadSize = new ulong[2];
             var updIndex = -1;
-            for (var x = 0; x < App.Applications.Count; x++)
+            for (var x = 0; x < Core.Applications.Count; x++)
             {
-                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
                     updIndex++;
                     var item = (ListViewItem) lvUpdates.ItemContainerGenerator.ContainerFromItem(lvUpdates.Items[updIndex]);
@@ -215,44 +192,44 @@ namespace SevenUpdate.Pages
                     {
                         if (!(bool) item.Tag)
                         {
-                            App.Applications[x].Updates.RemoveAt(y);
+                            Core.Applications[x].Updates.RemoveAt(y);
                             y--;
                             continue;
                         }
                     }
 
-                    if (!App.Applications[x].Updates[y].Selected)
+                    if (!Core.Applications[x].Updates[y].Selected)
                         continue;
 
-                    switch (App.Applications[x].Updates[y].Importance)
+                    switch (Core.Applications[x].Updates[y].Importance)
                     {
                         case Importance.Important:
                             count[0]++;
-                            downloadSize[0] = App.Applications[x].Updates[y].Size;
+                            downloadSize[0] = Core.Applications[x].Updates[y].Size;
                             break;
                         case Importance.Recommended:
-                            if (App.Settings.IncludeRecommended)
+                            if (Core.Settings.IncludeRecommended)
                             {
-                                downloadSize[0] = App.Applications[x].Updates[y].Size;
+                                downloadSize[0] = Core.Applications[x].Updates[y].Size;
                                 count[0]++;
                             }
                             else
                             {
-                                downloadSize[1] = App.Applications[x].Updates[y].Size;
+                                downloadSize[1] = Core.Applications[x].Updates[y].Size;
                                 count[1]++;
                             }
                             break;
                         case Importance.Optional:
                         case Importance.Locale:
-                            downloadSize[1] = App.Applications[x].Updates[y].Size;
+                            downloadSize[1] = Core.Applications[x].Updates[y].Size;
                             count[1]++;
                             break;
                     }
                 }
 
-                if (App.Applications[x].Updates.Count == 0)
+                if (Core.Applications[x].Updates.Count == 0)
                 {
-                    App.Applications.RemoveAt(x);
+                    Core.Applications.RemoveAt(x);
                     x--;
                 }
             }
@@ -267,17 +244,14 @@ namespace SevenUpdate.Pages
         private void AddUpdates()
         {
             var selectedUpdates = new ObservableCollection<Update>();
-            indices = new List<Indices>();
-            var index = new Indices();
+            appIndices = new List<int>();
 
-            for (var x = 0; x < App.Applications.Count; x++)
+            for (var x = 0; x < Core.Applications.Count; x++)
             {
-                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
+                appIndices.Add(x);
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
-                    selectedUpdates.Add(App.Applications[x].Updates[y]);
-                    index.AppIndex = x;
-                    index.UpdateIndex = y;
-                    indices.Add(index);
+                    selectedUpdates.Add(Core.Applications[x].Updates[y]);
                 }
             }
 
@@ -322,8 +296,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            if (CanceledSelection != null && AreHiddenUpdates)
-                CanceledSelection(this, new EventArgs());
+            MainWindow.NavService.GoBack();
         }
 
         /// <summary>
@@ -360,7 +333,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                Process.Start(App.Applications[indices[lvUpdates.SelectedIndex].AppIndex].AppInfo.HelpUrl);
+                Process.Start(Core.Applications[appIndices[lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
             }
             catch
             {
@@ -397,21 +370,20 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
-            var updateIndex = indices[lvUpdates.SelectedIndex].UpdateIndex;
-            var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
+            var appIndex = appIndices[lvUpdates.SelectedIndex];
 
             var update = lvUpdates.SelectedItem as Update;
             if (update == null)
                 return;
             var hnh = new Suh
                           {
-                              HelpUrl = App.Applications[appIndex].AppInfo.HelpUrl,
+                              HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl,
                               InfoUrl = update.InfoUrl,
-                              Publisher = App.Applications[appIndex].AppInfo.Publisher,
-                              PublisherUrl = App.Applications[appIndex].AppInfo.AppUrl,
+                              Publisher = Core.Applications[appIndex].AppInfo.Publisher,
+                              PublisherUrl = Core.Applications[appIndex].AppInfo.AppUrl,
                               ReleaseDate = update.ReleaseDate,
                               Status = UpdateStatus.Hidden,
-                              UpdateSize = App.GetUpdateSize(update.Files),
+                              UpdateSize = Core.GetUpdateSize(update.Files),
                               Importance = update.Importance,
                               Description = update.Description,
                               Name = update.Name
@@ -449,9 +421,9 @@ namespace SevenUpdate.Pages
             if (item == null)
                 return;
 
-            var appIndex = indices[lvUpdates.SelectedIndex].AppIndex;
+            var appIndex = appIndices[lvUpdates.SelectedIndex];
 
-            cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != App.Applications[appIndex].AppInfo.Directory;
+            cmiHideUpdate.IsEnabled = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) != Core.Applications[appIndex].AppInfo.Directory;
 
             
             

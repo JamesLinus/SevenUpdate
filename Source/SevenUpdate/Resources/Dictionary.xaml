@@ -1,166 +1,54 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:converters="clr-namespace:SevenUpdate.Converters" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" xmlns:Pages="clr-namespace:SevenUpdate.Pages" xmlns:Properties="clr-namespace:SevenUpdate.Properties">
-	<converters:FileSizeConverter x:Key="fileSizeConverter" />
-	<converters:LocaleStringToStringConverter x:Key="localeStringToString" />
-	<converters:Is64BitToStringConverter x:Key="is64BitToString" />
-	<converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
-	<converters:ImportanceToString x:Key="importanceToString" />
-	<SevenUpdate:StringToVisibilityConverter x:Key="stringToVisibility" />
-	<SevenUpdate:IntToVisibilityConverter x:Key="intToVisibility" />
-
-	<DataTemplate x:Key="HeaderTemplateSortDesc">
-		<DockPanel>
-			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />
-			<Path StrokeThickness="1" Fill="Gray" Data="M 5,5 L 10,10 L 15,5 L 5,5" />
-		</DockPanel>
-	</DataTemplate>
-
-	<DataTemplate x:Key="HeaderTemplateSortAsc">
-		<DockPanel>
-			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />
-			<Path StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" />
-		</DockPanel>
-	</DataTemplate>
-
-	<Style x:Key="HeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
-		<Setter Property="HorizontalContentAlignment" Value="Left" />
-		<Setter Property="Padding" Value="5,0" />
-	</Style>
-	<Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
-		<Style.Triggers>
-			<!-- setting up triggers for alternate background colors -->
-			<Trigger Property="ItemsControl.AlternationIndex" Value="0">
-				<Setter Property="Background" Value="#F3F7FB" />
-			</Trigger>
-			<Trigger Property="ItemsControl.AlternationIndex" Value="1">
-				<Setter Property="Background" Value="White" />
-			</Trigger>
-		</Style.Triggers>
-	</Style>
-
-	<Style x:Key="underlineTextBlock" TargetType="TextBlock">
-		<Style.Triggers>
-			<Trigger Property="IsMouseOver" Value="True">
-				<Setter Property="TextDecorations" Value="Underline" />
-			</Trigger>
-		</Style.Triggers>
-	</Style>
-
-	<Style TargetType="{x:Type Image}">
-		<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
-	</Style>
-
-    <Style x:Key="infoBarShield" TargetType="Image">
-        <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenShield.png" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding}" Value="Canceled">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ErrorOccurred}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.CheckForUpdates}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ConnectingToService}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Downloading}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.DownloadCompleted}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.UpdatesFound}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.RebootNeeded}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowShield.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.CheckingForUpdates}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/Icon.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Installing}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/Icon.png" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
-    <Style x:Key="infoBarSide" TargetType="Image">
-        <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenSide.png" />
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Canceled}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ErrorOccurred}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.CheckForUpdates}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ConnectingToService}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Downloading}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.DownloadCompleted}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.UpdatesFound}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.RebootNeeded}">
-                <Setter Property="Image.Source" Value="/SevenUpdate;component/Images/YellowSide.png" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.CheckingForUpdates}">
-                <Setter Property="Image.Source" Value="{x:Null}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Installing}">
-                <Setter Property="Image.Source" Value="{x:Null}" />
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:converters="clr-namespace:SevenUpdate.Converters"
+    xmlns:Converters="clr-namespace:SevenUpdate.Converters;assembly=SevenUpdate.Base">
+    <converters:FileSizeConverter x:Key="fileSizeConverter" />
+    <converters:LocaleStringToStringConverter x:Key="localeStringToString" />
+    <converters:Is64BitToStringConverter x:Key="is64BitToString" />
+    <converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
+    <converters:ImportanceToString x:Key="importanceToString" />
+    <Converters:StringToVisibilityConverter x:Key="stringToVisibility" />
+    <Converters:IntToVisibilityConverter x:Key="intToVisibility" />
+    <converters:DateConverter x:Key="dateConverter" />
     
-    <Style x:Key="infoBarStatus" TargetType="TextBlock">
-        <Setter Property="Visibility" Value="Collapsed" />
+    
+    <DataTemplate x:Key="HeaderTemplateSortDesc">
+        <DockPanel>
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}" />
+            <Path StrokeThickness="1" Fill="Gray" Data="M 5,5 L 10,10 L 15,5 L 5,5" />
+        </DockPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="HeaderTemplateSortAsc">
+        <DockPanel>
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}" />
+            <Path StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" />
+        </DockPanel>
+    </DataTemplate>
+
+    <Style x:Key="HeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Padding" Value="5,0" />
+    </Style>
+    <Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
         <Style.Triggers>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Canceled}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.CancelInstallation}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.CheckForUpdates}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.InstallLatestUpdates}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ConnectingToService}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.GettingInstallationStatus}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Downloading}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.PreparingDownload}" />
-            </DataTrigger> 
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.ErrorOccurred}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.UnknownErrorOccurred}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.Installing}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.PreparingInstall}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.InstallationCompleted}">
-                <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger> 
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.NoUpdates}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.NoNewUpdates}" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding}" Value="{x:Static Pages:UILayout.RebootNeeded}">
-                <Setter Property="Visibility" Value="Visible" />
-                <Setter Property="Text" Value="{x:Static Properties:Resources.SaveAndReboot}" />
-            </DataTrigger>
+            <!-- setting up triggers for alternate background colors -->
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="#F3F7FB" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="White" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="underlineTextBlock" TargetType="TextBlock">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
+    <Style TargetType="{x:Type Image}">
+        <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+    </Style>
 </ResourceDictionary>

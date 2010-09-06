@@ -7,7 +7,7 @@ using System.Windows.Data;
 
 #endregion
 
-namespace SevenUpdate
+namespace SevenUpdate.Converters
 {
     /// <summary>
     ///   Converts the string to a bool

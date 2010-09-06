@@ -119,17 +119,17 @@ namespace SevenUpdate.Windows
         {
             licenseInformation = new Collection<Eula>();
 
-            if (App.Applications == null)
+            if (Core.Applications == null)
                 return;
-            for (var x = 0; x < App.Applications.Count; x++)
+            for (var x = 0; x < Core.Applications.Count; x++)
             {
-                for (var y = 0; y < App.Applications[x].Updates.Count; y++)
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
-                    if (App.Applications[x].Updates[y].LicenseUrl == null)
+                    if (Core.Applications[x].Updates[y].LicenseUrl == null)
                         continue;
-                    if (App.Applications[x].Updates[y].LicenseUrl.Length <= 0)
+                    if (Core.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new Eula {LicenseUrl = App.Applications[x].Updates[y].LicenseUrl, Title = Base.GetLocaleString(App.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
+                    var sla = new Eula {LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Base.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
 
                     licenseInformation.Add(sla);
                 }
@@ -236,7 +236,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void Decline_Checked(object sender, RoutedEventArgs e)
         {
-            if (App.Applications.Count != 1)
+            if (Core.Applications.Count != 1)
             {
                 btnAction.IsEnabled = true;
                 ;
@@ -252,9 +252,9 @@ namespace SevenUpdate.Windows
         {
             if (rbDecline.IsChecked == true)
             {
-                App.Applications[licenseInformation[index].AppIndex].Updates.RemoveAt(licenseInformation[index].UpdateIndex);
-                if (App.Applications[licenseInformation[index].AppIndex].Updates.Count == 0)
-                    App.Applications.RemoveAt(licenseInformation[index].AppIndex);
+                Core.Applications[licenseInformation[index].AppIndex].Updates.RemoveAt(licenseInformation[index].UpdateIndex);
+                if (Core.Applications[licenseInformation[index].AppIndex].Updates.Count == 0)
+                    Core.Applications.RemoveAt(licenseInformation[index].AppIndex);
             }
             index++;
 
@@ -272,13 +272,13 @@ namespace SevenUpdate.Windows
             }
             if (btnAction.ButtonText == Properties.Resources.Finish)
             {
-                DialogResult = App.Applications.Count > 0;
+                DialogResult = Core.Applications.Count > 0;
                 Close();
             }
             if (index != licenseInformation.Count - 1)
                 return;
             btnAction.ButtonText = Properties.Resources.Finish;
-            if (App.Applications.Count > 0)
+            if (Core.Applications.Count > 0)
                 btnAction.IsShieldNeeded = true;
         }
 

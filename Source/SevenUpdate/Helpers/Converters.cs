@@ -50,7 +50,7 @@ namespace SevenUpdate.Converters
                 case Importance.Important:
                     return Resources.Important;
                 case Importance.Recommended:
-                    return App.Settings.IncludeRecommended ? Resources.Important : Resources.Recommended;
+                    return Core.Settings.IncludeRecommended ? Resources.Important : Resources.Recommended;
                 case Importance.Optional:
                     return Resources.Optional;
 
@@ -132,7 +132,7 @@ namespace SevenUpdate.Converters
             {
                 var files = value as Collection<UpdateFile>;
                 // Gets the full size of the update then converts it into a string format
-                return Base.ConvertFileSize(App.GetUpdateSize(files));
+                return Base.ConvertFileSize(Core.GetUpdateSize(files));
             }
             catch (Exception)
             {
@@ -208,6 +208,35 @@ namespace SevenUpdate.Converters
         ///   Converts a converted object back into it's original form
         /// </summary>
         /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the DateTime to a String
+    /// </summary>
+    [ValueConversion(typeof(DateTime), typeof(string))]
+    public sealed class DateConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var dateTime = value is DateTime ? (DateTime)value : new DateTime();
+
+            if (dateTime != DateTime.MinValue)
+            {
+                return dateTime.Date.Equals(DateTime.Now.Date)
+                           ? Resources.TodayAt + " " + dateTime.ToShortTimeString()
+                           : Resources.TodayAt + " " + dateTime.ToShortDateString() + " " + Resources.At + " " + dateTime.ToShortTimeString();
+            }
+            return Resources.Never;
+        }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return new NotImplementedException();
