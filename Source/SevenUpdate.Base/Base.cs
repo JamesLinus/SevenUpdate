@@ -126,6 +126,25 @@ namespace SevenUpdate
         public string File { get; set; }
     }
 
+    /// <summary>
+    ///   Provides event data for the SerializationError event
+    /// </summary>
+    public sealed class ProcessEventArgs : EventArgs
+    {
+        /// <summary>
+        ///   Contains event data associated with this event
+        /// </summary>
+        public ProcessEventArgs(Process process)
+        {
+            this.Process = process;
+        }
+
+        /// <summary>
+        ///   Gets the exception data
+        /// </summary>
+        public Process Process {  get; set; }
+    }
+
     #endregion
 
     /// <summary>
@@ -198,6 +217,28 @@ namespace SevenUpdate
         }
 
         /// <summary>
+        ///   Waits for the process to exit then triggers an event
+        /// </summary>
+        /// <param name = "process"></param>
+        private static void WaitForExit(Process process)
+        {
+            Task.Factory.StartNew(() =>
+                                      {
+                                          try
+                                          {
+                                              process.WaitForExit();
+                                              if (ProcessExited != null)
+                                                  ProcessExited(null, new ProcessEventArgs(process));
+                                          }
+                                          catch
+                                          {
+                                              if (ProcessExited != null)
+                                                  ProcessExited(null, new ProcessEventArgs(null));
+                                          }
+                                      });
+        }
+
+        /// <summary>
         ///   Starts a process on the system
         /// </summary>
         /// <param name = "fileName">The file to execute</param>
@@ -222,15 +263,14 @@ namespace SevenUpdate
             {
                 proc.Start();
                 if (wait)
-                    proc.WaitForExit();
-                proc.Dispose();
+                    WaitForExit(proc);
                 return true;
             }
             catch (Exception e)
             {
                 if (e.Message != @"The operation was canceled by the user")
                     ReportError(e, UserStore);
-                
+
                 proc.Dispose();
                 return false;
             }
@@ -254,7 +294,6 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         private static T DeserializeFile<T>(string fileName, bool usePrefix) where T : class
         {
-
             if (File.Exists(fileName))
             {
                 try
@@ -309,7 +348,8 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
         {
-           var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName, usePrefix));
+            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName, usePrefix));
+            task.Wait();
             return task.Result;
         }
 
@@ -324,6 +364,7 @@ namespace SevenUpdate
         public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
         {
             var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl, usePrefix));
+            task.Wait();
             return task.Result;
         }
 
@@ -377,7 +418,8 @@ namespace SevenUpdate
         /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
         public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
         {
-            Task.Factory.StartNew(() => SerializeFile(item, fileName, usePrefix));
+            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName, usePrefix));
+            task.Wait();
         }
 
         #endregion
@@ -388,6 +430,11 @@ namespace SevenUpdate
         ///   Occurs when an error occurs while serializing or deserializing a object/file
         /// </summary>
         public static event EventHandler<SerializationErrorEventArgs> SerializationError;
+
+        /// <summary>
+        ///   Occurs when a process has exited
+        /// </summary>
+        public static event EventHandler<ProcessEventArgs> ProcessExited;
 
         #endregion
 

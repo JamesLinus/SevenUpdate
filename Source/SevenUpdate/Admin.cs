@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using SevenUpdate.WCF;
 
 #endregion
@@ -269,6 +270,18 @@ namespace SevenUpdate
     /// </summary>
     internal static class AdminClient
     {
+        static AdminClient()
+        {
+            Base.ProcessExited += Base_ProcessExited;
+        }
+
+        static void Base_ProcessExited(object sender, ProcessEventArgs e)
+        {
+            if (wcfClient != null)
+                wcfClient.UnSubscribe();
+            wcfClient = null;
+        }
+
         private static int retry;
 
         /// <summary>
@@ -276,47 +289,52 @@ namespace SevenUpdate
         /// </summary>
         private static ServiceClient wcfClient;
 
-        private static bool ConnectToAdmin()
+        private static bool WaitForAdmin()
         {
+            while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)
+            {
+                if (wcfClient.State != CommunicationState.Faulted)
+                    continue;
+                AdminError(new FaultException());
+                return false;
+            }
             try
             {
-                while (wcfClient.State != CommunicationState.Created && wcfClient.State != CommunicationState.Opened)
-                {
-                    if (wcfClient.State != CommunicationState.Faulted)
-                        continue;
-                    AdminError(new FaultException());
-                    var process = Process.GetProcessesByName("SevenUpdate.Admin");
-                    foreach (Process t in process)
-                    {
-                        try
-                        {
-                            t.Kill();
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-                Thread.CurrentThread.Join(500);
                 wcfClient.Subscribe();
-                return true;
+                    return true;
             }
-            catch (EndpointNotFoundException e)
+            catch (EndpointNotFoundException)
             {
                 retry++;
-                Thread.CurrentThread.Join(500);
                 if (retry < 4)
-                    ConnectToAdmin();
-                else
                 {
-                    AdminError(e);
+                    KillAdmin();
+
+                    return WaitForAdmin();
                 }
             }
             catch (Exception e)
             {
                 AdminError(e);
+                
+                return false;
             }
             return false;
+        }
+
+        internal static void KillAdmin()
+        {
+            var process = Process.GetProcessesByName("SevenUpdate.Admin");
+            foreach (Process t in process)
+            {
+                try
+                {
+                    t.Kill();
+                }
+                catch
+                {
+                }
+            }
         }
 
         /// <summary>
@@ -324,9 +342,28 @@ namespace SevenUpdate
         /// </summary>
         internal static bool Connect()
         {
-            wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
-            var connect = Task.Factory.StartNew(() => ConnectToAdmin());
-            return connect.Result;
+            if (wcfClient == null)
+                    wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+
+            if (wcfClient.State == CommunicationState.Faulted)
+            {
+                KillAdmin();
+                bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait:true);
+
+                if (!success)
+                    return false;
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+            }
+
+            if (wcfClient.State == CommunicationState.Opened)
+            {
+                wcfClient.Subscribe();
+                return true;
+            }
+            var task = Task.Factory.StartNew(() => WaitForAdmin());
+            task.Wait();
+
+            return task.Result;
         }
 
         private static void AdminError(Exception e)
@@ -397,7 +434,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())
@@ -417,7 +454,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())
@@ -434,7 +471,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())
@@ -450,7 +487,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
 
             if (success)
             {
@@ -470,7 +507,7 @@ namespace SevenUpdate
         /// <param name = "app">the application to add to Seven Update</param>
         internal static void AddSua(Sua app)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
 
             if (!success)
                 return;
@@ -487,10 +524,11 @@ namespace SevenUpdate
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             // Launch SevenUpdate.Admin to save the settings to the AppStore.
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
 
             if (!success)
                 return;
+
             if (Connect())
                 wcfClient.ChangeSettings(sul, options, autoOn);
 

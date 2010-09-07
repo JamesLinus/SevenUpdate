@@ -113,16 +113,17 @@ namespace SevenUpdate.Admin
             bool createdNew;
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
+                #region WCF Hosts
+
                 try
                 {
                     if (createdNew)
                     {
                         host = new ServiceHost(typeof (Service.Service));
-                        host.Open();
-                        Service.Service.ClientConnected += Service_ClientConnected;
-                        Service.Service.ClientDisconnected += Service_ClientDisconnected;
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
+                        Service.Service.ClientConnected += Service_ClientConnected;
+                        Service.Service.ClientDisconnected += Service_ClientDisconnected;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
                         Service.Service.OnAddApp += Service_OnAddApp;
                         Service.Service.OnHideUpdate += Service_OnHideUpdate;
@@ -130,85 +131,80 @@ namespace SevenUpdate.Admin
                         Service.Service.OnSettingsChanged += Service_OnSettingsChanged;
                         Service.Service.OnInstallUpdates += Service_OnInstallUpdates;
                         Service.Service.OnShowUpdate += Service_OnShowUpdate;
+                        host.Open();
                     }
                 }
                 catch (FaultException e)
                 {
+                    Base.ReportError(e, Base.AllUserStore);
                     if (host != null)
                         host.Abort();
                     if (Service.Service.ErrorOccurred != null)
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Base.ReportError(e, Base.AllUserStore);
                     ShutdownApp();
                 }
                 catch (Exception e)
                 {
+                    Base.ReportError(e, Base.AllUserStore);
                     if (host != null)
                         host.Abort();
                     if (Service.Service.ErrorOccurred != null)
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
                     SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
-                    Base.ReportError(e, Base.AllUserStore);
+
                     ShutdownApp();
                 }
+
+                #endregion
 
                 if (!Directory.Exists(Base.AllUserStore))
                     Directory.CreateDirectory(Base.AllUserStore);
 
-                NotifyIcon.Icon = Resources.icon;
-                NotifyIcon.Visible = false;
-                NotifyIcon.BalloonTipClicked += RunSevenUpdate;
-                NotifyIcon.Click += RunSevenUpdate;
-
-                #region Arguments
+                if (NotifyIcon != null)
+                {
+                    NotifyIcon.Icon = Resources.icon;
+                    NotifyIcon.Visible = false;
+                    NotifyIcon.BalloonTipClicked += RunSevenUpdate;
+                    NotifyIcon.Click += RunSevenUpdate;
+                }
+            }
+            var app = new Application();
+            
+            #region Arguments
 
                 try
                 {                        
-                    var app = new Application();
+
                     if (args.Length > 0)
                     {
-
-                        switch (args[0])
+                        if (args[0] == "Abort")
                         {
-                            case "Abort":
-                                using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
-                                {
-                                    fs.WriteByte(0);
-                                    fs.Close();
-                                }
-                                break;
-
-                            case "Auto":
-
-                                #region code
-
-                                if (createdNew)
-                                {
-                                    if (File.Exists(Base.AllUserStore + "abort.lock"))
-                                        File.Delete(Base.AllUserStore + "abort.lock");
-
-                                    NotifyIcon.Text = Resources.CheckingForUpdates;
-                                    NotifyIcon.Visible = true;
-                                    Search.SearchDone += Search_SearchDone;
-                                    Search.ErrorOccurred += Search_ErrorOccurred;
-                                    Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
-
-                                    app.Run();
-                                }
-                                else
-                                    ShutdownApp();
-
-                                #endregion
-
-                                break;
+                            using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
+                            {
+                                fs.WriteByte(0);
+                                fs.Close();
+                                ShutdownApp();
+                            }
                         }
-                    }
-                    else
-                    {
-                        app.Run();
+                        if (args[0] == "Auto")
+                        {
+                            if (createdNew)
+                            {
+                                if (File.Exists(Base.AllUserStore + "abort.lock"))
+                                    File.Delete(Base.AllUserStore + "abort.lock");
+
+                                NotifyIcon.Text = Resources.CheckingForUpdates;
+                                NotifyIcon.Visible = true;
+                                Search.SearchDone += Search_SearchDone;
+                                Search.ErrorOccurred += Search_ErrorOccurred;
+                                Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
+                            }
+                            else
+                                ShutdownApp();
+                        }
                     }
                 }
                 catch (Exception e)
@@ -217,7 +213,9 @@ namespace SevenUpdate.Admin
                 }
 
                 #endregion
-            }
+            
+            app.Run();
+            Base.ReportError("After app run", Base.AllUserStore);
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
             try
             {
@@ -258,15 +256,20 @@ namespace SevenUpdate.Admin
                 host.Closed += Host_Closed;
                 try
                 {
-                    host.Abort();
+                    host.Close();
                 }
                 catch
                 {
-                    Environment.Exit(0);
+                    try
+                    {
+                        host.Abort();
+                    }
+                    catch
+                    {
+                    }
                 }
             }
-            else
-                Environment.Exit(0);
+            Environment.Exit(0);
         }
 
         private static void Host_Closed(object sender, EventArgs e)
@@ -476,9 +479,15 @@ namespace SevenUpdate.Admin
                 else
                     Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
             }
+            Base.SerializationError += Base_SerializationError;
             Base.Serialize(e.Apps, Base.AppsFile);
             Base.Serialize(e.Options, Base.ConfigFile);
             ShutdownApp();
+        }
+
+        static void Base_SerializationError(object sender, SerializationErrorEventArgs e)
+        {
+            Base.ReportError(e.Exception, Base.AllUserStore);
         }
 
         private static void Service_OnHideUpdates(object sender, Service.Service.OnHideUpdatesEventArgs e)

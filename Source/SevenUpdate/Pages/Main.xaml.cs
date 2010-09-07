@@ -40,6 +40,8 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class Main : Page
     {
+        private Timer timer;
+
         /// <summary>
         ///   The constructor for the Main page
         /// </summary>
@@ -136,7 +138,7 @@ namespace SevenUpdate.Pages
             if (Core.IsReconnect)
             {
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
-                var timer = new Timer {Enabled = true, Interval = 5000};
+                timer = new Timer {Enabled = true, Interval = 30000};
                 timer.Elapsed += timer_Elapsed;
                 AdminClient.Connect();
             }
@@ -148,22 +150,12 @@ namespace SevenUpdate.Pages
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (Core.Instance.UpdateAction == UpdateAction.ConnectingToService)
-            {
-                var process = Process.GetProcessesByName("SevenUpdate.Admin");
-
-                foreach (Process t in process)
-                {
-                    try
-                    {
-                        t.Kill();
-                    }
-                    catch
-                    {
-                    }
-                }
-                Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            }
+            timer.Enabled = false;
+            timer.Stop();
+            if (Core.Instance.UpdateAction != UpdateAction.ConnectingToService)
+                return;
+            AdminClient.KillAdmin();
+            Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
         }
     }
 }

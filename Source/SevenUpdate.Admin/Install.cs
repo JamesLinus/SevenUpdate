@@ -27,10 +27,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
-
+using SevenUpdate.Admin.Properties;
 using File = System.IO.File;
 
 #endregion
@@ -64,6 +65,8 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static int updateCount;
 
+        private static bool errorOccurred;
+
         #endregion
 
         /// <summary>
@@ -76,13 +79,12 @@ namespace SevenUpdate.Admin
         [DllImport("kernel32.dll")]
         private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
-
         private static void ReportProgress(int installProgress)
         {
             if (Service.Service.InstallProgressChanged != null && App.IsClientConnected)
                 Service.Service.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
             if (App.NotifyIcon != null)
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, SevenUpdate.Admin.Properties.Resources.InstallingUpdates + " " + installProgress + " " + SevenUpdate.Admin.Properties.Resources.Complete);
+                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, Resources.InstallingUpdates + " " + installProgress + " " + Resources.Complete);
         }
 
         #region Update Installation
@@ -112,7 +114,7 @@ namespace SevenUpdate.Admin
 
             updateCount = App.AppUpdates.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
-            var errorOccurred = false;
+            
 
             #endregion
 
@@ -122,6 +124,7 @@ namespace SevenUpdate.Admin
             {
                 for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
                 {
+                    errorOccurred = false;
                     if (File.Exists(Base.AllUserStore + @"abort.lock"))
                     {
                         File.Delete(Base.AllUserStore + @"abort.lock");
@@ -144,9 +147,7 @@ namespace SevenUpdate.Admin
 
                     #region Registry
 
-                    // ReSharper disable RedundantAssignment
-                    errorOccurred = SetRegistryItems(App.AppUpdates[x].Updates[y].RegistryItems);
-                    // ReSharper restore RedundantAssignment
+                    SetRegistryItems(App.AppUpdates[x].Updates[y].RegistryItems);
 
                     #endregion
 
@@ -154,7 +155,7 @@ namespace SevenUpdate.Admin
 
                     #region Files
 
-                    errorOccurred = UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     #endregion
 
@@ -253,12 +254,11 @@ namespace SevenUpdate.Admin
         /// </summary>
         /// <param name = "regItems">The registry changes to install on the system</param>
         /// <returns>a bool value indicating if an error occurred</returns>
-        private static bool SetRegistryItems(IList<RegistryItem> regItems)
+        private static void SetRegistryItems(IList<RegistryItem> regItems)
         {
             RegistryKey key;
-            var error = false;
             if (regItems == null)
-                return false;
+                return;
 
             for (int x = 0; x < regItems.Count; x++)
             {
@@ -291,7 +291,7 @@ namespace SevenUpdate.Admin
                         {
                             Base.ReportError(e, Base.AllUserStore);
                             Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
-                            error = true;
+                            errorOccurred = true;
                         }
                         break;
                     case RegistryAction.DeleteKey:
@@ -328,8 +328,6 @@ namespace SevenUpdate.Admin
 
                 #endregion
             }
-
-            return error;
         }
 
         /// <summary>
@@ -391,138 +389,147 @@ namespace SevenUpdate.Admin
             }
         }
 
+        private static void UpdateFile(UpdateFile file)
+        {
+            switch (file.Action)
+            {
+                #region Delete file
+
+                case FileAction.ExecuteThenDelete:
+                case FileAction.UnregisterThenDelete:
+                case FileAction.Delete:
+                    if (file.Action == FileAction.ExecuteThenDelete)
+                    {
+                        if (File.Exists(file.Source))
+                            Base.StartProcess(file.Source, file.Args, true);
+                    }
+
+                    if (file.Action == FileAction.UnregisterThenDelete)
+                        Base.StartProcess("regsvr32", "/u /s" + file.Destination);
+
+                    try
+                    {
+                        File.Delete(file.Destination);
+                    }
+                    catch
+                    {
+                        MoveFileEx(file.Destination, null, MoveOnReboot);
+                    }
+
+                    break;
+
+                #endregion
+
+                case FileAction.Execute:
+                    try
+                    {
+                        Base.StartProcess(file.Destination, file.Args);
+                    }
+                    catch (Exception e)
+                    {
+                        Base.ReportError(e + file.Source, Base.AllUserStore);
+                        Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                        errorOccurred = true;
+                    }
+                    break;
+
+                #region Update file
+
+                case FileAction.Update:
+                case FileAction.UpdateIfExist:
+                case FileAction.UpdateThenExecute:
+                case FileAction.UpdateThenRegister:
+                    if (File.Exists(file.Source))
+                    {
+                        try
+                        {
+                            if (File.Exists(file.Destination))
+                            {
+                                File.Copy(file.Destination, file.Destination + ".bak", true);
+                                File.Delete(file.Destination);
+                            }
+                            File.Move(file.Source, file.Destination);
+
+                            if (File.Exists(file.Destination + ".bak"))
+                                File.Delete(file.Destination + ".bak");
+                        }
+                        catch
+                        {
+                            if (!File.Exists(Base.AllUserStore + "reboot.lock"))
+                                File.Create(Base.AllUserStore + "reboot.lock").WriteByte(0);
+
+                            MoveFileEx(file.Source, file.Destination, MoveOnReboot);
+                            File.Delete(file.Destination + ".bak");
+                        }
+                    }
+                    else
+                    {
+                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore);
+                        Service.Service.ErrorOccurred(@"FileNotFound: " + file.Source, ErrorType.InstallationError);
+                        errorOccurred = true;
+                    }
+
+                    if (file.Action == FileAction.UpdateThenExecute)
+                    {
+                        try
+                        {
+                            Base.StartProcess(file.Destination, file.Args);
+                        }
+                        catch (Exception e)
+                        {
+                            Base.ReportError(e + file.Source, Base.AllUserStore);
+                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            errorOccurred = true;
+                        }
+                    }
+
+                    if (file.Action == FileAction.UpdateThenRegister)
+                        Base.StartProcess("regsvr32", "/s" + file.Destination);
+                    break;
+
+                #endregion
+            }
+        }
+
+
         /// <summary>
         ///   Installs the files in the update
         /// </summary>
         /// <param name = "files">the collection of files to update</param>
         /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
         /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
-        private static bool UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
+        private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
-            var error = false;
             for (var x = 0; x < files.Count; x++)
             {
-                var destinationFile = files[x].Destination;
-                var sourceFile = downloadDirectory + Path.GetFileName(destinationFile);
+                files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
                 try
                 {
-                    Directory.CreateDirectory(Path.GetDirectoryName(destinationFile));
+                    Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
                 }
                 catch (Exception e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
                     Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
-                    return false;
+                    errorOccurred = true;
                 }
 
-                switch (files[x].Action)
-                {
-                        #region Delete file
 
-                    case FileAction.ExecuteThenDelete:
-                    case FileAction.UnregisterThenDelete:
-                    case FileAction.Delete:
-                        if (files[x].Action == FileAction.ExecuteThenDelete)
-                        {
-                            if (File.Exists(sourceFile))
-                                Base.StartProcess(sourceFile, files[x].Args, true);
-                        }
+                int x1 = x;
+                int x2 = x;
+                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
+                                                                                    {
+                                                                                        #region Report Progress
 
-                        if (files[x].Action == FileAction.UnregisterThenDelete)
-                            Base.StartProcess("regsvr32", "/u /s" + destinationFile);
+                                                                                        int installProgress = (x2*100)/files.Count;
+                                                                                        if (installProgress > 70)
+                                                                                            installProgress -= 15;
 
-                        try
-                        {
-                            File.Delete(destinationFile);
-                        }
-                        catch
-                        {
-                            MoveFileEx(destinationFile, null, MoveOnReboot);
-                        }
-
-                        break;
-
-                        #endregion
-
-                    case FileAction.Execute:
-                        try
-                        {
-                            Base.StartProcess(destinationFile, files[x].Args);
-                        }
-                        catch (Exception e)
-                        {
-                            Base.ReportError(e + sourceFile, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
-                        }
-                        break;
-
-                        #region Update file
-
-                    case FileAction.Update:
-                    case FileAction.UpdateIfExist:
-                    case FileAction.UpdateThenExecute:
-                    case FileAction.UpdateThenRegister:
-                        if (File.Exists(sourceFile))
-                        {
-                            try
-                            {
-                                if (File.Exists(destinationFile))
-                                {
-                                    File.Copy(destinationFile, destinationFile + ".bak", true);
-                                    File.Delete(destinationFile);
-                                }
-                                File.Move(sourceFile, destinationFile);
-
-                                if (File.Exists(destinationFile + ".bak"))
-                                    File.Delete(destinationFile + ".bak");
-                            }
-                            catch
-                            {
-                                if (!File.Exists(Base.AllUserStore + "reboot.lock"))
-                                    File.Create(Base.AllUserStore + "reboot.lock").WriteByte(0);
-
-                                MoveFileEx(sourceFile, destinationFile, MoveOnReboot);
-                                File.Delete(destinationFile + ".bak");
-                            }
-                        }
-                        else
-                        {
-                            Base.ReportError("FileNotFound: " + sourceFile, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(@"FileNotFound: " + sourceFile, ErrorType.InstallationError);
-                            error = true;
-                        }
-
-                        if (files[x].Action == FileAction.UpdateThenExecute)
-                        {
-                            try
-                            {
-                                Base.StartProcess(destinationFile, files[x].Args);
-                            }
-                            catch (Exception e)
-                            {
-                                Base.ReportError(e + sourceFile, Base.AllUserStore);
-                                Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
-                            }
-                        }
-
-                        if (files[x].Action == FileAction.UpdateThenRegister)
-                            Base.StartProcess("regsvr32", "/s" + destinationFile);
-                        break;
-
-                        #endregion
-                }
-
-                #region Report Progress
-
-                int installProgress = (x*100)/files.Count;
-                if (installProgress > 70)
-                    installProgress -= 15;
-
-                ReportProgress(installProgress);
+                                                                                        ReportProgress(installProgress);
+                                                                                    });
 
                 #endregion
             }
-            return error;
         }
 
         #endregion
