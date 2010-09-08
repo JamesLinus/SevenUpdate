@@ -114,7 +114,6 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -136,8 +135,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Download.cs" />
-    <Compile Include="Install.cs" />
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -174,21 +171,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="IWshRuntimeLibrary">
-      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Externals\SharpBits.Base\SharpBits.Base.csproj">
-      <Project>{B39FDB92-7420-487E-8B44-D9BC0B88D857}</Project>
-      <Name>SharpBits.Base</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>
       <Name>SevenUpdate.Base</Name>

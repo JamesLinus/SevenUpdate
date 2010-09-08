@@ -194,7 +194,12 @@ namespace SevenUpdate.Windows
             para.Inlines.Add(r);
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
-            btnAction.IsShieldNeeded = licenseInformation.Count == 1;
+            
+            if (Core.IsAdmin)
+                btnAction.IsShieldNeeded = false;
+            else
+                btnAction.IsShieldNeeded = licenseInformation.Count == 1;
+
             tbHeading.Text = Properties.Resources.AcceptLicenseTerms + " " + licenseInformation[0].Title;
             rbAccept.IsEnabled = true;
             rbDecline.IsEnabled = true;
@@ -279,7 +284,7 @@ namespace SevenUpdate.Windows
                 return;
             btnAction.ButtonText = Properties.Resources.Finish;
             if (Core.Applications.Count > 0)
-                btnAction.IsShieldNeeded = true;
+                btnAction.IsShieldNeeded = !Core.IsAdmin;
         }
 
         #endregion

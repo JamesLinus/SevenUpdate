@@ -12,7 +12,7 @@
         </Grid.RowDefinitions>
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
-        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="5" Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="Restore hidden updates" VerticalAlignment="Top" Margin="24,12,0,5" />
         <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0"
                 MouseDoubleClick="ListView_MouseDoubleClick" Controls:ListViewSorter.CustomSorter="SevenUpdate.SuhSorter,SevenUpdate">
             <ListView.Resources>
@@ -49,11 +49,11 @@
         </ListView>
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
         <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
-            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnRestore" Click="Restore_Click" Padding="5,1" ButtonText="Restore" IsEnabled="False" />
-            <Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1"
+            <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="Restore_Click" Padding="5,1" ButtonText="Restore" IsEnabled="False" Name="btnRestore" />
+            <Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1"
                     Command="NavigationCommands.BrowseBack" />
         </StackPanel>
-        <TextBlock Grid.Row="2" HorizontalAlignment="Left" Name="lblSelectedUpdates" Text="Total Selected: 0 updates" VerticalAlignment="Center" Margin="20,0,0,0" />
+        <TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="Total Selected: 0 updates" VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />
         <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                 StrokeThickness="1" />
     </Grid>

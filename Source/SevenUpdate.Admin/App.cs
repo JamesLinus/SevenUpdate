@@ -22,14 +22,17 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.ServiceModel;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using SevenUpdate.Admin.Properties;
-using SharpBits.Base;
 using Application = System.Windows.Application;
+using Timer = System.Timers.Timer;
 
 #endregion
 
@@ -45,7 +48,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Defines constants for the notification type, such has SearchComplete
         /// </summary>
-        internal enum NotifyType
+        private enum NotifyType
         {
             /// <summary>
             ///   Indicates searching is completed
@@ -62,19 +65,25 @@ namespace SevenUpdate.Admin
             /// <summary>
             ///   Indicates that the installation of updates has begun
             /// </summary>
-            InstallStarted
+            InstallStarted,
+            /// <summary>
+            ///   Indicates that the installation of updates has completed
+            /// </summary>
+            InstallCompleted
         }
 
         #endregion
 
         #region Fields
 
+        private static Collection<Sui> apps;
+
         private static ServiceHost host;
 
         /// <summary>
         ///   The notifyIcon used only when Auto Updating
         /// </summary>
-        internal static NotifyIcon NotifyIcon = new NotifyIcon();
+        private static NotifyIcon notifyIcon;
 
         #endregion
 
@@ -83,7 +92,7 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Gets the update configuration settings
         /// </summary>
-        public static Config Settings
+        private static Config Settings
         {
             get
             {
@@ -92,14 +101,12 @@ namespace SevenUpdate.Admin
             }
         }
 
+        private static bool IsAutoInstall { get; set; }
+
         /// <summary>
         ///   Gets or Sets a bool value indicating Seven Update UI is currently connected.
         /// </summary>
-        internal static bool IsClientConnected { get; private set; }
-
-        internal static bool IsInstall { get; private set; }
-
-        internal static Collection<Sui> AppUpdates { get; private set; }
+        private static bool IsClientConnected { get; set; }
 
         #endregion
 
@@ -111,6 +118,9 @@ namespace SevenUpdate.Admin
         private static void Main(string[] args)
         {
             bool createdNew;
+            var timer = new Timer(30000);
+            timer.Elapsed += timer_Elapsed;
+
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
                 #region WCF Hosts
@@ -122,23 +132,23 @@ namespace SevenUpdate.Admin
                         host = new ServiceHost(typeof (Service.Service));
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
+                        host.Open();
                         Service.Service.ClientConnected += Service_ClientConnected;
                         Service.Service.ClientDisconnected += Service_ClientDisconnected;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-                        Service.Service.OnAddApp += Service_OnAddApp;
-                        Service.Service.OnHideUpdate += Service_OnHideUpdate;
-                        Service.Service.OnHideUpdates += Service_OnHideUpdates;
-                        Service.Service.OnSettingsChanged += Service_OnSettingsChanged;
-                        Service.Service.OnInstallUpdates += Service_OnInstallUpdates;
-                        Service.Service.OnShowUpdate += Service_OnShowUpdate;
-                        host.Open();
+                        Search.SearchCompleted += Search_SearchCompleted;
+                        Search.ErrorOccurred += Search_ErrorOccurred;
+                        Download.DownloadCompleted += Download_DownloadCompleted;
+                        Download.DownloadProgressChanged += Download_DownloadProgressChanged;
+                        Install.InstallCompleted += Install_InstallCompleted;
+                        Install.InstallProgressChanged += Install_InstallProgressChanged;
+                        if (!Directory.Exists(Base.AllUserStore))
+                            Directory.CreateDirectory(Base.AllUserStore);
                     }
                 }
                 catch (FaultException e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
-                    if (host != null)
-                        host.Abort();
                     if (Service.Service.ErrorOccurred != null)
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
@@ -148,8 +158,6 @@ namespace SevenUpdate.Admin
                 catch (Exception e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
-                    if (host != null)
-                        host.Abort();
                     if (Service.Service.ErrorOccurred != null)
                         Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
 
@@ -159,71 +167,57 @@ namespace SevenUpdate.Admin
                 }
 
                 #endregion
-
-                if (!Directory.Exists(Base.AllUserStore))
-                    Directory.CreateDirectory(Base.AllUserStore);
-
-                if (NotifyIcon != null)
-                {
-                    NotifyIcon.Icon = Resources.icon;
-                    NotifyIcon.Visible = false;
-                    NotifyIcon.BalloonTipClicked += RunSevenUpdate;
-                    NotifyIcon.Click += RunSevenUpdate;
-                }
             }
             var app = new Application();
-            
+
             #region Arguments
 
-                try
-                {                        
-
-                    if (args.Length > 0)
+            try
+            {
+                if (args.Length > 0)
+                {
+                    if (args[0] == "Abort")
                     {
-                        if (args[0] == "Abort")
+                        using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
                         {
-                            using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
-                            {
-                                fs.WriteByte(0);
-                                fs.Close();
-                                ShutdownApp();
-                            }
-                        }
-                        if (args[0] == "Auto")
-                        {
-                            if (createdNew)
-                            {
-                                if (File.Exists(Base.AllUserStore + "abort.lock"))
-                                    File.Delete(Base.AllUserStore + "abort.lock");
-
-                                NotifyIcon.Text = Resources.CheckingForUpdates;
-                                NotifyIcon.Visible = true;
-                                Search.SearchDone += Search_SearchDone;
-                                Search.ErrorOccurred += Search_ErrorOccurred;
-                                Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
-                            }
-                            else
-                                ShutdownApp();
+                            fs.WriteByte(0);
+                            fs.Close();
+                            ShutdownApp();
                         }
                     }
-                }
-                catch (Exception e)
-                {
-                    Base.ReportError(e, Base.AllUserStore);
-                }
+                    if (args[0] == "Auto")
+                    {
+                        if (File.Exists(Base.AllUserStore + "abort.lock"))
+                            File.Delete(Base.AllUserStore + "abort.lock");
 
-                #endregion
-            
+                        notifyIcon = new NotifyIcon {Icon = Resources.icon, Text = Resources.CheckingForUpdates, Visible = true};
+                        notifyIcon.BalloonTipClicked += RunSevenUpdate;
+                        notifyIcon.Click += RunSevenUpdate;
+                        Search.ErrorOccurred += Search_ErrorOccurred;
+                        Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
+                    }
+                    else
+                        ShutdownApp();
+                }
+                else
+                    timer.Start();
+            }
+            catch (Exception e)
+            {
+                Base.ReportError(e, Base.AllUserStore);
+            }
+
+            #endregion
+
             app.Run();
-            Base.ReportError("After app run", Base.AllUserStore);
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
             try
             {
-                if (NotifyIcon != null)
+                if (notifyIcon != null)
                 {
-                    NotifyIcon.Visible = false;
-                    NotifyIcon.Dispose();
-                    NotifyIcon = null;
+                    notifyIcon.Visible = false;
+                    notifyIcon.Dispose();
+                    notifyIcon = null;
                 }
             }
             catch
@@ -231,122 +225,92 @@ namespace SevenUpdate.Admin
             }
         }
 
-        #region Methods
-
-        /// <summary>
-        ///   Shuts down the process and removes the icon of the notification bar
-        /// </summary>
-        internal static void ShutdownApp()
+        private static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (NotifyIcon != null)
+            if (!IsAutoInstall)
             {
-                try
-                {
-                    NotifyIcon.Visible = false;
-                    NotifyIcon.Dispose();
-                    NotifyIcon = null;
-                }
-                catch
-                {
-                }
-            }
-
-            if (host != null)
-            {
-                host.Closed += Host_Closed;
-                try
-                {
-                    host.Close();
-                }
-                catch
-                {
-                    try
-                    {
-                        host.Abort();
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-            Environment.Exit(0);
-        }
-
-        private static void Host_Closed(object sender, EventArgs e)
-        {
-            Environment.Exit(0);
-        }
-
-        /// <summary>
-        ///   Updates the notify icon text
-        /// </summary>
-        /// <param name = "text">The string to set the notifyIcon text</param>
-        internal static void UpdateNotifyIcon(string text)
-        {
-            NotifyIcon.Text = text;
-        }
-
-        /// <summary>
-        ///   Updates the notifyIcon state
-        /// </summary>
-        /// <param name = "filter">The <see cref = "NotifyType" /> to set the notifyIcon to.</param>
-        internal static void UpdateNotifyIcon(NotifyType filter)
-        {
-            NotifyIcon.Visible = true;
-            switch (filter)
-            {
-                case NotifyType.DownloadStarted:
-                    NotifyIcon.Text = Resources.DownloadingUpdates;
-                    break;
-                case NotifyType.DownloadComplete:
-                    NotifyIcon.Text = Resources.UpdatesDownloadedViewThem;
-                    NotifyIcon.ShowBalloonTip(5000, Resources.UpdatesDownloaded, Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
-                    break;
-                case NotifyType.InstallStarted:
-                    NotifyIcon.Text = Resources.InstallingUpdates;
-                    break;
-                case NotifyType.SearchComplete:
-                    NotifyIcon.Text = Resources.UpdatesFoundViewThem;
-                    NotifyIcon.ShowBalloonTip(5000, Resources.UpdatesFound, Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
-                    break;
+                if (Process.GetProcessesByName("SevenUpdate").Length < 1)
+                    ShutdownApp();
             }
         }
 
-        /// <summary>
-        ///   Starts Seven Update UI
-        /// </summary>
-        private static void RunSevenUpdate(object sender, EventArgs e)
+        #region Events
+
+        private static void Install_InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
-            if (Environment.OSVersion.Version.Major < 6)
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, Resources.InstallingUpdates + " " + e.CurrentProgress + "% " + Resources.Complete);
+        }
+
+        private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
+        {
+            if (Service.Service.InstallCompleted != null && IsClientConnected)
+                Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
+            ShutdownApp();
+        }
+
+        private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (Service.Service.DownloadCompleted != null && IsClientConnected)
+                Service.Service.DownloadCompleted(false);
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon,
+                                                       Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Resources.OutOf + " " + e.FilesTotal + " " + Resources.Files + " " +
+                                                       Resources.Complete + ")");
+        }
+
+        private static void Download_DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            if ((Settings.AutoOption == AutoUpdateOption.Install && IsAutoInstall) || !IsAutoInstall)
             {
-                if (NotifyIcon.Text == Resources.UpdatesFoundViewThem || NotifyIcon.Text == Resources.UpdatesDownloadedViewThem || NotifyIcon.Text == Resources.CheckingForUpdates)
-                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
-                else
-                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
+                if (Service.Service.DownloadCompleted != null && IsClientConnected)
+                    Service.Service.DownloadCompleted(false);
+                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
+                Install.InstallUpdates(apps);
             }
             else
-                Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
+                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
+        }
 
-            if (NotifyIcon.Text == Resources.UpdatesFoundViewThem || NotifyIcon.Text == Resources.UpdatesDownloadedViewThem || NotifyIcon.Text == Resources.CheckingForUpdates)
+        /// <summary>
+        ///   Runs when the search for updates has completed for an auto update
+        /// </summary>
+        private static void Search_SearchCompleted(object sender, SearchCompletedEventArgs e)
+        {
+            if (e.Applications.Count > 0)
+            {
+                apps = e.Applications;
+                if (Settings.AutoOption == AutoUpdateOption.Notify)
+                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
+                else
+                {
+                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(e.Applications));
+                }
+            }
+            else
                 ShutdownApp();
         }
 
-        #endregion
-
-        #region Event Methods
+        /// <summary>
+        ///   Runs when there is an error searching for updates
+        /// </summary>
+        private static void Search_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            if (e.Type == ErrorType.FatalNetworkError)
+                ShutdownApp();
+        }
 
         /// <summary>
         ///   Prevents the system from shutting down until the installation is safely stopped
         /// </summary>
         private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            if (NotifyIcon != null)
+            if (notifyIcon != null)
             {
                 try
                 {
-                    NotifyIcon.Visible = false;
-                    NotifyIcon.Dispose();
-                    NotifyIcon = null;
+                    notifyIcon.Visible = false;
+                    notifyIcon.Dispose();
+                    notifyIcon = null;
                 }
                 catch
                 {
@@ -360,6 +324,10 @@ namespace SevenUpdate.Admin
             }
             e.Cancel = true;
         }
+
+        #endregion
+
+        #region Service events
 
         /// <summary>
         ///   Error Event when the .NetPipe binding faults
@@ -387,37 +355,6 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        ///   Runs when the search for updates has completed for an auto update
-        /// </summary>
-        private static void Search_SearchDone(object sender, SearchCompletedEventArgs e)
-        {
-            AppUpdates = e.Applications;
-            if (e.Applications.Count > 0)
-            {
-                if (Settings.AutoOption == AutoUpdateOption.Notify)
-                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
-                else
-                {
-                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Download.DownloadUpdates(JobPriority.Normal);
-                }
-            }
-            else
-                ShutdownApp();
-        }
-
-        /// <summary>
-        ///   Runs when there is an error searching for updates
-        /// </summary>
-        private static void Search_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
-        {
-            if (e.Type == ErrorType.FatalNetworkError)
-                ShutdownApp();
-        }
-
-        #region Service events
-
-        /// <summary>
         ///   Occurs when Seven Update UI connects to the admin process
         /// </summary>
         private static void Service_ClientConnected()
@@ -433,90 +370,91 @@ namespace SevenUpdate.Admin
             IsClientConnected = false;
         }
 
-        private static void Service_OnShowUpdate(object sender, Service.Service.OnShowUpdateEventArgs e)
-        {
-            var show = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
-
-            if (show.Count == 0)
-                File.Delete(Base.HiddenFile);
-            else
-            {
-                show.Remove(e.HiddenUpdate);
-                Base.Serialize(show, Base.HiddenFile);
-            }
-            ShutdownApp();
-        }
-
-        private static void Service_OnInstallUpdates(object sender, Service.Service.OnInstallUpdatesEventArgs e)
-        {
-            IsInstall = true;
-            AppUpdates = e.AppUpdates;
-            try
-            {
-                if (File.Exists(Base.AllUserStore + "abort.lock"))
-                    File.Delete(Base.AllUserStore + "abort.lock");
-            }
-            catch (Exception f)
-            {
-                Base.ReportError(f, Base.AllUserStore);
-            }
-            Download.DownloadUpdates(JobPriority.ForeGround);
-        }
-
-        private static void Service_OnSettingsChanged(object sender, Service.Service.OnSettingsChangedEventArgs e)
-        {
-            if (!e.AutoOn)
-            {
-                if (Environment.OSVersion.Version.Major < 6)
-                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
-                else
-                    Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
-            }
-            else
-            {
-                if (Environment.OSVersion.Version.Major < 6)
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Base.AppDir + @"SevenUpdate.Helper.exe ");
-                else
-                    Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
-            }
-            Base.SerializationError += Base_SerializationError;
-            Base.Serialize(e.Apps, Base.AppsFile);
-            Base.Serialize(e.Options, Base.ConfigFile);
-            ShutdownApp();
-        }
-
-        static void Base_SerializationError(object sender, SerializationErrorEventArgs e)
-        {
-            Base.ReportError(e.Exception, Base.AllUserStore);
-        }
-
-        private static void Service_OnHideUpdates(object sender, Service.Service.OnHideUpdatesEventArgs e)
-        {
-            Base.Serialize(e.HiddenUpdates, Base.HiddenFile);
-            ShutdownApp();
-        }
-
-        private static void Service_OnHideUpdate(object sender, Service.Service.OnHideUpdateEventArgs e)
-        {
-            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
-            hidden.Add(e.HiddenUpdate);
-
-            Base.Serialize(hidden, Base.HiddenFile);
-            ShutdownApp();
-        }
-
-        private static void Service_OnAddApp(object sender, Service.Service.OnAddAppEventArgs e)
-        {
-            var sul = Base.Deserialize<Collection<Sua>>(Base.AppsFile);
-            var index = sul.IndexOf(e.App);
-            if (index < 0)
-                sul.Add(e.App);
-
-            Base.Serialize(sul, Base.AppsFile);
-            ShutdownApp();
-        }
-
         #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///   Shuts down the process and removes the icon of the notification bar
+        /// </summary>
+        private static void ShutdownApp()
+        {
+            if (notifyIcon != null)
+            {
+                try
+                {
+                    notifyIcon.Visible = false;
+                    notifyIcon.Dispose();
+                    notifyIcon = null;
+                }
+                catch
+                {
+                }
+            }
+            Environment.Exit(0);
+        }
+
+        /// <summary>
+        ///   Updates the notify icon text
+        /// </summary>
+        /// <param name = "text">The string to set the notifyIcon text</param>
+        private static void UpdateNotifyIcon(string text)
+        {
+            if (notifyIcon != null)
+                notifyIcon.Text = text;
+        }
+
+        /// <summary>
+        ///   Updates the notifyIcon state
+        /// </summary>
+        /// <param name = "filter">The <see cref = "NotifyType" /> to set the notifyIcon to.</param>
+        private static void UpdateNotifyIcon(NotifyType filter)
+        {
+            if (notifyIcon == null)
+                return;
+
+            notifyIcon.Visible = true;
+            switch (filter)
+            {
+                case NotifyType.DownloadStarted:
+                    notifyIcon.Text = Resources.DownloadingUpdates;
+                    break;
+                case NotifyType.DownloadComplete:
+                    notifyIcon.Text = Resources.UpdatesDownloadedViewThem;
+                    notifyIcon.ShowBalloonTip(5000, Resources.UpdatesDownloaded, Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
+                    break;
+                case NotifyType.InstallStarted:
+                    notifyIcon.Text = Resources.InstallingUpdates;
+                    break;
+                case NotifyType.SearchComplete:
+                    notifyIcon.Text = Resources.UpdatesFoundViewThem;
+                    notifyIcon.ShowBalloonTip(5000, Resources.UpdatesFound, Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
+                    break;
+                case NotifyType.InstallCompleted:
+                    notifyIcon.Text = Resources.InstallationCompleted;
+                    notifyIcon.ShowBalloonTip(5000, Resources.UpdatesInstalled, Resources.InstallationCompleted, ToolTipIcon.Info);
+                    break;
+            }
+        }
+
+        /// <summary>
+        ///   Starts Seven Update UI
+        /// </summary>
+        private static void RunSevenUpdate(object sender, EventArgs e)
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
+                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
+                else
+                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
+            }
+            else
+                Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
+
+            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
+                ShutdownApp();
+        }
 
         #endregion
     }

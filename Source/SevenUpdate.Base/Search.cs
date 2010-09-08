@@ -32,40 +32,6 @@ using System.Threading.Tasks;
 
 namespace SevenUpdate
 {
-    #region Event Args
-
-    /// <summary>
-    ///   Provides event data for the SearchCompleted event
-    /// </summary>
-    public class SearchCompletedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "applications">The collection of applications to update</param>
-        /// <param name="importantCount">The number of important updates</param>
-        /// <param name="recommendedCount">The number of recommended updates</param>
-        /// <param name="optionalCount">The number of optional updates</param>
-        public SearchCompletedEventArgs(Collection<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
-        {
-            Applications = applications;
-            ImportantCount = importantCount;
-            OptionalCount = optionalCount;
-            RecommendedCount = recommendedCount;
-        }
-
-        /// <summary>
-        ///   Gets a collection of applications that contain updates to install
-        /// </summary>
-        public Collection<Sui> Applications { get; private set; }
-
-        public int ImportantCount { get; set; }
-        public int OptionalCount { get; set; }
-        public int RecommendedCount { get; set; }
-    }
-
-    #endregion
-
     /// <summary>
     ///   Contains methods to search for updates
     /// </summary>
@@ -306,8 +272,8 @@ namespace SevenUpdate
                         applications.Add(app);
 
                         // Search is complete!
-                        if (SearchDone != null)
-                            SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                        if (SearchCompleted != null)
+                            SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
 
                         return;
                     }
@@ -329,8 +295,8 @@ namespace SevenUpdate
             if (apps == null)
             {
                 // Search is complete!
-                if (SearchDone != null)
-                    SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                if (SearchCompleted != null)
+                    SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
 
                 return;
             }
@@ -380,8 +346,8 @@ namespace SevenUpdate
             #endregion
 
             // Search is complete!
-            if (SearchDone != null)
-                SearchDone(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+            if (SearchCompleted != null)
+                SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
         }
 
         /// <summary>
@@ -405,7 +371,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Occurs when the searching of updates has completed.
         /// </summary>
-        public static event EventHandler<SearchCompletedEventArgs> SearchDone;
+        public static event EventHandler<SearchCompletedEventArgs> SearchCompleted;
 
         #endregion
     }

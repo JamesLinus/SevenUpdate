@@ -34,139 +34,6 @@ using SevenUpdate.WCF;
 namespace SevenUpdate
 {
 
-    #region Event Args
-
-    /// <summary>
-    ///   Provides event data for the DownloadCompleted event
-    /// </summary>
-    public sealed class DownloadCompletedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "errorOccurred"><c>true</c> is an error occurred, otherwise <c>false</c></param>
-        public DownloadCompletedEventArgs(bool errorOccurred)
-        {
-            ErrorOccurred = errorOccurred;
-        }
-
-        /// <summary>
-        ///   <c>true</c> if an error occurred, otherwise <c>false</c>
-        /// </summary>
-        public bool ErrorOccurred { get; private set; }
-    }
-
-    /// <summary>
-    ///   Provides event data for the DownloadProgressChanged event
-    /// </summary>
-    public sealed class DownloadProgressChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "bytesTransferred">the number of bytes transferred</param>
-        /// <param name = "bytesTotal">the total number of bytes to download</param>
-        /// <param name = "filesTransferred">the number of files transfered</param>
-        /// <param name = "filesTotal">the total number of files transfered</param>
-        public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
-        {
-            BytesTotal = bytesTotal;
-            BytesTransferred = bytesTransferred;
-            FilesTotal = filesTotal;
-            FilesTransferred = filesTransferred;
-        }
-
-        /// <summary>
-        ///   Gets the number of bytes transferred
-        /// </summary>
-        public ulong BytesTransferred { get; private set; }
-
-        /// <summary>
-        ///   Gets the total number of bytes to download
-        /// </summary>
-        public ulong BytesTotal { get; private set; }
-
-        /// <summary>
-        ///   Gets the number of files downloaded
-        /// </summary>
-        public uint FilesTransferred { get; private set; }
-
-        /// <summary>
-        ///   Gets the total number of files to download
-        /// </summary>
-        public uint FilesTotal { get; private set; }
-    }
-
-    /// <summary>
-    ///   Provides event data for the InstallCompleted event
-    /// </summary>
-    public sealed class InstallCompletedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "updatesInstalled">the number of updates installed</param>
-        /// <param name = "updatesFailed">the number of updates that failed</param>
-        public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
-        {
-            UpdatesInstalled = updatesInstalled;
-            UpdatesFailed = updatesFailed;
-        }
-
-        /// <summary>
-        ///   Gets the number of updates that have been installed
-        /// </summary>
-        public int UpdatesInstalled { get; private set; }
-
-        /// <summary>
-        ///   Gets the number of updates that failed.
-        /// </summary>
-        public int UpdatesFailed { get; private set; }
-    }
-
-    /// <summary>
-    ///   Provides event data for the InstallProgressChanged event
-    /// </summary>
-    public sealed class InstallProgressChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "updateName">the name of the update currently being installed</param>
-        /// <param name = "progress">the progress percentage of the installation</param>
-        /// <param name = "updatesComplete">the number of updates that have been installed so far</param>
-        /// <param name = "totalUpdates">the total number of updates to install</param>
-        public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
-        {
-            CurrentProgress = progress;
-            TotalUpdates = totalUpdates;
-            UpdatesComplete = updatesComplete;
-            UpdateName = updateName;
-        }
-
-        /// <summary>
-        ///   The progress percentage of the installation
-        /// </summary>
-        public int CurrentProgress { get; private set; }
-
-        /// <summary>
-        ///   The total number of updates to install
-        /// </summary>
-        public int TotalUpdates { get; private set; }
-
-        /// <summary>
-        ///   The number of updates that have been installed so far
-        /// </summary>
-        public int UpdatesComplete { get; private set; }
-
-        /// <summary>
-        ///   The name of the current update being installed
-        /// </summary>
-        public string UpdateName { get; private set; }
-    }
-
-    #endregion
-
     /// <summary>
     ///   Contains callback methods for WCF
     /// </summary>
@@ -181,8 +48,6 @@ namespace SevenUpdate
         /// <param name = "type">the type of error that occurred</param>
         public void OnErrorOccurred(string exception, ErrorType type)
         {
-            if (ErrorOccurred == null)
-                return;
             ErrorOccurred(this, new ErrorOccurredEventArgs(exception, type));
         }
 
@@ -193,8 +58,7 @@ namespace SevenUpdate
         /// <param name = "failedUpdates">the number of failed updates</param>
         public void OnInstallCompleted(int installedUpdates, int failedUpdates)
         {
-            if (InstallDone != null)
-                InstallDone(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
+            InstallDone(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
         }
 
         /// <summary>
@@ -203,8 +67,7 @@ namespace SevenUpdate
         /// <param name = "errorOccurred"><c>true</c> if an error occurred, otherwise <c>false</c></param>
         public void OnDownloadCompleted(bool errorOccurred)
         {
-            if (DownloadDone != null)
-                DownloadDone(this, new DownloadCompletedEventArgs(errorOccurred));
+            DownloadDone(this, new DownloadCompletedEventArgs(errorOccurred));
         }
 
         /// <summary>
@@ -216,8 +79,7 @@ namespace SevenUpdate
         /// <param name = "totalUpdates">the total number of updates being installed</param>
         public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
-            if (InstallProgressChanged != null)
-                InstallProgressChanged(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
+            InstallProgressChanged(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
         }
 
         /// <summary>
@@ -229,8 +91,7 @@ namespace SevenUpdate
         /// <param name = "filesTotal">The total number of files to download</param>
         public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
-            if (DownloadProgressChanged != null)
-                DownloadProgressChanged(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
+            DownloadProgressChanged(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
         }
 
         #endregion
@@ -270,19 +131,6 @@ namespace SevenUpdate
     /// </summary>
     internal static class AdminClient
     {
-        static AdminClient()
-        {
-            Base.ProcessExited += Base_ProcessExited;
-        }
-
-        static void Base_ProcessExited(object sender, ProcessEventArgs e)
-        {
-            if (wcfClient != null)
-                wcfClient.UnSubscribe();
-            wcfClient = null;
-        }
-
-        private static int retry;
 
         /// <summary>
         ///   The client of the WCF service
@@ -291,49 +139,43 @@ namespace SevenUpdate
 
         private static bool WaitForAdmin()
         {
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            {
+                var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+                if (!success)
+                    return false;
+                Thread.SpinWait(500);
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+            }
+            if (wcfClient == null)
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+
             while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)
             {
                 if (wcfClient.State != CommunicationState.Faulted)
+                {
+                    Thread.SpinWait(200);
                     continue;
-                AdminError(new FaultException());
+                }
+                AdminError(new FaultException(Properties.Resources.CouldNotConnectToService));
                 return false;
             }
+
             try
             {
                 wcfClient.Subscribe();
-                    return true;
+                Core.IsAdmin = true;
+                return true;
             }
             catch (EndpointNotFoundException)
             {
-                retry++;
-                if (retry < 4)
-                {
-                    KillAdmin();
-
-                    return WaitForAdmin();
-                }
+                Thread.SpinWait(200);
+               return WaitForAdmin();
             }
             catch (Exception e)
             {
                 AdminError(e);
-                
                 return false;
-            }
-            return false;
-        }
-
-        internal static void KillAdmin()
-        {
-            var process = Process.GetProcessesByName("SevenUpdate.Admin");
-            foreach (Process t in process)
-            {
-                try
-                {
-                    t.Kill();
-                }
-                catch
-                {
-                }
             }
         }
 
@@ -342,32 +184,14 @@ namespace SevenUpdate
         /// </summary>
         internal static bool Connect()
         {
-            if (wcfClient == null)
-                    wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
-
-            if (wcfClient.State == CommunicationState.Faulted)
-            {
-                KillAdmin();
-                bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait:true);
-
-                if (!success)
-                    return false;
-                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
-            }
-
-            if (wcfClient.State == CommunicationState.Opened)
-            {
-                wcfClient.Subscribe();
-                return true;
-            }
             var task = Task.Factory.StartNew(() => WaitForAdmin());
             task.Wait();
-
             return task.Result;
         }
 
-        private static void AdminError(Exception e)
+        internal static void AdminError(Exception e)
         {
+            Core.IsAdmin = false;
             Base.ReportError(e, Base.UserStore);
             if (ServiceError != null)
                 ServiceError(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
@@ -454,14 +278,10 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise<c>false</c></returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
-            if (success)
-            {
-                if (Connect())
-                    wcfClient.HideUpdate(hiddenUpdate);
-            }
-
-            return success;
+            if (!Connect())
+                return false;
+            wcfClient.HideUpdate(hiddenUpdate);
+            return true;
         }
 
         /// <summary>
@@ -471,13 +291,10 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
-            if (success)
-            {
-                if (Connect())
-                    wcfClient.HideUpdates(hiddenUpdates);
-            }
-            return success;
+            if (!Connect())
+                return false;
+            wcfClient.HideUpdates(hiddenUpdates);
+            return true;
         }
 
         /// <summary>
@@ -487,14 +304,11 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
+            if (!Connect())
+                return false;
 
-            if (success)
-            {
-                if (Connect())
-                    wcfClient.ShowUpdate(hiddenUpdate);
-            }
-            return success;
+            wcfClient.ShowUpdate(hiddenUpdate);
+            return true;
         }
 
         #endregion
@@ -507,12 +321,10 @@ namespace SevenUpdate
         /// <param name = "app">the application to add to Seven Update</param>
         internal static void AddSua(Sua app)
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
-
-            if (!success)
+            if (!Connect())
                 return;
-            if (Connect())
-                wcfClient.AddApp(app);
+            
+            wcfClient.AddApp(app);
         }
 
         /// <summary>
@@ -523,14 +335,10 @@ namespace SevenUpdate
         /// <param name = "sul">the list of application to update to save</param>
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
-            // Launch SevenUpdate.Admin to save the settings to the AppStore.
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
-
-            if (!success)
+            if (!Connect())
                 return;
 
-            if (Connect())
-                wcfClient.ChangeSettings(sul, options, autoOn);
+            wcfClient.ChangeSettings(sul, options, autoOn);
 
             if (SettingsChanged != null)
                 SettingsChanged(null, new EventArgs());

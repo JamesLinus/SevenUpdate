@@ -163,4 +163,10 @@
   <data name="UpdatesFoundViewThem" xml:space="preserve">
     <value>Updates have been found, click here to view them</value>
   </data>
+  <data name="InstallationCompleted" xml:space="preserve">
+    <value>Seven Update has completed the installation of updates</value>
+  </data>
+  <data name="UpdatesInstalled" xml:space="preserve">
+    <value>Updates have been installed.</value>
+  </data>
 </root>

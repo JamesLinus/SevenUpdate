@@ -39,114 +39,6 @@ using ProtoBuf;
 namespace SevenUpdate
 {
 
-    #region Event Args
-
-    /// <summary>
-    ///   Indicates a type of error that can occur
-    /// </summary>
-    public enum ErrorType
-    {
-        /// <summary>
-        ///   An error that occurred while trying to download updates
-        /// </summary>
-        DownloadError,
-        /// <summary>
-        ///   An error that occurred while trying to install updates
-        /// </summary>
-        InstallationError,
-        /// <summary>
-        ///   A general network connection error
-        /// </summary>
-        FatalNetworkError,
-        /// <summary>
-        ///   An unspecified error, non fatal
-        /// </summary>
-        GeneralErrorNonFatal,
-        /// <summary>
-        ///   An unspecified error that prevents Seven Update from continuing
-        /// </summary>
-        FatalError,
-        /// <summary>
-        ///   An error that occurs while searching for updates
-        /// </summary>
-        SearchError
-    }
-
-    /// <summary>
-    ///   Provides event data for the ErrorOccurred event
-    /// </summary>
-    public sealed class ErrorOccurredEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "exception">the exception that occurred</param>
-        /// <param name = "type">the type of error that occurred</param>
-        public ErrorOccurredEventArgs(string exception, ErrorType type)
-        {
-            Exception = exception;
-            Type = type;
-        }
-
-        /// <summary>
-        ///   Gets the Exception information of the error that occurred
-        /// </summary>
-        public string Exception { get; private set; }
-
-        /// <summary>
-        ///   Gets the <see cref = "ErrorType" /> of the error that occurred
-        /// </summary>
-        public ErrorType Type { get; private set; }
-    }
-
-    /// <summary>
-    ///   Provides event data for the SerializationError event
-    /// </summary>
-    public sealed class SerializationErrorEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        /// <param name = "e">The exception data</param>
-        /// <param name = "file">The full path of the file</param>
-        public SerializationErrorEventArgs(Exception e, string file)
-        {
-            Exception = e;
-            File = file;
-        }
-
-        /// <summary>
-        ///   Gets the exception data
-        /// </summary>
-        public Exception Exception { get; private set; }
-
-        /// <summary>
-        ///   Gets the full path of the file
-        /// </summary>
-        public string File { get; set; }
-    }
-
-    /// <summary>
-    ///   Provides event data for the SerializationError event
-    /// </summary>
-    public sealed class ProcessEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public ProcessEventArgs(Process process)
-        {
-            this.Process = process;
-        }
-
-        /// <summary>
-        ///   Gets the exception data
-        /// </summary>
-        public Process Process {  get; set; }
-    }
-
-    #endregion
-
     /// <summary>
     ///   Methods that are shared between other classes
     /// </summary>
@@ -436,6 +328,11 @@ namespace SevenUpdate
         /// </summary>
         public static event EventHandler<ProcessEventArgs> ProcessExited;
 
+        /// <summary>
+        ///   Occurs when an error has occurred when downloading or installing updates
+        /// </summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
+
         #endregion
 
         #region Conversions
@@ -698,13 +595,16 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "message">The message to write in the log</param>
         /// <param name = "directoryStore">The directory to store the log</param>
-        public static void ReportError(string message, string directoryStore)
+        public static void ReportError(string message, string directoryStore, ErrorType errorType = ErrorType.GeneralErrorNonFatal)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
 
             tw.WriteLine(DateTime.Now + ": " + message);
 
             tw.Close();
+
+            if (ErrorOccurred != null)
+                ErrorOccurred(null, new ErrorOccurredEventArgs(message, errorType));
         }
 
         /// <summary>
@@ -712,7 +612,8 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "exception">The exception to write in the log</param>
         /// <param name = "directoryStore">The directory to store the log</param>
-        public static void ReportError(Exception exception, string directoryStore)
+        /// <param name="errorType">The type of error that occurred</param>
+        public static void ReportError(Exception exception, string directoryStore, ErrorType errorType = ErrorType.GeneralErrorNonFatal)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
             tw.WriteLine(DateTime.Now + ": " + exception.Source);
@@ -743,6 +644,8 @@ namespace SevenUpdate
             }
 
             tw.Close();
+            if (ErrorOccurred != null)
+                ErrorOccurred(null, new ErrorOccurredEventArgs(exception.Message, errorType));
         }
 
         #endregion

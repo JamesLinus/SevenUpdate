@@ -22,8 +22,10 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.ServiceModel;
-
+using System.Threading.Tasks;
+using Microsoft.Win32;
 
 #endregion
 
@@ -35,176 +37,6 @@ namespace SevenUpdate.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public sealed class Service : IService
     {
-        #region Events
-
-        public static event EventHandler<OnSettingsChangedEventArgs> OnSettingsChanged;
-
-        public static event EventHandler<OnInstallUpdatesEventArgs> OnInstallUpdates;
-
-        public static event EventHandler<OnAddAppEventArgs> OnAddApp;
-
-        public static event EventHandler<OnShowUpdateEventArgs> OnShowUpdate;
-
-        public static event EventHandler<OnHideUpdateEventArgs> OnHideUpdate;
-
-        public static event EventHandler<OnHideUpdatesEventArgs> OnHideUpdates;
-
-        #endregion
-
-        #region Event Args
-
-        #region Nested type: OnAddAppEventArgs
-
-        /// <summary>
-        ///   Provides event data the AddApp event
-        /// </summary>
-        public sealed class OnAddAppEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnAddAppEventArgs(Sua app)
-            {
-                App = app;
-            }
-
-            /// <summary>
-            ///   The app to add to the Seven Update list
-            /// </summary>
-            public Sua App { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: OnHideUpdateEventArgs
-
-        /// <summary>
-        ///   Provides event data the HideUpdate event
-        /// </summary>
-        public sealed class OnHideUpdateEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnHideUpdateEventArgs(Suh hiddenUpdate)
-            {
-                HiddenUpdate = hiddenUpdate;
-            }
-
-            /// <summary>
-            ///   The app to hide
-            /// </summary>
-            public Suh HiddenUpdate { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: OnHideUpdatesEventArgs
-
-        /// <summary>
-        ///   Provides event data the HideUpdate event
-        /// </summary>
-        public sealed class OnHideUpdatesEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnHideUpdatesEventArgs(Collection<Suh> hiddenUpdates)
-            {
-                HiddenUpdates = hiddenUpdates;
-            }
-
-            /// <summary>
-            ///   The app to hide
-            /// </summary>
-            public Collection<Suh> HiddenUpdates { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: OnInstallUpdatesEventArgs
-
-        /// <summary>
-        ///   Provides event data the InstallUpdates event
-        /// </summary>
-        public sealed class OnInstallUpdatesEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnInstallUpdatesEventArgs(Collection<Sui> appUpdates)
-            {
-                AppUpdates = appUpdates;
-            }
-
-            /// <summary>
-            ///   The apps to update
-            /// </summary>
-            public Collection<Sui> AppUpdates { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: OnSettingsChangedEventArgs
-
-        /// <summary>
-        ///   Provides event data the OnSettingsChanged event
-        /// </summary>
-        public sealed class OnSettingsChangedEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnSettingsChangedEventArgs(Collection<Sua> apps, Config options, bool autoOn)
-            {
-                Apps = apps;
-                Options = options;
-                AutoOn = autoOn;
-            }
-
-            /// <summary>
-            ///   The apps that Seven Update will update
-            /// </summary>
-            public Collection<Sua> Apps { get; private set; }
-
-            /// <summary>
-            ///   The apps that Seven Update will update
-            /// </summary>
-            public Config Options { get; private set; }
-
-            /// <summary>
-            ///   Gets or Sets a value indicating if auto updates should be enabled
-            /// </summary>
-            public bool AutoOn { get; private set; }
-        }
-
-        #endregion
-
-        #region Nested type: OnShowUpdateEventArgs
-
-        /// <summary>
-        ///   Provides event data the ShowUpdate event
-        /// </summary>
-        public sealed class OnShowUpdateEventArgs : EventArgs
-        {
-            /// <summary>
-            ///   Contains event data associated with this event
-            /// </summary>
-            public OnShowUpdateEventArgs(Suh hiddenUpdate)
-            {
-                HiddenUpdate = hiddenUpdate;
-            }
-
-            /// <summary>
-            ///   The app to unhide
-            /// </summary>
-            public Suh HiddenUpdate { get; private set; }
-        }
-
-        #endregion
-
-        #endregion
-
         #region Delegates
 
         /// <summary>
@@ -299,6 +131,13 @@ namespace SevenUpdate.Service
         public void Subscribe()
         {
             var callback = OperationContext.Current.GetCallbackChannel<IServiceCallBack>();
+
+            InstallCompleted -= callback.OnInstallCompleted;
+            InstallProgressChanged -= callback.OnInstallProgressChanged;
+            DownloadProgressChanged -= callback.OnDownloadProgressChanged;
+            DownloadCompleted -= callback.OnDownloadCompleted;
+            ErrorOccurred -= callback.OnErrorOccurred;
+
             InstallCompleted += callback.OnInstallCompleted;
             InstallProgressChanged += callback.OnInstallProgressChanged;
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
@@ -321,38 +160,81 @@ namespace SevenUpdate.Service
 
         public void AddApp(Sua app)
         {
-            if (OnAddApp != null)
-                OnAddApp(this, new OnAddAppEventArgs(app));
+            var sul = Base.Deserialize<Collection<Sua>>(Base.AppsFile);
+            bool exists = false;
+
+            for (int x = 0; x < sul.Count; x++)
+            {
+                if (sul[x].Directory == app.Directory && sul[x].Is64Bit == app.Is64Bit)
+                    exists = true;
+            }
+            if (exists)
+                return;
+            sul.Add(app);
+
+            Base.Serialize(sul, Base.AppsFile);
         }
 
         public void InstallUpdates(Collection<Sui> appUpdates)
         {
-            if (OnInstallUpdates != null)
-                OnInstallUpdates(this, new OnInstallUpdatesEventArgs(appUpdates));
+            try
+            {
+                if (File.Exists(Base.AllUserStore + "abort.lock"))
+                    File.Delete(Base.AllUserStore + "abort.lock");
+            }
+            catch (Exception f)
+            {
+                Base.ReportError(f, Base.AllUserStore);
+            }
+            Task.Factory.StartNew(() => Download.DownloadUpdates(appUpdates));
         }
 
         public void ShowUpdate(Suh hiddenUpdate)
         {
-            if (OnShowUpdate != null)
-                OnShowUpdate(this, new OnShowUpdateEventArgs(hiddenUpdate));
+            var show = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
+
+            if (show.Count == 0)
+                File.Delete(Base.HiddenFile);
+            else
+            {
+                show.Remove(hiddenUpdate);
+                Base.Serialize(show, Base.HiddenFile);
+            }
         }
 
         public void HideUpdate(Suh hiddenUpdate)
         {
-            if (OnHideUpdate != null)
-                OnHideUpdate(this, new OnHideUpdateEventArgs(hiddenUpdate));
+            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
+            hidden.Add(hiddenUpdate);
+
+            Base.Serialize(hidden, Base.HiddenFile);
         }
 
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            if (OnHideUpdates != null)
-                OnHideUpdates(this, new OnHideUpdatesEventArgs(hiddenUpdates));
+            Base.Serialize(hiddenUpdates, Base.HiddenFile);
         }
 
         public void ChangeSettings(Collection<Sua> apps, Config options, bool autoOn)
         {
-            if (OnSettingsChanged != null)
-                OnSettingsChanged(this, new OnSettingsChangedEventArgs(apps, options, autoOn));
+            if (!autoOn)
+            {
+                if (Environment.OSVersion.Version.Major < 6)
+                    // ReSharper disable PossibleNullReferenceException
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
+                    // ReSharper restore PossibleNullReferenceException
+                else
+                    Base.StartProcess("schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
+            }
+            else
+            {
+                if (Environment.OSVersion.Version.Major < 6)
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Base.AppDir + @"SevenUpdate.Helper.exe ");
+                else
+                    Base.StartProcess("schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
+            }
+            Base.Serialize(apps, Base.AppsFile);
+            Base.Serialize(options, Base.ConfigFile);
         }
 
         #endregion

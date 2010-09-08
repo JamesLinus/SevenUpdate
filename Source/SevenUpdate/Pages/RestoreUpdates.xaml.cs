@@ -58,6 +58,7 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
+            btnRestore.IsShieldNeeded = !Core.IsAdmin;
         }
 
         #region Event Declarations
@@ -119,15 +120,15 @@ namespace SevenUpdate.Pages
         {
             var checkedCount = hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            lblSelectedUpdates.Text = Properties.Resources.TotalSelected + " " + checkedCount + " ";
+            tbSelectedUpdates.Text = Properties.Resources.TotalSelected + " " + checkedCount + " ";
             if (checkedCount > 0)
             {
-                lblSelectedUpdates.Text += checkedCount == 1 ? Properties.Resources.Updates : Properties.Resources.Update;
+                tbSelectedUpdates.Text += checkedCount == 1 ? Properties.Resources.Updates : Properties.Resources.Update;
                 btnRestore.IsEnabled = true;
             }
             else
             {
-                lblSelectedUpdates.Text += Properties.Resources.Updates;
+                tbSelectedUpdates.Text += Properties.Resources.Updates;
                 btnRestore.IsEnabled = false;
             }
         }

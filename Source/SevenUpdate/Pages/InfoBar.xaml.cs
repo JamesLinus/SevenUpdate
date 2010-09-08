@@ -121,16 +121,16 @@ namespace SevenUpdate.Pages
         public InfoBar()
         {
             InitializeComponent();
-            Search.ErrorOccurred += ErrorOccurred;
-            ServiceCallBack.ErrorOccurred += ErrorOccurred;
+            Search.ErrorOccurred += ErrorOccurred;            
             AdminClient.ServiceError += ErrorOccurred;
-            Search.SearchDone += SearchCompleted;
+            Search.SearchCompleted += SearchCompleted;
+            UpdateInfo.UpdateSelectionChanged += UpdateInfo_UpdateSelectionChanged;
+            Core.UpdateActionChanged += UpdateAction_Changed;
             ServiceCallBack.DownloadProgressChanged += DownloadProgressChanged;
             ServiceCallBack.DownloadDone += DownloadCompleted;
             ServiceCallBack.InstallProgressChanged += InstallProgressChanged;
             ServiceCallBack.InstallDone += InstallCompleted;
-            UpdateInfo.UpdateSelectionChanged += UpdateInfo_UpdateSelectionChanged;
-            Core.UpdateActionChanged += new EventHandler(UpdateAction_Changed);
+            ServiceCallBack.ErrorOccurred += ErrorOccurred;
         }
 
         #region Update Event Methods
@@ -277,6 +277,7 @@ namespace SevenUpdate.Pages
         /// <param name = "e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
         {
+            Core.IsAdmin = false;
             // if a reboot is needed lets say it
             Core.Instance.UpdateAction = !Base.RebootNeeded ? UpdateAction.InstallationCompleted : UpdateAction.RebootNeeded;
 
@@ -322,7 +323,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when an error has occurred
         /// </summary>
-        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        internal void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(ErrorOccurred, e);
@@ -333,7 +334,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the search for updates has completed
         /// </summary>
-        private void SearchCompleted(object sender, SearchCompletedEventArgs e)
+        internal void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);
@@ -368,6 +369,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
+            
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallCompleted, e);
             else
@@ -448,7 +450,7 @@ namespace SevenUpdate.Pages
                     btnAction.Visibility = Visibility.Visible;
                     line.Visibility = Visibility.Visible;
                     line.Y1 = 25;
-                    btnAction.IsShieldNeeded = true;
+                    btnAction.IsShieldNeeded = !Core.IsAdmin;
                     break;
 
                 case UpdateAction.Downloading:
@@ -460,7 +462,7 @@ namespace SevenUpdate.Pages
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
 
-                    btnAction.IsShieldNeeded = true;
+                    btnAction.IsShieldNeeded = !Core.IsAdmin;
                     break;
 
                 case UpdateAction.ErrorOccurred:
@@ -490,7 +492,7 @@ namespace SevenUpdate.Pages
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
 
-                    btnAction.IsShieldNeeded = true;
+                    btnAction.IsShieldNeeded = !Core.IsAdmin;
                     break;
 
                 case UpdateAction.NoUpdates:
@@ -520,7 +522,7 @@ namespace SevenUpdate.Pages
                     tbHeading.Visibility = Visibility.Visible;
                     tbSelectedUpdates.Visibility = Visibility.Visible;
                     line.Visibility = Visibility.Visible;
-                    btnAction.IsShieldNeeded = true;
+                    btnAction.IsShieldNeeded = !Core.IsAdmin;
                     break;
             }
         }
@@ -575,7 +577,10 @@ namespace SevenUpdate.Pages
         /// </summary>
         void UpdateAction_Changed(object sender, EventArgs e)
         {
-            SetUI(Core.Instance.UpdateAction);
+            if (!Dispatcher.CheckAccess())
+                Dispatcher.BeginInvoke(()=>SetUI(Core.Instance.UpdateAction));
+            else
+                SetUI(Core.Instance.UpdateAction);
         }
 
         void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)

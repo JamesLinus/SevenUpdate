@@ -21,20 +21,19 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows;
-
 using SharpBits.Base;
 
 #endregion
 
-namespace SevenUpdate.Admin
+namespace SevenUpdate
 {
     /// <summary>
     ///   A class containing methods to download updates
     /// </summary>
-    internal static class Download
+    public static class Download
     {
         #region Fields
 
@@ -43,6 +42,22 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static BitsManager manager;
 
+        private static bool errorOccurred;
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        ///   Occurs when the download completed.
+        /// </summary>
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
+
+        /// <summary>
+        ///   Occurs when the download progress changed
+        /// </summary>
+        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
+
         #endregion
 
         #region Download Methods
@@ -50,28 +65,13 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Downloads the updates using BITS
         /// </summary>
-        /// <param name = "priority">the Priority of the download</param>
-        internal static void DownloadUpdates(JobPriority priority)
+        /// <param name = "appUpdates">The application updates to download</param>
+        public static void DownloadUpdates(Collection<Sui> appUpdates)
         {
-            if (App.AppUpdates == null)
-            {
-                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
-
-                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
-                App.ShutdownApp();
-            }
-            else
-            {
-                if (App.AppUpdates.Count < 1)
-                {
-                    if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                        Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
-
-                    Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
-                    App.ShutdownApp();
-                }
-            }
+            if (appUpdates == null)
+                return;
+            if (appUpdates.Count < 1)
+                return;
 
             // It's a new manager class
             manager = new BitsManager();
@@ -133,26 +133,25 @@ namespace SevenUpdate.Admin
 
             var bitsJob = manager.CreateJob("SevenUpdate", JobType.Download);
             bitsJob.NotificationFlags = NotificationFlags.JobErrorOccured | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
-            bitsJob.Priority = priority;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
-            for (var x = 0; x < App.AppUpdates.Count; x++)
+            for (var x = 0; x < appUpdates.Count; x++)
             {
-                for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
+                for (var y = 0; y < appUpdates[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of appname and update title
-                    var downloadDir = Base.AllUserStore + @"downloads\" + App.AppUpdates[x].Updates[y].Name[0].Value;
+                    var downloadDir = Base.AllUserStore + @"downloads\" + appUpdates[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
 
-                    for (var z = 0; z < App.AppUpdates[x].Updates[y].Files.Count; z++)
+                    for (var z = 0; z < appUpdates[x].Updates[y].Files.Count; z++)
                     {
-                        var fileDestination = App.AppUpdates[x].Updates[y].Files[z].Destination;
+                        var fileDestination = appUpdates[x].Updates[y].Files[z].Destination;
 
-                        if (App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
-                            App.AppUpdates[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
+                        if (appUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || appUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
+                            appUpdates[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
                             continue;
-                        if (Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == App.AppUpdates[x].Updates[y].Files[z].Hash)
+                        if (Base.GetHash(downloadDir + @"\" + Path.GetFileName(fileDestination)) == appUpdates[x].Updates[y].Files[z].Hash)
                             continue;
                         try
                         {
@@ -163,17 +162,13 @@ namespace SevenUpdate.Admin
                             catch
                             {
                             }
-                            var url =
-                                new Uri(Base.ConvertPath(App.AppUpdates[x].Updates[y].Files[z].Source, App.AppUpdates[x].Updates[y].DownloadUrl,
-                                                              App.AppUpdates[x].AppInfo.Is64Bit));
+                            var url = new Uri(Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Source, appUpdates[x].Updates[y].DownloadUrl, appUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(fileDestination));
                         }
                         catch (Exception e)
                         {
-                            if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                                Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
-                            Base.ReportError(e, Base.AllUserStore);
+                            Base.ReportError(e, Base.AllUserStore, ErrorType.DownloadError);
                         }
                     }
                 }
@@ -195,17 +190,16 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
-                    if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                        Service.Service.ErrorOccurred(e.Message, ErrorType.DownloadError);
-                    App.ShutdownApp();
+                    Base.ReportError(e, Base.AllUserStore, ErrorType.DownloadError);
+                    return;
                 }
             }
             else
             {
                 manager.Dispose();
                 manager = null;
-                Install.InstallUpdates();
+                if (DownloadCompleted != null)
+                    DownloadCompleted(null, new DownloadCompletedEventArgs(false));
             }
         }
 
@@ -215,15 +209,12 @@ namespace SevenUpdate.Admin
 
         #region Event Handlers
 
-        /// <summary>
-        ///   Calls the DownloadProgressChanged Event and updates the <see cref = "System.Windows.Forms.NotifyIcon" /> when the job progress has changed
-        /// </summary>
         private static void ManagerOnJobModified(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Base.AllUserStore + "abort.lock"))
             {
                 File.Delete(Base.AllUserStore + "abort.lock");
-                App.ShutdownApp();
+                return;
             }
 
             if (e.Job == null)
@@ -235,30 +226,11 @@ namespace SevenUpdate.Admin
             if (e.Job.State == JobState.Error)
                 return;
 
-            if (Service.Service.DownloadProgressChanged != null && App.IsClientConnected && e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
-                Service.Service.DownloadProgressChanged(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
-
-            if (App.NotifyIcon == null)
-                return;
-
-            if (e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
-            {
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           SevenUpdate.Admin.Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.Job.Progress.BytesTotal) + ", " +
-                                                           (e.Job.Progress.BytesTransferred*100/e.Job.Progress.BytesTotal).ToString("F0") + " % " + SevenUpdate.Admin.Properties.Resources.Complete +
-                                                           ")");
-            }
-            else
-            {
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon,
-                                                           SevenUpdate.Admin.Properties.Resources.DownloadingUpdates + " (" + e.Job.Progress.FilesTransferred + " " + SevenUpdate.Admin.Properties.Resources.OutOf + " " +
-                                                           e.Job.Progress.FilesTotal + " " + SevenUpdate.Admin.Properties.Resources.Files + " " + SevenUpdate.Admin.Properties.Resources.Complete + ")");
-            }
+            if (DownloadProgressChanged != null && e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
+                DownloadProgressChanged(null,
+                                        new DownloadProgressChangedEventArgs(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal));
         }
 
-        /// <summary>
-        ///   Calls the ErrorOccurred Event and updates the <see cref = "System.Windows.Forms.NotifyIcon" />  when an error occurs
-        /// </summary>
         private static void ManagerOnJobError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -270,18 +242,12 @@ namespace SevenUpdate.Admin
             if (e.Job.State != JobState.Error)
                 return;
 
+            errorOccurred = true;
+
             if (e.Job.Error.File != null)
-            {
-                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore);
-                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                    Service.Service.ErrorOccurred(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, ErrorType.DownloadError);
-            }
+                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore, ErrorType.DownloadError);
             else
-            {
-                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore);
-                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                    Service.Service.ErrorOccurred(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, ErrorType.DownloadError);
-            }
+                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore, ErrorType.DownloadError);
 
             try
             {
@@ -292,18 +258,15 @@ namespace SevenUpdate.Admin
             catch
             {
             }
-            App.ShutdownApp();
+            return;
         }
 
-        /// <summary>
-        ///   Calls the DownloadComplete Event and updates the <see cref = "System.Windows.Forms.NotifyIcon" /> when the job has been downloaded or Calls the InstallUpdates Method
-        /// </summary>
         private static void ManagerOnJobTransferred(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Base.AllUserStore + "abort.lock"))
             {
                 File.Delete(Base.AllUserStore + "abort.lock");
-                App.ShutdownApp();
+                return;
             }
 
             if (e.Job == null)
@@ -328,15 +291,9 @@ namespace SevenUpdate.Admin
             catch
             {
             }
-            if (App.Settings.AutoOption == AutoUpdateOption.Install || App.IsInstall)
-            {
-                if (Service.Service.DownloadCompleted != null && App.IsClientConnected)
-                    Service.Service.DownloadCompleted(false);
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.InstallStarted);
-                Install.InstallUpdates();
-            }
-            else
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, App.NotifyType.DownloadComplete);
+
+            if (DownloadCompleted != null)
+                DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));
         }
 
         #endregion

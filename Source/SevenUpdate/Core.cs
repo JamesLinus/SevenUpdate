@@ -23,6 +23,8 @@ namespace SevenUpdate
 
         private static UpdateAction updateAction;
 
+        private static bool isAdmin;
+
         #endregion
 
         #region Properties
@@ -39,9 +41,19 @@ namespace SevenUpdate
             }
         }
 
+        /// <summary>
+        ///   Gets or Sets a value indicating if the current user enabled admin access
+        /// </summary>
         public static bool IsAdmin
         {
-            get { return CoreNativeMethods.IsUserAnAdmin(); }
+            get
+            {
+                if (CoreNativeMethods.IsUserAnAdmin())
+                    return true;
+                return isAdmin;
+            }
+
+            set { isAdmin = value;}
         }
         
         /// <summary>
@@ -74,7 +86,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets or Sets a value indicating if an install is currently in progress
         /// </summary>
-        internal static bool IsInstallInProgress { get; set; }
+        internal static bool IsInstallInProgress { private get; set; }
 
         /// <summary>
         ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck

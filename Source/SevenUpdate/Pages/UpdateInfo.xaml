@@ -103,7 +103,7 @@
         <Image RenderOptions.BitmapScalingMode="HighQuality" IsEnabled="True" Source="/SevenUpdate;component/Images/Icon128.png" Stretch="None" Grid.Column="1" Grid.Row="6"
                 HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource intToVisibility}}"
                 Margin="36,23,36,138" Grid.RowSpan="3" />
-        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="5" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
+        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
         <Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Grid.Row="9" DataContext="{Binding}" />
         <StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="9">
             <Button Content="_OK" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" Click="Ok_Click" Command="NavigationCommands.BrowseBack" />

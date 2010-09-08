@@ -64,6 +64,7 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
+            btnSave.IsShieldNeeded = !Core.IsAdmin;
         }
 
         #region Methods
@@ -160,12 +161,7 @@ namespace SevenUpdate.Pages
         {
             lvApps.Cursor = Cursors.Arrow;
             if (machineAppList != null)
-            {
                 lvApps.ItemsSource = machineAppList;
-                lblListStatus.Text = null;
-            }
-            else
-                lblListStatus.Text = Properties.Resources.CouldNotConnect;
         }
 
         #endregion

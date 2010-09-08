@@ -387,4 +387,7 @@
   <data name="NotAvailable" xml:space="preserve">
     <value>Not Available</value>
   </data>
+  <data name="CouldNotConnectToService" xml:space="preserve">
+    <value>Could not connect to the Seven Update service</value>
+  </data>
 </root>

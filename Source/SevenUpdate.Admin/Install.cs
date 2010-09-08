@@ -28,20 +28,18 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Windows;
 using IWshRuntimeLibrary;
 using Microsoft.Win32;
-using SevenUpdate.Admin.Properties;
 using File = System.IO.File;
 
 #endregion
 
-namespace SevenUpdate.Admin
+namespace SevenUpdate
 {
     /// <summary>
     ///   Class containing methods to install updates
     /// </summary>
-    internal static class Install
+    public static class Install
     {
         #region Fields
 
@@ -69,6 +67,20 @@ namespace SevenUpdate.Admin
 
         #endregion
 
+        #region Events
+
+        /// <summary>
+        ///   Occurs when the installation completed.
+        /// </summary>
+        public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
+
+        /// <summary>
+        ///   Occurs when the installation progress changed
+        /// </summary>
+        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
+
+        #endregion
+
         /// <summary>
         ///   Moves or deletes a file on reboot
         /// </summary>
@@ -81,10 +93,8 @@ namespace SevenUpdate.Admin
 
         private static void ReportProgress(int installProgress)
         {
-            if (Service.Service.InstallProgressChanged != null && App.IsClientConnected)
-                Service.Service.InstallProgressChanged(currentUpdateName, installProgress, updateIndex, updateCount);
-            if (App.NotifyIcon != null)
-                Application.Current.Dispatcher.BeginInvoke(App.UpdateNotifyIcon, Resources.InstallingUpdates + " " + installProgress + " " + Resources.Complete);
+            if (InstallProgressChanged != null)
+                InstallProgressChanged(null, new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
         }
 
         #region Update Installation
@@ -92,47 +102,36 @@ namespace SevenUpdate.Admin
         /// <summary>
         ///   Installs updates
         /// </summary>
-        internal static void InstallUpdates()
+        public static void InstallUpdates(Collection<Sui> apps)
         {
-            if (App.AppUpdates == null)
-            {
-                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.FatalError);
-                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
-                App.ShutdownApp();
+            if (apps == null)
                 return;
-            }
-            if (App.AppUpdates.Count < 1)
-            {
-                if (Service.Service.ErrorOccurred != null && App.IsClientConnected)
-                    Service.Service.ErrorOccurred(@"Error recieving Sui collection from the WCF wire", ErrorType.DownloadError);
-                Base.ReportError(@"Error recieving Sui collection from the WCF wire", Base.AllUserStore);
-                App.ShutdownApp();
-            }
+
+            if (apps.Count < 1)
+                return;
 
             #region variables
 
-            updateCount = App.AppUpdates.Sum(t => t.Updates.Count);
+            updateCount = apps.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
-            
 
             #endregion
 
             ReportProgress(0);
 
-            for (var x = 0; x < App.AppUpdates.Count; x++)
+            for (var x = 0; x < apps.Count; x++)
             {
-                for (var y = 0; y < App.AppUpdates[x].Updates.Count; y++)
+                for (var y = 0; y < apps[x].Updates.Count; y++)
                 {
                     errorOccurred = false;
                     if (File.Exists(Base.AllUserStore + @"abort.lock"))
                     {
                         File.Delete(Base.AllUserStore + @"abort.lock");
-                        App.ShutdownApp();
+                        return;
                     }
 
-                    currentUpdateName = Base.GetLocaleString(App.AppUpdates[x].Updates[y].Name);
-                    if (App.AppUpdates[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
+                    currentUpdateName = Base.GetLocaleString(apps[x].Updates[y].Name);
+                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
                     {
                         try
                         {
@@ -147,7 +146,7 @@ namespace SevenUpdate.Admin
 
                     #region Registry
 
-                    SetRegistryItems(App.AppUpdates[x].Updates[y].RegistryItems);
+                    SetRegistryItems(apps[x].Updates[y].RegistryItems);
 
                     #endregion
 
@@ -155,7 +154,7 @@ namespace SevenUpdate.Admin
 
                     #region Files
 
-                    UpdateFiles(App.AppUpdates[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(apps[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     #endregion
 
@@ -163,7 +162,7 @@ namespace SevenUpdate.Admin
 
                     #region Shortcuts
 
-                    SetShortcuts(App.AppUpdates[x].Updates[y].Shortcuts, App.AppUpdates[x].AppInfo.Directory, App.AppUpdates[x].AppInfo.Is64Bit);
+                    SetShortcuts(apps[x].Updates[y].Shortcuts, apps[x].AppInfo.Directory, apps[x].AppInfo.Is64Bit);
 
                     #endregion
 
@@ -172,31 +171,31 @@ namespace SevenUpdate.Admin
                     if (errorOccurred)
                     {
                         failedUpdates++;
-                        AddHistory(App.AppUpdates[x], App.AppUpdates[x].Updates[y]);
+                        AddHistory(apps[x], apps[x].Updates[y]);
                     }
                     else
                     {
                         completedUpdates++;
-                        AddHistory(App.AppUpdates[x], App.AppUpdates[x].Updates[y]);
+                        AddHistory(apps[x], apps[x].Updates[y]);
                     }
 
                     #region If Seven Update
 
-                    if (App.AppUpdates[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
+                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
                     {
-                        for (var z = 0; z < App.AppUpdates[x].Updates[y].Files.Count; z++)
+                        for (var z = 0; z < apps[x].Updates[y].Files.Count; z++)
                         {
-                            switch (App.AppUpdates[x].Updates[y].Files[z].Action)
+                            switch (apps[x].Updates[y].Files[z].Action)
                             {
                                 case FileAction.Delete:
                                 case FileAction.UnregisterThenDelete:
                                     try
                                     {
-                                        File.Delete(App.AppUpdates[x].Updates[y].Files[z].Destination);
+                                        File.Delete(apps[x].Updates[y].Files[z].Destination);
                                     }
                                     catch
                                     {
-                                        MoveFileEx(App.AppUpdates[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
+                                        MoveFileEx(apps[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
                                     }
                                     break;
                                 default:
@@ -206,7 +205,7 @@ namespace SevenUpdate.Admin
 
                         Base.StartProcess(Base.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
 
-                        App.ShutdownApp();
+                        return;
                     }
 
                     #endregion
@@ -243,10 +242,10 @@ namespace SevenUpdate.Admin
                     }
                 }
             }
-            if (Service.Service.InstallCompleted != null)
-                Service.Service.InstallCompleted(completedUpdates, failedUpdates);
+            if (InstallCompleted != null)
+                InstallCompleted(null, new InstallCompletedEventArgs(completedUpdates, failedUpdates));
 
-            App.ShutdownApp();
+            return;
         }
 
         /// <summary>
@@ -289,8 +288,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
                             errorOccurred = true;
                         }
                         break;
@@ -301,8 +299,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
                         }
                         break;
                     case RegistryAction.DeleteValue:
@@ -312,8 +309,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
                         }
                         break;
                 }
@@ -373,8 +369,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
-                    Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                    Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
                 }
 
                 #region Report Progress
@@ -393,7 +388,7 @@ namespace SevenUpdate.Admin
         {
             switch (file.Action)
             {
-                #region Delete file
+                    #region Delete file
 
                 case FileAction.ExecuteThenDelete:
                 case FileAction.UnregisterThenDelete:
@@ -418,7 +413,7 @@ namespace SevenUpdate.Admin
 
                     break;
 
-                #endregion
+                    #endregion
 
                 case FileAction.Execute:
                     try
@@ -427,13 +422,12 @@ namespace SevenUpdate.Admin
                     }
                     catch (Exception e)
                     {
-                        Base.ReportError(e + file.Source, Base.AllUserStore);
-                        Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                        Base.ReportError(e + file.Source, Base.AllUserStore, ErrorType.InstallationError);
                         errorOccurred = true;
                     }
                     break;
 
-                #region Update file
+                    #region Update file
 
                 case FileAction.Update:
                 case FileAction.UpdateIfExist:
@@ -464,8 +458,7 @@ namespace SevenUpdate.Admin
                     }
                     else
                     {
-                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore);
-                        Service.Service.ErrorOccurred(@"FileNotFound: " + file.Source, ErrorType.InstallationError);
+                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore, ErrorType.InstallationError);
                         errorOccurred = true;
                     }
 
@@ -477,8 +470,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e + file.Source, Base.AllUserStore);
-                            Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                            Base.ReportError(e + file.Source, Base.AllUserStore, ErrorType.InstallationError);
                             errorOccurred = true;
                         }
                     }
@@ -487,10 +479,9 @@ namespace SevenUpdate.Admin
                         Base.StartProcess("regsvr32", "/s" + file.Destination);
                     break;
 
-                #endregion
+                    #endregion
             }
         }
-
 
         /// <summary>
         ///   Installs the files in the update
@@ -509,8 +500,7 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
-                    Service.Service.ErrorOccurred(e.Message, ErrorType.InstallationError);
+                    Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
                     errorOccurred = true;
                 }
 

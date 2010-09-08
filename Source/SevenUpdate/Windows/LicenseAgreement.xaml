@@ -11,7 +11,7 @@
 			<ColumnDefinition Width="596*" />
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
-		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="5" Text="Downloading License Agreement, please wait..." VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
+		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="Downloading License Agreement, please wait..." VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
 		<StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
 			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="Action_Click" IsEnabled="False" ButtonText="Finish" />
 			<Button Content="Cancel" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel_Click" />

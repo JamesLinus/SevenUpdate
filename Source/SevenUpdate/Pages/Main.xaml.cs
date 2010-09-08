@@ -52,8 +52,8 @@ namespace SevenUpdate.Pages
             #region Event Handler Declarations
 
             UpdateInfo.UpdateSelectionChanged += UpdateSelectionChanged;
-            RestoreUpdates.RestoredHiddenUpdate += RestoredHiddenUpdate;
-            AdminClient.SettingsChanged += Admin_SettingsChanged;
+            RestoreUpdates.RestoredHiddenUpdate += Settings_Changed;
+            AdminClient.SettingsChanged += Settings_Changed;
 
             #endregion
 
@@ -118,18 +118,12 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Checks for updates after hidden updates have been restored
+        ///   Checks for updates after settings were changed
         /// </summary>
-        private void RestoredHiddenUpdate(object sender, EventArgs e)
+        private void Settings_Changed(object sender, EventArgs e)
         {
             Core.CheckForUpdates(true);
         }
-
-        private void Admin_SettingsChanged(object sender, EventArgs e)
-        {
-            Core.CheckForUpdates(true);
-        }
-
 
         #endregion
 
@@ -154,8 +148,7 @@ namespace SevenUpdate.Pages
             timer.Stop();
             if (Core.Instance.UpdateAction != UpdateAction.ConnectingToService)
                 return;
-            AdminClient.KillAdmin();
-            Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+            AdminClient.AdminError(new Exception(Properties.Resources.CouldNotConnectToService));
         }
     }
 }

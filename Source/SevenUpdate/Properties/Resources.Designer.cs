@@ -196,6 +196,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not connect to the Seven Update service.
+        /// </summary>
+        public static string CouldNotConnectToService {
+            get {
+                return ResourceManager.GetString("CouldNotConnectToService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download and install your selected updates.
         /// </summary>
         public static string DownloadAndInstallUpdates {
