@@ -176,10 +176,6 @@ namespace Microsoft.Windows.Shell
         ForceMinimize = 11
     }
 
-    /// <summary>
-    ///   Provides a set of flags to be used with <see cref = "Microsoft.Windows.Shell.SearchCondition" /> 
-    ///   to indicate the operation in <see cref = "Microsoft.Windows.Shell.SearchConditionFactory" /> methods.
-    /// </summary>
     public enum SearchConditionOperation
     {
         /// <summary>
@@ -241,7 +237,7 @@ namespace Microsoft.Windows.Shell
         ///   The value of the property must match the value of the constant, where '?' 
         ///   matches any single character and '*' matches any sequence of characters.
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DOS")] DOSWildcards = 11,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DOS")] DosWildcards = 11,
 
         /// <summary>
         ///   The value of the property must contain a word that is the value of the constant.

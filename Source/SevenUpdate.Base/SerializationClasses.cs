@@ -37,7 +37,7 @@ namespace SevenUpdate
     ///   Configuration options
     /// </summary>
     [ProtoContract, DataContract(IsReference = true)]
-    public class Config : INotifyPropertyChanged
+    public sealed class Config : INotifyPropertyChanged
     {
         #region Fields
 
@@ -86,7 +86,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -134,7 +134,7 @@ namespace SevenUpdate
     ///   Contains a string indicating the language and a value
     /// </summary>
     [ProtoContract, DataContract]
-    public class LocaleString : INotifyPropertyChanged
+    public sealed class LocaleString : INotifyPropertyChanged
     {
         #region Fields
 
@@ -183,7 +183,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -202,7 +202,7 @@ namespace SevenUpdate
     ///   Seven Update Application information
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>))]
-    public class Sua : INotifyPropertyChanged
+    public sealed class Sua : INotifyPropertyChanged
     {
         #region Fields
 
@@ -378,13 +378,13 @@ namespace SevenUpdate
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        /// <param name = "propertyName" />
+        private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
 
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
@@ -552,7 +552,7 @@ namespace SevenUpdate
     ///   Application info
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
-    public class Sui : INotifyPropertyChanged
+    public abstract class Sui : INotifyPropertyChanged
     {
         #region Fields
 
@@ -602,7 +602,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -618,7 +618,7 @@ namespace SevenUpdate
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>)), KnownType(typeof (UpdateFile)), KnownType(typeof (RegistryItem)),
      KnownType(typeof (Shortcut))]
-    public class Update : INotifyPropertyChanged
+    public sealed class Update : INotifyPropertyChanged
     {
         #region Fields
 
@@ -837,7 +837,7 @@ namespace SevenUpdate
         public ulong Size
         {
             get { return size; }
-            set
+            internal set
             {
                 size = value;
                 // Call OnPropertyChanged whenever the property is updated
@@ -857,13 +857,13 @@ namespace SevenUpdate
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        /// <param name = "propertyName" />
+        private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
 
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
@@ -873,7 +873,7 @@ namespace SevenUpdate
     ///   Information about a file within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (FileAction))]
-    public class UpdateFile : INotifyPropertyChanged
+    public sealed class UpdateFile : INotifyPropertyChanged
     {
         #region Fields
 
@@ -995,7 +995,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -1010,7 +1010,7 @@ namespace SevenUpdate
     ///   A registry entry within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (RegistryAction)), KnownType(typeof (RegistryHive)), KnownType(typeof (RegistryValueKind))]
-    public class RegistryItem : INotifyPropertyChanged
+    public sealed class RegistryItem : INotifyPropertyChanged
     {
         #region Fields
 
@@ -1131,7 +1131,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -1146,7 +1146,7 @@ namespace SevenUpdate
     ///   A shortcut to be created within an update
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ShortcutAction))]
-    public class Shortcut : INotifyPropertyChanged
+    public sealed class Shortcut : INotifyPropertyChanged
     {
         #region Fields
 
@@ -1268,7 +1268,7 @@ namespace SevenUpdate
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 
@@ -1289,7 +1289,7 @@ namespace SevenUpdate
     ///   Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (UpdateStatus)), KnownType(typeof (Importance)), KnownType(typeof (ObservableCollection<LocaleString>))]
-    public class Suh : INotifyPropertyChanged
+    public sealed class Suh : INotifyPropertyChanged
     {
         #region Fields
 
@@ -1489,13 +1489,13 @@ namespace SevenUpdate
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        /// <param name = "propertyName" />
+        private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
 
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

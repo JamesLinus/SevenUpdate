@@ -22,7 +22,6 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -34,11 +33,9 @@ using SevenUpdate.Sdk.Windows;
 
 namespace SevenUpdate.Sdk
 {
-    public partial class App
+    public sealed partial class App
     {
         #region Global Vars
-
-        internal static string SuiFile { get; set; }
 
         internal static Sui SuiProject { get; set; }
 
@@ -116,8 +113,8 @@ namespace SevenUpdate.Sdk
         {
             Directory.CreateDirectory(SevenUpdate.Base.UserStore);
             SevenUpdate.Base.SerializationError += Base_SerializationError;
-            if (args.Length > 0)
-                SuiFile = args[0];
+            //if (args.Length > 0)
+            //    SuiFile = args[0];
 
             SetJumpLists();
         }
@@ -168,7 +165,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Interaction logic to load the app
     /// </summary>
-    public static class StartUp
+    internal static class StartUp
     {
         /// <summary>
         ///   Initializes the app resources
@@ -195,37 +192,6 @@ namespace SevenUpdate.Sdk
             App.Init(args);
             InitResources();
             app.Run(new MainWindow());
-        }
-    }
-
-    public static class StringExtensions
-    {
-        /// <summary>
-        ///   Checks if a given string contains any of the strings in the passed array of strings.
-        /// </summary>
-        /// <param name = "str">The string to check against values</param>
-        /// <param name = "values">An array of strings to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
-        public static bool ContainsAny(this string str, params string[] values)
-        {
-            if (!string.IsNullOrEmpty(str) || values.Length == 0)
-                return values.Any(str.Contains);
-
-            return false;
-        }
-
-        /// <summary>
-        ///   Checks if a given string contains any of the characters in the passed array of <c>characters</c>.
-        /// </summary>
-        /// <param name = "str">The string to check against values</param>
-        /// <param name = "values">An array of characters to compare to the given string</param>
-        /// <returns><c>True</c> if string contains any of the given strings, otherwise <c>False</c></returns>
-        public static bool ContainsAny(this string str, params char[] values)
-        {
-            if (!string.IsNullOrEmpty(str) || values.Length == 0)
-                return values.Any(str.Contains);
-
-            return false;
         }
     }
 }

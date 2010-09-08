@@ -21,7 +21,6 @@
 #region
 
 using System;
-using System.Windows.Controls;
 using Microsoft.Windows.Dwm;
 
 #endregion
@@ -31,7 +30,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for UpdateRegistry.xaml
     /// </summary>
-    public sealed partial class UpdateReview : Page
+    public sealed partial class UpdateReview
     {
         #region Constructors
 

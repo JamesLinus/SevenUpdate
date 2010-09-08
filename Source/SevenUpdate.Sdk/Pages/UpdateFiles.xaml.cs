@@ -21,11 +21,10 @@
 #region
 
 using System;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
@@ -39,7 +38,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for UpdateFiles.xaml
     /// </summary>
-    public sealed partial class UpdateFiles : Page
+    public sealed partial class UpdateFiles
     {
         #region Fields
 
@@ -82,7 +81,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            string installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
+            var installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
 
             var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
 
@@ -109,25 +108,17 @@ namespace SevenUpdate.Sdk.Pages
                                                                                                                                                   }, context);
         }
 
-        private void GetFileSize(ref UpdateFile file, string fileLocation = null)
+        private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             var updateFile = file;
 
             Task.Factory.StartNew(() => { updateFile.FileSize = SevenUpdate.Base.GetFileSize(fileLocation ?? updateFile.Destination); });
         }
 
-        private void AddFiles(Collection<string> files)
+        private void AddFiles(IList<string> files)
         {
             AddFile(files[0]);
-            for (int x = 1; x < files.Count; x++)
-                AddFile(files[x]);
-            listBox.SelectedIndex = 0;
-        }
-
-        private void AddFiles(string[] files)
-        {
-            AddFile(files[0]);
-            for (int x = 1; x < files.Length; x++)
+            for (var x = 1; x < files.Count; x++)
                 AddFile(files[x]);
             listBox.SelectedIndex = 0;
         }

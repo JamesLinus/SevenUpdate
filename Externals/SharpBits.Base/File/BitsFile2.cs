@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace SharpBits.Base.File
 {
-    public partial class BitsFile : IDisposable
+    public sealed partial class BitsFile
     {
         private IBackgroundCopyFile2 file2;
 

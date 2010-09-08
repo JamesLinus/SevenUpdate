@@ -32,7 +32,7 @@ namespace SevenUpdate.Windows
     /// <summary>
     ///   Interaction logic for About.xaml
     /// </summary>
-    public sealed partial class About : Window
+    public sealed partial class About
     {
         /// <summary>
         ///   Displays About Information

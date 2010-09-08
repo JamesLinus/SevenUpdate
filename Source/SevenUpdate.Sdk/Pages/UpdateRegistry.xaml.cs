@@ -22,7 +22,6 @@
 
 using System;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Microsoft.Windows.Dialogs;
@@ -36,7 +35,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for UpdateRegistry.xaml
     /// </summary>
-    public sealed partial class UpdateRegistry : Page
+    public sealed partial class UpdateRegistry
     {
         #region Contructors
 
@@ -150,9 +149,8 @@ namespace SevenUpdate.Sdk.Pages
             var registryParser = new RegistryParser();
             var results = registryParser.Parse(cfd.FileName);
 
-            for (int x = 0; x < results.Count; x++)
-                Base.UpdateInfo.RegistryItems.Add(results[x]);
-            
+            foreach (var t in results)
+                Base.UpdateInfo.RegistryItems.Add(t);
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)

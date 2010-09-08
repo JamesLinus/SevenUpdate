@@ -275,7 +275,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Raises the <see cref = "CommonFileDialog.FileOk" /> event just before the dialog is about to return with a result.
         /// </summary>
         /// <param name = "e">The event data.</param>
-        protected virtual void OnFileOk(CancelEventArgs e)
+        protected void OnFileOk(CancelEventArgs e)
         {
             CancelEventHandler handler = FileOk;
             if (handler != null)
@@ -286,7 +286,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Raises the <see cref = "FolderChanging" /> to stop navigation to a particular location.
         /// </summary>
         /// <param name = "e">Cancelable event arguments.</param>
-        protected virtual void OnFolderChanging(CommonFileDialogFolderChangeEventArgs e)
+        private void OnFolderChanging(CommonFileDialogFolderChangeEventArgs e)
         {
             EventHandler<CommonFileDialogFolderChangeEventArgs> handler = FolderChanging;
             if (handler != null)
@@ -297,7 +297,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Raises the <see cref = "CommonFileDialog.FolderChanged" /> event when the user navigates to a new folder.
         /// </summary>
         /// <param name = "e">The event data.</param>
-        protected virtual void OnFolderChanged(EventArgs e)
+        private void OnFolderChanged(EventArgs e)
         {
             EventHandler handler = FolderChanged;
             if (handler != null)
@@ -308,7 +308,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Raises the <see cref = "CommonFileDialog.SelectionChanged" /> event when the user changes the selection in the dialog's view.
         /// </summary>
         /// <param name = "e">The event data.</param>
-        protected virtual void OnSelectionChanged(EventArgs e)
+        private void OnSelectionChanged(EventArgs e)
         {
             EventHandler handler = SelectionChanged;
             if (handler != null)
@@ -320,7 +320,7 @@ namespace Microsoft.Windows.Dialogs
         ///   application of the initial chosen filetype.
         /// </summary>
         /// <param name = "e">The event data.</param>
-        protected virtual void OnFileTypeChanged(EventArgs e)
+        private void OnFileTypeChanged(EventArgs e)
         {
             EventHandler handler = FileTypeChanged;
             if (handler != null)
@@ -331,7 +331,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Raises the <see cref = "CommonFileDialog.DialogOpening" /> event when the dialog is opened.
         /// </summary>
         /// <param name = "e">The event data.</param>
-        protected virtual void OnOpening(EventArgs e)
+        private void OnOpening(EventArgs e)
         {
             EventHandler handler = DialogOpening;
             if (handler != null)
@@ -515,11 +515,11 @@ namespace Microsoft.Windows.Dialogs
 
         // Template method to allow derived dialog to create actual
         // specific COM coclass (e.g. FileOpenDialog or FileSaveDialog).
-        internal abstract void InitializeNativeFileDialog();
+        protected abstract void InitializeNativeFileDialog();
         internal abstract IFileDialog GetNativeFileDialog();
-        internal abstract void PopulateWithFileNames(Collection<string> names);
+        protected abstract void PopulateWithFileNames(Collection<string> names);
         internal abstract void PopulateWithIShellItems(Collection<IShellItem> shellItems);
-        internal abstract void CleanUpNativeFileDialog();
+        protected abstract void CleanUpNativeFileDialog();
         internal abstract ShellNativeMethods.FOS GetDerivedOptionFlags(ShellNativeMethods.FOS flags);
 
         private static void GenerateNotImplementedException()
@@ -533,7 +533,7 @@ namespace Microsoft.Windows.Dialogs
         /// </summary>
         /// <param name = "disposing"><b>true</b> to release both managed and unmanaged resources; 
         ///   <b>false</b> to release only unmanaged resources.</param>
-        public void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (disposing)
                 CleanUpNativeFileDialog();

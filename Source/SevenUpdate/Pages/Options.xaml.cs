@@ -39,7 +39,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for Options.xaml
     /// </summary>
-    public partial class Options : Page
+    public partial class Options
     {
         #region Fields
 
@@ -135,8 +135,6 @@ namespace SevenUpdate.Pages
                                 officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
                                 machineAppList.RemoveAt(y);
                                 y--;
-
-                                break;
                             }
                             continue;
                         }
@@ -144,7 +142,7 @@ namespace SevenUpdate.Pages
                 }
                 if (machineAppList != null)
                 {
-                    foreach (Sua t in machineAppList)
+                    foreach (var t in machineAppList)
                         officialAppList.Add(t);
                 }
             }

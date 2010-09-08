@@ -23,7 +23,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,9 +30,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using Microsoft.Windows.Controls;
-using Microsoft.Windows.Internal;
 using SevenUpdate.Converters;
 using SevenUpdate.Windows;
 
@@ -93,7 +89,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for Update_Info.xaml
     /// </summary>
-    public sealed partial class UpdateInfo : Page
+    public sealed partial class UpdateInfo
     {
 
         #region Fields
@@ -136,7 +132,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Loops through the <see cref = "ListView" /> and updates the source when the update selection has been saved
         /// </summary>
-        /// <param name = "element">The <see cref = "DependencyObject" / />
+        /// <param name = "element">The <see cref = "DependencyObject" /></param>
         private static void IterateVisualChild(DependencyObject element)
         {
             for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
@@ -210,11 +206,10 @@ namespace SevenUpdate.Pages
                     }
                 }
 
-                if (Core.Applications[x].Updates.Count == 0)
-                {
-                    Core.Applications.RemoveAt(x);
-                    x--;
-                }
+                if (Core.Applications[x].Updates.Count != 0)
+                    continue;
+                Core.Applications.RemoveAt(x);
+                x--;
             }
 
             if (UpdateSelectionChanged != null)
@@ -232,9 +227,9 @@ namespace SevenUpdate.Pages
             for (var x = 0; x < Core.Applications.Count; x++)
             {
                 appIndices.Add(x);
-                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                foreach (var t in Core.Applications[x].Updates)
                 {
-                    selectedUpdates.Add(Core.Applications[x].Updates[y]);
+                    selectedUpdates.Add(t);
                 }
             }
 

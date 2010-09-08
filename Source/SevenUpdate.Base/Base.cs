@@ -192,7 +192,7 @@ namespace SevenUpdate
                 {
                     using (var file = File.OpenRead(fileName))
                     {
-                        T obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
+                        var obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
 
                         file.Close();
                         return obj;
@@ -328,11 +328,6 @@ namespace SevenUpdate
         /// </summary>
         public static event EventHandler<ProcessEventArgs> ProcessExited;
 
-        /// <summary>
-        ///   Occurs when an error has occurred when downloading or installing updates
-        /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
-
         #endregion
 
         #region Conversions
@@ -344,7 +339,7 @@ namespace SevenUpdate
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
-            foreach (LocaleString t in localeStrings.Where(t => t.Lang == Locale))
+            foreach (var t in localeStrings.Where(t => t.Lang == Locale))
                 return t.Value;
             return localeStrings[0].Value;
         }
@@ -384,7 +379,7 @@ namespace SevenUpdate
         /// <param name = "dir">a string that contains a directory</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string dir, bool is64Bit)
+        internal static string ConvertPath(string path, string dir, bool is64Bit)
         {
             path = Replace(path, "[AppDir]", ConvertPath(dir, true, is64Bit));
             path = Replace(path, "[DownloadDir]", ConvertPath(dir, true, is64Bit));
@@ -421,6 +416,7 @@ namespace SevenUpdate
 
                 if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                 {
+// ReSharper disable AssignNullToNotNullAttribute
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%");
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%");
 
@@ -521,6 +517,7 @@ namespace SevenUpdate
                 stringBuilder.Replace("%WINDIR%", Environment.GetEnvironmentVariable("WINDIR"));
                 stringBuilder.Replace("%SYSTEMDRIVE%", Environment.GetEnvironmentVariable("SYSTEMDRIVE"));
             }
+            // ReSharper restore AssignNullToNotNullAttribute
             return stringBuilder.ToString();
         }
 
@@ -595,16 +592,13 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "message">The message to write in the log</param>
         /// <param name = "directoryStore">The directory to store the log</param>
-        public static void ReportError(string message, string directoryStore, ErrorType errorType = ErrorType.GeneralErrorNonFatal)
+        public static void ReportError(string message, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
 
             tw.WriteLine(DateTime.Now + ": " + message);
 
             tw.Close();
-
-            if (ErrorOccurred != null)
-                ErrorOccurred(null, new ErrorOccurredEventArgs(message, errorType));
         }
 
         /// <summary>
@@ -612,8 +606,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "exception">The exception to write in the log</param>
         /// <param name = "directoryStore">The directory to store the log</param>
-        /// <param name="errorType">The type of error that occurred</param>
-        public static void ReportError(Exception exception, string directoryStore, ErrorType errorType = ErrorType.GeneralErrorNonFatal)
+        public static void ReportError(Exception exception, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
             tw.WriteLine(DateTime.Now + ": " + exception.Source);
@@ -644,8 +637,6 @@ namespace SevenUpdate
             }
 
             tw.Close();
-            if (ErrorOccurred != null)
-                ErrorOccurred(null, new ErrorOccurredEventArgs(exception.Message, errorType));
         }
 
         #endregion

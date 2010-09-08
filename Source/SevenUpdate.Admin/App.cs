@@ -85,6 +85,8 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static NotifyIcon notifyIcon;
 
+        private static bool IsAutoInstall;
+
         #endregion
 
         #region Properties
@@ -101,7 +103,7 @@ namespace SevenUpdate.Admin
             }
         }
 
-        private static bool IsAutoInstall { get; set; }
+       
 
         /// <summary>
         ///   Gets or Sets a bool value indicating Seven Update UI is currently connected.
@@ -178,7 +180,7 @@ namespace SevenUpdate.Admin
                 {
                     if (args[0] == "Abort")
                     {
-                        using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
+                        using (var fs = File.Create(Base.AllUserStore + "abort.lock"))
                         {
                             fs.WriteByte(0);
                             fs.Close();
@@ -189,7 +191,7 @@ namespace SevenUpdate.Admin
                     {
                         if (File.Exists(Base.AllUserStore + "abort.lock"))
                             File.Delete(Base.AllUserStore + "abort.lock");
-
+                        IsAutoInstall = true;
                         notifyIcon = new NotifyIcon {Icon = Resources.icon, Text = Resources.CheckingForUpdates, Visible = true};
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
@@ -227,11 +229,10 @@ namespace SevenUpdate.Admin
 
         private static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (!IsAutoInstall)
-            {
-                if (Process.GetProcessesByName("SevenUpdate").Length < 1)
-                    ShutdownApp();
-            }
+            if (IsAutoInstall)
+                return;
+            if (Process.GetProcessesByName("SevenUpdate").Length < 1)
+                ShutdownApp();
         }
 
         #region Events
@@ -317,7 +318,7 @@ namespace SevenUpdate.Admin
                 }
             }
 
-            using (FileStream fs = File.Create(Base.AllUserStore + "abort.lock"))
+            using (var fs = File.Create(Base.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
                 fs.Close();

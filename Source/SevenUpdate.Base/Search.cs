@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace SevenUpdate
             {
                 if (hidden != null)
                 {
-                    foreach (Suh t in hidden)
+                    foreach (var t in hidden)
                     {
                         if (t.ReleaseDate == app.Updates[y].ReleaseDate && t.Name[0].Value == app.Updates[y].Name[0].Value)
                         {
@@ -171,11 +172,9 @@ namespace SevenUpdate
                 // Checks to see if the update only contains execute and delete actions
                 if (app.Updates[y].Files.Count > 0)
                 {
-                    foreach (UpdateFile t in app.Updates[y].Files)
+                    foreach (var t in app.Updates[y].Files.Where(t => t.Action != FileAction.ExecuteThenDelete))
                     {
-                        // If the update has a file that isn't an execute and delete, let's indicate not to remove the update
-                        if (t.Action != FileAction.ExecuteThenDelete)
-                            remove = false;
+                        remove = false;
                     }
                 }
 
@@ -305,7 +304,7 @@ namespace SevenUpdate
             var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-            foreach (Sua t in apps)
+            foreach (var t in apps)
             {
                 if (!t.IsEnabled)
                 {

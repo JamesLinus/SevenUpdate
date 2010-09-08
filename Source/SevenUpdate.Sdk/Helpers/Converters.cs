@@ -4,9 +4,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
 using System.Windows.Data;
-using SevenUpdate.Sdk.Properties;
+
 
 #endregion
 
@@ -16,7 +15,7 @@ namespace SevenUpdate.Sdk
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof(LocaleString), typeof(string))]
-    public sealed class StringToLocaleStringConverter : IValueConverter
+    internal sealed class StringToLocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -80,7 +79,7 @@ namespace SevenUpdate.Sdk
                 }
                 else
                 {
-                    for (int x = 0; x < localeStrings.Count; x++)
+                    for (var x = 0; x < localeStrings.Count; x++)
                     {
                         if (localeStrings[x].Lang == SevenUpdate.Base.Locale)
                             localeStrings.RemoveAt(x);
@@ -106,7 +105,7 @@ namespace SevenUpdate.Sdk
     ///   Converts the string to a DateTime
     /// </summary>
     [ValueConversion(typeof (DateTime), typeof (string))]
-    public sealed class DateConverter : IValueConverter
+    internal sealed class DateConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -127,7 +126,7 @@ namespace SevenUpdate.Sdk
     ///   Converts a Bool to a Label
     /// </summary>
     [ValueConversion(typeof(bool), typeof(string))]
-    public sealed class BoolToLabelConverter : IValueConverter
+    internal sealed class BoolToLabelConverter : IValueConverter
     {
         #region IValueConverter Members
 

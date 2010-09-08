@@ -251,7 +251,7 @@ namespace Microsoft.Windows.Dialogs
 
         #endregion
 
-        internal override void InitializeNativeFileDialog()
+        protected override void InitializeNativeFileDialog()
         {
             if (saveDialogCoClass == null)
                 saveDialogCoClass = new NativeFileSaveDialog();
@@ -263,7 +263,7 @@ namespace Microsoft.Windows.Dialogs
             return saveDialogCoClass;
         }
 
-        internal override void PopulateWithFileNames(Collection<string> names)
+        protected override void PopulateWithFileNames(Collection<string> names)
         {
             IShellItem item;
             saveDialogCoClass.GetResult(out item);
@@ -285,7 +285,7 @@ namespace Microsoft.Windows.Dialogs
             items.Add(item);
         }
 
-        internal override void CleanUpNativeFileDialog()
+        protected override void CleanUpNativeFileDialog()
         {
             if (saveDialogCoClass != null)
                 Marshal.ReleaseComObject(saveDialogCoClass);

@@ -21,13 +21,9 @@
 #region
 
 using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using SevenUpdate.Properties;
 using SevenUpdate.Windows;
 
@@ -38,7 +34,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for Main.xaml
     /// </summary>
-    public sealed partial class Main : Page
+    public sealed partial class Main
     {
         private Timer timer;
 
@@ -51,7 +47,7 @@ namespace SevenUpdate.Pages
 
             #region Event Handler Declarations
 
-            UpdateInfo.UpdateSelectionChanged += UpdateSelectionChanged;
+            UpdateInfo.UpdateSelectionChanged += UpdateSelection_Changed;
             RestoreUpdates.RestoredHiddenUpdate += Settings_Changed;
             AdminClient.SettingsChanged += Settings_Changed;
 
@@ -110,7 +106,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Updates the UI after the user selects updates to install
         /// </summary>
-        private void UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
+        private static void UpdateSelection_Changed(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (Core.Applications.Count != 0)
                 return;
@@ -120,7 +116,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Checks for updates after settings were changed
         /// </summary>
-        private void Settings_Changed(object sender, EventArgs e)
+        private static void Settings_Changed(object sender, EventArgs e)
         {
             Core.CheckForUpdates(true);
         }

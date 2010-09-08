@@ -16,7 +16,7 @@ namespace Microsoft.Windows.Shell
     ///   Represents a registered non file system Known Folder
     /// </summary>
     [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
-    public class NonFileSystemKnownFolder : ShellNonFileSystemFolder, IKnownFolder
+    internal sealed class NonFileSystemKnownFolder : ShellNonFileSystemFolder, IKnownFolder
     {
         #region Private Fields
 

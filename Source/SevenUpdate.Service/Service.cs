@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using Microsoft.Win32;
@@ -161,12 +162,11 @@ namespace SevenUpdate.Service
         public void AddApp(Sua app)
         {
             var sul = Base.Deserialize<Collection<Sua>>(Base.AppsFile);
-            bool exists = false;
+            var exists = false;
 
-            for (int x = 0; x < sul.Count; x++)
+            foreach (var t in sul.Where(t => t.Directory == app.Directory && t.Is64Bit == app.Is64Bit))
             {
-                if (sul[x].Directory == app.Directory && sul[x].Is64Bit == app.Is64Bit)
-                    exists = true;
+                exists = true;
             }
             if (exists)
                 return;

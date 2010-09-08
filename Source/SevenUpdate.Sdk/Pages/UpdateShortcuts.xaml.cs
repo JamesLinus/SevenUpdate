@@ -37,7 +37,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for UpdateShortcuts.xaml
     /// </summary>
-    public sealed partial class UpdateShortcuts : Page
+    public sealed partial class UpdateShortcuts
     {
         #region Contructors
 
@@ -64,7 +64,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        private void SaveShortcut(string fileName)
+        private static void SaveShortcut(string fileName)
         {
             var shortcut = new Shortcut {Location = fileName, Action = ShortcutAction.Add};
             Base.UpdateInfo.Shortcuts.Add(shortcut);
@@ -168,10 +168,10 @@ namespace SevenUpdate.Sdk.Pages
 
             SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
-            bool found = false;
+            var found = false;
             var shortcutDescriptions = ((Shortcut) listBox.SelectedItem).Description;
             // Load Values
-            foreach (LocaleString t in shortcutDescriptions.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in shortcutDescriptions.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxShortcutDescription.Text = t.Value;
                 found = true;
@@ -202,8 +202,8 @@ namespace SevenUpdate.Sdk.Pages
             if (Base.UpdateInfo.Shortcuts.Count < 0)
                 return;
 
-            bool found = false;
-            foreach (LocaleString t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            var found = false;
+            foreach (var t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 t.Value = tbxShortcutDescription.Text;
                 found = true;

@@ -31,7 +31,7 @@ using System.Windows.Media;
 
 namespace Microsoft.Windows.Controls
 {
-    public class InfoTextBox : TextBox
+    public sealed class InfoTextBox : TextBox
     {
         #region Constructors
 
@@ -80,7 +80,7 @@ namespace Microsoft.Windows.Controls
         private AdornerLabel myAdornerLabel;
         private AdornerLayer myAdornerLayer;
 
-        private static void IsVisibleChanged(object sender, EventArgs e)
+        private new static void  IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
             if (infoTextBox == null)

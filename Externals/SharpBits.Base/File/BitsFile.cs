@@ -9,7 +9,7 @@ using SharpBits.Base.Progress;
 
 namespace SharpBits.Base.File
 {
-    public partial class BitsFile : IDisposable
+    public sealed partial class BitsFile : IDisposable
     {
         private bool disposed;
         private IBackgroundCopyFile file;
@@ -108,7 +108,7 @@ namespace SharpBits.Base.File
 
         #endregion
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {

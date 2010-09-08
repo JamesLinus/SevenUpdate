@@ -22,13 +22,10 @@
 
 using System;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Windows.Controls;
 using SevenUpdate.Windows;
@@ -40,7 +37,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for Update_History.xaml
     /// </summary>
-    public sealed partial class RestoreUpdates : Page
+    public sealed partial class RestoreUpdates
     {
         #region Fields
 

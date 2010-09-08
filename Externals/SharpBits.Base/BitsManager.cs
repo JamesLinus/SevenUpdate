@@ -14,7 +14,7 @@ namespace SharpBits.Base
     ///   retrieve an enumerator object that contains the jobs in the queue, 
     ///   and to retrieve individual jobs from the queue.
     /// </summary>
-    public class BitsManager : IDisposable
+    public sealed class BitsManager : IDisposable
     {
         internal JobOwner CurrentOwner;
         private bool disposed;
@@ -202,7 +202,7 @@ namespace SharpBits.Base
             return job;
         }
 
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!disposed)
             {

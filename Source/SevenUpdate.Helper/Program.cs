@@ -86,9 +86,9 @@ namespace SevenUpdate.Helper
 
                 try
                 {
-                    FileInfo[] files = new DirectoryInfo(downloadDir).GetFiles();
+                    var files = new DirectoryInfo(downloadDir).GetFiles();
 
-                    foreach (FileInfo t in files)
+                    foreach (var t in files)
                     {
                         try
                         {

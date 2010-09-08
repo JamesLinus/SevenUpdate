@@ -21,9 +21,7 @@
 #region
 
 using System;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using SevenUpdate.Windows;
@@ -105,7 +103,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for InfoBar.xaml
     /// </summary>
-    public partial class InfoBar : UserControl
+    public sealed partial class InfoBar
     {
         #region Fields
 
@@ -290,18 +288,17 @@ namespace SevenUpdate.Pages
             else
                 tbStatus.Text += Properties.Resources.Updates;
 
-            if (e.UpdatesFailed > 0)
-            {
-                if (e.UpdatesInstalled == 0)
-                    tbStatus.Text = Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
-                else
-                    tbStatus.Text += ", " + Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
+            if (e.UpdatesFailed <= 0)
+                return;
+            if (e.UpdatesInstalled == 0)
+                tbStatus.Text = Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
+            else
+                tbStatus.Text += ", " + Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
 
-                if (e.UpdatesFailed == 1)
-                    tbStatus.Text += Properties.Resources.Update;
-                else
-                    tbStatus.Text += Properties.Resources.Updates;
-            }
+            if (e.UpdatesFailed == 1)
+                tbStatus.Text += Properties.Resources.Update;
+            else
+                tbStatus.Text += Properties.Resources.Updates;
 
             #endregion
         }
@@ -323,7 +320,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when an error has occurred
         /// </summary>
-        internal void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(ErrorOccurred, e);
@@ -334,7 +331,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   Sets the UI when the search for updates has completed
         /// </summary>
-        internal void SearchCompleted(object sender, SearchCompletedEventArgs e)
+        private void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(SearchCompleted, e);

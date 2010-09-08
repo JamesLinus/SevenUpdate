@@ -35,7 +35,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Interaction logic for App.xaml
     /// </summary>
-    public partial class App
+    public sealed partial class App
     {
         /// <summary>
         ///   Gets the app ready for startup
@@ -43,9 +43,9 @@ namespace SevenUpdate
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
-            foreach (string t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
+            foreach (var t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
             {
-                string suaLoc = t;
+                var suaLoc = t;
                 try
                 {
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
@@ -72,18 +72,17 @@ namespace SevenUpdate
                     Core.IsReconnect = true;
             }
 
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length > 0)
-            {
-                Core.IsReconnect = true;
-                Core.IsAutoCheck = false;
-            }
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0)
+                return;
+            Core.IsReconnect = true;
+            Core.IsAutoCheck = false;
         }
     }
 
     /// <summary>
     ///   Interaction logic to load the app
     /// </summary>
-    public static class StartUp
+    internal static class StartUp
     {
         /// <summary>
         ///   Initializes the app resources

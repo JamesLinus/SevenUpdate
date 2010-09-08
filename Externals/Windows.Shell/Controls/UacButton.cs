@@ -214,18 +214,16 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Handles a change to the <see cref = "ShieldIcon" /> property
         /// </summary>
-        /// <param name = "obj" />
-        /// <param name = "e" />
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
-            var sp = ((StackPanel)me.Content);
+            var sp = (StackPanel)me.Content;
             var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
             if (imageShield != null)
             {
                 imageShield.Source = (ImageSource)e.NewValue;
             }
-            me.ToolTip = me.GetToolTip(); ;
+            me.ToolTip = me.GetToolTip();
             me.OnPropertyChanged("ShieldIcon");
         }
 

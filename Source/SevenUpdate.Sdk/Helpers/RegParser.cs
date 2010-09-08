@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Win32;
@@ -13,22 +14,14 @@ using Microsoft.Win32;
 
 namespace SevenUpdate.Sdk
 {
-    public sealed class RegistryParser
+    internal sealed class RegistryParser
     {
         // Event system
-
-        #region Delegates
-
-        public delegate void WriteOutputDelegate(string output);
-
-        #endregion
-
-        public const string Version = "0.45";
 
         // Constants
         private const string RegV4Signature = "REGEDIT4\r\n";
         private const string RegV5Signature = "Windows Registry Editor Version 5.00\r\n";
-        private Collection<RegistryItem> RegItem = new Collection<RegistryItem>();
+        private readonly Collection<RegistryItem> regItem = new Collection<RegistryItem>();
 
         #region Static Declarations
 
@@ -41,8 +34,6 @@ namespace SevenUpdate.Sdk
 
         private static readonly Regex LineSplitter = new Regex(@"^[^\r\n\v\t]*[\t\x20]*=[\t\x20]*((\\[\x20\t]*\s*)|[^\r\n])*",
                                                                RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
-
-        private static Regex regexCommentData = new Regex(@"^\s*;(\s*.*)$", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
         private static readonly Regex RegexStringValueMatcher = new Regex(@"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?",
                                                                           RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
@@ -105,15 +96,15 @@ namespace SevenUpdate.Sdk
         ///   Main method for parsing a reg file
         /// </summary>
         /// <returns>String of lines to be returned</returns>
-        public Collection<RegistryItem> Parse(string file)
+        public IEnumerable<RegistryItem> Parse(string file)
         {
             if (!File.Exists(file))
                 return null;
 
             // Raw Data
-            Encoding encoder = Encoding.GetEncoding(0);
+            var encoder = Encoding.GetEncoding(0);
             var fileStream = new StreamReader(file, encoder, true);
-            string rawRegFileData = fileStream.ReadToEnd();
+            var rawRegFileData = fileStream.ReadToEnd();
 
             //
             // Nuke all comments (these have given me a royal headache 
@@ -127,7 +118,7 @@ namespace SevenUpdate.Sdk
 
             // Split Data into Array, where each element is a complete registry block
             rawRegFileData = RegexRootKey.Replace(rawRegFileData, SplitToken + @"$0");
-            string[] dataArray = Regex.Split(rawRegFileData, SplitToken, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            var dataArray = Regex.Split(rawRegFileData, SplitToken, RegexOptions.IgnoreCase | RegexOptions.Multiline);
             // Free memory (this method takes long to end and GC may not run wasting memory)
             GC.Collect();
 
@@ -147,10 +138,10 @@ namespace SevenUpdate.Sdk
                 return null;
 
 
-            for (int x = 0; x < dataArray.Length; x++)
-                ProcessRegBlock(dataArray[x]);
+            foreach (var t in dataArray)
+                ProcessRegBlock(t);
 
-            return RegItem;
+            return regItem;
         }
 
         #endregion
@@ -165,7 +156,7 @@ namespace SevenUpdate.Sdk
         private void ProcessRegBlock(string regBlock)
         {
             // Define variable for RootKey
-            string infRootKey = "_unknown";
+            var infRootKey = "_unknown";
 
             // Extract Root Key
             switch (RegexRootKey.Match(regBlock).Groups["RootKey"].Value.ToLower())
@@ -208,11 +199,11 @@ namespace SevenUpdate.Sdk
                 return;
 
             // Extract SubKey
-            string rawSubKeyName = RegexSubKey.Match(regBlock).Groups["Subkey"].Value;
+            var rawSubKeyName = RegexSubKey.Match(regBlock).Groups["Subkey"].Value;
             if (rawSubKeyName.Length == 0)
                 return;
             // rawSubKeyName
-            string infSubKeyValue = ApplyFixes(rawSubKeyName, true);
+            var infSubKeyValue = ApplyFixes(rawSubKeyName, true);
 
             // Check for removal of RegBlock - [-...
             if (Regex.IsMatch(regBlock, @"^\[-HK", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture))
@@ -220,7 +211,7 @@ namespace SevenUpdate.Sdk
                 // Then return data to DelReg instead of AddReg property of INFConversionResult instance
 
                 var regBlockResult = new RegistryItem {Key = infRootKey + infSubKeyValue, Action = RegistryAction.DeleteKey};
-                RegItem.Add(regBlockResult);
+                regItem.Add(regBlockResult);
                 return;
             }
 
@@ -256,13 +247,12 @@ namespace SevenUpdate.Sdk
             GC.Collect();
 
             // Pass RegLines to method for figuring out the FLAGS, VALUENAME and VALUEDATA
-            for (int x = 0; x < regLines.Count; x++)
+            foreach (var regBlockResult in regLines.Select(ProcessRegLine))
             {
-                var regBlockResult = ProcessRegLine(regLines[x]);
                 regBlockResult.Key = infRootKey + infSubKeyValue;
                 if (regBlockResult.Data == null && regBlockResult.KeyValue == null)
                     continue;
-                RegItem.Add(regBlockResult);
+                regItem.Add(regBlockResult);
             }
         }
 
@@ -271,7 +261,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         /// <param name = "line">Reg Line</param>
         /// <returns>Object containing AddReg or DelReg INF format partial lines for further processing.</returns>
-        private RegistryItem ProcessRegLine(string line)
+        private static RegistryItem ProcessRegLine(string line)
         {
             // Create new INFConversionResult to hold result of this method
             var methodResult = new RegistryItem();
@@ -283,10 +273,10 @@ namespace SevenUpdate.Sdk
             // ValueNameData string definition
             // ValueData string definition
             // Is ValueData string ?
-            bool valueDataIsString = false;
+            var valueDataIsString = false;
 
             // Define Match object that will test all criteria
-            Match criteriaMatch = RegexStringValueMatcher.Match(line);
+            var criteriaMatch = RegexStringValueMatcher.Match(line);
             if (!criteriaMatch.Success)
                 criteriaMatch = RegexOtherValueMatcher.Match(line);
             else
@@ -295,13 +285,13 @@ namespace SevenUpdate.Sdk
                 return methodResult;
 
             // Set the value name (blank if default, else valuename)
-            string valueName = criteriaMatch.Groups["Value"].Value;
+            var valueName = criteriaMatch.Groups["Value"].Value;
 
             // Apply fixes to value name data regardless of value data
             valueName = ApplyFixes(valueName, false);
 
             // Set the value data (string or otherwise, this will be checked later)
-            string valueData = criteriaMatch.Groups["Data"].Value;
+            var valueData = criteriaMatch.Groups["Data"].Value;
 
             if (valueDataIsString)
             {
@@ -374,13 +364,13 @@ namespace SevenUpdate.Sdk
                     // Check if length is equal to 8, else pad with 0s to 8
                     if (valueData.Length < 8)
                     {
-                        int numberOfZeroesNeeded = 8 - valueData.Length;
-                        for (int i = 0; i < numberOfZeroesNeeded; i++)
+                        var numberOfZeroesNeeded = 8 - valueData.Length;
+                        for (var i = 0; i < numberOfZeroesNeeded; i++)
                             valueData = "0" + valueData;
                     }
                     // Put a comma after each 2 digits
                     var digitsSeparated = new StringBuilder();
-                    MatchCollection splitThem = Regex.Matches(valueData, @"(([0-9]|[A-F]){2})", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
+                    var splitThem = Regex.Matches(valueData, @"(([0-9]|[A-F]){2})", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
                     digitsSeparated.Append(splitThem[0].Value + ",");
                     digitsSeparated.Append(splitThem[1].Value + ",");
                     digitsSeparated.Append(splitThem[2].Value + ",");
@@ -418,7 +408,7 @@ namespace SevenUpdate.Sdk
                     var temporaryArray = new List<string>(valueData.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as DBCS (Double byte characters)
-                    List<byte> byteArray = temporaryArray.ConvertAll(String2Byte);
+                    var byteArray = temporaryArray.ConvertAll(String2Byte);
                     valueData = UDecoder.GetString(byteArray.ToArray());
                 }
                 else
@@ -432,7 +422,7 @@ namespace SevenUpdate.Sdk
                     var temporaryArray = new List<string>(valueData.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as SBCS (Single byte characters)
-                    List<byte> byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
+                    var byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
                     valueData = ADecoder.GetString(byteArray.ToArray());
                 }
                 // Apply Fixes
@@ -478,14 +468,14 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // RegEx match all pairs of bytes
-                    MatchCollection readinTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    var readinTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
                     const string stringTerminator = "00,00";
                     foreach (Match found in readinTwos)
                     {
                         if (String.Compare(found.Value, stringTerminator) != 0)
                         {
                             var z = new List<string>(found.Value.Split(new[] {','}));
-                            List<byte> y = z.ConvertAll(String2Byte);
+                            var y = z.ConvertAll(String2Byte);
                             valueDataBuilder.Append(UDecoder.GetString(y.ToArray()));
                         }
                         else
@@ -499,7 +489,7 @@ namespace SevenUpdate.Sdk
                     valueData = Regex.Replace(valueData, @"00", @"0d,0a", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
                     // Convert to byte and back to characters using ASCIIEncoding
                     var z = new List<string>(valueData.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries));
-                    List<byte> y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
+                    var y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
                     valueDataBuilder.Append(ADecoder.GetString(y.ToArray()));
                 }
 
@@ -510,7 +500,7 @@ namespace SevenUpdate.Sdk
                 // Reinit StringBuilder to clear
                 valueDataBuilder = new StringBuilder(valueData.Length);
 
-                for (int i = 0; i < multiStringEntries.Count; i++)
+                for (var i = 0; i < multiStringEntries.Count; i++)
                 {
                     // Apply Fixes
                     multiStringEntries[i] = ApplyFixes(multiStringEntries[i], true);
@@ -553,7 +543,7 @@ namespace SevenUpdate.Sdk
                 var temporaryArray = new List<string>(valueData.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries));
 
                 // Treat as DBCS (Double byte characters)
-                List<byte> byteArray = temporaryArray.ConvertAll(String2Byte);
+                var byteArray = temporaryArray.ConvertAll(String2Byte);
                 valueData = UDecoder.GetString(byteArray.ToArray());
                 // Apply Fixes
                 valueData = ApplyFixes(valueData, true);
@@ -592,11 +582,9 @@ namespace SevenUpdate.Sdk
                 return ProcessBinaryType('6', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
 
             // hex(0):  |  REG_NONE
-            if (Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
-                return ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
+            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline) ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult) : methodResult;
 
             // Fallback in case nothing matches
-            return methodResult;
         }
 
         #region Helper methods
@@ -617,6 +605,7 @@ namespace SevenUpdate.Sdk
             // Remove hex: at the beginning
             valueData = Regex.Replace(valueData, @"^hex\(0*" + hexType + @"\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
             methodResult.ValueKind = flag;
+            methodResult.KeyValue = valueNameData;
             // Return Partial Line
             methodResult.Data = valueData;
             return methodResult;

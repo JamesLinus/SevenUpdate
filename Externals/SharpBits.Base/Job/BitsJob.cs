@@ -10,7 +10,7 @@ using SharpBits.Base.Progress;
 
 namespace SharpBits.Base.Job
 {
-    public partial class BitsJob : IDisposable
+    public partial class BitsJob
     {
         #region member fields
 

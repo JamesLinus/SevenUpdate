@@ -20,7 +20,7 @@ namespace Microsoft.Windows.Dialogs
     ///   in previous versions of Windows.
     /// </summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
-    public class TaskDialog : IDialogControlHost, IDisposable
+    public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
         // Global instance of TaskDialog, to be used by static Show() method.
         // As most parameters of a dialog created via static Show() will have
@@ -1167,7 +1167,7 @@ namespace Microsoft.Windows.Dialogs
         ///   Dispose TaskDialog Resources
         /// </summary>
         /// <param name = "disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
-        public virtual void Dispose(bool disposing)
+        public void Dispose(bool disposing)
         {
             if (!disposed)
             {

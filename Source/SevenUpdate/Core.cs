@@ -9,13 +9,13 @@ using SevenUpdate.Pages;
 
 namespace SevenUpdate
 {
-    public class Core : INotifyPropertyChanged
+    internal sealed class Core : INotifyPropertyChanged
     {
         #region Fields
 
         private static Core instance;
 
-        public static Core Instance
+        internal static Core Instance
         {
 
             get { return instance ?? (instance = new Core()); }
@@ -48,9 +48,7 @@ namespace SevenUpdate
         {
             get
             {
-                if (CoreNativeMethods.IsUserAnAdmin())
-                    return true;
-                return isAdmin;
+                return CoreNativeMethods.IsUserAnAdmin() || isAdmin;
             }
 
             set { isAdmin = value;}

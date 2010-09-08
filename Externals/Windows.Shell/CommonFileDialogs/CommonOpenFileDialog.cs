@@ -117,19 +117,19 @@ namespace Microsoft.Windows.Dialogs
             return openDialogCoClass;
         }
 
-        internal override void InitializeNativeFileDialog()
+        protected override void InitializeNativeFileDialog()
         {
             if (openDialogCoClass == null)
                 openDialogCoClass = new NativeFileOpenDialog();
         }
 
-        internal override void CleanUpNativeFileDialog()
+        protected override void CleanUpNativeFileDialog()
         {
             if (openDialogCoClass != null)
                 Marshal.ReleaseComObject(openDialogCoClass);
         }
 
-        internal override void PopulateWithFileNames(Collection<string> names)
+        protected override void PopulateWithFileNames(Collection<string> names)
         {
             IShellItemArray resultsArray;
             uint count;

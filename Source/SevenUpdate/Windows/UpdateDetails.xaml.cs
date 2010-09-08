@@ -20,10 +20,7 @@
 
 #region
 
-using System;
 using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 #endregion
@@ -33,7 +30,7 @@ namespace SevenUpdate.Windows
     /// <summary>
     ///   Interaction logic for Update_Details.xaml
     /// </summary>
-    public sealed partial class UpdateDetails : Window
+    public sealed partial class UpdateDetails
     {
         private string helpUrl, infoUrl;
         /// <summary>
@@ -48,8 +45,7 @@ namespace SevenUpdate.Windows
         ///   Shows the window and displays the update information
         /// </summary>
         /// <param name = "updateInfo">The update information to display</param>
-        /// <returns><c>true</c></returns>
-        internal bool? ShowDialog(Suh updateInfo)
+        internal void ShowDialog(Suh updateInfo)
         {
             DataContext = updateInfo;
             helpUrl = updateInfo.HelpUrl;
@@ -63,7 +59,8 @@ namespace SevenUpdate.Windows
                 tbStatus.Text = updateInfo.Status + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
 
 
-            return ShowDialog();
+            ShowDialog();
+            return;
         }
 
         /// <summary>

@@ -40,7 +40,7 @@ namespace SevenUpdate.Sdk.Windows
     ///   Interaction logic for MainWindow.xaml
     /// </summary>
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
-    public sealed partial class MainWindow : NavigationWindow
+    public sealed partial class MainWindow
     {
         #region Fields
 

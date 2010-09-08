@@ -8,7 +8,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Provides event data for the SearchCompleted event
     /// </summary>
-    public class SearchCompletedEventArgs : EventArgs
+    public sealed class SearchCompletedEventArgs : EventArgs
     {
         /// <summary>
         ///   Contains event data associated with this event
@@ -28,11 +28,11 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets a collection of applications that contain updates to install
         /// </summary>
-        public Collection<Sui> Applications { get; internal set; }
+        public Collection<Sui> Applications { get; private set; }
 
         public int ImportantCount { get; set; }
-        public int OptionalCount { get; set; }
-        public int RecommendedCount { get; set; }
+        public int OptionalCount { get; private set; }
+        public int RecommendedCount { get; private set; }
     }
 
     /// <summary>
@@ -164,131 +164,131 @@ namespace SevenUpdate
         public string UpdateName { get; private set; }
     }
 
-    /// <summary>
-    ///   Provides event data the AddApp event
-    /// </summary>
-    public sealed class OnAddAppEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnAddAppEventArgs(Sua app)
-        {
-            App = app;
-        }
+    ///// <summary>
+    /////   Provides event data the AddApp event
+    ///// </summary>
+    //public sealed class OnAddAppEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnAddAppEventArgs(Sua app)
+    //    {
+    //        App = app;
+    //    }
 
-        /// <summary>
-        ///   The app to add to the Seven Update list
-        /// </summary>
-        public Sua App { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   The app to add to the Seven Update list
+    //    /// </summary>
+    //    public Sua App { get; private set; }
+    //}
 
-    /// <summary>
-    ///   Provides event data the HideUpdate event
-    /// </summary>
-    public sealed class OnHideUpdateEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnHideUpdateEventArgs(Suh hiddenUpdate)
-        {
-            HiddenUpdate = hiddenUpdate;
-        }
+    ///// <summary>
+    /////   Provides event data the HideUpdate event
+    ///// </summary>
+    //public sealed class OnHideUpdateEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnHideUpdateEventArgs(Suh hiddenUpdate)
+    //    {
+    //        HiddenUpdate = hiddenUpdate;
+    //    }
 
-        /// <summary>
-        ///   The app to hide
-        /// </summary>
-        public Suh HiddenUpdate { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   The app to hide
+    //    /// </summary>
+    //    public Suh HiddenUpdate { get; private set; }
+    //}
 
-    /// <summary>
-    ///   Provides event data the HideUpdate event
-    /// </summary>
-    public sealed class OnHideUpdatesEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnHideUpdatesEventArgs(Collection<Suh> hiddenUpdates)
-        {
-            HiddenUpdates = hiddenUpdates;
-        }
+    ///// <summary>
+    /////   Provides event data the HideUpdate event
+    ///// </summary>
+    //public sealed class OnHideUpdatesEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnHideUpdatesEventArgs(Collection<Suh> hiddenUpdates)
+    //    {
+    //        HiddenUpdates = hiddenUpdates;
+    //    }
 
-        /// <summary>
-        ///   The app to hide
-        /// </summary>
-        public Collection<Suh> HiddenUpdates { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   The app to hide
+    //    /// </summary>
+    //    public Collection<Suh> HiddenUpdates { get; private set; }
+    //}
 
-    /// <summary>
-    ///   Provides event data the InstallUpdates event
-    /// </summary>
-    public sealed class OnInstallUpdatesEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnInstallUpdatesEventArgs(Collection<Sui> appUpdates)
-        {
-            AppUpdates = appUpdates;
-        }
+    ///// <summary>
+    /////   Provides event data the InstallUpdates event
+    ///// </summary>
+    //public sealed class OnInstallUpdatesEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnInstallUpdatesEventArgs(Collection<Sui> appUpdates)
+    //    {
+    //        AppUpdates = appUpdates;
+    //    }
 
-        /// <summary>
-        ///   The apps to update
-        /// </summary>
-        public Collection<Sui> AppUpdates { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   The apps to update
+    //    /// </summary>
+    //    public Collection<Sui> AppUpdates { get; private set; }
+    //}
 
-    /// <summary>
-    ///   Provides event data the SettingsChanged event
-    /// </summary>
-    public sealed class OnSettingsChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnSettingsChangedEventArgs(Collection<Sua> apps, Config options, bool autoOn)
-        {
-            Apps = apps;
-            Options = options;
-            AutoOn = autoOn;
-        }
+    ///// <summary>
+    /////   Provides event data the SettingsChanged event
+    ///// </summary>
+    //public sealed class OnSettingsChangedEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnSettingsChangedEventArgs(Collection<Sua> apps, Config options, bool autoOn)
+    //    {
+    //        Apps = apps;
+    //        Options = options;
+    //        AutoOn = autoOn;
+    //    }
 
-        /// <summary>
-        ///   The apps that Seven Update will update
-        /// </summary>
-        public Collection<Sua> Apps { get; private set; }
+    //    /// <summary>
+    //    ///   The apps that Seven Update will update
+    //    /// </summary>
+    //    public Collection<Sua> Apps { get; private set; }
 
-        /// <summary>
-        ///   The apps that Seven Update will update
-        /// </summary>
-        public Config Options { get; private set; }
+    //    /// <summary>
+    //    ///   The apps that Seven Update will update
+    //    /// </summary>
+    //    public Config Options { get; private set; }
 
-        /// <summary>
-        ///   Gets or Sets a value indicating if auto updates should be enabled
-        /// </summary>
-        public bool AutoOn { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   Gets or Sets a value indicating if auto updates should be enabled
+    //    /// </summary>
+    //    public bool AutoOn { get; private set; }
+    //}
 
-    /// <summary>
-    ///   Provides event data the ShowUpdate event
-    /// </summary>
-    public sealed class OnShowUpdateEventArgs : EventArgs
-    {
-        /// <summary>
-        ///   Contains event data associated with this event
-        /// </summary>
-        public OnShowUpdateEventArgs(Suh hiddenUpdate)
-        {
-            HiddenUpdate = hiddenUpdate;
-        }
+    ///// <summary>
+    /////   Provides event data the ShowUpdate event
+    ///// </summary>
+    //public sealed class OnShowUpdateEventArgs : EventArgs
+    //{
+    //    /// <summary>
+    //    ///   Contains event data associated with this event
+    //    /// </summary>
+    //    public OnShowUpdateEventArgs(Suh hiddenUpdate)
+    //    {
+    //        HiddenUpdate = hiddenUpdate;
+    //    }
 
-        /// <summary>
-        ///   The app to unhide
-        /// </summary>
-        public Suh HiddenUpdate { get; private set; }
-    }
+    //    /// <summary>
+    //    ///   The app to unhide
+    //    /// </summary>
+    //    public Suh HiddenUpdate { get; private set; }
+    //}
 
     /// <summary>
     ///   Provides event data for the ErrorOccurred event
@@ -341,7 +341,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets the full path of the file
         /// </summary>
-        public string File { get; set; }
+        public string File { get; private set; }
     }
 
     /// <summary>
@@ -354,13 +354,13 @@ namespace SevenUpdate
         /// </summary>
         public ProcessEventArgs(Process process)
         {
-            this.Process = process;
+            Process = process;
         }
 
         /// <summary>
         ///   Gets the exception data
         /// </summary>
-        public Process Process { get; set; }
+        public Process Process { get; private set; }
     }
 
 

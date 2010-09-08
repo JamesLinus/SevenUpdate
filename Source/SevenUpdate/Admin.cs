@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using SevenUpdate.WCF;
 
 #endregion
@@ -37,7 +36,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Contains callback methods for WCF
     /// </summary>
-    public class ServiceCallBack : IServiceCallback
+    internal sealed class ServiceCallBack : IServiceCallback
     {
         #region IServiceCallback Members
 
@@ -213,7 +212,10 @@ namespace SevenUpdate
         /// </summary>
         internal static void Disconnect()
         {
-            if (wcfClient != null)
+            if (wcfClient == null)
+            {
+            }
+            else
             {
                 try
                 {
@@ -235,7 +237,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the install was aborted, otherwise <c>false</c></returns>
         internal static bool AbortInstall()
         {
-            bool abort = false;
+            var abort = false;
             try
             {
                 abort = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
@@ -258,7 +260,7 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            bool success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
+            var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
             if (success)
             {
                 if (Connect())

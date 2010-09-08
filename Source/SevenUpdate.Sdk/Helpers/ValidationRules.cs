@@ -11,9 +11,9 @@ using SevenUpdate.Sdk.Properties;
 
 namespace SevenUpdate.Sdk.Helpers
 {
-    public class AppDirectoryRule : ValidationRule
+    internal sealed class AppDirectoryRule : ValidationRule
     {
-        public bool IsRegistryPath { get; set; }
+        internal bool IsRegistryPath { private get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -44,11 +44,13 @@ namespace SevenUpdate.Sdk.Helpers
         }
     }
 
-    public class RegistryPathRule : ValidationRule
+    public sealed class RegistryPathRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
+            if (input == null)
+               return new ValidationResult(false, Resources.FilePathInvalid);
             if (String.IsNullOrWhiteSpace(input))
                 return new ValidationResult(false, Resources.FilePathInvalid);
 
@@ -58,12 +60,12 @@ namespace SevenUpdate.Sdk.Helpers
         }
     }
 
-    public class LocaleStringRule : ValidationRule
+    public sealed class LocaleStringRule : ValidationRule
     {
         /// <summary>
         ///   The name of the Collection of locale strings to get
         /// </summary>
-        public string PropertyName { get; set; }
+        internal string PropertyName { private get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -80,7 +82,7 @@ namespace SevenUpdate.Sdk.Helpers
                     if (Base.AppInfo.Name == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (int x = 0; x < Base.AppInfo.Name.Count; x++)
+                    for (var x = 0; x < Base.AppInfo.Name.Count; x++)
                     {
                         if (Base.AppInfo.Name[x].Lang != SevenUpdate.Base.Locale)
                             continue;
@@ -98,7 +100,7 @@ namespace SevenUpdate.Sdk.Helpers
                     if (Base.AppInfo.Publisher == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (int x = 0; x < Base.AppInfo.Publisher.Count; x++)
+                    for (var x = 0; x < Base.AppInfo.Publisher.Count; x++)
                     {
                         if (Base.AppInfo.Publisher[x].Lang != SevenUpdate.Base.Locale)
                             continue;
@@ -116,7 +118,7 @@ namespace SevenUpdate.Sdk.Helpers
                     if (Base.AppInfo.Description == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (int x = 0; x < Base.AppInfo.Description.Count; x++)
+                    for (var x = 0; x < Base.AppInfo.Description.Count; x++)
                     {
                         if (Base.AppInfo.Description[x].Lang != SevenUpdate.Base.Locale)
                             continue;
@@ -134,7 +136,7 @@ namespace SevenUpdate.Sdk.Helpers
                     if (Base.UpdateInfo.Description == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (int x = 0; x < Base.UpdateInfo.Description.Count; x++)
+                    for (var x = 0; x < Base.UpdateInfo.Description.Count; x++)
                     {
                         if (Base.UpdateInfo.Description[x].Lang != SevenUpdate.Base.Locale)
                             continue;
@@ -152,7 +154,7 @@ namespace SevenUpdate.Sdk.Helpers
                     if (Base.UpdateInfo.Name == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (int x = 0; x < Base.UpdateInfo.Name.Count; x++)
+                    for (var x = 0; x < Base.UpdateInfo.Name.Count; x++)
                     {
                         if (Base.UpdateInfo.Name[x].Lang != SevenUpdate.Base.Locale)
                             continue;

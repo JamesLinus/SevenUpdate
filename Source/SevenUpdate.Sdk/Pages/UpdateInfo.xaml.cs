@@ -34,7 +34,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for UpdateInfo.xaml
     /// </summary>
-    public sealed partial class UpdateInfo : Page
+    public sealed partial class UpdateInfo
     {
         #region Properties
 
@@ -86,9 +86,9 @@ namespace SevenUpdate.Sdk.Pages
 
             SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
-            bool found = false;
+            var found = false;
             // Load Values
-            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Base.UpdateInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxUpdateName.Text = t.Value;
                 found = true;
@@ -99,7 +99,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Base.UpdateInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxUpdateDetails.Text = t.Value;
                 found = true;
@@ -126,14 +126,17 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
+            // ReSharper disable PossibleNullReferenceException
             tbxUpdateName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
             tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            // ReSharper restore PossibleNullReferenceException
 
             // Load Values
-            foreach (LocaleString t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
                 tbxUpdateDetails.Text = t.Value;
 
-            foreach (LocaleString t in Base.UpdateInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Base.UpdateInfo.Name.Where(t => t.Lang == "en"))
                 tbxUpdateName.Text = t.Value;
         }
 

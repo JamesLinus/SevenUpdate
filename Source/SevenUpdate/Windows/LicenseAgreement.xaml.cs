@@ -35,7 +35,7 @@ namespace SevenUpdate.Windows
     /// <summary>
     ///   Interaction logic for License_Agreement.xaml
     /// </summary>
-    public sealed partial class LicenseAgreement : Window
+    public sealed partial class LicenseAgreement
     {
         #region Fields
 
@@ -241,13 +241,7 @@ namespace SevenUpdate.Windows
         /// </summary>
         private void Decline_Checked(object sender, RoutedEventArgs e)
         {
-            if (Core.Applications.Count != 1)
-            {
-                btnAction.IsEnabled = true;
-                ;
-            }
-            else
-                btnAction.IsEnabled = false;
+            btnAction.IsEnabled = Core.Applications.Count != 1;
         }
 
         /// <summary>

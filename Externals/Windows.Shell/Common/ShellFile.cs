@@ -13,7 +13,7 @@ namespace Microsoft.Windows.Shell
     /// <summary>
     ///   A file in the Shell Namespace
     /// </summary>
-    public class ShellFile : ShellObjectNode, IDisposable
+    public sealed class ShellFile : ShellObjectNode
     {
         #region Internal Constructor
 
@@ -58,7 +58,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   The path for this file
         /// </summary>
-        public virtual string Path { get { return ParsingName; } }
+        public string Path { get { return ParsingName; } }
 
         #endregion
     }

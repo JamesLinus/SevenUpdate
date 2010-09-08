@@ -168,7 +168,7 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore, ErrorType.DownloadError);
+                            Base.ReportError(e, Base.AllUserStore);
                         }
                     }
                 }
@@ -190,7 +190,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore, ErrorType.DownloadError);
+                    Base.ReportError(e, Base.AllUserStore);
                     return;
                 }
             }
@@ -245,9 +245,9 @@ namespace SevenUpdate
             errorOccurred = true;
 
             if (e.Job.Error.File != null)
-                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore, ErrorType.DownloadError);
+                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore);
             else
-                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore, ErrorType.DownloadError);
+                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore);
 
             try
             {

@@ -35,7 +35,7 @@ namespace SevenUpdate.Converters
     ///   Converts Importance to a localized string
     /// </summary>
     [ValueConversion(typeof (Importance), typeof (string))]
-    public sealed class ImportanceToString : IValueConverter
+    internal sealed class ImportanceToString : IValueConverter
     {
         #region IValueConverter Members
 
@@ -78,7 +78,7 @@ namespace SevenUpdate.Converters
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
-    public sealed class LocaleStringToStringConverter : IValueConverter
+    internal sealed class LocaleStringToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -93,7 +93,7 @@ namespace SevenUpdate.Converters
             // Loops through the collection of LocaleStrings
             if (localeStrings != null)
             {
-                foreach (LocaleString t in localeStrings.Where(t => t.Lang == Base.Locale))
+                foreach (var t in localeStrings.Where(t => t.Lang == Base.Locale))
                     return t.Value;
 
                 // Returns an english string if the specified locale is not avaliable
@@ -118,7 +118,7 @@ namespace SevenUpdate.Converters
     ///   Converts a ulong or group of ulongs into a string readable filesize
     /// </summary>
     [ValueConversion(typeof (UpdateFile), typeof (string))]
-    public sealed class FileSizeConverter : IValueConverter
+    internal sealed class FileSizeConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -158,7 +158,7 @@ namespace SevenUpdate.Converters
     ///   Converts an Enum to a bool value
     /// </summary>
     [ValueConversion(typeof (UpdateStatus), typeof (bool))]
-    public sealed class UpdateStatusToBoolConverter : IValueConverter
+    internal sealed class UpdateStatusToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -188,7 +188,7 @@ namespace SevenUpdate.Converters
     ///   Converts a Bool to a readable string
     /// </summary>
     [ValueConversion(typeof (bool), typeof (string))]
-    public sealed class Is64BitToStringConverter : IValueConverter
+    internal sealed class Is64BitToStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -220,7 +220,7 @@ namespace SevenUpdate.Converters
     ///   Converts the DateTime to a String
     /// </summary>
     [ValueConversion(typeof(DateTime), typeof(string))]
-    public sealed class DateConverter : IValueConverter
+    internal sealed class DateConverter : IValueConverter
     {
         #region IValueConverter Members
 

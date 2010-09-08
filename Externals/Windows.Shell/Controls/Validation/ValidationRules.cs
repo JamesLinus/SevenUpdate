@@ -32,7 +32,7 @@ namespace Microsoft.Windows.Controls
                 var url = value as string;
                 if (!String.IsNullOrEmpty(url))
                 {
-                    var uri = new Uri(value.ToString());
+                    new Uri(value.ToString());
                     return new ValidationResult(true, null);
                 }
 

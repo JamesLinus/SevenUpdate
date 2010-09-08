@@ -22,12 +22,9 @@
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Windows.Controls;
 using SevenUpdate.Windows;
 
 #endregion
@@ -37,7 +34,7 @@ namespace SevenUpdate.Pages
     /// <summary>
     ///   Interaction logic for Update_History.xaml
     /// </summary>
-    public partial class UpdateHistory : Page
+    public partial class UpdateHistory
     {
         #region Fields
 

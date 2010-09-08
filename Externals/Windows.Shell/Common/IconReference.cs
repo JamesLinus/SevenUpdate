@@ -28,7 +28,7 @@ namespace Microsoft.Windows.Shell
         /// </summary>
         /// <param name = "moduleName">String specifying the name of an executable file, DLL, or icon file</param>
         /// <param name = "resourceId">Zero-based index of the icon</param>
-        public IconReference(string moduleName, int resourceId)
+        internal IconReference(string moduleName, int resourceId)
         {
             if (string.IsNullOrEmpty(moduleName))
                 throw new ArgumentNullException("moduleName", "Module name cannot be null or empty string");
@@ -44,7 +44,7 @@ namespace Microsoft.Windows.Shell
         /// <param name = "refPath">Reference path for the icon consiting of the module name and resource id.</param>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.Int32.Parse(System.String)",
             Justification = "We are not currently handling globalization or localization")]
-        public IconReference(string refPath)
+        internal IconReference(string refPath)
         {
             if (string.IsNullOrEmpty(refPath))
                 throw new ArgumentNullException("refPath", "Reference path cannot be null or empty string");

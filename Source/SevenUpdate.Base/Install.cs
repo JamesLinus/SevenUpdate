@@ -183,19 +183,19 @@ namespace SevenUpdate
 
                     if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
                     {
-                        for (var z = 0; z < apps[x].Updates[y].Files.Count; z++)
+                        foreach (var t in apps[x].Updates[y].Files)
                         {
-                            switch (apps[x].Updates[y].Files[z].Action)
+                            switch (t.Action)
                             {
                                 case FileAction.Delete:
                                 case FileAction.UnregisterThenDelete:
                                     try
                                     {
-                                        File.Delete(apps[x].Updates[y].Files[z].Destination);
+                                        File.Delete(t.Destination);
                                     }
                                     catch
                                     {
-                                        MoveFileEx(apps[x].Updates[y].Files[z].Destination, null, MoveOnReboot);
+                                        MoveFileEx(t.Destination, null, MoveOnReboot);
                                     }
                                     break;
                                 default:
@@ -259,7 +259,7 @@ namespace SevenUpdate
             if (regItems == null)
                 return;
 
-            for (int x = 0; x < regItems.Count; x++)
+            for (var x = 0; x < regItems.Count; x++)
             {
                 switch (regItems[x].Hive)
                 {
@@ -288,35 +288,40 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore);
                             errorOccurred = true;
                         }
                         break;
                     case RegistryAction.DeleteKey:
                         try
                         {
-                            key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
+                            if (key != null)
+// ReSharper disable PossibleNullReferenceException
+                                key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
+// ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore);
                         }
                         break;
                     case RegistryAction.DeleteValue:
                         try
                         {
+// ReSharper disable PossibleNullReferenceException
                             key.OpenSubKey(regItems[x].Key, true).DeleteValue(regItems[x].KeyValue, false);
+// ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
+                            Base.ReportError(e, Base.AllUserStore);
                         }
                         break;
                 }
 
                 #region Report Progress
 
-                int installProgress = (x*100)/regItems.Count;
+                var installProgress = (x*100)/regItems.Count;
                 if (installProgress > 30)
                     installProgress -= 10;
 
@@ -339,16 +344,18 @@ namespace SevenUpdate
 
             var ws = new WshShell();
             // Choose the path for the shortcut
-            for (int x = 0; x < shortcuts.Count; x++)
+            for (var x = 0; x < shortcuts.Count; x++)
             {
                 try
                 {
                     var linkLocation = Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
                     if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation)))
                     {
+                        // ReSharper disable AssignNullToNotNullAttribute
                         if (!Directory.Exists(Path.GetDirectoryName(linkLocation)))
                             Directory.CreateDirectory(Path.GetDirectoryName(linkLocation));
                         File.Delete(linkLocation);
+                        // ReSharper restore AssignNullToNotNullAttribute
                         var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation);
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
@@ -369,12 +376,12 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
+                    Base.ReportError(e, Base.AllUserStore);
                 }
 
                 #region Report Progress
 
-                int installProgress = (x*100)/shortcuts.Count;
+                var installProgress = (x*100)/shortcuts.Count;
                 if (installProgress > 90)
                     installProgress -= 15;
 
@@ -422,7 +429,7 @@ namespace SevenUpdate
                     }
                     catch (Exception e)
                     {
-                        Base.ReportError(e + file.Source, Base.AllUserStore, ErrorType.InstallationError);
+                        Base.ReportError(e + file.Source, Base.AllUserStore);
                         errorOccurred = true;
                     }
                     break;
@@ -458,7 +465,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore, ErrorType.InstallationError);
+                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -470,7 +477,7 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e + file.Source, Base.AllUserStore, ErrorType.InstallationError);
+                            Base.ReportError(e + file.Source, Base.AllUserStore);
                             errorOccurred = true;
                         }
                     }
@@ -496,22 +503,24 @@ namespace SevenUpdate
                 files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
                 try
                 {
+// ReSharper disable AssignNullToNotNullAttribute
                     Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
+// ReSharper restore AssignNullToNotNullAttribute
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore, ErrorType.InstallationError);
+                    Base.ReportError(e, Base.AllUserStore);
                     errorOccurred = true;
                 }
 
 
-                int x1 = x;
-                int x2 = x;
+                var x1 = x;
+                var x2 = x;
                 Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
                                                                                     {
                                                                                         #region Report Progress
 
-                                                                                        int installProgress = (x2*100)/files.Count;
+                                                                                        var installProgress = (x2*100)/files.Count;
                                                                                         if (installProgress > 70)
                                                                                             installProgress -= 15;
 

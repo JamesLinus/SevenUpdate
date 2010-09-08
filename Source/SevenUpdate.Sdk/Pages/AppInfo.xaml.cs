@@ -37,7 +37,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for AppInfo.xaml
     /// </summary>
-    public sealed partial class AppInfo : Page
+    public sealed partial class AppInfo
     {
         #region Properties
 
@@ -69,20 +69,21 @@ namespace SevenUpdate.Sdk.Pages
 
         private void LoadInfo()
         {
+            // ReSharper disable PossibleNullReferenceException
             tbxPublisher.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxAppDescription.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxAppName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-
+            // ReSharper restore PossibleNullReferenceException
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Base.AppInfo.Name.Where(t => t.Lang == "en"))
                 tbxAppName.Text = t.Value;
 
-            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Base.AppInfo.Description.Where(t => t.Lang == "en"))
                 tbxAppDescription.Text = t.Value;
 
-            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
+            foreach (var t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
                 tbxPublisher.Text = t.Value;
         }
 
@@ -139,9 +140,9 @@ namespace SevenUpdate.Sdk.Pages
 
             SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
-            bool found = false;
+            var found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Base.AppInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxAppDescription.Text = t.Value;
                 found = true;
@@ -151,7 +152,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Base.AppInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxAppName.Text = t.Value;
                 found = true;
@@ -162,7 +163,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (LocaleString t in Base.AppInfo.Publisher.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Base.AppInfo.Publisher.Where(t => t.Lang == SevenUpdate.Base.Locale))
             {
                 tbxPublisher.Text = t.Value;
                 found = true;
@@ -181,8 +182,10 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             tbxAppLocation.Text = null;
             var rule = new AppDirectoryRule {IsRegistryPath = true};
+// ReSharper disable PossibleNullReferenceException
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+            // ReSharper restore PossibleNullReferenceException
         }
 
         private void rbtnFileSystem_Checked(object sender, RoutedEventArgs e)
@@ -192,8 +195,10 @@ namespace SevenUpdate.Sdk.Pages
 
             tbxAppLocation.Text = null;
             var rule = new AppDirectoryRule {IsRegistryPath = false};
+// ReSharper disable PossibleNullReferenceException
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+            // ReSharper restore PossibleNullReferenceException
             Base.AppInfo.ValueName = null;
             tbxValueName.Text = null;
         }

@@ -24,7 +24,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using SevenUpdate.Sdk.Windows;
 
@@ -35,7 +34,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>
     ///   Interaction logic for Main.xaml
     /// </summary>
-    public sealed partial class Main : Page
+    public sealed partial class Main
     {
         #region Constructors
 
