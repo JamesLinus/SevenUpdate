@@ -41,7 +41,7 @@ namespace Microsoft.Windows.Controls
     /// <summary>
     ///   Provides a WPF button that displays a UAC Shield icon when required
     /// </summary>
-    public class UacButton : Button, INotifyPropertyChanged
+    public sealed class UacButton : Button, INotifyPropertyChanged
     {
         #region Fields
 
@@ -285,7 +285,7 @@ namespace Microsoft.Windows.Controls
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 

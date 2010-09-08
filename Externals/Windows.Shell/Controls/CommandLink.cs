@@ -33,7 +33,7 @@ namespace Microsoft.Windows.Controls
     /// <summary>
     ///   Implements a CommandLink button that can be used in WPF user interfaces.
     /// </summary>
-    public class CommandLink : Button, INotifyPropertyChanged
+    public sealed class CommandLink : Button, INotifyPropertyChanged
     {
         #region Fields
 
@@ -112,7 +112,7 @@ namespace Microsoft.Windows.Controls
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
         /// <param name = "name" />
-        protected void OnPropertyChanged(string name)
+        private void OnPropertyChanged(string name)
         {
             var handler = PropertyChanged;
 

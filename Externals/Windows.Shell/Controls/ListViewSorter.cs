@@ -15,7 +15,7 @@ using System.Windows.Media;
 
 namespace Microsoft.Windows.Controls
 {
-    public class ListViewSorter
+    public sealed class ListViewSorter
     {
         private static void CustomSorterCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {

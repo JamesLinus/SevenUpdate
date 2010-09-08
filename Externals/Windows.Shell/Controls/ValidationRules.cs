@@ -11,7 +11,7 @@ using Microsoft.Windows.Properties;
 
 namespace Microsoft.Windows.Controls
 {
-    public class RequiredInputRule : ValidationRule
+    public sealed class RequiredInputRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -21,7 +21,7 @@ namespace Microsoft.Windows.Controls
         }
     }
 
-    public class UrlInputRule : ValidationRule
+    public sealed class UrlInputRule : ValidationRule
     {
         public bool IsRequired { get; set; }
 
@@ -46,7 +46,7 @@ namespace Microsoft.Windows.Controls
         }
     }
 
-    public class FileNameInputRule : ValidationRule
+    public sealed class FileNameInputRule : ValidationRule
     {
         public bool IsRequired { get; set; }
 

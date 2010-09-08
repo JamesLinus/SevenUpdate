@@ -10,7 +10,7 @@ using System.Windows.Threading;
 namespace Microsoft.Windows.Controls
 {
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
-    public class ProgressIndicator : RangeBase
+    public sealed class ProgressIndicator : RangeBase
     {
         #region Constants
 

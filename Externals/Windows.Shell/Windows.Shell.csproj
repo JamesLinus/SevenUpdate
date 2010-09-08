@@ -211,7 +211,7 @@
     <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Controls\UacButton.cs" />
-    <Compile Include="Controls\Validation\ValidationRules.cs" />
+    <Compile Include="Controls\ValidationRules.cs" />
     <Compile Include="Dwm\AeroGlass.cs" />
     <Compile Include="Dialogs\Common\DialogControl.cs" />
     <Compile Include="Dialogs\Common\DialogControlCollection.cs" />

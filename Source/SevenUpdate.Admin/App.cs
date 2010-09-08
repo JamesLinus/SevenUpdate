@@ -87,6 +87,8 @@ namespace SevenUpdate.Admin
 
         private static bool IsAutoInstall;
 
+        private static bool isInstalling;
+
         #endregion
 
         #region Properties
@@ -229,7 +231,7 @@ namespace SevenUpdate.Admin
 
         private static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (IsAutoInstall)
+            if (IsAutoInstall || isInstalling)
                 return;
             if (Process.GetProcessesByName("SevenUpdate").Length < 1)
                 ShutdownApp();
@@ -239,6 +241,8 @@ namespace SevenUpdate.Admin
 
         private static void Install_InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
+            if (Service.Service.InstallProgressChanged != null && IsClientConnected)
+                Service.Service.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, Resources.InstallingUpdates + " " + e.CurrentProgress + "% " + Resources.Complete);
         }
 
@@ -251,8 +255,9 @@ namespace SevenUpdate.Admin
 
         private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            if (Service.Service.DownloadCompleted != null && IsClientConnected)
-                Service.Service.DownloadCompleted(false);
+            isInstalling = true;
+            if (Service.Service.DownloadProgressChanged != null && IsClientConnected)
+                Service.Service.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon,
                                                        Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Resources.OutOf + " " + e.FilesTotal + " " + Resources.Files + " " +
                                                        Resources.Complete + ")");
@@ -266,6 +271,7 @@ namespace SevenUpdate.Admin
                     Service.Service.DownloadCompleted(false);
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 Install.InstallUpdates(apps);
+                isInstalling = true;
             }
             else
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
@@ -285,6 +291,7 @@ namespace SevenUpdate.Admin
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
                     Task.Factory.StartNew(() => Download.DownloadUpdates(e.Applications));
+                    isInstalling = true;
                 }
             }
             else

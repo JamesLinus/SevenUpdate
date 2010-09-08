@@ -33,7 +33,7 @@ namespace Microsoft.Windows.Controls
     /// <summary>
     ///   Implements BackButton that can be used in WPF user interfaces.
     /// </summary>
-    public class BackButton : Button
+    public sealed class BackButton : Button
     {
         #region Constructors
 
