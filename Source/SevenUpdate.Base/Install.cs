@@ -354,14 +354,14 @@ namespace SevenUpdate
                     if (!linkLocation.EndsWith(@"\"))
                         linkLocation = linkLocation + @"\";
 
-                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation)))
+                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation + linkName + @".lnk")))
                     {
                         // ReSharper disable AssignNullToNotNullAttribute
                         if (!Directory.Exists(linkLocation))
                             Directory.CreateDirectory(linkLocation);
-                        File.Delete(linkLocation + linkName);
+                        File.Delete(linkLocation + linkName + @".lnk");
                         // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation + linkName);
+                        var shortcut = (IWshShortcut)ws.CreateShortcut(linkLocation + linkName + @".lnk");
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
                         // Description for the shortcut
