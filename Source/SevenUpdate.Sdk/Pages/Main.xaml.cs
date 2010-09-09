@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Windows.Dialogs;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -97,6 +98,36 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        //NOTE Method is not final, just for testing
+        private void CommandLink_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO implement dialog to show projects to edit instead of choosing a file
+
+            var cfd = new CommonOpenFileDialog
+            {
+                DefaultExtension = "sui",
+                DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                EnsureValidNames = true, Multiselect = false,
+            };
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            var project = Base.Deserialize<Collection<Update>>(cfd.FileName);
+            Core.UpdateInfo = project[0];
+            Core.AppInfo = Base.Deserialize<Collection<Sui>>(Core.ProjectsFile)[0].AppInfo;
+
+            if (Core.UpdateInfo.Files == null)
+                Core.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            if (Core.UpdateInfo.RegistryItems == null)
+                Core.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+            if (Core.UpdateInfo.Shortcuts == null)
+                Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+
+            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+        }
 
         #region MenuItem - Click
 

@@ -10,10 +10,10 @@
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="2" Fill="White" />
 		<StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-			<Controls:CommandLink x:Name="clNewProject" Content="Create a new project" Note="Enables Seven Update to update your software" TabIndex="0" Click="NewProject_Click" />
-			<Controls:CommandLink x:Name="clEditProject" Content="Open an existing Project" Note="Edit or create an update with an existing project" TabIndex="1" />
-			<Controls:CommandLink x:Name="clTestProject" Content="Test your project" TabIndex="2" Note="Simulate updating to detect problems" />
-			<Controls:CommandLink x:Name="clReleaseUpdate" Content="Release an update" Note="Creates the files to release your update" TabIndex="3" Margin="0" />
+			<Controls:CommandLink Content="Create a new project" Note="Enables Seven Update to update your software" TabIndex="0" Click="NewProject_Click" />
+			<Controls:CommandLink Content="Open an existing Project" Note="Edit or create an update with an existing project" TabIndex="1" Click="CommandLink_Click" />
+			<Controls:CommandLink Content="Test your project" TabIndex="2" Note="Simulate updating to detect problems" />
+			<Controls:CommandLink Content="Release an update" Note="Creates the files to release your update" TabIndex="3" Margin="0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 			<Controls:BackButton Grid.RowSpan="3" IsEnabled="False" />

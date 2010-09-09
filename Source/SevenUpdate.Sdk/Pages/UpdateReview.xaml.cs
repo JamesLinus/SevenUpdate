@@ -21,7 +21,11 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.Windows;
+using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -87,6 +91,44 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        //NOTE Method is not final, just for testing
+        private void CommandLink_Click(object sender, RoutedEventArgs e)
+        {
+            // Base.Deserialize<Collection<Sui>>(Core.ProjectsFile) ??
+            var projects = new Collection<Sui>();
+            // TODO implement check for an update, to remove the old and add the new for project editing.
+
+
+            var cfd = new CommonSaveFileDialog
+                          {
+                              AlwaysAppendDefaultExtension = true,
+                              DefaultExtension = "sui",
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              DefaultFileName = Core.AppInfo.Name[0].Value,
+                              EnsureValidNames = true,
+                          };
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            if (projects.Count < 1)
+            {
+                var project = new Sui { AppInfo = Core.AppInfo, Updates = new ObservableCollection<Update> { Core.UpdateInfo } };
+                projects.Add(project);
+            }
+
+            // Save the projects file
+            Base.Serialize(projects, Core.ProjectsFile);
+
+            var updates = new Collection<Update> {Core.UpdateInfo};
+
+            // Save the SUI File
+            Base.Serialize(updates, cfd.FileName);
+
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+        }
 
         #endregion
     }

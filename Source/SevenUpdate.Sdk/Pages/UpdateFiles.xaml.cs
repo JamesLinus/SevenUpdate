@@ -83,7 +83,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var installUrl = Base.ConvertPath(fullName, false, Core.AppInfo.Is64Bit);
 
-            var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
+            var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = @"[DownloadUrl]\" + Path.GetFileName(fullName)};
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -99,21 +99,13 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, true, Core.AppInfo.Is64Bit)); }).ContinueWith(_ =>
-                                                                                                                                                                                    {
-                                                                                                                                                                                        hashesGenerating
-                                                                                                                                                                                            --;
-                                                                                                                                                                                        if (
-                                                                                                                                                                                            hashesGenerating <
-                                                                                                                                                                                            1)
-                                                                                                                                                                                            tbHashCalculating
-                                                                                                                                                                                                .
-                                                                                                                                                                                                Visibility
-                                                                                                                                                                                                =
-                                                                                                                                                                                                Visibility
-                                                                                                                                                                                                    .
-                                                                                                                                                                                                    Collapsed;
-                                                                                                                                                                                    }, context);
+            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, true, Core.AppInfo.Is64Bit)); 
+            }).ContinueWith(_ =>                                                                                                                                                                   
+            {                                                                                                                                                               
+                hashesGenerating--;
+                if (hashesGenerating < 1)
+                    tbHashCalculating.Visibility = Visibility.Collapsed;
+            }, context);
         }
 
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
@@ -235,8 +227,9 @@ namespace SevenUpdate.Sdk.Pages
             var index = listBox.SelectedIndex;
             if (index < 0)
                 return;
-            if (e.Key == Key.Delete)
-                Core.UpdateInfo.Files.RemoveAt(index);
+            if (e.Key != Key.Delete)
+                return;
+            Core.UpdateInfo.Files.RemoveAt(index);
             listBox.SelectedIndex = (index - 1);
 
             if (listBox.SelectedIndex < 0 && listBox.Items.Count > 0)

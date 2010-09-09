@@ -32,7 +32,8 @@
 			</TextBlock>
 		</StackPanel>
 		<!--ListBox-->
-		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown">
+		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown"
+                SelectedIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Add File(s)" Click="AddFile_Click">
@@ -73,7 +74,8 @@
 		</StackPanel>
 		<!--File Action-->
 		<TextBlock Text="File action:" Padding="2" ToolTip="The action to take on this file" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<ComboBox Name="cbxUpdateType" SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center">
+		<ComboBox Name="cbxUpdateType" SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center"
+                SelectedIndex="0">
 			<ComboBoxItem Content="Update" Tag="Update" />
 			<ComboBoxItem Content="Update if file exists" Tag="UpdateIfExist" />
 			<ComboBoxItem Content="Update &amp; register dll file" Tag="UpdateThenRegister" />

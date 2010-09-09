@@ -87,9 +87,8 @@ namespace SevenUpdate.Sdk
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
-            Directory.CreateDirectory(Base.UserStore);
+            Directory.CreateDirectory(Core.UserStore);
             Base.SerializationError += Core.Base_SerializationError;
-
             Base.Locale = Settings.Default.locale;
             SetJumpLists();
             if (args.Length <= 0)
@@ -121,7 +120,6 @@ namespace SevenUpdate.Sdk
         {
             if (Application.Current == null)
                 return;
-            Base.Locale = Settings.Default.locale;
             if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 return;
             // merge in your application resources

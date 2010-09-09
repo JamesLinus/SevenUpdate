@@ -24,6 +24,9 @@
 				</TextBlock.Effect>
 			</TextBlock>
 		</StackPanel>
-		<Rectangle Grid.Row="1" Name="rectangle" Stroke="Black" Grid.ColumnSpan="2" />
-	</Grid>
+		<Rectangle Grid.Row="1" Name="rectangle" Stroke="Black" Grid.ColumnSpan="2" Fill="White" />
+        <Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" UseShield="False"
+                VerticalAlignment="Center" Grid.Row="1" Content="Save and release updates"
+                Note="Saves the project and exports the files needed to release your update" Click="CommandLink_Click" />
+    </Grid>
 </Page>

@@ -136,7 +136,7 @@ namespace SevenUpdate.Sdk.Pages
                                {
                                    Location = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit),
                                    Action = ShortcutAction.Add,
-                                   Name = new ObservableCollection<LocaleString>()
+                                   Name = new ObservableCollection<LocaleString>(),
                                };
             var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
             shortcut.Name.Add(ls);
@@ -253,8 +253,10 @@ namespace SevenUpdate.Sdk.Pages
             var index = listBox.SelectedIndex;
             if (index < 0)
                 return;
-            if (e.Key == Key.Delete)
-                Core.UpdateInfo.Shortcuts.RemoveAt(index);
+            if (e.Key != Key.Delete)
+                return;
+            
+            Core.UpdateInfo.Shortcuts.RemoveAt(index);
             listBox.SelectedIndex = (index - 1);
 
             if (listBox.SelectedIndex < 0 && listBox.Items.Count > 0)

@@ -88,7 +88,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   The location of the list of projects for the SDK
         /// </summary>
-        public static readonly string ProjectsFile = UserStore + @"\Projects.sul";
+        public static readonly string ProjectsFile = UserStore + @"Projects.sul";
 
         #endregion
 

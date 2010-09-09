@@ -174,4 +174,7 @@
   <data name="RecentProjects" xml:space="preserve">
     <value>Recent projects</value>
   </data>
+  <data name="Sui" xml:space="preserve">
+    <value>Seven Update information</value>
+  </data>
 </root>

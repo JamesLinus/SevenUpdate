@@ -31,6 +31,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using Microsoft.Win32;
 using ProtoBuf;
 
@@ -181,9 +182,8 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        private static T DeserializeFile<T>(string fileName, bool usePrefix) where T : class
+        private static T DeserializeFile<T>(string fileName) where T : class
         {
             if (File.Exists(fileName))
             {
@@ -191,7 +191,7 @@ namespace SevenUpdate
                 {
                     using (var file = File.OpenRead(fileName))
                     {
-                        var obj = usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(file, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(file);
+                        var obj = Serializer.Deserialize<T>(file);
 
                         file.Close();
                         return obj;
@@ -213,13 +213,12 @@ namespace SevenUpdate
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
         /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        private static T DeserializeStream<T>(Stream stream, string sourceUrl, bool usePrefix) where T : class
+        private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
         {
             try
             {
-                return usePrefix ? Serializer.DeserializeWithLengthPrefix<T>(stream, PrefixStyle.Fixed32) : Serializer.Deserialize<T>(stream);
+                return Serializer.Deserialize<T>(stream);
             }
             catch (Exception e)
             {
@@ -235,11 +234,10 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "fileName">the file that contains the object to DeSerialize</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(string fileName, bool usePrefix = false) where T : class
+        public static T Deserialize<T>(string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName, usePrefix));
+            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
             task.Wait();
             return task.Result;
         }
@@ -250,11 +248,10 @@ namespace SevenUpdate
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
         /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Deserialize with a length prefix, otherwise <c>false</c></param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string sourceUrl, bool usePrefix = false) where T : class
+        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl, usePrefix));
+            var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl));
             task.Wait();
             return task.Result;
         }
@@ -265,8 +262,7 @@ namespace SevenUpdate
         /// <typeparam name = "T">the object</typeparam>
         /// <param name = "item">the object to serialize</param>
         /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
-        private static void SerializeFile<T>(T item, string fileName, bool usePrefix) where T : class
+        private static void SerializeFile<T>(T item, string fileName) where T : class
         {
             try
             {
@@ -274,10 +270,8 @@ namespace SevenUpdate
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
                     {
-                        if (usePrefix)
-                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
-                        else
-                            Serializer.Serialize(file, item);
+
+                        Serializer.Serialize(file, item);
                         file.Close();
                     }
                 }
@@ -285,10 +279,7 @@ namespace SevenUpdate
                 {
                     using (var file = File.Open(fileName, FileMode.CreateNew))
                     {
-                        if (usePrefix)
-                            Serializer.SerializeWithLengthPrefix(file, item, PrefixStyle.Fixed32);
-                        else
-                            Serializer.Serialize(file, item);
+                        Serializer.Serialize(file, item);
                         file.Close();
                     }
                 }
@@ -306,11 +297,9 @@ namespace SevenUpdate
         /// <typeparam name = "T">the object</typeparam>
         /// <param name = "item">the object to serialize</param>
         /// <param name = "fileName">the location of a file that will be serialized</param>
-        /// <param name = "usePrefix"><c>True</c> to Serialize with a length prefix, otherwise <c>false</c></param>
-        public static void Serialize<T>(T item, string fileName, bool usePrefix = false) where T : class
+        public static void Serialize<T>(T item, string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName, usePrefix));
-            task.Wait();
+            Task.Factory.StartNew(() => SerializeFile(item, fileName));
         }
 
         #endregion
@@ -381,7 +370,7 @@ namespace SevenUpdate
         internal static string ConvertPath(string path, string dir, bool is64Bit)
         {
             path = Replace(path, "[AppDir]", ConvertPath(dir, true, is64Bit));
-            path = Replace(path, "[DownloadDir]", ConvertPath(dir, true, is64Bit));
+            path = Replace(path, "[DownloadUrl]", ConvertPath(dir, true, is64Bit));
             return ConvertPath(path, true, is64Bit);
         }
 

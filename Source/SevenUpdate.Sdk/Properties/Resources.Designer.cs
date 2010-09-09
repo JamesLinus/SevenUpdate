@@ -205,6 +205,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seven Update information.
+        /// </summary>
+        public static string Sui {
+            get {
+                return ResourceManager.GetString("Sui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The url you have entered is not valid..
         /// </summary>
         public static string UrlNotValid {

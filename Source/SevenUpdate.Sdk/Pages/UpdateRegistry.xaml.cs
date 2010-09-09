@@ -137,7 +137,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
         {
-            var registryItem = new RegistryItem {KeyValue = Properties.Resources.NewRegistryItem};
+            var registryItem = new RegistryItem {KeyValue = Properties.Resources.NewRegistryItem, Action = RegistryAction.Add, ValueKind = RegistryValueKind.String};
             Core.UpdateInfo.RegistryItems.Add(registryItem);
         }
 
@@ -188,8 +188,10 @@ namespace SevenUpdate.Sdk.Pages
             var index = listBox.SelectedIndex;
             if (index < 0)
                 return;
-            if (e.Key == Key.Delete)
-                Core.UpdateInfo.RegistryItems.RemoveAt(index);
+            if (e.Key != Key.Delete)
+                return;
+            
+            Core.UpdateInfo.RegistryItems.RemoveAt(index);
             listBox.SelectedIndex = (index - 1);
 
             if (listBox.SelectedIndex < 0 && listBox.Items.Count > 0)
