@@ -361,7 +361,7 @@ namespace SevenUpdate
                             Directory.CreateDirectory(linkLocation);
                         File.Delete(linkLocation + linkName + @".lnk");
                         // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut)ws.CreateShortcut(linkLocation + linkName + @".lnk");
+                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation + linkName + @".lnk");
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
                         // Description for the shortcut

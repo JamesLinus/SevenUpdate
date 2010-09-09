@@ -1,10 +1,33 @@
-﻿using System;
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
+
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
+#endregion
+
 namespace SevenUpdate
 {
-
     /// <summary>
     ///   Provides event data for the SearchCompleted event
     /// </summary>
@@ -14,9 +37,9 @@ namespace SevenUpdate
         ///   Contains event data associated with this event
         /// </summary>
         /// <param name = "applications">The collection of applications to update</param>
-        /// <param name="importantCount">The number of important updates</param>
-        /// <param name="recommendedCount">The number of recommended updates</param>
-        /// <param name="optionalCount">The number of optional updates</param>
+        /// <param name = "importantCount">The number of important updates</param>
+        /// <param name = "recommendedCount">The number of recommended updates</param>
+        /// <param name = "optionalCount">The number of optional updates</param>
         public SearchCompletedEventArgs(Collection<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
         {
             Applications = applications;
@@ -363,7 +386,6 @@ namespace SevenUpdate
         public Process Process { get; private set; }
     }
 
-
     /// <summary>
     ///   Indicates a type of error that can occur
     /// </summary>
@@ -394,5 +416,4 @@ namespace SevenUpdate
         /// </summary>
         SearchError
     }
-
 }

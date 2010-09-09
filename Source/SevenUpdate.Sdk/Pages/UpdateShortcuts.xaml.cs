@@ -131,7 +131,8 @@ namespace SevenUpdate.Sdk.Pages
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            var shortcut = new Shortcut {Location = Path.GetDirectoryName(cfd.FileName), Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>()};
+
+            var shortcut = new Shortcut {Location = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit), Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>()};
             var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
@@ -157,17 +158,17 @@ namespace SevenUpdate.Sdk.Pages
             var shortcut = new Shortcut
                                {
                                    Arguments = importedShortcut.Arguments,
-                                   Icon = importedShortcut.Icon,
-                                   Location = Path.GetDirectoryName(importedShortcut.Location),
+                                   Icon = Base.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit),
+                                   Location = Base.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit),
                                    Action = ShortcutAction.Update,
-                                   Target = importedShortcut.Target,
+                                   Target = Base.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
                                    Name = new ObservableCollection<LocaleString>(),
                                    Description = new ObservableCollection<LocaleString>()
                                };
 
             var ls = new LocaleString {Lang = Base.Locale, Value = importedShortcut.Name};
             shortcut.Name.Add(ls);
-            ls = new LocaleString { Lang = Base.Locale, Value = importedShortcut.Description };
+            ls = new LocaleString {Lang = Base.Locale, Value = importedShortcut.Description};
             shortcut.Description.Add(ls);
 
             Core.UpdateInfo.Shortcuts.Add(shortcut);
@@ -241,8 +242,6 @@ namespace SevenUpdate.Sdk.Pages
         {
             Core.SelectedShortcut = listBox.SelectedIndex;
         }
-
-        
 
         private void listBox_KeyDown(object sender, KeyEventArgs e)
         {

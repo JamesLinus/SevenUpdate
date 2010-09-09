@@ -173,9 +173,7 @@ namespace SevenUpdate
                 if (app.Updates[y].Files.Count > 0)
                 {
                     foreach (var t in app.Updates[y].Files.Where(t => t.Action != FileAction.ExecuteThenDelete))
-                    {
                         remove = false;
-                    }
                 }
 
                 // If the update does not have any files or if the update only contains execute and delete, then let's remove the update.
@@ -252,7 +250,6 @@ namespace SevenUpdate
 
                 if (app != null)
                 {
-
                     app.AppInfo = new Sua
                                       {
                                           AppUrl = "http://sevenupdate.com/",

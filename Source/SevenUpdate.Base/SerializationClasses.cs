@@ -625,12 +625,13 @@ namespace SevenUpdate
         private ObservableCollection<LocaleString> description;
         private string downloadUrl;
         private ObservableCollection<UpdateFile> files;
+        private bool hidden;
         private Importance importance;
         private string infoUrl, licenseUrl;
         private ObservableCollection<LocaleString> name;
         private ObservableCollection<RegistryItem> registryItems;
         private string releaseDate;
-        private bool selected, hidden;
+        private bool selected;
         private ObservableCollection<Shortcut> shortcuts;
         private ulong size;
 
@@ -1153,9 +1154,9 @@ namespace SevenUpdate
         private ShortcutAction action;
         private string arguments;
         private ObservableCollection<LocaleString> description;
-        private ObservableCollection<LocaleString> name;
         private string icon;
         private string location;
+        private ObservableCollection<LocaleString> name;
         private string target;
 
         #endregion
@@ -1174,10 +1175,9 @@ namespace SevenUpdate
                 name = value;
                 // Call OnPropertyChanged whenever the property is updated
                 OnPropertyChanged("Name");
-
             }
         }
-        
+
         /// <summary>
         ///   The location of where the shortcut is to be stored.
         /// </summary>

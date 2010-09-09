@@ -38,7 +38,6 @@ using ProtoBuf;
 
 namespace SevenUpdate
 {
-
     /// <summary>
     ///   Methods that are shared between other classes
     /// </summary>
@@ -416,7 +415,6 @@ namespace SevenUpdate
 
                 if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                 {
-
                     // ReSharper disable AssignNullToNotNullAttribute
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%");
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%");
