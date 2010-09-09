@@ -33,7 +33,9 @@ namespace Microsoft.Windows.Controls
                 if (!String.IsNullOrEmpty(url))
                 {
                     new Uri(value.ToString());
-                    return new ValidationResult(true, null);
+                    if (Path.GetFileName(url).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                        new ValidationResult(false, Resources.FilePathInvalid);
+                    new ValidationResult(true, null);
                 }
 
                 return IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
@@ -72,6 +74,8 @@ namespace Microsoft.Windows.Controls
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
+            if (input == null)
+                return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
             if (string.IsNullOrWhiteSpace(input))
                 return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);

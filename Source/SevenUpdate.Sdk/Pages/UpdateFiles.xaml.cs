@@ -81,7 +81,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            var installUrl = Base.ConvertPath(fullName, false, true);
+            var installUrl = Base.ConvertPath(fullName, false, Core.AppInfo.Is64Bit);
 
             var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
 
@@ -99,7 +99,7 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(fileLocation ?? updateFile.Destination); }).ContinueWith(_ =>
+            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, true, Core.AppInfo.Is64Bit)); }).ContinueWith(_ =>
                                                                                                                                       {
                                                                                                                                           hashesGenerating--;
                                                                                                                                           if (hashesGenerating < 1)
@@ -111,7 +111,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(fileLocation ?? updateFile.Destination); });
+            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(Base.ConvertPath(fileLocation ?? updateFile.Destination, true, Core.AppInfo.Is64Bit)); });
         }
 
         private void AddFiles(IList<string> files)
@@ -162,7 +162,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)

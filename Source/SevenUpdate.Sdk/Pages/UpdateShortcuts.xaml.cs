@@ -103,21 +103,21 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion

@@ -402,7 +402,7 @@ namespace SevenUpdate
 
             if (expand == false)
             {
-                var path2 = new StringBuilder();
+                var path2 = new StringBuilder(260);
                 NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
                 stringBuilder.Replace(path2.ToString(), "%ALLUSERSSTARTMENUPROGRAMS%");
                 NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_STARTMENU, false);
@@ -416,7 +416,8 @@ namespace SevenUpdate
 
                 if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                 {
-// ReSharper disable AssignNullToNotNullAttribute
+
+                    // ReSharper disable AssignNullToNotNullAttribute
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%");
                     stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%");
 
@@ -461,7 +462,7 @@ namespace SevenUpdate
             }
             else
             {
-                var path2 = new StringBuilder();
+                var path2 = new StringBuilder(260);
 
                 NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, path2, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
 
@@ -650,6 +651,8 @@ namespace SevenUpdate
         /// <returns>A ulong value indicating the file size</returns>
         public static ulong GetFileSize(string file)
         {
+            if (!File.Exists(file))
+                return 0;
             return (ulong) new FileInfo(file).Length;
         }
 
@@ -664,7 +667,6 @@ namespace SevenUpdate
         /// <returns>The SHA-2 Hash of the file</returns>
         public static string GetHash(string file)
         {
-            file = ConvertPath(file, true, false);
             if (!File.Exists(file))
                 return null;
             var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);

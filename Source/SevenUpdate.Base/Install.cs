@@ -131,7 +131,7 @@ namespace SevenUpdate
                     }
 
                     currentUpdateName = Base.GetLocaleString(apps[x].Updates[y].Name);
-                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
+                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, apps[x].AppInfo.Is64Bit))
                     {
                         try
                         {
