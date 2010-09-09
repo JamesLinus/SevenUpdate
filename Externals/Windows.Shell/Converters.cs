@@ -1,14 +1,38 @@
-﻿using System;
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
+
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
+
+#endregion
 
 namespace Microsoft.Windows.Common
 {
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof(string), typeof(bool))]
+    [ValueConversion(typeof (string), typeof (bool))]
     public sealed class StringToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -47,7 +71,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the string to a bool
     /// </summary>
-    [ValueConversion(typeof(string), typeof(Visibility))]
+    [ValueConversion(typeof (string), typeof (Visibility))]
     public sealed class StringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -88,7 +112,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(Visibility))]
+    [ValueConversion(typeof (int), typeof (Visibility))]
     public sealed class IntToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -99,7 +123,7 @@ namespace Microsoft.Windows.Common
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int)value : 0;
+            var count = value is int ? (int) value : 0;
 
             if (parameter != null)
             {
@@ -127,7 +151,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(bool))]
+    [ValueConversion(typeof (int), typeof (bool))]
     public sealed class IntToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -138,7 +162,7 @@ namespace Microsoft.Windows.Common
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int)value : 0;
+            var count = value is int ? (int) value : 0;
 
             if (parameter != null)
             {
@@ -164,7 +188,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Enum to a Boolean
     /// </summary>
-    [ValueConversion(typeof(Enum), typeof(bool))]
+    [ValueConversion(typeof (Enum), typeof (bool))]
     public sealed class EnumToBool : IValueConverter
     {
         #region IValueConverter Members
@@ -185,7 +209,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Enum to a Boolean
     /// </summary>
-    [ValueConversion(typeof(Enum), typeof(bool))]
+    [ValueConversion(typeof (Enum), typeof (bool))]
     public sealed class InverseEnumToBool : IValueConverter
     {
         #region IValueConverter Members
@@ -206,7 +230,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts a bool value to the opposite value
     /// </summary>
-    [ValueConversion(typeof(bool), typeof(bool))]
+    [ValueConversion(typeof (bool), typeof (bool))]
     public sealed class InverseBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -231,5 +255,4 @@ namespace Microsoft.Windows.Common
 
         #endregion
     }
-
 }

@@ -4,16 +4,16 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="16" />
 			<ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="699*" />
+			<ColumnDefinition Width="699*" />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
 		<Button Content="Close" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnClose" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="2" Click="Close_Click" Margin="12" HorizontalAlignment="Right" />
 		<TextBlock HorizontalAlignment="Left" Name="textBlock2" Padding="2" Text="Version:" VerticalAlignment="Top" Grid.Column="1" />
 		<TextBlock HorizontalAlignment="Left" Name="textBlock1" Padding="2" Text="Support:" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" />

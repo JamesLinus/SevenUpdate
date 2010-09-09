@@ -1,4 +1,26 @@
-﻿using System;
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
+
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,6 +31,8 @@ using Microsoft.Windows.Internal;
 using SevenUpdate.Pages;
 using SevenUpdate.Properties;
 
+#endregion
+
 namespace SevenUpdate
 {
     internal sealed class Core : INotifyPropertyChanged
@@ -17,15 +41,10 @@ namespace SevenUpdate
 
         private static Core instance;
 
-        internal static Core Instance
-        {
-
-            get { return instance ?? (instance = new Core()); }
-        }
-
         private static UpdateAction updateAction;
 
         private static bool isAdmin;
+        internal static Core Instance { get { return instance ?? (instance = new Core()); } }
 
         #endregion
 
@@ -48,10 +67,7 @@ namespace SevenUpdate
         /// </summary>
         public bool IsAdmin
         {
-            get
-            {
-                return CoreNativeMethods.IsUserAnAdmin() || isAdmin;
-            }
+            get { return CoreNativeMethods.IsUserAnAdmin() || isAdmin; }
 
             set
             {
@@ -59,7 +75,7 @@ namespace SevenUpdate
                 OnPropertyChanged("IsAdmin");
             }
         }
-        
+
         /// <summary>
         ///   Gets a collection of software that Seven Update can check for updates
         /// </summary>
@@ -73,7 +89,7 @@ namespace SevenUpdate
             get
             {
                 var t = Base.Deserialize<Config>(Base.ConfigFile);
-                return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
             }
         }
 
@@ -113,6 +129,12 @@ namespace SevenUpdate
 
         #endregion
 
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
         /// <summary>
         ///   Checks for updates
         /// </summary>
@@ -145,22 +167,34 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) != TaskDialogResult.Cancel)
+                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) !=
+                        TaskDialogResult.Cancel)
                         Base.StartProcess("shutdown.exe", "-r -t 00");
-                    
                 }
             }
             else
                 ShowMessage(null, TaskDialogStandardIcon.Information, Resources.AlreadyUpdating);
         }
 
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        private void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
         #region TaskDialog Methods
 
         /// <summary>
-        /// Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
         /// </summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, string description)
         {
@@ -168,11 +202,11 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
         /// </summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="icon"></param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
+        /// <param name = "icon"></param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
@@ -180,12 +214,12 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
         /// </summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="defaultButtonText">Text to display on the button</param>
-        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
+        /// <param name = "defaultButtonText">Text to display on the button</param>
+        /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, string description, string defaultButtonText, bool displayShieldOnButton)
         {
@@ -193,31 +227,32 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
         /// </summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name="icon">The icon to use</param>
-        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="footerText">Text to display as a footer message</param>
-        /// <param name="defaultButtonText">Text to display on the button</param>
-        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "icon">The icon to use</param>
+        /// <param name = "standardButtons">The standard buttons to use (with or without the custom default button text)</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
+        /// <param name = "footerText">Text to display as a footer message</param>
+        /// <param name = "defaultButtonText">Text to display on the button</param>
+        /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
+        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null,
+                                                     string defaultButtonText = null, bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
                 var td = new TaskDialog
-                {
-                    Caption = Resources.SevenUpdate,
-                    InstructionText = instructionText,
-                    Text = description,
-                    Icon = icon,
-                    FooterText = footerText,
-                    FooterIcon = TaskDialogStandardIcon.Information,
-                    Cancelable = true,
-                    StandardButtons = standardButtons
-                };
+                             {
+                                 Caption = Resources.SevenUpdate,
+                                 InstructionText = instructionText,
+                                 Text = description,
+                                 Icon = icon,
+                                 FooterText = footerText,
+                                 FooterIcon = TaskDialogStandardIcon.Information,
+                                 Cancelable = true,
+                                 StandardButtons = standardButtons
+                             };
                 if (defaultButtonText != null)
                 {
                     var button = new TaskDialogButton("btnCustom", defaultButtonText) {Default = true, ShowElevationIcon = displayShieldOnButton};
@@ -271,24 +306,6 @@ namespace SevenUpdate
         ///   Occurs when the user cancels their update selection
         /// </summary>
         internal static event EventHandler UpdateActionChanged;
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name = "name" />
-        private void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
-        }
 
         #endregion
     }

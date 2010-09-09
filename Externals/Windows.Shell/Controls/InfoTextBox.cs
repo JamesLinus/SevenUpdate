@@ -1,6 +1,6 @@
 ﻿#region GNU Public License Version 3
 
-// Copyright 2010 Robert Baker, Seven Software.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //   
 //      Seven Update is free software: you can redistribute it and/or modify
@@ -80,7 +80,7 @@ namespace Microsoft.Windows.Controls
         private AdornerLabel myAdornerLabel;
         private AdornerLayer myAdornerLayer;
 
-        private new static void  IsVisibleChanged(object sender, EventArgs e)
+        private new static void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
             if (infoTextBox == null)
@@ -143,7 +143,7 @@ namespace Microsoft.Windows.Controls
     // Adorners must subclass the abstract base class Adorner.
     public class AdornerLabel : Adorner
     {
-        private TextBlock textBlock;
+        private readonly TextBlock textBlock;
 
         // Be sure to call the base class constructor.
         public AdornerLabel(UIElement adornedElement, string label, Style labelStyle) : base(adornedElement)
@@ -218,7 +218,7 @@ namespace Microsoft.Windows.Controls
                 if (adorners == null)
                     return;
 
-                foreach (Adorner toRemove in adorners)
+                foreach (var toRemove in adorners)
                     adr.Remove(toRemove);
             }
             catch

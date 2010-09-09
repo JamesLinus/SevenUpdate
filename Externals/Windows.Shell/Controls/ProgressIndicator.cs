@@ -1,4 +1,26 @@
-﻿using System;
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
+
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,9 +29,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 
+#endregion
+
 namespace Microsoft.Windows.Controls
 {
-    [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
+    [TemplatePart(Name = ElementCanvas, Type = typeof (Canvas))]
     public sealed class ProgressIndicator : RangeBase
     {
         #region Constants
@@ -20,56 +44,32 @@ namespace Microsoft.Windows.Controls
 
         #region Private Fields
 
+        private readonly DispatcherTimer dispatcherTimer;
         private Canvas canvas;
 
         private Array canvasElements;
 
-        private readonly DispatcherTimer dispatcherTimer;
-
-        private int index;
-
         private bool clockwise;
+        private int index;
 
         #endregion
 
         #region Dependency Properties
 
-        public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register(
-            "IndeterminateText", typeof(string), typeof(ProgressIndicator));
+        public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register("IndeterminateText", typeof (string), typeof (ProgressIndicator));
 
-        public string IndeterminateText
-        {
-            get { return (string)GetValue(IndeterminateTextProperty); }
-            set { SetValue(IndeterminateTextProperty, value); }
-        }
+        public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register("IsIndeterminate", typeof (bool), typeof (ProgressIndicator));
 
-        public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register(
-            "IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
+        public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register("ElementStoryboard", typeof (Storyboard), typeof (ProgressIndicator));
 
-        public bool IsIndeterminate
-        {
-            get { return (bool)GetValue(IsIndeterminateProperty); }
-            set { SetValue(IsIndeterminateProperty, value); }
-        }
+        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof (bool), typeof (ProgressIndicator),
+                                                                                                  new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
-        public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register(
-            "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
+        public string IndeterminateText { get { return (string) GetValue(IndeterminateTextProperty); } set { SetValue(IndeterminateTextProperty, value); } }
+        public bool IsIndeterminate { get { return (bool) GetValue(IsIndeterminateProperty); } set { SetValue(IsIndeterminateProperty, value); } }
+        public Storyboard ElementStoryboard { get { return (Storyboard) GetValue(ElementStoryboardProperty); } set { SetValue(ElementStoryboardProperty, value); } }
 
-        public Storyboard ElementStoryboard
-        {
-            get { return (Storyboard)GetValue(ElementStoryboardProperty); }
-            set { SetValue(ElementStoryboardProperty, value); }
-        }
-
-        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register(
-            "IsRunning", typeof(bool), typeof(ProgressIndicator),
-            new FrameworkPropertyMetadata(IsRunningPropertyChanged));
-
-        public bool IsRunning
-        {
-            get { return (bool)GetValue(IsRunningProperty); }
-            set { SetValue(IsRunningProperty, value); }
-        }
+        public bool IsRunning { get { return (bool) GetValue(IsRunningProperty); } set { SetValue(IsRunningProperty, value); } }
 
         #endregion
 
@@ -77,15 +77,15 @@ namespace Microsoft.Windows.Controls
 
         static ProgressIndicator()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(typeof(ProgressIndicator)));
-            MaximumProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(100.0));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof (ProgressIndicator), new FrameworkPropertyMetadata(typeof (ProgressIndicator)));
+            MaximumProperty.OverrideMetadata(typeof (ProgressIndicator), new FrameworkPropertyMetadata(100.0));
         }
 
         public ProgressIndicator()
         {
             if (Resources.Count != 0)
                 return;
-            var resourceDictionary = new ResourceDictionary { Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary {Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative)};
 
             Resources.MergedDictionaries.Add(resourceDictionary);
             dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, Dispatcher) {Interval = new TimeSpan(0, 0, 0, 0, 300)};
@@ -97,17 +97,13 @@ namespace Microsoft.Windows.Controls
 
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var progressIndicator = (ProgressIndicator)d;
+            var progressIndicator = (ProgressIndicator) d;
 
-            if ((bool)e.NewValue)
-            {
+            if ((bool) e.NewValue)
                 progressIndicator.Start();
-            }
             else
-            {
                 progressIndicator.Stop();
-            }
-        }        
+        }
 
         private void Start()
         {
@@ -131,7 +127,7 @@ namespace Microsoft.Windows.Controls
             StartStoryboard(element);
 
             clockwise = index == canvasElements.Length - 1 ? !clockwise : clockwise;
-            index = (index + 1) % canvasElements.Length;
+            index = (index + 1)%canvasElements.Length;
         }
 
         private void StartStoryboard(FrameworkElement element)
@@ -145,7 +141,7 @@ namespace Microsoft.Windows.Controls
             var storyboard = new Storyboard();
             NameScope.SetNameScope(storyboard, NameScope.GetNameScope(this));
 
-            foreach (Timeline timelineClone in ElementStoryboard.Children.Select(timeline => timeline.Clone()))
+            foreach (var timelineClone in ElementStoryboard.Children.Select(timeline => timeline.Clone()))
             {
                 storyboard.Children.Add(timelineClone);
                 Storyboard.SetTargetName(timelineClone, element.Name);
@@ -166,14 +162,14 @@ namespace Microsoft.Windows.Controls
             if (canvas != null)
             {
                 // Get the center of the canvas. This will be the base of the rotation.
-                double centerX = canvas.Width / 2;
-                double centerY = canvas.Height / 2;
+                double centerX = canvas.Width/2;
+                double centerY = canvas.Height/2;
 
                 // Get the no. of degrees between each circles.
-                double interval = 360.0 / canvas.Children.Count;
+                double interval = 360.0/canvas.Children.Count;
                 double angle = -135;
 
-                canvasElements = Array.CreateInstance(typeof(UIElement), canvas.Children.Count);
+                canvasElements = Array.CreateInstance(typeof (UIElement), canvas.Children.Count);
                 canvas.Children.CopyTo(canvasElements, 0);
                 canvas.Children.Clear();
 

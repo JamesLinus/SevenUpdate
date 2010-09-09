@@ -28,7 +28,7 @@
 		<Setter Property="HorizontalContentAlignment" Value="Left" />
 		<Setter Property="Padding" Value="5,0" />
 	</Style>
-    
+
 	<Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
 		<Style.Triggers>
 			<!-- setting up triggers for alternate background colors -->
@@ -38,11 +38,11 @@
 			<Trigger Property="ItemsControl.AlternationIndex" Value="1">
 				<Setter Property="Background" Value="White" />
 			</Trigger>
-            <!-- setting up triggers for hidden updates-->
-            <DataTrigger  Binding="{Binding Hidden}" Value="True">
-                <Setter Property="Foreground" Value="Gray" />
-            </DataTrigger>
-        </Style.Triggers>
+			<!-- setting up triggers for hidden updates-->
+			<DataTrigger Binding="{Binding Hidden}" Value="True">
+				<Setter Property="Foreground" Value="Gray" />
+			</DataTrigger>
+		</Style.Triggers>
 	</Style>
 
 	<Style x:Key="underlineTextBlock" TargetType="TextBlock">

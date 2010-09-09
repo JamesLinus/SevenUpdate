@@ -133,8 +133,7 @@ namespace SevenUpdate.Helper
                     Process.Start(AppDir + "SevenUpdate.exe", "Auto");
                 else
                 {
-                    var p = new Process
-                                {StartInfo = {FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\""}};
+                    var p = new Process {StartInfo = {FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\""}};
                     p.Start();
                 }
                 Environment.Exit(0);

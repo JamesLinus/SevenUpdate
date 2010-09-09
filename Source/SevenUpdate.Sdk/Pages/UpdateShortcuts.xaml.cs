@@ -132,7 +132,12 @@ namespace SevenUpdate.Sdk.Pages
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
-            var shortcut = new Shortcut {Location = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit), Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>()};
+            var shortcut = new Shortcut
+                               {
+                                   Location = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit),
+                                   Action = ShortcutAction.Add,
+                                   Name = new ObservableCollection<LocaleString>()
+                               };
             var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);

@@ -1,6 +1,6 @@
 #region GNU Public License Version 3
 
-// Copyright 2010 Robert Baker, Seven Software.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //   
 //      Seven Update is free software: you can redistribute it and/or modify
@@ -24,7 +24,6 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 #endregion
 
@@ -43,20 +42,21 @@ namespace Microsoft.Windows.Controls
 
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof (string), typeof (CommandLink),
                                                                                              new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+
         #endregion
 
         #region Constructors
 
         static CommandLink()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CommandLink), new FrameworkPropertyMetadata(typeof(CommandLink)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof (CommandLink), new FrameworkPropertyMetadata(typeof (CommandLink)));
         }
 
         public CommandLink()
         {
             if (Resources.Count != 0)
                 return;
-            var resourceDictionary = new ResourceDictionary { Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary {Source = new Uri("/Windows.Shell;component/Resources/Dictionary.xaml", UriKind.Relative)};
             Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

@@ -105,8 +105,6 @@ namespace SevenUpdate.Admin
             }
         }
 
-       
-
         /// <summary>
         ///   Gets or Sets a bool value indicating Seven Update UI is currently connected.
         /// </summary>

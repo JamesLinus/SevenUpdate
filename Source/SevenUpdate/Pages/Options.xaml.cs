@@ -178,6 +178,18 @@ namespace SevenUpdate.Pages
             Task.Factory.StartNew(DownloadSul);
         }
 
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            try
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
+            catch
+            {
+            }
+            e.Handled = true;
+        }
+
         #region ListView Related
 
         /// <summary>
@@ -204,19 +216,6 @@ namespace SevenUpdate.Pages
 
         #endregion
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            try
-            {
-                Process.Start(e.Uri.AbsoluteUri);
-            }
-            catch
-            {
-            }
-            e.Handled = true;
-        }
-
         #endregion
-
     }
 }

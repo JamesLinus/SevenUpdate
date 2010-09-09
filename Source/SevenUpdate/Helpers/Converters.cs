@@ -219,14 +219,14 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts the DateTime to a String
     /// </summary>
-    [ValueConversion(typeof(DateTime), typeof(string))]
+    [ValueConversion(typeof (DateTime), typeof (string))]
     internal sealed class DateConverter : IValueConverter
     {
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTime = value is DateTime ? (DateTime)value : new DateTime();
+            var dateTime = value is DateTime ? (DateTime) value : new DateTime();
 
             if (dateTime != DateTime.MinValue)
             {

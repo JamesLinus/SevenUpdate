@@ -26,13 +26,13 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using SevenUpdate.Properties;
 using SevenUpdate.WCF;
 
 #endregion
 
 namespace SevenUpdate
 {
-
     /// <summary>
     ///   Contains callback methods for WCF
     /// </summary>
@@ -130,7 +130,6 @@ namespace SevenUpdate
     /// </summary>
     internal static class AdminClient
     {
-
         /// <summary>
         ///   The client of the WCF service
         /// </summary>
@@ -156,7 +155,7 @@ namespace SevenUpdate
                     Thread.SpinWait(200);
                     continue;
                 }
-                AdminError(new FaultException(Properties.Resources.CouldNotConnectToService));
+                AdminError(new FaultException(Resources.CouldNotConnectToService));
                 return false;
             }
 
@@ -169,7 +168,7 @@ namespace SevenUpdate
             catch (EndpointNotFoundException)
             {
                 Thread.SpinWait(200);
-               return WaitForAdmin();
+                return WaitForAdmin();
             }
             catch (Exception e)
             {
@@ -325,7 +324,7 @@ namespace SevenUpdate
         {
             if (!Connect())
                 return;
-            
+
             wcfClient.AddApp(app);
         }
 

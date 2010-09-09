@@ -194,7 +194,7 @@ namespace SevenUpdate.Windows
             para.Inlines.Add(r);
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
-            
+
             if (Core.Instance.IsAdmin)
                 btnAction.IsShieldNeeded = false;
             else

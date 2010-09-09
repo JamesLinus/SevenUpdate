@@ -24,7 +24,6 @@ using System.Collections.ObjectModel;
 using System.ServiceModel;
 using ProtoBuf.ServiceModel;
 
-
 #endregion
 
 namespace SevenUpdate.Service
@@ -32,7 +31,7 @@ namespace SevenUpdate.Service
     /// <summary>
     ///   Methods for the Event Service
     /// </summary>
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallBack))]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof (IServiceCallBack))]
     public interface IService
     {
         /// <summary>

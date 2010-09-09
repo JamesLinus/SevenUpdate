@@ -91,7 +91,6 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class UpdateInfo
     {
-
         #region Fields
 
         /// <summary>
@@ -229,9 +228,7 @@ namespace SevenUpdate.Pages
             {
                 appIndices.Add(x);
                 foreach (var t in Core.Applications[x].Updates)
-                {
                     selectedUpdates.Add(t);
-                }
             }
 
             lvUpdates.ItemsSource = selectedUpdates;
@@ -344,9 +341,7 @@ namespace SevenUpdate.Pages
             else
             {
                 if (AdminClient.ShowUpdate(hnh))
-                {
                     update.Hidden = false;
-                }
             }
         }
 

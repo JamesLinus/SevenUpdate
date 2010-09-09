@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -8,7 +28,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 
 #endregion
@@ -49,9 +68,8 @@ namespace Microsoft.Windows.Controls
 
         #region Public attached properties
 
-
         public static readonly DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached("CustomSorter", typeof (string), typeof (ListViewSorter),
-                                                                                                        new FrameworkPropertyMetadata(null, CustomSorterCallback));
+                                                                                                             new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         public static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached("AutoSort", typeof (bool), typeof (ListViewSorter),
                                                                                                          new UIPropertyMetadata(false, AutoSortCallback));
@@ -72,7 +90,7 @@ namespace Microsoft.Windows.Controls
         /// <returns>an <see cref = "IComparer" /> for CustomSorter</returns>
         private static string GetCustomSorter(DependencyObject obj)
         {
-            return (string)obj.GetValue(CustomSorterProperty);
+            return (string) obj.GetValue(CustomSorterProperty);
         }
 
         /// <summary>
@@ -197,6 +215,8 @@ namespace Microsoft.Windows.Controls
 
         #region Helper methods
 
+        private static ListSortDirection currentSortDirection;
+
         public static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
             DependencyObject parent = VisualTreeHelper.GetParent(reference);
@@ -228,7 +248,6 @@ namespace Microsoft.Windows.Controls
             SetSortedColumnHeader(listView, sortedColumnHeader);
         }
 
-        private static ListSortDirection currentSortDirection;
         public static void ApplyCustomSort(ListCollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
         {
             if (view.SortDescriptions.Count > 0)
@@ -237,7 +256,7 @@ namespace Microsoft.Windows.Controls
                 if (currentSort.PropertyName == propertyName)
                     currentSortDirection = currentSort.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
             }
-                
+
             try
             {
                 var sorter = Activator.CreateInstance(Type.GetType(GetCustomSorter(listView))) as ListViewCustomComparer;
@@ -256,15 +275,15 @@ namespace Microsoft.Windows.Controls
                 }
             }
             catch
-                {
-                }
+            {
+            }
 
-                var currentSortedColumnHeader = GetSortedColumnHeader(listView);
-                if (currentSortedColumnHeader != null)
-                    RemoveSortGlyph(currentSortedColumnHeader);
+            var currentSortedColumnHeader = GetSortedColumnHeader(listView);
+            if (currentSortedColumnHeader != null)
+                RemoveSortGlyph(currentSortedColumnHeader);
             if (string.IsNullOrEmpty(propertyName))
                 return;
-            
+
             if (GetShowSortGlyph(listView))
                 AddSortGlyph(sortedColumnHeader, currentSortDirection, currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
             SetSortedColumnHeader(listView, sortedColumnHeader);
@@ -282,7 +301,7 @@ namespace Microsoft.Windows.Controls
             var adorners = adornerLayer.GetAdorners(columnHeader);
             if (adorners == null)
                 return;
-            foreach (Adorner adorner in adorners)
+            foreach (var adorner in adorners)
             {
                 if (adorner is SortGlyphAdorner)
                     adornerLayer.Remove(adorner);
@@ -295,9 +314,9 @@ namespace Microsoft.Windows.Controls
 
         private class SortGlyphAdorner : Adorner
         {
-            private GridViewColumnHeader columnHeader;
-            private ListSortDirection direction;
-            private ImageSource sortGlyph;
+            private readonly GridViewColumnHeader columnHeader;
+            private readonly ListSortDirection direction;
+            private readonly ImageSource sortGlyph;
 
             public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph) : base(columnHeader)
             {

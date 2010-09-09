@@ -1,9 +1,28 @@
-﻿#region
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
+#region
 
 using System;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Windows.Controls;
 using Microsoft.Windows.Properties;
 
@@ -39,7 +58,6 @@ namespace Microsoft.Windows.Controls
                 }
 
                 return IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
-                    
             }
             catch
             {
@@ -56,8 +74,8 @@ namespace Microsoft.Windows.Controls
         {
             var input = value as string;
 
-           if(string.IsNullOrWhiteSpace(input))
-               return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+            if (string.IsNullOrWhiteSpace(input))
+                return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
             if (input.IndexOfAny(Path.GetInvalidPathChars()) >= 0 || input.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
                 return new ValidationResult(false, Resources.FilePathInvalid);

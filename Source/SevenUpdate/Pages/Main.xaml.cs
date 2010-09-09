@@ -138,7 +138,7 @@ namespace SevenUpdate.Pages
                 Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
         }
 
-        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             timer.Enabled = false;
             timer.Stop();

@@ -4,7 +4,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="243*" />
-            <RowDefinition Height="65*" />
+			<RowDefinition Height="65*" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="12" />

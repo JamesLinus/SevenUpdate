@@ -33,6 +33,7 @@ namespace SevenUpdate.Windows
     public sealed partial class UpdateDetails
     {
         private string helpUrl, infoUrl;
+
         /// <summary>
         ///   Constructor for the Update Details window
         /// </summary>

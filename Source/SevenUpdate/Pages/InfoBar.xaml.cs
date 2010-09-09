@@ -30,6 +30,7 @@ using SevenUpdate.Windows;
 
 namespace SevenUpdate.Pages
 {
+
     #region Enums
 
     /// <summary>
@@ -119,7 +120,7 @@ namespace SevenUpdate.Pages
         public InfoBar()
         {
             InitializeComponent();
-            Search.ErrorOccurred += ErrorOccurred;            
+            Search.ErrorOccurred += ErrorOccurred;
             AdminClient.ServiceError += ErrorOccurred;
             Search.SearchCompleted += SearchCompleted;
             UpdateInfo.UpdateSelectionChanged += UpdateInfo_UpdateSelectionChanged;
@@ -149,7 +150,6 @@ namespace SevenUpdate.Pages
                 if (Core.Settings.IncludeRecommended)
                     e.ImportantCount += e.RecommendedCount;
 
-
                 #region GUI Updating
 
                 if (e.ImportantCount > 0 || e.OptionalCount > 0)
@@ -174,9 +174,7 @@ namespace SevenUpdate.Pages
                     if (e.OptionalCount > 0)
                     {
                         if (e.ImportantCount == 0)
-                        {
                             tbHeading.Text = Properties.Resources.NoImportantUpdates;
-                        }
 
                         if (e.OptionalCount == 1)
                             tbViewOptionalUpdates.Text = e.OptionalCount + " " + Properties.Resources.OptionalUpdateAvailable;
@@ -204,7 +202,7 @@ namespace SevenUpdate.Pages
         private void ErrorOccurred(ErrorOccurredEventArgs e)
         {
             Core.IsInstallInProgress = false;
-            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred; 
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
             switch (e.Type)
             {
                 case ErrorType.FatalNetworkError:
@@ -239,8 +237,7 @@ namespace SevenUpdate.Pages
                 tbStatus.Text = Properties.Resources.Installing + " " + e.UpdateName;
 
                 if (e.TotalUpdates > 1)
-                    tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " +
-                                              Properties.Resources.Complete;
+                    tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
                 else
                     tbStatus.Text += ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
             }
@@ -259,13 +256,13 @@ namespace SevenUpdate.Pages
             }
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
             {
-                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred * 100 / e.BytesTotal).ToString("F0") + " % " +
-                                         Properties.Resources.Complete + ")";
+                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
+                                Properties.Resources.Complete + ")";
             }
             else
             {
-                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files +
-                                         " " + Properties.Resources.Complete + ")";
+                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files + " " +
+                                Properties.Resources.Complete + ")";
             }
         }
 
@@ -281,7 +278,7 @@ namespace SevenUpdate.Pages
 
             #region Update Status
 
-            tbStatus.Text = Properties.Resources.Succeeded + ": " + e.UpdatesInstalled+ " ";
+            tbStatus.Text = Properties.Resources.Succeeded + ": " + e.UpdatesInstalled + " ";
 
             if (e.UpdatesInstalled == 1)
                 tbStatus.Text += Properties.Resources.Update;
@@ -366,7 +363,6 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
-            
             if (!Dispatcher.CheckAccess())
                 Dispatcher.BeginInvoke(InstallCompleted, e);
             else
@@ -570,17 +566,17 @@ namespace SevenUpdate.Pages
         #region UI Events
 
         /// <summary>
-        /// Sets the UI when the update action is changed
+        ///   Sets the UI when the update action is changed
         /// </summary>
-        void UpdateAction_Changed(object sender, EventArgs e)
+        private void UpdateAction_Changed(object sender, EventArgs e)
         {
             if (!Dispatcher.CheckAccess())
-                Dispatcher.BeginInvoke(()=>SetUI(Core.Instance.UpdateAction));
+                Dispatcher.BeginInvoke(() => SetUI(Core.Instance.UpdateAction));
             else
                 SetUI(Core.Instance.UpdateAction);
         }
 
-        void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
+        private void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (e.ImportantUpdates > 0)
             {

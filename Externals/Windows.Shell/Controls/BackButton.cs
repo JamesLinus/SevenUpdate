@@ -1,6 +1,6 @@
 #region GNU Public License Version 3
 
-// Copyright 2010 Robert Baker, Seven Software.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //   
 //      Seven Update is free software: you can redistribute it and/or modify
@@ -21,7 +21,6 @@
 #region
 
 using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -39,7 +38,7 @@ namespace Microsoft.Windows.Controls
 
         static BackButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof (BackButton), new FrameworkPropertyMetadata(typeof (BackButton)));
         }
 
         public BackButton()
@@ -52,5 +51,5 @@ namespace Microsoft.Windows.Controls
         }
 
         #endregion
-        }
+    }
 }

@@ -165,9 +165,7 @@ namespace SevenUpdate.Service
             var exists = false;
 
             foreach (var t in sul.Where(t => t.Directory == app.Directory && t.Is64Bit == app.Is64Bit))
-            {
                 exists = true;
-            }
             if (exists)
                 return;
             sul.Add(app);
