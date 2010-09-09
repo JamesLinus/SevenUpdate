@@ -155,7 +155,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.Remove(listBox.SelectedItem);
+            Core.UpdateInfo.RegistryItems.RemoveAt(listBox.SelectedIndex);
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)

@@ -77,13 +77,13 @@ namespace SevenUpdate.Sdk.Pages
             tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             // ReSharper restore PossibleNullReferenceException
             // Load Values
-            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Base.Locale))
                 tbxAppName.Text = t.Value;
 
-            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Base.Locale))
                 tbxAppDescription.Text = t.Value;
 
-            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Base.Locale))
                 tbxPublisher.Text = t.Value;
         }
 

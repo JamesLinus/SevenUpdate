@@ -55,7 +55,6 @@
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
 						</MenuItem.Icon>
-
 					</MenuItem>
 				</ContextMenu>
 			</ListBox.ContextMenu>

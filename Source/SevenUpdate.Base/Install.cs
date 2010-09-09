@@ -308,9 +308,9 @@ namespace SevenUpdate
                     case RegistryAction.DeleteValue:
                         try
                         {
-// ReSharper disable PossibleNullReferenceException
+                            // ReSharper disable PossibleNullReferenceException
                             key.OpenSubKey(regItems[x].Key, true).DeleteValue(regItems[x].KeyValue, false);
-// ReSharper restore PossibleNullReferenceException
+                            // ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
@@ -349,14 +349,19 @@ namespace SevenUpdate
                 try
                 {
                     var linkLocation = Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
+                    var linkName = Base.GetLocaleString(shortcuts[x].Name);
+
+                    if (!linkLocation.EndsWith(@"\"))
+                        linkLocation = linkLocation + @"\";
+
                     if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation)))
                     {
                         // ReSharper disable AssignNullToNotNullAttribute
-                        if (!Directory.Exists(Path.GetDirectoryName(linkLocation)))
-                            Directory.CreateDirectory(Path.GetDirectoryName(linkLocation));
-                        File.Delete(linkLocation);
+                        if (!Directory.Exists(linkLocation))
+                            Directory.CreateDirectory(linkLocation);
+                        File.Delete(linkLocation + linkName);
                         // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation);
+                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation + linkName);
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
                         // Description for the shortcut

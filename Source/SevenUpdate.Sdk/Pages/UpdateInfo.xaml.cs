@@ -133,10 +133,10 @@ namespace SevenUpdate.Sdk.Pages
             // ReSharper restore PossibleNullReferenceException
 
             // Load Values
-            foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == Base.Locale))
                 tbxUpdateDetails.Text = t.Value;
 
-            foreach (var t in Core.UpdateInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Core.UpdateInfo.Name.Where(t => t.Lang == Base.Locale))
                 tbxUpdateName.Text = t.Value;
         }
 

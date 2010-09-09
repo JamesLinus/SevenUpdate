@@ -56,6 +56,12 @@ namespace SevenUpdate.Sdk
                 case "Update.Name":
                     localeStrings = Core.UpdateInfo.Name;
                     break;
+                case "Shortcut.Name":
+                    localeStrings = Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name;
+                    break;
+                case "Shortcut.Description":
+                    localeStrings = Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description;
+                    break;
             }
 
 

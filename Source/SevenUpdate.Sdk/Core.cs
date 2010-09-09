@@ -28,6 +28,8 @@ namespace SevenUpdate.Sdk
         /// </summary>
         internal static Update UpdateInfo { get; set; }
 
+        internal static int SelectedShortcut { get; set; }
+
         /// <summary>
         ///   Checks to see if a Url is valid and on the internet
         /// </summary>

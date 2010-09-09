@@ -121,7 +121,7 @@ namespace SevenUpdate.Sdk
         {
             if (Application.Current == null)
                 return;
-
+            Base.Locale = Settings.Default.locale;
             if (Application.Current.Resources.MergedDictionaries.Count > 0)
                 return;
             // merge in your application resources

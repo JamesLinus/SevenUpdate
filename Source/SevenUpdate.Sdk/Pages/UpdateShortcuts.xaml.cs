@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -66,7 +67,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private static void SaveShortcut(string fileName)
         {
-            var shortcut = new Shortcut {Location = fileName, Action = ShortcutAction.Add};
+            var shortcut = new Shortcut {Location = Path.GetDirectoryName(fileName), Action = ShortcutAction.Add};
+            shortcut.Name = new ObservableCollection<LocaleString>();
+            var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(fileName)};
+            shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
 
@@ -152,7 +156,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
-            listBox.Items.RemoveAt(listBox.SelectedIndex);
+            Core.UpdateInfo.Shortcuts.RemoveAt(listBox.SelectedIndex);
         }
 
         #endregion
@@ -163,21 +167,35 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Language_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tbxShortcutDescription == null || cbxLocale.SelectedIndex < 0)
+            if (tbxDescription == null || cbxLocale.SelectedIndex < 0)
                 return;
 
             Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
-            var shortcutDescriptions = ((Shortcut) listBox.SelectedItem).Description;
+            var shortcutDescriptions = Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description ?? new ObservableCollection<LocaleString>();
+
+
             // Load Values
             foreach (var t in shortcutDescriptions.Where(t => t.Lang == Base.Locale))
             {
-                tbxShortcutDescription.Text = t.Value;
+                tbxDescription.Text = t.Value;
                 found = true;
             }
             if (!found)
-                tbxShortcutDescription.Text = null;
+                tbxDescription.Text = null;
+
+            found = false;
+            var shortcutNames = Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Name ?? new ObservableCollection<LocaleString>();
+
+            // Load Values
+            foreach (var t in shortcutNames.Where(t => t.Lang == Base.Locale))
+            {
+                tbxName.Text = t.Value;
+                found = true;
+            }
+            if (!found)
+                tbxName.Text = null;
         }
 
         #endregion
@@ -192,28 +210,11 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #endregion
-
-        private void ShortcutDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Core.UpdateInfo.Shortcuts == null)
-                Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
-
-            if (Core.UpdateInfo.Shortcuts.Count < 0)
-                return;
-
-            var found = false;
-            foreach (var t in Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == Base.Locale))
-            {
-                t.Value = tbxShortcutDescription.Text;
-                found = true;
-            }
-
-            if (found)
-                return;
-
-            var ls = new LocaleString {Lang = Base.Locale, Value = tbxShortcutDescription.Text};
-            Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Add(ls);
+            Core.SelectedShortcut = listBox.SelectedIndex;
         }
+
+        #endregion
     }
 }

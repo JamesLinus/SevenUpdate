@@ -1153,6 +1153,7 @@ namespace SevenUpdate
         private ShortcutAction action;
         private string arguments;
         private ObservableCollection<LocaleString> description;
+        private ObservableCollection<LocaleString> name;
         private string icon;
         private string location;
         private string target;
@@ -1165,6 +1166,22 @@ namespace SevenUpdate
         ///   The location of where the shortcut is to be stored.
         /// </summary>
         [ProtoMember(1), DataMember]
+        public ObservableCollection<LocaleString> Name
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged("Name");
+
+            }
+        }
+        
+        /// <summary>
+        ///   The location of where the shortcut is to be stored.
+        /// </summary>
+        [ProtoMember(2), DataMember]
         public string Location
         {
             get { return location; }
@@ -1179,7 +1196,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The action to peform on the shortcut
         /// </summary>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(3), DataMember]
         public ShortcutAction Action
         {
             get { return action; }
@@ -1198,7 +1215,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Any arguments to be used with the shortcut
         /// </summary>
-        [ProtoMember(3, IsRequired = false), DataMember]
+        [ProtoMember(4, IsRequired = false), DataMember]
         public string Arguments
         {
             get { return arguments; }
@@ -1213,7 +1230,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Description of the shortcut
         /// </summary>
-        [ProtoMember(4, IsRequired = false), DataMember]
+        [ProtoMember(5, IsRequired = false), DataMember]
         public ObservableCollection<LocaleString> Description
         {
             get { return description; }
@@ -1228,7 +1245,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The full path to the icon or exe containing an icon
         /// </summary>
-        [ProtoMember(5, IsRequired = false), DataMember]
+        [ProtoMember(6, IsRequired = false), DataMember]
         public string Icon
         {
             get { return icon; }
@@ -1243,7 +1260,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The full path of the target to the shortcut.
         /// </summary>
-        [ProtoMember(6, IsRequired = false), DataMember]
+        [ProtoMember(7, IsRequired = false), DataMember]
         public string Target
         {
             get { return target; }
@@ -1267,13 +1284,13 @@ namespace SevenUpdate
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
         /// </summary>
-        /// <param name = "name" />
-        private void OnPropertyChanged(string name)
+        /// <param name = "propertyName" />
+        private void OnPropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
 
             if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
