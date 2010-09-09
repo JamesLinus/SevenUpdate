@@ -194,7 +194,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), EnsureValidNames = true};
+            var cfd = new CommonOpenFileDialog {DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), EnsureValidNames = true, Multiselect = true};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
             AddFiles(cfd.FileNames);
@@ -220,6 +220,19 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private void listBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            var index = listBox.SelectedIndex;
+            if (index < 0)
+                return;
+            if (e.Key == Key.Delete)
+                Core.UpdateInfo.Files.RemoveAt(index);
+            listBox.SelectedIndex = (index - 1);
+
+            if (listBox.SelectedIndex < 0 && listBox.Items.Count > 0)
+                listBox.SelectedIndex = 0;
+        }
 
         #endregion
     }

@@ -67,7 +67,7 @@
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" />
 		</StackPanel>
 		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="14" DisplayMemberPath="Name/Value"
-                SelectionChanged="listBox_SelectionChanged">
+                SelectionChanged="listBox_SelectionChanged" KeyDown="listBox_KeyDown">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Click="AddShortcut_Click" Header="Add Shortcut" />

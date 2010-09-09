@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -8,12 +9,44 @@ using System.Text;
 
 namespace Microsoft.Windows.Shell
 {
-    internal class ShortcutInterop
+    public class ShortcutInterop
     {
-        #region Signitures imported from http://pinvoke.net
+        #region InstallState enum
+
+        private enum InstallState
+        {
+            NotUsed = -7,
+            BadConfig = -6,
+            Incomplete = -5,
+            SourceAbsent = -4,
+            MoreData = -3,
+            InvalidArg = -2,
+            Unknown = -1,
+            Broken = 0,
+            Advertised = 1,
+            Removed = 1,
+            Absent = 2,
+            Local = 3,
+            Source = 4,
+            Default = 5
+        }
+
+        #endregion
 
         private const uint StgmRead = 0;
         private const int MaxPath = 260;
+
+        private const int MaxFeatureLength = 38;
+        private const int MaxGuidLength = 38;
+        private const int MaxPathLength = 1024;
+
+        [DllImport("msi.dll", CharSet = CharSet.Auto)]
+        private static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
+
+
+        [DllImport("msi.dll", CharSet = CharSet.Auto)]
+        private static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+
 
         [DllImport("shfolder.dll", CharSet = CharSet.Auto)]
         internal static extern int SHGetFolderPath(IntPtr hwndOwner, int nFolder, IntPtr hToken, int dwFlags, StringBuilder lpszPath);
@@ -237,6 +270,16 @@ namespace Microsoft.Windows.Shell
         {
         }
 
+        public class Shortcut
+        {
+            public string Name { get; set; }
+            public string Location { get; set; }
+            public string Arguments { get; set; }
+            public string Description { get; set; }
+            public string Icon { get; set; }
+            public string Target { get; set; }
+        }
+
         #endregion
 
         #region Nested type: WIN32_FIND_DATAW
@@ -252,80 +295,51 @@ namespace Microsoft.Windows.Shell
             public uint nFileSizeLow;
             public uint dwReserved0;
             public uint dwReserved1;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string cFileName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] public string cAlternateFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string cFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
+            public string cAlternateFileName;
         }
 
         #endregion
 
-        #endregion
-
-        public static string ResolveShortcut(string filename)
+        public static Shortcut ResolveShortcut(string filename)
         {
             var link = new ShellLink();
-            ((IPersistFile) link).Load(filename, StgmRead);
+            ((IPersistFile)link).Load(filename, StgmRead);
             // TODO: if I can get hold of the hwnd call resolve first. This handles moved and renamed files.  
             // ((IShellLinkW)link).Resolve(hwnd, 0) 
             var sb = new StringBuilder(MaxPath);
-            WIN32_FIND_DATAW data;
-            ((IShellLinkW) link).GetPath(sb, sb.Capacity, out data, 0);
-            return sb.ToString();
-        }
-    }
+            var shortcut = new Shortcut { Target = ResolveMsiShortcut(filename), Name = Path.GetFileNameWithoutExtension(filename) };
 
-    public class MsiShortcutParser
-    {
-        /*
-        UINT MsiGetShortcutTarget(
-            LPCTSTR szShortcutTarget,
-            LPTSTR szProductCode,
-            LPTSTR szFeatureId,
-            LPTSTR szComponentCode
-        );
-        */
+            if (shortcut.Target == null)
+            {
+                WIN32_FIND_DATAW data;
+                ((IShellLinkW)link).GetPath(sb, sb.Capacity, out data, 0);
+                shortcut.Target = sb.ToString();
+            }
 
-        #region InstallState enum
+            ((IShellLinkW)link).GetArguments(sb, sb.Capacity);
+            shortcut.Arguments = sb.ToString();
 
-        private enum InstallState
-        {
-            NotUsed = -7,
-            BadConfig = -6,
-            Incomplete = -5,
-            SourceAbsent = -4,
-            MoreData = -3,
-            InvalidArg = -2,
-            Unknown = -1,
-            Broken = 0,
-            Advertised = 1,
-            Removed = 1,
-            Absent = 2,
-            Local = 3,
-            Source = 4,
-            Default = 5
+            ((IShellLinkW)link).GetDescription(sb, sb.Capacity);
+            shortcut.Description = sb.ToString();
+
+            int piIcon;
+            ((IShellLinkW)link).GetIconLocation(sb, sb.Capacity, out piIcon);
+            var icon = sb.ToString();
+            if (String.IsNullOrWhiteSpace(icon))
+                shortcut.Icon = shortcut.Target + @"," + piIcon;
+            else
+                shortcut.Icon = sb.ToString();
+
+            shortcut.Location = filename;
+
+
+            return shortcut;
         }
 
-        #endregion
-
-        private const int MaxFeatureLength = 38;
-        private const int MaxGuidLength = 38;
-        private const int MaxPathLength = 1024;
-
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        private static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
-
-        /*
-        INSTALLSTATE MsiGetComponentPath(
-          LPCTSTR szProduct,
-          LPCTSTR szComponent,
-          LPTSTR lpPathBuf,
-          DWORD* pcchBuf
-        );
-        */
-
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        private static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
-
-        public static string ParseShortcut(string file)
+        public static string ResolveMsiShortcut(string file)
         {
             var product = new StringBuilder(MaxGuidLength + 1);
             var feature = new StringBuilder(MaxFeatureLength + 1);

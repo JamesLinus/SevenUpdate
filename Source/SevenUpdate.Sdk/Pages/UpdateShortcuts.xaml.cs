@@ -29,6 +29,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using Microsoft.Windows.Shell;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -59,19 +60,6 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        #endregion
-
-        #region Methods
-
-        private static void SaveShortcut(string fileName)
-        {
-            var shortcut = new Shortcut {Location = Path.GetDirectoryName(fileName), Action = ShortcutAction.Add};
-            shortcut.Name = new ObservableCollection<LocaleString>();
-            var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(fileName)};
-            shortcut.Name.Add(ls);
-            Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
 
         #endregion
@@ -138,15 +126,52 @@ namespace SevenUpdate.Sdk.Pages
                               DefaultExtension = "lnk",
                               DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                               DefaultFileName = Core.AppInfo.Name[0].Value,
-                              EnsureValidNames = true
+                              EnsureValidNames = true,
                           };
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                SaveShortcut(cfd.FileName);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var shortcut = new Shortcut {Location = Path.GetDirectoryName(cfd.FileName), Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>()};
+            var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
+            shortcut.Name.Add(ls);
+            Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
 
         private void ImportShortcut_Click(object sender, RoutedEventArgs e)
         {
+            var cfd = new CommonOpenFileDialog
+                          {
+                              DefaultExtension = "lnk",
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
+                              EnsureFileExists = true,
+                              NavigateToShortcut = true,
+                              Multiselect = false
+                          };
+
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            var importedShortcut = ShortcutInterop.ResolveShortcut(cfd.FileName);
+
+            var shortcut = new Shortcut
+                               {
+                                   Arguments = importedShortcut.Arguments,
+                                   Icon = importedShortcut.Icon,
+                                   Location = Path.GetDirectoryName(importedShortcut.Location),
+                                   Action = ShortcutAction.Update,
+                                   Target = importedShortcut.Target,
+                                   Name = new ObservableCollection<LocaleString>(),
+                                   Description = new ObservableCollection<LocaleString>()
+                               };
+
+            var ls = new LocaleString {Lang = Base.Locale, Value = importedShortcut.Name};
+            shortcut.Name.Add(ls);
+            ls = new LocaleString { Lang = Base.Locale, Value = importedShortcut.Description };
+            shortcut.Description.Add(ls);
+
+            Core.UpdateInfo.Shortcuts.Add(shortcut);
+            listBox.SelectedIndex = (Core.UpdateInfo.Shortcuts.Count - 1);
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
@@ -210,10 +235,29 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        #region ListBox
+
         private void listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Core.SelectedShortcut = listBox.SelectedIndex;
         }
+
+        
+
+        private void listBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            var index = listBox.SelectedIndex;
+            if (index < 0)
+                return;
+            if (e.Key == Key.Delete)
+                Core.UpdateInfo.Shortcuts.RemoveAt(index);
+            listBox.SelectedIndex = (index - 1);
+
+            if (listBox.SelectedIndex < 0 && listBox.Items.Count > 0)
+                listBox.SelectedIndex = 0;
+        }
+
+        #endregion
 
         #endregion
     }

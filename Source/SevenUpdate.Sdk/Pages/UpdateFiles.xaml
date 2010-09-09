@@ -32,7 +32,7 @@
 			</TextBlock>
 		</StackPanel>
 		<!--ListBox-->
-		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9">
+		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Add File(s)" Click="AddFile_Click">
