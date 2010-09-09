@@ -195,7 +195,7 @@ namespace SevenUpdate.Windows
             mcFlowDoc.Blocks.Add(para);
             rtbSLA.Document = mcFlowDoc;
             
-            if (Core.IsAdmin)
+            if (Core.Instance.IsAdmin)
                 btnAction.IsShieldNeeded = false;
             else
                 btnAction.IsShieldNeeded = licenseInformation.Count == 1;
@@ -278,7 +278,7 @@ namespace SevenUpdate.Windows
                 return;
             btnAction.ButtonText = Properties.Resources.Finish;
             if (Core.Applications.Count > 0)
-                btnAction.IsShieldNeeded = !Core.IsAdmin;
+                btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
         }
 
         #endregion

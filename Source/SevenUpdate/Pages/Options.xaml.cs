@@ -64,7 +64,7 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-            btnSave.IsShieldNeeded = !Core.IsAdmin;
+            btnSave.IsShieldNeeded = !Core.Instance.IsAdmin;
         }
 
         #region Methods

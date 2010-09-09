@@ -1,7 +1,5 @@
 ﻿#region
 
-
-
 #endregion
 
 namespace SevenUpdate.Sdk

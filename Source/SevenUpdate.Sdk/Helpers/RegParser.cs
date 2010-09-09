@@ -582,7 +582,9 @@ namespace SevenUpdate.Sdk
                 return ProcessBinaryType('6', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
 
             // hex(0):  |  REG_NONE
-            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline) ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult) : methodResult;
+            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline)
+                       ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult)
+                       : methodResult;
 
             // Fallback in case nothing matches
         }

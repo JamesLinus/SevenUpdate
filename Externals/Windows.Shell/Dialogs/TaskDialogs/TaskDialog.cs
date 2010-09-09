@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Permissions;
 using System.Windows;
+using System.Windows.Interop;
 using Microsoft.Windows.Internal;
 
 #endregion
@@ -434,7 +435,7 @@ namespace Microsoft.Windows.Dialogs
         /// <returns>The dialog result.</returns>
         public TaskDialogResult ShowDialog(Window window)
         {
-            OwnerWindowHandle = new System.Windows.Interop.WindowInteropHelper(window).Handle;
+            OwnerWindowHandle = new WindowInteropHelper(window).Handle;
             return ShowCore();
         }
 
@@ -539,8 +540,8 @@ namespace Microsoft.Windows.Dialogs
             // flavors of a single button struct.
             if (buttons.Count > 0 && commandLinks.Count > 0)
                 throw new NotSupportedException("Dialog cannot display both non-standard buttons and command links.");
-            if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None)
-                throw new NotSupportedException("Dialog cannot display both non-standard buttons and standard buttons.");
+            //if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None)
+            //    throw new NotSupportedException("Dialog cannot display both non-standard buttons and standard buttons.");
         }
 
         // Analyzes the final state of the NativeTaskDialog instance and creates the 
@@ -733,7 +734,7 @@ namespace Microsoft.Windows.Dialogs
         private static int FindDefaultButtonId(List<TaskDialogButtonBase> controls)
         {
             const int found = TaskDialogNativeMethods.NO_DEFAULT_BUTTON_SPECIFIED;
-            foreach (TaskDialogButtonBase control in controls.Where(control => control.Default))
+            foreach (var control in controls.Where(control => control.Default))
             {
                 // Check if we've found a default in this list already.
                 return control.Id;
@@ -743,7 +744,7 @@ namespace Microsoft.Windows.Dialogs
 
         private static void ApplyElevatedIcons(NativeTaskDialogSettings settings, List<TaskDialogButtonBase> controls)
         {
-            foreach (TaskDialogButton control in controls.Cast<TaskDialogButton>().Where(control => control.ShowElevationIcon))
+            foreach (var control in controls.Cast<TaskDialogButton>().Where(control => control.ShowElevationIcon))
             {
                 if (settings.ElevatedButtons == null)
                     settings.ElevatedButtons = new List<int>();
@@ -772,7 +773,7 @@ namespace Microsoft.Windows.Dialogs
         // sort the various controls by type. 
         private void SortDialogControls()
         {
-            foreach (TaskDialogControl control in Controls)
+            foreach (var control in Controls)
             {
                 if (control is TaskDialogButtonBase && String.IsNullOrEmpty(((TaskDialogButtonBase) control).Text))
                 {

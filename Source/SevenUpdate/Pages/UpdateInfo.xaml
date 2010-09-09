@@ -25,15 +25,10 @@
                 Controls:ListViewSorter.CustomSorter="SevenUpdate.UpdateSorter,SevenUpdate">
             <ListView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Click="MenuItem_MouseClick">
+                    <MenuItem Click="MenuItem_MouseClick" Name="miUpdate">
                         <MenuItem.Style>
                             <Style>
-                                <Setter Property="MenuItem.Header" Value="{x:Static Properties:Resources.HideUpdate}" />
-                                <Setter Property="MenuItem.Icon">
-                                    <Setter.Value>
-                                        <Image Source="/Windows.Shell;component/Images/Shield.png" />
-                                    </Setter.Value>
-                                </Setter>
+                                <Setter Property="MenuItem.Header" Value="{x:Static Properties:Resources.HideUpdate}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Hidden}" Value="True">
                                         <Setter Property="MenuItem.Header" Value="{x:Static Properties:Resources.ShowUpdate}" />
@@ -42,7 +37,7 @@
                                             Value="http://sevenupdate.com/apps/SevenUpdate">
                                         <Setter Property="MenuItem.IsEnabled" Value="False" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding Source={x:Static SevenUpdate:Core.IsAdmin}}" Value="True">
+                                    <DataTrigger Binding="{Binding IsAdmin}" Value="True">
                                         <Setter Property="MenuItem.Icon" Value="{x:Null}" />
                                     </DataTrigger>
                                 </Style.Triggers>

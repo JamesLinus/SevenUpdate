@@ -59,13 +59,13 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
-            listBox.ItemsSource = Base.UpdateInfo.Files;
+            listBox.ItemsSource = Core.UpdateInfo.Files;
 
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -81,11 +81,11 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            var installUrl = SevenUpdate.Base.ConvertPath(fullName, false, true);
+            var installUrl = Base.ConvertPath(fullName, false, true);
 
             var file = new UpdateFile {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "..."};
 
-            Base.UpdateInfo.Files.Add(file);
+            Core.UpdateInfo.Files.Add(file);
 
             tbHashCalculating.Visibility = Visibility.Visible;
 
@@ -99,20 +99,19 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = SevenUpdate.Base.GetHash(fileLocation ?? updateFile.Destination); }).ContinueWith(_ =>
-                                                                                                                                                  {
-                                                                                                                                                      hashesGenerating--;
-                                                                                                                                                      if (hashesGenerating < 1)
-                                                                                                                                                          tbHashCalculating.Visibility =
-                                                                                                                                                              Visibility.Collapsed;
-                                                                                                                                                  }, context);
+            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(fileLocation ?? updateFile.Destination); }).ContinueWith(_ =>
+                                                                                                                                      {
+                                                                                                                                          hashesGenerating--;
+                                                                                                                                          if (hashesGenerating < 1)
+                                                                                                                                              tbHashCalculating.Visibility = Visibility.Collapsed;
+                                                                                                                                      }, context);
         }
 
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(() => { updateFile.FileSize = SevenUpdate.Base.GetFileSize(fileLocation ?? updateFile.Destination); });
+            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(fileLocation ?? updateFile.Destination); });
         }
 
         private void AddFiles(IList<string> files)
@@ -135,7 +134,7 @@ namespace SevenUpdate.Sdk.Pages
             if (source == null)
                 return;
 
-            source.Text = SevenUpdate.Base.ConvertPath(source.Text, false, Base.AppInfo.Is64Bit);
+            source.Text = Base.ConvertPath(source.Text, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -144,7 +143,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (Base.UpdateInfo.Files.Count < 1 || SevenUpdate.Base.IsHashGenerating)
+            //if (Core.UpdateInfo.Files.Count < 1 || SevenUpdate.Base.IsHashGenerating)
             //    App.ShowInputErrorMessage();
             //else
             MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
@@ -163,7 +162,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Base.UpdateInfo.Files[listBox.SelectedIndex].Destination = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
@@ -185,12 +184,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
         {
-            Base.UpdateInfo.Files.RemoveAt(listBox.SelectedIndex);
+            Core.UpdateInfo.Files.RemoveAt(listBox.SelectedIndex);
         }
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            Base.UpdateInfo.Files.Clear();
+            Core.UpdateInfo.Files.Clear();
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)

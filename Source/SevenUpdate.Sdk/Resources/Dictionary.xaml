@@ -7,39 +7,39 @@
 	<Common:IntToVisibilityConverter x:Key="intToVisibility" />
 	<Common:IntToBoolConverter x:Key="intToBool" />
 	<Sdk:DateConverter x:Key="dateConverter" />
-    <Common:EnumToBool x:Key="enumToBool" />
-    <Common:InverseEnumToBool x:Key="inverseEnumToBool" />
+	<Common:EnumToBool x:Key="enumToBool" />
+	<Common:InverseEnumToBool x:Key="inverseEnumToBool" />
 
-    <!--Underline TextBlock-->
-    <Style x:Key="underlineTextBlock" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="#FF0066CC" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="TextDecorations" Value="Underline" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
+	<!--Underline TextBlock-->
+	<Style x:Key="underlineTextBlock" TargetType="TextBlock">
+		<Setter Property="Foreground" Value="#FF0066CC" />
+		<Style.Triggers>
+			<Trigger Property="IsMouseOver" Value="True">
+				<Setter Property="TextDecorations" Value="Underline" />
+			</Trigger>
+			<Trigger Property="IsEnabled" Value="False">
+				<Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
+			</Trigger>
+		</Style.Triggers>
+	</Style>
 
-    <Style TargetType="Image">
+	<Style TargetType="Image">
 		<Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
 	</Style>
 
-        <Style TargetType="MenuItem" x:Key="RemoveAllMenu">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Items.Count}" Value="0">
-                    <Setter Property="MenuItem.IsEnabled" Value="False" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+	<Style TargetType="MenuItem" x:Key="RemoveAllMenu">
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.Items.Count}" Value="0">
+				<Setter Property="MenuItem.IsEnabled" Value="False" />
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
 
-    <Style TargetType="MenuItem" x:Key="RemoveMenu" BasedOn="{StaticResource RemoveAllMenu}">
-        <Style.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems.Count}" Value="0">
-                    <Setter Property="MenuItem.IsEnabled" Value="False" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
+	<Style TargetType="MenuItem" x:Key="RemoveMenu" BasedOn="{StaticResource RemoveAllMenu}">
+		<Style.Triggers>
+			<DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItems.Count}" Value="0">
+				<Setter Property="MenuItem.IsEnabled" Value="False" />
+			</DataTrigger>
+		</Style.Triggers>
+	</Style>
 </ResourceDictionary>

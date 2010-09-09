@@ -376,6 +376,9 @@ namespace SevenUpdate.Admin
         private static void Service_ClientDisconnected()
         {
             IsClientConnected = false;
+
+            if (isInstalling == false && IsAutoInstall == false)
+                ShutdownApp();
         }
 
         #endregion

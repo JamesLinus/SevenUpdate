@@ -44,7 +44,7 @@ namespace SevenUpdate.Sdk.Pages
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
         }
 

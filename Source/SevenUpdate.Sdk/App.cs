@@ -22,11 +22,9 @@
 
 using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Shell;
-using Microsoft.Windows.Dialogs;
+using SevenUpdate.Sdk.Properties;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -35,18 +33,7 @@ namespace SevenUpdate.Sdk
 {
     public sealed partial class App
     {
-        #region Global Vars
-
-        internal static Sui SuiProject { get; set; }
-
-        #endregion
-
         #region Methods
-
-        private static void Base_SerializationError(object sender, SerializationErrorEventArgs e)
-        {
-            MessageBox.Show(Sdk.Properties.Resources.ProjectLoadError + " - " + e.Exception.Message);
-        }
 
         /// <summary>
         ///   Sets the Windows 7 JumpList
@@ -59,47 +46,36 @@ namespace SevenUpdate.Sdk
             //Configure a new JumpTask
             var jumpTask = new JumpTask
                                {
-                                   ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   Title = "Seven Update SDK",
+                                   ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   Title = Sdk.Properties.Resources.SevenUpdateSDK,
                                    Description = "Create new project",
                                    CustomCategory = "Tasks",
-                                   Arguments = "NewProject"
+                                   Arguments = "-new"
                                };
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               Title = "Seven Update SDK",
+                               ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                               Title = Sdk.Properties.Resources.SevenUpdateSDK,
                                Description = "Edit an existing project",
                                CustomCategory = "Tasks",
-                               Arguments = "EditProject"
+                               Arguments = "-edit"
                            };
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-                           {
-                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               Title = "Seven Update SDK",
-                               Description = "Test project",
-                               CustomCategory = "Tasks",
-                               Arguments = "TestProject"
-                           };
-            jumpList.JumpItems.Add(jumpTask);
-
-            jumpTask = new JumpTask
-                           {
-                               ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-                               Title = "Seven Update SDK",
-                               Description = "Test project",
-                               CustomCategory = "Tasks",
-                               Arguments = "TestProject"
-                           };
-            jumpList.JumpItems.Add(jumpTask);
+            //jumpTask = new JumpTask
+            //               {
+            //                   ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+            //                   IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
+            //                   Title = Sdk.Properties.Resources.SevenUpdateSDK,
+            //                   Description = "Test project",
+            //                   CustomCategory = Sdk.Properties.Resources.RecentProjects,
+            //                   Arguments = "-open " + Base.
+            //               };
+            //jumpList.JumpItems.Add(jumpTask);
 
 
             JumpList.SetJumpList(Current, jumpList);
@@ -111,55 +87,26 @@ namespace SevenUpdate.Sdk
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
-            Directory.CreateDirectory(SevenUpdate.Base.UserStore);
-            SevenUpdate.Base.SerializationError += Base_SerializationError;
-            //if (args.Length > 0)
-            //    SuiFile = args[0];
+            Directory.CreateDirectory(Base.UserStore);
+            Base.SerializationError += Core.Base_SerializationError;
 
+            Base.Locale = Settings.Default.locale;
             SetJumpLists();
-        }
-
-        /// <summary>
-        ///   Checks if a file or UNC is valid
-        /// </summary>
-        /// <param name = "path">The path we want to check</param>
-        /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
-        public static bool IsValidFilePath(string path, bool is64Bit)
-        {
-            path = SevenUpdate.Base.ConvertPath(path, true, is64Bit);
-            const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
-            var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            return reg.IsMatch(path);
-        }
-
-        internal static void ShowInputErrorMessage()
-        {
-            if (TaskDialog.IsPlatformSupported)
+            if (args.Length <= 0)
+                return;
+            switch (args[0])
             {
-                var td = new TaskDialog
-                             {
-                                 Caption = Sdk.Properties.Resources.SevenUpdateSDK,
-                                 InstructionText = Sdk.Properties.Resources.CorrectErrors,
-                                 Icon = TaskDialogStandardIcon.Warning,
-                                 FooterText = Sdk.Properties.Resources.ErrorHelp,
-                                 FooterIcon = TaskDialogStandardIcon.Information,
-                                 Cancelable = false
-                             };
-                td.ShowDialog(Current.MainWindow);
-            }
-            else
-            {
-                MessageBox.Show(Sdk.Properties.Resources.CorrectErrors + Environment.NewLine + Sdk.Properties.Resources.ErrorHelp, Sdk.Properties.Resources.SevenUpdateSDK, MessageBoxButton.OK,
-                                MessageBoxImage.Exclamation);
+                case "-edit":
+                    //TODO open the "Open project window"
+                    break;
+
+                case "-open":
+                    //TODO open the project for editing
+                    break;
             }
         }
 
         #endregion
-
-        internal static void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
     }
 
     /// <summary>

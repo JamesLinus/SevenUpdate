@@ -163,7 +163,7 @@ namespace SevenUpdate
             try
             {
                 wcfClient.Subscribe();
-                Core.IsAdmin = true;
+                Core.Instance.IsAdmin = true;
                 return true;
             }
             catch (EndpointNotFoundException)
@@ -190,7 +190,7 @@ namespace SevenUpdate
 
         internal static void AdminError(Exception e)
         {
-            Core.IsAdmin = false;
+            Core.Instance.IsAdmin = false;
             Base.ReportError(e, Base.UserStore);
             if (ServiceError != null)
                 ServiceError(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));

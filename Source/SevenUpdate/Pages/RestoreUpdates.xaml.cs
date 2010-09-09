@@ -55,7 +55,7 @@ namespace SevenUpdate.Pages
         {
             InitializeComponent();
             lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(Thumb_DragDelta), true);
-            btnRestore.IsShieldNeeded = !Core.IsAdmin;
+            btnRestore.IsShieldNeeded = !Core.Instance.IsAdmin;
         }
 
         #region Event Declarations

@@ -120,9 +120,6 @@
   <data name="AcceptLicenseTerms" xml:space="preserve">
     <value>Read and accept the license terms for</value>
   </data>
-  <data name="AllowUpdates" xml:space="preserve">
-    <value>Would you like to allow Seven Update to search, download and install updates for</value>
-  </data>
   <data name="AlreadyUpdating" xml:space="preserve">
     <value>Seven Update is currently already checking for, downloading, or installing updates.</value>
   </data>
@@ -389,5 +386,20 @@
   </data>
   <data name="CouldNotConnectToService" xml:space="preserve">
     <value>Could not connect to the Seven Update service</value>
+  </data>
+  <data name="RebootComputer" xml:space="preserve">
+    <value>Would you like to reboot your computer?</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddApp" xml:space="preserve">
+    <value>Add application to Seven Update?</value>
+  </data>
+  <data name="AllowUpdates" xml:space="preserve">
+    <value>This will allow Seven Update to search, download, and install updates for</value>
+  </data>
+  <data name="ToSevenUpdate" xml:space="preserve">
+    <value>to Seven Update?</value>
   </data>
 </root>

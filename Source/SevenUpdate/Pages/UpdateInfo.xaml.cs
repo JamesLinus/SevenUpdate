@@ -116,6 +116,7 @@ namespace SevenUpdate.Pages
         public UpdateInfo()
         {
             InitializeComponent();
+            miUpdate.DataContext = Core.Instance.IsAdmin;
         }
 
         #region Event Declarations

@@ -1,5 +1,11 @@
 //Copyright (c) Microsoft Corporation.  All rights reserved.
 
+#region
+
+using System;
+
+#endregion
+
 namespace Microsoft.Windows.Dialogs
 {
     /// <summary>
@@ -26,6 +32,26 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         ///   Displays the User Account Control shield.
         /// </summary>
-        Shield = 65532
+        Shield = UInt16.MaxValue - 3,
+        /// <summary>
+        ///   Displays the User Account Control shield.
+        /// </summary>
+        ShieldBlue = UInt16.MaxValue - 4,
+        /// <summary>
+        ///   Displays the User Account Control shield with gray background.
+        /// </summary>
+        ShieldGray = UInt16.MaxValue - 8,
+        /// <summary>
+        ///   Displays a warning shield with yellow background.
+        /// </summary>
+        SecurityWarning = UInt16.MaxValue - 5,
+        /// <summary>
+        ///   Displays an erro shield with red background.
+        /// </summary>
+        SecurityError = UInt16.MaxValue - 6,
+        /// <summary>
+        ///   Displays a success shield with green background.
+        /// </summary>
+        ShieldGreen = UInt16.MaxValue - 7,
     }
 }

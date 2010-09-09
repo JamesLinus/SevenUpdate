@@ -48,12 +48,12 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateInfo()
         {
             InitializeComponent();
-            DataContext = Base.UpdateInfo;
+            DataContext = Core.UpdateInfo;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -84,11 +84,11 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxUpdateName == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
+            Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
             // Load Values
-            foreach (var t in Base.UpdateInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.UpdateInfo.Name.Where(t => t.Lang == Base.Locale))
             {
                 tbxUpdateName.Text = t.Value;
                 found = true;
@@ -99,7 +99,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (var t in Base.UpdateInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == Base.Locale))
             {
                 tbxUpdateDetails.Text = t.Value;
                 found = true;
@@ -133,10 +133,10 @@ namespace SevenUpdate.Sdk.Pages
             // ReSharper restore PossibleNullReferenceException
 
             // Load Values
-            foreach (var t in Base.UpdateInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == "en"))
                 tbxUpdateDetails.Text = t.Value;
 
-            foreach (var t in Base.UpdateInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Core.UpdateInfo.Name.Where(t => t.Lang == "en"))
                 tbxUpdateName.Text = t.Value;
         }
 

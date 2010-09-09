@@ -70,7 +70,25 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Would you like to allow Seven Update to search, download and install updates for.
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add application to Seven Update?.
+        /// </summary>
+        public static string AddApp {
+            get {
+                return ResourceManager.GetString("AddApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will allow Seven Update to search, download, and install updates for.
         /// </summary>
         public static string AllowUpdates {
             get {
@@ -628,6 +646,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Would you like to reboot your computer?.
+        /// </summary>
+        public static string RebootComputer {
+            get {
+                return ResourceManager.GetString("RebootComputer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your computer needs to be restarted to finish updates..
         /// </summary>
         public static string RebootNeeded {
@@ -759,6 +786,15 @@ namespace SevenUpdate.Properties {
         public static string TodayAt {
             get {
                 return ResourceManager.GetString("TodayAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to to Seven Update?.
+        /// </summary>
+        public static string ToSevenUpdate {
+            get {
+                return ResourceManager.GetString("ToSevenUpdate", resourceCulture);
             }
         }
         

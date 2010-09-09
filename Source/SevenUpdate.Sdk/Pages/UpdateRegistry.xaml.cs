@@ -46,12 +46,12 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
-            listBox.ItemsSource = Base.UpdateInfo.RegistryItems;
+            listBox.ItemsSource = Core.UpdateInfo.RegistryItems;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
 
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -70,8 +70,8 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ValueData_KeyDown(object sender, KeyEventArgs e)
         {
-            if (Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary && Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.DWord &&
-                Base.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.QWord)
+            if (Core.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary && Core.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.DWord &&
+                Core.UpdateInfo.RegistryItems[listBox.SelectedIndex].ValueKind != RegistryValueKind.QWord)
                 return;
             var converter = new KeyConverter();
             var key = converter.ConvertToString(e.Key);
@@ -141,16 +141,16 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {Multiselect = false, DefaultExtension="reg"};
+            var cfd = new CommonOpenFileDialog {Multiselect = false, DefaultExtension = "reg"};
             cfd.Filters.Add(new CommonFileDialogFilter("Registry file", "*.reg"));
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            
+
             var registryParser = new RegistryParser();
             var results = registryParser.Parse(cfd.FileName);
 
             foreach (var t in results)
-                Base.UpdateInfo.RegistryItems.Add(t);
+                Core.UpdateInfo.RegistryItems.Add(t);
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
@@ -160,7 +160,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            Base.UpdateInfo.RegistryItems.Clear();
+            Core.UpdateInfo.RegistryItems.Clear();
         }
 
         #endregion

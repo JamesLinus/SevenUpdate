@@ -51,13 +51,13 @@ namespace SevenUpdate.Sdk.Pages
         public AppInfo()
         {
             InitializeComponent();
-            DataContext = Base.AppInfo;
+            DataContext = Core.AppInfo;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -77,19 +77,19 @@ namespace SevenUpdate.Sdk.Pages
             tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             // ReSharper restore PossibleNullReferenceException
             // Load Values
-            foreach (var t in Base.AppInfo.Name.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == "en"))
                 tbxAppName.Text = t.Value;
 
-            foreach (var t in Base.AppInfo.Description.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == "en"))
                 tbxAppDescription.Text = t.Value;
 
-            foreach (var t in Base.AppInfo.Publisher.Where(t => t.Lang == "en"))
+            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == "en"))
                 tbxPublisher.Text = t.Value;
         }
 
         private bool ValidateInfo()
         {
-            return Base.AppInfo.Name.Count > 0 && Base.AppInfo.Publisher.Count > 0 && Base.AppInfo.Description.Count > 0;
+            return Core.AppInfo.Name.Count > 0 && Core.AppInfo.Publisher.Count > 0 && Core.AppInfo.Description.Count > 0;
         }
 
         #endregion
@@ -116,7 +116,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(cfd.FileName, false, Base.AppInfo.Is64Bit);
+                tbxAppLocation.Text = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace SevenUpdate.Sdk.Pages
         private void tbxAppLocation_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (rbtnFileSystem.IsChecked.GetValueOrDefault())
-                tbxAppLocation.Text = SevenUpdate.Base.ConvertPath(tbxAppLocation.Text, false, Base.AppInfo.Is64Bit);
+                tbxAppLocation.Text = Base.ConvertPath(tbxAppLocation.Text, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -138,11 +138,11 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxAppName == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
+            Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
             // Load Values
-            foreach (var t in Base.AppInfo.Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Base.Locale))
             {
                 tbxAppDescription.Text = t.Value;
                 found = true;
@@ -152,7 +152,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (var t in Base.AppInfo.Name.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Base.Locale))
             {
                 tbxAppName.Text = t.Value;
                 found = true;
@@ -163,7 +163,7 @@ namespace SevenUpdate.Sdk.Pages
 
             found = false;
             // Load Values
-            foreach (var t in Base.AppInfo.Publisher.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Base.Locale))
             {
                 tbxPublisher.Text = t.Value;
                 found = true;
@@ -199,7 +199,7 @@ namespace SevenUpdate.Sdk.Pages
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
             // ReSharper restore PossibleNullReferenceException
-            Base.AppInfo.ValueName = null;
+            Core.AppInfo.ValueName = null;
             tbxValueName.Text = null;
         }
 

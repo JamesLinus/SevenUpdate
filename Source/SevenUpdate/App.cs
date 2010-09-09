@@ -26,6 +26,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows;
+using Microsoft.Windows.Dialogs;
+using SevenUpdate.Properties;
 using SevenUpdate.Windows;
 
 #endregion
@@ -43,6 +45,7 @@ namespace SevenUpdate
         /// <param name = "args">The command line arguments passed to the app</param>
         internal static void Init(string[] args)
         {
+            Base.Locale = Settings.Default.locale;
             foreach (var t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
             {
                 var suaLoc = t;
@@ -50,9 +53,11 @@ namespace SevenUpdate
                 {
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
                     var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
+                    string appName = Base.GetLocaleString(sua.Name);
                     if (
-                        MessageBox.Show(SevenUpdate.Properties.Resources.AllowUpdates + " " + Base.GetLocaleString(sua.Name) + "?", SevenUpdate.Properties.Resources.SevenUpdate, MessageBoxButton.YesNo,
-                                        MessageBoxImage.Question) == MessageBoxResult.Yes)
+                        Core.ShowMessage(SevenUpdate.Properties.Resources.Add + " " + appName + " " + SevenUpdate.Properties.Resources.ToSevenUpdate, TaskDialogStandardIcon.ShieldBlue,
+                                         TaskDialogStandardButtons.Cancel, SevenUpdate.Properties.Resources.AllowUpdates + appName + "?", null, SevenUpdate.Properties.Resources.Add, true) !=
+                        TaskDialogResult.Cancel)
                         AdminClient.AddSua(sua);
                 }
                 catch
@@ -62,7 +67,7 @@ namespace SevenUpdate
             }
 
             Directory.CreateDirectory(Base.UserStore);
-            Base.Locale = SevenUpdate.Properties.Settings.Default.locale;
+
 
             if (args.Length > 0)
             {

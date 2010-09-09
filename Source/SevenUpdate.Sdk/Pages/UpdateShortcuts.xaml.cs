@@ -47,14 +47,14 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateShortcuts()
         {
             InitializeComponent();
-            if (Base.UpdateInfo.Shortcuts == null)
-                Base.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
-            listBox.ItemsSource = Base.UpdateInfo.Shortcuts;
+            if (Core.UpdateInfo.Shortcuts == null)
+                Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+            listBox.ItemsSource = Core.UpdateInfo.Shortcuts;
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
 
-            MouseLeftButtonDown += App.Rectangle_MouseLeftButtonDown;
+            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
             rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
@@ -67,7 +67,7 @@ namespace SevenUpdate.Sdk.Pages
         private static void SaveShortcut(string fileName)
         {
             var shortcut = new Shortcut {Location = fileName, Action = ShortcutAction.Add};
-            Base.UpdateInfo.Shortcuts.Add(shortcut);
+            Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
 
         #endregion
@@ -86,7 +86,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Base.UpdateInfo.Shortcuts.Count != -1)
+            if (Core.UpdateInfo.Shortcuts.Count != -1)
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateReview.xaml", UriKind.Relative));
         }
 
@@ -103,21 +103,21 @@ namespace SevenUpdate.Sdk.Pages
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = Base.ConvertPath(cfd.FileName, false, true);
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = SevenUpdate.Base.ConvertPath(cfd.FileName, false, true);
+                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = Base.ConvertPath(cfd.FileName, false, true);
         }
 
         #endregion
@@ -133,7 +133,7 @@ namespace SevenUpdate.Sdk.Pages
                               AlwaysAppendDefaultExtension = true,
                               DefaultExtension = "lnk",
                               DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              DefaultFileName = Base.AppInfo.Name[0].Value,
+                              DefaultFileName = Core.AppInfo.Name[0].Value,
                               EnsureValidNames = true
                           };
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
@@ -147,7 +147,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void miRemoveAll_Click(object sender, RoutedEventArgs e)
         {
-            Base.UpdateInfo.Shortcuts.Clear();
+            Core.UpdateInfo.Shortcuts.Clear();
         }
 
         private void miRemove_Click(object sender, RoutedEventArgs e)
@@ -166,12 +166,12 @@ namespace SevenUpdate.Sdk.Pages
             if (tbxShortcutDescription == null || cbxLocale.SelectedIndex < 0)
                 return;
 
-            SevenUpdate.Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
+            Base.Locale = ((ComboBoxItem) cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
             var shortcutDescriptions = ((Shortcut) listBox.SelectedItem).Description;
             // Load Values
-            foreach (var t in shortcutDescriptions.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in shortcutDescriptions.Where(t => t.Lang == Base.Locale))
             {
                 tbxShortcutDescription.Text = t.Value;
                 found = true;
@@ -196,14 +196,14 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ShortcutDescription_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (Base.UpdateInfo.Shortcuts == null)
-                Base.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+            if (Core.UpdateInfo.Shortcuts == null)
+                Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
 
-            if (Base.UpdateInfo.Shortcuts.Count < 0)
+            if (Core.UpdateInfo.Shortcuts.Count < 0)
                 return;
 
             var found = false;
-            foreach (var t in Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == SevenUpdate.Base.Locale))
+            foreach (var t in Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Where(t => t.Lang == Base.Locale))
             {
                 t.Value = tbxShortcutDescription.Text;
                 found = true;
@@ -212,8 +212,8 @@ namespace SevenUpdate.Sdk.Pages
             if (found)
                 return;
 
-            var ls = new LocaleString {Lang = SevenUpdate.Base.Locale, Value = tbxShortcutDescription.Text};
-            Base.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Add(ls);
+            var ls = new LocaleString {Lang = Base.Locale, Value = tbxShortcutDescription.Text};
+            Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Description.Add(ls);
         }
     }
 }

@@ -70,20 +70,20 @@ namespace SevenUpdate.Sdk.Pages
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
-            Base.AppInfo = new Sua();
-            Base.UpdateInfo = new Update();
-            Base.AppInfo.Description = new ObservableCollection<LocaleString>();
-            Base.AppInfo.Name = new ObservableCollection<LocaleString>();
-            Base.AppInfo.Publisher = new ObservableCollection<LocaleString>();
-            Base.UpdateInfo.Name = new ObservableCollection<LocaleString>();
-            Base.UpdateInfo.Description = new ObservableCollection<LocaleString>();
-            Base.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
-            if (Base.UpdateInfo.Files == null)
-                Base.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
-            if (Base.UpdateInfo.RegistryItems == null)
-                Base.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
-            if (Base.UpdateInfo.Shortcuts== null)
-                Base.UpdateInfo.Shortcuts= new ObservableCollection<Shortcut>();
+            Core.AppInfo = new Sua();
+            Core.UpdateInfo = new Update();
+            Core.AppInfo.Description = new ObservableCollection<LocaleString>();
+            Core.AppInfo.Name = new ObservableCollection<LocaleString>();
+            Core.AppInfo.Publisher = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.Name = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.Description = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
+            if (Core.UpdateInfo.Files == null)
+                Core.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            if (Core.UpdateInfo.RegistryItems == null)
+                Core.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+            if (Core.UpdateInfo.Shortcuts == null)
+                Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
             MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 

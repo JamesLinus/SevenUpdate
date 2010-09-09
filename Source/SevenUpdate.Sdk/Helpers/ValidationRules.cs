@@ -31,7 +31,7 @@ namespace SevenUpdate.Sdk.Helpers
 
             try
             {
-                input = SevenUpdate.Base.ConvertPath(input, true, Base.AppInfo.Is64Bit);
+                input = Base.ConvertPath(input, true, Core.AppInfo.Is64Bit);
                 new Uri(input);
             }
             catch
@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Helpers
         {
             var input = value as string;
             if (input == null)
-               return new ValidationResult(false, Resources.FilePathInvalid);
+                return new ValidationResult(false, Resources.FilePathInvalid);
             if (String.IsNullOrWhiteSpace(input))
                 return new ValidationResult(false, Resources.FilePathInvalid);
 
@@ -79,14 +79,14 @@ namespace SevenUpdate.Sdk.Helpers
 
                     #region Code
 
-                    if (Base.AppInfo.Name == null)
+                    if (Core.AppInfo.Name == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (var x = 0; x < Base.AppInfo.Name.Count; x++)
+                    for (var x = 0; x < Core.AppInfo.Name.Count; x++)
                     {
-                        if (Base.AppInfo.Name[x].Lang != SevenUpdate.Base.Locale)
+                        if (Core.AppInfo.Name[x].Lang != Base.Locale)
                             continue;
-                        Base.AppInfo.Name.RemoveAt(x);
+                        Core.AppInfo.Name.RemoveAt(x);
                         break;
                     }
 
@@ -97,14 +97,14 @@ namespace SevenUpdate.Sdk.Helpers
 
                     #region Code
 
-                    if (Base.AppInfo.Publisher == null)
+                    if (Core.AppInfo.Publisher == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (var x = 0; x < Base.AppInfo.Publisher.Count; x++)
+                    for (var x = 0; x < Core.AppInfo.Publisher.Count; x++)
                     {
-                        if (Base.AppInfo.Publisher[x].Lang != SevenUpdate.Base.Locale)
+                        if (Core.AppInfo.Publisher[x].Lang != Base.Locale)
                             continue;
-                        Base.AppInfo.Publisher.RemoveAt(x);
+                        Core.AppInfo.Publisher.RemoveAt(x);
                         break;
                     }
 
@@ -115,14 +115,14 @@ namespace SevenUpdate.Sdk.Helpers
 
                     #region Code
 
-                    if (Base.AppInfo.Description == null)
+                    if (Core.AppInfo.Description == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (var x = 0; x < Base.AppInfo.Description.Count; x++)
+                    for (var x = 0; x < Core.AppInfo.Description.Count; x++)
                     {
-                        if (Base.AppInfo.Description[x].Lang != SevenUpdate.Base.Locale)
+                        if (Core.AppInfo.Description[x].Lang != Base.Locale)
                             continue;
-                        Base.AppInfo.Description.RemoveAt(x);
+                        Core.AppInfo.Description.RemoveAt(x);
                         break;
                     }
 
@@ -133,14 +133,14 @@ namespace SevenUpdate.Sdk.Helpers
 
                     #region Code
 
-                    if (Base.UpdateInfo.Description == null)
+                    if (Core.UpdateInfo.Description == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (var x = 0; x < Base.UpdateInfo.Description.Count; x++)
+                    for (var x = 0; x < Core.UpdateInfo.Description.Count; x++)
                     {
-                        if (Base.UpdateInfo.Description[x].Lang != SevenUpdate.Base.Locale)
+                        if (Core.UpdateInfo.Description[x].Lang != Base.Locale)
                             continue;
-                        Base.UpdateInfo.Description.RemoveAt(x);
+                        Core.UpdateInfo.Description.RemoveAt(x);
                         break;
                     }
 
@@ -151,14 +151,14 @@ namespace SevenUpdate.Sdk.Helpers
 
                     #region Code
 
-                    if (Base.UpdateInfo.Name == null)
+                    if (Core.UpdateInfo.Name == null)
                         return new ValidationResult(false, Resources.InputRequired);
 
-                    for (var x = 0; x < Base.UpdateInfo.Name.Count; x++)
+                    for (var x = 0; x < Core.UpdateInfo.Name.Count; x++)
                     {
-                        if (Base.UpdateInfo.Name[x].Lang != SevenUpdate.Base.Locale)
+                        if (Core.UpdateInfo.Name[x].Lang != Base.Locale)
                             continue;
-                        Base.UpdateInfo.Name.RemoveAt(x);
+                        Core.UpdateInfo.Name.RemoveAt(x);
                         break;
                     }
 

@@ -275,7 +275,7 @@ namespace SevenUpdate.Pages
         /// <param name = "e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
         {
-            Core.IsAdmin = false;
+            Core.Instance.IsAdmin = false;
             // if a reboot is needed lets say it
             Core.Instance.UpdateAction = !Base.RebootNeeded ? UpdateAction.InstallationCompleted : UpdateAction.RebootNeeded;
 
@@ -447,7 +447,7 @@ namespace SevenUpdate.Pages
                     btnAction.Visibility = Visibility.Visible;
                     line.Visibility = Visibility.Visible;
                     line.Y1 = 25;
-                    btnAction.IsShieldNeeded = !Core.IsAdmin;
+                    btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     break;
 
                 case UpdateAction.Downloading:
@@ -459,7 +459,7 @@ namespace SevenUpdate.Pages
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
 
-                    btnAction.IsShieldNeeded = !Core.IsAdmin;
+                    btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     break;
 
                 case UpdateAction.ErrorOccurred:
@@ -489,7 +489,7 @@ namespace SevenUpdate.Pages
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
 
-                    btnAction.IsShieldNeeded = !Core.IsAdmin;
+                    btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     break;
 
                 case UpdateAction.NoUpdates:
@@ -519,7 +519,7 @@ namespace SevenUpdate.Pages
                     tbHeading.Visibility = Visibility.Visible;
                     tbSelectedUpdates.Visibility = Visibility.Visible;
                     line.Visibility = Visibility.Visible;
-                    btnAction.IsShieldNeeded = !Core.IsAdmin;
+                    btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     break;
             }
         }

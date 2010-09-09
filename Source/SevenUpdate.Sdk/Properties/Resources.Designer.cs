@@ -160,6 +160,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recent projects.
+        /// </summary>
+        public static string RecentProjects {
+            get {
+                return ResourceManager.GetString("RecentProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registry Item.
         /// </summary>
         public static string RegistryItem {

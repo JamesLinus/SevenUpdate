@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-
 #endregion
 
 namespace SevenUpdate.Sdk
@@ -14,7 +13,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
-    [ValueConversion(typeof(LocaleString), typeof(string))]
+    [ValueConversion(typeof (LocaleString), typeof (string))]
     internal sealed class StringToLocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -28,7 +27,7 @@ namespace SevenUpdate.Sdk
             var localeStrings = value as Collection<LocaleString>;
 
             // Loops through the collection of LocaleStrings
-            return localeStrings != null ? localeStrings.Where(t => t.Lang == SevenUpdate.Base.Locale).Select(t => t.Value).FirstOrDefault() : null;
+            return localeStrings != null ? localeStrings.Where(t => t.Lang == Base.Locale).Select(t => t.Value).FirstOrDefault() : null;
         }
 
         /// <summary>
@@ -43,19 +42,19 @@ namespace SevenUpdate.Sdk
             switch (parameter as string)
             {
                 case "App.Name":
-                    localeStrings = Base.AppInfo.Name;
+                    localeStrings = Core.AppInfo.Name;
                     break;
                 case "App.Publisher":
-                    localeStrings = Base.AppInfo.Publisher;
+                    localeStrings = Core.AppInfo.Publisher;
                     break;
                 case "App.Description":
-                    localeStrings = Base.AppInfo.Description;
+                    localeStrings = Core.AppInfo.Description;
                     break;
                 case "Update.Description":
-                    localeStrings = Base.UpdateInfo.Description;
+                    localeStrings = Core.UpdateInfo.Description;
                     break;
                 case "Update.Name":
-                    localeStrings = Base.UpdateInfo.Name;
+                    localeStrings = Core.UpdateInfo.Name;
                     break;
             }
 
@@ -66,14 +65,14 @@ namespace SevenUpdate.Sdk
                 {
                     var found = false;
 
-                    foreach (var t in localeStrings.Where(t => t.Lang == SevenUpdate.Base.Locale))
+                    foreach (var t in localeStrings.Where(t => t.Lang == Base.Locale))
                     {
                         t.Value = valueString;
                         found = true;
                     }
                     if (!found)
                     {
-                        var ls = new LocaleString { Lang = SevenUpdate.Base.Locale, Value = valueString };
+                        var ls = new LocaleString {Lang = Base.Locale, Value = valueString};
                         localeStrings.Add(ls);
                     }
                 }
@@ -81,7 +80,7 @@ namespace SevenUpdate.Sdk
                 {
                     for (var x = 0; x < localeStrings.Count; x++)
                     {
-                        if (localeStrings[x].Lang == SevenUpdate.Base.Locale)
+                        if (localeStrings[x].Lang == Base.Locale)
                             localeStrings.RemoveAt(x);
                     }
                 }
@@ -91,7 +90,7 @@ namespace SevenUpdate.Sdk
                 if (!String.IsNullOrWhiteSpace(valueString))
                 {
                     localeStrings = new ObservableCollection<LocaleString>();
-                    var ls = new LocaleString { Lang = SevenUpdate.Base.Locale, Value = valueString };
+                    var ls = new LocaleString {Lang = Base.Locale, Value = valueString};
                     localeStrings.Add(ls);
                 }
             }
@@ -125,7 +124,7 @@ namespace SevenUpdate.Sdk
     /// <summary>
     ///   Converts a Bool to a Label
     /// </summary>
-    [ValueConversion(typeof(bool), typeof(string))]
+    [ValueConversion(typeof (bool), typeof (string))]
     internal sealed class BoolToLabelConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -136,7 +135,7 @@ namespace SevenUpdate.Sdk
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? @"HKLM\Software\MyCompany\MyApp" : @"%PROGRAMFILES%\Seven Software\Seven Update";
+            return (bool) value ? @"HKLM\Software\MyCompany\MyApp" : @"%PROGRAMFILES%\Seven Software\Seven Update";
         }
 
         /// <summary>

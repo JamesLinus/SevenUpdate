@@ -171,4 +171,7 @@
   <data name="InputRequired" xml:space="preserve">
     <value>A value is required for this field.</value>
   </data>
+  <data name="RecentProjects" xml:space="preserve">
+    <value>Recent projects</value>
+  </data>
 </root>
