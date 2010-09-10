@@ -23,6 +23,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Media;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -53,6 +54,48 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private static void SaveProject(int updateIndex = -1)
+        {
+            var projects = Base.Deserialize<Collection<Project>>(Core.ProjectsFile) ?? new Collection<Project>();
+
+            var appUpdates = new Collection<Update>();
+
+            var appName = Base.GetLocaleString(Core.AppInfo.Name);
+            for (int x = 0; x < projects.Count; x++)
+            {
+                if (projects[x].ApplicationName != Base.GetLocaleString(Core.AppInfo.Name))
+                    continue;
+                appUpdates = Base.Deserialize<Collection<Update>>(projects[x].Sui);
+                projects.RemoveAt(x);
+                break;
+            }
+
+            if (appUpdates.Count == 0 || updateIndex == -1)
+                appUpdates.Add(Core.UpdateInfo);
+            else
+            {
+                appUpdates.RemoveAt(updateIndex);
+                appUpdates.Add(Core.UpdateInfo);
+            }
+
+
+            // Save the SUI File
+            Base.Serialize(appUpdates, Core.UserStore + appName + ".sui");
+
+            // Save the SUA file
+            Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+
+            // Save project file
+            var project = new Project {ApplicationName = appName, Sui = Core.UserStore + appName + ".sui", Sua = Core.UserStore + appName + ".sua"};
+            projects.Add(project);
+            Base.Serialize(projects, Core.ProjectsFile);
+        }
+
+        private static void SaveUpdate(int updateIndex)
+        {
+
+        }
 
         #region UI Events
 
@@ -88,6 +131,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
+            tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
         }
 
         #endregion
@@ -95,41 +139,28 @@ namespace SevenUpdate.Sdk.Pages
         //NOTE Method is not final, just for testing
         private void CommandLink_Click(object sender, RoutedEventArgs e)
         {
-            // Base.Deserialize<Collection<Sui>>(Core.ProjectsFile) ??
-            var projects = new Collection<Sui>();
-            // TODO implement check for an update, to remove the old and add the new for project editing.
-
-
-            var cfd = new CommonSaveFileDialog
-                          {
-                              AlwaysAppendDefaultExtension = true,
-                              DefaultExtension = "sui",
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              DefaultFileName = Core.AppInfo.Name[0].Value,
-                              EnsureValidNames = true,
-                          };
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
-
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-
-            if (projects.Count < 1)
-            {
-                var project = new Sui { AppInfo = Core.AppInfo, Updates = new ObservableCollection<Update> { Core.UpdateInfo } };
-                projects.Add(project);
-            }
-
-            // Save the projects file
-            Base.Serialize(projects, Core.ProjectsFile);
-
-            var updates = new Collection<Update> {Core.UpdateInfo};
-
-            // Save the SUI File
-            Base.Serialize(updates, cfd.FileName);
+            SaveProject();
 
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
         #endregion
+
+        private void SaveExport_Click(object sender, RoutedEventArgs e)
+        {
+
+            var cfd = new CommonSaveFileDialog
+            {
+                AlwaysAppendDefaultExtension = true,
+                DefaultExtension = "sui",
+                DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                DefaultFileName = Core.AppInfo.Name[0].Value,
+                EnsureValidNames = true,
+            };
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+        }
     }
 }

@@ -26,6 +26,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
@@ -67,8 +68,18 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
-            line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            if (AeroGlass.IsEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+                line.Visibility = Visibility.Collapsed;
+                rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                line.Visibility = Visibility.Visible;
+                rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -216,8 +227,18 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            if (e.IsGlassEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+                line.Visibility = Visibility.Visible;
+                rectangle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                line.Visibility = Visibility.Collapsed;
+                rectangle.Visibility = Visibility.Collapsed;
+            }
         }
 
         #endregion

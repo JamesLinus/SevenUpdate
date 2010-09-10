@@ -26,7 +26,7 @@
 		<TextBlock HorizontalAlignment="Left" Padding="2" Text="Select the programs that will be updated with Seven Update." VerticalAlignment="Top" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="3" />
 		<ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3" Grid.Row="9">
-			<ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" Controls:ListViewSorter.CustomSorter="SevenUpdate.SuaSorter,SevenUpdate" BorderThickness="0" AlternationCount="2">
+			<ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" Controls:ListViewSorter.CustomSorter="SevenUpdate.SuaSorter,SevenUpdate" BorderThickness="0" AlternationCount="2" TabIndex="3">
 				<ListView.Resources>
 					<ToolTip x:Key="itemToolTip">
 						<TextBlock Text="{Binding Path=Description, Converter={StaticResource localeStringToString}}" TextWrapping="Wrap" MaxWidth="500" />
@@ -63,16 +63,16 @@
 		</ScrollViewer>
 		<TextBlock HorizontalAlignment="Left" Padding="2" Text="Please wait, downloading the program list..." VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" Margin="0,9" Grid.ColumnSpan="2" Visibility="{Binding ElementName=lvApps, Path=Items.Count, Converter={StaticResource intToBool}}" />
 		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0">
-			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" Click="Save_Click" Command="NavigationCommands.BrowseBack" ButtonText="Save" Name="btnSave" />
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Command="NavigationCommands.BrowseBack" />
+			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" Click="Save_Click" Command="NavigationCommands.BrowseBack" ButtonText="Save" Name="btnSave" TabIndex="4" />
+			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Command="NavigationCommands.BrowseBack" TabIndex="5" />
 		</StackPanel>
-		<CheckBox Content="Give me recommended updates the same way I receive important updates" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="5" IsChecked="{Binding Path=IncludeRecommended}" Margin="0,0,0,5" />
+		<CheckBox Content="Give me recommended updates the same way I receive important updates" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Left" VerticalAlignment="Center" MinHeight="5" IsChecked="{Binding Path=IncludeRecommended}" Margin="0,0,0,5" TabIndex="1" />
 		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Grid.ColumnSpan="2">
 			<TextBlock Padding="2" Text="Important updates" Foreground="#FF003399" VerticalAlignment="Center" />
 			<Separator MinWidth="200" MinHeight="5" Height="5" Width="555" Background="LightGray" VerticalAlignment="Center" Margin="2,2,0,0" />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="0.5" Grid.ColumnSpan="3" />
-		<ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120" SelectedValue="{Binding Path=AutoOption, Mode=TwoWay}" SelectedValuePath="Tag" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,22">
+		<ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120" SelectedValue="{Binding Path=AutoOption, Mode=TwoWay}" SelectedValuePath="Tag" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,22" TabIndex="0">
 			<ComboBoxItem Content="Install updates automatically" Tag="{x:Static SevenUpdate:AutoUpdateOption.Install}" />
 			<ComboBoxItem Content="Download updates but let me choose to install them (recommended)" Tag="{x:Static SevenUpdate:AutoUpdateOption.Download}" />
 			<ComboBoxItem Content="Check for updates but let me choose to download and install them" Tag="{x:Static SevenUpdate:AutoUpdateOption.Notify}" />

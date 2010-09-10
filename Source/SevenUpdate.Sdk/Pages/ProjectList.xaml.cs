@@ -21,6 +21,10 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Microsoft.Windows.Dwm;
 
 #endregion
@@ -50,43 +54,42 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private void LoadProjects()
+        {
+            var projects = Base.Deserialize<Collection<Project>>(Core.ProjectsFile) ?? new Collection<Project>();
+
+
+            if (projects.Count <= 0)
+                return;
+
+            foreach (Project app in projects)
+            {
+                var appName = new TreeViewItem { Header = app.ApplicationName };
+
+                foreach (string name in app.UpdateNames)
+                {
+                    var updates = new TreeViewItem { Header = name };
+                    appName.Items.Add(updates);
+                }
+                treeView.Items.Add(appName);
+            }
+        }
+
         #region UI Events
-
-        #region TextBox - Text Changed Events
-
-        #endregion
-
-        #region TextBox - Lost Keyboard Focus
-
-        #endregion
-
-        #region RadioButton - Checked
-
-        #endregion
-
-        #region Button - Click
-
-        #endregion
-
-        #region TextBlock - Mouse Down
-
-        #endregion
-
-        #region MenuItem - Click
-
-        #endregion
-
-        #region ComboBox - Selection Changed
-
-        #endregion
 
         #region Aero
 
         private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
+            tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
         }
 
         #endregion
+
+        private void Page_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+             Task.Factory.StartNew(LoadProjects);
+        }
 
         #endregion
     }

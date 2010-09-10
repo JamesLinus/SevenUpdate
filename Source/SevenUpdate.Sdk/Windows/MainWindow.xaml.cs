@@ -119,7 +119,7 @@ namespace SevenUpdate.Sdk.Windows
 
         private void NavigationWindow_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (AeroGlass.IsEnabled)
+            if (AeroGlass.IsEnabled && e.LeftButton == MouseButtonState.Pressed)
                 DragMove();
         }
 

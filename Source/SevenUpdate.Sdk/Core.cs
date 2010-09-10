@@ -26,8 +26,10 @@ using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Dialogs;
+using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Properties;
 
 #endregion
@@ -70,6 +72,8 @@ namespace SevenUpdate.Sdk
             }
             return true;
         }
+
+        internal static bool IsGlassEnabled { get; set; }
 
         #endregion
 

@@ -6,6 +6,8 @@
 		<Setter Property="MinWidth" Value="325" />
 		<Setter Property="MinHeight" Value="63" />
 		<Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="controls:CommandLink">

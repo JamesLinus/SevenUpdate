@@ -24,6 +24,7 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -55,8 +56,18 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
-            line.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = AeroGlass.IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+            if (AeroGlass.IsEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+                line.Visibility = Visibility.Collapsed;
+                rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                line.Visibility = Visibility.Visible;
+                rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -114,8 +125,18 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            line.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
-            rectangle.Visibility = e.IsGlassEnabled ? Visibility.Collapsed : Visibility.Visible;
+            if (e.IsGlassEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+                line.Visibility = Visibility.Visible;
+                rectangle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                line.Visibility = Visibility.Collapsed;
+                rectangle.Visibility = Visibility.Collapsed;
+            }
         }
 
         #endregion

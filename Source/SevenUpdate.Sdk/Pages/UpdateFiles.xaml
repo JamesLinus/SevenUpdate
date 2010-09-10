@@ -24,8 +24,8 @@
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="5" Fill="White" Grid.RowSpan="9" />
 		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
-			<Controls:BackButton Grid.RowSpan="3" />
-			<TextBlock Text="Files" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0">
+			<Controls:BackButton Grid.RowSpan="3" TabIndex="8" />
+			<TextBlock Text="Files" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle">
 				<TextBlock.Effect>
 					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
 				</TextBlock.Effect>
@@ -33,7 +33,7 @@
 		</StackPanel>
 		<!--ListBox-->
 		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown"
-                SelectedIndex="0">
+                SelectedIndex="0" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Add File(s)" Click="AddFile_Click">
@@ -69,13 +69,13 @@
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="5" Name="line" />
 		<Rectangle Grid.ColumnSpan="5" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
 		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" />
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" TabIndex="6" />
+			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="7" />
 		</StackPanel>
 		<!--File Action-->
 		<TextBlock Text="File action:" Padding="2" ToolTip="The action to take on this file" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
 		<ComboBox Name="cbxUpdateType" SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center"
-                SelectedIndex="0">
+                SelectedIndex="0" TabIndex="1">
 			<ComboBoxItem Content="Update" Tag="Update" />
 			<ComboBoxItem Content="Update if file exists" Tag="UpdateIfExist" />
 			<ComboBoxItem Content="Update &amp; register dll file" Tag="UpdateThenRegister" />
@@ -87,7 +87,7 @@
 			<ComboBoxItem Content="Unregister dll &amp; delete" Tag="UnregisterThenDelete" />
 		</ComboBox>
 		<TextBlock Text="Download URL:" Padding="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="(Optional) An absolute url that will download the file (file must have public read access)" TabIndex="1" LostKeyboardFocus="TextBox_LostKeyboardFocus" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
+		<Controls:InfoTextBox Label="(Optional) An absolute url that will download the file (file must have public read access)" TabIndex="2" LostKeyboardFocus="TextBox_LostKeyboardFocus" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Source" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -97,7 +97,7 @@
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
 		<TextBlock Text="Install location:" HorizontalAlignment="Left" Padding="2" ToolTip="Standard windows variables are allowed ex. %USERNAME% and also these custom variables: %APPDIR%" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="An absolute Uri pointing to the installed location of the file on a system" TabIndex="2" LostKeyboardFocus="TextBox_LostKeyboardFocus" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
+		<Controls:InfoTextBox Label="An absolute Uri pointing to the installed location of the file on a system" TabIndex="3" LostKeyboardFocus="TextBox_LostKeyboardFocus" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Destination" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -106,11 +106,11 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" MouseDown="Browse_MouseDown" Cursor="Hand" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" MouseDown="Browse_MouseDown" Cursor="Hand" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Focusable="True" />
 		<TextBlock Text="Command args:" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" ToolTip="Enter any arguments to be executed with the file" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="(Optional) Enter command line arguments to be passed when file is executed during update" Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Label="(Optional) Enter command line arguments to be passed when file is executed during update" Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="4" />
 		<TextBlock Text="SHA-2 hash:" HorizontalAlignment="Left" Padding="2" Grid.Column="1" Grid.Row="8" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<TextBlock IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}, ConverterParameter=True}" Padding="2" Foreground="#FF0066CC" MouseDown="Hash_MouseDown" Style="{StaticResource underlineTextBlock}" Text="{Binding ElementName=listBox, Path=SelectedItem.Hash, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" ToolTip="Click here to update the hash, it must be correct for the file for Seven Update to work properly" Cursor="Hand" Grid.Column="2" Grid.Row="8" Margin="5,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}, ConverterParameter=True}" Padding="2" Foreground="#FF0066CC" MouseDown="Hash_MouseDown" Style="{StaticResource underlineTextBlock}" Text="{Binding ElementName=listBox, Path=SelectedItem.Hash, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" ToolTip="Click here to update the hash, it must be correct for the file for Seven Update to work properly" Cursor="Hand" Grid.Column="2" Grid.Row="8" Margin="5,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Focusable="True" />
 		<TextBlock HorizontalAlignment="Left" Padding="2" Text="Calculating hash in background..." Grid.Row="10" VerticalAlignment="Center" Margin="30,0,0,0" Grid.ColumnSpan="2" Name="tbHashCalculating" Visibility="Collapsed">
 			<TextBlock.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
