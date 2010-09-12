@@ -25,11 +25,9 @@
 			</TextBlock>
 		</StackPanel>
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="White" />
-        <StackPanel Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Controls:CommandLink HorizontalAlignment="Center" TabIndex="0"
-                VerticalAlignment="Center" Grid.Row="1" Content="Save project" Click="CommandLink_Click" />
-            <Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" VerticalAlignment="Center" Grid.Row="1" Content="Save project and release updates"
-                    Note="Exports the files needed to release your update(s)" Click="SaveExport_Click" />
-        </StackPanel>
-    </Grid>
+		<StackPanel Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="0" VerticalAlignment="Center" Grid.Row="1" Content="Save project" Click="CommandLink_Click" />
+			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" VerticalAlignment="Center" Grid.Row="1" Content="Save project and release updates" Note="Exports the files needed to release your update(s)" Click="SaveExport_Click" />
+		</StackPanel>
+	</Grid>
 </Page>

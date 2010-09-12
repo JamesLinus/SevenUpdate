@@ -24,7 +24,6 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Shell;
-using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Properties;
 using SevenUpdate.Sdk.Windows;
 

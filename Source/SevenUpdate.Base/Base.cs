@@ -31,7 +31,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 using Microsoft.Win32;
 using ProtoBuf;
 
@@ -270,7 +269,6 @@ namespace SevenUpdate
                 {
                     using (var file = File.Open(fileName, FileMode.Truncate))
                     {
-
                         Serializer.Serialize(file, item);
                         file.Close();
                     }
@@ -367,10 +365,10 @@ namespace SevenUpdate
         /// <param name = "dir">a string that contains a directory</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
-        internal static string ConvertPath(string path, string dir, bool is64Bit)
+        public static string ConvertPath(string path, string dir, bool is64Bit)
         {
-            path = Replace(path, "[AppDir]", ConvertPath(dir, true, is64Bit));
-            path = Replace(path, "[DownloadUrl]", ConvertPath(dir, true, is64Bit));
+            path = Replace(path, "%INSTALLDIR%", ConvertPath(dir, true, is64Bit));
+            path = Replace(path, "%DOWNLOADURL%", ConvertPath(dir, true, is64Bit));
             return ConvertPath(path, true, is64Bit);
         }
 

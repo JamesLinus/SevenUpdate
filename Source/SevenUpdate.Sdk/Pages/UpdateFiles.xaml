@@ -32,8 +32,7 @@
 			</TextBlock>
 		</StackPanel>
 		<!--ListBox-->
-		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown"
-                SelectedIndex="0" TabIndex="0">
+		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown" SelectedIndex="0" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Add File(s)" Click="AddFile_Click">
@@ -74,8 +73,7 @@
 		</StackPanel>
 		<!--File Action-->
 		<TextBlock Text="File action:" Padding="2" ToolTip="The action to take on this file" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<ComboBox Name="cbxUpdateType" SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center"
-                SelectedIndex="0" TabIndex="1">
+		<ComboBox Name="cbxUpdateType" SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" SelectedIndex="0" TabIndex="1">
 			<ComboBoxItem Content="Update" Tag="Update" />
 			<ComboBoxItem Content="Update if file exists" Tag="UpdateIfExist" />
 			<ComboBoxItem Content="Update &amp; register dll file" Tag="UpdateThenRegister" />
@@ -96,7 +94,7 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="Install location:" HorizontalAlignment="Left" Padding="2" ToolTip="Standard windows variables are allowed ex. %USERNAME% and also these custom variables: %APPDIR%" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock Text="Install location:" HorizontalAlignment="Left" Padding="2" ToolTip="Standard windows variables are allowed ex. %USERNAME%. Use %INSTALLDIR% for files in the app directory when possible" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
 		<Controls:InfoTextBox Label="An absolute Uri pointing to the installed location of the file on a system" TabIndex="3" LostKeyboardFocus="TextBox_LostKeyboardFocus" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Destination" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">

@@ -86,42 +86,41 @@
 			</ListView.View>
 		</ListView>
 		<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/Images/SideBar2.jpg" Grid.Column="1" Grid.RowSpan="10" Stretch="Fill" />
-		<Image RenderOptions.BitmapScalingMode="HighQuality" IsEnabled="True" Source="/SevenUpdate;component/Images/Icon128.png" Stretch="None" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource intToVisibility}}" Margin="36,23,36,138" Grid.RowSpan="3" />
+		<Image RenderOptions.BitmapScalingMode="HighQuality" IsEnabled="True" Source="/SevenUpdate;component/Images/Icon128.png" Stretch="None" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}, ConverterParameter=True}" Margin="36,23,36,138" Grid.RowSpan="3" />
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
 		<Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Grid.Row="9" DataContext="{Binding}" />
 		<StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="9">
 			<Button Content="_OK" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" Click="Ok_Click" Command="NavigationCommands.BrowseBack" TabIndex="1" />
-			<Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Click="Cancel_Click" Command="NavigationCommands.BrowseBack"
-                    TabIndex="2" />
+			<Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Click="Cancel_Click" Command="NavigationCommands.BrowseBack" TabIndex="2" />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" Stretch="Fill" StrokeThickness="1" Grid.ColumnSpan="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Bottom" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
 		<Line Stroke="#FFA0A0A0" Y1="{Binding Path=ActualHeight, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" Grid.Column="1" Grid.RowSpan="7" HorizontalAlignment="Left" Grid.Row="2" />
-		<TextBlock FontWeight="Bold" TextWrapping="Wrap" Padding="2" Text="{Binding ElementName=lvUpdates, Path=SelectedItem.Name, Converter={StaticResource localeStringToString}}" Grid.Column="1" Grid.Row="2" />
-		<TextBlock Text="{Binding ElementName=lvUpdates, Path=SelectedItem.Description, Converter={StaticResource localeStringToString}}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="0,5,0,0" Padding="2" />
+		<TextBlock FontWeight="Bold" TextWrapping="Wrap" Padding="2" Text="{Binding ElementName=lvUpdates, Path=SelectedItem.Name, Converter={StaticResource localeStringToString}}" Grid.Column="1" Grid.Row="2" Margin="5,0,0,0" />
+		<TextBlock Text="{Binding ElementName=lvUpdates, Path=SelectedItem.Description, Converter={StaticResource localeStringToString}}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="5,5,0,0" Padding="2" />
 		<StackPanel Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Margin="0,10,0,0">
-			<TextBlock FontWeight="Bold" Padding="2" Text="Published:" MaxWidth="120" />
+			<TextBlock FontWeight="Bold" Padding="2" Text="Published:" MaxWidth="120" Margin="5,0,0,0" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" />
 			<TextBlock Padding="2" MaxWidth="90" Text="{Binding ElementName=lvUpdates, Path=SelectedItem.ReleaseDate}" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="5" Margin="0,10,0,0">
-			<Image Visibility="Hidden" Stretch="None">
+			<Image Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" Stretch="None" Margin="5,0,0,0">
 				<Image.Style>
 					<Style>
 						<Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenArrow.png" />
 						<Style.Triggers>
-							<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=Size, Converter={StaticResource intToBool}}" Value="True">
+							<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedItem.Size, Converter={StaticResource intToBool}}" Value="True">
 								<Setter Property="Image.Source" Value="/SevenUpdate;component/Images/BlueArrow.png" />
 							</DataTrigger>
 						</Style.Triggers>
 					</Style>
 				</Image.Style>
 			</Image>
-			<TextBlock Padding="2" TextWrapping="Wrap" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" Margin="5,0,0,0">
+			<TextBlock Padding="2" TextWrapping="Wrap" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" VerticalAlignment="Center" Margin="5,0,0,0">
 				<TextBlock.Style>
 					<Style>
 						<Setter Property="TextBlock.Text" Value="{x:Static Properties:Resources.ReadyToInstall}" />
 						<Style.Triggers>
-							<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=Size, Converter={StaticResource intToBool}}" Value="True">
+							<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedItem.Size, Converter={StaticResource intToBool}}" Value="True">
 								<Setter Property="TextBlock.Text" Value="{x:Static Properties:Resources.ReadyToDownload}" />
 							</DataTrigger>
 						</Style.Triggers>
@@ -129,7 +128,24 @@
 				</TextBlock.Style>
 			</TextBlock>
 		</StackPanel>
-		<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="2" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="6" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlInfo_MouseDown" Visibility="{Binding ElementName=lvUpdates, Path=SelectedItem.InfoUrl, Converter={StaticResource stringToVisibility}}" Cursor="Hand" Margin="0,10,0,0" Focusable="True" />
-		<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="2" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" Foreground="#FF0066CC" MaxWidth="190" MouseDown="UrlHelp_MouseDown" Visibility="{Binding ElementName=lvUpdates, Path=SelectedItem.HelpUrl, Converter={StaticResource stringToVisibility}}" Cursor="Hand" Margin="0,5,0,0" Focusable="True" />
+		<TextBlock HorizontalAlignment="Left" Padding="2" Text="More information" VerticalAlignment="Top" Grid.Column="1" Grid.Row="6" Foreground="#FF0066CC" MouseDown="UrlInfo_MouseDown" Cursor="Hand" Margin="5,10,0,0" Focusable="True">
+			<TextBlock.Style>
+				<Style>
+					<Style.Triggers>
+						<Trigger Property="TextBlock.IsMouseOver" Value="True">
+							<Setter Property="TextBlock.TextDecorations" Value="Underline" />
+						</Trigger>
+						<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedIndex}" Value="-1">
+							<Setter Property="TextBlock.Visibility" Value="Collapsed" />
+						</DataTrigger>
+						<DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedItem.InfoUrl, Converter={StaticResource stringToBool}}" Value="True">
+							<Setter Property="TextBlock.Visibility" Value="Collapsed" />
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</TextBlock.Style>
+
+		</TextBlock>
+		<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="2" Text="Help and support" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" Foreground="#FF0066CC" MouseDown="UrlHelp_MouseDown" Cursor="Hand" Margin="5,5,0,0" Focusable="True" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" />
 	</Grid>
 </Page>

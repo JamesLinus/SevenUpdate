@@ -47,8 +47,7 @@
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" TabIndex="8" />
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="9" />
 		</StackPanel>
-		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="listBox_KeyDown"
-                TabIndex="0">
+		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="listBox_KeyDown" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Click="AddRegistryItem_Click" Header="Add Registry Item" />

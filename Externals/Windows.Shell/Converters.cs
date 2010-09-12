@@ -151,6 +151,45 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
+    [ValueConversion(typeof(int), typeof(Visibility))]
+    public sealed class IndexToVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var count = value is int ? (int)value : -1;
+
+            if (parameter != null)
+            {
+                // If count is less then 0 and should return visible
+                if (count < 0 && System.Convert.ToBoolean(parameter))
+                    return Visibility.Visible;
+                return Visibility.Collapsed;
+            }
+
+            return count < 0 ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    ///   Converts the Int to Bool
+    /// </summary>
     [ValueConversion(typeof (int), typeof (bool))]
     public sealed class IntToBoolConverter : IValueConverter
     {
@@ -162,7 +201,7 @@ namespace Microsoft.Windows.Common
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int) value : 0;
+            var count = System.Convert.ToUInt64(value);
 
             if (parameter != null)
             {

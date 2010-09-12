@@ -5,11 +5,13 @@
 	<converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
 	<converters:ImportanceToString x:Key="importanceToString" />
 	<Common:StringToVisibilityConverter x:Key="stringToVisibility" />
+    <Common:StringToBoolConverter x:Key="stringToBool" />
 	<Common:IntToVisibilityConverter x:Key="intToVisibility" />
 	<Common:IntToBoolConverter x:Key="intToBool" />
+    <Common:IndexToVisibilityConverter x:Key="indexToVisibility" />
 	<converters:DateConverter x:Key="dateConverter" />
 	<Common:InverseBoolConverter x:Key="inverseBool" />
-
+    
 	<DataTemplate x:Key="HeaderTemplateSortDesc">
 		<DockPanel>
 			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />

@@ -192,7 +192,6 @@ namespace SevenUpdate.Sdk.Pages
                 tbTitle.Foreground = Brushes.Black;
                 line.Visibility = Visibility.Collapsed;
                 rectangle.Visibility = Visibility.Collapsed;
-
             }
             else
             {
@@ -211,7 +210,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             if (e.Key != Key.Delete)
                 return;
-            
+
             Core.UpdateInfo.RegistryItems.RemoveAt(index);
             listBox.SelectedIndex = (index - 1);
 

@@ -61,11 +61,29 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adds a new update to.
+        /// </summary>
+        public static string AddUpdate {
+            get {
+                return ResourceManager.GetString("AddUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculating hash.
         /// </summary>
         public static string CalculatingHash {
             get {
                 return ResourceManager.GetString("CalculatingHash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -84,6 +102,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string DontShowMessage {
             get {
                 return ResourceManager.GetString("DontShowMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -178,6 +205,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seven Software.
         /// </summary>
         public static string SevenSoftware {
@@ -210,6 +246,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string Sui {
             get {
                 return ResourceManager.GetString("Sui", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test.
+        /// </summary>
+        public static string Test {
+            get {
+                return ResourceManager.GetString("Test", resourceCulture);
             }
         }
         

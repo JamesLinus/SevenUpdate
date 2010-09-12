@@ -21,6 +21,7 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -56,7 +57,16 @@ namespace SevenUpdate.Sdk.Pages
 
             if (Environment.OSVersion.Version.Major < 6)
                 return;
-
+            if (Core.AppIndex > -1)
+            {
+                btnNext.Visibility = Visibility.Collapsed;
+                btnCancel.Content = Properties.Resources.Save;
+            }
+            else
+            {
+                btnCancel.Content = Properties.Resources.Cancel;
+                btnNext.Visibility = Visibility.Visible;
+            }
 
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
@@ -116,6 +126,30 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            if (btnNext.Visibility != Visibility.Visible)
+            {
+                var projects = Base.Deserialize<Collection<Project>>(Core.ProjectsFile) ?? new Collection<Project>();
+
+                var appName = Base.GetLocaleString(Core.AppInfo.Name);
+
+                ObservableCollection<string> updateNames = null;
+
+                if (Core.AppIndex > -1)
+                {
+                    updateNames = projects[Core.AppIndex].UpdateNames;
+                    projects.RemoveAt(Core.AppIndex);
+                }
+
+                // Save the SUA file
+                Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+
+                // Save project file
+                var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
+
+                projects.Add(project);
+                Base.Serialize(projects, Core.ProjectsFile);
+            }
+
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 

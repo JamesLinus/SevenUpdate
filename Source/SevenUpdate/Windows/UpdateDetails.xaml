@@ -12,8 +12,8 @@
 		</StackPanel>
 		<TextBlock Grid.Row="6" TextWrapping="Wrap" Grid.Column="1" Padding="2" Text="{Binding Path=Description, Converter={StaticResource localeStringToString}}" />
 		<TextBlock Grid.Row="7" Text="More information:" Grid.Column="1" Grid.RowSpan="2" Margin="0,5,0,0" Padding="2" Visibility="{Binding Path=InfoUrl, Converter={StaticResource stringToVisibility}}" />
-		<TextBlock Style="{StaticResource underlineTextBlock}" Grid.Row="9" Grid.Column="1" Foreground="#FF0066CC" MouseDown="MoreInfoUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Visibility="{Binding Path=InfoUrl, Converter={StaticResource stringToVisibility}}" Text="{Binding Path=InfoUrl}" />
-		<TextBlock Grid.Row="10" Text="Help and Support:" Grid.Column="1" Margin="0,5,0,0" Padding="2" Visibility="{Binding Path=InfoUrl, Converter={StaticResource stringToVisibility}}" />
-		<TextBlock Style="{StaticResource underlineTextBlock}" Grid.Row="10" Grid.Column="1" Foreground="#FF0066CC" MouseDown="HelpUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Visibility="{Binding Path=InfoUrl, Converter={StaticResource stringToVisibility}}" Text="{Binding Path=InfoUrl}" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Grid.Row="9" Grid.Column="1" Foreground="#FF0066CC" MouseDown="MoreInfoUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Visibility="{Binding Path=InfoUrl, Converter={StaticResource stringToVisibility}, ConverterParameter=True}" Text="{Binding Path=InfoUrl}" />
+		<TextBlock Grid.Row="10" Text="Help and Support:" Grid.Column="1" Margin="0,5,0,0" Padding="2" Visibility="{Binding Path=HelpUrl, Converter={StaticResource stringToVisibility}}" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Grid.Row="10" Grid.Column="1" Foreground="#FF0066CC" MouseDown="HelpUrl_MouseDown" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Text="{Binding Path=HelpUrl}" />
 	</StackPanel>
 </Window>

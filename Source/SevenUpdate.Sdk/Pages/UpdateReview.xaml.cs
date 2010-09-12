@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Windows.Dialogs;
@@ -55,28 +56,37 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        private static void SaveProject(int updateIndex = -1)
+        private static void SaveProject(bool export = false)
         {
-            var projects = Base.Deserialize<Collection<Project>>(Core.ProjectsFile) ?? new Collection<Project>();
+            var projects = Base.Deserialize<ObservableCollection<Project>>(Core.ProjectsFile) ?? new ObservableCollection<Project>();
 
             var appUpdates = new Collection<Update>();
 
             var appName = Base.GetLocaleString(Core.AppInfo.Name);
-            for (int x = 0; x < projects.Count; x++)
+
+            var updateNames = new ObservableCollection<string>();
+
+            // If SUA exists lets remove the old info
+            if (Core.AppIndex > -1)
             {
-                if (projects[x].ApplicationName != Base.GetLocaleString(Core.AppInfo.Name))
-                    continue;
-                appUpdates = Base.Deserialize<Collection<Update>>(projects[x].Sui);
-                projects.RemoveAt(x);
-                break;
+                appUpdates = Base.Deserialize<Collection<Update>>(Core.UserStore + projects[Core.AppIndex].ApplicationName + ".sui");
+                updateNames = projects[Core.AppIndex].UpdateNames;
+                projects.RemoveAt(Core.AppIndex);
             }
 
-            if (appUpdates.Count == 0 || updateIndex == -1)
+            // If we are just updating the SUA, lets add it
+            if (appUpdates.Count == 0 || Core.UpdateIndex == -1)
+            {
+                updateNames.Add(Base.GetLocaleString(Core.UpdateInfo.Name));
                 appUpdates.Add(Core.UpdateInfo);
+            }
+                // If we are updating the update, lets remove the old info and add the new.
             else
             {
-                appUpdates.RemoveAt(updateIndex);
+                updateNames.RemoveAt(Core.UpdateIndex);
+                appUpdates.RemoveAt(Core.UpdateIndex);
                 appUpdates.Add(Core.UpdateInfo);
+                updateNames.Add(Base.GetLocaleString(Core.UpdateInfo.Name));
             }
 
 
@@ -87,14 +97,26 @@ namespace SevenUpdate.Sdk.Pages
             Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
 
             // Save project file
-            var project = new Project {ApplicationName = appName, Sui = Core.UserStore + appName + ".sui", Sua = Core.UserStore + appName + ".sua"};
+            var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
+
+
             projects.Add(project);
             Base.Serialize(projects, Core.ProjectsFile);
+
+            if (!export)
+                return;
+            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),};
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua");
+            File.Copy(Core.UserStore + appName + ".suia", cfd.FileName + @"\" + appName + ".sui");
         }
 
-        private static void SaveUpdate(int updateIndex)
+        private void SaveExport_Click(object sender, RoutedEventArgs e)
         {
-
+            SaveProject(true);
         }
 
         #region UI Events
@@ -145,22 +167,5 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
-
-        private void SaveExport_Click(object sender, RoutedEventArgs e)
-        {
-
-            var cfd = new CommonSaveFileDialog
-            {
-                AlwaysAppendDefaultExtension = true,
-                DefaultExtension = "sui",
-                DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                DefaultFileName = Core.AppInfo.Name[0].Value,
-                EnsureValidNames = true,
-            };
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
-
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-        }
     }
 }

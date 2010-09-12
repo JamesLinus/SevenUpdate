@@ -21,16 +21,61 @@
 #region
 
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using ProtoBuf;
 
 #endregion
 
 namespace SevenUpdate.Sdk
 {
-    internal class Project
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
+    public class Project : INotifyPropertyChanged
     {
-        public string ApplicationName { get; set; }
-        public Collection<string> UpdateNames { get; set; }
-        public string Sua { get; set; }
-        public string Sui { get; set; }
+        private string applicationName;
+        private ObservableCollection<string> updateNames;
+
+        [ProtoMember(1), DataMember]
+        public string ApplicationName
+        {
+            get { return applicationName; }
+            set
+            {
+                applicationName = value;
+                OnPropertyChanged("ApplicationName");
+            }
+        }
+
+        [ProtoMember(2), DataMember]
+        public ObservableCollection<string> UpdateNames
+        {
+            get { return updateNames; }
+            set
+            {
+                updateNames = value;
+                OnPropertyChanged("UpdateNames");
+            }
+        }
+
+        #region Implementation of INotifyPropertyChanged
+
+        /// <summary>
+        ///   Occurs when a property has changed
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        private void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
     }
 }

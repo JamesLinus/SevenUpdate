@@ -177,4 +177,19 @@
   <data name="Sui" xml:space="preserve">
     <value>Seven Update information</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Test" xml:space="preserve">
+    <value>Test</value>
+  </data>
+  <data name="AddUpdate" xml:space="preserve">
+    <value>Adds a new update to</value>
+  </data>
 </root>

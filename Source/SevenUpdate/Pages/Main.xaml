@@ -26,7 +26,7 @@
 		</StackPanel>
 		<TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,9" VerticalAlignment="Bottom" Cursor="Hand" Padding="2" MouseDown="About_MouseDown" Grid.Row="4" Focusable="True" />
 		<TextBlock FontSize="16" Foreground="#FF003399" Padding="2" Text="Seven Update" Grid.Column="2" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
-		<ib:InfoBar x:Name="infoBar" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,30" Grid.ColumnSpan="2" MaxWidth="625" />
+		<ib:InfoBar x:Name="infoBar" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,30" Grid.ColumnSpan="2" />
 		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Padding="2" Text="Most recent check for updates:" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
 		<TextBlock Grid.Row="3" HorizontalAlignment="Left" Padding="2" Text="Updates were installed:" VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
 		<TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default},  Path=lastUpdateCheck, Converter={StaticResource dateConverter}}" />

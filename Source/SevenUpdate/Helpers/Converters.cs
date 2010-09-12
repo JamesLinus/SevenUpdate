@@ -244,4 +244,30 @@ namespace SevenUpdate.Converters
 
         #endregion
     }
+
+    //internal sealed class MultiConverter : IMultiValueConverter
+    //{
+    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        var index = (int) values[0];
+    //        var url = 0;
+    //        if (values[1] == )
+    //            return Visibility.Collapsed;
+    //        try
+    //        {
+    //            url = ((string)values[1]).Length;
+    //        }
+    //        catch
+    //        {
+    //        }
+
+
+    //        return index < 0 ? Visibility.Collapsed : (url > 0 ? Visibility.Visible : Visibility.Collapsed);
+    //    }
+
+    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 }

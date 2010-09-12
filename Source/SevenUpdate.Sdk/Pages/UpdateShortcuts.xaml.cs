@@ -143,12 +143,10 @@ namespace SevenUpdate.Sdk.Pages
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
-            var shortcut = new Shortcut
-                               {
-                                   Location = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit),
-                                   Action = ShortcutAction.Add,
-                                   Name = new ObservableCollection<LocaleString>(),
-                               };
+            var path = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit);
+            path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
+
+            var shortcut = new Shortcut {Location = path, Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>(),};
             var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
@@ -171,11 +169,16 @@ namespace SevenUpdate.Sdk.Pages
 
             var importedShortcut = ShortcutInterop.ResolveShortcut(cfd.FileName);
 
+            var path = Base.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
+            path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
+
+            var icon = Base.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit);
+            icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                                {
                                    Arguments = importedShortcut.Arguments,
-                                   Icon = Base.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit),
-                                   Location = Base.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit),
+                                   Icon = icon,
+                                   Location = path,
                                    Action = ShortcutAction.Update,
                                    Target = Base.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
                                    Name = new ObservableCollection<LocaleString>(),
@@ -276,7 +279,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             if (e.Key != Key.Delete)
                 return;
-            
+
             Core.UpdateInfo.Shortcuts.RemoveAt(index);
             listBox.SelectedIndex = (index - 1);
 

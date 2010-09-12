@@ -26,10 +26,8 @@ using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Microsoft.Windows.Dialogs;
-using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Properties;
 
 #endregion
@@ -52,6 +50,8 @@ namespace SevenUpdate.Sdk
 
         internal static int SelectedShortcut { get; set; }
 
+        internal static bool IsGlassEnabled { get; set; }
+
         /// <summary>
         ///   Checks to see if a Url is valid and on the internet
         /// </summary>
@@ -73,8 +73,6 @@ namespace SevenUpdate.Sdk
             return true;
         }
 
-        internal static bool IsGlassEnabled { get; set; }
-
         #endregion
 
         #region Fields
@@ -93,6 +91,9 @@ namespace SevenUpdate.Sdk
         ///   The location of the list of projects for the SDK
         /// </summary>
         public static readonly string ProjectsFile = UserStore + @"Projects.sul";
+
+        internal static int UpdateIndex = -1;
+        internal static int AppIndex = -1;
 
         #endregion
 

@@ -192,8 +192,6 @@ namespace SevenUpdate.Pages
             }
             else
                 Core.Instance.UpdateAction = UpdateAction.NoUpdates;
-
-            imageHeight = imgSideBanner.MaxHeight;
         }
 
         /// <summary>
@@ -397,6 +395,7 @@ namespace SevenUpdate.Pages
             tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
             tbViewImportantUpdates.Visibility = Visibility.Collapsed;
             line.Visibility = Visibility.Collapsed;
+            
 
             switch (action)
             {
@@ -425,6 +424,7 @@ namespace SevenUpdate.Pages
                     tbHeading.Text = Properties.Resources.CheckingForUpdates;
 
                     tbHeading.Visibility = Visibility.Visible;
+                    line.Y1 = 25;
 
                     break;
 
@@ -612,7 +612,7 @@ namespace SevenUpdate.Pages
                     tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.OptionalDownloadSize);
             }
 
-            if (e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0)
+            if ((e.ImportantDownloadSize == 0 && e.OptionalDownloadSize == 0) && (e.ImportantUpdates > 0 || e.OptionalUpdates > 0))
             {
                 isInstallOnly = true;
                 tbHeading.Text = Properties.Resources.InstallUpdatesForPrograms;
@@ -627,15 +627,12 @@ namespace SevenUpdate.Pages
             {
                 tbSelectedUpdates.FontWeight = FontWeights.Bold;
                 btnAction.Visibility = Visibility.Visible;
-                var binding = new Binding {Source = grid, Path = new PropertyPath("ActualHeight")};
-                imgSideBanner.SetBinding(MaxHeightProperty, binding);
             }
             else
             {
                 tbSelectedUpdates.Text = Properties.Resources.NoUpdatesSelected;
                 tbSelectedUpdates.FontWeight = FontWeights.Normal;
                 btnAction.Visibility = Visibility.Collapsed;
-                imgSideBanner.MaxHeight = imageHeight;
             }
         }
 
