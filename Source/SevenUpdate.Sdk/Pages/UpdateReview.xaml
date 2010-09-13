@@ -29,5 +29,6 @@
 			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="0" VerticalAlignment="Center" Grid.Row="1" Content="Save project" Click="CommandLink_Click" />
 			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" VerticalAlignment="Center" Grid.Row="1" Content="Save project and release updates" Note="Exports the files needed to release your update(s)" Click="SaveExport_Click" />
 		</StackPanel>
+		<Label Content="This page is not complete, information about the update you have just created will be displayed here." Grid.Row="1" Height="28" HorizontalAlignment="Left" Margin="12" Name="label1" VerticalAlignment="Top" />
 	</Grid>
 </Page>

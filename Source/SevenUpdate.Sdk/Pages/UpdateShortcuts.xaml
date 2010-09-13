@@ -89,21 +89,21 @@
 			</StackPanel>
 		</GroupBox>
 		<TextBlock Text="Shortcut name:" ToolTip="The name of the shortcut" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5">
+		<Controls:InfoTextBox Label="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5" Name="tbxSaveLocation">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Location" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
-						<Controls:DirectoryInputRule />
+						<Controls:DirectoryInputRule IsRequired="True" />
 					</Binding.ValidationRules>
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
 		<TextBlock Text="Shortcut save location:" ToolTip="The location where the shortcut resides, example: startmenu or desktop" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Label="My Shortcut" Grid.Column="1" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Name="tbxName" TabIndex="4">
+		<Controls:InfoTextBox Label="My Shortcut" Grid.Column="1" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Name="tbxName" TabIndex="4" Margin="0,0,30,0">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ConverterParameter="Shortcut.Name" Converter="{StaticResource stringToLocaleString}">
 					<Binding.ValidationRules>
-						<Controls:FileNameInputRule />
+						<Controls:FileNameInputRule IsRequired="True" />
 					</Binding.ValidationRules>
 				</Binding>
 			</Controls:InfoTextBox.Text>
@@ -111,11 +111,11 @@
 		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" MouseDown="BrowsePath_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="5" VerticalAlignment="Center" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
 
 		<TextBlock Text="Shortcut target:" ToolTip="The app or path the shortcut points to" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%PROGRAMFILES%\MyApp\MyApp.exe" Grid.Column="1" Grid.Row="7" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="6">
+		<Controls:InfoTextBox Label="%PROGRAMFILES%\MyApp\MyApp.exe" Grid.Column="1" Grid.Row="7" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="6" Name="tbxTarget">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Target" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
-						<Controls:FileNameInputRule />
+						<Controls:FileNameInputRule IsRequired="True" />
 					</Binding.ValidationRules>
 				</Binding>
 			</Controls:InfoTextBox.Text>

@@ -97,6 +97,24 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create new project.
+        /// </summary>
+        public static string CreateProject {
+            get {
+                return ResourceManager.GetString("CreateProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create new update.
+        /// </summary>
+        public static string CreateUpdate {
+            get {
+                return ResourceManager.GetString("CreateUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t show me this message again..
         /// </summary>
         public static string DontShowMessage {
@@ -111,6 +129,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit an existing project.
+        /// </summary>
+        public static string EditProject {
+            get {
+                return ResourceManager.GetString("EditProject", resourceCulture);
             }
         }
         

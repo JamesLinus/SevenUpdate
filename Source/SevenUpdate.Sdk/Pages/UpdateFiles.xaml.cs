@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Windows.Controls;
@@ -148,6 +149,13 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private bool HasErrors()
+        {
+            if (Core.UpdateInfo.Files.Count == 0)
+                return false;
+            return tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxInstallLocation.GetBindingExpression(TextBox.TextProperty).HasError;
+        }
+
         #region UI Events
 
         #region TextBox - Lost Keyboard Focus
@@ -167,10 +175,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (Core.UpdateInfo.Files.Count < 1 || SevenUpdate.Base.IsHashGenerating)
-            //    App.ShowInputErrorMessage();
-            //else
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            if (!HasErrors())
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateRegistry.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

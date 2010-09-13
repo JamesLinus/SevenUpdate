@@ -58,8 +58,6 @@ namespace SevenUpdate.Sdk.Pages
 
         private static void SaveProject(bool export = false)
         {
-            var projects = Base.Deserialize<ObservableCollection<Project>>(Core.ProjectsFile) ?? new ObservableCollection<Project>();
-
             var appUpdates = new Collection<Update>();
 
             var appName = Base.GetLocaleString(Core.AppInfo.Name);
@@ -69,9 +67,9 @@ namespace SevenUpdate.Sdk.Pages
             // If SUA exists lets remove the old info
             if (Core.AppIndex > -1)
             {
-                appUpdates = Base.Deserialize<Collection<Update>>(Core.UserStore + projects[Core.AppIndex].ApplicationName + ".sui");
-                updateNames = projects[Core.AppIndex].UpdateNames;
-                projects.RemoveAt(Core.AppIndex);
+                appUpdates = Base.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[Core.AppIndex].ApplicationName + ".sui");
+                updateNames = Core.Projects[Core.AppIndex].UpdateNames;
+                Core.Projects.RemoveAt(Core.AppIndex);
             }
 
             // If we are just updating the SUA, lets add it
@@ -100,8 +98,8 @@ namespace SevenUpdate.Sdk.Pages
             var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
 
 
-            projects.Add(project);
-            Base.Serialize(projects, Core.ProjectsFile);
+            Core.Projects.Add(project);
+            Base.Serialize(Core.Projects, Core.ProjectsFile);
 
             if (!export)
                 return;

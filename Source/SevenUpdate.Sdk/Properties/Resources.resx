@@ -192,4 +192,13 @@
   <data name="AddUpdate" xml:space="preserve">
     <value>Adds a new update to</value>
   </data>
+  <data name="CreateProject" xml:space="preserve">
+    <value>Create new project</value>
+  </data>
+  <data name="CreateUpdate" xml:space="preserve">
+    <value>Create new update</value>
+  </data>
+  <data name="EditProject" xml:space="preserve">
+    <value>Edit an existing project</value>
+  </data>
 </root>

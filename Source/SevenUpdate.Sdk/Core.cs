@@ -21,14 +21,17 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 using Microsoft.Windows.Dialogs;
 using SevenUpdate.Sdk.Properties;
+using SevenUpdate.Sdk.Windows;
 
 #endregion
 
@@ -92,12 +95,110 @@ namespace SevenUpdate.Sdk
         /// </summary>
         public static readonly string ProjectsFile = UserStore + @"Projects.sul";
 
+        public static ObservableCollection<Project> Projects = Base.Deserialize<ObservableCollection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
+
         internal static int UpdateIndex = -1;
         internal static int AppIndex = -1;
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        ///   Sets the Windows 7 JumpList
+        /// </summary>
+        internal static void SetJumpLists()
+        {
+            // Create JumpTask
+            var jumpList = new JumpList();
+
+            JumpTask jumpTask;
+            for (int x = 0; x < Projects.Count; x++)
+            {
+                jumpTask = new JumpTask
+                               {
+                                   ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   Title = Resources.CreateUpdate,
+                                   CustomCategory = Projects[x].ApplicationName,
+                                   Arguments = "-newupdate " + x
+                               };
+                jumpList.JumpItems.Add(jumpTask);
+                for (int y = 0; y < Projects[x].UpdateNames.Count; y++)
+                {
+                    jumpTask = new JumpTask
+                                   {
+                                       ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                       IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                       Title = Resources.Edit + " " + Projects[x].UpdateNames[y],
+                                       CustomCategory = Projects[x].ApplicationName,
+                                       Arguments = "-edit " + x + " " + y
+                                   };
+                    jumpList.JumpItems.Add(jumpTask);
+                }
+            }
+
+            //Configure a new JumpTask
+            jumpTask = new JumpTask
+                           {
+                               ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                               Title = Resources.CreateProject,
+                               CustomCategory = "Tasks",
+                               Arguments = "-newproject"
+                           };
+            jumpList.JumpItems.Add(jumpTask);
+
+            JumpList.SetJumpList(Application.Current, jumpList);
+        }
+
+        internal static void EditItem()
+        {
+            AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
+            if (UpdateIndex < 0)
+                MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+            else
+            {
+                UpdateInfo = Base.Deserialize<Collection<Update>>(UserStore + Projects[AppIndex].ApplicationName + ".sui")[UpdateIndex];
+                if (UpdateInfo.Files == null)
+                    UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+                if (UpdateInfo.Shortcuts == null)
+                    UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+                if (UpdateInfo.RegistryItems == null)
+                    UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            }
+        }
+
+        internal static void NewProject()
+        {
+            AppInfo = new Sua();
+            UpdateInfo = new Update();
+            AppInfo.Description = new ObservableCollection<LocaleString>();
+            AppInfo.Name = new ObservableCollection<LocaleString>();
+            AppInfo.Publisher = new ObservableCollection<LocaleString>();
+            UpdateInfo.Name = new ObservableCollection<LocaleString>();
+            UpdateInfo.Description = new ObservableCollection<LocaleString>();
+            UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
+            UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+            UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+        }
+
+        internal static void NewUpdate()
+        {
+            AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
+            UpdateInfo = new Update
+                             {
+                                 Files = new ObservableCollection<UpdateFile>(),
+                                 RegistryItems = new ObservableCollection<RegistryItem>(),
+                                 Shortcuts = new ObservableCollection<Shortcut>(),
+                                 Description = new ObservableCollection<LocaleString>(),
+                                 Name = new ObservableCollection<LocaleString>()
+                             };
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+        }
 
         /// <summary>
         ///   Checks if a file or UNC is valid

@@ -23,7 +23,6 @@
 using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Shell;
 using SevenUpdate.Sdk.Properties;
 using SevenUpdate.Sdk.Windows;
 
@@ -33,76 +32,23 @@ namespace SevenUpdate.Sdk
 {
     public sealed partial class App
     {
+        #region Fields
+
+        internal static string[] Args;
+
+        #endregion
+
         #region Methods
-
-        /// <summary>
-        ///   Sets the Windows 7 JumpList
-        /// </summary>
-        private static void SetJumpLists()
-        {
-            // Create JumpTask
-            var jumpList = new JumpList();
-
-            //Configure a new JumpTask
-            var jumpTask = new JumpTask
-                               {
-                                   ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   Title = Sdk.Properties.Resources.SevenUpdateSDK,
-                                   Description = "Create new project",
-                                   CustomCategory = "Tasks",
-                                   Arguments = "-new"
-                               };
-            jumpList.JumpItems.Add(jumpTask);
-
-            jumpTask = new JumpTask
-                           {
-                               ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                               Title = Sdk.Properties.Resources.SevenUpdateSDK,
-                               Description = "Edit an existing project",
-                               CustomCategory = "Tasks",
-                               Arguments = "-edit"
-                           };
-            jumpList.JumpItems.Add(jumpTask);
-
-            //jumpTask = new JumpTask
-            //               {
-            //                   ApplicationPath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-            //                   IconResourcePath = SevenUpdate.Base.AppDir + "SevenUpdate.Sdk.exe",
-            //                   Title = Sdk.Properties.Resources.SevenUpdateSDK,
-            //                   Description = "Test project",
-            //                   CustomCategory = Sdk.Properties.Resources.RecentProjects,
-            //                   Arguments = "-open " + Base.
-            //               };
-            //jumpList.JumpItems.Add(jumpTask);
-
-
-            JumpList.SetJumpList(Current, jumpList);
-        }
 
         /// <summary>
         ///   Gets the app ready for startup
         /// </summary>
-        /// <param name = "args">The command line arguments passed to the app</param>
-        internal static void Init(string[] args)
+        internal static void Init()
         {
             Directory.CreateDirectory(Core.UserStore);
             Base.SerializationError += Core.Base_SerializationError;
             Base.Locale = Settings.Default.locale;
-            SetJumpLists();
-            if (args.Length <= 0)
-                return;
-            switch (args[0])
-            {
-                case "-edit":
-                    //TODO open the "Open project window"
-                    break;
-
-                case "-open":
-                    //TODO open the project for editing
-                    break;
-            }
+            Core.SetJumpLists();
         }
 
         #endregion
@@ -134,7 +80,8 @@ namespace SevenUpdate.Sdk
         private static void Main(string[] args)
         {
             var app = new Application();
-            App.Init(args);
+            App.Args = args;
+            App.Init();
             InitResources();
             app.Run(new MainWindow());
         }

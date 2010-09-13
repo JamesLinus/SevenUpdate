@@ -41,12 +41,6 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class Main
     {
-        #region Fields
-
-        public static ObservableCollection<Project> Projects;
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -67,20 +61,19 @@ namespace SevenUpdate.Sdk.Pages
         private void LoadProjects()
         {
             treeView.Items.Clear();
-            Projects = Base.Deserialize<ObservableCollection<Project>>(Core.ProjectsFile) ?? new ObservableCollection<Project>();
-            if (Projects.Count <= 0)
+            if (Core.Projects.Count <= 0)
                 return;
 
             treeView.Visibility = Visibility.Visible;
 
-            for (int x = 0; x < Projects.Count; x++)
+            for (int x = 0; x < Core.Projects.Count; x++)
             {
-                var app = new TreeViewItem {Header = Projects[x].ApplicationName, Tag = x};
+                var app = new TreeViewItem {Header = Core.Projects[x].ApplicationName, Tag = x};
 
-                for (int y = 0; y < Projects[x].UpdateNames.Count; y++)
+                for (int y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                 {
                     var index = new[] {x, y};
-                    app.Items.Add(new TreeViewItem {Header = Projects[x].UpdateNames[y], Tag = index});
+                    app.Items.Add(new TreeViewItem {Header = Core.Projects[x].UpdateNames[y], Tag = index});
                 }
 
                 if (x == 0)
@@ -96,30 +89,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
         {
-            Core.AppInfo = new Sua();
-            Core.UpdateInfo = new Update();
-            Core.AppInfo.Description = new ObservableCollection<LocaleString>();
-            Core.AppInfo.Name = new ObservableCollection<LocaleString>();
-            Core.AppInfo.Publisher = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.Name = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.Description = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
-            Core.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
-            Core.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
-            Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
-            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+            Core.NewProject();
         }
 
         private void clEdit_Click(object sender, RoutedEventArgs e)
         {
-            Core.AppInfo = Base.Deserialize<Sua>(Core.UserStore + Projects[Core.AppIndex].ApplicationName + ".sua");
-            if (Core.UpdateIndex < 0)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
-            else
-            {
-                Core.UpdateInfo = Base.Deserialize<Collection<Update>>(Core.UserStore + Projects[Core.AppIndex].ApplicationName + ".sui")[Core.UpdateIndex];
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
-            }
+            Core.EditItem();
         }
 
         private void clDeploy_Click(object sender, RoutedEventArgs e)
@@ -128,23 +103,14 @@ namespace SevenUpdate.Sdk.Pages
 
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            var appName = Projects[Core.AppIndex].ApplicationName;
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
             File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua", true);
             File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui", true);
         }
 
         private void NewUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Core.AppInfo = Base.Deserialize<Sua>(Core.UserStore + Projects[Core.AppIndex].ApplicationName + ".sua");
-            Core.UpdateInfo = new Update
-                                  {
-                                      Files = new ObservableCollection<UpdateFile>(),
-                                      RegistryItems = new ObservableCollection<RegistryItem>(),
-                                      Shortcuts = new ObservableCollection<Shortcut>(),
-                                      Description = new ObservableCollection<LocaleString>(),
-                                      Name = new ObservableCollection<LocaleString>()
-                                  };
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            Core.NewUpdate();
         }
 
         #endregion
@@ -200,21 +166,21 @@ namespace SevenUpdate.Sdk.Pages
             if (item.HasItems)
             {
                 var index = item.Tag is int ? (int) item.Tag : 0;
-                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sui");
-                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sua");
-                Projects.RemoveAt(index);
-                Base.Serialize(Projects, Core.ProjectsFile);
+                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sui");
+                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sua");
+                Core.Projects.RemoveAt(index);
+                Base.Serialize(Core.Projects, Core.ProjectsFile);
             }
             else
             {
                 var index = item.Tag as int[];
                 if (index != null)
                 {
-                    var updates = Base.Deserialize<Collection<Update>>(Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
-                    Projects[index[0]].UpdateNames.RemoveAt(index[1]);
-                    Base.Serialize(Projects, Core.ProjectsFile);
+                    var updates = Base.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
+                    Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
+                    Base.Serialize(Core.Projects, Core.ProjectsFile);
                     updates.RemoveAt(index[1]);
-                    Base.Serialize(updates, Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
+                    Base.Serialize(updates, Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
                 }
             }
 

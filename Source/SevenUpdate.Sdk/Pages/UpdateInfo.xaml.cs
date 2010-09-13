@@ -25,6 +25,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -72,13 +73,27 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private bool HasErrors()
+        {
+            return tbxUpdateName.GetBindingExpression(TextBox.TextProperty).HasError || tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).HasError || imgReleaseDate.Visibility == Visibility.Visible;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadInfo();
+        }
+
         #region UI Events
 
         #region Button - Click
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            if (!HasErrors())
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateFiles.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -162,10 +177,5 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadInfo();
-        }
     }
 }

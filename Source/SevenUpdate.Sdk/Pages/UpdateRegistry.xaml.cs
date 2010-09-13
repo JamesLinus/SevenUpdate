@@ -22,6 +22,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Win32;
@@ -71,6 +72,11 @@ namespace SevenUpdate.Sdk.Pages
         #endregion
 
         #region Methods
+
+        private bool HasErrors()
+        {
+            return Core.UpdateInfo.RegistryItems.Count != 0 && tbxKeyPath.GetBindingExpression(TextBox.TextProperty).HasError;
+        }
 
         #endregion
 
@@ -132,7 +138,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+            if (!HasErrors())
+                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         #endregion
@@ -147,7 +156,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddRegistryItem_Click(object sender, RoutedEventArgs e)
         {
-            var registryItem = new RegistryItem {KeyValue = Properties.Resources.NewRegistryItem, Action = RegistryAction.Add, ValueKind = RegistryValueKind.String};
+            var registryItem = new RegistryItem {KeyValue = Properties.Resources.NewRegistryItem, Key = @"HKLM\Software\MyApp", Action = RegistryAction.Add, ValueKind = RegistryValueKind.String};
             Core.UpdateInfo.RegistryItems.Add(registryItem);
         }
 
@@ -219,5 +228,10 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            tbxKeyPath.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+        }
     }
 }

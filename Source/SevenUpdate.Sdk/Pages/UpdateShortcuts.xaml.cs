@@ -75,6 +75,14 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
+        private bool HasErrors()
+        {
+            if (Core.UpdateInfo.Shortcuts.Count == 0)
+                return false;
+            return tbxName.GetBindingExpression(TextBox.TextProperty).HasError || tbxSaveLocation.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxTarget.GetBindingExpression(TextBox.TextProperty).HasError;
+        }
+
         #region UI Events
 
         #region TextBox - Lost Keyboard Focus
@@ -89,8 +97,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Core.UpdateInfo.Shortcuts.Count != -1)
+            if (!HasErrors())
                 MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateReview.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)

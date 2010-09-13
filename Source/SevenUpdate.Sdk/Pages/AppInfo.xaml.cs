@@ -108,9 +108,12 @@ namespace SevenUpdate.Sdk.Pages
                 tbxPublisher.Text = t.Value;
         }
 
-        private bool ValidateInfo()
+        private bool HasErrors()
         {
-            return Core.AppInfo.Name.Count > 0 && Core.AppInfo.Publisher.Count > 0 && Core.AppInfo.Description.Count > 0;
+            return tbxAppName.GetBindingExpression(TextBox.TextProperty).HasError || tbxValueName.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxPublisher.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppUrl.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppLocation.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError;
         }
 
         #endregion
@@ -121,7 +124,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            if (!HasErrors())
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -227,7 +233,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             tbxAppLocation.Text = null;
             var rule = new AppDirectoryRule {IsRegistryPath = true};
-// ReSharper disable PossibleNullReferenceException
+            // ReSharper disable PossibleNullReferenceException
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
             // ReSharper restore PossibleNullReferenceException
@@ -240,7 +246,7 @@ namespace SevenUpdate.Sdk.Pages
 
             tbxAppLocation.Text = null;
             var rule = new AppDirectoryRule {IsRegistryPath = false};
-// ReSharper disable PossibleNullReferenceException
+            // ReSharper disable PossibleNullReferenceException
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
             // ReSharper restore PossibleNullReferenceException
@@ -265,13 +271,13 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (e.IsGlassEnabled)
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = Brushes.Black;
                 line.Visibility = Visibility.Collapsed;
                 rectangle.Visibility = Visibility.Collapsed;
             }
             else
             {
-                tbTitle.Foreground = Brushes.Black;
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
             }

@@ -92,8 +92,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="Source download directory URL:" Padding="2" HorizontalAlignment="Left" ToolTip="The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10">
+		<TextBlock Text="Source download location:" Padding="2" HorizontalAlignment="Left" ToolTip="The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Label="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10" Name="tbxSourceLocation">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="DownloadUrl" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
