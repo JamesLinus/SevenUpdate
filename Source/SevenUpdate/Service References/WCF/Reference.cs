@@ -31,7 +31,6 @@ using System.ServiceModel.Channels;
 namespace SevenUpdate.WCF
 {
     [GeneratedCode("System.ServiceModel", "4.0.0.0"), ServiceContract(ConfigurationName = "WCF.IService", CallbackContract = typeof (IServiceCallback), SessionMode = SessionMode.Required)]
-    
     public interface IService
     {
         [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/Subscribe")]
@@ -84,7 +83,6 @@ namespace SevenUpdate.WCF
     }
 
     [DebuggerStepThrough, GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    
     public class ServiceClient : DuplexClientBase<IService>, IService
     {
         public ServiceClient(InstanceContext callbackInstance) : base(callbackInstance)

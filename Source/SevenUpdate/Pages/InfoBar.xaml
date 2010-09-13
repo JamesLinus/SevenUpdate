@@ -21,10 +21,13 @@
 			<RowDefinition Height="50*" />
 		</Grid.RowDefinitions>
 		<Border Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="1" BorderBrush="LightGray" />
-		<ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Style="{StaticResource infoBarProgress}" Grid.Column="2" Grid.Row="1" MinHeight="16" Margin="0,5,0,0" />
-		<TextBlock Name="tbStatus" Padding="2" Visibility="Visible" TextWrapping="Wrap" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Margin="0,5,12,0" HorizontalAlignment="Stretch" Text="No updates are available for your programs." MaxHeight="50" />
-		<Image RenderOptions.BitmapScalingMode="HighQuality" Grid.RowSpan="3" Width="20" Style="{StaticResource infoBarSide}" Stretch="Fill"
-                MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Grid, AncestorLevel=1}, Path=ActualHeight}" />
+		<StackPanel Grid.Column="2" Grid.Row="1">
+			<ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Style="{StaticResource infoBarProgress}" MinHeight="16" Margin="0,5,0,0" />
+			<TextBlock Name="tbStatus" Padding="2" Visibility="Visible" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,5,12,0" HorizontalAlignment="Stretch" Text="No updates are available for your programs." MaxHeight="50" />
+		</StackPanel>
+		<Canvas Grid.RowSpan="3" Width="20">
+			<Image RenderOptions.BitmapScalingMode="HighQuality" Grid.RowSpan="3" Width="20" Style="{StaticResource infoBarSide}" Stretch="Fill" MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Canvas, AncestorLevel=1}, Path=ActualHeight}" />
+		</Canvas>
 		<TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" HorizontalAlignment="Left" Name="tbHeading" Text="Your programs are up to date" VerticalAlignment="Center" Margin="0,5,0,0" />
 		<Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" HorizontalAlignment="Left" IsEnabled="True" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2" StretchDirection="Both" Style="{StaticResource infoBarShield}" />
 		<Line Grid.Column="2" StrokeThickness="1" Stroke="LightGray" Grid.Row="1" Grid.RowSpan="2" Y1="25" HorizontalAlignment="Center" Margin="0,15,0,0" Name="line" VerticalAlignment="Top" />

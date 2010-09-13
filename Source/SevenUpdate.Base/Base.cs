@@ -284,6 +284,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
+                ReportError(e, UserStore);
                 if (SerializationError != null)
                     SerializationError(null, new SerializationErrorEventArgs(e, fileName));
             }
@@ -297,7 +298,8 @@ namespace SevenUpdate
         /// <param name = "fileName">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string fileName) where T : class
         {
-            Task.Factory.StartNew(() => SerializeFile(item, fileName));
+            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
+            task.Wait();
         }
 
         #endregion

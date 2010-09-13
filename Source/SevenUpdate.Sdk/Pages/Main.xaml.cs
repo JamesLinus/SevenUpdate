@@ -41,6 +41,12 @@ namespace SevenUpdate.Sdk.Pages
     /// </summary>
     public sealed partial class Main
     {
+        #region Fields
+
+        public static ObservableCollection<Project> Projects;
+
+        #endregion
+
         #region Constructors
 
         /// <summary>
@@ -55,12 +61,6 @@ namespace SevenUpdate.Sdk.Pages
             tbHelp.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
             tbAbout.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
         }
-
-        #endregion
-
-        #region Fields
-
-        public static ObservableCollection<Project> Projects;
 
         #endregion
 
@@ -83,103 +83,31 @@ namespace SevenUpdate.Sdk.Pages
                     app.Items.Add(new TreeViewItem {Header = Projects[x].UpdateNames[y], Tag = index});
                 }
 
+                if (x == 0)
+                    app.IsSelected = true;
+
                 treeView.Items.Add(app);
             }
         }
 
-        private void NewUpdate_Click(object sender, RoutedEventArgs e)
+        #region UI Events
+
+        #region Commandlink - Click
+
+        private void NewProject_Click(object sender, RoutedEventArgs e)
         {
-            Core.AppInfo = Base.Deserialize<Sua>(Core.UserStore + Projects[Core.AppIndex].ApplicationName + ".sua");
-            Core.UpdateInfo = new Update
-                                  {
-                                      Files = new ObservableCollection<UpdateFile>(),
-                                      RegistryItems = new ObservableCollection<RegistryItem>(),
-                                      Shortcuts = new ObservableCollection<Shortcut>(),
-                                      Description = new ObservableCollection<LocaleString>(),
-                                      Name = new ObservableCollection<LocaleString>()
-                                  };
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
-        }
-
-        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            if (treeView.SelectedItem == null)
-            {
-                clTest.Visibility = Visibility.Collapsed;
-                clDeploy.Visibility = Visibility.Collapsed;
-                clNewUpdate.Visibility = Visibility.Collapsed;
-                clEdit.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                clTest.Visibility = Visibility.Visible;
-                clDeploy.Visibility = Visibility.Visible;
-                clNewUpdate.Visibility = Visibility.Visible;
-                clEdit.Visibility = Visibility.Visible;
-            }
-
-            var item = treeView.SelectedItem as TreeViewItem;
-
-            if (item == null)
-                return;
-
-            clEdit.Content = Properties.Resources.Edit + " " + item.Header;
-
-            if (item.HasItems)
-            {
-                Core.AppIndex = item.Tag is int ? (int) item.Tag : -1;
-                Core.UpdateIndex = -1;
-                clNewUpdate.Visibility = Visibility.Visible;
-                clTest.Visibility = Visibility.Visible;
-                clDeploy.Visibility = Visibility.Visible;
-
-
-                clNewUpdate.Note = Properties.Resources.AddUpdate + " " + item.Header;
-                clTest.Content = Properties.Resources.Test + " " + item.Header;
-            }
-            else
-            {
-                var index = item.Tag as int[];
-                if (index != null)
-                {
-                    Core.AppIndex = index[0];
-                    Core.UpdateIndex = index[1];
-                }
-
-                clNewUpdate.Visibility = Visibility.Collapsed;
-                clTest.Visibility = Visibility.Collapsed;
-                clDeploy.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var item = treeView.SelectedItem as TreeViewItem;
-            if (item == null)
-                return;
-
-            if (item.HasItems)
-            {
-                var index = item.Tag is int ? (int) item.Tag : 0;
-                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sui");
-                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sua");
-                Projects.RemoveAt(index);
-                Base.Serialize(Projects, Core.ProjectsFile);
-            }
-            else
-            {
-                var index = item.Tag as int[];
-                if (index != null)
-                {
-                    var updates = Base.Deserialize<Collection<Update>>(Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
-                    Projects[index[0]].UpdateNames.RemoveAt(index[1]);
-                    Base.Serialize(Projects, Core.ProjectsFile);
-                    updates.RemoveAt(index[1]);
-                    Base.Serialize(updates, Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
-                }
-            }
-
-            LoadProjects();
+            Core.AppInfo = new Sua();
+            Core.UpdateInfo = new Update();
+            Core.AppInfo.Description = new ObservableCollection<LocaleString>();
+            Core.AppInfo.Name = new ObservableCollection<LocaleString>();
+            Core.AppInfo.Publisher = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.Name = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.Description = new ObservableCollection<LocaleString>();
+            Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
+            Core.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
+            Core.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
+            Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
+            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
         }
 
         private void clEdit_Click(object sender, RoutedEventArgs e)
@@ -205,40 +133,18 @@ namespace SevenUpdate.Sdk.Pages
             File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui", true);
         }
 
-        #region UI Events
-
-        #region TextBox - Text Changed Events
-
-        #endregion
-
-        #region TextBox - Lost Keyboard Focus
-
-        #endregion
-
-        #region RadioButton - Checked
-
-        #endregion
-
-        #region Button - Click
-
-        #endregion
-
-        #region Commandlink - Cli
-
-        private void NewProject_Click(object sender, RoutedEventArgs e)
+        private void NewUpdate_Click(object sender, RoutedEventArgs e)
         {
-            Core.AppInfo = new Sua();
-            Core.UpdateInfo = new Update();
-            Core.AppInfo.Description = new ObservableCollection<LocaleString>();
-            Core.AppInfo.Name = new ObservableCollection<LocaleString>();
-            Core.AppInfo.Publisher = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.Name = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.Description = new ObservableCollection<LocaleString>();
-            Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
-            Core.UpdateInfo.Files = new ObservableCollection<UpdateFile>();
-            Core.UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
-            Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
-            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+            Core.AppInfo = Base.Deserialize<Sua>(Core.UserStore + Projects[Core.AppIndex].ApplicationName + ".sua");
+            Core.UpdateInfo = new Update
+                                  {
+                                      Files = new ObservableCollection<UpdateFile>(),
+                                      RegistryItems = new ObservableCollection<RegistryItem>(),
+                                      Shortcuts = new ObservableCollection<Shortcut>(),
+                                      Description = new ObservableCollection<LocaleString>(),
+                                      Name = new ObservableCollection<LocaleString>()
+                                  };
+            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
         }
 
         #endregion
@@ -285,9 +191,90 @@ namespace SevenUpdate.Sdk.Pages
 
         #region MenuItem - Click
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = treeView.SelectedItem as TreeViewItem;
+            if (item == null)
+                return;
+
+            if (item.HasItems)
+            {
+                var index = item.Tag is int ? (int) item.Tag : 0;
+                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sui");
+                File.Delete(Core.UserStore + Projects[index].ApplicationName + ".sua");
+                Projects.RemoveAt(index);
+                Base.Serialize(Projects, Core.ProjectsFile);
+            }
+            else
+            {
+                var index = item.Tag as int[];
+                if (index != null)
+                {
+                    var updates = Base.Deserialize<Collection<Update>>(Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
+                    Projects[index[0]].UpdateNames.RemoveAt(index[1]);
+                    Base.Serialize(Projects, Core.ProjectsFile);
+                    updates.RemoveAt(index[1]);
+                    Base.Serialize(updates, Core.UserStore + Projects[index[0]].ApplicationName + ".sui");
+                }
+            }
+
+            LoadProjects();
+        }
+
         #endregion
 
-        #region ComboBox - Selection Changed
+        #region TreeView - SelectedItemChanged
+
+        private void treeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (treeView.SelectedItem == null)
+            {
+                // clTest.Visibility = Visibility.Collapsed;
+                clDeploy.Visibility = Visibility.Collapsed;
+                clNewUpdate.Visibility = Visibility.Collapsed;
+                clEdit.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                // clTest.Visibility = Visibility.Visible;
+                clDeploy.Visibility = Visibility.Visible;
+                clNewUpdate.Visibility = Visibility.Visible;
+                clEdit.Visibility = Visibility.Visible;
+            }
+
+            var item = treeView.SelectedItem as TreeViewItem;
+
+            if (item == null)
+                return;
+
+            clEdit.Content = Properties.Resources.Edit + " " + item.Header;
+
+            if (item.HasItems)
+            {
+                Core.AppIndex = item.Tag is int ? (int) item.Tag : -1;
+                Core.UpdateIndex = -1;
+                clNewUpdate.Visibility = Visibility.Visible;
+                // clTest.Visibility = Visibility.Visible;
+                clDeploy.Visibility = Visibility.Visible;
+
+
+                clNewUpdate.Note = Properties.Resources.AddUpdate + " " + item.Header;
+                // clTest.Content = Properties.Resources.Test + " " + item.Header;
+            }
+            else
+            {
+                var index = item.Tag as int[];
+                if (index != null)
+                {
+                    Core.AppIndex = index[0];
+                    Core.UpdateIndex = index[1];
+                }
+
+                clNewUpdate.Visibility = Visibility.Collapsed;
+                // clTest.Visibility = Visibility.Collapsed;
+                clDeploy.Visibility = Visibility.Collapsed;
+            }
+        }
 
         #endregion
 

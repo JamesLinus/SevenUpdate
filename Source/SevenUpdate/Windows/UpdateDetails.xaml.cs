@@ -57,7 +57,9 @@ namespace SevenUpdate.Windows
                 tbStatus.Text = Base.ConvertFileSize(updateInfo.UpdateSize);
             }
             else
-                tbStatus.Text = updateInfo.Status + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
+                tbStatus.Text = updateInfo.Status == UpdateStatus.Failed
+                                    ? Properties.Resources.Failed
+                                    : Properties.Resources.Successful + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
 
 
             ShowDialog();

@@ -296,9 +296,9 @@ namespace SevenUpdate
                         try
                         {
                             if (key != null)
-// ReSharper disable PossibleNullReferenceException
+                                // ReSharper disable PossibleNullReferenceException
                                 key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
-// ReSharper restore PossibleNullReferenceException
+                            // ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
@@ -508,9 +508,9 @@ namespace SevenUpdate
                 files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
                 try
                 {
-// ReSharper disable AssignNullToNotNullAttribute
+                    // ReSharper disable AssignNullToNotNullAttribute
                     Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
-// ReSharper restore AssignNullToNotNullAttribute
+                    // ReSharper restore AssignNullToNotNullAttribute
                 }
                 catch (Exception e)
                 {

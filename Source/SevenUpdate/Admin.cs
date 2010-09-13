@@ -221,9 +221,8 @@ namespace SevenUpdate
                     if (wcfClient.State == CommunicationState.Opened)
                         wcfClient.UnSubscribe();
                 }
-                catch (Exception e)
+                catch
                 {
-                    Base.ReportError(e, Base.UserStore);
                 }
             }
         }
@@ -259,13 +258,10 @@ namespace SevenUpdate
         /// <returns><c>true</c> if the admin process was executed, otherwise <c>false</c></returns>
         internal static bool Install()
         {
-            var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", wait: true);
-            if (success)
-            {
-                if (Connect())
-                    wcfClient.InstallUpdates(Core.Applications);
-            }
-            return success;
+            if (!Connect())
+                return false;
+            wcfClient.InstallUpdates(Core.Applications);
+            return true;
         }
 
         #endregion

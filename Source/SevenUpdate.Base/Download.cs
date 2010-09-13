@@ -66,7 +66,7 @@ namespace SevenUpdate
         ///   Downloads the updates using BITS
         /// </summary>
         /// <param name = "appUpdates">The application updates to download</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates)
+        public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
         {
             if (appUpdates == null)
                 return;
@@ -132,6 +132,8 @@ namespace SevenUpdate
             }
 
             var bitsJob = manager.CreateJob("SevenUpdate", JobType.Download);
+            if (isPriority)
+                bitsJob.Priority = JobPriority.ForeGround;
             bitsJob.NotificationFlags = NotificationFlags.JobErrorOccured | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
@@ -251,7 +253,7 @@ namespace SevenUpdate
 
             try
             {
-                e.Job.Complete();
+                e.Job.Cancel();
                 manager.Dispose();
                 manager = null;
             }

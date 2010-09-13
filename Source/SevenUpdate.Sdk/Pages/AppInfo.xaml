@@ -133,7 +133,7 @@
 			<Controls:InfoTextBox.Text>
 				<Binding Path="HelpUrl" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
-                        <Controls:UrlInputRule IsRequired="True" />
+						<Controls:UrlInputRule IsRequired="True" />
 					</Binding.ValidationRules>
 				</Binding>
 			</Controls:InfoTextBox.Text>

@@ -205,7 +205,6 @@
     
 	<!--Back Button Style-->
 	<Style TargetType="controls:BackButton">
-		<Setter Property="IsEnabled" Value="True" />
 		<Setter Property="HorizontalAlignment" Value="Left" />
 		<Setter Property="VerticalAlignment" Value="Center" />
 		<Setter Property="Template">
@@ -225,7 +224,7 @@
 								<Setter TargetName="Normal" Property="Image.Opacity" Value="0" />
 							</DataTrigger.Setters>
 						</DataTrigger>
-						<DataTrigger Value="True" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
+						<!--<DataTrigger Value="True" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
 							<DataTrigger.EnterActions>
 								<BeginStoryboard>
 									<Storyboard Storyboard.TargetName="Selected" Storyboard.TargetProperty="Opacity">
@@ -240,7 +239,7 @@
 									</Storyboard>
 								</BeginStoryboard>
 							</DataTrigger.ExitActions>
-						</DataTrigger>
+						</DataTrigger>-->
 						<EventTrigger RoutedEvent="Button.MouseEnter">
 							<EventTrigger.Actions>
 								<BeginStoryboard>

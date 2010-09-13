@@ -26,8 +26,8 @@
 			<ListView.View>
 				<GridView ColumnHeaderContainerStyle="{StaticResource hcs}">
 					<GridViewColumn Header="Name" DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Width="450" Controls:ListViewSorter.PropertyName="Name" />
-					<GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource localeStringToString}}" Width="125" Controls:ListViewSorter.PropertyName="Status" />
-					<GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringToString}}" Width="100" Controls:ListViewSorter.PropertyName="Importance" />
+					<GridViewColumn Header="Status" DisplayMemberBinding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource statusToString}}" Width="125" Controls:ListViewSorter.PropertyName="Status" />
+					<GridViewColumn Header="Importance" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceToString}}" Width="100" Controls:ListViewSorter.PropertyName="Importance" />
 					<GridViewColumn Header="Date Installed" DisplayMemberBinding="{Binding Path=InstallDate}" Width="125" Controls:ListViewSorter.PropertyName="DateInstalled" />
 				</GridView>
 			</ListView.View>

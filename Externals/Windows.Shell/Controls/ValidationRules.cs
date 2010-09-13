@@ -49,15 +49,12 @@ namespace Microsoft.Windows.Controls
             try
             {
                 var url = value as string;
-                if (!String.IsNullOrEmpty(url))
-                {
-                    new Uri(value.ToString());
-                    if (Path.GetFileName(url).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-                        new ValidationResult(false, Resources.FilePathInvalid);
-                    new ValidationResult(true, null);
-                }
 
-                return IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
+                if (String.IsNullOrWhiteSpace(url))
+                    return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+
+                new Uri(value.ToString());
+                return Path.GetFileName(url).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
             catch
             {
@@ -74,7 +71,7 @@ namespace Microsoft.Windows.Controls
         {
             var input = value as string;
 
-            if (string.IsNullOrWhiteSpace(input))
+            if (String.IsNullOrWhiteSpace(input))
                 return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
             if (input.IndexOfAny(Path.GetInvalidPathChars()) >= 0 || input.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)

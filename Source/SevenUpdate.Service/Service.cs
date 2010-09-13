@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.ServiceModel;
-using System.Threading.Tasks;
 using Microsoft.Win32;
 
 #endregion
@@ -44,6 +43,12 @@ namespace SevenUpdate.Service
         ///   A callback delegate for a WCF Event
         /// </summary>
         public delegate void CallbackDelegate();
+
+        /// <summary>
+        ///   A callback Delegate for a WCF Event
+        /// </summary>
+        /// <param name = "apps">The apps to download</param>
+        public delegate void DownloadCallbackDelegate(Collection<Sui> apps);
 
         /// <summary>
         ///   A callback delegate for the <see cref = "DownloadCompleted" /> event
@@ -122,6 +127,11 @@ namespace SevenUpdate.Service
         /// </summary>
         public static event CallbackDelegate ClientDisconnected;
 
+        /// <summary>
+        ///   Raises an event when the client disconnects
+        /// </summary>
+        public static event DownloadCallbackDelegate DownloadUpdates;
+
         #endregion
 
         #region IService Members
@@ -144,7 +154,8 @@ namespace SevenUpdate.Service
             DownloadProgressChanged += callback.OnDownloadProgressChanged;
             DownloadCompleted += callback.OnDownloadCompleted;
             ErrorOccurred += callback.OnErrorOccurred;
-            ClientConnected();
+            if (ClientConnected != null)
+                ClientConnected();
         }
 
         /// <summary>
@@ -156,7 +167,8 @@ namespace SevenUpdate.Service
             InstallProgressChanged = null;
             DownloadCompleted = null;
             DownloadProgressChanged = null;
-            ClientDisconnected();
+            if (ClientDisconnected != null)
+                ClientDisconnected();
         }
 
         public void AddApp(Sua app)
@@ -184,7 +196,8 @@ namespace SevenUpdate.Service
             {
                 Base.ReportError(f, Base.AllUserStore);
             }
-            Task.Factory.StartNew(() => Download.DownloadUpdates(appUpdates));
+            if (DownloadUpdates != null)
+                DownloadUpdates(appUpdates);
         }
 
         public void ShowUpdate(Suh hiddenUpdate)

@@ -22,7 +22,6 @@
 
 using System;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
 using SevenUpdate.Windows;
 
@@ -107,8 +106,6 @@ namespace SevenUpdate.Pages
     public sealed partial class InfoBar
     {
         #region Fields
-
-        private double imageHeight;
 
         private bool isInstallOnly;
 
@@ -252,6 +249,7 @@ namespace SevenUpdate.Pages
                 Core.Instance.UpdateAction = UpdateAction.Downloading;
                 Core.IsReconnect = false;
             }
+
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
             {
                 tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
@@ -272,7 +270,12 @@ namespace SevenUpdate.Pages
         {
             Core.Instance.IsAdmin = false;
             // if a reboot is needed lets say it
-            Core.Instance.UpdateAction = !Base.RebootNeeded ? UpdateAction.InstallationCompleted : UpdateAction.RebootNeeded;
+
+            if (Base.RebootNeeded)
+            {
+                Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
+                return;
+            }
 
             #region Update Status
 
@@ -298,10 +301,6 @@ namespace SevenUpdate.Pages
             #endregion
         }
 
-        /// <summary>
-        ///   Updates the UI when the downloading of updates has completed
-        /// </summary>
-        /// <param name = "e">The DownloadCompleted data</param>
         private static void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             if (e.ErrorOccurred)
@@ -395,7 +394,6 @@ namespace SevenUpdate.Pages
             tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
             tbViewImportantUpdates.Visibility = Visibility.Collapsed;
             line.Visibility = Visibility.Collapsed;
-            
 
             switch (action)
             {
@@ -407,6 +405,8 @@ namespace SevenUpdate.Pages
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
+
+                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.CheckForUpdates:
@@ -444,6 +444,8 @@ namespace SevenUpdate.Pages
                     line.Visibility = Visibility.Visible;
                     line.Y1 = 25;
                     btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
+
+                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.Downloading:
@@ -456,6 +458,8 @@ namespace SevenUpdate.Pages
                     btnAction.Visibility = Visibility.Visible;
 
                     btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
+
+                    Core.IsInstallInProgress = true;
                     break;
 
                 case UpdateAction.ErrorOccurred:
@@ -466,6 +470,8 @@ namespace SevenUpdate.Pages
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
                     btnAction.Visibility = Visibility.Visible;
+
+                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.InstallationCompleted:
@@ -473,6 +479,8 @@ namespace SevenUpdate.Pages
 
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
+
+                    Core.IsInstallInProgress = false;
 
                     break;
 
@@ -486,6 +494,7 @@ namespace SevenUpdate.Pages
                     btnAction.Visibility = Visibility.Visible;
 
                     btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
+                    Core.IsInstallInProgress = true;
                     break;
 
                 case UpdateAction.NoUpdates:
@@ -494,6 +503,8 @@ namespace SevenUpdate.Pages
 
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
+
+                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.RebootNeeded:
@@ -634,6 +645,9 @@ namespace SevenUpdate.Pages
                 tbSelectedUpdates.FontWeight = FontWeights.Normal;
                 btnAction.Visibility = Visibility.Collapsed;
             }
+
+            //imgSide.Visibility = Visibility.Collapsed;
+            //imgSide.Visibility = Visibility.Visible;
         }
 
         private void Infobar_Loaded(object sender, RoutedEventArgs e)

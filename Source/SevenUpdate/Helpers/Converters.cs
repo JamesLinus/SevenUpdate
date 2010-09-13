@@ -75,6 +75,46 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
+    ///   Converts Importance to a localized string
+    /// </summary>
+    [ValueConversion(typeof (UpdateStatus), typeof (string))]
+    internal sealed class UpdateStatusToString : IValueConverter
+    {
+        #region IValueConverter Members
+
+        /// <summary>
+        ///   Converts a object into another object
+        /// </summary>
+        /// <returns>the converted object</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            switch (value is UpdateStatus ? (UpdateStatus) value : UpdateStatus.Successful)
+            {
+                case UpdateStatus.Hidden:
+                    return Resources.Hidden;
+                case UpdateStatus.Failed:
+                    return Resources.Failed;
+                case UpdateStatus.Successful:
+                    return Resources.Successful;
+
+                default:
+                    return Resources.NotAvailable;
+            }
+        }
+
+        /// <summary>
+        ///   Converts a converted object back into it's original form
+        /// </summary>
+        /// <returns>The original object</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return new NotImplementedException();
+        }
+
+        #endregion
+    }
+
+    /// <summary>
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
@@ -244,30 +284,4 @@ namespace SevenUpdate.Converters
 
         #endregion
     }
-
-    //internal sealed class MultiConverter : IMultiValueConverter
-    //{
-    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        var index = (int) values[0];
-    //        var url = 0;
-    //        if (values[1] == )
-    //            return Visibility.Collapsed;
-    //        try
-    //        {
-    //            url = ((string)values[1]).Length;
-    //        }
-    //        catch
-    //        {
-    //        }
-
-
-    //        return index < 0 ? Visibility.Collapsed : (url > 0 ? Visibility.Visible : Visibility.Collapsed);
-    //    }
-
-    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 }

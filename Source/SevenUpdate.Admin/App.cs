@@ -85,7 +85,7 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static NotifyIcon notifyIcon;
 
-        private static bool IsAutoInstall;
+        private static bool isAutoInstall;
 
         private static bool isInstalling;
 
@@ -134,9 +134,9 @@ namespace SevenUpdate.Admin
                         host = new ServiceHost(typeof (Service.Service));
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
-                        host.Open();
                         Service.Service.ClientConnected += Service_ClientConnected;
                         Service.Service.ClientDisconnected += Service_ClientDisconnected;
+                        Service.Service.DownloadUpdates += Service_DownloadUpdates;
                         SystemEvents.SessionEnding += SystemEvents_SessionEnding;
                         Search.SearchCompleted += Search_SearchCompleted;
                         Search.ErrorOccurred += Search_ErrorOccurred;
@@ -144,6 +144,7 @@ namespace SevenUpdate.Admin
                         Download.DownloadProgressChanged += Download_DownloadProgressChanged;
                         Install.InstallCompleted += Install_InstallCompleted;
                         Install.InstallProgressChanged += Install_InstallProgressChanged;
+                        host.Open();
                         if (!Directory.Exists(Base.AllUserStore))
                             Directory.CreateDirectory(Base.AllUserStore);
                     }
@@ -191,7 +192,7 @@ namespace SevenUpdate.Admin
                     {
                         if (File.Exists(Base.AllUserStore + "abort.lock"))
                             File.Delete(Base.AllUserStore + "abort.lock");
-                        IsAutoInstall = true;
+                        isAutoInstall = true;
                         notifyIcon = new NotifyIcon {Icon = Resources.icon, Text = Resources.CheckingForUpdates, Visible = true};
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
@@ -229,7 +230,7 @@ namespace SevenUpdate.Admin
 
         private static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (IsAutoInstall || isInstalling)
+            if (isAutoInstall || isInstalling)
                 return;
             if (Process.GetProcessesByName("SevenUpdate").Length < 1)
                 ShutdownApp();
@@ -248,7 +249,9 @@ namespace SevenUpdate.Admin
         {
             if (Service.Service.InstallCompleted != null && IsClientConnected)
                 Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
-            ShutdownApp();
+
+            if (isAutoInstall)
+                ShutdownApp();
         }
 
         private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -263,7 +266,7 @@ namespace SevenUpdate.Admin
 
         private static void Download_DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
-            if ((Settings.AutoOption == AutoUpdateOption.Install && IsAutoInstall) || !IsAutoInstall)
+            if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
             {
                 if (Service.Service.DownloadCompleted != null && IsClientConnected)
                     Service.Service.DownloadCompleted(false);
@@ -335,6 +338,19 @@ namespace SevenUpdate.Admin
 
         #region Service events
 
+        private static void Service_DownloadUpdates(Collection<Sui> appUpdates)
+        {
+            try
+            {
+                apps = appUpdates;
+                Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
+            }
+            catch (Exception e)
+            {
+                Base.ReportError(e, Base.AllUserStore);
+            }
+        }
+
         /// <summary>
         ///   Error Event when the .NetPipe binding faults
         /// </summary>
@@ -375,7 +391,7 @@ namespace SevenUpdate.Admin
         {
             IsClientConnected = false;
 
-            if (isInstalling == false && IsAutoInstall == false)
+            if (isInstalling == false && isAutoInstall == false)
                 ShutdownApp();
         }
 

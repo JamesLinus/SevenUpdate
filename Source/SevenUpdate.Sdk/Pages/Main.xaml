@@ -14,14 +14,14 @@
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="2" Fill="White" Grid.ColumnSpan="2" />
 		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,25,0,0">
-			<Controls:CommandLink Content="Create a new project" Note="Enables Seven Update to update your software" TabIndex="1" Click="NewProject_Click" />
+			<Controls:CommandLink Content="Create a new project" Note="Enable Seven Update to update your software" TabIndex="1" Click="NewProject_Click" />
 			<Controls:CommandLink Content="Create a new update" Grid.Column="1" Note="Adds a new update to" TabIndex="2" Click="NewUpdate_Click" Visibility="Collapsed" Name="clNewUpdate" />
 			<Controls:CommandLink Grid.Column="1" Content="Edit item" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" />
 			<Controls:CommandLink Content="Deploy project" Note="Creates the files needed to release your update(s)" TabIndex="3" Visibility="Collapsed" Name="clDeploy" Click="clDeploy_Click" />
 			<Controls:CommandLink Content="Test update" TabIndex="4" Note="Simulate updating to detect problems" Visibility="Collapsed" Name="clTest" Margin="0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.ColumnSpan="2">
-			<Controls:BackButton Grid.RowSpan="3" IsEnabled="False" />
+			<Controls:BackButton IsEnabled="False" />
 			<TextBlock Text="Welcome to the Seven Update SDK" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,-2,0,0" Name="tbTitle">
 				<TextBlock.Effect>
 					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
@@ -38,7 +38,7 @@
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
 			</TextBlock.Effect>
 		</TextBlock>
-		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="treeView_SelectedItemChanged" MouseRightButtonDown="treeView_MouseRightButtonDown">
+		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="treeView_SelectedItemChanged" MouseRightButtonDown="treeView_MouseRightButtonDown" MaxWidth="400">
 			<TreeView.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Delete" Click="MenuItem_Click">

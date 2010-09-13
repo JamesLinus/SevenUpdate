@@ -174,6 +174,7 @@ Section "Main Section" SEC01
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/Windows.Shell.dll" "$INSTDIR\Windows.Shell.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/Interop.IWshRuntimeLibrary.dll" "$INSTDIR\Interop.IWshRuntimeLibrary.dll"
