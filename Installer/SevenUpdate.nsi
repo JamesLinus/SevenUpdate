@@ -166,7 +166,7 @@ Section "Main Section" SEC01
   SetOverwrite on
   SectionIn RO
   Call ConnectInternet
-  !insertmacro CheckDotNET 3.5
+  !insertmacro CheckDotNET 4
   Call CloseSevenUpdate
 	
   RMDir /r $INSTDIR
