@@ -186,4 +186,30 @@ namespace SevenUpdate.Sdk.Helpers
             return new ValidationResult(false, Resources.InputRequired);
         }
     }
+
+    public sealed class SuiLocationRule : ValidationRule
+    {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            var input = value as string;
+
+            if (String.IsNullOrWhiteSpace(input))
+                return new ValidationResult(false, Resources.FilePathInvalid);
+
+            try
+            {
+                new Uri(input);
+            }
+            catch
+            {
+               return new ValidationResult(false, Resources.FilePathInvalid);
+            }
+
+            if (Path.GetFileName(input).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || !input.EndsWith(".sui", true, cultureInfo))
+                return new ValidationResult(false, Resources.FilePathInvalid);
+
+
+            return new ValidationResult(true, null);
+        }
+    }
 }

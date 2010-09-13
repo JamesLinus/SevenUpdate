@@ -96,6 +96,9 @@ namespace SevenUpdate.Sdk.Pages
             tbxAppName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxAppUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             // ReSharper restore PossibleNullReferenceException
             // Load Values
             foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Base.Locale))
@@ -113,7 +116,7 @@ namespace SevenUpdate.Sdk.Pages
             return tbxAppName.GetBindingExpression(TextBox.TextProperty).HasError || tbxValueName.GetBindingExpression(TextBox.TextProperty).HasError ||
                    tbxPublisher.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppUrl.GetBindingExpression(TextBox.TextProperty).HasError ||
                    tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppLocation.GetBindingExpression(TextBox.TextProperty).HasError ||
-                   tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError;
+                   tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError || tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).HasError;
         }
 
         #endregion

@@ -74,7 +74,7 @@ namespace Microsoft.Windows.Controls
             if (String.IsNullOrWhiteSpace(input))
                 return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
-            if (input.IndexOfAny(Path.GetInvalidPathChars()) >= 0 || input.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            if (Path.GetFileName(input).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || Path.GetDirectoryName(input).IndexOfAny(Path.GetInvalidPathChars()) >= 0)
                 return new ValidationResult(false, Resources.FilePathInvalid);
 
 
@@ -95,7 +95,7 @@ namespace Microsoft.Windows.Controls
             if (string.IsNullOrWhiteSpace(input))
                 return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
-            return input.IndexOfAny(Path.GetInvalidPathChars()) >= 0 ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+            return Path.GetDirectoryName(input).IndexOfAny(Path.GetInvalidPathChars()) >= 0 ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
         }
     }
 }
