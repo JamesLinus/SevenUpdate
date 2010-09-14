@@ -142,7 +142,7 @@ namespace SevenUpdate
                 var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
                 if (!success)
                     return false;
-                Thread.SpinWait(500);
+                Thread.Sleep(1000);
                 wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
             }
             if (wcfClient == null)
@@ -150,14 +150,18 @@ namespace SevenUpdate
 
             while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)
             {
-                if (wcfClient.State != CommunicationState.Faulted)
-                {
-                    Thread.SpinWait(200);
-                    continue;
-                }
-                AdminError(new FaultException(Resources.CouldNotConnectToService));
-                return false;
+                if (wcfClient.State == CommunicationState.Faulted)
+                    break;
+                Thread.SpinWait(200);
+                continue;
             }
+
+            if (wcfClient.State == CommunicationState.Faulted)
+            {
+                AdminError(new Exception("Fault"));
+                return WaitForAdmin();
+            }
+
 
             try
             {
@@ -218,8 +222,7 @@ namespace SevenUpdate
             {
                 try
                 {
-                    if (wcfClient.State == CommunicationState.Opened)
-                        wcfClient.UnSubscribe();
+                    wcfClient.UnSubscribe();
                 }
                 catch
                 {

@@ -97,7 +97,7 @@ namespace SevenUpdate.Sdk.Pages
             installUrl = installUrl.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
             var file = new UpdateFile
-                           {Action = FileAction.UpdateIfExist, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = @"%DOWNLOADURL%\" + Path.GetFileName(fullName)};
+                           {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = @"%DOWNLOADURL%\" + Path.GetFileName(fullName)};
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -113,23 +113,26 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); }).ContinueWith(_ =>
-                                                                                                                                                                                                      {
-                                                                                                                                                                                                          hashesGenerating
-                                                                                                                                                                                                              --;
-                                                                                                                                                                                                          if
-                                                                                                                                                                                                              (
-                                                                                                                                                                                                              hashesGenerating <
-                                                                                                                                                                                                              1)
-                                                                                                                                                                                                              tbHashCalculating
-                                                                                                                                                                                                                  .
-                                                                                                                                                                                                                  Visibility
-                                                                                                                                                                                                                  =
-                                                                                                                                                                                                                  Visibility
-                                                                                                                                                                                                                      .
-                                                                                                                                                                                                                      Collapsed;
-                                                                                                                                                                                                      },
-                                                                                                                                                                                                  context);
+            Task.Factory.StartNew(() =>
+                                      { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); }).ContinueWith(_ =>
+                                                                                                                                                                                                    {
+
+                                                                                                                                                                                                        hashesGenerating
+                                                                                                                                                                                                            --;
+
+                                                                                                                                                                                                        if
+                                                                                                                                                                                                            (
+                                                                                                                                                                                                            hashesGenerating <
+                                                                                                                                                                                                            1)
+                                                                                                                                                                                                            tbHashCalculating
+                                                                                                                                                                                                                .
+                                                                                                                                                                                                                Visibility
+                                                                                                                                                                                                                =
+                                                                                                                                                                                                                Visibility
+                                                                                                                                                                                                                    .
+                                                                                                                                                                                                                    Collapsed;
+                                                                                                                                                                                                    },
+                                                                                                                                                                                                context);
         }
 
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)

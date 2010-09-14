@@ -102,14 +102,18 @@ namespace SevenUpdate.Sdk.Pages
             Base.Serialize(Core.Projects, Core.ProjectsFile);
 
             if (!export)
+            {
+                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                 return;
+            }
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),};
 
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
-            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua");
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui");
+            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua", true);
+            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui", true);
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
         private void SaveExport_Click(object sender, RoutedEventArgs e)
@@ -118,34 +122,6 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #region UI Events
-
-        #region TextBox - Text Changed Events
-
-        #endregion
-
-        #region TextBox - Lost Keyboard Focus
-
-        #endregion
-
-        #region RadioButton - Checked
-
-        #endregion
-
-        #region Button - Click
-
-        #endregion
-
-        #region TextBlock - Mouse Down
-
-        #endregion
-
-        #region MenuItem - Click
-
-        #endregion
-
-        #region ComboBox - Selection Changed
-
-        #endregion
 
         #region Aero
 
@@ -156,12 +132,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        //NOTE Method is not final, just for testing
         private void CommandLink_Click(object sender, RoutedEventArgs e)
         {
             SaveProject();
-
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
         #endregion

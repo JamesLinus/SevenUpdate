@@ -276,6 +276,7 @@ namespace SevenUpdate.Pages
                 Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
                 return;
             }
+            Core.Instance.UpdateAction = UpdateAction.InstallationCompleted;
 
             #region Update Status
 
