@@ -122,6 +122,7 @@ namespace SevenUpdate.Admin
             bool createdNew;
             var timer = new Timer(30000);
             timer.Elapsed += timer_Elapsed;
+            timer.Start();
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
@@ -193,6 +194,7 @@ namespace SevenUpdate.Admin
                         if (File.Exists(Base.AllUserStore + "abort.lock"))
                             File.Delete(Base.AllUserStore + "abort.lock");
                         isAutoInstall = true;
+                        isInstalling = true;
                         notifyIcon = new NotifyIcon {Icon = Resources.icon, Text = Resources.CheckingForUpdates, Visible = true};
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
@@ -202,8 +204,6 @@ namespace SevenUpdate.Admin
                     else
                         ShutdownApp();
                 }
-                else
-                    timer.Start();
             }
             catch (Exception e)
             {
@@ -230,7 +230,7 @@ namespace SevenUpdate.Admin
 
         private static void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (isAutoInstall || isInstalling)
+            if (isInstalling)
                 return;
             if (Process.GetProcessesByName("SevenUpdate").Length < 1)
                 ShutdownApp();
@@ -247,11 +247,14 @@ namespace SevenUpdate.Admin
 
         private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
+            isInstalling = false;
+            
             if (Service.Service.InstallCompleted != null && IsClientConnected)
                 Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
 
             if (isAutoInstall)
                 ShutdownApp();
+            
         }
 
         private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -275,7 +278,10 @@ namespace SevenUpdate.Admin
                 isInstalling = true;
             }
             else
+            {
+                isInstalling = false;
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
+            }
         }
 
         /// <summary>
@@ -296,7 +302,10 @@ namespace SevenUpdate.Admin
                 }
             }
             else
+            {
+                isInstalling = false;
                 ShutdownApp();
+            }
         }
 
         /// <summary>
@@ -391,7 +400,7 @@ namespace SevenUpdate.Admin
         {
             IsClientConnected = false;
 
-            if (isInstalling == false && isAutoInstall == false)
+            if (isInstalling == false)
                 ShutdownApp();
         }
 
