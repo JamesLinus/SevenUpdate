@@ -172,6 +172,8 @@ namespace SevenUpdate.Sdk
 
         internal static void NewProject()
         {
+            AppIndex = -1;
+            UpdateIndex = -1;
             AppInfo = new Sua();
             UpdateInfo = new Update();
             AppInfo.Description = new ObservableCollection<LocaleString>();

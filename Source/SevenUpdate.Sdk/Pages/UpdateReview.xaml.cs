@@ -109,7 +109,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
 
             File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua");
-            File.Copy(Core.UserStore + appName + ".suia", cfd.FileName + @"\" + appName + ".sui");
+            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui");
         }
 
         private void SaveExport_Click(object sender, RoutedEventArgs e)

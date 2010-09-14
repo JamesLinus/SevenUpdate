@@ -43,7 +43,7 @@ namespace SevenUpdate.Sdk.Windows
 
             var version = Assembly.GetExecutingAssembly().GetName().Version;
 
-            tbVersion.Text = version.ToString();
+            tbVersion.Text = version + " Beta";
         }
 
         /// <summary>

@@ -28,6 +28,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
@@ -153,6 +154,18 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             element.Focus();
             e.Handled = true;
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            try
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+                e.Handled = true;
+            }
+            catch
+            {
+            }
         }
 
         #region MenuItem - Click

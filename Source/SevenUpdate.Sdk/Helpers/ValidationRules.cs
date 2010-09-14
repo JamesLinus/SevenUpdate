@@ -202,7 +202,7 @@ namespace SevenUpdate.Sdk.Helpers
             }
             catch
             {
-               return new ValidationResult(false, Resources.FilePathInvalid);
+                return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             if (Path.GetFileName(input).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || !input.EndsWith(".sui", true, cultureInfo))

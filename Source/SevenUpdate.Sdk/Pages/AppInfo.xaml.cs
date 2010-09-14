@@ -113,10 +113,13 @@ namespace SevenUpdate.Sdk.Pages
 
         private bool HasErrors()
         {
-            return tbxAppName.GetBindingExpression(TextBox.TextProperty).HasError || tbxValueName.GetBindingExpression(TextBox.TextProperty).HasError ||
-                   tbxPublisher.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppUrl.GetBindingExpression(TextBox.TextProperty).HasError ||
-                   tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppLocation.GetBindingExpression(TextBox.TextProperty).HasError ||
-                   tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError || tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).HasError;
+            if (rbtnRegistry.IsChecked.GetValueOrDefault() && tbxValueName.GetBindingExpression(TextBox.TextProperty).HasError)
+                return true;
+
+            return tbxAppName.GetBindingExpression(TextBox.TextProperty).HasError || tbxPublisher.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxAppUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxAppLocation.GetBindingExpression(TextBox.TextProperty).HasError || tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError ||
+                   tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).HasError;
         }
 
         #endregion
@@ -137,29 +140,33 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (btnNext.Visibility != Visibility.Visible)
             {
-                var projects = Base.Deserialize<Collection<Project>>(Core.ProjectsFile) ?? new Collection<Project>();
-
-                var appName = Base.GetLocaleString(Core.AppInfo.Name);
-
-                ObservableCollection<string> updateNames = null;
-
-                if (Core.AppIndex > -1)
+                if (HasErrors())
+                    Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
+                else
                 {
-                    updateNames = projects[Core.AppIndex].UpdateNames;
-                    projects.RemoveAt(Core.AppIndex);
+                    var appName = Base.GetLocaleString(Core.AppInfo.Name);
+
+                    ObservableCollection<string> updateNames = null;
+
+                    if (Core.AppIndex > -1)
+                    {
+                        updateNames = Core.Projects[Core.AppIndex].UpdateNames;
+                        Core.Projects.RemoveAt(Core.AppIndex);
+                    }
+
+                    // Save the SUA file
+                    Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+
+                    // Save project file
+                    var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
+
+                    Core.Projects.Add(project);
+                    Base.Serialize(Core.Projects, Core.ProjectsFile);
+                    MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                 }
-
-                // Save the SUA file
-                Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
-
-                // Save project file
-                var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
-
-                projects.Add(project);
-                Base.Serialize(projects, Core.ProjectsFile);
             }
-
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+            else
+                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
         #endregion
