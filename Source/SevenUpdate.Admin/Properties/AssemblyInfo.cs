@@ -66,5 +66,5 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersionAttribute("1.2.0")]
-[assembly: AssemblyFileVersionAttribute("10.9.12")]
+[assembly: AssemblyFileVersionAttribute("10.9.14")]
 [assembly: NeutralResourcesLanguage("en-US")]

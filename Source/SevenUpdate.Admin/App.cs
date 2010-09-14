@@ -252,9 +252,7 @@ namespace SevenUpdate.Admin
             if (Service.Service.InstallCompleted != null && IsClientConnected)
                 Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
 
-            if (isAutoInstall)
-                ShutdownApp();
-            
+            ShutdownApp();
         }
 
         private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

@@ -177,7 +177,6 @@ Section "Main Section" SEC01
   WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
   WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
   WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\sui.ico"
-  WriteRegStr HKCR "SevenUpdate.sui\shell\open\command" "" '"$INSTDIR\SevenUpdate.Sdk.exe" "%1"'
   
   Call RefreshShellIcons
 SectionEnd

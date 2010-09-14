@@ -23,6 +23,7 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using SevenUpdate.Properties;
 using SevenUpdate.Windows;
 
 #endregion
@@ -268,6 +269,7 @@ namespace SevenUpdate.Pages
         /// <param name = "e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
         {
+            Settings.Default.lastInstall = DateTime.Now;
             Core.Instance.IsAdmin = false;
             // if a reboot is needed lets say it
 
@@ -646,9 +648,6 @@ namespace SevenUpdate.Pages
                 tbSelectedUpdates.FontWeight = FontWeights.Normal;
                 btnAction.Visibility = Visibility.Collapsed;
             }
-
-            //imgSide.Visibility = Visibility.Collapsed;
-            //imgSide.Visibility = Visibility.Visible;
         }
 
         private void Infobar_Loaded(object sender, RoutedEventArgs e)

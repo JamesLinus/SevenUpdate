@@ -54,7 +54,7 @@ namespace Microsoft.Windows.Controls
                     return IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
 
                 new Uri(value.ToString());
-                return Path.GetFileName(url).IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+                return new ValidationResult(true, null);
             }
             catch
             {

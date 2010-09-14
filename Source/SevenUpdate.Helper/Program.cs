@@ -58,11 +58,16 @@ namespace SevenUpdate.Helper
                 try
                 {
                     Process.GetProcessesByName("SevenUpdate")[0].CloseMainWindow();
-
-                    Process.GetProcessesByName("SevenUpdate")[0].Kill();
                 }
                 catch
                 {
+                    try
+                    {
+                        Process.GetProcessesByName("SevenUpdate")[0].Kill();
+                    }
+                    catch
+                    {
+                    }
                 }
 
                 try
@@ -93,6 +98,13 @@ namespace SevenUpdate.Helper
                         try
                         {
                             File.Copy(t.FullName, AppDir + t.Name, true);
+                            try
+                            {
+                                File.Delete(t.FullName);
+                            }
+                            catch
+                            {
+                            }
                         }
                         catch
                         {
@@ -100,13 +112,6 @@ namespace SevenUpdate.Helper
 
                             if (!File.Exists(appStore + "reboot.lock"))
                                 File.Create(appStore + "reboot.lock").WriteByte(0);
-                        }
-                        try
-                        {
-                            File.Delete(t.FullName);
-                        }
-                        catch
-                        {
                         }
                     }
                 }

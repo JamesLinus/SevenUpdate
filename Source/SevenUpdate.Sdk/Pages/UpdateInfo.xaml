@@ -97,7 +97,7 @@
 			<Controls:InfoTextBox.Text>
 				<Binding Path="DownloadUrl" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
-						<Controls:UrlInputRule />
+						<Controls:UrlInputRule IsRequired="True" />
 					</Binding.ValidationRules>
 				</Binding>
 			</Controls:InfoTextBox.Text>

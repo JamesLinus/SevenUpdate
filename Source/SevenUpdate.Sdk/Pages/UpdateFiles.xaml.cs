@@ -113,26 +113,8 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() =>
-                                      { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); }).ContinueWith(_ =>
-                                                                                                                                                                                                    {
-
-                                                                                                                                                                                                        hashesGenerating
-                                                                                                                                                                                                            --;
-
-                                                                                                                                                                                                        if
-                                                                                                                                                                                                            (
-                                                                                                                                                                                                            hashesGenerating <
-                                                                                                                                                                                                            1)
-                                                                                                                                                                                                            tbHashCalculating
-                                                                                                                                                                                                                .
-                                                                                                                                                                                                                Visibility
-                                                                                                                                                                                                                =
-                                                                                                                                                                                                                Visibility
-                                                                                                                                                                                                                    .
-                                                                                                                                                                                                                    Collapsed;
-                                                                                                                                                                                                    },
-                                                                                                                                                                                                context);
+            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); }).ContinueWith(
+                _ => CheckHash(), context);
         }
 
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
@@ -150,7 +132,15 @@ namespace SevenUpdate.Sdk.Pages
             listBox.SelectedIndex = 0;
         }
 
-        #endregion
+        
+
+        private void CheckHash()
+        {
+            hashesGenerating--;
+
+            if (hashesGenerating < 1)
+                tbHashCalculating.Visibility = Visibility.Collapsed;
+        }
 
         private bool HasErrors()
         {
@@ -158,6 +148,8 @@ namespace SevenUpdate.Sdk.Pages
                 return false;
             return tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).HasError || tbxInstallLocation.GetBindingExpression(TextBox.TextProperty).HasError;
         }
+
+        #endregion
 
         #region UI Events
 
@@ -195,14 +187,16 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {Multiselect = false};
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var cfd = new CommonOpenFileDialog { Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination) };
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
@@ -237,7 +231,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true};
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+
+            var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true, InitialDirectory = directory};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
         }

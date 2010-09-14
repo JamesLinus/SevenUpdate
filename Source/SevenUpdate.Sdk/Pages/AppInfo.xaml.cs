@@ -145,6 +145,9 @@ namespace SevenUpdate.Sdk.Pages
                 else
                 {
                     var appName = Base.GetLocaleString(Core.AppInfo.Name);
+                    if (Core.AppInfo.Is64Bit)
+                        if (!appName.Contains("x64") && !appName.Contains("X64"))
+                            appName += " (x64)";
 
                     ObservableCollection<string> updateNames = null;
 

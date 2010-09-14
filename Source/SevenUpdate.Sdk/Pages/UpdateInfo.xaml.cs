@@ -166,6 +166,8 @@ namespace SevenUpdate.Sdk.Pages
             tbxUpdateName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
             tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+
+            tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             // ReSharper restore PossibleNullReferenceException
 
             // Load Values
