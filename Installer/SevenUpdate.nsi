@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update"
-!define PRODUCT_VERSION "1.0.0.0"
+!define PRODUCT_VERSION "1.2.0.0"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe"
@@ -12,6 +12,7 @@
 !include "DotNET.nsh"
 !include "LogicLib.nsh"
 !include "WinVer.nsh"
+!include "LogicLib.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -153,11 +154,19 @@ FunctionEnd
 FunctionEnd
  
 !macro DownloadFile SOURCE DEST 
-  InetLoad::load /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
+
+  inetc::get /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
   Pop $0 ;Get the return value
+  DetailPrint "Result: $0"
+  StrCmp $0 "OK" +3
+  StrCmp $0 "cancelled" +6
+  inetc::get /TIMEOUT=30000 /NOPROXY "${SOURCE}" "${DEST}" /END
+  Pop $0
+  DetailPrint "Result: $0"
   StrCmp $0 "OK" +3
   MessageBox MB_OK "Download failed: $0"
   Quit
+  
 !macroend
 
 Section "Main Section" SEC01
@@ -166,7 +175,7 @@ Section "Main Section" SEC01
   SetOverwrite on
   SectionIn RO
   Call ConnectInternet
-  !insertmacro CheckDotNET 4
+  !insertmacro CheckDotNet4
   Call CloseSevenUpdate
 	
   RMDir /r $INSTDIR
