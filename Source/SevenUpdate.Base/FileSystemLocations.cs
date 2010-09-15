@@ -28,25 +28,25 @@ using System.Text;
 
 namespace SevenUpdate
 {
-    internal static class NativeMethods
+    public static class NativeMethods
     {
         /// <summary>
         ///   Gets the system folder(s) of a path
         /// </summary>
         /// <returns>a string of the path with expanded system variables</returns>
         [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
-        internal static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
+        public static extern bool SHGetSpecialFolderPath(IntPtr hwndOwner, [Out] StringBuilder lpszPath, int nFolder, bool fCreate);
     }
 
     /// <summary>
     ///   Defines constants for file system locations
     /// </summary>
-    internal static class FileSystemLocations
+    public static class FileSystemLocations
     {
         /// <summary>
         ///   ALLUSERS%\Start Menu\Programs
         /// </summary>
-        internal const int CSIDL_COMMON_PROGRAMS = 0x0017;
+        public const int CSIDL_COMMON_PROGRAMS = 0x0017;
 
         /// <summary>
         ///   %ALLUSERS%\Start Menu

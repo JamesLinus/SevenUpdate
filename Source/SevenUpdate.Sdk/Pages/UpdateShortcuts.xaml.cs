@@ -24,6 +24,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -141,11 +142,14 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddShortcut_Click(object sender, RoutedEventArgs e)
         {
+            var allUserStartMenu = new StringBuilder(260);
+            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
+
             var cfd = new CommonSaveFileDialog
                           {
                               AlwaysAppendDefaultExtension = true,
                               DefaultExtension = "lnk",
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              DefaultDirectory = allUserStartMenu.ToString(),
                               DefaultFileName = Core.AppInfo.Name[0].Value,
                               EnsureValidNames = true,
                           };
@@ -164,10 +168,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportShortcut_Click(object sender, RoutedEventArgs e)
         {
+            var allUserStartMenu = new StringBuilder(260);
+            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
             var cfd = new CommonOpenFileDialog
                           {
                               DefaultExtension = "lnk",
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu),
+                              DefaultDirectory = allUserStartMenu.ToString(),
                               EnsureFileExists = true,
                               NavigateToShortcut = true,
                               Multiselect = false
