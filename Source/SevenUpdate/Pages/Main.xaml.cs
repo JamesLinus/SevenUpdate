@@ -38,6 +38,8 @@ namespace SevenUpdate.Pages
     {
         private Timer timer;
 
+        private bool init;
+
         /// <summary>
         ///   The constructor for the Main page
         /// </summary>
@@ -47,7 +49,6 @@ namespace SevenUpdate.Pages
 
             #region Event Handler Declarations
 
-            UpdateInfo.UpdateSelectionChanged += UpdateSelection_Changed;
             RestoreUpdates.RestoredHiddenUpdate += Settings_Changed;
             AdminClient.SettingsChanged += Settings_Changed;
 
@@ -102,16 +103,6 @@ namespace SevenUpdate.Pages
         #endregion
 
         /// <summary>
-        ///   Updates the UI after the user selects updates to install
-        /// </summary>
-        private static void UpdateSelection_Changed(object sender, UpdateSelectionChangedEventArgs e)
-        {
-            if (Core.Applications.Count != 0)
-                return;
-            Core.CheckForUpdates();
-        }
-
-        /// <summary>
         ///   Checks for updates after settings were changed
         /// </summary>
         private static void Settings_Changed(object sender, EventArgs e)
@@ -123,8 +114,12 @@ namespace SevenUpdate.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Core.Instance.UpdateAction = Base.RebootNeeded ? UpdateAction.RebootNeeded : UpdateAction.NoUpdates;
+            if (Base.RebootNeeded)
+                Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
 
+            if (init)
+                return;
+            Core.Instance.UpdateAction = UpdateAction.NoUpdates;
             if (Core.IsReconnect)
             {
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
@@ -150,6 +145,7 @@ namespace SevenUpdate.Pages
                 {
                 }
             }
+            init = true;
         }
 
         private void timer_Elapsed(object sender, ElapsedEventArgs e)

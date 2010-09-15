@@ -90,7 +90,7 @@
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="Select the updates you want to install" VerticalAlignment="Top" Margin="24,12" />
 		<Rectangle Fill="#FFF0F0F0" Grid.ColumnSpan="2" Height="44" Grid.Row="9" DataContext="{Binding}" />
 		<StackPanel Grid.Column="1" HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0" Grid.Row="9">
-			<Button Content="_OK" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" Click="Ok_Click" Command="NavigationCommands.BrowseBack" TabIndex="1" />
+			<Button Content="_OK" IsDefault="True" MinHeight="23" MinWidth="75" Name="btnOK" Padding="5,1" Click="Ok_Click" TabIndex="1" />
 			<Button Content="Cancel" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Click="Cancel_Click" Command="NavigationCommands.BrowseBack" TabIndex="2" />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9" Stretch="Fill" StrokeThickness="1" Grid.ColumnSpan="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" />
