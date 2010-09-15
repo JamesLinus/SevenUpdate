@@ -41,22 +41,22 @@ namespace SevenUpdate.Sdk.Helpers
             if (input == null)
                 return new ValidationResult(false, Resources.FilePathInvalid);
 
+            const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+            if (IsRegistryPath)
+                return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
+
             try
             {
-                input = Base.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit);
+                input = Base.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
                 new Uri(input);
             }
             catch
             {
-                return new ValidationResult(false, Resources.FilePathInvalid);
+                return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
                 return new ValidationResult(false, Resources.FilePathInvalid);
-
-            const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
-            if (IsRegistryPath)
-                return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
 
             return new ValidationResult(true, null);
         }

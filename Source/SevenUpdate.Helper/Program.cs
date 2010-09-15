@@ -78,10 +78,11 @@ namespace SevenUpdate.Helper
                 {
                 }
 
+                Thread.Sleep(1000);
+
                 try
                 {
-                    if (File.Exists(appStore + "reboot.lock"))
-                        File.Delete(appStore + "reboot.lock");
+                    File.Delete(appStore + "reboot.lock");
                 }
                 catch
                 {

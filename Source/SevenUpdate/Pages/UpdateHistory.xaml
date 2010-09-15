@@ -17,9 +17,9 @@
 					<MenuItem Header="View Details" Click="MenuItem_MouseClick" />
 				</ContextMenu>
 			</ListView.Resources>
-			<ListView.ItemContainerStyle>
-				<Style TargetType="{x:Type ListViewItem}">
-					<EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListView_MouseDoubleClick" />
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource alternatingListViewItemStyle}">
+                    <EventSetter Event="PreviewMouseLeftButtonDown" Handler="ListView_MouseDoubleClick" />
 					<Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
 				</Style>
 			</ListView.ItemContainerStyle>

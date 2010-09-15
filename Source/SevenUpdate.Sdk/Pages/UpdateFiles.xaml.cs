@@ -113,7 +113,7 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); }).ContinueWith(
+            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); }).ContinueWith(
                 _ => CheckHash(), context);
         }
 
@@ -121,7 +121,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit)); });
+            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); });
         }
 
         private void AddFiles(IList<string> files)

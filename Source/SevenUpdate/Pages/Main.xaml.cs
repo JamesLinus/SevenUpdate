@@ -52,8 +52,6 @@ namespace SevenUpdate.Pages
             AdminClient.SettingsChanged += Settings_Changed;
 
             #endregion
-
-            Core.Instance.UpdateAction = Base.RebootNeeded ? UpdateAction.RebootNeeded : UpdateAction.NoUpdates;
         }
 
         #region UI Events
@@ -125,6 +123,8 @@ namespace SevenUpdate.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            Core.Instance.UpdateAction = Base.RebootNeeded ? UpdateAction.RebootNeeded : UpdateAction.NoUpdates;
+
             if (Core.IsReconnect)
             {
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
@@ -133,9 +133,23 @@ namespace SevenUpdate.Pages
                 AdminClient.Connect();
             }
             else if (Core.IsAutoCheck)
+            {
+                Core.IsAutoCheck = false;
                 Core.CheckForUpdates(true);
-            else if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
-                Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+            }
+            else
+            {
+                try
+                {
+                    if (Settings.Default.lastUpdateCheck == DateTime.MinValue)
+                        Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+                    if (!Settings.Default.lastUpdateCheck.Date.Equals(DateTime.Now.Date))
+                        Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+                }
+                catch
+                {
+                }
+            }
         }
 
         private void timer_Elapsed(object sender, ElapsedEventArgs e)

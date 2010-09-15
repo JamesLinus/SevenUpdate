@@ -1017,7 +1017,6 @@ namespace SevenUpdate
 
         private RegistryAction action;
         private string data;
-        private RegistryHive hive;
         private string key, keyValue;
         private RegistryValueKind valueKind;
 
@@ -1037,21 +1036,6 @@ namespace SevenUpdate
                 action = value;
                 // Call OnPropertyChanged whenever the property is updated
                 OnPropertyChanged("Action");
-            }
-        }
-
-        /// <summary>
-        ///   The hive of the current registry item
-        /// </summary>
-        [ProtoMember(2), DefaultValue(RegistryHive.LocalMachine), DataMember]
-        public RegistryHive Hive
-        {
-            get { return hive; }
-            set
-            {
-                hive = value;
-                // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged("Hive");
             }
         }
 

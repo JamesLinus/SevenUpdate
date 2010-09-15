@@ -46,6 +46,7 @@ namespace SevenUpdate
         internal static void Init(string[] args)
         {
             Base.Locale = Settings.Default.locale;
+
             foreach (var t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
             {
                 var suaLoc = t;

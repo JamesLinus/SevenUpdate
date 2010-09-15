@@ -264,7 +264,6 @@ namespace SevenUpdate.Sdk.Pages
             tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
             // ReSharper restore PossibleNullReferenceException
             Core.AppInfo.ValueName = null;
-            tbxValueName.Text = null;
         }
 
         #endregion

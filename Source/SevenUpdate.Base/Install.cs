@@ -146,7 +146,7 @@ namespace SevenUpdate
 
                     #region Registry
 
-                    SetRegistryItems(apps[x].Updates[y].RegistryItems);
+                    SetRegistryItems(apps[x].Updates[y].RegistryItems, apps[x].AppInfo.Is64Bit);
 
                     #endregion
 
@@ -162,7 +162,7 @@ namespace SevenUpdate
 
                     #region Shortcuts
 
-                    SetShortcuts(apps[x].Updates[y].Shortcuts, apps[x].AppInfo.Directory, apps[x].AppInfo.Is64Bit);
+                    SetShortcuts(apps[x].Updates[y].Shortcuts, apps[x].AppInfo);
 
                     #endregion
 
@@ -252,8 +252,9 @@ namespace SevenUpdate
         ///   Sets the registry items of an update
         /// </summary>
         /// <param name = "regItems">The registry changes to install on the system</param>
+        /// <param name="is64Bit">Indicates if the app is 64 bit</param>
         /// <returns>a bool value indicating if an error occurred</returns>
-        private static void SetRegistryItems(IList<RegistryItem> regItems)
+        private static void SetRegistryItems(IList<RegistryItem> regItems, bool is64Bit)
         {
             RegistryKey key;
             if (regItems == null)
@@ -261,18 +262,19 @@ namespace SevenUpdate
 
             for (var x = 0; x < regItems.Count; x++)
             {
-                switch (regItems[x].Hive)
+                var keyPath = Base.GetRegistryKey(regItems[x].Key, is64Bit);
+                switch (keyPath)
                 {
-                    case RegistryHive.ClassesRoot:
+                    case "HKEY_CLASSES_ROOT":
                         key = Registry.ClassesRoot;
                         break;
-                    case RegistryHive.CurrentUser:
+                    case "HKEY_CURRENT_USER":
                         key = Registry.CurrentUser;
                         break;
-                    case RegistryHive.LocalMachine:
+                    case "HKEY_LOCAL_MACHINE":
                         key = Registry.LocalMachine;
                         break;
-                    case RegistryHive.Users:
+                    case "HKEY_USERS":
                         key = Registry.Users;
                         break;
                     default:
@@ -284,7 +286,7 @@ namespace SevenUpdate
                     case RegistryAction.Add:
                         try
                         {
-                            Registry.SetValue(regItems[x].Key, regItems[x].KeyValue, regItems[x].Data, regItems[x].ValueKind);
+                            Registry.SetValue(keyPath, regItems[x].KeyValue, regItems[x].Data, regItems[x].ValueKind);
                         }
                         catch (Exception e)
                         {
@@ -296,7 +298,7 @@ namespace SevenUpdate
                         try
                         {
                             if (key != null)
-                                // ReSharper disable PossibleNullReferenceException
+                            // ReSharper disable PossibleNullReferenceException
                                 key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
                             // ReSharper restore PossibleNullReferenceException
                         }
@@ -335,9 +337,8 @@ namespace SevenUpdate
         ///   Installs the shortcuts of an update
         /// </summary>
         /// <param name = "shortcuts">the shortcuts to install on the system</param>
-        /// <param name = "appDirectory">the directory where the application is installed</param>
-        /// <param name = "is64Bit"><c>true</c> if the application is 64 bit, otherwise <c>false</c></param>
-        private static void SetShortcuts(IList<Shortcut> shortcuts, string appDirectory, bool is64Bit)
+        /// <param name="appInfo">the application information</param>
+        private static void SetShortcuts(IList<Shortcut> shortcuts, Sua appInfo)
         {
             if (shortcuts == null)
                 return;
@@ -348,36 +349,36 @@ namespace SevenUpdate
             {
                 try
                 {
-                    var linkLocation = Base.ConvertPath(shortcuts[x].Location, appDirectory, is64Bit);
+                    shortcuts[x].Location = Base.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
                     var linkName = Base.GetLocaleString(shortcuts[x].Name);
 
-                    if (!linkLocation.EndsWith(@"\"))
-                        linkLocation = linkLocation + @"\";
+                    if (!shortcuts[x].Location.EndsWith(@"\"))
+                        shortcuts[x].Location = shortcuts[x].Location + @"\";
 
-                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(linkLocation + linkName + @".lnk")))
+                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
                     {
                         // ReSharper disable AssignNullToNotNullAttribute
-                        if (!Directory.Exists(linkLocation))
-                            Directory.CreateDirectory(linkLocation);
-                        File.Delete(linkLocation + linkName + @".lnk");
+                        if (!Directory.Exists(shortcuts[x].Location))
+                            Directory.CreateDirectory(shortcuts[x].Location);
+                        File.Delete(shortcuts[x].Location + linkName + @".lnk");
                         // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut) ws.CreateShortcut(linkLocation + linkName + @".lnk");
+                        var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
                         // Where the shortcut should point to
-                        shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appDirectory, is64Bit);
+                        shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
                         // Description for the shortcut
                         shortcut.Description = Base.GetLocaleString(shortcuts[x].Description);
                         // Location for the shortcut's icon
-                        shortcut.IconLocation = Base.ConvertPath(shortcuts[x].Icon, appDirectory, is64Bit);
+                        shortcut.IconLocation = Base.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
                         // The arguments to be used for the shortcut
                         shortcut.Arguments = shortcuts[x].Arguments;
                         // The working directory to be used for the shortcut
-                        shortcut.WorkingDirectory = appDirectory;
+                        shortcut.WorkingDirectory = appInfo.Directory;
                         // Create the shortcut at the given path
                         shortcut.Save();
                     }
 
                     if (shortcuts[x].Action == ShortcutAction.Delete)
-                        File.Delete(linkLocation);
+                        File.Delete(shortcuts[x].Location);
                 }
                 catch (Exception e)
                 {
