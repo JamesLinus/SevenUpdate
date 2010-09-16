@@ -100,10 +100,10 @@ namespace SevenUpdate.Sdk.Pages
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
-            var installUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
+            var installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            var downloadUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            var downloadUrl = fullName.Replace(installDirectory,  @"%DOWNLOADURL%\", true);
             downloadUrl = downloadUrl.Replace(@"\\", @"\");
 
             var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = downloadUrl};

@@ -295,6 +295,7 @@ namespace SevenUpdate.Pages
 
             if (e.UpdatesFailed <= 0)
                 return;
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
             if (e.UpdatesInstalled == 0)
                 tbStatus.Text = Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
             else
