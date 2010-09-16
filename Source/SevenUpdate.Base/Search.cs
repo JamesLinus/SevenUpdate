@@ -93,7 +93,6 @@ namespace SevenUpdate
                 ulong size = 0;
                 for (var z = 0; z < app.Updates[y].Files.Count; z++)
                 {
-                    
                     app.Updates[y].Files[z].Destination = Base.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
                     // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                     if (File.Exists(app.Updates[y].Files[z].Destination))

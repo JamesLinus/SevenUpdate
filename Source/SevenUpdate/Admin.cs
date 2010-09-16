@@ -26,7 +26,6 @@ using System.Diagnostics;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using SevenUpdate.Properties;
 using SevenUpdate.WCF;
 
 #endregion

@@ -333,9 +333,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets and converts the registry key
+        ///   Gets and converts the registry key
         /// </summary>
-        /// <param name="registryKey">The registry key</param>
+        /// <param name = "registryKey">The registry key</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>The registry key</returns>
         public static string GetRegistryKey(string registryKey, bool is64Bit)
@@ -398,7 +398,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "path">a string that contains a file path</param>
         /// <param name = "directory">a string that contains a directory</param>
-        /// <param name="valueName">a string that contains a valuename of the registry key that contains the directory location</param>
+        /// <param name = "valueName">a string that contains a valuename of the registry key that contains the directory location</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, string valueName = null, bool is64Bit = false)
@@ -567,7 +567,7 @@ namespace SevenUpdate
         /// <param name = "find">a string to find in the complete string</param>
         /// <param name = "replace">a string to use to replace the find string in the complete string</param>
         /// <param name = "ignoreCare">Indicates if replacement ignores character case</param>
-        private static string Replace(this string str, string find, string replace, bool ignoreCare)
+        public static string Replace(this string str, string find, string replace, bool ignoreCare)
         {
             // Get input string length
             var expressionLength = str.Length;
@@ -611,7 +611,7 @@ namespace SevenUpdate
         /// <param name = "find">a string to find in the complete string</param>
         /// <param name = "replace">a string to use to replace the find string in the complete string</param>
         /// <param name = "ignoreCare">Indicates if the replace should ignore case</param>
-        private static StringBuilder Replace(this StringBuilder sb, string find, string replace, bool ignoreCare)
+        public static StringBuilder Replace(this StringBuilder sb, string find, string replace, bool ignoreCare)
         {
             var str = sb.ToString();
             // Get input string length

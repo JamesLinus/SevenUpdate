@@ -93,11 +93,20 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            var installUrl = Base.ConvertPath(fullName, false, Core.AppInfo.Is64Bit);
-            installUrl = installUrl.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
+            string installDirectory;
 
-            var file = new UpdateFile
-                           {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = @"%DOWNLOADURL%\" + Path.GetFileName(fullName)};
+
+            installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var installUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
+            installUrl = installUrl.Replace(@"\\", @"\");
+
+            var downloadUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            downloadUrl = downloadUrl.Replace(@"\\", @"\");
+
+            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = downloadUrl};
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -113,15 +122,17 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             tbHashCalculating.Visibility = Visibility.Visible;
             hashesGenerating++;
-            Task.Factory.StartNew(() => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); }).ContinueWith(
-                _ => CheckHash(), context);
+            Task.Factory.StartNew(
+                () => { updateFile.Hash = Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); }).ContinueWith(
+                    _ => CheckHash(), context);
         }
 
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(() => { updateFile.FileSize = Base.GetFileSize(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); });
+            Task.Factory.StartNew(
+                () => { updateFile.FileSize = Base.GetFileSize(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)); });
         }
 
         private void AddFiles(IList<string> files)
@@ -131,8 +142,6 @@ namespace SevenUpdate.Sdk.Pages
                 AddFile(files[x]);
             listBox.SelectedIndex = 0;
         }
-
-        
 
         private void CheckHash()
         {
@@ -187,7 +196,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
@@ -195,8 +206,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var cfd = new CommonOpenFileDialog { Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination) };
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
 
@@ -231,7 +244,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true, InitialDirectory = directory};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)

@@ -36,9 +36,8 @@ namespace SevenUpdate.Pages
     /// </summary>
     public sealed partial class Main
     {
-        private Timer timer;
-
         private bool init;
+        private Timer timer;
 
         /// <summary>
         ///   The constructor for the Main page
@@ -127,7 +126,7 @@ namespace SevenUpdate.Pages
                 timer.Elapsed += timer_Elapsed;
                 AdminClient.Connect();
             }
-            else if (Core.IsAutoCheck)
+            else if (Core.IsAutoCheck || Settings.Default.updatesFound)
             {
                 Core.IsAutoCheck = false;
                 Core.CheckForUpdates(true);

@@ -170,14 +170,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var allUserStartMenu = new StringBuilder(260);
             NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
-            var cfd = new CommonOpenFileDialog
-                          {
-                              DefaultExtension = "lnk",
-                              DefaultDirectory = allUserStartMenu.ToString(),
-                              EnsureFileExists = true,
-                              NavigateToShortcut = true,
-                              Multiselect = false
-                          };
+            var cfd = new CommonOpenFileDialog {DefaultExtension = "lnk", DefaultDirectory = allUserStartMenu.ToString(), EnsureFileExists = true, NavigateToShortcut = true, Multiselect = false};
 
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)

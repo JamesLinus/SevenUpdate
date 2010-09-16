@@ -248,7 +248,7 @@ namespace SevenUpdate.Admin
         private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             isInstalling = false;
-            
+
             if (Service.Service.InstallCompleted != null && IsClientConnected)
                 Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
 

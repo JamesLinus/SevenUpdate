@@ -153,6 +153,7 @@ namespace SevenUpdate.Pages
                 if (e.ImportantCount > 0 || e.OptionalCount > 0)
                 {
                     Core.Instance.UpdateAction = UpdateAction.UpdatesFound;
+                    Settings.Default.updatesFound = true;
 
                     if (e.ImportantCount > 0 && e.OptionalCount > 0)
                         line.Y1 = 50;
@@ -189,7 +190,10 @@ namespace SevenUpdate.Pages
                 #endregion
             }
             else
+            {
+                Settings.Default.updatesFound = false;
                 Core.Instance.UpdateAction = UpdateAction.NoUpdates;
+            }
         }
 
         /// <summary>
@@ -567,6 +571,7 @@ namespace SevenUpdate.Pages
                 {
                     Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
                     Core.IsInstallInProgress = true;
+                    Settings.Default.lastInstall = DateTime.Now;
                 }
                 else
                     Core.Instance.UpdateAction = UpdateAction.Canceled;

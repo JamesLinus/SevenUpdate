@@ -148,7 +148,8 @@ namespace SevenUpdate
 
                     for (var z = 0; z < appUpdates[x].Updates[y].Files.Count; z++)
                     {
-                        appUpdates[x].Updates[y].Files[z].Destination = Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Destination, appUpdates[x].AppInfo.Directory, appUpdates[x].AppInfo.ValueName, appUpdates[x].AppInfo.Is64Bit);
+                        appUpdates[x].Updates[y].Files[z].Destination = Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Destination, appUpdates[x].AppInfo.Directory, appUpdates[x].AppInfo.ValueName,
+                                                                                         appUpdates[x].AppInfo.Is64Bit);
 
                         if (appUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || appUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
                             appUpdates[x].Updates[y].Files[z].Action == FileAction.CompareOnly)
@@ -164,7 +165,7 @@ namespace SevenUpdate
                             catch
                             {
                             }
-                            var url = new Uri(Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Source, appUpdates[x].Updates[y].DownloadUrl,null, appUpdates[x].AppInfo.Is64Bit));
+                            var url = new Uri(Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Source, appUpdates[x].Updates[y].DownloadUrl, null, appUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(appUpdates[x].Updates[y].Files[z].Destination));
                         }
