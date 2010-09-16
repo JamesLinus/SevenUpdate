@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -70,8 +90,7 @@ namespace SharpBits.Base
 
         [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
-        internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long cbName, StringBuilder domainName, ref long cbDomainName,
-                                                      ref int psUse);
+        internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long cbName, StringBuilder domainName, ref long cbDomainName, ref int psUse);
 
         [DllImport("ole32.dll", CharSet = CharSet.Auto)]
         public static extern int CoInitializeSecurity(IntPtr pVoid, int cAuthSvc, IntPtr asAuthSvc, IntPtr pReserved1, RpcAuthnLevel level, RpcImpLevel impers, IntPtr pAuthList,
@@ -92,14 +111,12 @@ namespace SharpBits.Base
 
     internal static class Utils
     {
-        private static BitsVersion version;
-
         static Utils()
         {
-            version = GetBitsVersion();
+            BITSVersion = GetBitsVersion();
         }
 
-        internal static BitsVersion BITSVersion { get { return version; } }
+        internal static BitsVersion BITSVersion { get; private set; }
 
         internal static string GetName(string sid)
         {
@@ -107,7 +124,7 @@ namespace SharpBits.Base
             long cbUserName = size;
             long cbDomainName = size;
             var ptrSID = new IntPtr(0);
-            int psUse = 0;
+            var psUse = 0;
             var userName = new StringBuilder(size);
             var domainName = new StringBuilder(size);
             if (NativeMethods.ConvertStringSidToSidW(sid, ref ptrSID))
@@ -132,7 +149,7 @@ namespace SharpBits.Base
             if (fileTime.dwHighDateTime == 0 && fileTime.dwLowDateTime == 0) //Checking for MinValue
                 return DateTime.MinValue;
 
-            long dateTime = (((long) fileTime.dwHighDateTime) << 32) + fileTime.dwLowDateTime;
+            var dateTime = (((long) fileTime.dwHighDateTime) << 32) + fileTime.dwLowDateTime;
             return DateTime.FromFileTime(dateTime);
         }
 
@@ -151,9 +168,9 @@ namespace SharpBits.Base
         {
             try
             {
-                string fileName = Path.Combine(Environment.SystemDirectory, "qmgr.dll");
+                var fileName = Path.Combine(Environment.SystemDirectory, "qmgr.dll");
                 int handle;
-                int size = NativeMethods.GetFileVersionInfoSize(fileName, out handle);
+                var size = NativeMethods.GetFileVersionInfoSize(fileName, out handle);
                 if (size == 0)
                     return BitsVersion.Bits0_0;
                 var buffer = new byte[size];
@@ -166,19 +183,19 @@ namespace SharpBits.Base
 
                 int block1 = Marshal.ReadInt16(subBlock);
                 int block2 = Marshal.ReadInt16((IntPtr) ((int) subBlock + 2));
-                string spv = string.Format(@"\StringFileInfo\{0:X4}{1:X4}\ProductVersion", block1, block2);
+                var spv = string.Format(@"\StringFileInfo\{0:X4}{1:X4}\ProductVersion", block1, block2);
 
                 string versionInfo;
                 if (!NativeMethods.VerQueryValue(buffer, spv, out versionInfo, out len))
                     return BitsVersion.Bits0_0;
 
-                string[] versionNumbers = versionInfo.Split('.');
+                var versionNumbers = versionInfo.Split('.');
 
                 if (versionNumbers.Length < 2)
                     return BitsVersion.Bits0_0;
 
-                int major = int.Parse(versionNumbers[0]);
-                int minor = int.Parse(versionNumbers[1]);
+                var major = int.Parse(versionNumbers[0]);
+                var minor = int.Parse(versionNumbers[1]);
 
                 switch (major)
                 {

@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -172,7 +190,7 @@ namespace Microsoft.Windows.Internal
         public void Clear()
         {
             // Can't pass "this" by ref, so make a copy to call PropVariantClear with
-            PropVariant var = this;
+            var var = this;
             PropVariantNativeMethods.PropVariantClear(ref var);
 
             // Since we couldn't pass "this" by ref, we need to clear the member fields manually
@@ -301,7 +319,7 @@ namespace Microsoft.Windows.Internal
         {
             var fileTimeArr = new FILETIME[value.Length];
 
-            for (int i = 0; i < value.Length; i++)
+            for (var i = 0; i < value.Length; i++)
                 fileTimeArr[i] = DateTimeTotFileTime(value[i]);
 
             PropVariant propVar;
@@ -338,7 +356,7 @@ namespace Microsoft.Windows.Internal
             valueType = (ushort) VarEnum.VT_FILETIME;
 
             PropVariant propVar;
-            FILETIME ft = DateTimeTotFileTime(value);
+            var ft = DateTimeTotFileTime(value);
             PropVariantNativeMethods.InitPropVariantFromFileTime(ref ft, out propVar);
             CopyData(propVar);
         }
@@ -350,15 +368,15 @@ namespace Microsoft.Windows.Internal
         public void SetSafeArray(Array array)
         {
             const ushort vtUnknown = 13;
-            IntPtr psa = PropVariantNativeMethods.SafeArrayCreateVector(vtUnknown, 0, (uint) array.Length);
+            var psa = PropVariantNativeMethods.SafeArrayCreateVector(vtUnknown, 0, (uint) array.Length);
 
-            IntPtr pvData = PropVariantNativeMethods.SafeArrayAccessData(psa);
+            var pvData = PropVariantNativeMethods.SafeArrayAccessData(psa);
             try // to remember to release lock on data
             {
-                for (int i = 0; i < array.Length; ++i)
+                for (var i = 0; i < array.Length; ++i)
                 {
-                    object obj = array.GetValue(i);
-                    IntPtr punk = (obj != null) ? Marshal.GetIUnknownForObject(obj) : IntPtr.Zero;
+                    var obj = array.GetValue(i);
+                    var punk = (obj != null) ? Marshal.GetIUnknownForObject(obj) : IntPtr.Zero;
                     Marshal.WriteIntPtr(pvData, i*IntPtr.Size, punk);
                 }
             }
@@ -437,7 +455,7 @@ namespace Microsoft.Windows.Internal
         /// <param name = "value">The new value to set.</param>
         public void SetDecimal(decimal value)
         {
-            int[] bits = Decimal.GetBits(value);
+            var bits = Decimal.GetBits(value);
             valueData = (IntPtr) bits[0];
             valueDataExt = bits[1];
             wReserved3 = (ushort) (bits[2] >> 16);
@@ -709,7 +727,7 @@ namespace Microsoft.Windows.Internal
 
         private static FILETIME DateTimeTotFileTime(DateTime value)
         {
-            long hFT = value.ToFileTime();
+            var hFT = value.ToFileTime();
             var ft = new FILETIME {dwLowDateTime = (int) (hFT & 0xFFFFFFFF), dwHighDateTime = (int) (hFT >> 32)};
             return ft;
         }
@@ -718,17 +736,17 @@ namespace Microsoft.Windows.Internal
         {
             var blobData = new byte[lVal];
             IntPtr pBlobData;
-            if (IntPtr.Size == 4)
-                pBlobData = new IntPtr(valueDataExt);
-            else if (IntPtr.Size == 8)
+            switch (IntPtr.Size)
             {
-                // In this case, we need to derive a pointer at offset 12,
-                // because the size of the blob is represented as a 4-byte int
-                // but the pointer is immediately after that.
-                pBlobData = new IntPtr(BitConverter.ToInt32(GetDataBytes(), sizeof (int)) + (Int64) (BitConverter.ToInt32(GetDataBytes(), 2*sizeof (int)) << 32));
+                case 4:
+                    pBlobData = new IntPtr(valueDataExt);
+                    break;
+                case 8:
+                    pBlobData = new IntPtr(BitConverter.ToInt32(GetDataBytes(), sizeof (int)) + (Int64) (BitConverter.ToInt32(GetDataBytes(), 2*sizeof (int)) << 32));
+                    break;
+                default:
+                    throw new NotSupportedException();
             }
-            else
-                throw new NotSupportedException();
             Marshal.Copy(pBlobData, blobData, 0, lVal);
 
             return blobData;
@@ -736,7 +754,7 @@ namespace Microsoft.Windows.Internal
 
         private Array GetVector<T>() where T : struct
         {
-            int count = PropVariantNativeMethods.PropVariantGetElementCount(ref this);
+            var count = PropVariantNativeMethods.PropVariantGetElementCount(ref this);
             if (count <= 0)
                 return null;
 
@@ -785,7 +803,7 @@ namespace Microsoft.Windows.Internal
                     FILETIME val;
                     PropVariantNativeMethods.PropVariantGetFileTimeElem(ref this, i, out val);
 
-                    long fileTime = FileTimeToDateTime(ref val);
+                    var fileTime = FileTimeToDateTime(ref val);
 
 
                     arr.SetValue(DateTime.FromFileTime(fileTime), i);
@@ -816,7 +834,7 @@ namespace Microsoft.Windows.Internal
         // A string requires a special case because it's not a struct or value type
         private string[] GetStringVector()
         {
-            int count = PropVariantNativeMethods.PropVariantGetElementCount(ref this);
+            var count = PropVariantNativeMethods.PropVariantGetElementCount(ref this);
             if (count <= 0)
                 return null;
 
@@ -834,27 +852,32 @@ namespace Microsoft.Windows.Internal
         private byte[] GetDataBytes()
         {
             var ret = new byte[IntPtr.Size + sizeof (int)];
-            if (IntPtr.Size == 4)
-                BitConverter.GetBytes(valueData.ToInt32()).CopyTo(ret, 0);
-            else if (IntPtr.Size == 8)
-                BitConverter.GetBytes(valueData.ToInt64()).CopyTo(ret, 0);
+            switch (IntPtr.Size)
+            {
+                case 4:
+                    BitConverter.GetBytes(valueData.ToInt32()).CopyTo(ret, 0);
+                    break;
+                case 8:
+                    BitConverter.GetBytes(valueData.ToInt64()).CopyTo(ret, 0);
+                    break;
+            }
             BitConverter.GetBytes(valueDataExt).CopyTo(ret, IntPtr.Size);
             return ret;
         }
 
         private static Array CrackSingleDimSafeArray(IntPtr psa)
         {
-            uint cDims = PropVariantNativeMethods.SafeArrayGetDim(psa);
+            var cDims = PropVariantNativeMethods.SafeArrayGetDim(psa);
             if (cDims != 1)
                 throw new ArgumentException("Multi-dimensional SafeArrays not supported.");
 
-            int lBound = PropVariantNativeMethods.SafeArrayGetLBound(psa, 1U);
-            int uBound = PropVariantNativeMethods.SafeArrayGetUBound(psa, 1U);
+            var lBound = PropVariantNativeMethods.SafeArrayGetLBound(psa, 1U);
+            var uBound = PropVariantNativeMethods.SafeArrayGetUBound(psa, 1U);
 
-            int n = uBound - lBound + 1; // uBound is inclusive
+            var n = uBound - lBound + 1; // uBound is inclusive
 
             var array = new object[n];
-            for (int i = lBound; i <= uBound; ++i)
+            for (var i = lBound; i <= uBound; ++i)
                 array[i] = PropVariantNativeMethods.SafeArrayGetElement(psa, ref i);
 
             return array;

@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -42,9 +60,9 @@ namespace Microsoft.Windows.ApplicationServices
             if (settings == null)
                 throw new ArgumentNullException("settings");
 
-            GCHandle handle = GCHandle.Alloc(settings.RecoveryData);
+            var handle = GCHandle.Alloc(settings.RecoveryData);
 
-            HRESULT hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(AppRestartRecoveryNativeMethods.internalCallback, (IntPtr) handle, settings.PingInterval, 0);
+            var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(AppRestartRecoveryNativeMethods.internalCallback, (IntPtr) handle, settings.PingInterval, 0);
 
             if (!CoreErrorHelper.Succeeded((int) hr))
             {
@@ -64,7 +82,7 @@ namespace Microsoft.Windows.ApplicationServices
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
             CoreHelpers.ThrowIfNotVista();
 
-            HRESULT hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRecoveryCallback();
+            var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRecoveryCallback();
 
             if (hr == HRESULT.E_FAIL)
                 throw new ExternalException("Unregister for recovery failed.");
@@ -80,7 +98,7 @@ namespace Microsoft.Windows.ApplicationServices
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
             CoreHelpers.ThrowIfNotVista();
 
-            HRESULT hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRestart();
+            var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRestart();
 
             if (hr == HRESULT.E_FAIL)
                 throw new ExternalException("Unregister for restart failed.");
@@ -101,7 +119,7 @@ namespace Microsoft.Windows.ApplicationServices
 
             bool canceled;
 
-            HRESULT hr = AppRestartRecoveryNativeMethods.ApplicationRecoveryInProgress(out canceled);
+            var hr = AppRestartRecoveryNativeMethods.ApplicationRecoveryInProgress(out canceled);
 
             if (hr == HRESULT.E_FAIL)
                 throw new InvalidOperationException("This method must be called from the registered callback method.");
@@ -149,7 +167,7 @@ namespace Microsoft.Windows.ApplicationServices
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
             CoreHelpers.ThrowIfNotVista();
 
-            HRESULT hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, settings.Restrictions);
+            var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, settings.Restrictions);
 
             if (hr == HRESULT.E_FAIL)
                 throw new InvalidOperationException("Application failed to registered for restart.");

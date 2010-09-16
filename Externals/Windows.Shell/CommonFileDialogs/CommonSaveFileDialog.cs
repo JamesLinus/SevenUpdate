@@ -1,10 +1,29 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using Microsoft.Windows.Internal;
@@ -144,7 +163,7 @@ namespace Microsoft.Windows.Dialogs
                 if (nativeDialog != null)
                 {
                     IPropertyStore propertyStore;
-                    HRESULT hr = nativeDialog.GetProperties(out propertyStore);
+                    var hr = nativeDialog.GetProperties(out propertyStore);
 
                     if (!CoreErrorHelper.Succeeded((int) hr))
                         throw Marshal.GetExceptionForHR((int) hr);
@@ -198,10 +217,8 @@ namespace Microsoft.Windows.Dialogs
             // Loop through all our property keys and create a semicolon-delimited property list string.
             if (propertyList != null && propertyList.Length > 0)
             {
-                foreach (PropertyKey key in propertyList)
+                foreach (var canonicalName in propertyList.Select(key => ShellPropertyDescriptionsCache.Cache.GetPropertyDescription(key).CanonicalName))
                 {
-                    string canonicalName = ShellPropertyDescriptionsCache.Cache.GetPropertyDescription(key).CanonicalName;
-
                     // The string we pass to PSGetPropertyDescriptionListFromString must
                     // start with "prop:", followed a list of canonical names for each 
                     // property that is to collected.
@@ -217,14 +234,17 @@ namespace Microsoft.Windows.Dialogs
             }
 
             // If the string was created correctly, get IPropertyDescriptionList for it
-            if (!string.IsNullOrEmpty(propertyListStr))
+            if (string.IsNullOrEmpty(propertyListStr))
+            {
+            }
+            else
             {
                 var guid = new Guid(ShellIIDGuid.IPropertyDescriptionList);
                 IPropertyDescriptionList propertyDescriptionList = null;
 
                 try
                 {
-                    int hr = PropertySystemNativeMethods.PSGetPropertyDescriptionListFromString(propertyListStr, ref guid, out propertyDescriptionList);
+                    var hr = PropertySystemNativeMethods.PSGetPropertyDescriptionListFromString(propertyListStr, ref guid, out propertyDescriptionList);
 
                     // If we get a IPropertyDescriptionList, setit on the native dialog.
                     if (CoreErrorHelper.Succeeded(hr))

@@ -552,7 +552,7 @@ namespace SevenUpdate
     ///   The collection of updates and the application info.
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
-    public class Sui : INotifyPropertyChanged
+    public abstract class Sui : INotifyPropertyChanged
     {
         #region Fields
 

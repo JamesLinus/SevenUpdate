@@ -1,8 +1,27 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -26,15 +45,15 @@ namespace Microsoft.Windows.Dialogs
     /// </remarks>
     internal class NativeTaskDialog : IDisposable
     {
+        private readonly TaskDialogNativeMethods.TASKDIALOGCONFIG nativeDialogConfig;
+        private readonly TaskDialog outerDialog;
+
+        private readonly NativeTaskDialogSettings settings;
+        private readonly IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof (TaskDialogNativeMethods.TASKDIALOG_ELEMENTS)).Length];
         private IntPtr buttonArray;
         private bool firstRadioButtonClicked = true;
         private IntPtr hWndDialog;
-        private TaskDialogNativeMethods.TASKDIALOGCONFIG nativeDialogConfig;
-        private TaskDialog outerDialog;
-
         private IntPtr radioButtonArray;
-        private NativeTaskDialogSettings settings;
-        private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof (TaskDialogNativeMethods.TASKDIALOG_ELEMENTS)).Length];
 
         #region Constructors
 
@@ -96,7 +115,7 @@ namespace Microsoft.Windows.Dialogs
 
                 // Here is the way we use "vanilla" P/Invoke to call 
                 // TaskDialogIndirect().  
-                HRESULT hresult = TaskDialogNativeMethods.TaskDialogIndirect(nativeDialogConfig, out selectedButtonID, out selectedRadioButtonID, out checkBoxChecked);
+                var hresult = TaskDialogNativeMethods.TaskDialogIndirect(nativeDialogConfig, out selectedButtonID, out selectedRadioButtonID, out checkBoxChecked);
 
                 if (CoreErrorHelper.Failed(hresult))
                 {
@@ -113,7 +132,7 @@ namespace Microsoft.Windows.Dialogs
                             msg = String.Format("An unexpected internal error occurred in the Win32 call:{0:x}", hresult);
                             break;
                     }
-                    Exception e = Marshal.GetExceptionForHR((int) hresult);
+                    var e = Marshal.GetExceptionForHR((int) hresult);
                     throw new Win32Exception(msg, e);
                 }
             }
@@ -140,18 +159,27 @@ namespace Microsoft.Windows.Dialogs
 
             var id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCANCEL;
 
-            if (result == TaskDialogResult.Close)
-                id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCLOSE;
-            else if (result == TaskDialogResult.CustomButtonClicked)
-                id = DialogsDefaults.MinimumDialogControlId; // custom buttons
-            else if (result == TaskDialogResult.No)
-                id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDNO;
-            else if (result == TaskDialogResult.Ok)
-                id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDOK;
-            else if (result == TaskDialogResult.Retry)
-                id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDRETRY;
-            else if (result == TaskDialogResult.Yes)
-                id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDYES;
+            switch (result)
+            {
+                case TaskDialogResult.Close:
+                    id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDCLOSE;
+                    break;
+                case TaskDialogResult.CustomButtonClicked:
+                    id = DialogsDefaults.MinimumDialogControlId; // custom buttons
+                    break;
+                case TaskDialogResult.No:
+                    id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDNO;
+                    break;
+                case TaskDialogResult.Ok:
+                    id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDOK;
+                    break;
+                case TaskDialogResult.Retry:
+                    id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDRETRY;
+                    break;
+                case TaskDialogResult.Yes:
+                    id = (int) TaskDialogNativeMethods.TASKDIALOG_COMMON_BUTTON_RETURN_ID.IDYES;
+                    break;
+            }
 
             SendMessageHelper(TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_CLICK_BUTTON, id, 0);
         }
@@ -168,7 +196,7 @@ namespace Microsoft.Windows.Dialogs
             switch ((TaskDialogNativeMethods.TASKDIALOG_NOTIFICATIONS) msg)
             {
                 case TaskDialogNativeMethods.TASKDIALOG_NOTIFICATIONS.TDN_CREATED:
-                    int result = PerformDialogInitialization();
+                    var result = PerformDialogInitialization();
                     outerDialog.RaiseOpenedEvent();
                     return result;
                 case TaskDialogNativeMethods.TASKDIALOG_NOTIFICATIONS.TDN_BUTTON_CLICKED:
@@ -224,7 +252,7 @@ namespace Microsoft.Windows.Dialogs
 
             if (settings.ElevatedButtons != null && settings.ElevatedButtons.Count > 0)
             {
-                foreach (int id in settings.ElevatedButtons)
+                foreach (var id in settings.ElevatedButtons)
                     UpdateElevationIcon(id, true);
             }
 
@@ -265,7 +293,7 @@ namespace Microsoft.Windows.Dialogs
 
         private int HandleHyperlinkClick(IntPtr pszHREF)
         {
-            string link = Marshal.PtrToStringUni(pszHREF);
+            var link = Marshal.PtrToStringUni(pszHREF);
             outerDialog.RaiseHyperlinkClickEvent(link);
 
             return CoreErrorHelper.IGNORED;
@@ -308,7 +336,7 @@ namespace Microsoft.Windows.Dialogs
             AssertCurrentlyShowing();
 
             // Build range LPARAM - note it is in REVERSE intuitive order.
-            long range = MakeLongLParam(settings.ProgressBarMaximum, settings.ProgressBarMinimum);
+            var range = MakeLongLParam(settings.ProgressBarMaximum, settings.ProgressBarMinimum);
 
             SendMessageHelper(TaskDialogNativeMethods.TASKDIALOG_MESSAGES.TDM_SET_PROGRESS_BAR_RANGE, 0, range);
         }
@@ -415,7 +443,7 @@ namespace Microsoft.Windows.Dialogs
 
         private IntPtr MakeNewString(string s, TaskDialogNativeMethods.TASKDIALOG_ELEMENTS element)
         {
-            IntPtr newStringPtr = Marshal.StringToHGlobalUni(s);
+            var newStringPtr = Marshal.StringToHGlobalUni(s);
             updatedStrings[(int) element] = newStringPtr;
             return newStringPtr;
         }
@@ -430,11 +458,10 @@ namespace Microsoft.Windows.Dialogs
         private void FreeOldString(TaskDialogNativeMethods.TASKDIALOG_ELEMENTS element)
         {
             var elementIndex = (int) element;
-            if (updatedStrings[elementIndex] != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(updatedStrings[elementIndex]);
-                updatedStrings[elementIndex] = IntPtr.Zero;
-            }
+            if (updatedStrings[elementIndex] == IntPtr.Zero)
+                return;
+            Marshal.FreeHGlobal(updatedStrings[elementIndex]);
+            updatedStrings[elementIndex] = IntPtr.Zero;
         }
 
         // Based on the following defines in WinDef.h and WinUser.h:
@@ -458,20 +485,19 @@ namespace Microsoft.Windows.Dialogs
                 settings.NativeConfiguration.pButtons = buttonArray;
                 settings.NativeConfiguration.cButtons = (uint) settings.Buttons.Length;
             }
-            if (settings.RadioButtons != null && settings.RadioButtons.Length > 0)
-            {
-                radioButtonArray = AllocateAndMarshalButtons(settings.RadioButtons);
-                settings.NativeConfiguration.pRadioButtons = radioButtonArray;
-                settings.NativeConfiguration.cRadioButtons = (uint) settings.RadioButtons.Length;
-            }
+            if (settings.RadioButtons == null || settings.RadioButtons.Length <= 0)
+                return;
+            radioButtonArray = AllocateAndMarshalButtons(settings.RadioButtons);
+            settings.NativeConfiguration.pRadioButtons = radioButtonArray;
+            settings.NativeConfiguration.cRadioButtons = (uint) settings.RadioButtons.Length;
         }
 
-        private static IntPtr AllocateAndMarshalButtons(TaskDialogNativeMethods.TASKDIALOG_BUTTON[] structs)
+        private static IntPtr AllocateAndMarshalButtons(ICollection<TaskDialogNativeMethods.TASKDIALOG_BUTTON> structs)
         {
-            IntPtr initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof (TaskDialogNativeMethods.TASKDIALOG_BUTTON))*structs.Length);
+            var initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof (TaskDialogNativeMethods.TASKDIALOG_BUTTON))*structs.Count);
 
-            IntPtr currentPtr = initialPtr;
-            foreach (TaskDialogNativeMethods.TASKDIALOG_BUTTON button in structs)
+            var currentPtr = initialPtr;
+            foreach (var button in structs)
             {
                 Marshal.StructureToPtr(button, currentPtr, false);
                 currentPtr = (IntPtr) ((int) currentPtr + Marshal.SizeOf(button));
@@ -501,51 +527,49 @@ namespace Microsoft.Windows.Dialogs
         // Core disposing logic.
         protected void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+                return;
+            disposed = true;
+
+            // Single biggest resource - make sure the dialog 
+            // itself has been instructed to close.
+
+            if (showState == DialogShowState.Showing)
+                NativeClose(TaskDialogResult.Cancel);
+
+            // Clean up custom allocated strings that were updated
+            // while the dialog was showing. Note that the strings
+            // passed in the initial TaskDialogIndirect call will
+            // be cleaned up automagically by the default 
+            // marshalling logic.
+
+            if (updatedStrings != null)
             {
-                disposed = true;
-
-                // Single biggest resource - make sure the dialog 
-                // itself has been instructed to close.
-
-                if (showState == DialogShowState.Showing)
-                    NativeClose(TaskDialogResult.Cancel);
-
-                // Clean up custom allocated strings that were updated
-                // while the dialog was showing. Note that the strings
-                // passed in the initial TaskDialogIndirect call will
-                // be cleaned up automagically by the default 
-                // marshalling logic.
-
-                if (updatedStrings != null)
+                for (var i = 0; i < updatedStrings.Length; i++)
                 {
-                    for (int i = 0; i < updatedStrings.Length; i++)
-                    {
-                        if (updatedStrings[i] != IntPtr.Zero)
-                        {
-                            Marshal.FreeHGlobal(updatedStrings[i]);
-                            updatedStrings[i] = IntPtr.Zero;
-                        }
-                    }
+                    if (updatedStrings[i] == IntPtr.Zero)
+                        continue;
+                    Marshal.FreeHGlobal(updatedStrings[i]);
+                    updatedStrings[i] = IntPtr.Zero;
                 }
+            }
 
-                // Clean up the button and radio button arrays, if any.
-                if (buttonArray != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(buttonArray);
-                    buttonArray = IntPtr.Zero;
-                }
-                if (radioButtonArray != IntPtr.Zero)
-                {
-                    Marshal.FreeHGlobal(radioButtonArray);
-                    radioButtonArray = IntPtr.Zero;
-                }
+            // Clean up the button and radio button arrays, if any.
+            if (buttonArray != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(buttonArray);
+                buttonArray = IntPtr.Zero;
+            }
+            if (radioButtonArray != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(radioButtonArray);
+                radioButtonArray = IntPtr.Zero;
+            }
 
-                if (disposing)
-                {
-                    // Clean up managed resources - currently there are none
-                    // that are interesting.
-                }
+            if (disposing)
+            {
+                // Clean up managed resources - currently there are none
+                // that are interesting.
             }
         }
 

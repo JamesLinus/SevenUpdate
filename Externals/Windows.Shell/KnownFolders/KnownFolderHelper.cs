@@ -1,4 +1,22 @@
-// Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -25,7 +43,7 @@ namespace Microsoft.Windows.Shell
         {
             IKnownFolderManager knownFolderManager = new KnownFolderManagerClass();
             IKnownFolderNative knownFolder;
-            HRESULT hr = knownFolderManager.FindFolderFromIDList(pidl, out knownFolder);
+            var hr = knownFolderManager.FindFolderFromIDList(pidl, out knownFolder);
 
             return hr != HRESULT.S_OK ? null : knownFolder;
         }
@@ -41,11 +59,11 @@ namespace Microsoft.Windows.Shell
             IKnownFolderNative knownFolderNative;
             IKnownFolderManager knownFolderManager = new KnownFolderManagerClass();
 
-            HRESULT hr = knownFolderManager.GetFolder(knownFolderId, out knownFolderNative);
+            var hr = knownFolderManager.GetFolder(knownFolderId, out knownFolderNative);
 
             if (hr != HRESULT.S_OK)
                 throw Marshal.GetExceptionForHR((int) hr);
-            IKnownFolder kf = GetKnownFolder(knownFolderNative);
+            var kf = GetKnownFolder(knownFolderNative);
 
             if (kf != null)
                 return kf;
@@ -62,7 +80,7 @@ namespace Microsoft.Windows.Shell
             IKnownFolderNative knownFolderNative;
             IKnownFolderManager knownFolderManager = new KnownFolderManagerClass();
 
-            HRESULT hr = knownFolderManager.GetFolder(knownFolderId, out knownFolderNative);
+            var hr = knownFolderManager.GetFolder(knownFolderId, out knownFolderNative);
 
             return hr == HRESULT.S_OK ? GetKnownFolder(knownFolderNative) : null;
         }
@@ -80,12 +98,12 @@ namespace Microsoft.Windows.Shell
             // Get the native IShellItem2 from the native IKnownFolder
             IShellItem2 shellItem;
             var guid = new Guid(ShellIIDGuid.IShellItem2);
-            HRESULT hr = knownFolderNative.GetShellItem(0, ref guid, out shellItem);
+            var hr = knownFolderNative.GetShellItem(0, ref guid, out shellItem);
 
             if (!CoreErrorHelper.Succeeded((int) hr))
                 return null;
 
-            bool isFileSystem = false;
+            var isFileSystem = false;
 
             // If we have a valid IShellItem, try to get the FileSystem attribute.
             if (shellItem != null)
@@ -122,7 +140,7 @@ namespace Microsoft.Windows.Shell
             IKnownFolderManager knownFolderManager = new KnownFolderManagerClass();
 
             knownFolderManager.GetFolderByName(canonicalName, out knownFolderNative);
-            IKnownFolder kf = GetKnownFolder(knownFolderNative);
+            var kf = GetKnownFolder(knownFolderNative);
 
             if (kf != null)
                 return kf;
@@ -149,8 +167,8 @@ namespace Microsoft.Windows.Shell
         /// <exception cref = "System.ArgumentException">Thrown if the given parsing name is invalid.</exception>
         public static IKnownFolder FromParsingName(string parsingName)
         {
-            IntPtr pidl = IntPtr.Zero;
-            IntPtr pidl2 = IntPtr.Zero;
+            var pidl = IntPtr.Zero;
+            var pidl2 = IntPtr.Zero;
 
             try
             {
@@ -161,11 +179,11 @@ namespace Microsoft.Windows.Shell
 
 
                 // It's probably a special folder, try to get it                
-                IKnownFolderNative knownFolderNative = FromPIDL(pidl);
+                var knownFolderNative = FromPIDL(pidl);
 
                 if (knownFolderNative != null)
                 {
-                    IKnownFolder kf = GetKnownFolder(knownFolderNative);
+                    var kf = GetKnownFolder(knownFolderNative);
 
                     if (kf != null)
                         return kf;
@@ -183,7 +201,7 @@ namespace Microsoft.Windows.Shell
                     if (pidl2 == IntPtr.Zero)
                         throw new ArgumentException("Parsing name is invalid.", "parsingName");
 
-                    IKnownFolder kf = GetKnownFolder(FromPIDL(pidl));
+                    var kf = GetKnownFolder(FromPIDL(pidl));
 
                     if (kf != null)
                         return kf;

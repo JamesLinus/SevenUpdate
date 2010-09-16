@@ -67,11 +67,11 @@ namespace SevenUpdate.Sdk.Pages
 
             treeView.Visibility = Visibility.Visible;
 
-            for (int x = 0; x < Core.Projects.Count; x++)
+            for (var x = 0; x < Core.Projects.Count; x++)
             {
                 var app = new TreeViewItem {Header = Core.Projects[x].ApplicationName, Tag = x};
 
-                for (int y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
+                for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                 {
                     var index = new[] {x, y};
                     app.Items.Add(new TreeViewItem {Header = Core.Projects[x].UpdateNames[y], Tag = index});

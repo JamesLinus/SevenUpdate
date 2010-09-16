@@ -1,8 +1,27 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
@@ -57,8 +76,8 @@ namespace Microsoft.Windows.Dialogs
             // Parse string and create extension strings.
             // Format: "bat,cmd", or "bat;cmd", or "*.bat;*.cmd"
             // Can support leading "." or "*." - these will be stripped.
-            string[] rawExtensions = extensionList.Split(',', ';');
-            foreach (string extension in rawExtensions)
+            var rawExtensions = extensionList.Split(',', ';');
+            foreach (var extension in rawExtensions)
                 Extensions.Add(NormalizeExtension(extension));
         }
 
@@ -102,10 +121,10 @@ namespace Microsoft.Windows.Dialogs
             return rawExtension;
         }
 
-        private static string GetDisplayExtensionList(Collection<string> extensions)
+        private static string GetDisplayExtensionList(IEnumerable<string> extensions)
         {
             var extensionList = new StringBuilder();
-            foreach (string extension in extensions)
+            foreach (var extension in extensions)
             {
                 if (extensionList.Length > 0)
                     extensionList.Append(", ");
@@ -124,7 +143,7 @@ namespace Microsoft.Windows.Dialogs
         internal ShellNativeMethods.COMDLG_FILTERSPEC GetFilterSpec()
         {
             var filterList = new StringBuilder();
-            foreach (string extension in Extensions)
+            foreach (var extension in Extensions)
             {
                 if (filterList.Length > 0)
                     filterList.Append(";");

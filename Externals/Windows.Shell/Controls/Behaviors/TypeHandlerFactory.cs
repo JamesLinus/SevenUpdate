@@ -1,6 +1,22 @@
-// -------------------------------------------------------------------
-// Copyright (c) Microsoft Corporation. All Rights Reserved.
-// -------------------------------------------------------------------
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -59,24 +75,22 @@ namespace Microsoft.Windows.Controls
         protected TypeHandler DetermineBestHandler(TypeHandler handler, Type type)
         {
             InitializeIfNecessary();
-            Type bestType = typeof (object);
-            Type bestIntefaceImplementationType = typeof (object);
+            var bestType = typeof (object);
+            var bestIntefaceImplementationType = typeof (object);
 
             // Look through all the handlers for one that applies to the specified type.
             // Choose the one that applies to the most derived type or interface.
-            foreach (TypeHandler candidate in handlers)
+            foreach (var candidate in handlers)
             {
-                Type candidateType = GetBaseType(candidate);
-                if (candidateType.IsAssignableFrom(type) || (candidateType.IsGenericTypeDefinition && IsGenericTypeDefinitionOf(candidateType, type)))
-                {
-                    // Compare the current best to the candidate and take the candidate if it is more derived/specific.
-                    if (bestType.IsAssignableFrom(candidateType) || (candidateType.IsInterface && !candidateType.IsAssignableFrom(bestIntefaceImplementationType)))
-                    {
-                        handler = candidate;
-                        bestType = candidateType;
-                        bestIntefaceImplementationType = GetImplementingType(candidateType, type);
-                    }
-                }
+                var candidateType = GetBaseType(candidate);
+                if (!candidateType.IsAssignableFrom(type) && (!candidateType.IsGenericTypeDefinition || !IsGenericTypeDefinitionOf(candidateType, type)))
+                    continue;
+                // Compare the current best to the candidate and take the candidate if it is more derived/specific.
+                if (!bestType.IsAssignableFrom(candidateType) && (!candidateType.IsInterface || candidateType.IsAssignableFrom(bestIntefaceImplementationType)))
+                    continue;
+                handler = candidate;
+                bestType = candidateType;
+                bestIntefaceImplementationType = GetImplementingType(candidateType, type);
             }
 
             return handler;
@@ -97,7 +111,7 @@ namespace Microsoft.Windows.Controls
                 return baseType;
 
             // Walk up the base type chain starting at type and return the most-base type that still implements the base type passed in.
-            Type implementingType = targetType;
+            var implementingType = targetType;
             while (implementingType.BaseType != null && DoesTypeImplement(baseType, implementingType.BaseType))
                 implementingType = implementingType.BaseType;
 
@@ -122,7 +136,7 @@ namespace Microsoft.Windows.Controls
 
             while (targetType != null)
             {
-                Type genericDefinition = GetGenericTypeDefinition(targetType);
+                var genericDefinition = GetGenericTypeDefinition(targetType);
                 if (genericDefinition != null && baseDefinition.IsAssignableFrom(genericDefinition))
                     return true;
 

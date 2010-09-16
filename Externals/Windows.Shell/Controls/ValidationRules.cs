@@ -30,7 +30,7 @@ using Microsoft.Windows.Properties;
 
 namespace Microsoft.Windows.Controls
 {
-    public sealed class RequiredInputRule : ValidationRule
+    public abstract class RequiredInputRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

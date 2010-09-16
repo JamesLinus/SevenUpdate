@@ -1,11 +1,28 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
 using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Windows.Internal;
 
@@ -43,7 +60,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             PropVariant propVar;
 
-            IPropertyStore store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
+            var store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
 
             store.GetValue(ref propertyKey, out propVar);
 
@@ -55,12 +72,11 @@ namespace Microsoft.Windows.Shell.PropertySystem
             if (refPath == null)
                 return;
 
-            int index = ShellNativeMethods.PathParseIconLocation(ref refPath);
-            if (refPath != null)
-            {
-                imageReferencePath = refPath;
-                imageReferenceIconIndex = index;
-            }
+            var index = ShellNativeMethods.PathParseIconLocation(ref refPath);
+            if (refPath == null)
+                return;
+            imageReferencePath = refPath;
+            imageReferenceIconIndex = index;
         }
 
         private void StorePropVariantValue(PropVariant propVar)
@@ -69,12 +85,12 @@ namespace Microsoft.Windows.Shell.PropertySystem
             IPropertyStore writablePropStore = null;
             try
             {
-                int hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out writablePropStore);
+                var hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out writablePropStore);
 
                 if (!CoreErrorHelper.Succeeded(hr))
                     throw new ExternalException("Unable to get writable property store for this property.", Marshal.GetExceptionForHR(hr));
 
-                int result = writablePropStore.SetValue(ref propertyKey, ref propVar);
+                var result = writablePropStore.SetValue(ref propertyKey, ref propVar);
 
                 if (!AllowSetTruncatedValue && (result == InPlaceStringTruncated))
                     throw new ArgumentOutOfRangeException("propVar", "A value had to be truncated in a string or rounded if a numeric value. Set AllowTruncatedValue to true to prevent this exception.");
@@ -193,8 +209,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
                 if (value is Nullable)
                 {
-                    Type t = typeof (T);
-                    PropertyInfo pi = t.GetProperty("HasValue");
+                    var t = typeof (T);
+                    var pi = t.GetProperty("HasValue");
                     if (pi != null)
                     {
                         var hasValue = (bool) pi.GetValue(value, null);
@@ -213,7 +229,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
                 if (ParentShellObject != null)
                 {
-                    using (ShellPropertyWriter propertyWriter = ParentShellObject.Properties.GetPropertyWriter())
+                    using (var propertyWriter = ParentShellObject.Properties.GetPropertyWriter())
                         propertyWriter.WriteProperty(this, value, AllowSetTruncatedValue);
                 }
                 else if (NativePropertyStore != null)
@@ -258,14 +274,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 return null;
             }
 
-            IPropertyStore store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
+            var store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
 
             store.GetValue(ref propertyKey, out propVar);
 
             // Release the Propertystore
             Marshal.ReleaseComObject(store);
 
-            HRESULT hr = Description.NativePropertyDescription.FormatForDisplay(ref propVar, ref format, out formattedString);
+            var hr = Description.NativePropertyDescription.FormatForDisplay(ref propVar, ref format, out formattedString);
 
             // Sometimes, the value cannot be displayed properly, such as for blobs
             // or if we get argument exception
@@ -300,7 +316,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
                 if (ParentShellObject != null)
                 {
-                    IPropertyStore store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
+                    var store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
 
                     store.GetValue(ref propertyKey, out propVar);
 
@@ -349,7 +365,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                     throw new PlatformNotSupportedException("This Property is available on Windows 7 only.");
 
                 GetImageReference();
-                int index = (imageReferenceIconIndex.HasValue ? imageReferenceIconIndex.Value : -1);
+                var index = (imageReferenceIconIndex.HasValue ? imageReferenceIconIndex.Value : -1);
 
                 return new IconReference(imageReferencePath, index);
             }
@@ -377,14 +393,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 return false;
             }
 
-            IPropertyStore store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
+            var store = ShellPropertyCollection.CreateDefaultPropertyStore(ParentShellObject);
 
             store.GetValue(ref propertyKey, out propVar);
 
             // Release the Propertystore
             Marshal.ReleaseComObject(store);
 
-            HRESULT hr = Description.NativePropertyDescription.FormatForDisplay(ref propVar, ref format, out formattedString);
+            var hr = Description.NativePropertyDescription.FormatForDisplay(ref propVar, ref format, out formattedString);
 
             // Sometimes, the value cannot be displayed properly, such as for blobs
             // or if we get argument exception

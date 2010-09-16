@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -552,7 +570,7 @@ namespace Microsoft.Windows.Dialogs
 
             TaskDialogResult result;
 
-            TaskDialogStandardButtons standardButton = MapButtonIdToStandardButton(native.SelectedButtonID);
+            var standardButton = MapButtonIdToStandardButton(native.SelectedButtonID);
 
             // If returned ID isn't a standard button, let's fetch 
             if (standardButton == TaskDialogStandardButtons.None)
@@ -637,7 +655,7 @@ namespace Microsoft.Windows.Dialogs
         private void ApplyOptionConfiguration(TaskDialogNativeMethods.TASKDIALOGCONFIG dialogConfig)
         {
             // Handle options - start with no options set.
-            TaskDialogNativeMethods.TASKDIALOG_FLAGS options = TaskDialogNativeMethods.TASKDIALOG_FLAGS.NONE;
+            var options = TaskDialogNativeMethods.TASKDIALOG_FLAGS.NONE;
             if (cancelable)
                 options |= TaskDialogNativeMethods.TASKDIALOG_FLAGS.TDF_ALLOW_DIALOG_CANCELLATION;
             if (footerCheckBoxChecked.HasValue && footerCheckBoxChecked.Value)
@@ -688,7 +706,7 @@ namespace Microsoft.Windows.Dialogs
                 // These are the actual arrays/lists of 
                 // the structs that we'll copy to the 
                 // unmanaged heap.
-                List<TaskDialogButtonBase> sourceList = (buttons.Count > 0 ? buttons : commandLinks);
+                var sourceList = (buttons.Count > 0 ? buttons : commandLinks);
                 settings.Buttons = BuildButtonStructArray(sourceList);
 
                 // Apply option flag that forces all 
@@ -702,26 +720,25 @@ namespace Microsoft.Windows.Dialogs
 
                 ApplyElevatedIcons(settings, sourceList);
             }
-            if (radioButtons.Count > 0)
-            {
-                settings.RadioButtons = BuildButtonStructArray(radioButtons);
+            if (radioButtons.Count <= 0)
+                return;
+            settings.RadioButtons = BuildButtonStructArray(radioButtons);
 
-                // Set default radio button - radio buttons don't support.
-                int defaultRadioButton = FindDefaultButtonId(radioButtons);
-                settings.NativeConfiguration.nDefaultRadioButton = defaultRadioButton;
+            // Set default radio button - radio buttons don't support.
+            var defaultRadioButton = FindDefaultButtonId(radioButtons);
+            settings.NativeConfiguration.nDefaultRadioButton = defaultRadioButton;
 
-                if (defaultRadioButton == TaskDialogNativeMethods.NO_DEFAULT_BUTTON_SPECIFIED)
-                    settings.NativeConfiguration.dwFlags |= TaskDialogNativeMethods.TASKDIALOG_FLAGS.TDF_NO_DEFAULT_RADIO_BUTTON;
-            }
+            if (defaultRadioButton == TaskDialogNativeMethods.NO_DEFAULT_BUTTON_SPECIFIED)
+                settings.NativeConfiguration.dwFlags |= TaskDialogNativeMethods.TASKDIALOG_FLAGS.TDF_NO_DEFAULT_RADIO_BUTTON;
         }
 
-        private static TaskDialogNativeMethods.TASKDIALOG_BUTTON[] BuildButtonStructArray(List<TaskDialogButtonBase> controls)
+        private static TaskDialogNativeMethods.TASKDIALOG_BUTTON[] BuildButtonStructArray(IList<TaskDialogButtonBase> controls)
         {
             TaskDialogButtonBase button;
 
-            int totalButtons = controls.Count;
+            var totalButtons = controls.Count;
             var buttonStructs = new TaskDialogNativeMethods.TASKDIALOG_BUTTON[totalButtons];
-            for (int i = 0; i < totalButtons; i++)
+            for (var i = 0; i < totalButtons; i++)
             {
                 button = controls[i];
                 buttonStructs[i] = new TaskDialogNativeMethods.TASKDIALOG_BUTTON(button.Id, button.ToString());
@@ -731,18 +748,13 @@ namespace Microsoft.Windows.Dialogs
 
         // Searches list of controls and returns the ID of 
         // the default control, or null if no default was specified.
-        private static int FindDefaultButtonId(List<TaskDialogButtonBase> controls)
+        private static int FindDefaultButtonId(IEnumerable<TaskDialogButtonBase> controls)
         {
             const int found = TaskDialogNativeMethods.NO_DEFAULT_BUTTON_SPECIFIED;
-            foreach (var control in controls.Where(control => control.Default))
-            {
-                // Check if we've found a default in this list already.
-                return control.Id;
-            }
-            return found;
+            return controls.Where(control => control.Default).Select(control => control.Id).FirstOrDefault();
         }
 
-        private static void ApplyElevatedIcons(NativeTaskDialogSettings settings, List<TaskDialogButtonBase> controls)
+        private static void ApplyElevatedIcons(NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
         {
             foreach (var control in controls.Cast<TaskDialogButton>().Where(control => control.ShowElevationIcon))
             {
@@ -909,7 +921,7 @@ namespace Microsoft.Windows.Dialogs
             Debug.Assert(control is TaskDialogControl, "Property changing for a control that is not a TaskDialogControl-derived type");
             Debug.Assert(propertyName != "Name", "Name changes at any time are not supported - public API should have blocked this");
 
-            bool canChange = false;
+            var canChange = false;
 
             if (!NativeDialogShowing)
             {
@@ -1031,7 +1043,7 @@ namespace Microsoft.Windows.Dialogs
         internal void RaiseButtonClickEvent(int id)
         {
             // First check to see if the ID matches a custom button.
-            TaskDialogButtonBase button = GetButtonForId(id);
+            var button = GetButtonForId(id);
 
             // If a custom button was found, 
             // raise the event - if not, it's a standard button, and
@@ -1042,7 +1054,7 @@ namespace Microsoft.Windows.Dialogs
 
         internal void RaiseHyperlinkClickEvent(string link)
         {
-            EventHandler<TaskDialogHyperlinkClickedEventArgs> handler = HyperlinkClick;
+            var handler = HyperlinkClick;
             if (handler != null)
                 handler(this, new TaskDialogHyperlinkClickedEventArgs(link));
         }
@@ -1055,14 +1067,14 @@ namespace Microsoft.Windows.Dialogs
         // the full dialog state.
         internal int RaiseClosingEvent(int id)
         {
-            EventHandler<TaskDialogClosingEventArgs> handler = Closing;
+            var handler = Closing;
             if (handler != null)
             {
                 TaskDialogButtonBase customButton;
                 var e = new TaskDialogClosingEventArgs();
 
                 // Try to identify the button - is it a standard one?
-                TaskDialogStandardButtons buttonClicked = MapButtonIdToStandardButton(id);
+                var buttonClicked = MapButtonIdToStandardButton(id);
 
                 // If not, it had better be a custom button...
                 if (buttonClicked == TaskDialogStandardButtons.None)
@@ -1092,21 +1104,21 @@ namespace Microsoft.Windows.Dialogs
 
         internal void RaiseHelpInvokedEvent()
         {
-            EventHandler handler = HelpInvoked;
+            var handler = HelpInvoked;
             if (handler != null)
                 handler(this, EventArgs.Empty);
         }
 
         internal void RaiseOpenedEvent()
         {
-            EventHandler handler = Opened;
+            var handler = Opened;
             if (handler != null)
                 handler(this, EventArgs.Empty);
         }
 
         internal void RaiseTickEvent(int ticks)
         {
-            EventHandler<TaskDialogTickEventArgs> handler = Tick;
+            var handler = Tick;
             if (handler != null)
                 handler(this, new TaskDialogTickEventArgs(ticks));
         }
@@ -1170,35 +1182,33 @@ namespace Microsoft.Windows.Dialogs
         /// <param name = "disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
         public void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (disposed)
+                return;
+            disposed = true;
+
+            if (disposing)
             {
-                disposed = true;
+                // Clean up managed resources.
+                if (nativeDialog != null && nativeDialog.ShowState == DialogShowState.Showing)
+                    nativeDialog.NativeClose(TaskDialogResult.Cancel);
 
-                if (disposing)
-                {
-                    // Clean up managed resources.
-                    if (nativeDialog != null && nativeDialog.ShowState == DialogShowState.Showing)
-                        nativeDialog.NativeClose(TaskDialogResult.Cancel);
-
-                    buttons = null;
-                    radioButtons = null;
-                    commandLinks = null;
-                }
-
-                // Clean up unmanaged resources SECOND, NTD counts on 
-                // being closed before being disposed.
-                if (nativeDialog != null)
-                {
-                    nativeDialog.Dispose();
-                    nativeDialog = null;
-                }
-
-                if (staticDialog != null)
-                {
-                    staticDialog.Dispose();
-                    staticDialog = null;
-                }
+                buttons = null;
+                radioButtons = null;
+                commandLinks = null;
             }
+
+            // Clean up unmanaged resources SECOND, NTD counts on 
+            // being closed before being disposed.
+            if (nativeDialog != null)
+            {
+                nativeDialog.Dispose();
+                nativeDialog = null;
+            }
+
+            if (staticDialog == null)
+                return;
+            staticDialog.Dispose();
+            staticDialog = null;
         }
 
         #endregion

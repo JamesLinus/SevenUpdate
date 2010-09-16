@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -15,15 +33,9 @@ namespace Microsoft.Windows.Shell
     /// <summary>
     ///   A helper class for Shell Objects
     /// </summary>
-    internal sealed class ShellHelper
+    internal static class ShellHelper
     {
-        internal static PropertyKey ItemTypePropertyKey = new PropertyKey(new Guid("28636AA6-953D-11D2-B5D6-00C04FD918D0"), 11);
-
-        private ShellHelper()
-        {
-            // Private constructor so no one can construct this using the default 
-            // provided by the compiler.
-        }
+        private static PropertyKey itemTypePropertyKey = new PropertyKey(new Guid("28636AA6-953D-11D2-B5D6-00C04FD918D0"), 11);
 
         internal static string GetParsingName(IShellItem shellItem)
         {
@@ -33,7 +45,7 @@ namespace Microsoft.Windows.Shell
             string path = null;
 
             IntPtr pszPath;
-            HRESULT hr = shellItem.GetDisplayName(ShellNativeMethods.SIGDN.SIGDN_DESKTOPABSOLUTEPARSING, out pszPath);
+            var hr = shellItem.GetDisplayName(ShellNativeMethods.SIGDN.SIGDN_DESKTOPABSOLUTEPARSING, out pszPath);
 
             if (false == (hr == HRESULT.S_OK || hr == HRESULT.E_INVALIDARG))
                 throw new COMException("GetParsingName", (int) hr);
@@ -58,7 +70,7 @@ namespace Microsoft.Windows.Shell
             {
                 string itemType;
 
-                HRESULT hr = shellItem.GetString(ref ItemTypePropertyKey, out itemType);
+                var hr = shellItem.GetString(ref itemTypePropertyKey, out itemType);
 
                 if (hr == HRESULT.S_OK)
                     return itemType;
@@ -72,17 +84,17 @@ namespace Microsoft.Windows.Shell
             IntPtr pidl;
 
             ShellNativeMethods.SFGAO sfgao;
-            int retCode = ShellNativeMethods.SHParseDisplayName(name, IntPtr.Zero, out pidl, 0, out sfgao);
+            var retCode = ShellNativeMethods.SHParseDisplayName(name, IntPtr.Zero, out pidl, 0, out sfgao);
 
             return (CoreErrorHelper.Succeeded(retCode) ? pidl : IntPtr.Zero);
         }
 
         internal static IntPtr PidlFromShellItem(IShellItem nativeShellItem)
         {
-            IntPtr shellItem = Marshal.GetComInterfaceForObject(nativeShellItem, typeof (IShellItem));
+            var shellItem = Marshal.GetComInterfaceForObject(nativeShellItem, typeof (IShellItem));
             IntPtr pidl;
 
-            int retCode = ShellNativeMethods.SHGetIDListFromObject(shellItem, out pidl);
+            var retCode = ShellNativeMethods.SHGetIDListFromObject(shellItem, out pidl);
 
             return (CoreErrorHelper.Succeeded(retCode) ? pidl : IntPtr.Zero);
         }

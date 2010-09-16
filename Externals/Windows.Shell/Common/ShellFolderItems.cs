@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -17,8 +35,8 @@ namespace Microsoft.Windows.Shell
     {
         #region Private Fields
 
+        private readonly ShellContainer nativeShellFolder;
         private IEnumIDList nativeEnumIdList;
-        private ShellContainer nativeShellFolder;
 
         #endregion
 
@@ -28,7 +46,7 @@ namespace Microsoft.Windows.Shell
         {
             this.nativeShellFolder = nativeShellFolder;
 
-            HRESULT hr = nativeShellFolder.NativeShellFolder.EnumObjects(IntPtr.Zero, ShellNativeMethods.SHCONT.SHCONTF_FOLDERS | ShellNativeMethods.SHCONT.SHCONTF_NONFOLDERS, out nativeEnumIdList);
+            var hr = nativeShellFolder.NativeShellFolder.EnumObjects(IntPtr.Zero, ShellNativeMethods.SHCONT.SHCONTF_FOLDERS | ShellNativeMethods.SHCONT.SHCONTF_NONFOLDERS, out nativeEnumIdList);
 
 
             if (CoreErrorHelper.Succeeded((int) hr))
@@ -46,11 +64,10 @@ namespace Microsoft.Windows.Shell
 
         public void Dispose()
         {
-            if (nativeEnumIdList != null)
-            {
-                Marshal.ReleaseComObject(nativeEnumIdList);
-                nativeEnumIdList = null;
-            }
+            if (nativeEnumIdList == null)
+                return;
+            Marshal.ReleaseComObject(nativeEnumIdList);
+            nativeEnumIdList = null;
         }
 
         object IEnumerator.Current { get { return Current; } }
@@ -66,7 +83,7 @@ namespace Microsoft.Windows.Shell
             IntPtr item;
             uint numItemsReturned;
             const uint itemsRequested = 1;
-            HRESULT hr = nativeEnumIdList.Next(itemsRequested, out item, out numItemsReturned);
+            var hr = nativeEnumIdList.Next(itemsRequested, out item, out numItemsReturned);
 
             if (numItemsReturned < itemsRequested || hr != HRESULT.S_OK)
                 return false;

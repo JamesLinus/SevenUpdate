@@ -100,7 +100,7 @@ namespace SevenUpdate.Sdk.Pages
             var installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            var downloadUrl = fullName.Replace(installDirectory,  @"%DOWNLOADURL%\", true);
+            var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
             downloadUrl = downloadUrl.Replace(@"\\", @"\");
 
             var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = downloadUrl};
@@ -193,9 +193,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Browse_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
                 Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
@@ -203,9 +203,9 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
@@ -242,8 +242,8 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
             var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                   ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                   : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var cfd = new CommonOpenFileDialog {Multiselect = false, IsFolderPicker = true, InitialDirectory = directory};
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)

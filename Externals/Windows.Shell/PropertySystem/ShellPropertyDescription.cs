@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -74,7 +92,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     IntPtr dispNameptr;
 
-                    HRESULT hr = NativePropertyDescription.GetDisplayName(out dispNameptr);
+                    var hr = NativePropertyDescription.GetDisplayName(out dispNameptr);
 
                     if (CoreErrorHelper.Succeeded((int) hr) && dispNameptr != IntPtr.Zero)
                     {
@@ -101,7 +119,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                     // EditInvitation can be empty, so ignore the HR value, but don't throw an exception
                     IntPtr ptr;
 
-                    HRESULT hr = NativePropertyDescription.GetEditInvitation(out ptr);
+                    var hr = NativePropertyDescription.GetEditInvitation(out ptr);
 
                     if (CoreErrorHelper.Succeeded((int) hr) && ptr != IntPtr.Zero)
                     {
@@ -126,7 +144,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     VarEnum tempType;
 
-                    HRESULT hr = NativePropertyDescription.GetPropertyType(out tempType);
+                    var hr = NativePropertyDescription.GetPropertyType(out tempType);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         varEnumType = tempType;
@@ -153,7 +171,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertyDisplayType tempDisplayType;
 
-                    HRESULT hr = NativePropertyDescription.GetDisplayType(out tempDisplayType);
+                    var hr = NativePropertyDescription.GetDisplayType(out tempDisplayType);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         displayType = tempDisplayType;
@@ -174,7 +192,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     uint tempDefaultColumWidth;
 
-                    HRESULT hr = NativePropertyDescription.GetDefaultColumnWidth(out tempDefaultColumWidth);
+                    var hr = NativePropertyDescription.GetDefaultColumnWidth(out tempDefaultColumWidth);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         defaultColumWidth = tempDefaultColumWidth;
@@ -196,7 +214,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertyAggregationType tempAggregationTypes;
 
-                    HRESULT hr = NativePropertyDescription.GetAggregationType(out tempAggregationTypes);
+                    var hr = NativePropertyDescription.GetAggregationType(out tempAggregationTypes);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         aggregationTypes = tempAggregationTypes;
@@ -219,7 +237,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
                     var guid = new Guid(ShellIIDGuid.IPropertyEnumTypeList);
                     IPropertyEnumTypeList nativeList;
-                    HRESULT hr = NativePropertyDescription.GetEnumTypeList(ref guid, out nativeList);
+                    var hr = NativePropertyDescription.GetEnumTypeList(ref guid, out nativeList);
 
                     if (nativeList != null && CoreErrorHelper.Succeeded((int) hr))
                     {
@@ -255,7 +273,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertyColumnState state;
 
-                    HRESULT hr = NativePropertyDescription.GetColumnState(out state);
+                    var hr = NativePropertyDescription.GetColumnState(out state);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         columnState = state;
@@ -285,7 +303,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                     PropertyConditionType tempConditionType;
                     PropertyConditionOperation tempConditionOperation;
 
-                    HRESULT hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
+                    var hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                     {
@@ -319,7 +337,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                     PropertyConditionType tempConditionType;
                     PropertyConditionOperation tempConditionOperation;
 
-                    HRESULT hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
+                    var hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                     {
@@ -349,7 +367,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertyGroupingRange tempGroupingRange;
 
-                    HRESULT hr = NativePropertyDescription.GetGroupingRange(out tempGroupingRange);
+                    var hr = NativePropertyDescription.GetGroupingRange(out tempGroupingRange);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         groupingRange = tempGroupingRange;
@@ -377,7 +395,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertySortDescription tempSortDescription;
 
-                    HRESULT hr = NativePropertyDescription.GetSortDescription(out tempSortDescription);
+                    var hr = NativePropertyDescription.GetSortDescription(out tempSortDescription);
 
                     if (CoreErrorHelper.Succeeded((int) hr))
                         sortDescription = tempSortDescription;
@@ -398,7 +416,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 {
                     PropertyTypeFlags tempFlags;
 
-                    HRESULT hr = NativePropertyDescription.GetTypeFlags(PropertyTypeFlags.MaskAll, out tempFlags);
+                    var hr = NativePropertyDescription.GetTypeFlags(PropertyTypeFlags.MaskAll, out tempFlags);
 
                     propertyTypeFlags = CoreErrorHelper.Succeeded((int) hr) ? tempFlags : default(PropertyTypeFlags);
                 }
@@ -417,7 +435,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 if (NativePropertyDescription != null && propertyViewFlags == null)
                 {
                     PropertyViewFlags tempFlags;
-                    HRESULT hr = NativePropertyDescription.GetViewFlags(out tempFlags);
+                    var hr = NativePropertyDescription.GetViewFlags(out tempFlags);
 
                     propertyViewFlags = CoreErrorHelper.Succeeded((int) hr) ? tempFlags : default(PropertyViewFlags);
                 }
@@ -443,12 +461,12 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </remarks>
         public string GetSortDescriptionLabel(bool descending)
         {
-            string label = String.Empty;
+            var label = String.Empty;
 
             if (NativePropertyDescription != null)
             {
                 IntPtr ptr;
-                HRESULT hr = NativePropertyDescription.GetSortDescriptionLabel(descending, out ptr);
+                var hr = NativePropertyDescription.GetSortDescriptionLabel(descending, out ptr);
 
                 if (CoreErrorHelper.Succeeded((int) hr) && ptr != IntPtr.Zero)
                 {
@@ -649,16 +667,15 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 nativePropertyDescription = null;
             }
 
-            if (disposing)
-            {
-                // and the managed ones
-                canonicalName = null;
-                displayName = null;
-                editInvitation = null;
-                defaultColumWidth = null;
-                valueType = null;
-                propertyEnumTypes = null;
-            }
+            if (!disposing)
+                return;
+            // and the managed ones
+            canonicalName = null;
+            displayName = null;
+            editInvitation = null;
+            defaultColumWidth = null;
+            valueType = null;
+            propertyEnumTypes = null;
         }
 
         /// <summary>

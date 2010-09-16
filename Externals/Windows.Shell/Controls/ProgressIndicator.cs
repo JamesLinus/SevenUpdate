@@ -121,7 +121,7 @@ namespace Microsoft.Windows.Controls
         {
             if (canvasElements == null || ElementStoryboard == null)
                 return;
-            int trueIndex = clockwise ? index : canvasElements.Length - index - 1;
+            var trueIndex = clockwise ? index : canvasElements.Length - index - 1;
 
             var element = canvasElements.GetValue(trueIndex) as FrameworkElement;
             StartStoryboard(element);
@@ -159,30 +159,29 @@ namespace Microsoft.Windows.Controls
             base.OnApplyTemplate();
 
             canvas = GetTemplateChild(ElementCanvas) as Canvas;
-            if (canvas != null)
+            if (canvas == null)
+                return;
+            // Get the center of the canvas. This will be the base of the rotation.
+            var centerX = canvas.Width/2;
+            var centerY = canvas.Height/2;
+
+            // Get the no. of degrees between each circles.
+            var interval = 360.0/canvas.Children.Count;
+            double angle = -135;
+
+            canvasElements = Array.CreateInstance(typeof (UIElement), canvas.Children.Count);
+            canvas.Children.CopyTo(canvasElements, 0);
+            canvas.Children.Clear();
+
+            foreach (UIElement element in canvasElements)
             {
-                // Get the center of the canvas. This will be the base of the rotation.
-                double centerX = canvas.Width/2;
-                double centerY = canvas.Height/2;
+                var contentControl = new ContentControl {Content = element};
 
-                // Get the no. of degrees between each circles.
-                double interval = 360.0/canvas.Children.Count;
-                double angle = -135;
+                var rotateTransform = new RotateTransform(angle, centerX, centerY);
+                contentControl.RenderTransform = rotateTransform;
+                angle += interval;
 
-                canvasElements = Array.CreateInstance(typeof (UIElement), canvas.Children.Count);
-                canvas.Children.CopyTo(canvasElements, 0);
-                canvas.Children.Clear();
-
-                foreach (UIElement element in canvasElements)
-                {
-                    var contentControl = new ContentControl {Content = element};
-
-                    var rotateTransform = new RotateTransform(angle, centerX, centerY);
-                    contentControl.RenderTransform = rotateTransform;
-                    angle += interval;
-
-                    canvas.Children.Add(contentControl);
-                }
+                canvas.Children.Add(contentControl);
             }
         }
 

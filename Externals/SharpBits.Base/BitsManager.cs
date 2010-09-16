@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -18,9 +38,6 @@ namespace SharpBits.Base
     {
         internal JobOwner CurrentOwner;
         private bool disposed;
-        private BitsJobs jobs;
-        private IBackgroundCopyManager manager;
-        private BitsNotification notificationHandler;
         private EventHandler<BitsInterfaceNotificationEventArgs> onInterfaceError;
         private EventHandler<NotificationEventArgs> onJobAdded;
         private EventHandler<ErrorNotificationEventArgs> onJobErrored;
@@ -34,12 +51,12 @@ namespace SharpBits.Base
             Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
             NativeMethods.CoInitializeSecurity(IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthnLevel.Connect, RpcImpLevel.Impersonate, IntPtr.Zero, EoAuthnCap.None, IntPtr.Zero);
 
-            manager = new BackgroundCopyManager() as IBackgroundCopyManager;
-            jobs = new BitsJobs(this); // will be set correctly later after initialization
-            notificationHandler = new BitsNotification(this);
-            notificationHandler.OnJobErrorEvent += NotificationHandlerOnJobErrorEvent;
-            notificationHandler.OnJobModifiedEvent += NotificationHandlerOnJobModifiedEvent;
-            notificationHandler.OnJobTransferredEvent += NotificationHandlerOnJobTransferredEvent;
+            BackgroundCopyManager = new BackgroundCopyManager() as IBackgroundCopyManager;
+            Jobs = new BitsJobs(this); // will be set correctly later after initialization
+            NotificationHandler = new BitsNotification(this);
+            NotificationHandler.OnJobErrorEvent += NotificationHandlerOnJobErrorEvent;
+            NotificationHandler.OnJobModifiedEvent += NotificationHandlerOnJobModifiedEvent;
+            NotificationHandler.OnJobTransferredEvent += NotificationHandlerOnJobTransferredEvent;
         }
 
         #region event handler for notication interface
@@ -47,9 +64,9 @@ namespace SharpBits.Base
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
-            if (jobs.ContainsKey(e.Job.JobId))
+            if (Jobs.ContainsKey(e.Job.JobId))
             {
-                BitsJob job = jobs[e.Job.JobId];
+                var job = Jobs[e.Job.JobId];
                 job.JobTransferred(sender, e);
             }
             //publish the event to other subscribers
@@ -60,9 +77,9 @@ namespace SharpBits.Base
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
-            if (jobs.ContainsKey(e.Job.JobId))
+            if (Jobs.ContainsKey(e.Job.JobId))
             {
-                BitsJob job = jobs[e.Job.JobId];
+                var job = Jobs[e.Job.JobId];
                 job.JobModified(sender, e);
             }
             //publish the event to other subscribers
@@ -73,9 +90,9 @@ namespace SharpBits.Base
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
             // route the event to the job
-            if (jobs.ContainsKey(e.Job.JobId))
+            if (Jobs.ContainsKey(e.Job.JobId))
             {
-                BitsJob job = jobs[e.Job.JobId];
+                var job = Jobs[e.Job.JobId];
                 job.JobError(sender, e);
             }
             //publish the event to other subscribers
@@ -85,9 +102,9 @@ namespace SharpBits.Base
 
         #endregion
 
-        public BitsJobs Jobs { get { return jobs; } }
+        public BitsJobs Jobs { get; private set; }
 
-        internal IBackgroundCopyManager BackgroundCopyManager { get { return manager; } }
+        internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
 
         #region util methods
 
@@ -100,7 +117,7 @@ namespace SharpBits.Base
         public string GetErrorDescription(int hResult)
         {
             string description;
-            manager.GetErrorDescription(hResult, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+            BackgroundCopyManager.GetErrorDescription(hResult, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
             return description;
         }
 
@@ -110,7 +127,7 @@ namespace SharpBits.Base
 
         #region internal notification handling
 
-        internal BitsNotification NotificationHandler { get { return notificationHandler; } }
+        internal BitsNotification NotificationHandler { get; private set; }
 
         internal void NotifyOnJobRemoval(BitsJob job)
         {
@@ -120,11 +137,10 @@ namespace SharpBits.Base
 
         internal void PublishException(BitsJob job, COMException exception)
         {
-            if (onInterfaceError != null)
-            {
-                string description = GetErrorDescription(exception.ErrorCode);
-                onInterfaceError(this, new BitsInterfaceNotificationEventArgs(job, exception, description));
-            }
+            if (onInterfaceError == null)
+                return;
+            var description = GetErrorDescription(exception.ErrorCode);
+            onInterfaceError(this, new BitsInterfaceNotificationEventArgs(job, exception, description));
         }
 
         #endregion
@@ -164,17 +180,17 @@ namespace SharpBits.Base
 
         public BitsJobs EnumJobs(JobOwner jobOwner)
         {
-            if (manager == null)
+            if (BackgroundCopyManager == null)
                 return null;
             CurrentOwner = jobOwner;
             IEnumBackgroundCopyJobs jobList;
-            manager.EnumJobs((UInt32) jobOwner, out jobList);
-            if (jobs == null)
-                jobs = new BitsJobs(this, jobList);
+            BackgroundCopyManager.EnumJobs((UInt32) jobOwner, out jobList);
+            if (Jobs == null)
+                Jobs = new BitsJobs(this, jobList);
             else
-                jobs.Update(jobList);
+                Jobs.Update(jobList);
 
-            return jobs;
+            return Jobs;
         }
 
         /// <summary>
@@ -190,12 +206,12 @@ namespace SharpBits.Base
         {
             Guid guid;
             IBackgroundCopyJob pJob;
-            manager.CreateJob(displayName, (BG_JOB_TYPE) jobType, out guid, out pJob);
+            BackgroundCopyManager.CreateJob(displayName, (BG_JOB_TYPE) jobType, out guid, out pJob);
             BitsJob job;
-            lock (jobs)
+            lock (Jobs)
             {
                 job = new BitsJob(this, pJob);
-                jobs.Add(guid, job);
+                Jobs.Add(guid, job);
             }
             if (null != onJobAdded)
                 onJobAdded(this, new NotificationEventArgs(job));
@@ -208,13 +224,13 @@ namespace SharpBits.Base
             {
                 if (disposing)
                 {
-                    foreach (BitsJob job in Jobs.Values)
+                    foreach (var job in Jobs.Values)
                         job.Dispose();
 
-                    jobs.Clear();
-                    jobs.Dispose();
-                    Marshal.ReleaseComObject(manager);
-                    manager = null;
+                    Jobs.Clear();
+                    Jobs.Dispose();
+                    Marshal.ReleaseComObject(BackgroundCopyManager);
+                    BackgroundCopyManager = null;
                 }
             }
             disposed = true;

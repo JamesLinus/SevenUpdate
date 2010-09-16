@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -12,9 +32,8 @@ namespace SharpBits.Base.Job
     [SuppressMessage("Microsoft.Usage", "CA2237:MarkISerializableTypesWithSerializable")]
     public class BitsJobs : Dictionary<Guid, BitsJob>, IDisposable
     {
+        private readonly BitsManager manager;
         private bool disposed;
-        private IEnumBackgroundCopyJobs jobList;
-        private BitsManager manager;
 
         //only required for initialization
         internal BitsJobs(BitsManager manager)
@@ -25,11 +44,11 @@ namespace SharpBits.Base.Job
         internal BitsJobs(BitsManager manager, IEnumBackgroundCopyJobs jobList)
         {
             this.manager = manager;
-            this.jobList = jobList;
+            Jobs = jobList;
             Update();
         }
 
-        internal IEnumBackgroundCopyJobs Jobs { get { return jobList; } }
+        internal IEnumBackgroundCopyJobs Jobs { get; private set; }
 
         #region IDisposable Members
 
@@ -45,7 +64,7 @@ namespace SharpBits.Base.Job
         {
             lock (this) //avoid threading issues on list updates
             {
-                this.jobList = jobList;
+                Jobs = jobList;
                 Update();
             }
         }
@@ -56,29 +75,28 @@ namespace SharpBits.Base.Job
             IBackgroundCopyJob currentJob;
             BitsJob job;
             var currentList = this.ToDictionary(entry => entry.Key, entry => entry.Value);
-            jobList.Reset();
+            Jobs.Reset();
             Clear();
-            jobList.GetCount(out count);
-            for (int i = 0; i < count; i++)
+            Jobs.GetCount(out count);
+            for (var i = 0; i < count; i++)
             {
                 uint fetchedCount;
-                jobList.Next(1, out currentJob, out fetchedCount);
-                if (fetchedCount == 1)
+                Jobs.Next(1, out currentJob, out fetchedCount);
+                if (fetchedCount != 1)
+                    continue;
+                Guid guid;
+                currentJob.GetId(out guid);
+                if (currentList.ContainsKey(guid))
                 {
-                    Guid guid;
-                    currentJob.GetId(out guid);
-                    if (currentList.ContainsKey(guid))
-                    {
-                        job = currentList[guid];
-                        currentList.Remove(guid);
-                    }
-                    else
-                        job = new BitsJob(manager, currentJob);
-                    Add(job.JobId, job);
+                    job = currentList[guid];
+                    currentList.Remove(guid);
                 }
+                else
+                    job = new BitsJob(manager, currentJob);
+                Add(job.JobId, job);
             }
 
-            foreach (BitsJob disposeJob in currentList.Values)
+            foreach (var disposeJob in currentList.Values)
             {
                 manager.NotifyOnJobRemoval(disposeJob);
                 disposeJob.Dispose();
@@ -92,7 +110,7 @@ namespace SharpBits.Base.Job
                 if (disposing)
                 {
                     //TODO: release COM resource
-                    jobList = null;
+                    Jobs = null;
                 }
             }
             disposed = true;

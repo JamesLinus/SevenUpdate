@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -24,14 +42,14 @@ namespace Microsoft.Windows.Shell
         #region Private members
 
         /// <summary>
+        ///   Native shellItem
+        /// </summary>
+        private readonly IShellItem shellItemNative;
+
+        /// <summary>
         ///   Internal member to keep track of the current size
         /// </summary>
         private Size currentSize = new Size(256, 256);
-
-        /// <summary>
-        ///   Native shellItem
-        /// </summary>
-        private IShellItem shellItemNative;
 
         #endregion
 
@@ -188,11 +206,10 @@ namespace Microsoft.Windows.Shell
                 // Do a similar check as we did in CurrentSize property setter,
                 // If our mode is IconOnly, then our max is defined by DefaultIconSize.Maximum. We should make sure 
                 // our CurrentSize is within this max range
-                if (FormatOption == ShellThumbnailFormatOptions.IconOnly)
-                {
-                    if (CurrentSize.Height > DefaultIconSize.Maximum.Height || CurrentSize.Width > DefaultIconSize.Maximum.Width)
-                        CurrentSize = DefaultIconSize.Maximum;
-                }
+                if (FormatOption != ShellThumbnailFormatOptions.IconOnly)
+                    return;
+                if (CurrentSize.Height > DefaultIconSize.Maximum.Height || CurrentSize.Width > DefaultIconSize.Maximum.Width)
+                    CurrentSize = DefaultIconSize.Maximum;
             }
         }
 
@@ -219,15 +236,25 @@ namespace Microsoft.Windows.Shell
             if (AllowBiggerSize)
                 flags |= ShellNativeMethods.SIIGBF.SIIGBF_BIGGERSIZEOK;
 
-            if (RetrievalOption == ShellThumbnailRetrievalOptions.CacheOnly)
-                flags |= ShellNativeMethods.SIIGBF.SIIGBF_INCACHEONLY;
-            else if (RetrievalOption == ShellThumbnailRetrievalOptions.MemoryOnly)
-                flags |= ShellNativeMethods.SIIGBF.SIIGBF_MEMORYONLY;
+            switch (RetrievalOption)
+            {
+                case ShellThumbnailRetrievalOptions.CacheOnly:
+                    flags |= ShellNativeMethods.SIIGBF.SIIGBF_INCACHEONLY;
+                    break;
+                case ShellThumbnailRetrievalOptions.MemoryOnly:
+                    flags |= ShellNativeMethods.SIIGBF.SIIGBF_MEMORYONLY;
+                    break;
+            }
 
-            if (FormatOption == ShellThumbnailFormatOptions.IconOnly)
-                flags |= ShellNativeMethods.SIIGBF.SIIGBF_ICONONLY;
-            else if (FormatOption == ShellThumbnailFormatOptions.ThumbnailOnly)
-                flags |= ShellNativeMethods.SIIGBF.SIIGBF_THUMBNAILONLY;
+            switch (FormatOption)
+            {
+                case ShellThumbnailFormatOptions.IconOnly:
+                    flags |= ShellNativeMethods.SIIGBF.SIIGBF_ICONONLY;
+                    break;
+                case ShellThumbnailFormatOptions.ThumbnailOnly:
+                    flags |= ShellNativeMethods.SIIGBF.SIIGBF_THUMBNAILONLY;
+                    break;
+            }
 
             return flags;
         }
@@ -241,7 +268,7 @@ namespace Microsoft.Windows.Shell
 
             // Use IShellItemImageFactory to get an icon
             // Options passed in: Resize to fit
-            HRESULT hr = ((IShellItemImageFactory) shellItemNative).GetImage(nativeSIZE, CalculateFlags(), out hbitmap);
+            var hr = ((IShellItemImageFactory) shellItemNative).GetImage(nativeSIZE, CalculateFlags(), out hbitmap);
 
             if (hr == HRESULT.S_OK)
                 return hbitmap;
@@ -259,10 +286,10 @@ namespace Microsoft.Windows.Shell
 
         private Bitmap GetBitmap(Size size)
         {
-            IntPtr hBitmap = GetHBitmap(size);
+            var hBitmap = GetHBitmap(size);
 
             // return a System.Drawing.Bitmap from the hBitmap
-            Bitmap returnValue = Image.FromHbitmap(hBitmap);
+            var returnValue = Image.FromHbitmap(hBitmap);
 
             // delete HBitmap to avoid memory leaks
             ShellNativeMethods.DeleteObject(hBitmap);
@@ -272,11 +299,11 @@ namespace Microsoft.Windows.Shell
 
         private BitmapSource GetBitmapSource(Size size)
         {
-            IntPtr hBitmap = GetHBitmap(size);
+            var hBitmap = GetHBitmap(size);
 
             // return a System.Media.Imaging.BitmapSource
             // Use interop to create a BitmapSource from hBitmap.
-            BitmapSource returnValue = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            var returnValue = Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
             // delete HBitmap to avoid memory leaks
             ShellNativeMethods.DeleteObject(hBitmap);

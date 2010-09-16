@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -11,7 +31,7 @@ namespace SharpBits.Base.Job
 {
     public partial class BitsJob : IDisposable
     {
-        private IBackgroundCopyJob3 job3;
+        private readonly IBackgroundCopyJob3 job3;
 
         #region public properties
 
@@ -73,8 +93,8 @@ namespace SharpBits.Base.Job
                 if (job3 != null && fileRanges != null) // only supported from IBackgroundCopyJob3 and above
                 {
                     var ranges = new BG_FILE_RANGE[fileRanges.Count];
-                    for (int i = 0; i < fileRanges.Count; i++)
-                        ranges[i] = fileRanges[i]._BG_FILE_RANGE;
+                    for (var i = 0; i < fileRanges.Count; i++)
+                        ranges[i] = fileRanges[i].BgFileRange;
                     job3.AddFileWithRanges(remoteName, localName, (uint) fileRanges.Count, ranges);
                 }
                 else

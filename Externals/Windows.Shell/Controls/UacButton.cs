@@ -22,17 +22,11 @@
 
 using System;
 using System.ComponentModel;
-using System.Drawing;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Image = System.Drawing.Image;
+
 
 #endregion
 
@@ -162,7 +156,7 @@ namespace Microsoft.Windows.Controls
             IsEnabledChanged += UacButton_IsEnabledChanged;
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
-            var imgShield = new System.Windows.Controls.Image { Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
+            var imgShield = new Image { Source = IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
             stackPanel.Children.Add(imgShield);
 
             var textBlock = new TextBlock { Text = buttonText, VerticalAlignment = VerticalAlignment.Center };
@@ -218,7 +212,7 @@ namespace Microsoft.Windows.Controls
         {
             var me = (UacButton)obj;
             var sp = (StackPanel)me.Content;
-            var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
+            var imageShield = ((Image)sp.Children[0]);
             if (imageShield != null)
             {
                 imageShield.Source = (ImageSource)e.NewValue;
@@ -263,7 +257,7 @@ namespace Microsoft.Windows.Controls
             var showShield = (bool)e.NewValue && isShieldNeeded;
             var me = (UacButton)obj;
             var sp = ((StackPanel)me.Content);
-            var imageShield = ((System.Windows.Controls.Image)sp.Children[0]);
+            var imageShield = ((Image)sp.Children[0]);
             if (imageShield != null)
             {
                 imageShield.Visibility = showShield ? Visibility.Visible : Visibility.Collapsed;

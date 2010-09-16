@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -33,7 +51,10 @@ namespace Microsoft.Windows.Shell
         {
             IsReadOnly = readOnly;
 
-            if (iArray != null)
+            if (iArray == null)
+            {
+            }
+            else
             {
                 try
                 {
@@ -103,19 +124,18 @@ namespace Microsoft.Windows.Shell
         /// <param name = "disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
         protected void Dispose(bool disposing)
         {
-            if (isDisposed == false)
+            if (isDisposed)
+                return;
+            if (disposing && content != null)
             {
-                if (disposing && content != null)
-                {
-                    foreach (ShellObject obj in content)
-                        obj.Dispose();
+                foreach (var obj in content)
+                    obj.Dispose();
 
-                    content.Clear();
-                    content = null;
-                }
-
-                isDisposed = true;
+                content.Clear();
+                content = null;
             }
+
+            isDisposed = true;
         }
 
         #endregion
@@ -133,7 +153,7 @@ namespace Microsoft.Windows.Shell
         /// <returns />
         public IEnumerator GetEnumerator()
         {
-            for (int index = 0; index < Count; index++)
+            for (var index = 0; index < Count; index++)
                 yield return content[index];
         }
 
@@ -156,7 +176,7 @@ namespace Microsoft.Windows.Shell
             // grab the object IDLs            
             var idls = new IntPtr[itemCount];
 
-            for (int index = 0; index < itemCount; index++)
+            for (var index = 0; index < itemCount; index++)
             {
                 if (index == 0)
                 {
@@ -170,7 +190,7 @@ namespace Microsoft.Windows.Shell
 
             // calculate offset array (folder IDL + item IDLs)
             var offsets = new uint[itemCount + 1];
-            for (int index = 0; index < itemCount; index++)
+            for (var index = 0; index < itemCount; index++)
             {
                 if (index == 0)
                 {
@@ -189,11 +209,11 @@ namespace Microsoft.Windows.Shell
             //    } CIDA, * LPIDA;
             //
             bwriter.Write(content.Count);
-            foreach (uint offset in offsets)
+            foreach (var offset in offsets)
                 bwriter.Write(offset);
 
             // copy idls
-            foreach (IntPtr idl in idls)
+            foreach (var idl in idls)
             {
                 var data = new byte[ShellNativeMethods.ILGetSize(idl)];
                 Marshal.Copy(idl, data, 0, data.Length);
@@ -305,7 +325,7 @@ namespace Microsoft.Windows.Shell
             if (array.Length < arrayIndex + content.Count)
                 throw new ArgumentException("Destination array too small, or invalid arrayIndex.");
 
-            for (int index = 0; index < content.Count; index++)
+            for (var index = 0; index < content.Count; index++)
                 array[index + arrayIndex] = content[index];
         }
 

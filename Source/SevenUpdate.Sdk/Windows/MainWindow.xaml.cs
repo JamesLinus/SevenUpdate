@@ -87,26 +87,25 @@ namespace SevenUpdate.Sdk.Windows
             Height = Settings.Default.windowHeight;
             Width = Settings.Default.windowWidth;
 
-            if (App.Args.Length > 0)
+            if (App.Args.Length <= 0)
+                return;
+            switch (App.Args[0])
             {
-                switch (App.Args[0])
-                {
-                    case "-newproject":
-                        Core.NewProject();
-                        break;
+                case "-newproject":
+                    Core.NewProject();
+                    break;
 
-                    case "-newupdate":
-                        Core.AppIndex = Convert.ToInt32(App.Args[1]);
+                case "-newupdate":
+                    Core.AppIndex = Convert.ToInt32(App.Args[1]);
 
-                        Core.NewUpdate();
-                        break;
+                    Core.NewUpdate();
+                    break;
 
-                    case "-edit":
-                        Core.AppIndex = Convert.ToInt32(App.Args[1]);
-                        Core.UpdateIndex = Convert.ToInt32(App.Args[2]);
-                        Core.EditItem();
-                        break;
-                }
+                case "-edit":
+                    Core.AppIndex = Convert.ToInt32(App.Args[1]);
+                    Core.UpdateIndex = Convert.ToInt32(App.Args[2]);
+                    Core.EditItem();
+                    break;
             }
         }
 

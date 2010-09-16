@@ -73,17 +73,11 @@
       <HintPath>..\..\Externals\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Runtime.Serialization">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.ServiceModel">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -268,10 +262,6 @@
     <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
       <Name>Windows.Shell</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SevenUpdate.Admin\SevenUpdate.Admin.csproj">
-      <Project>{762D246E-1DF7-4C49-8169-413AD897F8BD}</Project>
-      <Name>SevenUpdate.Admin</Name>
     </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>

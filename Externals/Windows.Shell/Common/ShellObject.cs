@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -103,7 +121,7 @@ namespace Microsoft.Windows.Shell
                 if (nativeShellItem == null && ParsingName != null)
                 {
                     var guid = new Guid(ShellIIDGuid.IShellItem2);
-                    int retCode = ShellNativeMethods.SHCreateItemFromParsingName(ParsingName, IntPtr.Zero, ref guid, out nativeShellItem);
+                    var retCode = ShellNativeMethods.SHCreateItemFromParsingName(ParsingName, IntPtr.Zero, ref guid, out nativeShellItem);
 
                     if (nativeShellItem == null || !CoreErrorHelper.Succeeded(retCode))
                         throw new ExternalException("Shell item could not be created.", Marshal.GetExceptionForHR(retCode));
@@ -162,7 +180,7 @@ namespace Microsoft.Windows.Shell
                 if (internalName == null && NativeShellItem != null)
                 {
                     IntPtr pszString;
-                    HRESULT hr = NativeShellItem.GetDisplayName(ShellNativeMethods.SIGDN.SIGDN_NORMALDISPLAY, out pszString);
+                    var hr = NativeShellItem.GetDisplayName(ShellNativeMethods.SIGDN.SIGDN_NORMALDISPLAY, out pszString);
                     if (hr == HRESULT.S_OK && pszString != IntPtr.Zero)
                     {
                         internalName = Marshal.PtrToStringAuto(pszString);
@@ -260,7 +278,7 @@ namespace Microsoft.Windows.Shell
                 {
                     IShellItem parentShellItem;
 
-                    HRESULT hr = NativeShellItem2.GetParent(out parentShellItem);
+                    var hr = NativeShellItem2.GetParent(out parentShellItem);
 
                     if (hr == HRESULT.S_OK && parentShellItem != null)
                         parentShellObject = ShellObjectFactory.Create(parentShellItem);
@@ -297,7 +315,7 @@ namespace Microsoft.Windows.Shell
         {
             string returnValue = null;
 
-            HRESULT hr = HRESULT.S_OK;
+            var hr = HRESULT.S_OK;
 
             if (NativeShellItem2 != null)
                 hr = NativeShellItem2.GetDisplayName((ShellNativeMethods.SIGDN) displayNameType, out returnValue);
@@ -350,11 +368,10 @@ namespace Microsoft.Windows.Shell
                 nativeShellItem = null;
             }
 
-            if (NativePropertyStore != null)
-            {
-                Marshal.ReleaseComObject(NativePropertyStore);
-                NativePropertyStore = null;
-            }
+            if (NativePropertyStore == null)
+                return;
+            Marshal.ReleaseComObject(NativePropertyStore);
+            NativePropertyStore = null;
         }
 
         /// <summary>
@@ -367,7 +384,7 @@ namespace Microsoft.Windows.Shell
 
         #region equality and hashing
 
-        private static MD5CryptoServiceProvider hashProvider = new MD5CryptoServiceProvider();
+        private static readonly MD5CryptoServiceProvider hashProvider = new MD5CryptoServiceProvider();
         private int? hashValue;
 
         /// <summary>
@@ -377,16 +394,16 @@ namespace Microsoft.Windows.Shell
         /// <returns>True if the ShellObjects are equal, false otherwise.</returns>
         public bool Equals(ShellObject other)
         {
-            bool areEqual = false;
+            var areEqual = false;
 
             if ((object) other != null)
             {
-                IShellItem ifirst = NativeShellItem;
-                IShellItem isecond = other.NativeShellItem;
+                var ifirst = NativeShellItem;
+                var isecond = other.NativeShellItem;
                 if (((ifirst != null) && (isecond != null)))
                 {
                     int result;
-                    HRESULT hr = ifirst.Compare(isecond, SICHINTF.SICHINT_ALLFIELDS, out result);
+                    var hr = ifirst.Compare(isecond, SICHINTF.SICHINT_ALLFIELDS, out result);
 
                     if ((hr == HRESULT.S_OK) && (result == 0))
                         areEqual = true;
@@ -404,12 +421,12 @@ namespace Microsoft.Windows.Shell
         {
             if (!hashValue.HasValue)
             {
-                uint size = ShellNativeMethods.ILGetSize(PIDL);
+                var size = ShellNativeMethods.ILGetSize(PIDL);
                 if (size != 0)
                 {
                     var pidlData = new byte[size];
                     Marshal.Copy(PIDL, pidlData, 0, (int) size);
-                    byte[] hashData = hashProvider.ComputeHash(pidlData);
+                    var hashData = hashProvider.ComputeHash(pidlData);
                     hashValue = BitConverter.ToInt32(hashData, 0);
                 }
                 else

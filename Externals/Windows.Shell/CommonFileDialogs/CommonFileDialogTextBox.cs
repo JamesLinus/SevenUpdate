@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -12,7 +30,7 @@ namespace Microsoft.Windows.Dialogs.Controls
     /// <summary>
     ///   Defines the text box controls in the Common File Dialog.
     /// </summary>
-    public class CommonFileDialogTextBox : CommonFileDialogControl
+    public abstract class CommonFileDialogTextBox : CommonFileDialogControl
     {
         /// <summary>
         ///   Holds an instance of the customized (/native) dialog and should
@@ -95,13 +113,12 @@ namespace Microsoft.Windows.Dialogs.Controls
             // otherwise, use the native call to get the text value, 
             // setting the textValue member variable then return it.
 
-            if (customizedDialog != null)
-            {
-                string textValue;
-                customizedDialog.GetEditBoxText(Id, out textValue);
+            if (customizedDialog == null)
+                return;
+            string textValue;
+            customizedDialog.GetEditBoxText(Id, out textValue);
 
-                base.Text = textValue;
-            }
+            base.Text = textValue;
         }
     }
 }

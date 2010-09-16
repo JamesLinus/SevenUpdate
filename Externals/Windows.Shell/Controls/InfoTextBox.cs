@@ -71,7 +71,7 @@ namespace Microsoft.Windows.Controls
 
             if (infoTextBox != null)
                 infoTextBox.UpdateAdorner(infoTextBox);
-            DependencyPropertyDescriptor isVisiblePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof (InfoTextBox));
+            var isVisiblePropertyDescriptor = DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof (InfoTextBox));
             isVisiblePropertyDescriptor.AddValueChanged(d, IsVisibleChanged);
         }
 
@@ -97,11 +97,11 @@ namespace Microsoft.Windows.Controls
             myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
             UpdateAdorner(this);
 
-            DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof (FrameworkElement));
+            var focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof (FrameworkElement));
             if (focusProp != null)
                 focusProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
 
-            DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof (InfoTextBox));
+            var containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof (InfoTextBox));
             if (containsTextProp != null)
                 containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
         }
@@ -180,12 +180,12 @@ namespace Microsoft.Windows.Controls
     {
         public static void RemoveAdorners<T>(this AdornerLayer adr, UIElement elem)
         {
-            Adorner[] adorners = adr.GetAdorners(elem);
+            var adorners = adr.GetAdorners(elem);
 
             if (adorners == null)
                 return;
 
-            for (int i = adorners.Length - 1; i >= 0; i--)
+            for (var i = adorners.Length - 1; i >= 0; i--)
             {
                 if (adorners[i] is T)
                     adr.Remove(adorners[i]);
@@ -196,12 +196,12 @@ namespace Microsoft.Windows.Controls
         {
             if (adr == null)
                 return false;
-            Adorner[] adorners = adr.GetAdorners(elem);
+            var adorners = adr.GetAdorners(elem);
 
             if (adorners == null)
                 return false;
 
-            for (int i = adorners.Length - 1; i >= 0; i--)
+            for (var i = adorners.Length - 1; i >= 0; i--)
             {
                 if (adorners[i] is T)
                     return true;
@@ -213,7 +213,7 @@ namespace Microsoft.Windows.Controls
         {
             try
             {
-                Adorner[] adorners = adr.GetAdorners(elem);
+                var adorners = adr.GetAdorners(elem);
 
                 if (adorners == null)
                     return;

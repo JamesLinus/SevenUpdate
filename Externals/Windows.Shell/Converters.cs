@@ -151,7 +151,7 @@ namespace Microsoft.Windows.Common
     /// <summary>
     ///   Converts the Int to Visibility
     /// </summary>
-    [ValueConversion(typeof(int), typeof(Visibility))]
+    [ValueConversion(typeof (int), typeof (Visibility))]
     public sealed class IndexToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -162,7 +162,7 @@ namespace Microsoft.Windows.Common
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var count = value is int ? (int)value : -1;
+            var count = value is int ? (int) value : -1;
 
             if (parameter != null)
             {

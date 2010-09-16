@@ -1,6 +1,6 @@
 ﻿#region GNU Public License Version 3
 
-// Copyright 2010 Robert Baker, Seven Software.
+// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 //   
 //      Seven Update is free software: you can redistribute it and/or modify
@@ -34,14 +34,37 @@ namespace Microsoft.Windows.Dwm
     ///   WPF Glass Window
     ///   Inherit from this window class to enable glass on a WPF window
     /// </summary>
-    public class AeroGlass
+    public abstract class AeroGlass
     {
         #region properties
 
         /// <summary>
         ///   Get determines if AeroGlass is enabled on the desktop. Set enables/disables AreoGlass on the desktop.
         /// </summary>
-        public static bool IsEnabled { set { CoreNativeMethods.DwmEnableComposition(value ? CoreNativeMethods.CompositionEnable.DwmEcEnableComposition : CoreNativeMethods.CompositionEnable.DwmEcDisableComposition); } get { return CoreNativeMethods.DwmIsCompositionEnabled(); } }
+        public static bool IsEnabled
+        {
+            set
+            {
+                try
+                {
+                    CoreNativeMethods.DwmEnableComposition(value ? CoreNativeMethods.CompositionEnable.DwmEcEnableComposition : CoreNativeMethods.CompositionEnable.DwmEcDisableComposition);
+                }
+                catch
+                {
+                }
+            }
+            get
+            {
+                try
+                {
+                    return CoreNativeMethods.DwmIsCompositionEnabled();
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
 
         #endregion
 
@@ -73,9 +96,9 @@ namespace Microsoft.Windows.Dwm
                                          (windowRect.bottom - windowRect.top) - (double) (clientRect.bottom - clientRect.top));
 
             // calculate size of element relative to nonclient area
-            GeneralTransform transform = element.TransformToAncestor(window);
-            Point topLeftFrame = transform.Transform(new Point(0, 0));
-            Point bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
+            var transform = element.TransformToAncestor(window);
+            var topLeftFrame = transform.Transform(new Point(0, 0));
+            var bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
             var margins = new CoreNativeMethods.MARGINS
@@ -103,6 +126,8 @@ namespace Microsoft.Windows.Dwm
         /// </summary>
         public static void ResetAeroGlass(CoreNativeMethods.MARGINS margins, IntPtr windowHandle)
         {
+            if (Environment.OSVersion.Version.Major < 6)
+                return;
             CoreNativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins);
         }
 
@@ -113,12 +138,14 @@ namespace Microsoft.Windows.Dwm
         /// <param name = "margins">The region to add glass</param>
         public static void EnableGlass(Window window, CoreNativeMethods.MARGINS margins = new CoreNativeMethods.MARGINS())
         {
+            if (Environment.OSVersion.Version.Major < 6)
+                return;
             if (margins.cyTopHeight == 0 && margins.cyBottomHeight == 0 && margins.cxRightWidth == 0 && margins.cxLeftWidth == 0)
                 margins = new CoreNativeMethods.MARGINS(true);
             var windowHandle = new WindowInteropHelper(window).Handle;
 
             // add Window Proc hook to capture DWM messages
-            HwndSource source = HwndSource.FromHwnd(windowHandle);
+            var source = HwndSource.FromHwnd(windowHandle);
             source.AddHook(WndProc);
 
             // Set the Background to transparent from Win32 perpective 
@@ -200,8 +227,6 @@ namespace Microsoft.Windows.Dwm
             /// </summary>
             public bool IsGlassEnabled { get; private set; }
         }
-
-        
 
         #endregion
     }

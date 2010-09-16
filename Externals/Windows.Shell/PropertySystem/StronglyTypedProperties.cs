@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -26,8 +44,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertyContactJA : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertyContactJA(ShellObject parent)
             {
@@ -47,7 +65,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.JA.CompanyNamePhonetic;
+                    var key = SystemProperties.System.Contact.JA.CompanyNamePhonetic;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -67,7 +85,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.JA.FirstNamePhonetic;
+                    var key = SystemProperties.System.Contact.JA.FirstNamePhonetic;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -87,7 +105,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.JA.LastNamePhonetic;
+                    var key = SystemProperties.System.Contact.JA.LastNamePhonetic;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -112,8 +130,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertyDevicesNotifications : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertyDevicesNotifications(ShellObject parent)
             {
@@ -133,7 +151,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.LowBattery;
+                    var key = SystemProperties.System.Devices.Notifications.LowBattery;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -153,7 +171,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.MissedCall;
+                    var key = SystemProperties.System.Devices.Notifications.MissedCall;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -173,7 +191,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.NewMessage;
+                    var key = SystemProperties.System.Devices.Notifications.NewMessage;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -193,7 +211,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.NewVoicemail;
+                    var key = SystemProperties.System.Devices.Notifications.NewVoicemail;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -213,7 +231,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.StorageFull;
+                    var key = SystemProperties.System.Devices.Notifications.StorageFull;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -233,7 +251,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notifications.StorageFullLinkText;
+                    var key = SystemProperties.System.Devices.Notifications.StorageFullLinkText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -258,8 +276,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystem : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystem(ShellObject parent)
             {
@@ -279,7 +297,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AcquisitionID;
+                    var key = SystemProperties.System.AcquisitionID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -299,7 +317,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ApplicationName;
+                    var key = SystemProperties.System.ApplicationName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -319,7 +337,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Author;
+                    var key = SystemProperties.System.Author;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -339,7 +357,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Capacity;
+                    var key = SystemProperties.System.Capacity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -359,7 +377,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Category;
+                    var key = SystemProperties.System.Category;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -379,7 +397,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Comment;
+                    var key = SystemProperties.System.Comment;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -399,7 +417,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Company;
+                    var key = SystemProperties.System.Company;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -419,7 +437,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ComputerName;
+                    var key = SystemProperties.System.ComputerName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -440,7 +458,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ContainedItems;
+                    var key = SystemProperties.System.ContainedItems;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr[]>(key));
@@ -459,7 +477,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ContentStatus;
+                    var key = SystemProperties.System.ContentStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -478,7 +496,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ContentType;
+                    var key = SystemProperties.System.ContentType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -498,7 +516,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Copyright;
+                    var key = SystemProperties.System.Copyright;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -518,7 +536,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateAccessed;
+                    var key = SystemProperties.System.DateAccessed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -539,7 +557,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateAcquired;
+                    var key = SystemProperties.System.DateAcquired;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -558,7 +576,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateArchived;
+                    var key = SystemProperties.System.DateArchived;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -577,7 +595,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateCompleted;
+                    var key = SystemProperties.System.DateCompleted;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -597,7 +615,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateCreated;
+                    var key = SystemProperties.System.DateCreated;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -617,7 +635,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateImported;
+                    var key = SystemProperties.System.DateImported;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -637,7 +655,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DateModified;
+                    var key = SystemProperties.System.DateModified;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -657,7 +675,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DescriptionID;
+                    var key = SystemProperties.System.DescriptionID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -676,7 +694,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DueDate;
+                    var key = SystemProperties.System.DueDate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -695,7 +713,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.EndDate;
+                    var key = SystemProperties.System.EndDate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -715,7 +733,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileAllocationSize;
+                    var key = SystemProperties.System.FileAllocationSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -735,7 +753,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileAttributes;
+                    var key = SystemProperties.System.FileAttributes;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -755,7 +773,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileCount;
+                    var key = SystemProperties.System.FileCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -775,7 +793,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileDescription;
+                    var key = SystemProperties.System.FileDescription;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -812,7 +830,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileExtension;
+                    var key = SystemProperties.System.FileExtension;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -833,7 +851,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileFRN;
+                    var key = SystemProperties.System.FileFRN;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -873,7 +891,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileName;
+                    var key = SystemProperties.System.FileName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -893,7 +911,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileOwner;
+                    var key = SystemProperties.System.FileOwner;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -913,7 +931,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FileVersion;
+                    var key = SystemProperties.System.FileVersion;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -933,7 +951,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FindData;
+                    var key = SystemProperties.System.FindData;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -953,7 +971,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FlagColor;
+                    var key = SystemProperties.System.FlagColor;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -974,7 +992,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FlagColorText;
+                    var key = SystemProperties.System.FlagColorText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -994,7 +1012,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FlagStatus;
+                    var key = SystemProperties.System.FlagStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -1015,7 +1033,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FlagStatusText;
+                    var key = SystemProperties.System.FlagStatusText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1035,7 +1053,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FreeSpace;
+                    var key = SystemProperties.System.FreeSpace;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -1057,7 +1075,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.FullText;
+                    var key = SystemProperties.System.FullText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1076,7 +1094,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IdentityProperty;
+                    var key = SystemProperties.System.IdentityProperty;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1095,7 +1113,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ImageParsingName;
+                    var key = SystemProperties.System.ImageParsingName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -1114,7 +1132,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Importance;
+                    var key = SystemProperties.System.Importance;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -1135,7 +1153,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ImportanceText;
+                    var key = SystemProperties.System.ImportanceText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1155,7 +1173,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.InfoTipText;
+                    var key = SystemProperties.System.InfoTipText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1175,7 +1193,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.InternalName;
+                    var key = SystemProperties.System.InternalName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1195,7 +1213,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsAttachment;
+                    var key = SystemProperties.System.IsAttachment;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1215,7 +1233,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsDefaultNonOwnerSaveLocation;
+                    var key = SystemProperties.System.IsDefaultNonOwnerSaveLocation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1235,7 +1253,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsDefaultSaveLocation;
+                    var key = SystemProperties.System.IsDefaultSaveLocation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1254,7 +1272,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsDeleted;
+                    var key = SystemProperties.System.IsDeleted;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1274,7 +1292,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsEncrypted;
+                    var key = SystemProperties.System.IsEncrypted;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1293,7 +1311,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsFlagged;
+                    var key = SystemProperties.System.IsFlagged;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1312,7 +1330,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsFlaggedComplete;
+                    var key = SystemProperties.System.IsFlaggedComplete;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1332,7 +1350,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsIncomplete;
+                    var key = SystemProperties.System.IsIncomplete;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1352,7 +1370,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsLocationSupported;
+                    var key = SystemProperties.System.IsLocationSupported;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1372,7 +1390,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsPinnedToNameSpaceTree;
+                    var key = SystemProperties.System.IsPinnedToNameSpaceTree;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1392,7 +1410,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsRead;
+                    var key = SystemProperties.System.IsRead;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1412,7 +1430,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsSearchOnlyItem;
+                    var key = SystemProperties.System.IsSearchOnlyItem;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1432,7 +1450,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsSendToTarget;
+                    var key = SystemProperties.System.IsSendToTarget;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1452,7 +1470,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IsShared;
+                    var key = SystemProperties.System.IsShared;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -1474,7 +1492,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemAuthors;
+                    var key = SystemProperties.System.ItemAuthors;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -1493,7 +1511,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemClassType;
+                    var key = SystemProperties.System.ItemClassType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1515,7 +1533,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemDate;
+                    var key = SystemProperties.System.ItemDate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -1550,7 +1568,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemFolderNameDisplay;
+                    var key = SystemProperties.System.ItemFolderNameDisplay;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1583,7 +1601,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemFolderPathDisplay;
+                    var key = SystemProperties.System.ItemFolderPathDisplay;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1619,7 +1637,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemFolderPathDisplayNarrow;
+                    var key = SystemProperties.System.ItemFolderPathDisplayNarrow;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1645,7 +1663,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemName;
+                    var key = SystemProperties.System.ItemName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1702,7 +1720,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemNameDisplay;
+                    var key = SystemProperties.System.ItemNameDisplay;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1737,7 +1755,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemNamePrefix;
+                    var key = SystemProperties.System.ItemNamePrefix;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1761,7 +1779,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemParticipants;
+                    var key = SystemProperties.System.ItemParticipants;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -1801,7 +1819,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemPathDisplay;
+                    var key = SystemProperties.System.ItemPathDisplay;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1837,7 +1855,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemPathDisplayNarrow;
+                    var key = SystemProperties.System.ItemPathDisplayNarrow;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1878,7 +1896,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemType;
+                    var key = SystemProperties.System.ItemType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1918,7 +1936,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemTypeText;
+                    var key = SystemProperties.System.ItemTypeText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1946,7 +1964,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ItemUrl;
+                    var key = SystemProperties.System.ItemUrl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -1966,7 +1984,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Keywords;
+                    var key = SystemProperties.System.Keywords;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -1988,7 +2006,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Kind;
+                    var key = SystemProperties.System.Kind;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -2009,7 +2027,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.KindText;
+                    var key = SystemProperties.System.KindText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2029,7 +2047,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Language;
+                    var key = SystemProperties.System.Language;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2048,7 +2066,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.MileageInformation;
+                    var key = SystemProperties.System.MileageInformation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2068,7 +2086,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.MIMEType;
+                    var key = SystemProperties.System.MIMEType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2088,7 +2106,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.NamespaceCLSID;
+                    var key = SystemProperties.System.NamespaceCLSID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -2107,7 +2125,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Null;
+                    var key = SystemProperties.System.Null;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -2126,7 +2144,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.OfflineAvailability;
+                    var key = SystemProperties.System.OfflineAvailability;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2145,7 +2163,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.OfflineStatus;
+                    var key = SystemProperties.System.OfflineStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2165,7 +2183,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.OriginalFileName;
+                    var key = SystemProperties.System.OriginalFileName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2185,7 +2203,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.OwnerSID;
+                    var key = SystemProperties.System.OwnerSID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2205,7 +2223,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParentalRating;
+                    var key = SystemProperties.System.ParentalRating;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2224,7 +2242,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParentalRatingReason;
+                    var key = SystemProperties.System.ParentalRatingReason;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2243,7 +2261,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParentalRatingsOrganization;
+                    var key = SystemProperties.System.ParentalRatingsOrganization;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2263,7 +2281,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParsingBindContext;
+                    var key = SystemProperties.System.ParsingBindContext;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -2284,7 +2302,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParsingName;
+                    var key = SystemProperties.System.ParsingName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2309,7 +2327,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ParsingPath;
+                    var key = SystemProperties.System.ParsingPath;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2329,7 +2347,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PerceivedType;
+                    var key = SystemProperties.System.PerceivedType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -2349,7 +2367,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PercentFull;
+                    var key = SystemProperties.System.PercentFull;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2369,7 +2387,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Priority;
+                    var key = SystemProperties.System.Priority;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -2390,7 +2408,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PriorityText;
+                    var key = SystemProperties.System.PriorityText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2409,7 +2427,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Project;
+                    var key = SystemProperties.System.Project;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2429,7 +2447,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ProviderItemID;
+                    var key = SystemProperties.System.ProviderItemID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2450,7 +2468,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Rating;
+                    var key = SystemProperties.System.Rating;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2471,7 +2489,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RatingText;
+                    var key = SystemProperties.System.RatingText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2491,7 +2509,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sensitivity;
+                    var key = SystemProperties.System.Sensitivity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -2512,7 +2530,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SensitivityText;
+                    var key = SystemProperties.System.SensitivityText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2532,7 +2550,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SFGAOFlags;
+                    var key = SystemProperties.System.SFGAOFlags;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2552,7 +2570,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SharedWith;
+                    var key = SystemProperties.System.SharedWith;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -2572,7 +2590,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ShareUserRating;
+                    var key = SystemProperties.System.ShareUserRating;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2592,7 +2610,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SharingStatus;
+                    var key = SystemProperties.System.SharingStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2613,7 +2631,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SimpleRating;
+                    var key = SystemProperties.System.SimpleRating;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -2633,7 +2651,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Size;
+                    var key = SystemProperties.System.Size;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -2653,7 +2671,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SoftwareUsed;
+                    var key = SystemProperties.System.SoftwareUsed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2672,7 +2690,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.SourceItem;
+                    var key = SystemProperties.System.SourceItem;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2691,7 +2709,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.StartDate;
+                    var key = SystemProperties.System.StartDate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -2710,7 +2728,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Status;
+                    var key = SystemProperties.System.Status;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2730,7 +2748,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Subject;
+                    var key = SystemProperties.System.Subject;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2750,7 +2768,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Thumbnail;
+                    var key = SystemProperties.System.Thumbnail;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -2771,7 +2789,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ThumbnailCacheId;
+                    var key = SystemProperties.System.ThumbnailCacheId;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -2791,7 +2809,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.ThumbnailStream;
+                    var key = SystemProperties.System.ThumbnailStream;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IStream>(key));
@@ -2811,7 +2829,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Title;
+                    var key = SystemProperties.System.Title;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -2831,7 +2849,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.TotalFileSize;
+                    var key = SystemProperties.System.TotalFileSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -2851,7 +2869,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Trademarks;
+                    var key = SystemProperties.System.Trademarks;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3084,8 +3102,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemAppUserModel : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemAppUserModel(ShellObject parent)
             {
@@ -3104,7 +3122,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.ExcludeFromShowInNewInstall;
+                    var key = SystemProperties.System.AppUserModel.ExcludeFromShowInNewInstall;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3123,7 +3141,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.ID;
+                    var key = SystemProperties.System.AppUserModel.ID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3142,7 +3160,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.IsDestListSeparator;
+                    var key = SystemProperties.System.AppUserModel.IsDestListSeparator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3161,7 +3179,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.PreventPinning;
+                    var key = SystemProperties.System.AppUserModel.PreventPinning;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3180,7 +3198,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.RelaunchCommand;
+                    var key = SystemProperties.System.AppUserModel.RelaunchCommand;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3199,7 +3217,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.RelaunchDisplayNameResource;
+                    var key = SystemProperties.System.AppUserModel.RelaunchDisplayNameResource;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3218,7 +3236,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.AppUserModel.RelaunchIconResource;
+                    var key = SystemProperties.System.AppUserModel.RelaunchIconResource;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3243,8 +3261,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemAudio : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemAudio(ShellObject parent)
             {
@@ -3264,7 +3282,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.ChannelCount;
+                    var key = SystemProperties.System.Audio.ChannelCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -3284,7 +3302,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.Compression;
+                    var key = SystemProperties.System.Audio.Compression;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3304,7 +3322,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.EncodingBitrate;
+                    var key = SystemProperties.System.Audio.EncodingBitrate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -3324,7 +3342,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.Format;
+                    var key = SystemProperties.System.Audio.Format;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3343,7 +3361,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.IsVariableBitRate;
+                    var key = SystemProperties.System.Audio.IsVariableBitRate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3362,7 +3380,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.PeakValue;
+                    var key = SystemProperties.System.Audio.PeakValue;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -3382,7 +3400,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.SampleRate;
+                    var key = SystemProperties.System.Audio.SampleRate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -3402,7 +3420,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.SampleSize;
+                    var key = SystemProperties.System.Audio.SampleSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -3422,7 +3440,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.StreamName;
+                    var key = SystemProperties.System.Audio.StreamName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3442,7 +3460,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Audio.StreamNumber;
+                    var key = SystemProperties.System.Audio.StreamNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -3467,8 +3485,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemCalendar : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemCalendar(ShellObject parent)
             {
@@ -3488,7 +3506,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.Duration;
+                    var key = SystemProperties.System.Calendar.Duration;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3508,7 +3526,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.IsOnline;
+                    var key = SystemProperties.System.Calendar.IsOnline;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3527,7 +3545,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.IsRecurring;
+                    var key = SystemProperties.System.Calendar.IsRecurring;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3546,7 +3564,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.Location;
+                    var key = SystemProperties.System.Calendar.Location;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3565,7 +3583,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.OptionalAttendeeAddresses;
+                    var key = SystemProperties.System.Calendar.OptionalAttendeeAddresses;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -3584,7 +3602,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.OptionalAttendeeNames;
+                    var key = SystemProperties.System.Calendar.OptionalAttendeeNames;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -3604,7 +3622,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.OrganizerAddress;
+                    var key = SystemProperties.System.Calendar.OrganizerAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3624,7 +3642,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.OrganizerName;
+                    var key = SystemProperties.System.Calendar.OrganizerName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3643,7 +3661,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.ReminderTime;
+                    var key = SystemProperties.System.Calendar.ReminderTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -3662,7 +3680,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.RequiredAttendeeAddresses;
+                    var key = SystemProperties.System.Calendar.RequiredAttendeeAddresses;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -3681,7 +3699,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.RequiredAttendeeNames;
+                    var key = SystemProperties.System.Calendar.RequiredAttendeeNames;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -3700,7 +3718,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.Resources;
+                    var key = SystemProperties.System.Calendar.Resources;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -3720,7 +3738,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.ResponseStatus;
+                    var key = SystemProperties.System.Calendar.ResponseStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -3740,7 +3758,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.ShowTimeAs;
+                    var key = SystemProperties.System.Calendar.ShowTimeAs;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -3761,7 +3779,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Calendar.ShowTimeAsText;
+                    var key = SystemProperties.System.Calendar.ShowTimeAsText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3786,8 +3804,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemCommunication : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemCommunication(ShellObject parent)
             {
@@ -3807,7 +3825,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.AccountName;
+                    var key = SystemProperties.System.Communication.AccountName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3827,7 +3845,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.DateItemExpires;
+                    var key = SystemProperties.System.Communication.DateItemExpires;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -3847,7 +3865,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.FollowupIconIndex;
+                    var key = SystemProperties.System.Communication.FollowupIconIndex;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -3867,7 +3885,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.HeaderItem;
+                    var key = SystemProperties.System.Communication.HeaderItem;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -3887,7 +3905,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.PolicyTag;
+                    var key = SystemProperties.System.Communication.PolicyTag;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3907,7 +3925,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.SecurityFlags;
+                    var key = SystemProperties.System.Communication.SecurityFlags;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -3926,7 +3944,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.Suffix;
+                    var key = SystemProperties.System.Communication.Suffix;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3945,7 +3963,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.TaskStatus;
+                    var key = SystemProperties.System.Communication.TaskStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -3966,7 +3984,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Communication.TaskStatusText;
+                    var key = SystemProperties.System.Communication.TaskStatusText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -3991,8 +4009,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemComputer : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemComputer(ShellObject parent)
             {
@@ -4012,7 +4030,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Computer.DecoratedFreeSpace;
+                    var key = SystemProperties.System.Computer.DecoratedFreeSpace;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64[]>(key));
@@ -4037,8 +4055,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemContact : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemContact(ShellObject parent)
             {
@@ -4057,7 +4075,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Anniversary;
+                    var key = SystemProperties.System.Contact.Anniversary;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -4076,7 +4094,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.AssistantName;
+                    var key = SystemProperties.System.Contact.AssistantName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4095,7 +4113,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.AssistantTelephone;
+                    var key = SystemProperties.System.Contact.AssistantTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4114,7 +4132,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Birthday;
+                    var key = SystemProperties.System.Contact.Birthday;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -4133,7 +4151,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddress;
+                    var key = SystemProperties.System.Contact.BusinessAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4152,7 +4170,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressCity;
+                    var key = SystemProperties.System.Contact.BusinessAddressCity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4171,7 +4189,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressCountry;
+                    var key = SystemProperties.System.Contact.BusinessAddressCountry;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4190,7 +4208,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressPostalCode;
+                    var key = SystemProperties.System.Contact.BusinessAddressPostalCode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4209,7 +4227,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressPostOfficeBox;
+                    var key = SystemProperties.System.Contact.BusinessAddressPostOfficeBox;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4228,7 +4246,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressState;
+                    var key = SystemProperties.System.Contact.BusinessAddressState;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4247,7 +4265,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessAddressStreet;
+                    var key = SystemProperties.System.Contact.BusinessAddressStreet;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4267,7 +4285,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessFaxNumber;
+                    var key = SystemProperties.System.Contact.BusinessFaxNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4286,7 +4304,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessHomePage;
+                    var key = SystemProperties.System.Contact.BusinessHomePage;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4305,7 +4323,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.BusinessTelephone;
+                    var key = SystemProperties.System.Contact.BusinessTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4324,7 +4342,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.CallbackTelephone;
+                    var key = SystemProperties.System.Contact.CallbackTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4343,7 +4361,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.CarTelephone;
+                    var key = SystemProperties.System.Contact.CarTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4362,7 +4380,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Children;
+                    var key = SystemProperties.System.Contact.Children;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -4381,7 +4399,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.CompanyMainTelephone;
+                    var key = SystemProperties.System.Contact.CompanyMainTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4400,7 +4418,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Department;
+                    var key = SystemProperties.System.Contact.Department;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4419,7 +4437,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.EmailAddress;
+                    var key = SystemProperties.System.Contact.EmailAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4438,7 +4456,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.EmailAddress2;
+                    var key = SystemProperties.System.Contact.EmailAddress2;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4457,7 +4475,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.EmailAddress3;
+                    var key = SystemProperties.System.Contact.EmailAddress3;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4476,7 +4494,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.EmailAddresses;
+                    var key = SystemProperties.System.Contact.EmailAddresses;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -4495,7 +4513,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.EmailName;
+                    var key = SystemProperties.System.Contact.EmailName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4514,7 +4532,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.FileAsName;
+                    var key = SystemProperties.System.Contact.FileAsName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4533,7 +4551,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.FirstName;
+                    var key = SystemProperties.System.Contact.FirstName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4552,7 +4570,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.FullName;
+                    var key = SystemProperties.System.Contact.FullName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4571,7 +4589,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Gender;
+                    var key = SystemProperties.System.Contact.Gender;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4590,7 +4608,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.GenderValue;
+                    var key = SystemProperties.System.Contact.GenderValue;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -4609,7 +4627,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Hobbies;
+                    var key = SystemProperties.System.Contact.Hobbies;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -4628,7 +4646,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddress;
+                    var key = SystemProperties.System.Contact.HomeAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4647,7 +4665,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressCity;
+                    var key = SystemProperties.System.Contact.HomeAddressCity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4666,7 +4684,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressCountry;
+                    var key = SystemProperties.System.Contact.HomeAddressCountry;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4685,7 +4703,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressPostalCode;
+                    var key = SystemProperties.System.Contact.HomeAddressPostalCode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4704,7 +4722,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressPostOfficeBox;
+                    var key = SystemProperties.System.Contact.HomeAddressPostOfficeBox;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4723,7 +4741,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressState;
+                    var key = SystemProperties.System.Contact.HomeAddressState;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4742,7 +4760,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeAddressStreet;
+                    var key = SystemProperties.System.Contact.HomeAddressStreet;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4761,7 +4779,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeFaxNumber;
+                    var key = SystemProperties.System.Contact.HomeFaxNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4780,7 +4798,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.HomeTelephone;
+                    var key = SystemProperties.System.Contact.HomeTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4799,7 +4817,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.IMAddress;
+                    var key = SystemProperties.System.Contact.IMAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -4818,7 +4836,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Initials;
+                    var key = SystemProperties.System.Contact.Initials;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4837,7 +4855,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.JobTitle;
+                    var key = SystemProperties.System.Contact.JobTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4856,7 +4874,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Label;
+                    var key = SystemProperties.System.Contact.Label;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4875,7 +4893,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.LastName;
+                    var key = SystemProperties.System.Contact.LastName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4894,7 +4912,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.MailingAddress;
+                    var key = SystemProperties.System.Contact.MailingAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4913,7 +4931,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.MiddleName;
+                    var key = SystemProperties.System.Contact.MiddleName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4932,7 +4950,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.MobileTelephone;
+                    var key = SystemProperties.System.Contact.MobileTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4951,7 +4969,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.NickName;
+                    var key = SystemProperties.System.Contact.NickName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4970,7 +4988,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OfficeLocation;
+                    var key = SystemProperties.System.Contact.OfficeLocation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -4989,7 +5007,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddress;
+                    var key = SystemProperties.System.Contact.OtherAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5008,7 +5026,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressCity;
+                    var key = SystemProperties.System.Contact.OtherAddressCity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5027,7 +5045,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressCountry;
+                    var key = SystemProperties.System.Contact.OtherAddressCountry;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5046,7 +5064,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressPostalCode;
+                    var key = SystemProperties.System.Contact.OtherAddressPostalCode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5065,7 +5083,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressPostOfficeBox;
+                    var key = SystemProperties.System.Contact.OtherAddressPostOfficeBox;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5084,7 +5102,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressState;
+                    var key = SystemProperties.System.Contact.OtherAddressState;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5103,7 +5121,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.OtherAddressStreet;
+                    var key = SystemProperties.System.Contact.OtherAddressStreet;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5122,7 +5140,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PagerTelephone;
+                    var key = SystemProperties.System.Contact.PagerTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5141,7 +5159,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PersonalTitle;
+                    var key = SystemProperties.System.Contact.PersonalTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5160,7 +5178,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressCity;
+                    var key = SystemProperties.System.Contact.PrimaryAddressCity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5179,7 +5197,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressCountry;
+                    var key = SystemProperties.System.Contact.PrimaryAddressCountry;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5198,7 +5216,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressPostalCode;
+                    var key = SystemProperties.System.Contact.PrimaryAddressPostalCode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5217,7 +5235,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressPostOfficeBox;
+                    var key = SystemProperties.System.Contact.PrimaryAddressPostOfficeBox;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5236,7 +5254,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressState;
+                    var key = SystemProperties.System.Contact.PrimaryAddressState;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5255,7 +5273,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryAddressStreet;
+                    var key = SystemProperties.System.Contact.PrimaryAddressStreet;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5274,7 +5292,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryEmailAddress;
+                    var key = SystemProperties.System.Contact.PrimaryEmailAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5293,7 +5311,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.PrimaryTelephone;
+                    var key = SystemProperties.System.Contact.PrimaryTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5312,7 +5330,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Profession;
+                    var key = SystemProperties.System.Contact.Profession;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5331,7 +5349,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.SpouseName;
+                    var key = SystemProperties.System.Contact.SpouseName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5350,7 +5368,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.Suffix;
+                    var key = SystemProperties.System.Contact.Suffix;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5369,7 +5387,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.TelexNumber;
+                    var key = SystemProperties.System.Contact.TelexNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5388,7 +5406,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.TTYTDDTelephone;
+                    var key = SystemProperties.System.Contact.TTYTDDTelephone;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5407,7 +5425,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Contact.WebPage;
+                    var key = SystemProperties.System.Contact.WebPage;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5439,8 +5457,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemDRM : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemDRM(ShellObject parent)
             {
@@ -5460,7 +5478,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DRM.DatePlayExpires;
+                    var key = SystemProperties.System.DRM.DatePlayExpires;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -5480,7 +5498,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DRM.DatePlayStarts;
+                    var key = SystemProperties.System.DRM.DatePlayStarts;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -5500,7 +5518,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DRM.Description;
+                    var key = SystemProperties.System.DRM.Description;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5520,7 +5538,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DRM.IsProtected;
+                    var key = SystemProperties.System.DRM.IsProtected;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -5540,7 +5558,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DRM.PlayCount;
+                    var key = SystemProperties.System.DRM.PlayCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -5565,8 +5583,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemDevice : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemDevice(ShellObject parent)
             {
@@ -5586,7 +5604,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Device.PrinterURL;
+                    var key = SystemProperties.System.Device.PrinterURL;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5611,8 +5629,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemDeviceInterface : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemDeviceInterface(ShellObject parent)
             {
@@ -5632,7 +5650,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DeviceInterface.PrinterDriverDirectory;
+                    var key = SystemProperties.System.DeviceInterface.PrinterDriverDirectory;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5652,7 +5670,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DeviceInterface.PrinterDriverName;
+                    var key = SystemProperties.System.DeviceInterface.PrinterDriverName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5672,7 +5690,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DeviceInterface.PrinterName;
+                    var key = SystemProperties.System.DeviceInterface.PrinterName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5692,7 +5710,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.DeviceInterface.PrinterPortName;
+                    var key = SystemProperties.System.DeviceInterface.PrinterPortName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5717,8 +5735,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemDevices : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemDevices(ShellObject parent)
             {
@@ -5738,7 +5756,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.BatteryLife;
+                    var key = SystemProperties.System.Devices.BatteryLife;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -5758,7 +5776,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.BatteryPlusCharging;
+                    var key = SystemProperties.System.Devices.BatteryPlusCharging;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -5778,7 +5796,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.BatteryPlusChargingText;
+                    var key = SystemProperties.System.Devices.BatteryPlusChargingText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5798,7 +5816,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Category;
+                    var key = SystemProperties.System.Devices.Category;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -5818,7 +5836,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.CategoryGroup;
+                    var key = SystemProperties.System.Devices.CategoryGroup;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -5838,7 +5856,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.CategoryPlural;
+                    var key = SystemProperties.System.Devices.CategoryPlural;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -5858,7 +5876,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.ChargingState;
+                    var key = SystemProperties.System.Devices.ChargingState;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -5878,7 +5896,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Connected;
+                    var key = SystemProperties.System.Devices.Connected;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -5898,7 +5916,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.ContainerId;
+                    var key = SystemProperties.System.Devices.ContainerId;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -5918,7 +5936,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.DefaultTooltip;
+                    var key = SystemProperties.System.Devices.DefaultTooltip;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5938,7 +5956,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.DeviceDescription1;
+                    var key = SystemProperties.System.Devices.DeviceDescription1;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5958,7 +5976,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.DeviceDescription2;
+                    var key = SystemProperties.System.Devices.DeviceDescription2;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -5978,7 +5996,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.DiscoveryMethod;
+                    var key = SystemProperties.System.Devices.DiscoveryMethod;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -5998,7 +6016,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.FriendlyName;
+                    var key = SystemProperties.System.Devices.FriendlyName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6018,7 +6036,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.FunctionPaths;
+                    var key = SystemProperties.System.Devices.FunctionPaths;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -6038,7 +6056,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.InterfacePaths;
+                    var key = SystemProperties.System.Devices.InterfacePaths;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -6058,7 +6076,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.IsDefault;
+                    var key = SystemProperties.System.Devices.IsDefault;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6078,7 +6096,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.IsNetworkConnected;
+                    var key = SystemProperties.System.Devices.IsNetworkConnected;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6098,7 +6116,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.IsShared;
+                    var key = SystemProperties.System.Devices.IsShared;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6118,7 +6136,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.IsSoftwareInstalling;
+                    var key = SystemProperties.System.Devices.IsSoftwareInstalling;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6138,7 +6156,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.LaunchDeviceStageFromExplorer;
+                    var key = SystemProperties.System.Devices.LaunchDeviceStageFromExplorer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6158,7 +6176,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.LocalMachine;
+                    var key = SystemProperties.System.Devices.LocalMachine;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6178,7 +6196,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Manufacturer;
+                    var key = SystemProperties.System.Devices.Manufacturer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6198,7 +6216,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.MissedCalls;
+                    var key = SystemProperties.System.Devices.MissedCalls;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -6218,7 +6236,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.ModelName;
+                    var key = SystemProperties.System.Devices.ModelName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6238,7 +6256,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.ModelNumber;
+                    var key = SystemProperties.System.Devices.ModelNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6258,7 +6276,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NetworkedTooltip;
+                    var key = SystemProperties.System.Devices.NetworkedTooltip;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6278,7 +6296,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NetworkName;
+                    var key = SystemProperties.System.Devices.NetworkName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6298,7 +6316,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NetworkType;
+                    var key = SystemProperties.System.Devices.NetworkType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6318,7 +6336,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NewPictures;
+                    var key = SystemProperties.System.Devices.NewPictures;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -6338,7 +6356,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Notification;
+                    var key = SystemProperties.System.Devices.Notification;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6358,7 +6376,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NotificationStore;
+                    var key = SystemProperties.System.Devices.NotificationStore;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -6378,7 +6396,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.NotWorkingProperly;
+                    var key = SystemProperties.System.Devices.NotWorkingProperly;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6398,7 +6416,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Paired;
+                    var key = SystemProperties.System.Devices.Paired;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6418,7 +6436,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.PrimaryCategory;
+                    var key = SystemProperties.System.Devices.PrimaryCategory;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6438,7 +6456,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Roaming;
+                    var key = SystemProperties.System.Devices.Roaming;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -6458,7 +6476,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.SafeRemovalRequired;
+                    var key = SystemProperties.System.Devices.SafeRemovalRequired;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -6478,7 +6496,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.SharedTooltip;
+                    var key = SystemProperties.System.Devices.SharedTooltip;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6498,7 +6516,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.SignalStrength;
+                    var key = SystemProperties.System.Devices.SignalStrength;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -6518,7 +6536,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Status1;
+                    var key = SystemProperties.System.Devices.Status1;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6538,7 +6556,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Status2;
+                    var key = SystemProperties.System.Devices.Status2;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6558,7 +6576,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.StorageCapacity;
+                    var key = SystemProperties.System.Devices.StorageCapacity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -6578,7 +6596,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.StorageFreeSpace;
+                    var key = SystemProperties.System.Devices.StorageFreeSpace;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -6598,7 +6616,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.StorageFreeSpacePercent;
+                    var key = SystemProperties.System.Devices.StorageFreeSpacePercent;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -6618,7 +6636,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.TextMessages;
+                    var key = SystemProperties.System.Devices.TextMessages;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -6638,7 +6656,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Devices.Voicemail;
+                    var key = SystemProperties.System.Devices.Voicemail;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -6670,8 +6688,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemDocument : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemDocument(ShellObject parent)
             {
@@ -6691,7 +6709,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.ByteCount;
+                    var key = SystemProperties.System.Document.ByteCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6711,7 +6729,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.CharacterCount;
+                    var key = SystemProperties.System.Document.CharacterCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6730,7 +6748,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.ClientID;
+                    var key = SystemProperties.System.Document.ClientID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6749,7 +6767,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Contributor;
+                    var key = SystemProperties.System.Document.Contributor;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -6769,7 +6787,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.DateCreated;
+                    var key = SystemProperties.System.Document.DateCreated;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -6789,7 +6807,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.DatePrinted;
+                    var key = SystemProperties.System.Document.DatePrinted;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -6809,7 +6827,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.DateSaved;
+                    var key = SystemProperties.System.Document.DateSaved;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -6828,7 +6846,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Division;
+                    var key = SystemProperties.System.Document.Division;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6847,7 +6865,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.DocumentID;
+                    var key = SystemProperties.System.Document.DocumentID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6867,7 +6885,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.HiddenSlideCount;
+                    var key = SystemProperties.System.Document.HiddenSlideCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6887,7 +6905,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.LastAuthor;
+                    var key = SystemProperties.System.Document.LastAuthor;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6907,7 +6925,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.LineCount;
+                    var key = SystemProperties.System.Document.LineCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6927,7 +6945,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Manager;
+                    var key = SystemProperties.System.Document.Manager;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -6947,7 +6965,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.MultimediaClipCount;
+                    var key = SystemProperties.System.Document.MultimediaClipCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6967,7 +6985,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.NoteCount;
+                    var key = SystemProperties.System.Document.NoteCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -6987,7 +7005,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.PageCount;
+                    var key = SystemProperties.System.Document.PageCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -7007,7 +7025,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.ParagraphCount;
+                    var key = SystemProperties.System.Document.ParagraphCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -7027,7 +7045,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.PresentationFormat;
+                    var key = SystemProperties.System.Document.PresentationFormat;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7047,7 +7065,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.RevisionNumber;
+                    var key = SystemProperties.System.Document.RevisionNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7067,7 +7085,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Security;
+                    var key = SystemProperties.System.Document.Security;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -7087,7 +7105,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.SlideCount;
+                    var key = SystemProperties.System.Document.SlideCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -7107,7 +7125,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Template;
+                    var key = SystemProperties.System.Document.Template;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7127,7 +7145,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.TotalEditingTime;
+                    var key = SystemProperties.System.Document.TotalEditingTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -7146,7 +7164,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.Version;
+                    var key = SystemProperties.System.Document.Version;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7166,7 +7184,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Document.WordCount;
+                    var key = SystemProperties.System.Document.WordCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -7191,8 +7209,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemGPS : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemGPS(ShellObject parent)
             {
@@ -7213,7 +7231,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Altitude;
+                    var key = SystemProperties.System.GPS.Altitude;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -7233,7 +7251,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.AltitudeDenominator;
+                    var key = SystemProperties.System.GPS.AltitudeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7253,7 +7271,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.AltitudeNumerator;
+                    var key = SystemProperties.System.GPS.AltitudeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7273,7 +7291,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.AltitudeRef;
+                    var key = SystemProperties.System.GPS.AltitudeRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -7293,7 +7311,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.AreaInformation;
+                    var key = SystemProperties.System.GPS.AreaInformation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7313,7 +7331,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Date;
+                    var key = SystemProperties.System.GPS.Date;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -7334,7 +7352,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestBearing;
+                    var key = SystemProperties.System.GPS.DestBearing;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -7354,7 +7372,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestBearingDenominator;
+                    var key = SystemProperties.System.GPS.DestBearingDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7374,7 +7392,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestBearingNumerator;
+                    var key = SystemProperties.System.GPS.DestBearingNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7394,7 +7412,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestBearingRef;
+                    var key = SystemProperties.System.GPS.DestBearingRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7415,7 +7433,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestDistance;
+                    var key = SystemProperties.System.GPS.DestDistance;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -7435,7 +7453,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestDistanceDenominator;
+                    var key = SystemProperties.System.GPS.DestDistanceDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7455,7 +7473,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestDistanceNumerator;
+                    var key = SystemProperties.System.GPS.DestDistanceNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7475,7 +7493,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestDistanceRef;
+                    var key = SystemProperties.System.GPS.DestDistanceRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7497,7 +7515,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLatitude;
+                    var key = SystemProperties.System.GPS.DestLatitude;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
@@ -7517,7 +7535,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLatitudeDenominator;
+                    var key = SystemProperties.System.GPS.DestLatitudeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7537,7 +7555,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLatitudeNumerator;
+                    var key = SystemProperties.System.GPS.DestLatitudeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7557,7 +7575,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLatitudeRef;
+                    var key = SystemProperties.System.GPS.DestLatitudeRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7579,7 +7597,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLongitude;
+                    var key = SystemProperties.System.GPS.DestLongitude;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
@@ -7599,7 +7617,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLongitudeDenominator;
+                    var key = SystemProperties.System.GPS.DestLongitudeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7619,7 +7637,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLongitudeNumerator;
+                    var key = SystemProperties.System.GPS.DestLongitudeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7639,7 +7657,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DestLongitudeRef;
+                    var key = SystemProperties.System.GPS.DestLongitudeRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7659,7 +7677,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Differential;
+                    var key = SystemProperties.System.GPS.Differential;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -7679,7 +7697,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DOP;
+                    var key = SystemProperties.System.GPS.DOP;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -7699,7 +7717,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DOPDenominator;
+                    var key = SystemProperties.System.GPS.DOPDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7719,7 +7737,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.DOPNumerator;
+                    var key = SystemProperties.System.GPS.DOPNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7740,7 +7758,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.ImgDirection;
+                    var key = SystemProperties.System.GPS.ImgDirection;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -7760,7 +7778,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.ImgDirectionDenominator;
+                    var key = SystemProperties.System.GPS.ImgDirectionDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7780,7 +7798,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.ImgDirectionNumerator;
+                    var key = SystemProperties.System.GPS.ImgDirectionNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -7800,7 +7818,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.ImgDirectionRef;
+                    var key = SystemProperties.System.GPS.ImgDirectionRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7821,7 +7839,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Latitude;
+                    var key = SystemProperties.System.GPS.Latitude;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
@@ -7841,7 +7859,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LatitudeDenominator;
+                    var key = SystemProperties.System.GPS.LatitudeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7861,7 +7879,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LatitudeNumerator;
+                    var key = SystemProperties.System.GPS.LatitudeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7881,7 +7899,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LatitudeRef;
+                    var key = SystemProperties.System.GPS.LatitudeRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7902,7 +7920,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Longitude;
+                    var key = SystemProperties.System.GPS.Longitude;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
@@ -7922,7 +7940,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LongitudeDenominator;
+                    var key = SystemProperties.System.GPS.LongitudeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7942,7 +7960,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LongitudeNumerator;
+                    var key = SystemProperties.System.GPS.LongitudeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
@@ -7962,7 +7980,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.LongitudeRef;
+                    var key = SystemProperties.System.GPS.LongitudeRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -7982,7 +8000,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.MapDatum;
+                    var key = SystemProperties.System.GPS.MapDatum;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8002,7 +8020,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.MeasureMode;
+                    var key = SystemProperties.System.GPS.MeasureMode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8022,7 +8040,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.ProcessingMethod;
+                    var key = SystemProperties.System.GPS.ProcessingMethod;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8042,7 +8060,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Satellites;
+                    var key = SystemProperties.System.GPS.Satellites;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8063,7 +8081,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Speed;
+                    var key = SystemProperties.System.GPS.Speed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -8083,7 +8101,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.SpeedDenominator;
+                    var key = SystemProperties.System.GPS.SpeedDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8103,7 +8121,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.SpeedNumerator;
+                    var key = SystemProperties.System.GPS.SpeedNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8124,7 +8142,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.SpeedRef;
+                    var key = SystemProperties.System.GPS.SpeedRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8145,7 +8163,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Status;
+                    var key = SystemProperties.System.GPS.Status;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8166,7 +8184,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.Track;
+                    var key = SystemProperties.System.GPS.Track;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -8186,7 +8204,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.TrackDenominator;
+                    var key = SystemProperties.System.GPS.TrackDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8206,7 +8224,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.TrackNumerator;
+                    var key = SystemProperties.System.GPS.TrackNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8226,7 +8244,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.TrackRef;
+                    var key = SystemProperties.System.GPS.TrackRef;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8246,7 +8264,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.GPS.VersionID;
+                    var key = SystemProperties.System.GPS.VersionID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -8271,8 +8289,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemIdentity : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemIdentity(ShellObject parent)
             {
@@ -8292,7 +8310,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.Blob;
+                    var key = SystemProperties.System.Identity.Blob;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -8312,7 +8330,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.DisplayName;
+                    var key = SystemProperties.System.Identity.DisplayName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8332,7 +8350,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.IsMeIdentity;
+                    var key = SystemProperties.System.Identity.IsMeIdentity;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -8352,7 +8370,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.PrimaryEmailAddress;
+                    var key = SystemProperties.System.Identity.PrimaryEmailAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8372,7 +8390,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.ProviderID;
+                    var key = SystemProperties.System.Identity.ProviderID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -8392,7 +8410,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.UniqueID;
+                    var key = SystemProperties.System.Identity.UniqueID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8412,7 +8430,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Identity.UserName;
+                    var key = SystemProperties.System.Identity.UserName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8437,8 +8455,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemIdentityProvider : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemIdentityProvider(ShellObject parent)
             {
@@ -8458,7 +8476,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IdentityProvider.Name;
+                    var key = SystemProperties.System.IdentityProvider.Name;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8478,7 +8496,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.IdentityProvider.Picture;
+                    var key = SystemProperties.System.IdentityProvider.Picture;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8503,8 +8521,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemImage : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemImage(ShellObject parent)
             {
@@ -8524,7 +8542,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.BitDepth;
+                    var key = SystemProperties.System.Image.BitDepth;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8544,7 +8562,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.ColorSpace;
+                    var key = SystemProperties.System.Image.ColorSpace;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -8564,7 +8582,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.CompressedBitsPerPixel;
+                    var key = SystemProperties.System.Image.CompressedBitsPerPixel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -8584,7 +8602,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.CompressedBitsPerPixelDenominator;
+                    var key = SystemProperties.System.Image.CompressedBitsPerPixelDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8604,7 +8622,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.CompressedBitsPerPixelNumerator;
+                    var key = SystemProperties.System.Image.CompressedBitsPerPixelNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8624,7 +8642,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.Compression;
+                    var key = SystemProperties.System.Image.Compression;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -8645,7 +8663,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.CompressionText;
+                    var key = SystemProperties.System.Image.CompressionText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8665,7 +8683,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.Dimensions;
+                    var key = SystemProperties.System.Image.Dimensions;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8685,7 +8703,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.HorizontalResolution;
+                    var key = SystemProperties.System.Image.HorizontalResolution;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -8705,7 +8723,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.HorizontalSize;
+                    var key = SystemProperties.System.Image.HorizontalSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8724,7 +8742,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.ImageID;
+                    var key = SystemProperties.System.Image.ImageID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8743,7 +8761,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.ResolutionUnit;
+                    var key = SystemProperties.System.Image.ResolutionUnit;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int16?>(key));
@@ -8763,7 +8781,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.VerticalResolution;
+                    var key = SystemProperties.System.Image.VerticalResolution;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -8783,7 +8801,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Image.VerticalSize;
+                    var key = SystemProperties.System.Image.VerticalSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -8808,8 +8826,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemJournal : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemJournal(ShellObject parent)
             {
@@ -8828,7 +8846,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Journal.Contacts;
+                    var key = SystemProperties.System.Journal.Contacts;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -8847,7 +8865,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Journal.EntryType;
+                    var key = SystemProperties.System.Journal.EntryType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8872,8 +8890,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemLayoutPattern : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemLayoutPattern(ShellObject parent)
             {
@@ -8894,7 +8912,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.LayoutPattern.ContentViewModeForBrowse;
+                    var key = SystemProperties.System.LayoutPattern.ContentViewModeForBrowse;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8915,7 +8933,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.LayoutPattern.ContentViewModeForSearch;
+                    var key = SystemProperties.System.LayoutPattern.ContentViewModeForSearch;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8940,8 +8958,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemLink : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemLink(ShellObject parent)
             {
@@ -8960,7 +8978,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.Arguments;
+                    var key = SystemProperties.System.Link.Arguments;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8979,7 +8997,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.Comment;
+                    var key = SystemProperties.System.Link.Comment;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -8998,7 +9016,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.DateVisited;
+                    var key = SystemProperties.System.Link.DateVisited;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -9017,7 +9035,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.Description;
+                    var key = SystemProperties.System.Link.Description;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9037,7 +9055,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.Status;
+                    var key = SystemProperties.System.Link.Status;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -9057,7 +9075,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.TargetExtension;
+                    var key = SystemProperties.System.Link.TargetExtension;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9082,7 +9100,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.TargetParsingPath;
+                    var key = SystemProperties.System.Link.TargetParsingPath;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9103,7 +9121,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.TargetSFGAOFlags;
+                    var key = SystemProperties.System.Link.TargetSFGAOFlags;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -9124,7 +9142,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.TargetSFGAOFlagsStrings;
+                    var key = SystemProperties.System.Link.TargetSFGAOFlagsStrings;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9143,7 +9161,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Link.TargetUrl;
+                    var key = SystemProperties.System.Link.TargetUrl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9168,8 +9186,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemMedia : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemMedia(ShellObject parent)
             {
@@ -9189,7 +9207,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.AuthorUrl;
+                    var key = SystemProperties.System.Media.AuthorUrl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9208,7 +9226,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.AverageLevel;
+                    var key = SystemProperties.System.Media.AverageLevel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -9228,7 +9246,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ClassPrimaryID;
+                    var key = SystemProperties.System.Media.ClassPrimaryID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9248,7 +9266,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ClassSecondaryID;
+                    var key = SystemProperties.System.Media.ClassSecondaryID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9268,7 +9286,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.CollectionGroupID;
+                    var key = SystemProperties.System.Media.CollectionGroupID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9288,7 +9306,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.CollectionID;
+                    var key = SystemProperties.System.Media.CollectionID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9308,7 +9326,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ContentDistributor;
+                    var key = SystemProperties.System.Media.ContentDistributor;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9328,7 +9346,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ContentID;
+                    var key = SystemProperties.System.Media.ContentID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9348,7 +9366,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.CreatorApplication;
+                    var key = SystemProperties.System.Media.CreatorApplication;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9368,7 +9386,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.CreatorApplicationVersion;
+                    var key = SystemProperties.System.Media.CreatorApplicationVersion;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9388,7 +9406,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.DateEncoded;
+                    var key = SystemProperties.System.Media.DateEncoded;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -9407,7 +9425,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.DateReleased;
+                    var key = SystemProperties.System.Media.DateReleased;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9427,7 +9445,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.Duration;
+                    var key = SystemProperties.System.Media.Duration;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -9447,7 +9465,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.DVDID;
+                    var key = SystemProperties.System.Media.DVDID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9467,7 +9485,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.EncodedBy;
+                    var key = SystemProperties.System.Media.EncodedBy;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9487,7 +9505,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.EncodingSettings;
+                    var key = SystemProperties.System.Media.EncodingSettings;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9507,7 +9525,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.FrameCount;
+                    var key = SystemProperties.System.Media.FrameCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -9527,7 +9545,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.MCDI;
+                    var key = SystemProperties.System.Media.MCDI;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9547,7 +9565,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.MetadataContentProvider;
+                    var key = SystemProperties.System.Media.MetadataContentProvider;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9567,7 +9585,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.Producer;
+                    var key = SystemProperties.System.Media.Producer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9587,7 +9605,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.PromotionUrl;
+                    var key = SystemProperties.System.Media.PromotionUrl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9607,7 +9625,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ProtectionType;
+                    var key = SystemProperties.System.Media.ProtectionType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9627,7 +9645,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ProviderRating;
+                    var key = SystemProperties.System.Media.ProviderRating;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9647,7 +9665,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.ProviderStyle;
+                    var key = SystemProperties.System.Media.ProviderStyle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9667,7 +9685,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.Publisher;
+                    var key = SystemProperties.System.Media.Publisher;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9686,7 +9704,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.SubscriptionContentId;
+                    var key = SystemProperties.System.Media.SubscriptionContentId;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9706,7 +9724,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.SubTitle;
+                    var key = SystemProperties.System.Media.SubTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9726,7 +9744,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.UniqueFileIdentifier;
+                    var key = SystemProperties.System.Media.UniqueFileIdentifier;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9746,7 +9764,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.UserNoAutoInfo;
+                    var key = SystemProperties.System.Media.UserNoAutoInfo;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9766,7 +9784,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.UserWebUrl;
+                    var key = SystemProperties.System.Media.UserWebUrl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9786,7 +9804,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.Writer;
+                    var key = SystemProperties.System.Media.Writer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9806,7 +9824,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Media.Year;
+                    var key = SystemProperties.System.Media.Year;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -9831,8 +9849,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemMessage : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemMessage(ShellObject parent)
             {
@@ -9851,7 +9869,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.AttachmentContents;
+                    var key = SystemProperties.System.Message.AttachmentContents;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9871,7 +9889,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.AttachmentNames;
+                    var key = SystemProperties.System.Message.AttachmentNames;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9891,7 +9909,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.BccAddress;
+                    var key = SystemProperties.System.Message.BccAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9911,7 +9929,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.BccName;
+                    var key = SystemProperties.System.Message.BccName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9931,7 +9949,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.CcAddress;
+                    var key = SystemProperties.System.Message.CcAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9951,7 +9969,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.CcName;
+                    var key = SystemProperties.System.Message.CcName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -9970,7 +9988,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ConversationID;
+                    var key = SystemProperties.System.Message.ConversationID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -9990,7 +10008,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ConversationIndex;
+                    var key = SystemProperties.System.Message.ConversationIndex;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -10010,7 +10028,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.DateReceived;
+                    var key = SystemProperties.System.Message.DateReceived;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -10030,7 +10048,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.DateSent;
+                    var key = SystemProperties.System.Message.DateSent;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -10051,7 +10069,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.Flags;
+                    var key = SystemProperties.System.Message.Flags;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -10070,7 +10088,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.FromAddress;
+                    var key = SystemProperties.System.Message.FromAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10090,7 +10108,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.FromName;
+                    var key = SystemProperties.System.Message.FromName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10110,7 +10128,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.HasAttachments;
+                    var key = SystemProperties.System.Message.HasAttachments;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -10129,7 +10147,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.IsFwdOrReply;
+                    var key = SystemProperties.System.Message.IsFwdOrReply;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -10149,7 +10167,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.MessageClass;
+                    var key = SystemProperties.System.Message.MessageClass;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10169,7 +10187,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ProofInProgress;
+                    var key = SystemProperties.System.Message.ProofInProgress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -10188,7 +10206,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.SenderAddress;
+                    var key = SystemProperties.System.Message.SenderAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10207,7 +10225,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.SenderName;
+                    var key = SystemProperties.System.Message.SenderName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10227,7 +10245,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.Store;
+                    var key = SystemProperties.System.Message.Store;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10247,7 +10265,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ToAddress;
+                    var key = SystemProperties.System.Message.ToAddress;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10267,7 +10285,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ToDoFlags;
+                    var key = SystemProperties.System.Message.ToDoFlags;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -10286,7 +10304,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ToDoTitle;
+                    var key = SystemProperties.System.Message.ToDoTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10306,7 +10324,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Message.ToName;
+                    var key = SystemProperties.System.Message.ToName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10331,8 +10349,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemMusic : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemMusic(ShellObject parent)
             {
@@ -10352,7 +10370,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.AlbumArtist;
+                    var key = SystemProperties.System.Music.AlbumArtist;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10373,7 +10391,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.AlbumID;
+                    var key = SystemProperties.System.Music.AlbumID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10393,7 +10411,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.AlbumTitle;
+                    var key = SystemProperties.System.Music.AlbumTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10413,7 +10431,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Artist;
+                    var key = SystemProperties.System.Music.Artist;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10433,7 +10451,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.BeatsPerMinute;
+                    var key = SystemProperties.System.Music.BeatsPerMinute;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10453,7 +10471,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Composer;
+                    var key = SystemProperties.System.Music.Composer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10473,7 +10491,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Conductor;
+                    var key = SystemProperties.System.Music.Conductor;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10493,7 +10511,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.ContentGroupDescription;
+                    var key = SystemProperties.System.Music.ContentGroupDescription;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10514,7 +10532,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.DisplayArtist;
+                    var key = SystemProperties.System.Music.DisplayArtist;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10534,7 +10552,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Genre;
+                    var key = SystemProperties.System.Music.Genre;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -10554,7 +10572,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.InitialKey;
+                    var key = SystemProperties.System.Music.InitialKey;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10574,7 +10592,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.IsCompilation;
+                    var key = SystemProperties.System.Music.IsCompilation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -10594,7 +10612,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Lyrics;
+                    var key = SystemProperties.System.Music.Lyrics;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10614,7 +10632,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Mood;
+                    var key = SystemProperties.System.Music.Mood;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10634,7 +10652,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.PartOfSet;
+                    var key = SystemProperties.System.Music.PartOfSet;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10654,7 +10672,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.Period;
+                    var key = SystemProperties.System.Music.Period;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10673,7 +10691,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.SynchronizedLyrics;
+                    var key = SystemProperties.System.Music.SynchronizedLyrics;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -10693,7 +10711,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Music.TrackNumber;
+                    var key = SystemProperties.System.Music.TrackNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -10718,8 +10736,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemNote : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemNote(ShellObject parent)
             {
@@ -10738,7 +10756,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Note.Color;
+                    var key = SystemProperties.System.Note.Color;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -10759,7 +10777,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Note.ColorText;
+                    var key = SystemProperties.System.Note.ColorText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10784,8 +10802,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemPhoto : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemPhoto(ShellObject parent)
             {
@@ -10805,7 +10823,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Aperture;
+                    var key = SystemProperties.System.Photo.Aperture;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -10825,7 +10843,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ApertureDenominator;
+                    var key = SystemProperties.System.Photo.ApertureDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -10845,7 +10863,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ApertureNumerator;
+                    var key = SystemProperties.System.Photo.ApertureNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -10870,7 +10888,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Brightness;
+                    var key = SystemProperties.System.Photo.Brightness;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -10890,7 +10908,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.BrightnessDenominator;
+                    var key = SystemProperties.System.Photo.BrightnessDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -10910,7 +10928,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.BrightnessNumerator;
+                    var key = SystemProperties.System.Photo.BrightnessNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -10930,7 +10948,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.CameraManufacturer;
+                    var key = SystemProperties.System.Photo.CameraManufacturer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10950,7 +10968,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.CameraModel;
+                    var key = SystemProperties.System.Photo.CameraModel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10970,7 +10988,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.CameraSerialNumber;
+                    var key = SystemProperties.System.Photo.CameraSerialNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -10991,7 +11009,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Contrast;
+                    var key = SystemProperties.System.Photo.Contrast;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11012,7 +11030,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ContrastText;
+                    var key = SystemProperties.System.Photo.ContrastText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11032,7 +11050,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.DateTaken;
+                    var key = SystemProperties.System.Photo.DateTaken;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -11052,7 +11070,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.DigitalZoom;
+                    var key = SystemProperties.System.Photo.DigitalZoom;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11072,7 +11090,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.DigitalZoomDenominator;
+                    var key = SystemProperties.System.Photo.DigitalZoomDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11092,7 +11110,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.DigitalZoomNumerator;
+                    var key = SystemProperties.System.Photo.DigitalZoomNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11112,7 +11130,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Event;
+                    var key = SystemProperties.System.Photo.Event;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -11132,7 +11150,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.EXIFVersion;
+                    var key = SystemProperties.System.Photo.EXIFVersion;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11152,7 +11170,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureBias;
+                    var key = SystemProperties.System.Photo.ExposureBias;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11172,7 +11190,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureBiasDenominator;
+                    var key = SystemProperties.System.Photo.ExposureBiasDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -11192,7 +11210,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureBiasNumerator;
+                    var key = SystemProperties.System.Photo.ExposureBiasNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -11212,7 +11230,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureIndex;
+                    var key = SystemProperties.System.Photo.ExposureIndex;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11232,7 +11250,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureIndexDenominator;
+                    var key = SystemProperties.System.Photo.ExposureIndexDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11252,7 +11270,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureIndexNumerator;
+                    var key = SystemProperties.System.Photo.ExposureIndexNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11272,7 +11290,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureProgram;
+                    var key = SystemProperties.System.Photo.ExposureProgram;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11293,7 +11311,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureProgramText;
+                    var key = SystemProperties.System.Photo.ExposureProgramText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11313,7 +11331,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureTime;
+                    var key = SystemProperties.System.Photo.ExposureTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11333,7 +11351,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureTimeDenominator;
+                    var key = SystemProperties.System.Photo.ExposureTimeDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11353,7 +11371,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ExposureTimeNumerator;
+                    var key = SystemProperties.System.Photo.ExposureTimeNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11373,7 +11391,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Flash;
+                    var key = SystemProperties.System.Photo.Flash;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
@@ -11393,7 +11411,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashEnergy;
+                    var key = SystemProperties.System.Photo.FlashEnergy;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11413,7 +11431,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashEnergyDenominator;
+                    var key = SystemProperties.System.Photo.FlashEnergyDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11433,7 +11451,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashEnergyNumerator;
+                    var key = SystemProperties.System.Photo.FlashEnergyNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11452,7 +11470,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashManufacturer;
+                    var key = SystemProperties.System.Photo.FlashManufacturer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11471,7 +11489,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashModel;
+                    var key = SystemProperties.System.Photo.FlashModel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11492,7 +11510,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FlashText;
+                    var key = SystemProperties.System.Photo.FlashText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11512,7 +11530,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FNumber;
+                    var key = SystemProperties.System.Photo.FNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11532,7 +11550,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FNumberDenominator;
+                    var key = SystemProperties.System.Photo.FNumberDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11552,7 +11570,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FNumberNumerator;
+                    var key = SystemProperties.System.Photo.FNumberNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11572,7 +11590,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalLength;
+                    var key = SystemProperties.System.Photo.FocalLength;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11592,7 +11610,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalLengthDenominator;
+                    var key = SystemProperties.System.Photo.FocalLengthDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11611,7 +11629,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalLengthInFilm;
+                    var key = SystemProperties.System.Photo.FocalLengthInFilm;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -11631,7 +11649,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalLengthNumerator;
+                    var key = SystemProperties.System.Photo.FocalLengthNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11652,7 +11670,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneXResolution;
+                    var key = SystemProperties.System.Photo.FocalPlaneXResolution;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11672,7 +11690,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneXResolutionDenominator;
+                    var key = SystemProperties.System.Photo.FocalPlaneXResolutionDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11692,7 +11710,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneXResolutionNumerator;
+                    var key = SystemProperties.System.Photo.FocalPlaneXResolutionNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11713,7 +11731,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneYResolution;
+                    var key = SystemProperties.System.Photo.FocalPlaneYResolution;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11733,7 +11751,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneYResolutionDenominator;
+                    var key = SystemProperties.System.Photo.FocalPlaneYResolutionDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11753,7 +11771,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.FocalPlaneYResolutionNumerator;
+                    var key = SystemProperties.System.Photo.FocalPlaneYResolutionNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11775,7 +11793,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.GainControl;
+                    var key = SystemProperties.System.Photo.GainControl;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11795,7 +11813,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.GainControlDenominator;
+                    var key = SystemProperties.System.Photo.GainControlDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11815,7 +11833,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.GainControlNumerator;
+                    var key = SystemProperties.System.Photo.GainControlNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11836,7 +11854,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.GainControlText;
+                    var key = SystemProperties.System.Photo.GainControlText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11856,7 +11874,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ISOSpeed;
+                    var key = SystemProperties.System.Photo.ISOSpeed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -11875,7 +11893,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.LensManufacturer;
+                    var key = SystemProperties.System.Photo.LensManufacturer;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11894,7 +11912,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.LensModel;
+                    var key = SystemProperties.System.Photo.LensModel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -11914,7 +11932,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.LightSource;
+                    var key = SystemProperties.System.Photo.LightSource;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -11933,7 +11951,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MakerNote;
+                    var key = SystemProperties.System.Photo.MakerNote;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -11952,7 +11970,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MakerNoteOffset;
+                    var key = SystemProperties.System.Photo.MakerNoteOffset;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
@@ -11972,7 +11990,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MaxAperture;
+                    var key = SystemProperties.System.Photo.MaxAperture;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -11992,7 +12010,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MaxApertureDenominator;
+                    var key = SystemProperties.System.Photo.MaxApertureDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12012,7 +12030,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MaxApertureNumerator;
+                    var key = SystemProperties.System.Photo.MaxApertureNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12032,7 +12050,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MeteringMode;
+                    var key = SystemProperties.System.Photo.MeteringMode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -12053,7 +12071,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.MeteringModeText;
+                    var key = SystemProperties.System.Photo.MeteringModeText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12073,7 +12091,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Orientation;
+                    var key = SystemProperties.System.Photo.Orientation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -12094,7 +12112,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.OrientationText;
+                    var key = SystemProperties.System.Photo.OrientationText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12114,7 +12132,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.PeopleNames;
+                    var key = SystemProperties.System.Photo.PeopleNames;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -12135,7 +12153,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.PhotometricInterpretation;
+                    var key = SystemProperties.System.Photo.PhotometricInterpretation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -12156,7 +12174,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.PhotometricInterpretationText;
+                    var key = SystemProperties.System.Photo.PhotometricInterpretationText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12177,7 +12195,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ProgramMode;
+                    var key = SystemProperties.System.Photo.ProgramMode;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12198,7 +12216,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ProgramModeText;
+                    var key = SystemProperties.System.Photo.ProgramModeText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12217,7 +12235,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.RelatedSoundFile;
+                    var key = SystemProperties.System.Photo.RelatedSoundFile;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12238,7 +12256,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Saturation;
+                    var key = SystemProperties.System.Photo.Saturation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12259,7 +12277,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.SaturationText;
+                    var key = SystemProperties.System.Photo.SaturationText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12280,7 +12298,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.Sharpness;
+                    var key = SystemProperties.System.Photo.Sharpness;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12301,7 +12319,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.SharpnessText;
+                    var key = SystemProperties.System.Photo.SharpnessText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12321,7 +12339,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ShutterSpeed;
+                    var key = SystemProperties.System.Photo.ShutterSpeed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -12341,7 +12359,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ShutterSpeedDenominator;
+                    var key = SystemProperties.System.Photo.ShutterSpeedDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -12361,7 +12379,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.ShutterSpeedNumerator;
+                    var key = SystemProperties.System.Photo.ShutterSpeedNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -12381,7 +12399,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.SubjectDistance;
+                    var key = SystemProperties.System.Photo.SubjectDistance;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
@@ -12401,7 +12419,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.SubjectDistanceDenominator;
+                    var key = SystemProperties.System.Photo.SubjectDistanceDenominator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12421,7 +12439,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.SubjectDistanceNumerator;
+                    var key = SystemProperties.System.Photo.SubjectDistanceNumerator;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12441,7 +12459,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.TagViewAggregate;
+                    var key = SystemProperties.System.Photo.TagViewAggregate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -12460,7 +12478,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.TranscodedForSync;
+                    var key = SystemProperties.System.Photo.TranscodedForSync;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -12480,7 +12498,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.WhiteBalance;
+                    var key = SystemProperties.System.Photo.WhiteBalance;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -12501,7 +12519,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Photo.WhiteBalanceText;
+                    var key = SystemProperties.System.Photo.WhiteBalanceText;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12526,8 +12544,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemPropGroup : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemPropGroup(ShellObject parent)
             {
@@ -12546,7 +12564,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Advanced;
+                    var key = SystemProperties.System.PropGroup.Advanced;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12565,7 +12583,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Audio;
+                    var key = SystemProperties.System.PropGroup.Audio;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12584,7 +12602,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Calendar;
+                    var key = SystemProperties.System.PropGroup.Calendar;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12603,7 +12621,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Camera;
+                    var key = SystemProperties.System.PropGroup.Camera;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12622,7 +12640,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Contact;
+                    var key = SystemProperties.System.PropGroup.Contact;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12641,7 +12659,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Content;
+                    var key = SystemProperties.System.PropGroup.Content;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12660,7 +12678,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Description;
+                    var key = SystemProperties.System.PropGroup.Description;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12679,7 +12697,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.FileSystem;
+                    var key = SystemProperties.System.PropGroup.FileSystem;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12698,7 +12716,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.General;
+                    var key = SystemProperties.System.PropGroup.General;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12717,7 +12735,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.GPS;
+                    var key = SystemProperties.System.PropGroup.GPS;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12736,7 +12754,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Image;
+                    var key = SystemProperties.System.PropGroup.Image;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12755,7 +12773,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Media;
+                    var key = SystemProperties.System.PropGroup.Media;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12774,7 +12792,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.MediaAdvanced;
+                    var key = SystemProperties.System.PropGroup.MediaAdvanced;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12793,7 +12811,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Message;
+                    var key = SystemProperties.System.PropGroup.Message;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12812,7 +12830,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Music;
+                    var key = SystemProperties.System.PropGroup.Music;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12831,7 +12849,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Origin;
+                    var key = SystemProperties.System.PropGroup.Origin;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12850,7 +12868,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.PhotoAdvanced;
+                    var key = SystemProperties.System.PropGroup.PhotoAdvanced;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12869,7 +12887,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.RecordedTV;
+                    var key = SystemProperties.System.PropGroup.RecordedTV;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12888,7 +12906,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropGroup.Video;
+                    var key = SystemProperties.System.PropGroup.Video;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -12913,8 +12931,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemPropList : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemPropList(ShellObject parent)
             {
@@ -12935,7 +12953,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.ConflictPrompt;
+                    var key = SystemProperties.System.PropList.ConflictPrompt;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12956,7 +12974,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.ContentViewModeForBrowse;
+                    var key = SystemProperties.System.PropList.ContentViewModeForBrowse;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12977,7 +12995,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.ContentViewModeForSearch;
+                    var key = SystemProperties.System.PropList.ContentViewModeForSearch;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -12998,7 +13016,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.ExtendedTileInfo;
+                    var key = SystemProperties.System.PropList.ExtendedTileInfo;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13020,7 +13038,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.FileOperationPrompt;
+                    var key = SystemProperties.System.PropList.FileOperationPrompt;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13041,7 +13059,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.FullDetails;
+                    var key = SystemProperties.System.PropList.FullDetails;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13062,7 +13080,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.InfoTip;
+                    var key = SystemProperties.System.PropList.InfoTip;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13084,7 +13102,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.NonPersonal;
+                    var key = SystemProperties.System.PropList.NonPersonal;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13104,7 +13122,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.PreviewDetails;
+                    var key = SystemProperties.System.PropList.PreviewDetails;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13125,7 +13143,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.PreviewTitle;
+                    var key = SystemProperties.System.PropList.PreviewTitle;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13146,7 +13164,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.QuickTip;
+                    var key = SystemProperties.System.PropList.QuickTip;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13166,7 +13184,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.TileInfo;
+                    var key = SystemProperties.System.PropList.TileInfo;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13186,7 +13204,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.PropList.XPDetailsPanel;
+                    var key = SystemProperties.System.PropList.XPDetailsPanel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13211,8 +13229,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemRecordedTV : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemRecordedTV(ShellObject parent)
             {
@@ -13232,7 +13250,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.ChannelNumber;
+                    var key = SystemProperties.System.RecordedTV.ChannelNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -13252,7 +13270,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.Credits;
+                    var key = SystemProperties.System.RecordedTV.Credits;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13271,7 +13289,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.DateContentExpires;
+                    var key = SystemProperties.System.RecordedTV.DateContentExpires;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -13291,7 +13309,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.EpisodeName;
+                    var key = SystemProperties.System.RecordedTV.EpisodeName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13310,7 +13328,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsATSCContent;
+                    var key = SystemProperties.System.RecordedTV.IsATSCContent;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13329,7 +13347,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsClosedCaptioningAvailable;
+                    var key = SystemProperties.System.RecordedTV.IsClosedCaptioningAvailable;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13348,7 +13366,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsDTVContent;
+                    var key = SystemProperties.System.RecordedTV.IsDTVContent;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13367,7 +13385,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsHDContent;
+                    var key = SystemProperties.System.RecordedTV.IsHDContent;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13386,7 +13404,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsRepeatBroadcast;
+                    var key = SystemProperties.System.RecordedTV.IsRepeatBroadcast;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13405,7 +13423,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.IsSAP;
+                    var key = SystemProperties.System.RecordedTV.IsSAP;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13424,7 +13442,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.NetworkAffiliation;
+                    var key = SystemProperties.System.RecordedTV.NetworkAffiliation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13443,7 +13461,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.OriginalBroadcastDate;
+                    var key = SystemProperties.System.RecordedTV.OriginalBroadcastDate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -13462,7 +13480,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.ProgramDescription;
+                    var key = SystemProperties.System.RecordedTV.ProgramDescription;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13481,7 +13499,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.RecordingTime;
+                    var key = SystemProperties.System.RecordedTV.RecordingTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -13501,7 +13519,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.StationCallSign;
+                    var key = SystemProperties.System.RecordedTV.StationCallSign;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13520,7 +13538,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.RecordedTV.StationName;
+                    var key = SystemProperties.System.RecordedTV.StationName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13545,8 +13563,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemSearch : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemSearch(ShellObject parent)
             {
@@ -13566,7 +13584,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.AutoSummary;
+                    var key = SystemProperties.System.Search.AutoSummary;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13586,7 +13604,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.ContainerHash;
+                    var key = SystemProperties.System.Search.ContainerHash;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13607,7 +13625,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.Contents;
+                    var key = SystemProperties.System.Search.Contents;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13628,7 +13646,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.EntryID;
+                    var key = SystemProperties.System.Search.EntryID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -13647,7 +13665,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.ExtendedProperties;
+                    var key = SystemProperties.System.Search.ExtendedProperties;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
@@ -13667,7 +13685,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.GatherTime;
+                    var key = SystemProperties.System.Search.GatherTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -13688,7 +13706,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.HitCount;
+                    var key = SystemProperties.System.Search.HitCount;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -13708,7 +13726,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.IsClosedDirectory;
+                    var key = SystemProperties.System.Search.IsClosedDirectory;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13728,7 +13746,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.IsFullyContained;
+                    var key = SystemProperties.System.Search.IsFullyContained;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -13748,7 +13766,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.QueryFocusedSummary;
+                    var key = SystemProperties.System.Search.QueryFocusedSummary;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13768,7 +13786,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.QueryFocusedSummaryWithFallback;
+                    var key = SystemProperties.System.Search.QueryFocusedSummaryWithFallback;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13788,7 +13806,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.Rank;
+                    var key = SystemProperties.System.Search.Rank;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
@@ -13808,7 +13826,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.Store;
+                    var key = SystemProperties.System.Search.Store;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13828,7 +13846,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.UrlToIndex;
+                    var key = SystemProperties.System.Search.UrlToIndex;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13848,7 +13866,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Search.UrlToIndexWithModificationTime;
+                    var key = SystemProperties.System.Search.UrlToIndexWithModificationTime;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
@@ -13873,8 +13891,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemShell : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemShell(ShellObject parent)
             {
@@ -13894,7 +13912,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Shell.OmitFromView;
+                    var key = SystemProperties.System.Shell.OmitFromView;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -13914,7 +13932,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Shell.SFGAOFlagsStrings;
+                    var key = SystemProperties.System.Shell.SFGAOFlagsStrings;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -13939,8 +13957,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemSoftware : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemSoftware(ShellObject parent)
             {
@@ -13960,7 +13978,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Software.DateLastUsed;
+                    var key = SystemProperties.System.Software.DateLastUsed;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
@@ -13980,7 +13998,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Software.ProductName;
+                    var key = SystemProperties.System.Software.ProductName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14005,8 +14023,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemSync : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemSync(ShellObject parent)
             {
@@ -14025,7 +14043,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.Comments;
+                    var key = SystemProperties.System.Sync.Comments;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14044,7 +14062,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ConflictDescription;
+                    var key = SystemProperties.System.Sync.ConflictDescription;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14063,7 +14081,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ConflictFirstLocation;
+                    var key = SystemProperties.System.Sync.ConflictFirstLocation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14082,7 +14100,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ConflictSecondLocation;
+                    var key = SystemProperties.System.Sync.ConflictSecondLocation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14101,7 +14119,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.HandlerCollectionID;
+                    var key = SystemProperties.System.Sync.HandlerCollectionID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
@@ -14120,7 +14138,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.HandlerID;
+                    var key = SystemProperties.System.Sync.HandlerID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14139,7 +14157,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.HandlerName;
+                    var key = SystemProperties.System.Sync.HandlerName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14159,7 +14177,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.HandlerType;
+                    var key = SystemProperties.System.Sync.HandlerType;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14179,7 +14197,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.HandlerTypeLabel;
+                    var key = SystemProperties.System.Sync.HandlerTypeLabel;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14198,7 +14216,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ItemID;
+                    var key = SystemProperties.System.Sync.ItemID;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14217,7 +14235,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ItemName;
+                    var key = SystemProperties.System.Sync.ItemName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14237,7 +14255,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.ProgressPercentage;
+                    var key = SystemProperties.System.Sync.ProgressPercentage;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14257,7 +14275,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.State;
+                    var key = SystemProperties.System.Sync.State;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14276,7 +14294,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Sync.Status;
+                    var key = SystemProperties.System.Sync.Status;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14301,8 +14319,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemTask : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemTask(ShellObject parent)
             {
@@ -14321,7 +14339,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Task.BillingInformation;
+                    var key = SystemProperties.System.Task.BillingInformation;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14340,7 +14358,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Task.CompletionStatus;
+                    var key = SystemProperties.System.Task.CompletionStatus;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14359,7 +14377,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Task.Owner;
+                    var key = SystemProperties.System.Task.Owner;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14384,8 +14402,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemVideo : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemVideo(ShellObject parent)
             {
@@ -14405,7 +14423,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.Compression;
+                    var key = SystemProperties.System.Video.Compression;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14425,7 +14443,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.Director;
+                    var key = SystemProperties.System.Video.Director;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
@@ -14445,7 +14463,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.EncodingBitrate;
+                    var key = SystemProperties.System.Video.EncodingBitrate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14465,7 +14483,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.FourCC;
+                    var key = SystemProperties.System.Video.FourCC;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14485,7 +14503,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.FrameHeight;
+                    var key = SystemProperties.System.Video.FrameHeight;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14505,7 +14523,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.FrameRate;
+                    var key = SystemProperties.System.Video.FrameRate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14525,7 +14543,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.FrameWidth;
+                    var key = SystemProperties.System.Video.FrameWidth;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14546,7 +14564,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.HorizontalAspectRatio;
+                    var key = SystemProperties.System.Video.HorizontalAspectRatio;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14566,7 +14584,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.SampleSize;
+                    var key = SystemProperties.System.Video.SampleSize;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14586,7 +14604,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.StreamName;
+                    var key = SystemProperties.System.Video.StreamName;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14606,7 +14624,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.StreamNumber;
+                    var key = SystemProperties.System.Video.StreamNumber;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
@@ -14626,7 +14644,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.TotalBitrate;
+                    var key = SystemProperties.System.Video.TotalBitrate;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14645,7 +14663,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.TranscodedForSync;
+                    var key = SystemProperties.System.Video.TranscodedForSync;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -14666,7 +14684,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Video.VerticalAspectRatio;
+                    var key = SystemProperties.System.Video.VerticalAspectRatio;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
@@ -14691,8 +14709,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         public class PropertySystemVolume : PropertyStoreItems
         {
-            private Hashtable hashtable = new Hashtable();
-            private ShellObject shellObjectParent;
+            private readonly Hashtable hashtable = new Hashtable();
+            private readonly ShellObject shellObjectParent;
 
             internal PropertySystemVolume(ShellObject parent)
             {
@@ -14712,7 +14730,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Volume.FileSystem;
+                    var key = SystemProperties.System.Volume.FileSystem;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
@@ -14731,7 +14749,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Volume.IsMappedDrive;
+                    var key = SystemProperties.System.Volume.IsMappedDrive;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
@@ -14751,7 +14769,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    PropertyKey key = SystemProperties.System.Volume.IsRoot;
+                    var key = SystemProperties.System.Volume.IsRoot;
 
                     if (!hashtable.ContainsKey(key))
                         hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));

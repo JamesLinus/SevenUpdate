@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -16,7 +34,7 @@ namespace Microsoft.Windows.Shell
     {
         #region Private members
 
-        private static char[] commaSeparator = new[] {','};
+        private static readonly char[] commaSeparator = new[] {','};
         private string moduleName;
         private string referencePath;
         private int resourceId;
@@ -49,7 +67,7 @@ namespace Microsoft.Windows.Shell
             if (string.IsNullOrEmpty(refPath))
                 throw new ArgumentNullException("refPath", "Reference path cannot be null or empty string");
 
-            string[] refParams = refPath.Split(commaSeparator);
+            var refParams = refPath.Split(commaSeparator);
 
             if (refParams.Length != 2 || string.IsNullOrEmpty(refParams[0]) || string.IsNullOrEmpty(refParams[1]))
                 throw new ArgumentException("Reference path is invalid.");
@@ -93,7 +111,7 @@ namespace Microsoft.Windows.Shell
                 if (string.IsNullOrEmpty(value))
                     throw new ArgumentNullException("value", "Reference path cannot be null or empty string");
 
-                string[] refParams = value.Split(commaSeparator);
+                var refParams = value.Split(commaSeparator);
 
                 if (refParams.Length != 2 || string.IsNullOrEmpty(refParams[0]) || string.IsNullOrEmpty(refParams[1]))
                     throw new ArgumentException("Reference path is invalid.");

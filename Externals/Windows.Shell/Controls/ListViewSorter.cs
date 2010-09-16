@@ -23,6 +23,7 @@
 using System;
 using System.Collections;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -219,7 +220,7 @@ namespace Microsoft.Windows.Controls
 
         public static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
-            DependencyObject parent = VisualTreeHelper.GetParent(reference);
+            var parent = VisualTreeHelper.GetParent(reference);
             while (!(parent is T))
                 parent = VisualTreeHelper.GetParent(parent);
             return (T) parent;
@@ -295,17 +296,14 @@ namespace Microsoft.Windows.Controls
             adornerLayer.Add(new SortGlyphAdorner(columnHeader, direction, sortGlyph));
         }
 
-        private static void RemoveSortGlyph(GridViewColumnHeader columnHeader)
+        private static void RemoveSortGlyph(UIElement columnHeader)
         {
             var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
             var adorners = adornerLayer.GetAdorners(columnHeader);
             if (adorners == null)
                 return;
-            foreach (var adorner in adorners)
-            {
-                if (adorner is SortGlyphAdorner)
-                    adornerLayer.Remove(adorner);
-            }
+            foreach (var adorner in adorners.OfType<SortGlyphAdorner>())
+                adornerLayer.Remove(adorner);
         }
 
         #endregion
@@ -335,19 +333,16 @@ namespace Microsoft.Windows.Controls
 
                 if (direction == ListSortDirection.Ascending)
                 {
-                    double tmp = y1;
+                    var tmp = y1;
                     y1 = y2;
                     y2 = tmp;
                 }
 
-                var pathSegmentCollection = new PathSegmentCollection();
-                pathSegmentCollection.Add(new LineSegment(new Point(x2, y1), true));
-                pathSegmentCollection.Add(new LineSegment(new Point(x3, y2), true));
+                var pathSegmentCollection = new PathSegmentCollection {new LineSegment(new Point(x2, y1), true), new LineSegment(new Point(x3, y2), true)};
 
                 var pathFigure = new PathFigure(new Point(x1, y1), pathSegmentCollection, true);
 
-                var pathFigureCollection = new PathFigureCollection();
-                pathFigureCollection.Add(pathFigure);
+                var pathFigureCollection = new PathFigureCollection {pathFigure};
 
                 var pathGeometry = new PathGeometry(pathFigureCollection);
                 return pathGeometry;

@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -15,7 +33,7 @@ namespace Microsoft.Windows.Dialogs.Controls
     ///   Creates the ComboBox controls in the Common File Dialog.
     /// </summary>
     [ContentProperty("Items")]
-    public class CommonFileDialogComboBox : CommonFileDialogProminentControl, ICommonFileDialogIndexedControls
+    public abstract class CommonFileDialogComboBox : CommonFileDialogProminentControl, ICommonFileDialogIndexedControls
     {
         private readonly Collection<CommonFileDialogComboBoxItem> items = new Collection<CommonFileDialogComboBoxItem>();
         private int selectedIndex = -1;
@@ -61,13 +79,10 @@ namespace Microsoft.Windows.Dialogs.Controls
                 }
 
                 // Only update this property if it has a valid value
-                if (value >= 0 && value < items.Count)
-                {
-                    selectedIndex = value;
-                    ApplyPropertyChange("SelectedIndex");
-                }
-                else
+                if (value < 0 || value >= items.Count)
                     throw new IndexOutOfRangeException("Index was outside the bounds of the CommonFileDialogComboBox.");
+                selectedIndex = value;
+                ApplyPropertyChange("SelectedIndex");
             }
         }
 
@@ -112,7 +127,7 @@ namespace Microsoft.Windows.Dialogs.Controls
             dialog.AddComboBox(Id);
 
             // Add the combo box items
-            for (int index = 0; index < items.Count; index++)
+            for (var index = 0; index < items.Count; index++)
                 dialog.AddControlItem(Id, index, items[index].Text);
 
             // Set the currently selected item
@@ -133,7 +148,7 @@ namespace Microsoft.Windows.Dialogs.Controls
     /// <summary>
     ///   Creates a ComboBoxItem for the Common File Dialog.
     /// </summary>
-    public class CommonFileDialogComboBoxItem
+    public abstract class CommonFileDialogComboBoxItem
     {
         private string text = String.Empty;
 

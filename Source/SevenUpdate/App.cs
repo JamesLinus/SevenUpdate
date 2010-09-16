@@ -54,7 +54,7 @@ namespace SevenUpdate
                 {
                     suaLoc = suaLoc.Replace("sevenupdate://", null);
                     var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
-                    string appName = Base.GetLocaleString(sua.Name);
+                    var appName = Base.GetLocaleString(sua.Name);
                     if (
                         Core.ShowMessage(SevenUpdate.Properties.Resources.Add + " " + appName + " " + SevenUpdate.Properties.Resources.ToSevenUpdate, TaskDialogStandardIcon.ShieldBlue,
                                          TaskDialogStandardButtons.Cancel, SevenUpdate.Properties.Resources.AllowUpdates + appName + "?", null, SevenUpdate.Properties.Resources.Add, true) !=

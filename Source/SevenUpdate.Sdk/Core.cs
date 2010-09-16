@@ -113,7 +113,7 @@ namespace SevenUpdate.Sdk
             var jumpList = new JumpList();
 
             JumpTask jumpTask;
-            for (int x = 0; x < Projects.Count; x++)
+            for (var x = 0; x < Projects.Count; x++)
             {
                 jumpTask = new JumpTask
                                {
@@ -124,7 +124,7 @@ namespace SevenUpdate.Sdk
                                    Arguments = "-newupdate " + x
                                };
                 jumpList.JumpItems.Add(jumpTask);
-                for (int y = 0; y < Projects[x].UpdateNames.Count; y++)
+                for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
                 {
                     jumpTask = new JumpTask
                                    {

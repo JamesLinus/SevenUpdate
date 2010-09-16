@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -13,9 +31,9 @@ namespace Microsoft.Windows.Shell
 {
     internal class ShellItemArray : IShellItemArray
     {
-        private List<IShellItem> shellItemsList = new List<IShellItem>();
+        private readonly List<IShellItem> shellItemsList = new List<IShellItem>();
 
-        internal ShellItemArray(IShellItem[] shellItems)
+        internal ShellItemArray(IEnumerable<IShellItem> shellItems)
         {
             shellItemsList.AddRange(shellItems);
         }
@@ -57,11 +75,8 @@ namespace Microsoft.Windows.Shell
                 ppsi = shellItemsList[index];
                 return HRESULT.S_OK;
             }
-            else
-            {
-                ppsi = null;
-                return HRESULT.E_FAIL;
-            }
+            ppsi = null;
+            return HRESULT.E_FAIL;
         }
 
         public HRESULT EnumItems(out IntPtr ppenumShellItems)

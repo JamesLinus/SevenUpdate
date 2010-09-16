@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -92,7 +110,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             IPropertyStore nativePropertyStore;
 
             var guid = new Guid(ShellIIDGuid.IPropertyStore);
-            int hr = shellObj.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_BESTEFFORT, ref guid, out nativePropertyStore);
+            var hr = shellObj.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_BESTEFFORT, ref guid, out nativePropertyStore);
 
             // throw on failure 
             if (nativePropertyStore == null || !CoreErrorHelper.Succeeded(hr))
@@ -120,9 +138,9 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 if (string.IsNullOrEmpty(canonicalName))
                     throw new ArgumentException("Argument CanonicalName cannot be null or empty.", "canonicalName");
 
-                IShellProperty[] props = Items.Where(p => p.CanonicalName == canonicalName).ToArray();
+                var props = Items.Where(p => p.CanonicalName == canonicalName).ToArray();
 
-                if (props != null && props.Length > 0)
+                if (props.Length > 0)
                     return props[0];
 
                 throw new IndexOutOfRangeException("This CanonicalName is not a valid index.");
@@ -141,9 +159,9 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                IShellProperty[] props = Items.Where(p => p.PropertyKey == key).ToArray();
+                var props = Items.Where(p => p.PropertyKey == key).ToArray();
 
-                if (props != null && props.Length > 0)
+                if (props.Length > 0)
                     return props[0];
 
                 throw new IndexOutOfRangeException("This PropertyKey is not a valid index.");
@@ -194,7 +212,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
         internal static IShellProperty CreateTypedProperty(PropertyKey propKey, IPropertyStore NativePropertyStore)
         {
-            ShellPropertyDescription desc = ShellPropertyDescriptionsCache.Cache.GetPropertyDescription(propKey);
+            var desc = ShellPropertyDescriptionsCache.Cache.GetPropertyDescription(propKey);
 
             switch (desc.VarEnumType)
             {
@@ -332,11 +350,10 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <param name = "disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (NativePropertyStore != null)
-            {
-                Marshal.ReleaseComObject(NativePropertyStore);
-                NativePropertyStore = null;
-            }
+            if (NativePropertyStore == null)
+                return;
+            Marshal.ReleaseComObject(NativePropertyStore);
+            NativePropertyStore = null;
         }
 
         /// <summary>

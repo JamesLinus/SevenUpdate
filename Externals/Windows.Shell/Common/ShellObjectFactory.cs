@@ -1,4 +1,22 @@
-// Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -35,7 +53,7 @@ namespace Microsoft.Windows.Shell
             var nativeShellItem2 = nativeShellItem as IShellItem2;
 
             // Get the System.ItemType property
-            string itemType = ShellHelper.GetItemType(nativeShellItem2);
+            var itemType = ShellHelper.GetItemType(nativeShellItem2);
 
             if (!string.IsNullOrEmpty(itemType))
                 itemType = itemType.ToLower();
@@ -45,10 +63,10 @@ namespace Microsoft.Windows.Shell
             nativeShellItem2.GetAttributes(ShellNativeMethods.SFGAO.SFGAO_FILESYSTEM | ShellNativeMethods.SFGAO.SFGAO_FOLDER, out sfgao);
 
             // Is this item a FileSystem item?
-            bool isFileSystem = (sfgao & ShellNativeMethods.SFGAO.SFGAO_FILESYSTEM) != 0;
+            var isFileSystem = (sfgao & ShellNativeMethods.SFGAO.SFGAO_FILESYSTEM) != 0;
 
             // Is this item a Folder?
-            bool isFolder = (sfgao & ShellNativeMethods.SFGAO.SFGAO_FOLDER) != 0;
+            var isFolder = (sfgao & ShellNativeMethods.SFGAO.SFGAO_FOLDER) != 0;
 
             // Shell Library
 
@@ -92,7 +110,7 @@ namespace Microsoft.Windows.Shell
 
         private static IKnownFolderNative GetNativeKnownFolder(IShellItem nativeShellItem, out bool isVirtual)
         {
-            IntPtr pidl = IntPtr.Zero;
+            var pidl = IntPtr.Zero;
 
             try
             {
@@ -105,7 +123,7 @@ namespace Microsoft.Windows.Shell
                     return null;
                 }
 
-                IKnownFolderNative knownFolderNative = KnownFolderHelper.FromPIDL(pidl);
+                var knownFolderNative = KnownFolderHelper.FromPIDL(pidl);
 
                 if (knownFolderNative != null)
                 {
@@ -146,7 +164,7 @@ namespace Microsoft.Windows.Shell
             // Create a native shellitem from our path
             IShellItem2 nativeShellItem;
             var guid = new Guid(ShellIIDGuid.IShellItem2);
-            int retCode = ShellNativeMethods.SHCreateItemFromParsingName(parsingName, IntPtr.Zero, ref guid, out nativeShellItem);
+            var retCode = ShellNativeMethods.SHCreateItemFromParsingName(parsingName, IntPtr.Zero, ref guid, out nativeShellItem);
 
             if (CoreErrorHelper.Succeeded(retCode))
                 return Create(nativeShellItem);
@@ -165,7 +183,7 @@ namespace Microsoft.Windows.Shell
 
             var guid = new Guid(ShellIIDGuid.IShellItem2);
             IShellItem2 nativeShellItem;
-            int retCode = ShellNativeMethods.SHCreateItemFromIDList(idListPtr, ref guid, out nativeShellItem);
+            var retCode = ShellNativeMethods.SHCreateItemFromIDList(idListPtr, ref guid, out nativeShellItem);
             return CoreErrorHelper.Succeeded(retCode) ? Create(nativeShellItem) : null;
         }
 
@@ -179,7 +197,7 @@ namespace Microsoft.Windows.Shell
         {
             IShellItem nativeShellItem;
 
-            int retCode = ShellNativeMethods.SHCreateShellItem(IntPtr.Zero, parent.NativeShellFolder, idListPtr, out nativeShellItem);
+            var retCode = ShellNativeMethods.SHCreateShellItem(IntPtr.Zero, parent.NativeShellFolder, idListPtr, out nativeShellItem);
 
             return CoreErrorHelper.Succeeded(retCode) ? Create(nativeShellItem) : null;
         }

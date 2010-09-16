@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -33,7 +51,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
             try
             {
-                int hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out writablePropStore);
+                var hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out writablePropStore);
 
                 if (!CoreErrorHelper.Succeeded(hr))
                     throw new ExternalException("Unable to get writable property store for this property.", Marshal.GetExceptionForHR(hr));
@@ -98,8 +116,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
             if (writablePropStore == null)
                 throw new InvalidOperationException("Writeable store has been closed.");
 
-            PropVariant propVar = PropVariant.FromObject(value);
-            int result = writablePropStore.SetValue(ref key, ref propVar);
+            var propVar = PropVariant.FromObject(value);
+            var result = writablePropStore.SetValue(ref key, ref propVar);
 
             if (!allowTruncatedValue && (result == InPlaceStringTruncated))
             {
@@ -139,7 +157,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
             // Get the PropertyKey using the canonicalName passed in
             PropertyKey propKey;
 
-            int result = PropertySystemNativeMethods.PSGetPropertyKeyFromName(canonicalName, out propKey);
+            var result = PropertySystemNativeMethods.PSGetPropertyKeyFromName(canonicalName, out propKey);
 
             if (!CoreErrorHelper.Succeeded(result))
                 throw new ArgumentException("The given CanonicalName is not valid.", Marshal.GetExceptionForHR(result));

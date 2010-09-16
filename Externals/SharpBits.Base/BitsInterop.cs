@@ -1,3 +1,23 @@
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
+
 #region
 
 using System;
@@ -22,8 +42,7 @@ namespace SharpBits.Base
     /// <summary>
     ///   Entry point to the BITS infrastructure.
     /// </summary>
-    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute,
-     SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
+    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute, SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     internal class BackgroundCopyManager
     {
     }
@@ -322,8 +341,7 @@ namespace SharpBits.Base
         /// <param name = "pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name = "pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name = "pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
-                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         ///   Changes the ownership of the job to the current user
@@ -548,8 +566,7 @@ namespace SharpBits.Base
         /// <param name = "pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name = "pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name = "pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
-                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         ///   Changes the ownership of the job to the current user
@@ -826,8 +843,7 @@ namespace SharpBits.Base
         /// <param name = "pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name = "pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name = "pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
-                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         ///   Changes the ownership of the job to the current user
@@ -1115,8 +1131,7 @@ namespace SharpBits.Base
         /// <param name = "pProxyBypassList">Null-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyBypassList when done.</param>
         /// <param name = "pProxyList">Null-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free ppProxyList when done.</param>
         /// <param name = "pProxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the BG_JOB_PROXY_USAGE enumeration. </param>
-        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList,
-                              [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
+        void GetProxySettings(out BG_JOB_PROXY_USAGE pProxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyList, [MarshalAs(UnmanagedType.LPWStr)] out string pProxyBypassList);
 
         /// <summary>
         ///   Changes the ownership of the job to the current user

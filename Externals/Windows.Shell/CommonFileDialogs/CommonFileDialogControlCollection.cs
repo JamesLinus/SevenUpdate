@@ -1,4 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
+﻿#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -17,7 +35,7 @@ namespace Microsoft.Windows.Dialogs.Controls
     /// <typeparam name = "T">DialogControl</typeparam>
     public sealed class CommonFileDialogControlCollection<T> : Collection<T> where T : DialogControl
     {
-        private IDialogControlHost hostingDialog;
+        private readonly IDialogControlHost hostingDialog;
 
         internal CommonFileDialogControlCollection(IDialogControlHost host)
         {
@@ -44,7 +62,7 @@ namespace Microsoft.Windows.Dialogs.Controls
                 if (String.IsNullOrEmpty(name))
                     throw new ArgumentException("Control name must not be null or zero length.");
 
-                foreach (T control in Items)
+                foreach (var control in Items)
                 {
                     // NOTE: we don't ToLower() the strings - casing effects 
                     // hash codes, so we are case-sensitive.
@@ -52,7 +70,7 @@ namespace Microsoft.Windows.Dialogs.Controls
                         return control;
                     if (!(control is CommonFileDialogGroupBox))
                         continue;
-                    foreach (T subControl in (control as CommonFileDialogGroupBox).Items.Cast<T>().Where(subControl => subControl.Name == name))
+                    foreach (var subControl in (control as CommonFileDialogGroupBox).Items.Cast<T>().Where(subControl => subControl.Name == name))
                         return subControl;
                 }
                 return null;
@@ -136,22 +154,20 @@ namespace Microsoft.Windows.Dialogs.Controls
                     return control;
 
                 // Search GroupBox child items
-                if (control is CommonFileDialogGroupBox)
-                {
-                    var groupBox = control as CommonFileDialogGroupBox;
+                if (!(control is CommonFileDialogGroupBox))
+                    continue;
+                var groupBox = control as CommonFileDialogGroupBox;
 
-                    // recurse and search the GroupBox
-                    int iSubCtrlCount = ((CommonFileDialogGroupBox) control).Items.Count;
+                // recurse and search the GroupBox
+                var iSubCtrlCount = ((CommonFileDialogGroupBox) control).Items.Count;
 
-                    if (iSubCtrlCount > 0)
-                    {
-                        DialogControl foundControl = GetSubControlbyId(groupBox.Items, id);
+                if (iSubCtrlCount <= 0)
+                    continue;
+                var foundControl = GetSubControlbyId(groupBox.Items, id);
 
-                        // make sure something was actually found
-                        if (foundControl != null)
-                            return foundControl;
-                    }
-                }
+                // make sure something was actually found
+                if (foundControl != null)
+                    return foundControl;
             }
 
             // Control id not found - likely an error, but the calling 

@@ -1,4 +1,22 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
+#region GNU Public License Version 3
+
+// Copyright 2007-2010 Robert Baker, Seven Software.
+// This file is part of Seven Update.
+//   
+//      Seven Update is free software: you can redistribute it and/or modify
+//      it under the terms of the GNU General Public License as published by
+//      the Free Software Foundation, either version 3 of the License, or
+//      (at your option) any later version.
+//  
+//      Seven Update is distributed in the hope that it will be useful,
+//      but WITHOUT ANY WARRANTY; without even the implied warranty of
+//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//      GNU General Public License for more details.
+//   
+//      You should have received a copy of the GNU General Public License
+//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+
+#endregion
 
 #region
 
@@ -17,7 +35,6 @@ namespace Microsoft.Windows.Internal
     /// </summary>
     public static class CoreNativeMethods
     {
-
         #region General Definitions
 
         /// <summary>
@@ -210,11 +227,15 @@ namespace Microsoft.Windows.Internal
         internal const int DWM_BB_BLURREGION = 0x00000002; // hRgnBlur has been specified
         internal const int DWM_BB_TRANSITIONONMAXIMIZED = 0x00000004; // fTransitionOnMaximized has been specified
 
-        internal static class DwmMessages
+        #region Nested type: CompositionEnable
+
+        internal enum CompositionEnable : uint
         {
-            internal const int WmDwmCompositionChanged = 0x031E;
-            internal const int WmDwmnRenderingChanged = 0x031F;
+            DwmEcDisableComposition = 0,
+            DwmEcEnableComposition = 1
         }
+
+        #endregion
 
         #region Nested type: DwmBlurBehind
 
@@ -229,7 +250,28 @@ namespace Microsoft.Windows.Internal
 
         #endregion
 
-        #region Nested type: DWM_PRESENT_PARAMETERS
+        #region Nested type: DwmBlurBehindDwFlags
+
+        internal enum DwmBlurBehindDwFlags : uint
+        {
+            DwmBBEnable = 0x00000001,
+            DwmBBBlurRegion = 0x00000002,
+            DwmBBTransitiononMaximized = 0x00000004
+        }
+
+        #endregion
+
+        #region Nested type: DwmMessages
+
+        internal static class DwmMessages
+        {
+            internal const int WmDwmCompositionChanged = 0x031E;
+            internal const int WmDwmnRenderingChanged = 0x031F;
+        }
+
+        #endregion
+
+        #region Nested type: DwmPresentParameters
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct DwmPresentParameters
@@ -241,32 +283,6 @@ namespace Microsoft.Windows.Internal
             internal bool fUseSourceRate;
             internal UNSIGNED_RATIO uiNumerator;
         } ;
-
-        #endregion
-
-        #region Nested type: DWM_THUMBNAIL_PROPERTIES
-
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct DwmThumbnailProperties
-        {
-            internal DwmThumbnailFlags dwFlags;
-            internal RECT rcDestination;
-            internal RECT rcSource;
-            internal byte opacity;
-            internal bool fVisible;
-            internal bool fSourceClientAreaOnly;
-        } ;
-
-        #endregion
-
-        #region Nested type: DwmBlurBehindDwFlags
-
-        internal enum DwmBlurBehindDwFlags : uint
-        {
-            DwmBBEnable = 0x00000001,
-            DwmBBBlurRegion = 0x00000002,
-            DwmBBTransitiononMaximized = 0x00000004
-        }
 
         #endregion
 
@@ -283,11 +299,20 @@ namespace Microsoft.Windows.Internal
 
         #endregion
 
-        internal enum CompositionEnable : uint
+        #region Nested type: DwmThumbnailProperties
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct DwmThumbnailProperties
         {
-            DwmEcDisableComposition = 0,
-            DwmEcEnableComposition = 1
-        }
+            internal DwmThumbnailFlags dwFlags;
+            internal RECT rcDestination;
+            internal RECT rcSource;
+            internal byte opacity;
+            internal bool fVisible;
+            internal bool fSourceClientAreaOnly;
+        } ;
+
+        #endregion
 
         #region Nested type: MARGINS
 
@@ -397,7 +422,7 @@ namespace Microsoft.Windows.Internal
             internal uint dwClassContext;
             internal uint locale;
             // This will be passed as null, so the type doesn't matter.
-            private object pServerInfo;
+            private readonly object pServerInfo;
             internal IntPtr hwnd;
         }
 
