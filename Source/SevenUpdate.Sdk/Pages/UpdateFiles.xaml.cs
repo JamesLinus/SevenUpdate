@@ -93,10 +93,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "fullName">The fullpath to the file</param>
         private void AddFile(string fullName)
         {
-            string installDirectory;
-
-
-            installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -244,7 +241,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFolder_Click(object sender, RoutedEventArgs e)
         {
-            string directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
                                    ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                    : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 

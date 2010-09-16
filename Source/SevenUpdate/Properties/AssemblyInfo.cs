@@ -31,7 +31,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("SevenUpdate")]
+[assembly: AssemblyTitle("Seven Update")]
 [assembly: AssemblyDescription("Provides an easy way to update your software")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
