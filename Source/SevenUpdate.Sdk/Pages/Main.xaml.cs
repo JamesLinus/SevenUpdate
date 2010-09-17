@@ -52,9 +52,20 @@ namespace SevenUpdate.Sdk.Pages
             InitializeComponent();
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
-            tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
-            tbHelp.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
-            tbAbout.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
+            if (AeroGlass.IsEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+                tbHelp.Foreground = Brushes.Black;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
+            }
         }
 
         #endregion
@@ -84,6 +95,24 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        private void ReleaseUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog
+                          {
+                              IsFolderPicker = false,
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              AddToMostRecentlyUsedList = true,
+                              DefaultExtension = ".sui"
+                          };
+
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
+        }
+
         #region UI Events
 
         #region Commandlink - Click
@@ -96,17 +125,6 @@ namespace SevenUpdate.Sdk.Pages
         private void clEdit_Click(object sender, RoutedEventArgs e)
         {
             Core.EditItem();
-        }
-
-        private void clDeploy_Click(object sender, RoutedEventArgs e)
-        {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),};
-
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua", true);
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui", true);
         }
 
         private void NewUpdate_Click(object sender, RoutedEventArgs e)
@@ -168,6 +186,22 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        private void ReleaseApp_Click(object sender, RoutedEventArgs e)
+        {
+            var cfd = new CommonOpenFileDialog
+                          {
+                              IsFolderPicker = false,
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              AddToMostRecentlyUsedList = true,
+                              DefaultExtension = ".sua"
+                          };
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sua, "*.sua"));
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName, true);
+        }
+
         #region MenuItem - Click
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -209,14 +243,12 @@ namespace SevenUpdate.Sdk.Pages
             if (treeView.SelectedItem == null)
             {
                 // clTest.Visibility = Visibility.Collapsed;
-                clDeploy.Visibility = Visibility.Collapsed;
                 clNewUpdate.Visibility = Visibility.Collapsed;
                 clEdit.Visibility = Visibility.Collapsed;
             }
             else
             {
                 // clTest.Visibility = Visibility.Visible;
-                clDeploy.Visibility = Visibility.Visible;
                 clNewUpdate.Visibility = Visibility.Visible;
                 clEdit.Visibility = Visibility.Visible;
             }
@@ -234,8 +266,6 @@ namespace SevenUpdate.Sdk.Pages
                 Core.UpdateIndex = -1;
                 clNewUpdate.Visibility = Visibility.Visible;
                 // clTest.Visibility = Visibility.Visible;
-                clDeploy.Visibility = Visibility.Visible;
-
 
                 clNewUpdate.Note = Properties.Resources.AddUpdate + " " + item.Header;
                 // clTest.Content = Properties.Resources.Test + " " + item.Header;
@@ -251,7 +281,6 @@ namespace SevenUpdate.Sdk.Pages
 
                 clNewUpdate.Visibility = Visibility.Collapsed;
                 // clTest.Visibility = Visibility.Collapsed;
-                clDeploy.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -265,10 +294,12 @@ namespace SevenUpdate.Sdk.Pages
             {
                 tbTitle.Foreground = Brushes.Black;
                 tbHelp.Foreground = Brushes.Black;
+                //tbTitle.TextEffects = new TextEffectCollection();
+                //tbTitle.TextEffects.Add(Core.dropShadowEffect);
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }

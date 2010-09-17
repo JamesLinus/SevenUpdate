@@ -201,4 +201,7 @@
   <data name="EditProject" xml:space="preserve">
     <value>Edit an existing project</value>
   </data>
+  <data name="Sua" xml:space="preserve">
+    <value>Seven Update application</value>
+  </data>
 </root>

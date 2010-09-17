@@ -68,9 +68,13 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
             }
         }
 
@@ -136,7 +140,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #endregion
 
-        #region Content Menu
+        #region Context Menu
 
         #region MenuItem - Click
 
@@ -149,7 +153,7 @@ namespace SevenUpdate.Sdk.Pages
                           {
                               AlwaysAppendDefaultExtension = true,
                               DefaultExtension = "lnk",
-                              DefaultDirectory = allUserStartMenu.ToString(),
+                              InitialDirectory = allUserStartMenu.ToString(),
                               DefaultFileName = Core.AppInfo.Name[0].Value,
                               EnsureValidNames = true,
                           };
@@ -170,7 +174,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var allUserStartMenu = new StringBuilder(260);
             NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
-            var cfd = new CommonOpenFileDialog {DefaultExtension = "lnk", DefaultDirectory = allUserStartMenu.ToString(), EnsureFileExists = true, NavigateToShortcut = true, Multiselect = false};
+            var cfd = new CommonOpenFileDialog {DefaultExtension = "lnk", InitialDirectory = allUserStartMenu.ToString(), EnsureFileExists = true, NavigateToShortcut = true, Multiselect = false};
 
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
@@ -266,7 +270,7 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Collapsed;
                 rectangle.Visibility = Visibility.Collapsed;
             }

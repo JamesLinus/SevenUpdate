@@ -12,7 +12,7 @@
 	<!-- Grid-->
 	<Grid Name="grid">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="176*" MaxWidth="420" />
+			<ColumnDefinition Width="Auto" MaxWidth="420" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="520*" />
 			<ColumnDefinition Width="Auto" />
@@ -41,7 +41,7 @@
 			</TextBlock>
 		</StackPanel>
 		<!--ListBox-->
-		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="150" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown" SelectedIndex="0" TabIndex="0">
+		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" KeyDown="listBox_KeyDown" SelectedIndex="0" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="Add File(s)" Click="AddFile_Click">

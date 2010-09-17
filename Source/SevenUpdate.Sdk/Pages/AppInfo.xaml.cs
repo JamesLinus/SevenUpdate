@@ -78,9 +78,13 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
             }
         }
 
@@ -291,7 +295,7 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
             }

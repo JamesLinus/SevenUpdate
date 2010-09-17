@@ -63,9 +63,13 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
             }
         }
 
@@ -133,15 +137,15 @@ namespace SevenUpdate.Sdk.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            if (!HasErrors())
+                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+            else
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            if (!HasErrors())
-                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-            else
-                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
+            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
         #endregion
@@ -204,7 +208,7 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
             }

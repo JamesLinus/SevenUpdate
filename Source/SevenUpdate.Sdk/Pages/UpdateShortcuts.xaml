@@ -3,7 +3,7 @@
 	<!-- Grid-->
 	<Grid Name="grid">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="176*" MaxWidth="420" />
+			<ColumnDefinition Width="Auto" MaxWidth="420" />
 			<ColumnDefinition Width="606*" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="24" />
@@ -27,6 +27,7 @@
 			<RowDefinition Height="44" />
 		</Grid.RowDefinitions>
 		<Rectangle Grid.ColumnSpan="4" Grid.Row="15" Fill="#FFF0F0F0" Name="rectangle" />
+		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="15" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" Name="line" />
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="4" Fill="White" Grid.RowSpan="14" />
 		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
 			<Controls:BackButton Grid.RowSpan="3" TabIndex="13">
@@ -46,7 +47,6 @@
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
 			<TextBlock Text="To get started, right click the list box and create or import a shortcut" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
 		</StackPanel>
-		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="15" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="4" Name="line" />
 		<ComboBox Grid.Column="1" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80" SelectedIndex="0" SelectionChanged="Language_SelectionChanged" Grid.ColumnSpan="2" Margin="0,5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="12">
 			<ComboBoxItem Content="English" Tag="en" />
 			<ComboBoxItem Content="Arabic" Tag="ar" />
@@ -66,7 +66,7 @@
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" TabIndex="10" />
 			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="11" />
 		</StackPanel>
-		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="150" MaxWidth="400" Grid.RowSpan="14" DisplayMemberPath="Name/Value" SelectionChanged="listBox_SelectionChanged" KeyDown="listBox_KeyDown" TabIndex="0">
+		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="14" DisplayMemberPath="Name/Value" SelectionChanged="listBox_SelectionChanged" KeyDown="listBox_KeyDown" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Click="AddShortcut_Click" Header="Add Shortcut" />

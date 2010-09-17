@@ -34,7 +34,7 @@ namespace SevenUpdate.Sdk
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
     [ValueConversion(typeof (LocaleString), typeof (string))]
-    internal sealed class StringToLocaleStringConverter : IValueConverter
+    internal class StringToLocaleStringConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -130,7 +130,7 @@ namespace SevenUpdate.Sdk
     ///   Converts the string to a DateTime
     /// </summary>
     [ValueConversion(typeof (DateTime), typeof (string))]
-    internal sealed class DateConverter : IValueConverter
+    internal class DateConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -151,7 +151,7 @@ namespace SevenUpdate.Sdk
     ///   Converts a Bool to a Label
     /// </summary>
     [ValueConversion(typeof (bool), typeof (string))]
-    internal sealed class BoolToLabelConverter : IValueConverter
+    internal class BoolToLabelConverter : IValueConverter
     {
         #region IValueConverter Members
 

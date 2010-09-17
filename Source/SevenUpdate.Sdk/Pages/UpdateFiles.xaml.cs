@@ -77,9 +77,13 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
             }
         }
 
@@ -233,7 +237,10 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), EnsureValidNames = true, Multiselect = true};
+            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var cfd = new CommonOpenFileDialog {InitialDirectory = directory, EnsureValidNames = true, Multiselect = true};
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
             AddFiles(cfd.FileNames);
@@ -266,7 +273,7 @@ namespace SevenUpdate.Sdk.Pages
             }
             else
             {
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Collapsed;
                 rectangle.Visibility = Visibility.Collapsed;
             }

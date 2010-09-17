@@ -52,6 +52,18 @@ namespace SevenUpdate.Sdk.Pages
 
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
+            if (AeroGlass.IsEnabled)
+            {
+                tbTitle.Foreground = Brushes.Black;
+            }
+            else
+            {
+                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    tbTitle.TextEffects.Clear();
+                }
+            }
         }
 
         #endregion
@@ -96,28 +108,45 @@ namespace SevenUpdate.Sdk.Pages
             // Save the SUI File
             Base.Serialize(appUpdates, Core.UserStore + appName + ".sui");
 
-            // Save the SUA file
-            Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
-
             // Save project file
             var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
-
-
             Core.Projects.Add(project);
             Base.Serialize(Core.Projects, Core.ProjectsFile);
 
+            if (Core.IsNewProject)
+                // Save the SUA file
+                Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+
             if (!export)
             {
+                Core.IsNewProject = false;
                 MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                 return;
             }
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),};
+
+            var cfd = new CommonOpenFileDialog
+                          {
+                              IsFolderPicker = false,
+                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                              AddToMostRecentlyUsedList = true,
+                              DefaultExtension = ".sui"
+                          };
+
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
 
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
+            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
 
-            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName + @"\" + appName + ".sua", true);
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName + @"\" + appName + ".sui", true);
+            if (Core.IsNewProject)
+            {
+                cfd.DefaultExtension = ".sua";
+                cfd.Filters.Clear();
+                cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sua, "*.sua"));
+                cfd.Filters[0].ShowExtensions = false;
+                File.Copy(Core.UserStore + appName + ".sua", cfd.FileName, true);
+            }
+            Core.IsNewProject = false;
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
         }
 
@@ -132,7 +161,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 102, 204));
+            tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
         #endregion

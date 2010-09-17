@@ -30,7 +30,7 @@ using Microsoft.Windows.Properties;
 
 namespace Microsoft.Windows.Controls
 {
-    public abstract class RequiredInputRule : ValidationRule
+    public class RequiredInputRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Windows.Controls
         }
     }
 
-    public sealed class UrlInputRule : ValidationRule
+    public class UrlInputRule : ValidationRule
     {
         public bool IsRequired { get; set; }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Windows.Controls
         }
     }
 
-    public sealed class FileNameInputRule : ValidationRule
+    public class FileNameInputRule : ValidationRule
     {
         public bool IsRequired { get; set; }
 

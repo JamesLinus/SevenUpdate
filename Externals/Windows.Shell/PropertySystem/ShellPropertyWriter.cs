@@ -1,22 +1,5 @@
-#region GNU Public License Version 3
-
-// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
+//Copyright (c) Microsoft Corporation.  All rights reserved.
+//Modified by Robert Baker, Seven Software 2010.
 
 #region
 
@@ -40,7 +23,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         protected const int InPlaceStringTruncated = 0x00401A0;
 
-        internal IPropertyStore writablePropStore;
+        internal IPropertyStore WritablePropStore;
 
         internal ShellPropertyWriter(ShellObject parent)
         {
@@ -51,7 +34,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
             try
             {
-                var hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out writablePropStore);
+                var hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out WritablePropStore);
 
                 if (!CoreErrorHelper.Succeeded(hr))
                     throw new ExternalException("Unable to get writable property store for this property.", Marshal.GetExceptionForHR(hr));
@@ -59,7 +42,7 @@ namespace Microsoft.Windows.Shell.PropertySystem
                 // then set it on the parent shell object for others to use.
                 // Once this writer is closed/commited, we will set the 
                 if (ParentShellObject.NativePropertyStore == null)
-                    ParentShellObject.NativePropertyStore = writablePropStore;
+                    ParentShellObject.NativePropertyStore = WritablePropStore;
             }
             catch (InvalidComObjectException e)
             {
@@ -113,19 +96,19 @@ namespace Microsoft.Windows.Shell.PropertySystem
         ///   a numeric value.</exception>
         public void WriteProperty(PropertyKey key, object value, bool allowTruncatedValue)
         {
-            if (writablePropStore == null)
+            if (WritablePropStore == null)
                 throw new InvalidOperationException("Writeable store has been closed.");
 
             var propVar = PropVariant.FromObject(value);
-            var result = writablePropStore.SetValue(ref key, ref propVar);
+            var result = WritablePropStore.SetValue(ref key, ref propVar);
 
             if (!allowTruncatedValue && (result == InPlaceStringTruncated))
             {
                 // At this point we can't revert back the commit
                 // so don't commit, close the property store and throw an exception
                 // to let the user know.
-                Marshal.ReleaseComObject(writablePropStore);
-                writablePropStore = null;
+                Marshal.ReleaseComObject(WritablePropStore);
+                WritablePropStore = null;
 
                 throw new ArgumentOutOfRangeException("value", "A value had to be truncated in a string or rounded if a numeric value. Set AllowTruncatedValue to true to prevent this exception.");
             }
@@ -235,12 +218,12 @@ namespace Microsoft.Windows.Shell.PropertySystem
         public void Close()
         {
             // Close the property writer (commit, etc)
-            if (writablePropStore != null)
+            if (WritablePropStore != null)
             {
-                writablePropStore.Commit();
+                WritablePropStore.Commit();
 
-                Marshal.ReleaseComObject(writablePropStore);
-                writablePropStore = null;
+                Marshal.ReleaseComObject(WritablePropStore);
+                WritablePropStore = null;
             }
 
             ParentShellObject.NativePropertyStore = null;

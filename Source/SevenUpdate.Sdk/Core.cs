@@ -47,13 +47,24 @@ namespace SevenUpdate.Sdk
         public static Sua AppInfo { get; set; }
 
         /// <summary>
-        ///   The current update being edited
+        ///   Gets or sets the current update being edited
         /// </summary>
         internal static Update UpdateInfo { get; set; }
 
+        /// <summary>
+        ///   Gets or sets the current shortcut being edited
+        /// </summary>
         internal static int SelectedShortcut { get; set; }
 
+        /// <summary>
+        ///   Gets or sets if aero glass is enabled
+        /// </summary>
         internal static bool IsGlassEnabled { get; set; }
+
+        /// <summary>
+        ///   Gets of sets if the current project being edited is new
+        /// </summary>
+        internal static bool IsNewProject { get; set; }
 
         /// <summary>
         ///   Checks to see if a Url is valid and on the internet
@@ -99,6 +110,8 @@ namespace SevenUpdate.Sdk
 
         internal static int UpdateIndex = -1;
         internal static int AppIndex = -1;
+
+        //internal static DropShadowEffect dropShadowEffect = new DropShadowEffect { Color = Color.FromRgb(255, 255, 255), BlurRadius = 10, RenderingBias = RenderingBias.Performance, ShadowDepth = 0, Direction = 0 };
 
         #endregion
 
@@ -154,6 +167,7 @@ namespace SevenUpdate.Sdk
 
         internal static void EditItem()
         {
+            IsNewProject = false;
             AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
             if (UpdateIndex < 0)
                 MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
@@ -172,6 +186,7 @@ namespace SevenUpdate.Sdk
 
         internal static void NewProject()
         {
+            IsNewProject = true;
             AppIndex = -1;
             UpdateIndex = -1;
             AppInfo = new Sua();
@@ -190,6 +205,7 @@ namespace SevenUpdate.Sdk
 
         internal static void NewUpdate()
         {
+            IsNewProject = false;
             AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
             UpdateInfo = new Update
                              {

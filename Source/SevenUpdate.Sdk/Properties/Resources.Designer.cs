@@ -268,6 +268,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seven Update application.
+        /// </summary>
+        public static string Sua {
+            get {
+                return ResourceManager.GetString("Sua", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seven Update information.
         /// </summary>
         public static string Sui {

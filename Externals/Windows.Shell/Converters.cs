@@ -33,7 +33,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the string to a bool
     /// </summary>
     [ValueConversion(typeof (string), typeof (bool))]
-    public sealed class StringToBoolConverter : IValueConverter
+    public class StringToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -72,7 +72,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the string to a bool
     /// </summary>
     [ValueConversion(typeof (string), typeof (Visibility))]
-    public sealed class StringToVisibilityConverter : IValueConverter
+    public class StringToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -113,7 +113,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the Int to Visibility
     /// </summary>
     [ValueConversion(typeof (int), typeof (Visibility))]
-    public sealed class IntToVisibilityConverter : IValueConverter
+    public class IntToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -152,7 +152,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the Int to Visibility
     /// </summary>
     [ValueConversion(typeof (int), typeof (Visibility))]
-    public sealed class IndexToVisibilityConverter : IValueConverter
+    public class IndexToVisibilityConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -191,7 +191,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the Int to Bool
     /// </summary>
     [ValueConversion(typeof (int), typeof (bool))]
-    public sealed class IntToBoolConverter : IValueConverter
+    public class IntToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 
@@ -228,7 +228,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the Enum to a Boolean
     /// </summary>
     [ValueConversion(typeof (Enum), typeof (bool))]
-    public sealed class EnumToBool : IValueConverter
+    public class EnumToBool : IValueConverter
     {
         #region IValueConverter Members
 
@@ -249,7 +249,7 @@ namespace Microsoft.Windows.Common
     ///   Converts the Enum to a Boolean
     /// </summary>
     [ValueConversion(typeof (Enum), typeof (bool))]
-    public sealed class InverseEnumToBool : IValueConverter
+    public class InverseEnumToBool : IValueConverter
     {
         #region IValueConverter Members
 
@@ -270,7 +270,7 @@ namespace Microsoft.Windows.Common
     ///   Converts a bool value to the opposite value
     /// </summary>
     [ValueConversion(typeof (bool), typeof (bool))]
-    public sealed class InverseBoolConverter : IValueConverter
+    public class InverseBoolConverter : IValueConverter
     {
         #region IValueConverter Members
 

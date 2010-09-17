@@ -31,7 +31,7 @@ using SevenUpdate.Sdk.Properties;
 
 namespace SevenUpdate.Sdk.Helpers
 {
-    internal sealed class AppDirectoryRule : ValidationRule
+    internal class AppDirectoryRule : ValidationRule
     {
         internal bool IsRegistryPath { private get; set; }
 
@@ -62,7 +62,7 @@ namespace SevenUpdate.Sdk.Helpers
         }
     }
 
-    public sealed class RegistryPathRule : ValidationRule
+    public class RegistryPathRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -77,7 +77,7 @@ namespace SevenUpdate.Sdk.Helpers
         }
     }
 
-    public sealed class LocaleStringRule : ValidationRule
+    public class LocaleStringRule : ValidationRule
     {
         /// <summary>
         ///   The name of the Collection of locale strings to get
@@ -187,7 +187,7 @@ namespace SevenUpdate.Sdk.Helpers
         }
     }
 
-    public sealed class SuiLocationRule : ValidationRule
+    public class SuiLocationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

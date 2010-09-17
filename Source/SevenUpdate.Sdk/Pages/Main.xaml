@@ -17,18 +17,17 @@
 			<Controls:CommandLink Content="Create a new project" Note="Enable Seven Update to update your software" TabIndex="1" Click="NewProject_Click" />
 			<Controls:CommandLink Content="Create a new update" Grid.Column="1" Note="Adds a new update to" TabIndex="2" Click="NewUpdate_Click" Visibility="Collapsed" Name="clNewUpdate" />
 			<Controls:CommandLink Grid.Column="1" Content="Edit item" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" />
-			<Controls:CommandLink Content="Deploy project" Note="Creates the files needed to release your update(s)" TabIndex="3" Visibility="Collapsed" Name="clDeploy" Click="clDeploy_Click" />
 			<Controls:CommandLink Content="Test update" TabIndex="4" Note="Simulate updating to detect problems" Visibility="Collapsed" Name="clTest" Margin="0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 			<Controls:BackButton IsEnabled="False" />
-			<TextBlock Text="Welcome to the Seven Update SDK" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,-2,0,0" Name="tbTitle">
+			<TextBlock Text="Welcome to the Seven Update SDK" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,0,0,2" Name="tbTitle">
 				<TextBlock.Effect>
 					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
 				</TextBlock.Effect>
 			</TextBlock>
 		</StackPanel>
-		<TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,0,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand" Focusable="True" Name="tbHelp" Grid.Column="1">
+		<TextBlock Text="Help &amp; Support" Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand" Focusable="True" Name="tbHelp" Grid.Column="1">
 			<TextBlock.Effect>
 				<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
 			</TextBlock.Effect>
@@ -41,6 +40,17 @@
 		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="treeView_SelectedItemChanged" MouseRightButtonDown="treeView_MouseRightButtonDown" MaxWidth="400">
 			<TreeView.ContextMenu>
 				<ContextMenu>
+					<MenuItem Header="Release application" Click="ReleaseApp_Click">
+						<MenuItem.Icon>
+							<Image Source="/SevenUpdate.Sdk;component/Images/App.png" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<MenuItem Header="Release updates" Click="ReleaseUpdates_Click">
+						<MenuItem.Icon>
+							<Image Source="/SevenUpdate.Sdk;component/Images/Update.png" />
+						</MenuItem.Icon>
+					</MenuItem>
+					<Separator />
 					<MenuItem Header="Delete" Click="MenuItem_Click">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
