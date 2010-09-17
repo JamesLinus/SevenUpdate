@@ -53,17 +53,9 @@ namespace SevenUpdate.Sdk.Pages
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             if (AeroGlass.IsEnabled)
-            {
                 tbTitle.Foreground = Brushes.Black;
-            }
             else
-            {
                 tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    tbTitle.TextEffects.Clear();
-                }
-            }
         }
 
         #endregion
@@ -124,12 +116,12 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var cfd = new CommonOpenFileDialog
+            var cfd = new CommonSaveFileDialog
                           {
-                              IsFolderPicker = false,
                               DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                               AddToMostRecentlyUsedList = true,
-                              DefaultExtension = ".sui"
+                              DefaultExtension = ".sui",
+                              DefaultFileName = appName
                           };
 
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));

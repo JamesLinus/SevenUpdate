@@ -29,6 +29,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using Microsoft.Windows.Shell;
@@ -71,10 +72,6 @@ namespace SevenUpdate.Sdk.Pages
                 tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    tbTitle.TextEffects.Clear();
-                }
             }
         }
 
@@ -90,9 +87,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region UI Events
 
-        #region TextBox - Lost Keyboard Focus
 
-        #endregion
 
         #region RadioButton - Checked
 
@@ -120,22 +115,64 @@ namespace SevenUpdate.Sdk.Pages
         private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = fileUrl;
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = fileUrl;
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = fileUrl;
+        }
+
+        #endregion
+
+        #region TextBox - Lost Keyboard Focus
+
+        private void TextBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            var source = e.Source as InfoTextBox;
+            if (source == null)
+                return;
+            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            installUrl = installUrl.Replace(@"\\", @"\");
+
+            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion

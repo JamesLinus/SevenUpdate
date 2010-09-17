@@ -221,6 +221,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
+                ReportError(e, UserStore);
                 if (SerializationError != null)
                     SerializationError(null, new SerializationErrorEventArgs(e, sourceUrl));
             }
@@ -438,9 +439,6 @@ namespace SevenUpdate
                 if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
-                    stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%", true);
-                    stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
-
                     if (is64Bit)
                     {
                         stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
@@ -458,6 +456,8 @@ namespace SevenUpdate
                 }
                 else
                 {
+                    stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES%", true);
+                    stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES%", true);
                     stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%", true);
                     stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
                 }
@@ -569,6 +569,9 @@ namespace SevenUpdate
         /// <param name = "ignoreCare">Indicates if replacement ignores character case</param>
         public static string Replace(this string str, string find, string replace, bool ignoreCare)
         {
+            if (str == null || find == null)
+                return str;
+
             // Get input string length
             var expressionLength = str.Length;
 
@@ -613,6 +616,9 @@ namespace SevenUpdate
         /// <param name = "ignoreCare">Indicates if the replace should ignore case</param>
         public static StringBuilder Replace(this StringBuilder sb, string find, string replace, bool ignoreCare)
         {
+            if (sb == null || find == null)
+                return sb;
+
             var str = sb.ToString();
             // Get input string length
             var expressionLength = str.Length;

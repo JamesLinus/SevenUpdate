@@ -80,10 +80,6 @@ namespace SevenUpdate.Sdk.Pages
                 tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    tbTitle.TextEffects.Clear();
-                }
             }
         }
 
@@ -170,8 +166,15 @@ namespace SevenUpdate.Sdk.Pages
             var source = e.Source as InfoTextBox;
             if (source == null)
                 return;
+            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
-            source.Text = Base.ConvertPath(source.Text, false, Core.AppInfo.Is64Bit);
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            installUrl = installUrl.Replace(@"\\", @"\");
+
+            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
         #endregion
@@ -201,8 +204,15 @@ namespace SevenUpdate.Sdk.Pages
                                 ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                 : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var cfd = new CommonOpenFileDialog {Multiselect = false, InitialDirectory = directory, DefaultFileName = Path.GetFileName(Core.UpdateInfo.Files[listBox.SelectedIndex].Destination)};
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
-                Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+
+            var installUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            installUrl = installUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Files[listBox.SelectedIndex].Destination = installUrl;
         }
 
         private void Hash_MouseDown(object sender, MouseButtonEventArgs e)

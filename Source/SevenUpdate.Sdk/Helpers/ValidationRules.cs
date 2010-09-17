@@ -47,7 +47,7 @@ namespace SevenUpdate.Sdk.Helpers
 
             try
             {
-                input = Base.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                input = Core.AppInfo.Directory == null ? Base.ConvertPath(input, true, Core.AppInfo.Is64Bit) : Base.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
                 new Uri(input);
             }
             catch

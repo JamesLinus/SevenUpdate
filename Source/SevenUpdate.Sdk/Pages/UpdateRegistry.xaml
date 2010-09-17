@@ -31,11 +31,7 @@
 					<CommandBinding Command="NavigationCommands.BrowseBack" />
 				</Controls:BackButton.CommandBindings>
 			</Controls:BackButton>
-			<TextBlock Text="Registry" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle">
-				<TextBlock.Effect>
-					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
-				</TextBlock.Effect>
-			</TextBlock>
+			<TextBlock Style="{StaticResource glassText}" Text="Registry" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<!--Help Text-->
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility},ConverterParameter=True}" Grid.ColumnSpan="3" Grid.Row="9" HorizontalAlignment="Left">

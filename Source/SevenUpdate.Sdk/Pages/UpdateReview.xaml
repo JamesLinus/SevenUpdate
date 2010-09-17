@@ -18,11 +18,7 @@
 					<CommandBinding Command="NavigationCommands.BrowseBack" />
 				</Controls:BackButton.CommandBindings>
 			</Controls:BackButton>
-			<TextBlock Text="Review" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle">
-				<TextBlock.Effect>
-					<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
-				</TextBlock.Effect>
-			</TextBlock>
+			<TextBlock Style="{StaticResource glassText}" Text="Review" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="White" />
 		<StackPanel Grid.ColumnSpan="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">

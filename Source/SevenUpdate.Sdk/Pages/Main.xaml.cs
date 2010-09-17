@@ -56,15 +56,13 @@ namespace SevenUpdate.Sdk.Pages
             {
                 tbTitle.Foreground = Brushes.Black;
                 tbHelp.Foreground = Brushes.Black;
+                tbAbout.Foreground = Brushes.Black;
             }
             else
             {
                 tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    tbTitle.TextEffects.Clear();
-                }
+                tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
 
@@ -93,24 +91,6 @@ namespace SevenUpdate.Sdk.Pages
 
                 treeView.Items.Add(app);
             }
-        }
-
-        private void ReleaseUpdates_Click(object sender, RoutedEventArgs e)
-        {
-            var cfd = new CommonOpenFileDialog
-                          {
-                              IsFolderPicker = false,
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              AddToMostRecentlyUsedList = true,
-                              DefaultExtension = ".sui"
-                          };
-
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
-
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
         }
 
         #region UI Events
@@ -188,17 +168,17 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ReleaseApp_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            var cfd = new CommonSaveFileDialog
                           {
-                              IsFolderPicker = false,
                               DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
                               AddToMostRecentlyUsedList = true,
-                              DefaultExtension = ".sua"
+                              DefaultExtension = ".sua",
+                              DefaultFileName = appName
                           };
             cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sua, "*.sua"));
             if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
                 return;
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
             File.Copy(Core.UserStore + appName + ".sua", cfd.FileName, true);
         }
 
@@ -232,6 +212,25 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             LoadProjects();
+        }
+
+        private void ReleaseUpdates_Click(object sender, RoutedEventArgs e)
+        {
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            var cfd = new CommonSaveFileDialog
+            {
+                DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                AddToMostRecentlyUsedList = true,
+                DefaultExtension = ".sui",
+                DefaultFileName = appName
+            };
+
+            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+
+            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+                return;
+
+            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace Microsoft.Windows.Internal
         /// <summary>
         ///   Determines if the application is running on XP
         /// </summary>
-        public static bool RunningOnXP { get { return Environment.OSVersion.Version.Major >= 5; } }
+        public static bool RunningOnXP { get { return Environment.OSVersion.Version.Major < 6; } }
 
         /// <summary>
         ///   Determines if the application is running on Vista

@@ -66,10 +66,6 @@ namespace SevenUpdate.Sdk.Pages
                 tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 line.Visibility = Visibility.Visible;
                 rectangle.Visibility = Visibility.Visible;
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    tbTitle.TextEffects.Clear();
-                }
             }
         }
 
