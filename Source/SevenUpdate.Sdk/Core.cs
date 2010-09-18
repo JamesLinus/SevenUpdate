@@ -358,7 +358,6 @@ namespace SevenUpdate.Sdk
                           {
                               InitialDirectory = initialDirectory,
                               EnsureValidNames = true,
-                              EnsureFileExists = true,
                               DefaultDirectory = defaultDirectory,
                               DefaultExtension = defaultExtension,
                               DefaultFileName = defaultFileName,
