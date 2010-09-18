@@ -204,4 +204,10 @@
   <data name="Sua" xml:space="preserve">
     <value>Seven Update application</value>
   </data>
+  <data name="RegFile" xml:space="preserve">
+    <value>Registry file</value>
+  </data>
+  <data name="AllFiles" xml:space="preserve">
+    <value>All files</value>
+  </data>
 </root>

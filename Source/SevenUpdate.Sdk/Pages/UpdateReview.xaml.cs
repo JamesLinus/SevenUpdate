@@ -25,7 +25,6 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -116,27 +115,20 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var cfd = new CommonSaveFileDialog
-                          {
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              AddToMostRecentlyUsedList = true,
-                              DefaultExtension = ".sui",
-                              DefaultFileName = appName
-                          };
+            var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sui");
 
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
-
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+            if (fileName == null)
                 return;
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
+
+            File.Copy(Core.UserStore + appName + ".sui", fileName, true);
 
             if (Core.IsNewProject)
             {
-                cfd.DefaultExtension = ".sua";
-                cfd.Filters.Clear();
-                cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sua, "*.sua"));
-                cfd.Filters[0].ShowExtensions = false;
-                File.Copy(Core.UserStore + appName + ".sua", cfd.FileName, true);
+                fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sua");
+
+                if (fileName == null)
+                    return;
+                File.Copy(Core.UserStore + appName + ".sua", fileName, true);
             }
             Core.IsNewProject = false;
             MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));

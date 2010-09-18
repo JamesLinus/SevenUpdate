@@ -21,9 +21,9 @@ namespace Microsoft.Windows.Dialogs
     ///   Creates a Vista or Windows 7 Common File Dialog, allowing the user to select the filename and location for a saved file.
     /// </summary>
     /// <permission cref = "System.Security.Permissions.FileDialogPermission">
-    ///   to save a file. Associated enumeration: <see cref = "System.Security.Permissions.SecurityAction.LinkDemand" />.
+    ///   to save a file. Associated enumeration: <see cref = "System.Security.Permissions.SecurityAction.Demand" />.
     /// </permission>
-    [FileDialogPermission(SecurityAction.LinkDemand, Save = true)]
+    [FileDialogPermission(SecurityAction.Demand, Save = true)]
     public sealed class CommonSaveFileDialog : CommonFileDialog
     {
         private NativeFileSaveDialog saveDialogCoClass;

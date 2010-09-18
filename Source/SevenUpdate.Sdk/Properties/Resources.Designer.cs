@@ -70,6 +70,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All files.
+        /// </summary>
+        public static string AllFiles {
+            get {
+                return ResourceManager.GetString("AllFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculating hash.
         /// </summary>
         public static string CalculatingHash {
@@ -219,6 +228,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string RecentProjects {
             get {
                 return ResourceManager.GetString("RecentProjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registry file.
+        /// </summary>
+        public static string RegFile {
+            get {
+                return ResourceManager.GetString("RegFile", resourceCulture);
             }
         }
         

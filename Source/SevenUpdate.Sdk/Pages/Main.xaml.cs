@@ -29,7 +29,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -166,22 +165,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        private void ReleaseApp_Click(object sender, RoutedEventArgs e)
-        {
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            var cfd = new CommonSaveFileDialog
-                          {
-                              DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                              AddToMostRecentlyUsedList = true,
-                              DefaultExtension = ".sua",
-                              DefaultFileName = appName
-                          };
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sua, "*.sua"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-            File.Copy(Core.UserStore + appName + ".sua", cfd.FileName, true);
-        }
-
         #region MenuItem - Click
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -214,23 +197,26 @@ namespace SevenUpdate.Sdk.Pages
             LoadProjects();
         }
 
+        private void ReleaseApp_Click(object sender, RoutedEventArgs e)
+        {
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sua");
+
+            if (fileName == null)
+                return;
+            File.Copy(Core.UserStore + appName + ".sua", fileName, true);
+        }
+
         private void ReleaseUpdates_Click(object sender, RoutedEventArgs e)
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            var cfd = new CommonSaveFileDialog
-            {
-                DefaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                AddToMostRecentlyUsedList = true,
-                DefaultExtension = ".sui",
-                DefaultFileName = appName
-            };
 
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Sui, "*.sui"));
+            var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sui");
 
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+            if (fileName == null)
                 return;
 
-            File.Copy(Core.UserStore + appName + ".sui", cfd.FileName, true);
+            File.Copy(Core.UserStore + appName + ".sui", fileName, true);
         }
 
         #endregion

@@ -18,7 +18,7 @@ namespace Microsoft.Windows.Dialogs
     /// <summary>
     ///   Creates a Vista or Windows 7 Common File Dialog, allowing the user to select one or more files.
     /// </summary>
-    [FileDialogPermission(SecurityAction.LinkDemand, Open = true)]
+    [FileDialogPermission(SecurityAction.Demand, Open = true)]
     public sealed class CommonOpenFileDialog : CommonFileDialog
     {
         private NativeFileOpenDialog openDialogCoClass;

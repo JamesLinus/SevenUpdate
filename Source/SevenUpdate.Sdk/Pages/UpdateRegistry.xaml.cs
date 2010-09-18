@@ -162,13 +162,12 @@ namespace SevenUpdate.Sdk.Pages
 
         private void ImportRegistryFile_Click(object sender, RoutedEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {Multiselect = false, DefaultExtension = "reg"};
-            cfd.Filters.Add(new CommonFileDialogFilter("Registry file", "*.reg"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+            var files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), false, null, null, "reg");
+            if (files == null)
                 return;
 
             var registryParser = new RegistryParser();
-            var results = registryParser.Parse(cfd.FileName);
+            var results = registryParser.Parse(files[0]);
 
             foreach (var t in results)
                 Core.UpdateInfo.RegistryItems.Add(t);

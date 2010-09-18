@@ -85,8 +85,7 @@
 			</StackPanel>
 		</GroupBox>
 		<TextBlock Text="Shortcut name:" ToolTip="The name of the shortcut" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5" Name="tbxSaveLocation"
-                LostKeyboardFocus="TextBox_LostKeyboardFocus">
+		<Controls:InfoTextBox Label="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5" Name="tbxSaveLocation" LostKeyboardFocus="TextBox_LostKeyboardFocus">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Location" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>

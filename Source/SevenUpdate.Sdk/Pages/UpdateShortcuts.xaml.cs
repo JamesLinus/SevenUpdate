@@ -87,12 +87,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #region UI Events
 
-
-
-        #region RadioButton - Checked
-
-        #endregion
-
         #region Button - Click
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -114,43 +108,43 @@ namespace SevenUpdate.Sdk.Pages
 
         private void BrowseTarget_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
-
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-
-            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            var files = Core.OpenFileDialog(installDirectory);
+            var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Target = fileUrl;
         }
 
         private void BrowsePath_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            var shortcut = Core.OpenFileDialog(installDirectory, false, null, null, "lnk", true);
 
-            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            if (shortcut == null)
+                return;
+            var saveLoc = Path.GetDirectoryName(shortcut[0]);
+
+            var fileUrl = saveLoc.Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Location = fileUrl;
         }
 
         private void BrowseIcon_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog {IsFolderPicker = true, Multiselect = false};
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
-                return;
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory) ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
-            var fileUrl = cfd.FileName.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            var shortcut = Core.OpenFileDialog(installDirectory);
+
+            if (shortcut == null)
+                return;
+
+            var fileUrl = shortcut[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[listBox.SelectedIndex].Icon = fileUrl;
         }
@@ -186,23 +180,16 @@ namespace SevenUpdate.Sdk.Pages
             var allUserStartMenu = new StringBuilder(260);
             NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
 
-            var cfd = new CommonSaveFileDialog
-                          {
-                              AlwaysAppendDefaultExtension = true,
-                              DefaultExtension = "lnk",
-                              InitialDirectory = allUserStartMenu.ToString(),
-                              DefaultFileName = Core.AppInfo.Name[0].Value,
-                              EnsureValidNames = true,
-                          };
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+            var file = Core.SaveFileDialog(allUserStartMenu.ToString(), null, Core.AppInfo.Name[0].Value, "lnk");
+
+            if (file == null)
                 return;
 
-            var path = Base.ConvertPath(Path.GetDirectoryName(cfd.FileName), false, Core.AppInfo.Is64Bit);
+            var path = Base.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
             var shortcut = new Shortcut {Location = path, Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>(),};
-            var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(cfd.FileName)};
+            var ls = new LocaleString {Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(file)};
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
@@ -211,13 +198,12 @@ namespace SevenUpdate.Sdk.Pages
         {
             var allUserStartMenu = new StringBuilder(260);
             NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
-            var cfd = new CommonOpenFileDialog {DefaultExtension = "lnk", InitialDirectory = allUserStartMenu.ToString(), EnsureFileExists = true, NavigateToShortcut = true, Multiselect = false};
+            var file = Core.OpenFileDialog(allUserStartMenu.ToString(), false, null, Core.AppInfo.Name[0].Value, "lnk", true);
 
-            cfd.Filters.Add(new CommonFileDialogFilter(Properties.Resources.Shortcut, "*.lnk"));
-            if (cfd.ShowDialog(Application.Current.MainWindow) != CommonFileDialogResult.OK)
+            if (file == null)
                 return;
 
-            var importedShortcut = ShortcutInterop.ResolveShortcut(cfd.FileName);
+            var importedShortcut = ShortcutInterop.ResolveShortcut(file[0]);
 
             var path = Base.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");

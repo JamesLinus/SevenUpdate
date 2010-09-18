@@ -29,7 +29,9 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
+using Microsoft.Win32;
 using Microsoft.Windows.Dialogs;
+using Microsoft.Windows.Internal;
 using SevenUpdate.Sdk.Properties;
 using SevenUpdate.Sdk.Windows;
 
@@ -110,8 +112,6 @@ namespace SevenUpdate.Sdk
 
         internal static int UpdateIndex = -1;
         internal static int AppIndex = -1;
-
-        //internal static DropShadowEffect dropShadowEffect = new DropShadowEffect { Color = Color.FromRgb(255, 255, 255), BlurRadius = 10, RenderingBias = RenderingBias.Performance, ShadowDepth = 0, Direction = 0 };
 
         #endregion
 
@@ -229,6 +229,161 @@ namespace SevenUpdate.Sdk
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);
+        }
+
+        #endregion
+
+        #region CommonFileDialog
+
+        /// <summary>
+        ///   Opens a OpenFileDialog
+        /// </summary>
+        /// <param name = "initialDirectory">Gets or sets the inital directory displayed when the dialog is shown. A null or empty string indicates that the dialog is using the default directory</param>
+        /// <param name = "multiSelect">Gets or sets a value that determines whether the user can select more than one file</param>
+        /// <param name = "defaultDirectory">Sets the folder or path used as a default if there is not a recently used folder value available</param>
+        /// <param name = "defaultFileName">Sets the default file name</param>
+        /// <param name = "defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is null or empty, the extension is not added to the file names</param>
+        /// <param name = "navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
+        /// <returns>A collection of the selected files</returns>
+        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultDirectory = null, string defaultFileName = null, string defaultExtension = null,
+                                                bool navigateToShortcut = false)
+        {
+            if (CoreHelpers.RunningOnXP)
+            {
+                var ofd = new OpenFileDialog
+                              {
+                                  Multiselect = multiSelect,
+                                  FileName = defaultFileName,
+                                  CheckFileExists = true,
+                                  DefaultExt = defaultExtension,
+                                  InitialDirectory = initialDirectory,
+                                  DereferenceLinks = navigateToShortcut
+                              };
+
+                switch (defaultExtension)
+                {
+                    case "sua":
+                        ofd.Filter = Resources.Sua + " (*.sua)|*.sua";
+                        break;
+                    case "sui":
+                        ofd.Filter = Resources.Sui + " (*.sui)|*.sui";
+                        break;
+                    case "reg":
+                        ofd.Filter = Resources.RegFile + " (*.reg)|*.reg";
+                        break;
+                    case "lnk":
+                        ofd.Filter = Resources.Shortcut + " (*.lnk)|*.lnk";
+                        break;
+                    default:
+                        ofd.AddExtension = false;
+                        ofd.Filter = Resources.AllFiles + "|*.*";
+                        break;
+                }
+                return ofd.ShowDialog(Application.Current.MainWindow).GetValueOrDefault() ? ofd.FileNames : null;
+            }
+
+            var cfd = new CommonOpenFileDialog
+                          {
+                              InitialDirectory = initialDirectory,
+                              EnsureFileExists = true,
+                              EnsureValidNames = true,
+                              Multiselect = true,
+                              DefaultDirectory = defaultDirectory,
+                              NavigateToShortcut = navigateToShortcut,
+                              DefaultExtension = defaultExtension,
+                              DefaultFileName = defaultFileName
+                          };
+            switch (defaultExtension)
+            {
+                case "sua":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sua, "*.sua"));
+                    break;
+                case "sui":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sui, "*.sui"));
+                    break;
+                case "reg":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.RegFile, "*.reg"));
+                    break;
+                case "lnk":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Shortcut, "*.lnk"));
+                    break;
+            }
+            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+            {
+                var fileNames = new string[cfd.FileNames.Count];
+                cfd.FileNames.CopyTo(fileNames, 0);
+                return fileNames;
+            }
+            return null;
+        }
+
+        /// <summary>
+        ///   Opens a SaveFileDialog
+        /// </summary>
+        /// <param name = "initialDirectory">Gets or sets the inital directory displayed when the dialog is shown. A null or empty string indicates that the dialog is using the default directory</param>
+        /// <param name = "defaultDirectory">Sets the folder or path used as a default if there is not a recently used folder value available</param>
+        /// <param name = "defaultFileName">Sets the default file name</param>
+        /// <param name = "defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is null or empty, the extension is not added to the file names</param>
+        /// <returns>Gets the selected filename</returns>
+        internal static string SaveFileDialog(string initialDirectory, string defaultDirectory, string defaultFileName, string defaultExtension = null)
+        {
+            if (CoreHelpers.RunningOnXP)
+            {
+                var ofd = new SaveFileDialog
+                              {FileName = defaultFileName, CheckFileExists = true, DefaultExt = defaultExtension, AddExtension = true, InitialDirectory = initialDirectory, ValidateNames = true};
+
+                switch (defaultExtension)
+                {
+                    case "sua":
+                        ofd.Filter = Resources.Sua + " (*.sua)|*.sua";
+                        break;
+                    case "sui":
+                        ofd.Filter = Resources.Sui + " (*.sui)|*.sui";
+                        break;
+                    case "reg":
+                        ofd.Filter = Resources.RegFile + " (*.reg)|*.reg";
+                        break;
+                    case "lnk":
+                        ofd.Filter = Resources.Shortcut + " (*.lnk)|*.lnk";
+                        break;
+                    default:
+                        ofd.AddExtension = false;
+                        ofd.Filter = Resources.AllFiles + "|*.*";
+                        break;
+                }
+                return ofd.ShowDialog(Application.Current.MainWindow).GetValueOrDefault() ? ofd.FileName : null;
+            }
+
+            var cfd = new CommonSaveFileDialog
+                          {
+                              InitialDirectory = initialDirectory,
+                              EnsureValidNames = true,
+                              EnsureFileExists = true,
+                              DefaultDirectory = defaultDirectory,
+                              DefaultExtension = defaultExtension,
+                              DefaultFileName = defaultFileName,
+                              AlwaysAppendDefaultExtension = true,
+                              AddToMostRecentlyUsedList = true
+                          };
+            switch (defaultExtension)
+            {
+                case "sua":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sua, "*.sua"));
+                    break;
+                case "sui":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sui, "*.sui"));
+                    break;
+                case "reg":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.RegFile, "*.reg"));
+                    break;
+                case "lnk":
+                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Shortcut, "*.lnk"));
+                    break;
+                default:
+                    cfd.AlwaysAppendDefaultExtension = false;
+                    break;
+            }
+            return cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK ? cfd.FileName : null;
         }
 
         #endregion
