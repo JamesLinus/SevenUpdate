@@ -330,7 +330,7 @@ namespace SevenUpdate.Sdk
             if (CoreHelpers.RunningOnXP)
             {
                 var ofd = new SaveFileDialog
-                              {FileName = defaultFileName, CheckFileExists = true, DefaultExt = defaultExtension, AddExtension = true, InitialDirectory = initialDirectory, ValidateNames = true};
+                              {FileName = defaultFileName, CheckFileExists = false, DefaultExt = defaultExtension, AddExtension = true, InitialDirectory = initialDirectory, ValidateNames = true};
 
                 switch (defaultExtension)
                 {
