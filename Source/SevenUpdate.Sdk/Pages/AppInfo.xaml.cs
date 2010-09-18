@@ -55,8 +55,6 @@ namespace SevenUpdate.Sdk.Pages
             InitializeComponent();
             DataContext = Core.AppInfo;
 
-            if (Environment.OSVersion.Version.Major < 6)
-                return;
             if (Core.AppIndex > -1)
             {
                 btnNext.Visibility = Visibility.Collapsed;

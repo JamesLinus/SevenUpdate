@@ -56,9 +56,6 @@ namespace SevenUpdate.Sdk.Pages
                 Core.UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
             listBox.ItemsSource = Core.UpdateInfo.Shortcuts;
 
-            if (Environment.OSVersion.Version.Major < 6)
-                return;
-
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             if (AeroGlass.IsEnabled)

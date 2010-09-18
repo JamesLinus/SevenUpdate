@@ -46,15 +46,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             InitializeComponent();
 
-            if (Environment.OSVersion.Version.Major < 6)
-                return;
-
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
-            if (AeroGlass.IsEnabled)
-                tbTitle.Foreground = Brushes.Black;
-            else
-                tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+            tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
         #endregion

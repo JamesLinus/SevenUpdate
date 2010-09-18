@@ -63,10 +63,6 @@ namespace SevenUpdate.Sdk.Pages
 
             listBox.ItemsSource = Core.UpdateInfo.Files;
 
-
-            if (Environment.OSVersion.Version.Major < 6)
-                return;
-
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             if (AeroGlass.IsEnabled)
