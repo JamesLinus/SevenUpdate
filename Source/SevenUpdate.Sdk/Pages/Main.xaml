@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Sdk.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="850" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Sdk.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="467" d:DesignWidth="850" Loaded="Page_Loaded">
 	<!-- Grid-->
 	<Grid ShowGridLines="False">
 		<Grid.ColumnDefinitions>
@@ -16,7 +16,7 @@
 		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,75,0,0" Grid.RowSpan="2">
 			<Controls:CommandLink Content="Create a new project" Note="Enable Seven Update to update your software" TabIndex="1" Click="NewProject_Click" />
 			<Controls:CommandLink Content="Create a new update" Grid.Column="1" Note="Adds a new update to" TabIndex="2" Click="NewUpdate_Click" Visibility="Collapsed" Name="clNewUpdate" />
-			<Controls:CommandLink Grid.Column="1" Content="Edit item" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" />
+			<Controls:CommandLink Grid.Column="1" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" Content="Edit" />
 			<Controls:CommandLink Content="Test update" TabIndex="4" Note="Simulate updating to detect problems" Visibility="Collapsed" Name="clTest" Margin="0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
@@ -28,17 +28,17 @@
 		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="treeView_SelectedItemChanged" MouseRightButtonDown="treeView_MouseRightButtonDown" MaxWidth="400">
 			<TreeView.ContextMenu>
 				<ContextMenu>
-					<MenuItem Header="Release application" Click="ReleaseApp_Click">
+					<MenuItem Header="Release application" Click="ReleaseApp_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/App.png" />
 						</MenuItem.Icon>
 					</MenuItem>
-					<MenuItem Header="Release updates" Click="ReleaseUpdates_Click">
+					<MenuItem Header="Release updates" Click="ReleaseUpdates_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Update.png" />
 						</MenuItem.Icon>
 					</MenuItem>
-					<Separator />
+					<Separator Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}" />
 					<MenuItem Header="Delete" Click="MenuItem_Click">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />

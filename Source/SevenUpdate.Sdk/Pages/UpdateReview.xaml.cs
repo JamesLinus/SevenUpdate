@@ -45,7 +45,7 @@ namespace SevenUpdate.Sdk.Pages
         public UpdateReview()
         {
             InitializeComponent();
-
+            DataContext = Core.UpdateInfo;
             MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
             AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
             tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
