@@ -1,5 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<UserControl x:Class="SevenUpdate.Pages.InfoBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="600" Loaded="Infobar_Loaded" d:DesignHeight="110" d:DesignWidth="600" MaxHeight="150">
+
+<UserControl x:Class="SevenUpdate.Pages.InfoBar" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="600" Loaded="Infobar_Loaded" d:DesignHeight="110" d:DesignWidth="600" MaxHeight="150" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<UserControl.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -23,18 +24,18 @@
 		<Border Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="1" BorderBrush="LightGray" />
 		<StackPanel Grid.Column="2" Grid.Row="1">
 			<ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" Style="{StaticResource infoBarProgress}" MinHeight="16" Margin="0,5,0,0" />
-			<TextBlock Name="tbStatus" Padding="2" Visibility="Visible" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,5,12,0" HorizontalAlignment="Stretch" Text="No updates are available for your programs." MaxHeight="50" />
+			<TextBlock Name="tbStatus" Padding="2" Visibility="Visible" TextWrapping="Wrap" VerticalAlignment="Top" Margin="0,5,12,0" HorizontalAlignment="Stretch" Text="{lex:LocText SevenUpdate:Resources:NoUpdates}" MaxHeight="50" />
 		</StackPanel>
 		<Canvas Grid.RowSpan="3" Width="20">
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Grid.RowSpan="3" Width="20" Style="{StaticResource infoBarSide}" Stretch="Fill" MaxHeight="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Canvas, AncestorLevel=1}, Path=ActualHeight}" />
 		</Canvas>
-		<TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" HorizontalAlignment="Left" Name="tbHeading" Text="Your programs are up to date" VerticalAlignment="Center" Margin="0,5,0,0" />
+		<TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" HorizontalAlignment="Left" Name="tbHeading" Text="{lex:LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,0,0" />
 		<Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" HorizontalAlignment="Left" IsEnabled="True" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2" StretchDirection="Both" Style="{StaticResource infoBarShield}" />
 		<Line Grid.Column="2" StrokeThickness="1" Stroke="LightGray" Grid.Row="1" Grid.RowSpan="2" Y1="25" HorizontalAlignment="Center" Margin="0,15,0,0" Name="line" VerticalAlignment="Top" />
 		<StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0"></StackPanel>
-		<TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="ImportantUpdates_MouseDown" Name="tbViewImportantUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="1" Text="View important updates" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Focusable="True" />
-		<TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="OptionalUpdates_MouseDown" Name="tbViewOptionalUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="2" Text="View optional updates" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" />
-		<TextBlock TextWrapping="Wrap" Grid.Column="2" LineHeight="25" Grid.Row="1" Name="tbSelectedUpdates" HorizontalAlignment="Right" Padding="2" Margin="0,10,4,0" VerticalAlignment="Top" Text="No updates selected." />
+		<TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="ImportantUpdates_MouseDown" Name="tbViewImportantUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="1" Text="{lex:LocText SevenUpdate:Resources:ViewImportantUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Focusable="True" />
+		<TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="OptionalUpdates_MouseDown" Name="tbViewOptionalUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="2" Text="{lex:LocText SevenUpdate:Resources:ViewOptionalUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" />
+		<TextBlock TextWrapping="Wrap" Grid.Column="2" LineHeight="25" Grid.Row="1" Name="tbSelectedUpdates" HorizontalAlignment="Right" Padding="2" Margin="0,10,4,0" VerticalAlignment="Top" Text="{lex:LocText SevenUpdate:Resources:NoUpdatesSelected}" />
 		<Controls:UacButton MinHeight="23" MinWidth="75" Padding="5,1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,12" Grid.Column="2" Grid.Row="2" IsDefault="True" Click="UacButton_Click" Name="btnAction" TabIndex="0" />
 	</Grid>
 </UserControl>

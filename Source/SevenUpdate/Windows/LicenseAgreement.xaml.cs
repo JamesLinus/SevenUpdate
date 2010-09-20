@@ -172,7 +172,7 @@ namespace SevenUpdate.Windows
                 catch (Exception f)
                 {
                     Base.ReportError(f.Message, Base.UserStore);
-                    licenseText[x] = "Error Downloading License Agreement";
+                    licenseText[x] = Properties.Resources.LicenseDownloadError;
                 }
             }
             wc.Dispose();
@@ -200,7 +200,7 @@ namespace SevenUpdate.Windows
             else
                 btnAction.IsShieldNeeded = licenseInformation.Count == 1;
 
-            tbHeading.Text = Properties.Resources.AcceptLicenseTerms + " " + licenseInformation[0].Title;
+            tbHeading.Text = String.Format(Properties.Resources.AcceptLicenseTerms, licenseInformation[0].Title);
             rbAccept.IsEnabled = true;
             rbDecline.IsEnabled = true;
             rtbSLA.Cursor = Cursors.IBeam;
@@ -259,7 +259,7 @@ namespace SevenUpdate.Windows
 
             if (btnAction.ButtonText == Properties.Resources.Next)
             {
-                tbHeading.Text = Properties.Resources.AcceptLicenseTerms + " " + licenseInformation[index].Title;
+                tbHeading.Text = String.Format(Properties.Resources.AcceptLicenseTerms, licenseInformation[index].Title);
                 var mcFlowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(licenseText[index]);

@@ -117,17 +117,8 @@ namespace SevenUpdate.Pages
         {
             var checkedCount = hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            tbSelectedUpdates.Text = Properties.Resources.TotalSelected + " " + checkedCount + " ";
-            if (checkedCount > 0)
-            {
-                tbSelectedUpdates.Text += checkedCount == 1 ? Properties.Resources.Updates : Properties.Resources.Update;
-                btnRestore.IsEnabled = true;
-            }
-            else
-            {
-                tbSelectedUpdates.Text += Properties.Resources.Updates;
-                btnRestore.IsEnabled = false;
-            }
+            tbSelectedUpdates.Text = String.Format(Properties.Resources.TotalSelectedUpdates, checkedCount);
+            btnRestore.IsEnabled = checkedCount > 0;
         }
 
         /// <summary>

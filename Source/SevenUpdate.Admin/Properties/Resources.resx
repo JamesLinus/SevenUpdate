@@ -120,17 +120,8 @@
   <data name="CheckingForUpdates" xml:space="preserve">
     <value>Checking for updates...</value>
   </data>
-  <data name="Complete" xml:space="preserve">
-    <value>complete</value>
-  </data>
   <data name="DownloadingUpdates" xml:space="preserve">
     <value>Downloading updates...</value>
-  </data>
-  <data name="Failed" xml:space="preserve">
-    <value>Failed</value>
-  </data>
-  <data name="Files" xml:space="preserve">
-    <value>files</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
@@ -138,18 +129,6 @@
   </data>
   <data name="InstallingUpdates" xml:space="preserve">
     <value>Installing updates...</value>
-  </data>
-  <data name="OutOf" xml:space="preserve">
-    <value>out of</value>
-  </data>
-  <data name="SevenSoftware" xml:space="preserve">
-    <value>Seven Software</value>
-  </data>
-  <data name="SevenUpdate" xml:space="preserve">
-    <value>Seven Update</value>
-  </data>
-  <data name="Successful" xml:space="preserve">
-    <value>Successful</value>
   </data>
   <data name="UpdatesDownloaded" xml:space="preserve">
     <value>Updates have been downloaded</value>
@@ -167,6 +146,12 @@
     <value>Seven Update has completed the installation of updates</value>
   </data>
   <data name="UpdatesInstalled" xml:space="preserve">
-    <value>Updates have been installed.</value>
+    <value>Updates have been installed</value>
+  </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>Downloading updates... ({0} out of {1} files complete)</value>
+  </data>
+  <data name="InstallProgress" xml:space="preserve">
+    <value>Installing updates {0}% complete...</value>
   </data>
 </root>

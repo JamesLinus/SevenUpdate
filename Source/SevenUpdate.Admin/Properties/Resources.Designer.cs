@@ -70,15 +70,6 @@ namespace SevenUpdate.Admin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to complete.
-        /// </summary>
-        internal static string Complete {
-            get {
-                return ResourceManager.GetString("Complete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Downloading updates....
         /// </summary>
         internal static string DownloadingUpdates {
@@ -88,20 +79,11 @@ namespace SevenUpdate.Admin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed.
+        ///   Looks up a localized string similar to Downloading updates... ({0} out of {1} files complete).
         /// </summary>
-        internal static string Failed {
+        internal static string DownloadProgress {
             get {
-                return ResourceManager.GetString("Failed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to files.
-        /// </summary>
-        internal static string Files {
-            get {
-                return ResourceManager.GetString("Files", resourceCulture);
+                return ResourceManager.GetString("DownloadProgress", resourceCulture);
             }
         }
         
@@ -131,38 +113,11 @@ namespace SevenUpdate.Admin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to out of.
+        ///   Looks up a localized string similar to Installing updates {0}% complete....
         /// </summary>
-        internal static string OutOf {
+        internal static string InstallProgress {
             get {
-                return ResourceManager.GetString("OutOf", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seven Software.
-        /// </summary>
-        internal static string SevenSoftware {
-            get {
-                return ResourceManager.GetString("SevenSoftware", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Seven Update.
-        /// </summary>
-        internal static string SevenUpdate {
-            get {
-                return ResourceManager.GetString("SevenUpdate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Successful.
-        /// </summary>
-        internal static string Successful {
-            get {
-                return ResourceManager.GetString("Successful", resourceCulture);
+                return ResourceManager.GetString("InstallProgress", resourceCulture);
             }
         }
         
@@ -203,7 +158,7 @@ namespace SevenUpdate.Admin.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updates have been installed..
+        ///   Looks up a localized string similar to Updates have been installed.
         /// </summary>
         internal static string UpdatesInstalled {
             get {

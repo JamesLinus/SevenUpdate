@@ -56,9 +56,8 @@ namespace SevenUpdate
                     var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
                     var appName = Base.GetLocaleString(sua.Name);
                     if (
-                        Core.ShowMessage(SevenUpdate.Properties.Resources.Add + " " + appName + " " + SevenUpdate.Properties.Resources.ToSevenUpdate, TaskDialogStandardIcon.ShieldBlue,
-                                         TaskDialogStandardButtons.Cancel, SevenUpdate.Properties.Resources.AllowUpdates + appName + "?", null, SevenUpdate.Properties.Resources.Add, true) !=
-                        TaskDialogResult.Cancel)
+                        Core.ShowMessage(String.Format(SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), TaskDialogStandardIcon.ShieldBlue, TaskDialogStandardButtons.Cancel,
+                                         String.Format(SevenUpdate.Properties.Resources.AllowUpdates, appName), null, SevenUpdate.Properties.Resources.Add, true) != TaskDialogResult.Cancel)
                         AdminClient.AddSua(sua);
                 }
                 catch

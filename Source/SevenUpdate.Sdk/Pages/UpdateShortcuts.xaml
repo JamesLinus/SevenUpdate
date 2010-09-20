@@ -1,5 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Sdk.Pages.UpdateShortcuts" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850">
+
+<Page x:Class="SevenUpdate.Sdk.Pages.UpdateShortcuts" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<!-- Grid-->
 	<Grid Name="grid">
 		<Grid.ColumnDefinitions>
@@ -36,40 +37,40 @@
 					<CommandBinding Command="NavigationCommands.BrowseBack" />
 				</Controls:BackButton.CommandBindings>
 			</Controls:BackButton>
-			<TextBlock Style="{StaticResource glassText}" Text="Shortcuts" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
+			<TextBlock Style="{StaticResource glassText}" Text="{lex:LocText SevenUpdate.Sdk:Resources:Shortcuts}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<!--Help Text-->
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="13" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility},ConverterParameter=True}" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Left">
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
-			<TextBlock Text="To get started, right click the list box and create or import a shortcut" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
+			<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:GetStartedShortcut}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
 		</StackPanel>
 		<ComboBox Grid.Column="1" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80" SelectedIndex="0" SelectionChanged="Language_SelectionChanged" Grid.ColumnSpan="2" Margin="0,5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="12">
-			<ComboBoxItem Content="English" Tag="en" />
-			<ComboBoxItem Content="Arabic" Tag="ar" />
-			<ComboBoxItem Content="Bengali" Tag="bn" />
-			<ComboBoxItem Content="Dutch" Tag="nl" />
-			<ComboBoxItem Content="French" Tag="fr" />
-			<ComboBoxItem Content="German" Tag="de" />
-			<ComboBoxItem Content="Hindi" Tag="hi" />
-			<ComboBoxItem Content="Japanese" Tag="ja" />
-			<ComboBoxItem Content="Polish" Tag="pl" />
-			<ComboBoxItem Content="Portuguese" Tag="pt" />
-			<ComboBoxItem Content="Russian" Tag="ru" />
-			<ComboBoxItem Content="Spanish" Tag="es" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:English}" Tag="en" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Arabic}" Tag="ar" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Bengali}" Tag="bn" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Dutch}" Tag="nl" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:French}" Tag="fr" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:German}" Tag="de" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Hindi}" Tag="hi" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Japanese}" Tag="ja" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Polish}" Tag="pl" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Portuguese}" Tag="pt" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Russian}" Tag="ru" />
+			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Spanish}" Tag="es" />
 		</ComboBox>
 		<!--Navigation Buttons-->
 		<StackPanel Grid.Row="15" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3" Grid.Column="1">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="_Next" Click="Button_Click" TabIndex="10" />
-			<Button Content="Cancel" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="11" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{lex:LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="10" />
+			<Button Content="{lex:LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="11" />
 		</StackPanel>
 		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="14" DisplayMemberPath="Name/Value" SelectionChanged="listBox_SelectionChanged" KeyDown="listBox_KeyDown" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
-					<MenuItem Click="AddShortcut_Click" Header="Add Shortcut" />
-					<MenuItem Click="ImportShortcut_Click" Header="Import Shortcut" />
+					<MenuItem Click="AddShortcut_Click" Header="{lex:LocText SevenUpdate.Sdk:Resources:AddShortcut}" />
+					<MenuItem Click="ImportShortcut_Click" Header="{lex:LocText SevenUpdate.Sdk:Resources:ImportShortcut}" />
 					<Separator />
-					<MenuItem Header="Remove Shortcut" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
-					<MenuItem Header="Remove All Shortcuts" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
+					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:RemoveShortcut}" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
+					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:RemoveAllShortcuts}" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
 						</MenuItem.Icon>
@@ -77,15 +78,15 @@
 				</ContextMenu>
 			</ListBox.ContextMenu>
 		</ListBox>
-		<GroupBox Grid.Column="1" Grid.Row="1" Header="Shortcut Action" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
+		<GroupBox Grid.Column="1" Grid.Row="1" Header="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutAction}" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<StackPanel Orientation="Horizontal">
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Add/Update" Margin="10" ToolTip="Creates or updates the shortcut" TabIndex="1" />
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Update}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Update only" Margin="10" ToolTip="Updates the shortcut only if it exists on the system" TabIndex="2" />
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="Delete shortcut" Margin="10" ToolTip="Deletes the shortcut on the system" TabIndex="3" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:AddOrUpdate}" Margin="10" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:AddOrUpdateToolTip}" TabIndex="1" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Update}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:UpdateOnly}" Margin="10" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:UpdateOnlyToolTip}" TabIndex="2" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:DeleteShortcut}" Margin="10" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:DeleteShortcutToolTip}" TabIndex="3" />
 			</StackPanel>
 		</GroupBox>
-		<TextBlock Text="Shortcut name:" ToolTip="The name of the shortcut" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5" Name="tbxSaveLocation" LostKeyboardFocus="TextBox_LostKeyboardFocus">
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutName}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutToolTip}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Note="%DESKTOP%" Grid.Column="1" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="5" Name="tbxSaveLocation" LostKeyboardFocus="TextBox_LostKeyboardFocus">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Location" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -94,8 +95,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="Shortcut save location:" ToolTip="The location where the shortcut resides, example: startmenu or desktop" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Label="My Shortcut" Grid.Column="1" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Name="tbxName" TabIndex="4" Margin="0,0,30,0">
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutSaveLocation}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutSaveLocationToolTip}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="4" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Note="{lex:LocText SevenUpdate.Sdk:Resources:MyShortcut}" Grid.Column="1" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Name="tbxName" TabIndex="4" Margin="0,0,30,0">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ConverterParameter="Shortcut.Name" Converter="{StaticResource stringToLocaleString}">
 					<Binding.ValidationRules>
@@ -104,10 +105,10 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" MouseDown="BrowsePath_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="5" VerticalAlignment="Center" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="{lex:LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:LocateFileLocation}" HorizontalAlignment="Left" MouseDown="BrowsePath_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="5" VerticalAlignment="Center" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
 
-		<TextBlock Text="Shortcut target:" ToolTip="The app or path the shortcut points to" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%PROGRAMFILES%\MyApp\MyApp.exe" Grid.Column="1" Grid.Row="7" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="6" Name="tbxTarget" LostKeyboardFocus="TextBox_LostKeyboardFocus">
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutTarget}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutTargetToolTip}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Note="%PROGRAMFILES%\MyApp\MyApp.exe" Grid.Column="1" Grid.Row="7" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="6" Name="tbxTarget" LostKeyboardFocus="TextBox_LostKeyboardFocus">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Target" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -116,10 +117,10 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" MouseDown="BrowseTarget_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="7" VerticalAlignment="Center" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="{lex:LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:LocateFileLocation}" HorizontalAlignment="Left" MouseDown="BrowseTarget_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="7" VerticalAlignment="Center" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
 
-		<TextBlock Text="Shortcut icon:" ToolTip="A path pointing to an ico to use as the shortcut icon" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="8" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Label="%PROGRAMFILES%\MyApp\MyApp.exe,0" Grid.Column="1" Grid.Row="9" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="7" LostKeyboardFocus="TextBox_LostKeyboardFocus">
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutIcon}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutIconToolTip}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="8" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Note="%PROGRAMFILES%\MyApp\MyApp.exe,0" Grid.Column="1" Grid.Row="9" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="7" LostKeyboardFocus="TextBox_LostKeyboardFocus">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Icon" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -128,11 +129,11 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="Browse" ToolTip="Click to locate the file location" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="BrowseIcon_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="9" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="{lex:LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:LocateFileLocation}" HorizontalAlignment="Left" VerticalAlignment="Center" MouseDown="BrowseIcon_MouseDown" Cursor="Hand" Grid.Column="2" Grid.Row="9" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" Focusable="True" />
 
-		<TextBlock Text="Shortcut description:" ToolTip="A simple description of the target exe" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="10" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterParameter=Shortcut.Description, Converter={StaticResource stringToLocaleString}}" Label="TestValue" Name="tbxDescription" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="11" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TextWrapping="Wrap" TabIndex="8" />
-		<TextBlock Text="Shortcut arguments:" HorizontalAlignment="Left" ToolTip="The command line arguments for the shortcut" Grid.Column="1" Grid.Row="12" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Arguments, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Label="TestValue" ToolTip="-myarg" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="13" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="9" />
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutDescription}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutDescriptionToolTip}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="10" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, ConverterParameter=Shortcut.Description, Converter={StaticResource stringToLocaleString}}" Note="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutDescriptionNote}" Name="tbxDescription" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="11" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TextWrapping="Wrap" TabIndex="8" />
+		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutArguments}" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ShortcutArguementsToolTip}" Grid.Column="1" Grid.Row="12" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Arguments, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Note="{lex:LocText SevenUpdate.Sdk:Resources:ArgumentNote}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ArgumentNote}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="13" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:ShortcutAction.Delete}}" TabIndex="9" />
 	</Grid>
 </Page>

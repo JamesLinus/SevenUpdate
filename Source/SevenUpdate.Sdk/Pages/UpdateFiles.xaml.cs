@@ -31,6 +31,7 @@ using System.Windows.Media;
 using Microsoft.Windows.Controls;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Dwm;
+using SevenUpdate.Sdk.Helpers;
 using SevenUpdate.Sdk.Windows;
 
 #endregion
@@ -45,10 +46,6 @@ namespace SevenUpdate.Sdk.Pages
         #region Fields
 
         private int hashesGenerating;
-
-        #endregion
-
-        #region Properties
 
         #endregion
 
@@ -99,7 +96,7 @@ namespace SevenUpdate.Sdk.Pages
             var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
             downloadUrl = downloadUrl.Replace(@"\\", @"\");
 
-            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash + "...", Source = downloadUrl};
+            var file = new UpdateFile {Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl};
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -264,6 +261,39 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        #endregion
+
+        #region ComboBox - SelectedItemChanged
+
+        private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbxDownloadUrl == null)
+                return;
+            var updateFile = listBox.SelectedItem as UpdateFile;
+            // ReSharper disable PossibleNullReferenceException
+            tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
+            switch (updateFile.Action)
+            {
+                case FileAction.CompareOnly:
+                case FileAction.Delete:
+                case FileAction.UnregisterThenDelete:
+                    updateFile.Source = null;
+                    updateFile.Args = null;
+                    tbxArgs.IsEnabled = false;
+                    tbxDownloadUrl.IsEnabled = false;
+                    break;
+
+                default:
+                    var rule = new AppDirectoryRule();
+                    tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
+                    tbxArgs.IsEnabled = true;
+                    tbxDownloadUrl.IsEnabled = true;
+                    break;
+            }
+            tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            // ReSharper restore PossibleNullReferenceException
+        }
 
         #endregion
 

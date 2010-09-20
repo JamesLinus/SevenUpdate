@@ -47,6 +47,8 @@
     <OutputPath>..\bin\Any CPU\Seven Update\Release\</OutputPath>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisIgnoreGeneratedCode>false</CodeAnalysisIgnoreGeneratedCode>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -262,6 +264,10 @@
     <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
       <Name>Windows.Shell</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Externals\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
+      <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>
+      <Name>WPFLocalizeExtension</Name>
     </ProjectReference>
     <ProjectReference Include="..\SevenUpdate.Base\SevenUpdate.Base.csproj">
       <Project>{918773CA-2A8D-4825-9516-DD1B4AFB8B46}</Project>

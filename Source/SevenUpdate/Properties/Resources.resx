@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -119,135 +119,290 @@
   </resheader>
   <data name="AcceptLicenseTerms" xml:space="preserve">
     <value>Read and accept the license terms for</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="AlreadyUpdating" xml:space="preserve">
     <value>Seven Update is currently already checking for, downloading, or installing updates.</value>
-  </data>
-  <data name="At" xml:space="preserve">
-    <value>at</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="CancelInstallation" xml:space="preserve">
     <value>You have chosen to cancel the installation of updates.</value>
-  </data>
-  <data name="CancelUpdates" xml:space="preserve">
-    <value>Cancel updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="CheckConnection" xml:space="preserve">
     <value>Seven Update cannot connect to the internet, check your connection or firewall.</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="CheckingForUpdates" xml:space="preserve">
     <value>Checking for updates...</value>
-  </data>
-  <data name="CheckUpdatesOnly" xml:space="preserve">
-    <value>Check for updates but let me choose whether to download and install them</value>
-  </data>
-  <data name="Complete" xml:space="preserve">
-    <value>complete</value>
-  </data>
-  <data name="CompletedInstallingUpdates" xml:space="preserve">
-    <value>Seven Update has completed installing updates.</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="CouldNotConnect" xml:space="preserve">
     <value>Could not connect to the Seven Update server</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="DownloadAndInstallUpdates" xml:space="preserve">
     <value>Download and install your selected updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="DownloadingUpdates" xml:space="preserve">
     <value>Downloading Updates...</value>
-  </data>
-  <data name="DownloadingUpdatesBackground" xml:space="preserve">
-    <value>Seven Update is downloading updates in the background.</value>
-  </data>
-  <data name="DownloadUpdatesOnly" xml:space="preserve">
-    <value>Download updates but let me choose whether to install them (Recommended)</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="ErrorOccurred" xml:space="preserve">
     <value>An error occurred while searching, downloading, or installing updates.</value>
-  </data>
-  <data name="ExitConfirm" xml:space="preserve">
-    <value>Are you sure you would like to exit?</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="Finish" xml:space="preserve">
     <value>Finish</value>
-  </data>
-  <data name="FinishedDownloading" xml:space="preserve">
-    <value>Seven Update has finish downloading updates, click here to view them.</value>
+    <comment>Button.Content</comment>
   </data>
   <data name="Hidden" xml:space="preserve">
     <value>Hidden</value>
+    <comment>Update Status</comment>
+  </data>
+  <data name="ImportantUpdateAvailable" xml:space="preserve">
+    <value>1 important update available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ImportantUpdatesAvailable" xml:space="preserve">
+    <value>{0} important updates are available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ImportantUpdateSelected" xml:space="preserve">
+    <value>1 important update selected</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ImportantUpdatesSelected" xml:space="preserve">
+    <value>{0} important updates selected</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallingUpdates" xml:space="preserve">
+    <value>Installing updates...</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallUpdates" xml:space="preserve">
+    <value>Install updates</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="NoImportantUpdates" xml:space="preserve">
+    <value>No important updates available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="NoNewUpdates" xml:space="preserve">
+    <value>No new updates are available for your programs.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="NoUpdatesSelected" xml:space="preserve">
+    <value>No updates are currently selected.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="OptionalUpdateAvailable" xml:space="preserve">
+    <value>1 optional update available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="OptionalUpdatesAvailable" xml:space="preserve">
+    <value>{0} optional update are available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="OptionalUpdateSelected" xml:space="preserve">
+    <value>1 optional update selected</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="OptionalUpdatesSelected" xml:space="preserve">
+    <value>{0} optional updates selected</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="PreparingDownload" xml:space="preserve">
+    <value>Preparing to download updates...</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="PreparingInstall" xml:space="preserve">
+    <value>Preparing to install updates...</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ProgramsUpToDate" xml:space="preserve">
+    <value>Your programs are up to date</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="RebootNeeded" xml:space="preserve">
+    <value>Your computer needs to be restarted to finish updates.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="RestartNow" xml:space="preserve">
+    <value>Restart now</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="SaveAndReboot" xml:space="preserve">
+    <value>Save your work and reboot your machine to complete the installation of updates.</value>
+    <comment>TaskDialog Content</comment>
+  </data>
+  <data name="SevenUpdate" xml:space="preserve">
+    <value>Seven Update</value>
+    <comment>AppName</comment>
+  </data>
+  <data name="ShowUpdate" xml:space="preserve">
+    <value>Show update</value>
+    <comment>ContextMenu</comment>
+  </data>
+  <data name="TodayAt" xml:space="preserve">
+    <value>Today at {0}</value>
+    <comment>Date</comment>
+  </data>
+  <data name="TryAgain" xml:space="preserve">
+    <value>Try Again</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="UnknownErrorOccurred" xml:space="preserve">
+    <value>An unknown error occurred</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdatesCanceled" xml:space="preserve">
+    <value>Updates have been canceled</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdatesReadyInstalled" xml:space="preserve">
+    <value>Updates are ready to be installed</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Important" xml:space="preserve">
+    <value>Important</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+    <comment>Importance</comment>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>Recommended</value>
+    <comment>Importance</comment>
+  </data>
+  <data name="InstallUpdatesForPrograms" xml:space="preserve">
+    <value>Install updates for your programs</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="RebootNeededFirst" xml:space="preserve">
+    <value>Seven Update cannot currently check for updates, because you must first restart the computer so that a previous installation may be completed.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="StopDownload" xml:space="preserve">
+    <value>Stop download</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="StopInstallation" xml:space="preserve">
+    <value>Stop installation</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="UpdatesInstalledTitle" xml:space="preserve">
+    <value>The updates were successfully installed</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Never" xml:space="preserve">
+    <value>Never</value>
+    <comment>ComboBox.Content</comment>
+  </data>
+  <data name="ConnectingToService" xml:space="preserve">
+    <value>Connecting to the Seven Update service...</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="CheckForUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="CheckForUpdatesHeading" xml:space="preserve">
+    <value>Check for updates for your installed software</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallLatestUpdates" xml:space="preserve">
+    <value>Always install the latest updates to enhance your software security and performance.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="NotAvailable" xml:space="preserve">
+    <value>Not Available</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="CouldNotConnectToService" xml:space="preserve">
+    <value>Could not connect to the Seven Update service</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="RebootComputer" xml:space="preserve">
+    <value>Would you like to reboot your computer?</value>
+    <comment>TaskDialog.Content</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="AllowUpdates" xml:space="preserve">
+    <value>This will allow Seven Update to search, download, and install updates for {0}</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="AddToSevenUpdate" xml:space="preserve">
+    <value>Add {0} to Seven Update?</value>
+    <comment>TaskDialog.Content</comment>
+  </data>
+  <data name="DownloadPercentProgress" xml:space="preserve">
+    <value>Downloading updates... ({0}, {1}% complete)</value>
+  </data>
+  <data name="DownloadProgress" xml:space="preserve">
+    <value>Downloading updates... ({0} out of {1} files)</value>
+  </data>
+  <data name="Failed" xml:space="preserve">
+    <value>Failed</value>
+    <comment>Update Status</comment>
+  </data>
+  <data name="InstallExtendedProgress" xml:space="preserve">
+    <value>Installing {0}\n{1} out of {2}, {3}% complete</value>
+  </data>
+  <data name="InstallProgress" xml:space="preserve">
+    <value>Installing {0} {1}% complete</value>
+  </data>
+  <data name="LicenseDownloadError" xml:space="preserve">
+    <value>Error Downloading License Agreement</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Successful" xml:space="preserve">
+    <value>Successful</value>
+    <comment>Update Status</comment>
+  </data>
+  <data name="TimeAt" xml:space="preserve">
+    <value>{0} at {1}</value>
+    <comment>10/01/2010 at 12:00pm</comment>
+  </data>
+  <data name="TotalSelectedUpdates" xml:space="preserve">
+    <value>Total selected: {0} updates</value>
+  </data>
+  <data name="UpdateFailed" xml:space="preserve">
+    <value>1 update failed</value>
+  </data>
+  <data name="UpdateInstallDate" xml:space="preserve">
+    <value>Succeeded, installed on {0}</value>
+  </data>
+  <data name="UpdateInstalled" xml:space="preserve">
+    <value>1 update succeeded</value>
+  </data>
+  <data name="UpdatesFailed" xml:space="preserve">
+    <value>{0} updates failed</value>
+  </data>
+  <data name="UpdatesInstalled" xml:space="preserve">
+    <value>{0} updates succeeded</value>
+  </data>
+  <data name="UpdatesInstalledFailed" xml:space="preserve">
+    <value>{0} succeeded, {1} failed</value>
+  </data>
+  <data name="CouldNotConnectService" xml:space="preserve">
+    <value>Could not connect to the Seven Update service</value>
   </data>
   <data name="HideUpdate" xml:space="preserve">
     <value>Hide update</value>
   </data>
-  <data name="ImportantUpdateAvailable" xml:space="preserve">
-    <value>important update available</value>
-  </data>
-  <data name="ImportantUpdatesAvailable" xml:space="preserve">
-    <value>important updates are available</value>
-  </data>
-  <data name="ImportantUpdateSelected" xml:space="preserve">
-    <value>important update selected</value>
-  </data>
-  <data name="ImportantUpdatesSelected" xml:space="preserve">
-    <value>important updates selected</value>
-  </data>
-  <data name="Installing" xml:space="preserve">
-    <value>Installing</value>
-  </data>
-  <data name="InstallingUpdates" xml:space="preserve">
-    <value>Installing updates...</value>
-  </data>
-  <data name="InstallingUpdatesBackground" xml:space="preserve">
-    <value>Seven Update is installing updates in the background.</value>
-  </data>
-  <data name="InstallUpdates" xml:space="preserve">
-    <value>Install updates</value>
-  </data>
-  <data name="InstallUpdatesAutomatically" xml:space="preserve">
-    <value>Install updates automatically</value>
-  </data>
-  <data name="LastUpdated" xml:space="preserve">
-    <value>Last updated:</value>
-  </data>
-  <data name="NeverCheckUpdates" xml:space="preserve">
-    <value>Never check for updates (not recommended)</value>
-  </data>
-  <data name="Next" xml:space="preserve">
-    <value>Next</value>
-  </data>
-  <data name="NoImportantUpdates" xml:space="preserve">
-    <value>No important updates available</value>
-  </data>
-  <data name="NoNewUpdates" xml:space="preserve">
-    <value>No new updates are available for your programs.</value>
-  </data>
-  <data name="NoUpdatesSelected" xml:space="preserve">
-    <value>No updates are currently selected.</value>
-  </data>
-  <data name="OptionalUpdateAvailable" xml:space="preserve">
-    <value>optional update available</value>
-  </data>
-  <data name="OptionalUpdatesAvailable" xml:space="preserve">
-    <value>optional update are available</value>
-  </data>
-  <data name="OptionalUpdateSelected" xml:space="preserve">
-    <value>optional update selected</value>
-  </data>
-  <data name="OptionalUpdatesSelected" xml:space="preserve">
-    <value>optional updates selected</value>
-  </data>
-  <data name="OutOf" xml:space="preserve">
-    <value>out of</value>
-  </data>
-  <data name="PreparingDownload" xml:space="preserve">
-    <value>Preparing to download updates...</value>
-  </data>
-  <data name="PreparingInstall" xml:space="preserve">
-    <value>Preparing to install updates...</value>
-  </data>
-  <data name="ProgramsUpToDate" xml:space="preserve">
-    <value>Your programs are up to date</value>
+  <data name="Locale" xml:space="preserve">
+    <value>Locale</value>
+    <comment>Importance</comment>
   </data>
   <data name="ReadyToDownload" xml:space="preserve">
     <value>Ready to download</value>
@@ -255,151 +410,212 @@
   <data name="ReadyToInstall" xml:space="preserve">
     <value>Ready to install</value>
   </data>
-  <data name="RebootNeeded" xml:space="preserve">
-    <value>Your computer needs to be restarted to finish updates.</value>
+  <data name="ChangeSettings" xml:space="preserve">
+    <value>Change settings</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="RestartNow" xml:space="preserve">
-    <value>Restart now</value>
+  <data name="ViewUpdateHistory" xml:space="preserve">
+    <value>View update history</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="SaveAndReboot" xml:space="preserve">
-    <value>Save your work and reboot your machine to complete the installation of updates.</value>
+  <data name="RestoreHiddenUpdates" xml:space="preserve">
+    <value>Restore hidden updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="SevenSoftware" xml:space="preserve">
-    <value>Seven Software</value>
+  <data name="AboutSevenUpdate" xml:space="preserve">
+    <value>About Seven Update</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="SevenUpdate" xml:space="preserve">
-    <value>Seven Update</value>
+  <data name="RecentCheck" xml:space="preserve">
+    <value>Most recent check for updates:</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="ShowUpdate" xml:space="preserve">
-    <value>Show update</value>
+  <data name="NoUpdates" xml:space="preserve">
+    <value>No updates are available for your programs.</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="Succeeded" xml:space="preserve">
-    <value>Succeeded</value>
+  <data name="ViewImportantUpdates" xml:space="preserve">
+    <value>View important updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="TodayAt" xml:space="preserve">
-    <value>Today at</value>
+  <data name="ViewOptionalUpdates" xml:space="preserve">
+    <value>View optional updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
+  <data name="Options" xml:space="preserve">
+    <value>Options</value>
+    <comment>Page.Title</comment>
   </data>
-  <data name="TotalSelected" xml:space="preserve">
-    <value>Total selected:</value>
+  <data name="ChooseHowToInstall" xml:space="preserve">
+    <value>Choose how Seven Update can install updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="TryAgain" xml:space="preserve">
-    <value>Try Again</value>
+  <data name="OptionDescription" xml:space="preserve">
+    <value>When your computer is online, Seven Update can automatically check for updates and download them using these settings.</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="UnknownErrorOccurred" xml:space="preserve">
-    <value>An unknown error occurred</value>
+  <data name="SelectPrograms" xml:space="preserve">
+    <value>Select the programs that will be updated with Seven Update.</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="Update" xml:space="preserve">
-    <value>update</value>
+  <data name="Program" xml:space="preserve">
+    <value>Program</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="Updates" xml:space="preserve">
-    <value>updates</value>
+  <data name="Publisher" xml:space="preserve">
+    <value>Publisher</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="UpdatesAvailable" xml:space="preserve">
-    <value>There are updates available, click here to see them</value>
+  <data name="Architecture" xml:space="preserve">
+    <value>Architecture</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="UpdatesCanceled" xml:space="preserve">
-    <value>Updates have been canceled</value>
+  <data name="PleaseWaitDownloading" xml:space="preserve">
+    <value>Please wait, downloading the program list...</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="UpdatesComplete" xml:space="preserve">
-    <value>Updates are complete</value>
+  <data name="GiveRecommendedUpdates" xml:space="preserve">
+    <value>Give me recommended updates the same way I receive important updates</value>
+    <comment>CheckBox.Content</comment>
   </data>
-  <data name="UpdatesDownloaded" xml:space="preserve">
-    <value>Updates have been downloaded</value>
+  <data name="ImportantUpdates" xml:space="preserve">
+    <value>Important updates</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="UpdateSelected" xml:space="preserve">
-    <value>update selected</value>
+  <data name="InstallUpdatesAutomatically" xml:space="preserve">
+    <value>Install updates automatically</value>
+    <comment>ComboBoxItem.Content</comment>
   </data>
-  <data name="UpdatesReadyInstalled" xml:space="preserve">
-    <value>Updates are ready to be installed</value>
+  <data name="DownloadUpdatesButChooseToInstall" xml:space="preserve">
+    <value>Download updates but let me choose to install them (recommended)</value>
+    <comment>ComboBoxItem.Content</comment>
   </data>
-  <data name="Failed" xml:space="preserve">
-    <value>Failed</value>
+  <data name="CheckUpdatesButChooseToDownload" xml:space="preserve">
+    <value>Check for updates but let me choose to download and install them</value>
+    <comment>ComboBoxItem.Content</comment>
   </data>
-  <data name="Important" xml:space="preserve">
-    <value>Important</value>
+  <data name="NeverCheckForUpdates" xml:space="preserve">
+    <value>Never check for updates (not recommended)</value>
+    <comment>ComboBoxItem.Content</comment>
   </data>
-  <data name="Locale" xml:space="preserve">
-    <value>Locale</value>
+  <data name="UpdateHistory" xml:space="preserve">
+    <value>Update History</value>
+    <comment>Page.Title</comment>
   </data>
-  <data name="Optional" xml:space="preserve">
-    <value>Optional</value>
+  <data name="ViewDetails" xml:space="preserve">
+    <value>View Details</value>
+    <comment>MenuItem.Header</comment>
   </data>
-  <data name="Recommended" xml:space="preserve">
-    <value>Recommended</value>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="Successful" xml:space="preserve">
-    <value>Successful</value>
+  <data name="Importance" xml:space="preserve">
+    <value>Importance</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="InstallUpdatesForPrograms" xml:space="preserve">
-    <value>Install updates for your programs</value>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="RebootNeededFirst" xml:space="preserve">
-    <value>Seven Update cannot currently check for updates, because you must first restart the computer so that a previous installation may be completed.</value>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+    <comment>Controls:UacButton.ButtonText</comment>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="Restore" xml:space="preserve">
-    <value>Restore</value>
+  <data name="ReviewUpdateHistory" xml:space="preserve">
+    <value>Review your update history</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="DownloadSize" xml:space="preserve">
-    <value>Download size</value>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="On" xml:space="preserve">
-    <value>on</value>
+  <data name="DateInstalled" xml:space="preserve">
+    <value>Date Installed</value>
+    <comment>GridViewColumn.Header</comment>
   </data>
-  <data name="StopDownload" xml:space="preserve">
-    <value>Stop download</value>
+  <data name="OK" xml:space="preserve">
+    <value>_OK</value>
+    <comment>Button.Content</comment>
   </data>
-  <data name="StopInstallation" xml:space="preserve">
-    <value>Stop installation</value>
+  <data name="UpdateInformation" xml:space="preserve">
+    <value>Update Information</value>
+    <comment>Page.Title</comment>
   </data>
-  <data name="UpdatesInstalled" xml:space="preserve">
-    <value>The updates were successfully installed</value>
+  <data name="SelectUpdatesToInstall" xml:space="preserve">
+    <value>Select the updates you want to install</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="Never" xml:space="preserve">
-    <value>Never</value>
+  <data name="Published" xml:space="preserve">
+    <value>Published:</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="InstalledOn" xml:space="preserve">
-    <value>installed on</value>
+  <data name="MoreInformation" xml:space="preserve">
+    <value>More information</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="ConnectingToService" xml:space="preserve">
-    <value>Connecting to the Seven Update service...</value>
+  <data name="HelpSupport" xml:space="preserve">
+    <value>Help and support</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="Files" xml:space="preserve">
-    <value>files</value>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="CheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+  <data name="RecentInstall" xml:space="preserve">
+    <value>Updates were installed:</value>
   </data>
-  <data name="CheckForUpdatesHeading" xml:space="preserve">
-    <value>Check for updates for your installed software</value>
+  <data name="Version" xml:space="preserve">
+    <value>Version:</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="InstallLatestUpdates" xml:space="preserve">
-    <value>Always install the latest updates to enhance your software security and performance.</value>
+  <data name="Support" xml:space="preserve">
+    <value>Support:</value>
+    <comment>TextBlock.Text</comment>
   </data>
-  <data name="NotAvailable" xml:space="preserve">
-    <value>Not Available</value>
+  <data name="SevenUpdateLicense" xml:space="preserve">
+    <value>Seven Update is licensed under the GNU GPL 3.0 © 2007-2010</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="CouldNotConnectToService" xml:space="preserve">
-    <value>Could not connect to the Seven Update service</value>
+  <data name="DevelopmentTeam" xml:space="preserve">
+    <value>Development Team:</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="RebootComputer" xml:space="preserve">
-    <value>Would you like to reboot your computer?</value>
+  <data name="AppCreator" xml:space="preserve">
+    <value>Robert Baker (Seven ALive) - Creator and Lead Developer</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Add</value>
+  <data name="PortionsOfCode" xml:space="preserve">
+    <value>Portions of code use the following libraries:</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="AddApp" xml:space="preserve">
-    <value>Add application to Seven Update?</value>
+  <data name="SharpBitsLicense" xml:space="preserve">
+    <value>SharpBITS.NET is licensed under the</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="AllowUpdates" xml:space="preserve">
-    <value>This will allow Seven Update to search, download, and install updates for</value>
+  <data name="BSDLicense" xml:space="preserve">
+    <value>BSD license</value>
+    <comment>Run.Text</comment>
   </data>
-  <data name="ToSevenUpdate" xml:space="preserve">
-    <value>to Seven Update?</value>
+  <data name="protobufLicense" xml:space="preserve">
+    <value>protobuf-net is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="ApacheLicense" xml:space="preserve">
+    <value>Apache License 2.0</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="ApiCodePackLicense" xml:space="preserve">
+    <value>Microsoft® Windows® API Code Pack is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="MicrosoftLicense" xml:space="preserve">
+    <value>Microsoft Software License</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
   </data>
 </root>

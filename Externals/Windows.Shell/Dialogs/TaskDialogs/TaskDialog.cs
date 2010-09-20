@@ -733,7 +733,6 @@ namespace Microsoft.Windows.Dialogs
         // the default control, or null if no default was specified.
         private static int FindDefaultButtonId(IEnumerable<TaskDialogButtonBase> controls)
         {
-            const int found = TaskDialogNativeMethods.NO_DEFAULT_BUTTON_SPECIFIED;
             return controls.Where(control => control.Default).Select(control => control.Id).FirstOrDefault();
         }
 

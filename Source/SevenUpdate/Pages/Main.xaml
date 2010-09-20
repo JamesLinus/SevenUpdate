@@ -1,5 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" MinWidth="850" MinHeight="467" Title="Seven Update" KeepAlive="True" Loaded="Page_Loaded">
+
+<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" MinWidth="850" MinHeight="467" Title="{lex:LocText SevenUpdate:Resources:SevenUpdate}" KeepAlive="True" Loaded="Page_Loaded" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<!-- Grid-->
 	<Grid ShowGridLines="False">
 		<Grid.RowDefinitions>
@@ -18,18 +19,18 @@
 		<!-- Sidebar image -->
 		<Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" Grid.RowSpan="5" />
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Check for updates" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" Focusable="True" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Change settings" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" Focusable="True" />
 
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="View update history" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" Focusable="True" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="Restore hidden updates" Padding="2" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" Focusable="True" />
 		</StackPanel>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Text="About Seven Update" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,9" VerticalAlignment="Bottom" Cursor="Hand" Padding="2" MouseDown="About_MouseDown" Grid.Row="4" Focusable="True" />
-		<TextBlock FontSize="16" Foreground="#FF003399" Padding="2" Text="Seven Update" Grid.Column="2" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Text="{lex:LocText SevenUpdate:Resources:AboutSevenUpdate}" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,9" VerticalAlignment="Bottom" Cursor="Hand" Padding="2" MouseDown="About_MouseDown" Grid.Row="4" Focusable="True" />
+		<TextBlock FontSize="16" Foreground="#FF003399" Padding="2" Text="{lex:LocText SevenUpdate:Resources:SevenUpdate}" Grid.Column="2" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
 		<ib:InfoBar x:Name="infoBar" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,30" Grid.ColumnSpan="2" />
-		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Padding="2" Text="Most recent check for updates:" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
-		<TextBlock Grid.Row="3" HorizontalAlignment="Left" Padding="2" Text="Updates were installed:" VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
-		<TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default},  Path=lastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged}" />
-		<TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=lastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged}" Margin="0,5,0,0" />
+		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Padding="2" Text="{lex:LocText SevenUpdate:Resources:RecentCheck}" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
+		<TextBlock Grid.Row="3" HorizontalAlignment="Left" Padding="2" Text="{lex:LocText SevenUpdate:Resources:RecentInstall}" VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
+		<TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default},  Path=lastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged, FallbackValue=Never}" />
+		<TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=lastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged, FallbackValue=Never}" Margin="0,5,0,0" />
 	</Grid>
 </Page>

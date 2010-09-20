@@ -195,35 +195,11 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
         /// <param name = "description">A description of the message, supplements the instruction text</param>
-        /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, string description)
-        {
-            return ShowMessage(instructionText, TaskDialogStandardIcon.None, TaskDialogStandardButtons.Ok, description);
-        }
-
-        /// <summary>
-        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
-        /// </summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name = "description">A description of the message, supplements the instruction text</param>
         /// <param name = "icon"></param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             return ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
-        }
-
-        /// <summary>
-        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
-        /// </summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
-        /// <param name = "description">A description of the message, supplements the instruction text</param>
-        /// <param name = "defaultButtonText">Text to display on the button</param>
-        /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
-        /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, string description, string defaultButtonText, bool displayShieldOnButton)
-        {
-            return ShowMessage(instructionText, TaskDialogStandardIcon.None, TaskDialogStandardButtons.Cancel, description, null, defaultButtonText, displayShieldOnButton);
         }
 
         /// <summary>

@@ -61,6 +61,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Seven Update.
+        /// </summary>
+        public static string AboutSevenUpdate {
+            get {
+                return ResourceManager.GetString("AboutSevenUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read and accept the license terms for.
         /// </summary>
         public static string AcceptLicenseTerms {
@@ -79,16 +88,16 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add application to Seven Update?.
+        ///   Looks up a localized string similar to Add {0} to Seven Update?.
         /// </summary>
-        public static string AddApp {
+        public static string AddToSevenUpdate {
             get {
-                return ResourceManager.GetString("AddApp", resourceCulture);
+                return ResourceManager.GetString("AddToSevenUpdate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This will allow Seven Update to search, download, and install updates for.
+        ///   Looks up a localized string similar to This will allow Seven Update to search, download, and install updates for {0}.
         /// </summary>
         public static string AllowUpdates {
             get {
@@ -106,11 +115,56 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to at.
+        ///   Looks up a localized string similar to Apache License 2.0.
         /// </summary>
-        public static string At {
+        public static string ApacheLicense {
             get {
-                return ResourceManager.GetString("At", resourceCulture);
+                return ResourceManager.GetString("ApacheLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft® Windows® API Code Pack is licensed under the.
+        /// </summary>
+        public static string ApiCodePackLicense {
+            get {
+                return ResourceManager.GetString("ApiCodePackLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Robert Baker (Seven ALive) - Creator and Lead Developer.
+        /// </summary>
+        public static string AppCreator {
+            get {
+                return ResourceManager.GetString("AppCreator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Architecture.
+        /// </summary>
+        public static string Architecture {
+            get {
+                return ResourceManager.GetString("Architecture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BSD license.
+        /// </summary>
+        public static string BSDLicense {
+            get {
+                return ResourceManager.GetString("BSDLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -124,11 +178,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel updates.
+        ///   Looks up a localized string similar to Change settings.
         /// </summary>
-        public static string CancelUpdates {
+        public static string ChangeSettings {
             get {
-                return ResourceManager.GetString("CancelUpdates", resourceCulture);
+                return ResourceManager.GetString("ChangeSettings", resourceCulture);
             }
         }
         
@@ -169,29 +223,29 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check for updates but let me choose whether to download and install them.
+        ///   Looks up a localized string similar to Check for updates but let me choose to download and install them.
         /// </summary>
-        public static string CheckUpdatesOnly {
+        public static string CheckUpdatesButChooseToDownload {
             get {
-                return ResourceManager.GetString("CheckUpdatesOnly", resourceCulture);
+                return ResourceManager.GetString("CheckUpdatesButChooseToDownload", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to complete.
+        ///   Looks up a localized string similar to Choose how Seven Update can install updates.
         /// </summary>
-        public static string Complete {
+        public static string ChooseHowToInstall {
             get {
-                return ResourceManager.GetString("Complete", resourceCulture);
+                return ResourceManager.GetString("ChooseHowToInstall", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update has completed installing updates..
+        ///   Looks up a localized string similar to Close.
         /// </summary>
-        public static string CompletedInstallingUpdates {
+        public static string Close {
             get {
-                return ResourceManager.GetString("CompletedInstallingUpdates", resourceCulture);
+                return ResourceManager.GetString("Close", resourceCulture);
             }
         }
         
@@ -216,9 +270,36 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Could not connect to the Seven Update service.
         /// </summary>
+        public static string CouldNotConnectService {
+            get {
+                return ResourceManager.GetString("CouldNotConnectService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to the Seven Update service.
+        /// </summary>
         public static string CouldNotConnectToService {
             get {
                 return ResourceManager.GetString("CouldNotConnectToService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date Installed.
+        /// </summary>
+        public static string DateInstalled {
+            get {
+                return ResourceManager.GetString("DateInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Development Team:.
+        /// </summary>
+        public static string DevelopmentTeam {
+            get {
+                return ResourceManager.GetString("DevelopmentTeam", resourceCulture);
             }
         }
         
@@ -241,29 +322,29 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update is downloading updates in the background..
+        ///   Looks up a localized string similar to Downloading updates... ({0}, {1}% complete).
         /// </summary>
-        public static string DownloadingUpdatesBackground {
+        public static string DownloadPercentProgress {
             get {
-                return ResourceManager.GetString("DownloadingUpdatesBackground", resourceCulture);
+                return ResourceManager.GetString("DownloadPercentProgress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download size.
+        ///   Looks up a localized string similar to Downloading updates... ({0} out of {1} files).
         /// </summary>
-        public static string DownloadSize {
+        public static string DownloadProgress {
             get {
-                return ResourceManager.GetString("DownloadSize", resourceCulture);
+                return ResourceManager.GetString("DownloadProgress", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download updates but let me choose whether to install them (Recommended).
+        ///   Looks up a localized string similar to Download updates but let me choose to install them (recommended).
         /// </summary>
-        public static string DownloadUpdatesOnly {
+        public static string DownloadUpdatesButChooseToInstall {
             get {
-                return ResourceManager.GetString("DownloadUpdatesOnly", resourceCulture);
+                return ResourceManager.GetString("DownloadUpdatesButChooseToInstall", resourceCulture);
             }
         }
         
@@ -277,29 +358,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Are you sure you would like to exit?.
-        /// </summary>
-        public static string ExitConfirm {
-            get {
-                return ResourceManager.GetString("ExitConfirm", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to files.
-        /// </summary>
-        public static string Files {
-            get {
-                return ResourceManager.GetString("Files", resourceCulture);
             }
         }
         
@@ -313,11 +376,20 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update has finish downloading updates, click here to view them..
+        ///   Looks up a localized string similar to Give me recommended updates the same way I receive important updates.
         /// </summary>
-        public static string FinishedDownloading {
+        public static string GiveRecommendedUpdates {
             get {
-                return ResourceManager.GetString("FinishedDownloading", resourceCulture);
+                return ResourceManager.GetString("GiveRecommendedUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Help and support.
+        /// </summary>
+        public static string HelpSupport {
+            get {
+                return ResourceManager.GetString("HelpSupport", resourceCulture);
             }
         }
         
@@ -340,6 +412,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Importance.
+        /// </summary>
+        public static string Importance {
+            get {
+                return ResourceManager.GetString("Importance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Important.
         /// </summary>
         public static string Important {
@@ -349,7 +430,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to important update available.
+        ///   Looks up a localized string similar to 1 important update available.
         /// </summary>
         public static string ImportantUpdateAvailable {
             get {
@@ -358,7 +439,16 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to important updates are available.
+        ///   Looks up a localized string similar to Important updates.
+        /// </summary>
+        public static string ImportantUpdates {
+            get {
+                return ResourceManager.GetString("ImportantUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} important updates are available.
         /// </summary>
         public static string ImportantUpdatesAvailable {
             get {
@@ -367,7 +457,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to important update selected.
+        ///   Looks up a localized string similar to 1 important update selected.
         /// </summary>
         public static string ImportantUpdateSelected {
             get {
@@ -376,7 +466,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to important updates selected.
+        ///   Looks up a localized string similar to {0} important updates selected.
         /// </summary>
         public static string ImportantUpdatesSelected {
             get {
@@ -385,20 +475,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to installed on.
+        ///   Looks up a localized string similar to Installing {0}\n{1} out of {2}, {3}% complete.
         /// </summary>
-        public static string InstalledOn {
+        public static string InstallExtendedProgress {
             get {
-                return ResourceManager.GetString("InstalledOn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Installing.
-        /// </summary>
-        public static string Installing {
-            get {
-                return ResourceManager.GetString("Installing", resourceCulture);
+                return ResourceManager.GetString("InstallExtendedProgress", resourceCulture);
             }
         }
         
@@ -412,20 +493,20 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update is installing updates in the background..
-        /// </summary>
-        public static string InstallingUpdatesBackground {
-            get {
-                return ResourceManager.GetString("InstallingUpdatesBackground", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Always install the latest updates to enhance your software security and performance..
         /// </summary>
         public static string InstallLatestUpdates {
             get {
                 return ResourceManager.GetString("InstallLatestUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installing {0} {1}% complete.
+        /// </summary>
+        public static string InstallProgress {
+            get {
+                return ResourceManager.GetString("InstallProgress", resourceCulture);
             }
         }
         
@@ -457,11 +538,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Last updated:.
+        ///   Looks up a localized string similar to Error Downloading License Agreement.
         /// </summary>
-        public static string LastUpdated {
+        public static string LicenseDownloadError {
             get {
-                return ResourceManager.GetString("LastUpdated", resourceCulture);
+                return ResourceManager.GetString("LicenseDownloadError", resourceCulture);
             }
         }
         
@@ -471,6 +552,33 @@ namespace SevenUpdate.Properties {
         public static string Locale {
             get {
                 return ResourceManager.GetString("Locale", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Software License.
+        /// </summary>
+        public static string MicrosoftLicense {
+            get {
+                return ResourceManager.GetString("MicrosoftLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to More information.
+        /// </summary>
+        public static string MoreInformation {
+            get {
+                return ResourceManager.GetString("MoreInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
             }
         }
         
@@ -486,9 +594,9 @@ namespace SevenUpdate.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Never check for updates (not recommended).
         /// </summary>
-        public static string NeverCheckUpdates {
+        public static string NeverCheckForUpdates {
             get {
-                return ResourceManager.GetString("NeverCheckUpdates", resourceCulture);
+                return ResourceManager.GetString("NeverCheckForUpdates", resourceCulture);
             }
         }
         
@@ -529,6 +637,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No updates are available for your programs..
+        /// </summary>
+        public static string NoUpdates {
+            get {
+                return ResourceManager.GetString("NoUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No updates are currently selected..
         /// </summary>
         public static string NoUpdatesSelected {
@@ -538,11 +655,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to on.
+        ///   Looks up a localized string similar to _OK.
         /// </summary>
-        public static string On {
+        public static string OK {
             get {
-                return ResourceManager.GetString("On", resourceCulture);
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         
@@ -556,7 +673,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to optional update available.
+        ///   Looks up a localized string similar to 1 optional update available.
         /// </summary>
         public static string OptionalUpdateAvailable {
             get {
@@ -565,7 +682,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to optional update are available.
+        ///   Looks up a localized string similar to {0} optional update are available.
         /// </summary>
         public static string OptionalUpdatesAvailable {
             get {
@@ -574,7 +691,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to optional update selected.
+        ///   Looks up a localized string similar to 1 optional update selected.
         /// </summary>
         public static string OptionalUpdateSelected {
             get {
@@ -583,7 +700,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to optional updates selected.
+        ///   Looks up a localized string similar to {0} optional updates selected.
         /// </summary>
         public static string OptionalUpdatesSelected {
             get {
@@ -592,11 +709,38 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to out of.
+        ///   Looks up a localized string similar to When your computer is online, Seven Update can automatically check for updates and download them using these settings..
         /// </summary>
-        public static string OutOf {
+        public static string OptionDescription {
             get {
-                return ResourceManager.GetString("OutOf", resourceCulture);
+                return ResourceManager.GetString("OptionDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait, downloading the program list....
+        /// </summary>
+        public static string PleaseWaitDownloading {
+            get {
+                return ResourceManager.GetString("PleaseWaitDownloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portions of code use the following libraries:.
+        /// </summary>
+        public static string PortionsOfCode {
+            get {
+                return ResourceManager.GetString("PortionsOfCode", resourceCulture);
             }
         }
         
@@ -619,11 +763,47 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Program.
+        /// </summary>
+        public static string Program {
+            get {
+                return ResourceManager.GetString("Program", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your programs are up to date.
         /// </summary>
         public static string ProgramsUpToDate {
             get {
                 return ResourceManager.GetString("ProgramsUpToDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to protobuf-net is licensed under the.
+        /// </summary>
+        public static string protobufLicense {
+            get {
+                return ResourceManager.GetString("protobufLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Published:.
+        /// </summary>
+        public static string Published {
+            get {
+                return ResourceManager.GetString("Published", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Publisher.
+        /// </summary>
+        public static string Publisher {
+            get {
+                return ResourceManager.GetString("Publisher", resourceCulture);
             }
         }
         
@@ -673,6 +853,24 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Most recent check for updates:.
+        /// </summary>
+        public static string RecentCheck {
+            get {
+                return ResourceManager.GetString("RecentCheck", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updates were installed:.
+        /// </summary>
+        public static string RecentInstall {
+            get {
+                return ResourceManager.GetString("RecentInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recommended.
         /// </summary>
         public static string Recommended {
@@ -700,6 +898,24 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore hidden updates.
+        /// </summary>
+        public static string RestoreHiddenUpdates {
+            get {
+                return ResourceManager.GetString("RestoreHiddenUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Review your update history.
+        /// </summary>
+        public static string ReviewUpdateHistory {
+            get {
+                return ResourceManager.GetString("ReviewUpdateHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -718,11 +934,20 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Software.
+        ///   Looks up a localized string similar to Select the programs that will be updated with Seven Update..
         /// </summary>
-        public static string SevenSoftware {
+        public static string SelectPrograms {
             get {
-                return ResourceManager.GetString("SevenSoftware", resourceCulture);
+                return ResourceManager.GetString("SelectPrograms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the updates you want to install.
+        /// </summary>
+        public static string SelectUpdatesToInstall {
+            get {
+                return ResourceManager.GetString("SelectUpdatesToInstall", resourceCulture);
             }
         }
         
@@ -736,11 +961,47 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seven Update is licensed under the GNU GPL 3.0 © 2007-2010.
+        /// </summary>
+        public static string SevenUpdateLicense {
+            get {
+                return ResourceManager.GetString("SevenUpdateLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SharpBITS.NET is licensed under the.
+        /// </summary>
+        public static string SharpBitsLicense {
+            get {
+                return ResourceManager.GetString("SharpBitsLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show update.
         /// </summary>
         public static string ShowUpdate {
             get {
                 return ResourceManager.GetString("ShowUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
             }
         }
         
@@ -763,15 +1024,6 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Succeeded.
-        /// </summary>
-        public static string Succeeded {
-            get {
-                return ResourceManager.GetString("Succeeded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Successful.
         /// </summary>
         public static string Successful {
@@ -781,7 +1033,25 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Today at.
+        ///   Looks up a localized string similar to Support:.
+        /// </summary>
+        public static string Support {
+            get {
+                return ResourceManager.GetString("Support", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} at {1}.
+        /// </summary>
+        public static string TimeAt {
+            get {
+                return ResourceManager.GetString("TimeAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Today at {0}.
         /// </summary>
         public static string TodayAt {
             get {
@@ -790,29 +1060,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to to Seven Update?.
+        ///   Looks up a localized string similar to Total selected: {0} updates.
         /// </summary>
-        public static string ToSevenUpdate {
+        public static string TotalSelectedUpdates {
             get {
-                return ResourceManager.GetString("ToSevenUpdate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total.
-        /// </summary>
-        public static string Total {
-            get {
-                return ResourceManager.GetString("Total", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Total selected:.
-        /// </summary>
-        public static string TotalSelected {
-            get {
-                return ResourceManager.GetString("TotalSelected", resourceCulture);
+                return ResourceManager.GetString("TotalSelectedUpdates", resourceCulture);
             }
         }
         
@@ -835,29 +1087,47 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update.
+        ///   Looks up a localized string similar to 1 update failed.
         /// </summary>
-        public static string Update {
+        public static string UpdateFailed {
             get {
-                return ResourceManager.GetString("Update", resourceCulture);
+                return ResourceManager.GetString("UpdateFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to updates.
+        ///   Looks up a localized string similar to Update History.
         /// </summary>
-        public static string Updates {
+        public static string UpdateHistory {
             get {
-                return ResourceManager.GetString("Updates", resourceCulture);
+                return ResourceManager.GetString("UpdateHistory", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are updates available, click here to see them.
+        ///   Looks up a localized string similar to Update Information.
         /// </summary>
-        public static string UpdatesAvailable {
+        public static string UpdateInformation {
             get {
-                return ResourceManager.GetString("UpdatesAvailable", resourceCulture);
+                return ResourceManager.GetString("UpdateInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Succeeded, installed on {0}.
+        /// </summary>
+        public static string UpdateInstallDate {
+            get {
+                return ResourceManager.GetString("UpdateInstallDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 update succeeded.
+        /// </summary>
+        public static string UpdateInstalled {
+            get {
+                return ResourceManager.GetString("UpdateInstalled", resourceCulture);
             }
         }
         
@@ -871,38 +1141,38 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updates are complete.
+        ///   Looks up a localized string similar to {0} updates failed.
         /// </summary>
-        public static string UpdatesComplete {
+        public static string UpdatesFailed {
             get {
-                return ResourceManager.GetString("UpdatesComplete", resourceCulture);
+                return ResourceManager.GetString("UpdatesFailed", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Updates have been downloaded.
+        ///   Looks up a localized string similar to {0} updates succeeded.
         /// </summary>
-        public static string UpdatesDownloaded {
+        public static string UpdatesInstalled {
             get {
-                return ResourceManager.GetString("UpdatesDownloaded", resourceCulture);
+                return ResourceManager.GetString("UpdatesInstalled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update selected.
+        ///   Looks up a localized string similar to {0} succeeded, {1} failed.
         /// </summary>
-        public static string UpdateSelected {
+        public static string UpdatesInstalledFailed {
             get {
-                return ResourceManager.GetString("UpdateSelected", resourceCulture);
+                return ResourceManager.GetString("UpdatesInstalledFailed", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The updates were successfully installed.
         /// </summary>
-        public static string UpdatesInstalled {
+        public static string UpdatesInstalledTitle {
             get {
-                return ResourceManager.GetString("UpdatesInstalled", resourceCulture);
+                return ResourceManager.GetString("UpdatesInstalledTitle", resourceCulture);
             }
         }
         
@@ -912,6 +1182,51 @@ namespace SevenUpdate.Properties {
         public static string UpdatesReadyInstalled {
             get {
                 return ResourceManager.GetString("UpdatesReadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version:.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Details.
+        /// </summary>
+        public static string ViewDetails {
+            get {
+                return ResourceManager.GetString("ViewDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View important updates.
+        /// </summary>
+        public static string ViewImportantUpdates {
+            get {
+                return ResourceManager.GetString("ViewImportantUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View optional updates.
+        /// </summary>
+        public static string ViewOptionalUpdates {
+            get {
+                return ResourceManager.GetString("ViewOptionalUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View update history.
+        /// </summary>
+        public static string ViewUpdateHistory {
+            get {
+                return ResourceManager.GetString("ViewUpdateHistory", resourceCulture);
             }
         }
     }

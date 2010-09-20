@@ -20,6 +20,7 @@
 
 #region
 
+using System;
 using System.Diagnostics;
 using System.Windows.Input;
 
@@ -52,14 +53,9 @@ namespace SevenUpdate.Windows
             helpUrl = updateInfo.HelpUrl;
             infoUrl = updateInfo.InfoUrl;
             if (updateInfo.Status == UpdateStatus.Hidden)
-            {
-                tbStatusLabel.Text = Properties.Resources.DownloadSize + ":";
                 tbStatus.Text = Base.ConvertFileSize(updateInfo.UpdateSize);
-            }
             else
-                tbStatus.Text = updateInfo.Status == UpdateStatus.Failed
-                                    ? Properties.Resources.Failed
-                                    : Properties.Resources.Successful + ", " + Properties.Resources.InstalledOn + " " + updateInfo.InstallDate;
+                tbStatus.Text = updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed : String.Format(Properties.Resources.UpdateInstallDate, updateInfo.InstallDate);
 
 
             ShowDialog();

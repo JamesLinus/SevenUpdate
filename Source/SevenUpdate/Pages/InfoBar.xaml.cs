@@ -161,9 +161,9 @@ namespace SevenUpdate.Pages
                     if (e.ImportantCount > 0)
                     {
                         if (e.ImportantCount == 1)
-                            tbViewImportantUpdates.Text = e.ImportantCount + " " + Properties.Resources.ImportantUpdateAvailable + " ";
+                            tbViewImportantUpdates.Text = String.Format(Properties.Resources.ImportantUpdateAvailable, e.ImportantCount);
                         else
-                            tbViewImportantUpdates.Text = e.ImportantCount + " " + Properties.Resources.ImportantUpdatesAvailable;
+                            tbViewImportantUpdates.Text = String.Format(Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
 
                         tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -176,9 +176,9 @@ namespace SevenUpdate.Pages
                             tbHeading.Text = Properties.Resources.NoImportantUpdates;
 
                         if (e.OptionalCount == 1)
-                            tbViewOptionalUpdates.Text = e.OptionalCount + " " + Properties.Resources.OptionalUpdateAvailable;
+                            tbViewOptionalUpdates.Text = String.Format(Properties.Resources.OptionalUpdateAvailable, e.OptionalCount);
                         else
-                            tbViewOptionalUpdates.Text = e.OptionalCount + " " + Properties.Resources.OptionalUpdatesAvailable;
+                            tbViewOptionalUpdates.Text = String.Format(Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
 
                         tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -231,15 +231,13 @@ namespace SevenUpdate.Pages
             }
 
             if (e.CurrentProgress == -1)
-                tbStatus.Text = Properties.Resources.PreparingInstall + "...";
+                tbStatus.Text = Properties.Resources.PreparingInstall;
             else
             {
-                tbStatus.Text = Properties.Resources.Installing + " " + e.UpdateName;
-
                 if (e.TotalUpdates > 1)
-                    tbStatus.Text += Environment.NewLine + e.UpdatesComplete + " " + Properties.Resources.OutOf + " " + e.TotalUpdates + ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
+                    tbStatus.Text = String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress);
                 else
-                    tbStatus.Text += ", " + e.CurrentProgress + "% " + Properties.Resources.Complete;
+                    tbStatus.Text = String.Format(Properties.Resources.InstallProgress, e.UpdateName);
             }
         }
 
@@ -256,15 +254,9 @@ namespace SevenUpdate.Pages
             }
 
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-            {
-                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + Base.ConvertFileSize(e.BytesTotal) + ", " + (e.BytesTransferred*100/e.BytesTotal).ToString("F0") + " % " +
-                                Properties.Resources.Complete + ")";
-            }
+                tbStatus.Text = String.Format(Properties.Resources.DownloadPercentProgress, Base.ConvertFileSize(e.BytesTotal), (e.BytesTransferred*100/e.BytesTotal).ToString("F0"));
             else
-            {
-                tbStatus.Text = Properties.Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Properties.Resources.OutOf + " " + e.FilesTotal + " " + Properties.Resources.Files + " " +
-                                Properties.Resources.Complete + ")";
-            }
+                tbStatus.Text = String.Format(Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
         }
 
         /// <summary>
@@ -286,25 +278,17 @@ namespace SevenUpdate.Pages
 
             #region Update Status
 
-            tbStatus.Text = Properties.Resources.Succeeded + ": " + e.UpdatesInstalled + " ";
-
-            if (e.UpdatesInstalled == 1)
-                tbStatus.Text += Properties.Resources.Update;
-            else
-                tbStatus.Text += Properties.Resources.Updates;
-
             if (e.UpdatesFailed <= 0)
+            {
+                tbStatus.Text = e.UpdatesInstalled == 1 ? Properties.Resources.UpdateInstalled : String.Format(Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
                 return;
+            }
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            if (e.UpdatesInstalled == 0)
-                tbStatus.Text = Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
-            else
-                tbStatus.Text += ", " + Properties.Resources.Failed + ": " + e.UpdatesFailed + " ";
 
-            if (e.UpdatesFailed == 1)
-                tbStatus.Text += Properties.Resources.Update;
+            if (e.UpdatesInstalled == 0)
+                tbStatus.Text = e.UpdatesFailed == 1 ? Properties.Resources.UpdateFailed : String.Format(Properties.Resources.UpdatesFailed, e.UpdatesFailed);
             else
-                tbStatus.Text += Properties.Resources.Updates;
+                tbStatus.Text = String.Format(Properties.Resources.UpdatesInstalledFailed, e.UpdatesInstalled, e.UpdatesFailed);
 
             #endregion
         }
@@ -483,7 +467,7 @@ namespace SevenUpdate.Pages
                     break;
 
                 case UpdateAction.InstallationCompleted:
-                    tbHeading.Text = Properties.Resources.UpdatesInstalled;
+                    tbHeading.Text = Properties.Resources.UpdatesInstalledTitle;
 
                     tbHeading.Visibility = Visibility.Visible;
                     tbStatus.Visibility = Visibility.Visible;
@@ -601,10 +585,7 @@ namespace SevenUpdate.Pages
             if (e.ImportantUpdates > 0)
             {
                 tbViewImportantUpdates.Visibility = Visibility.Visible;
-                if (e.ImportantUpdates == 1)
-                    tbSelectedUpdates.Text = e.ImportantUpdates + " " + Properties.Resources.ImportantUpdateSelected;
-                else
-                    tbSelectedUpdates.Text = e.ImportantUpdates + " " + Properties.Resources.ImportantUpdatesSelected;
+                tbSelectedUpdates.Text = e.ImportantUpdates == 1 ? Properties.Resources.ImportantUpdateSelected : String.Format(Properties.Resources.ImportantUpdatesSelected, e.ImportantUpdates);
 
                 if (e.ImportantDownloadSize > 0)
                     tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.ImportantDownloadSize);
@@ -614,18 +595,13 @@ namespace SevenUpdate.Pages
             {
                 tbViewOptionalUpdates.Visibility = Visibility.Visible;
                 if (e.ImportantUpdates == 0)
-                {
-                    if (e.OptionalUpdates == 1)
-                        tbSelectedUpdates.Text = e.OptionalUpdates + " " + Properties.Resources.OptionalUpdateSelected;
-                    else
-                        tbSelectedUpdates.Text = e.OptionalUpdates + " " + Properties.Resources.OptionalUpdatesSelected;
-                }
+                    tbSelectedUpdates.Text = e.OptionalUpdates == 1 ? Properties.Resources.OptionalUpdateSelected : String.Format(Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
                 else
                 {
                     if (e.OptionalUpdates == 1)
-                        tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + Properties.Resources.OptionalUpdateSelected;
+                        tbSelectedUpdates.Text += Environment.NewLine + Properties.Resources.OptionalUpdateSelected;
                     else
-                        tbSelectedUpdates.Text += Environment.NewLine + e.OptionalUpdates + " " + Properties.Resources.OptionalUpdatesSelected;
+                        tbSelectedUpdates.Text += Environment.NewLine + String.Format(Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
                 }
 
                 if (e.OptionalDownloadSize > 0)

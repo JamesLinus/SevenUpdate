@@ -389,13 +389,13 @@
 	<!--Validation TextBox-->
 	<Style TargetType="controls:InfoTextBox">
 		<Setter Property="FontSize" Value="14" />
-		<Setter Property="LabelStyle" Value="{StaticResource shadowedLabelStyle}" />
+		<Setter Property="NoteStyle" Value="{StaticResource shadowedLabelStyle}" />
 		<Setter Property="Validation.ErrorTemplate">
 			<Setter.Value>
 				<ControlTemplate>
 					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 						<AdornedElementPlaceholder />
-						<Image Source="/Windows.Shell;component/Images/Caution.png" Margin="4,0" UseLayoutRounding="True" />
+						<Image Source="/Windows.Shell;component/Images/Caution.png" Margin="4,0" SnapsToDevicePixels="True" RenderOptions.BitmapScalingMode="NearestNeighbor" />
 					</StackPanel>
 				</ControlTemplate>
 			</Setter.Value>

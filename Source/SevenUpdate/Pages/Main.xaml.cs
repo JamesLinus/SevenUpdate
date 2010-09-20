@@ -153,7 +153,7 @@ namespace SevenUpdate.Pages
             timer.Stop();
             if (Core.Instance.UpdateAction != UpdateAction.ConnectingToService)
                 return;
-            AdminClient.AdminError(new Exception(Properties.Resources.CouldNotConnectToService));
+            AdminClient.AdminError(new Exception(Properties.Resources.CouldNotConnectService));
         }
     }
 }

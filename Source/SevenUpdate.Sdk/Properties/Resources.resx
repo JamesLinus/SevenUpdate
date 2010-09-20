@@ -117,35 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DontShowMessage" xml:space="preserve">
-    <value>Don't show me this message again.</value>
-  </data>
-  <data name="ExitConfirm" xml:space="preserve">
-    <value>Are you sure you would like to exit?</value>
-  </data>
-  <data name="LoseProgress" xml:space="preserve">
-    <value>If you exit now you will lose unsaved progress.</value>
-  </data>
   <data name="NewRegistryItem" xml:space="preserve">
     <value>New Registry Item</value>
+    <comment>ListBox</comment>
   </data>
   <data name="NewShortcut" xml:space="preserve">
     <value>New Shortcut</value>
+    <comment>ListBox</comment>
   </data>
   <data name="RegistryItem" xml:space="preserve">
     <value>Registry Item</value>
+    <comment>ListBox</comment>
   </data>
   <data name="Shortcut" xml:space="preserve">
     <value>Shortcut</value>
   </data>
   <data name="UrlNotValid" xml:space="preserve">
     <value>The url you have entered is not valid.</value>
+    <comment>Validation error message</comment>
   </data>
   <data name="UrlSui" xml:space="preserve">
     <value>The url you have entered must point to your sui file.</value>
+    <comment>Validation error message</comment>
   </data>
   <data name="UrlValid" xml:space="preserve">
     <value>The url you have entered is valid.</value>
+    <comment>Validation error message</comment>
   </data>
   <data name="SevenSoftware" xml:space="preserve">
     <value>Seven Software</value>
@@ -155,59 +152,727 @@
   </data>
   <data name="CorrectErrors" xml:space="preserve">
     <value>Fix all errors to continue</value>
-  </data>
-  <data name="ErrorHelp" xml:space="preserve">
-    <value>An exclamation mark next to a value denotes an error.</value>
+    <comment>MessageBox Error</comment>
   </data>
   <data name="CalculatingHash" xml:space="preserve">
-    <value>Calculating hash</value>
+    <value>Calculating hash...</value>
+    <comment>TextBlock.Text</comment>
   </data>
   <data name="ProjectLoadError" xml:space="preserve">
     <value>There was an error loading the project.</value>
+    <comment>Validation error message</comment>
   </data>
   <data name="FilePathInvalid" xml:space="preserve">
     <value>The path entered is not valid.</value>
+    <comment>Error message</comment>
   </data>
   <data name="InputRequired" xml:space="preserve">
     <value>A value is required for this field.</value>
+    <comment>Validation error message</comment>
   </data>
   <data name="RecentProjects" xml:space="preserve">
     <value>Recent projects</value>
+    <comment>JumpList</comment>
   </data>
   <data name="Sui" xml:space="preserve">
     <value>Seven Update information</value>
+    <comment>Filetype filter</comment>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+    <comment>Button.Content</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+    <comment>Button.Content</comment>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edit {0}</value>
+    <comment>Controls:CommandLink.Note</comment>
   </data>
   <data name="Test" xml:space="preserve">
-    <value>Test</value>
+    <value>Test {0}</value>
   </data>
   <data name="AddUpdate" xml:space="preserve">
-    <value>Adds a new update to</value>
+    <value>Adds a new update to {0}</value>
+    <comment>Controls:CommandLink.Note</comment>
   </data>
   <data name="CreateProject" xml:space="preserve">
     <value>Create new project</value>
+    <comment>JumpList</comment>
   </data>
   <data name="CreateUpdate" xml:space="preserve">
     <value>Create new update</value>
-  </data>
-  <data name="EditProject" xml:space="preserve">
-    <value>Edit an existing project</value>
+    <comment>JumpList</comment>
   </data>
   <data name="Sua" xml:space="preserve">
     <value>Seven Update application</value>
+    <comment>Filetype filter</comment>
   </data>
   <data name="RegFile" xml:space="preserve">
     <value>Registry file</value>
+    <comment>Filetype filter</comment>
+  </data>
+  <data name="CreateNewProject" xml:space="preserve">
+    <value>Create a new project</value>
+    <comment>Controls:CommandLink.Content</comment>
+  </data>
+  <data name="CreateNewUpdate" xml:space="preserve">
+    <value>Create a new update</value>
+    <comment>Controls:CommandLink.Content</comment>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Welcome to the Seven Update SDK</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="HelpSupport" xml:space="preserve">
+    <value>Help &amp; Support</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ReleaseApplication" xml:space="preserve">
+    <value>Release application</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="ReleaseUpdates" xml:space="preserve">
+    <value>Release updates</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="SoftwareInformation" xml:space="preserve">
+    <value>Software information</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>_Next</value>
+    <comment>Button.Content</comment>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>Arabic</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Bengali" xml:space="preserve">
+    <value>Bengali</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Dutch" xml:space="preserve">
+    <value>Dutch</value>
+    <comment>ComboBoxItem.Content</comment>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>French</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Hindi" xml:space="preserve">
+    <value>Hindi</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Japanese</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Polish" xml:space="preserve">
+    <value>Polish</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Portuguese" xml:space="preserve">
+    <value>Portuguese</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Russian" xml:space="preserve">
+    <value>Russian</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanish</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="ApplicationName" xml:space="preserve">
+    <value>Application name:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ApplicationNameToolTip" xml:space="preserve">
+    <value>The name of the application to be updated.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Is64Bit" xml:space="preserve">
+    <value>64-bit application</value>
+    <comment>CheckBox.Content</comment>
+  </data>
+  <data name="Is64BitToolTip" xml:space="preserve">
+    <value>Check this box if your software is native x64.</value>
+    <comment>CheckBox.ToolTip</comment>
+  </data>
+  <data name="ApplicationInstallLocation" xml:space="preserve">
+    <value>Application install location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ApplicationInstallLocationToolTip" xml:space="preserve">
+    <value>The directory where the application is is installed. It is best to use system path variabes when applicable.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>File System</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="Registry" xml:space="preserve">
+    <value>Registry</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="RegistryKey" xml:space="preserve">
+    <value>Registry key:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="KeyPathToolTip" xml:space="preserve">
+    <value>The full key path where the value containing the install location of the application is stored. Acceptable hive formats: HKLM\Software or HKEY_LOCAL_MACHINE</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ValueName" xml:space="preserve">
+    <value>Value name:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ValueNameToolTip" xml:space="preserve">
+    <value>The name of the value that contains the install location of the application</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="LocateAppDirectory" xml:space="preserve">
+    <value>Click to locate the application directory</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="UpdateFileLocation" xml:space="preserve">
+    <value>Update file location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateFileLocationToolTip" xml:space="preserve">
+    <value>The url that leads to the SUI file where Seven Update will download and read to determine if your software has updates</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ApplicationDescription" xml:space="preserve">
+    <value>Application description:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="PublisherInformation" xml:space="preserve">
+    <value>Publisher information</value>
+    <comment>Expander.Header</comment>
+  </data>
+  <data name="PublisherName" xml:space="preserve">
+    <value>Publisher name:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="SoftwareCompany" xml:space="preserve">
+    <value>The software company or development team.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ApplicationWebsite" xml:space="preserve">
+    <value>Application web site:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ApplicationWebsiteToolTip" xml:space="preserve">
+    <value>A url pointing to the web site of the publisher or the software.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="HelpWebsite" xml:space="preserve">
+    <value>Help &amp; Support web site:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="HelpWebsiteToolTip" xml:space="preserve">
+    <value>A url pointing to the support area for this software.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Files" xml:space="preserve">
+    <value>Files</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="AddFiles" xml:space="preserve">
+    <value>Add File(s)</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="AddFolder" xml:space="preserve">
+    <value>Add Folder</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveFile" xml:space="preserve">
+    <value>Remove File</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveAllFiles" xml:space="preserve">
+    <value>Remove All Files</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="ToGetStartedFiles" xml:space="preserve">
+    <value>To get started, right click the list box and add a file or folder of files.</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="FileAction" xml:space="preserve">
+    <value>File action:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="FileActionToolTip" xml:space="preserve">
+    <value>The action to take on this file</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="UpdateIfFileExists" xml:space="preserve">
+    <value>Update if file exists</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="UpdateRegister" xml:space="preserve">
+    <value>Update &amp; register dll file</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="UpdateExecute" xml:space="preserve">
+    <value>Update &amp; execute</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="CompareOnly" xml:space="preserve">
+    <value>Compare only</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="Execute" xml:space="preserve">
+    <value>Execute</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="ExecuteDelete" xml:space="preserve">
+    <value>Execute &amp; delete</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="UnregisterDelete" xml:space="preserve">
+    <value>Unregister dll &amp; delete</value>
+    <comment>FileAction</comment>
+  </data>
+  <data name="DownloadUrl" xml:space="preserve">
+    <value>Download location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallLocation" xml:space="preserve">
+    <value>Install location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallLocationToolTip" xml:space="preserve">
+    <value>Standard windows variables are allowed ex. %USERNAME%. Use %INSTALLDIR% for files in the app directory and %DOWNLOADURL% for files in the download directory</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="LocateFileLocation" xml:space="preserve">
+    <value>Click to locate the file location</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="CommandArgs" xml:space="preserve">
+    <value>Command args:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="CommandArgsToolTip" xml:space="preserve">
+    <value>Enter any arguments to be executed with the file</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="SHA2Hash" xml:space="preserve">
+    <value>SHA-2 hash:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="SHA2HashToolTip" xml:space="preserve">
+    <value>Click here to update the hash, it must be correct for the file for Seven Update to work properly</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="UpdateInformation" xml:space="preserve">
+    <value>Update information</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateName" xml:space="preserve">
+    <value>Update name:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateNameToolTip" xml:space="preserve">
+    <value>This should describe your update and include the name of the software.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="UpdateDetails" xml:space="preserve">
+    <value>Update details:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateInformationURL" xml:space="preserve">
+    <value>Update information URL:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateInformationURLToolTip" xml:space="preserve">
+    <value>Should be a web page with information about this update.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="SoftwareLicenseURL" xml:space="preserve">
+    <value>Software license URL:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="SoftwareLicenseURLToolTip" xml:space="preserve">
+    <value>A url pointing to txt or rtf document containing the software license.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="SourceDownloadLocation" xml:space="preserve">
+    <value>Source download location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="SourceDownloadLocationToolTip" xml:space="preserve">
+    <value>The main directory on your server, that contains all of the files needed for the update, it needs to be a valid uri with public read access</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release date:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ReleaseDateToolTip" xml:space="preserve">
+    <value>The date the update was released to the public.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ValidDateRequired" xml:space="preserve">
+    <value>A valid date is required.</value>
+    <comment>Image.ToolTip</comment>
+  </data>
+  <data name="UpdateImportance" xml:space="preserve">
+    <value>Update importance:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateImportanceToolTip" xml:space="preserve">
+    <value>Categorize this update by importance.</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Important" xml:space="preserve">
+    <value>Important</value>
+    <comment>Importance</comment>
+  </data>
+  <data name="Recommended" xml:space="preserve">
+    <value>Recommended</value>
+    <comment>Importance</comment>
+  </data>
+  <data name="Optional" xml:space="preserve">
+    <value>Optional</value>
+    <comment>Importance</comment>
+  </data>
+  <data name="Locale" xml:space="preserve">
+    <value>Locale</value>
+    <comment>Locale</comment>
+  </data>
+  <data name="RegistryTitle" xml:space="preserve">
+    <value>Registry</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="GetStartedRegistry" xml:space="preserve">
+    <value>To get started, right click the list box and create or import a registry item</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="AddRegistryItem" xml:space="preserve">
+    <value>Add Registry Item</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="ImportRegistryFile" xml:space="preserve">
+    <value>Import Registry File</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveRegistryItem" xml:space="preserve">
+    <value>Remove Registry Item</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveAllRegistryItems" xml:space="preserve">
+    <value>Remove All Registry Items</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RegistryAction" xml:space="preserve">
+    <value>Registry Action</value>
+    <comment>GroupBox.Header</comment>
+  </data>
+  <data name="AddOrUpdate" xml:space="preserve">
+    <value>Add/Update</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="DeleteKey" xml:space="preserve">
+    <value>Delete key</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="DeleteValue" xml:space="preserve">
+    <value>Delete value</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="KeyPath" xml:space="preserve">
+    <value>Key path:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ValueData" xml:space="preserve">
+    <value>Value data:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ValueDataToolTip" xml:space="preserve">
+    <value>Specify data for the value</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="Binary" xml:space="preserve">
+    <value>Binary</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="DWord" xml:space="preserve">
+    <value>DWord</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="ExpandString" xml:space="preserve">
+    <value>ExpandString</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="MultiString" xml:space="preserve">
+    <value>MultiString</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="QWord" xml:space="preserve">
+    <value>QWord</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="Review" xml:space="preserve">
+    <value>Review</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="SaveProject" xml:space="preserve">
+    <value>Save project</value>
+    <comment>Controls:CommandLink.Content</comment>
+  </data>
+  <data name="SaveProjectRelease" xml:space="preserve">
+    <value>Save project and release updates</value>
+    <comment>Controls:CommandLink.Content</comment>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Shortcuts</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="GetStartedShortcut" xml:space="preserve">
+    <value>To get started, right click the list box and create or import a shortcut</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="AddShortcut" xml:space="preserve">
+    <value>Add Shortcut</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="ImportShortcut" xml:space="preserve">
+    <value>Import Shortcut</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveShortcut" xml:space="preserve">
+    <value>Remove Shortcut</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="RemoveAllShortcuts" xml:space="preserve">
+    <value>Remove All Shortcuts</value>
+    <comment>MenuItem.Header</comment>
+  </data>
+  <data name="ShortcutAction" xml:space="preserve">
+    <value>Shortcut Action</value>
+    <comment>GroupBox.Header</comment>
+  </data>
+  <data name="AddOrUpdateToolTip" xml:space="preserve">
+    <value>Creates or updates the shortcut</value>
+    <comment>RadioButton.ToolTip</comment>
+  </data>
+  <data name="UpdateOnly" xml:space="preserve">
+    <value>Update only</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="UpdateOnlyToolTip" xml:space="preserve">
+    <value>Updates the shortcut only if it exists on the system</value>
+    <comment>RadioButton.ToolTip</comment>
+  </data>
+  <data name="DeleteShortcut" xml:space="preserve">
+    <value>Delete shortcut</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="DeleteShortcutToolTip" xml:space="preserve">
+    <value>Deletes the shortcut on the system</value>
+    <comment>RadioButton.ToolTip</comment>
+  </data>
+  <data name="ShortcutName" xml:space="preserve">
+    <value>Shortcut name:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutToolTip" xml:space="preserve">
+    <value>The name of the shortcut</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ShortcutSaveLocation" xml:space="preserve">
+    <value>Shortcut save location:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutSaveLocationToolTip" xml:space="preserve">
+    <value>The location where the shortcut resides, example: startmenu or desktop</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ShortcutTarget" xml:space="preserve">
+    <value>Shortcut target:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutTargetToolTip" xml:space="preserve">
+    <value>The app or path the shortcut points to</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ShortcutIcon" xml:space="preserve">
+    <value>Shortcut icon:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutIconToolTip" xml:space="preserve">
+    <value>A path pointing to an ico to use as the shortcut icon</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ShortcutDescription" xml:space="preserve">
+    <value>Shortcut description:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutDescriptionToolTip" xml:space="preserve">
+    <value>A simple description of the target exe</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ShortcutArguments" xml:space="preserve">
+    <value>Shortcut arguments:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="ShortcutArguementsToolTip" xml:space="preserve">
+    <value>The command line arguments for the shortcut</value>
+    <comment>TextBlock.ToolTip</comment>
+  </data>
+  <data name="ApplicationNameNote" xml:space="preserve">
+    <value>Seven Update SDK (max 100 characters)</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="RegistryValueNote" xml:space="preserve">
+    <value>Install Location</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="ApplicationDescriptionNote" xml:space="preserve">
+    <value>Write a summary about the application here, but make it no longer than 300 characters</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="CreateProjectNote" xml:space="preserve">
+    <value>Enable Seven Update to update your software</value>
+    <comment>Controls:CommandLink.Note</comment>
+  </data>
+  <data name="TestProjectNote" xml:space="preserve">
+    <value>Simulate updating to detect problems</value>
+    <comment>Controls:CommandLink.Note</comment>
   </data>
   <data name="AllFiles" xml:space="preserve">
     <value>All files</value>
+    <comment>Filetype filter</comment>
+  </data>
+  <data name="DownloadLocationNote" xml:space="preserve">
+    <value>(Optional) An absolute url that will download the file (file must have public read access)</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="InstallLocationNote" xml:space="preserve">
+    <value>An absolute Uri pointing to the installed location of the file on a system</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="ArgumentNote" xml:space="preserve">
+    <value>(Optional) Enter command line arguments to be passed when file is executed during update</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="UpdateNameNote" xml:space="preserve">
+    <value>Performance update for MyAppName (max 100 characters)</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="UpdateDetailsNote" xml:space="preserve">
+    <value>Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="UpdateDetailsUrlNote" xml:space="preserve">
+    <value>(Optional) http://sevenupdate.com/SDK-Update</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="LicenseUrlNote" xml:space="preserve">
+    <value>(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="ExportProjectNote" xml:space="preserve">
+    <value>Exports the files needed to release your update(s)</value>
+    <comment>Controls:CommandLink.Note</comment>
+  </data>
+  <data name="MyShortcut" xml:space="preserve">
+    <value>My Shortcut</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="TestValue" xml:space="preserve">
+    <value>TestValue</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="ShortcutDescriptionNote" xml:space="preserve">
+    <value>(Optional) Displays a description of the shortcut on mouse hover</value>
+  </data>
+  <data name="ValueNameNote" xml:space="preserve">
+    <value>My Value Name</value>
+    <comment>Controls:InfoTextBox.Note</comment>
+  </data>
+  <data name="AboutSevenUpdateSDK" xml:space="preserve">
+    <value>About Seven Update SDK</value>
+    <comment>Window.Title</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Support" xml:space="preserve">
+    <value>Support:</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="String" xml:space="preserve">
+    <value>String</value>
+    <comment>RegistryValueDataType</comment>
+  </data>
+  <data name="SevenUpdateLicense" xml:space="preserve">
+    <value>Seven Update SDK is licensed under the GNU GPL 3.0 © 2007-2010</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="DevelopmentTeam" xml:space="preserve">
+    <value>Development Team:</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="AppCreator" xml:space="preserve">
+    <value>Robert Baker (sevenalive) - Creator and Lead Developer</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="PortionsOfCode" xml:space="preserve">
+    <value>Portions of code use the following libraries:</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="SharpBitsLicense" xml:space="preserve">
+    <value>SharpBITS.NET is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="BSDlicense" xml:space="preserve">
+    <value>BSD license</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="protobufLicense" xml:space="preserve">
+    <value>protobuf-net is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="ApacheLicense" xml:space="preserve">
+    <value>Apache License 2.0</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="ApiCodePackLicense" xml:space="preserve">
+    <value>Microsoft® Windows® API Code Pack is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="MicrosoftLicense" xml:space="preserve">
+    <value>Microsoft Software License</value>
+    <comment>Run.Text</comment>
   </data>
 </root>

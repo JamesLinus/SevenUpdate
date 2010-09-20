@@ -28,7 +28,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Microsoft.Windows.Dwm;
 using SevenUpdate.Sdk.Windows;
 
@@ -155,18 +154,6 @@ namespace SevenUpdate.Sdk.Pages
             e.Handled = true;
         }
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            try
-            {
-                Process.Start(e.Uri.AbsoluteUri);
-                e.Handled = true;
-            }
-            catch
-            {
-            }
-        }
-
         #region MenuItem - Click
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -245,8 +232,8 @@ namespace SevenUpdate.Sdk.Pages
             if (item == null)
                 return;
 
-            clEdit.Content = Properties.Resources.Edit + " " + item.Header;
-
+            clEdit.Content = String.Format(Properties.Resources.Edit, item.Header);
+            clNewUpdate.Note = String.Format(Properties.Resources.AddUpdate, item.Header);
             if (item.HasItems)
             {
                 Core.AppIndex = item.Tag is int ? (int) item.Tag : -1;
@@ -254,8 +241,8 @@ namespace SevenUpdate.Sdk.Pages
                 clNewUpdate.Visibility = Visibility.Visible;
                 // clTest.Visibility = Visibility.Visible;
 
-                clNewUpdate.Note = Properties.Resources.AddUpdate + " " + item.Header;
-                // clTest.Content = Properties.Resources.Test + " " + item.Header;
+
+                // clTest.Content = String.Format(Properties.Resources.Test, item.Header);
             }
             else
             {

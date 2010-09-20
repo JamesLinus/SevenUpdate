@@ -242,7 +242,7 @@ namespace SevenUpdate.Admin
         {
             if (Service.Service.InstallProgressChanged != null && IsClientConnected)
                 Service.Service.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, Resources.InstallingUpdates + " " + e.CurrentProgress + "% " + Resources.Complete);
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(Resources.InstallProgress, e.CurrentProgress));
         }
 
         private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
@@ -260,9 +260,7 @@ namespace SevenUpdate.Admin
             isInstalling = true;
             if (Service.Service.DownloadProgressChanged != null && IsClientConnected)
                 Service.Service.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon,
-                                                       Resources.DownloadingUpdates + " (" + e.FilesTransferred + " " + Resources.OutOf + " " + e.FilesTotal + " " + Resources.Files + " " +
-                                                       Resources.Complete + ")");
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
         private static void Download_DownloadCompleted(object sender, DownloadCompletedEventArgs e)

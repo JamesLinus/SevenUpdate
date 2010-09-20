@@ -47,18 +47,18 @@ namespace Microsoft.Windows.Controls
 
         #region Properties
 
-        // Using a DependencyProperty as the backing store for Label.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LabelProperty = DependencyProperty.Register("Label", typeof (string), typeof (InfoTextBox), new UIPropertyMetadata("", LabelPropertyChanged));
+        // Using a DependencyProperty as the backing store for Note.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof (string), typeof (InfoTextBox), new UIPropertyMetadata("", LabelPropertyChanged));
 
-        // Using a DependencyProperty as the backing store for LabelStyle.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LabelStyleProperty = DependencyProperty.Register("LabelStyle", typeof (Style), typeof (InfoTextBox), new UIPropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for NoteStyle.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof (Style), typeof (InfoTextBox), new UIPropertyMetadata(null));
 
         private static readonly DependencyPropertyKey HasTextPropertyKey = DependencyProperty.RegisterReadOnly("HasText", typeof (bool), typeof (InfoTextBox), new PropertyMetadata(false));
 
         public static readonly DependencyProperty HasTextProperty = HasTextPropertyKey.DependencyProperty;
 
-        public string Label { get { return (string) GetValue(LabelProperty); } set { SetValue(LabelProperty, value); } }
-        public Style LabelStyle { get { return (Style) GetValue(LabelStyleProperty); } set { SetValue(LabelStyleProperty, value); } }
+        public string Note { get { return (string) GetValue(NoteProperty); } set { SetValue(NoteProperty, value); } }
+        public Style NoteStyle { get { return (Style) GetValue(NoteStyleProperty); } set { SetValue(NoteStyleProperty, value); } }
         public bool HasText { get { return (bool) GetValue(HasTextProperty); } private set { SetValue(HasTextPropertyKey, value); } }
 
         #endregion
@@ -94,7 +94,7 @@ namespace Microsoft.Windows.Controls
             base.OnApplyTemplate();
 
             myAdornerLayer = AdornerLayer.GetAdornerLayer(this);
-            myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
+            myAdornerLabel = new AdornerLabel(this, Note, NoteStyle);
             UpdateAdorner(this);
 
             var focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof (FrameworkElement));
@@ -132,7 +132,7 @@ namespace Microsoft.Windows.Controls
             if (elem == null || myAdornerLayer == null)
                 return;
 
-            myAdornerLabel = new AdornerLabel(this, Label, LabelStyle);
+            myAdornerLabel = new AdornerLabel(this, Note, NoteStyle);
             myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
 
             if (!((InfoTextBox) elem).HasText && !elem.IsFocused && !hide)

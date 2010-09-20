@@ -271,8 +271,8 @@ namespace SevenUpdate.Converters
             if (dateTime != DateTime.MinValue)
             {
                 return dateTime.Date.Equals(DateTime.Now.Date)
-                           ? Resources.TodayAt + " " + dateTime.ToShortTimeString()
-                           : Resources.TodayAt + " " + dateTime.ToShortDateString() + " " + Resources.At + " " + dateTime.ToShortTimeString();
+                           ? String.Format(Resources.TodayAt, dateTime.ToShortTimeString())
+                           : String.Format(Resources.TimeAt, dateTime.ToShortDateString(), dateTime.ToShortTimeString());
             }
             return Resources.Never;
         }
