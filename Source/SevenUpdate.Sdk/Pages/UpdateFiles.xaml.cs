@@ -268,7 +268,7 @@ namespace SevenUpdate.Sdk.Pages
 
         private void UpdateType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (tbxDownloadUrl == null)
+            if (tbxDownloadUrl == null || listBox.SelectedItem == null)
                 return;
             var updateFile = listBox.SelectedItem as UpdateFile;
             // ReSharper disable PossibleNullReferenceException

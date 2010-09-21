@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("WPFLocalizeExtension")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("WPFLocalizeExtension")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Root-Project")]
+[assembly: AssemblyCompany("Bernhard Millauer")]
 [assembly: AssemblyProduct("WPFLocalizeExtension")]
-[assembly: AssemblyCopyright("Copyright ©  2008 - 2010")]
+[assembly: AssemblyCopyright("Copyright © Bernhard Millauer 2008 - 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -39,5 +39,5 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyFileVersion("10.9.20")]

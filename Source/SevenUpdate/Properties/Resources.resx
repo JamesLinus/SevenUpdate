@@ -618,4 +618,28 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
+    <value>WPFLocalizeExtension is licensed under the</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="MicrosoftPublicLicense" xml:space="preserve">
+    <value>Microsoft Public License</value>
+    <comment>Run.Text</comment>
+  </data>
+  <data name="SoftwareLicenseAgreement" xml:space="preserve">
+    <value>Software License Agreement</value>
+    <comment>Window.Title</comment>
+  </data>
+  <data name="DownloadingLicenseAgreement" xml:space="preserve">
+    <value>Downloading License Agreement, please wait...</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="AcceptTerms" xml:space="preserve">
+    <value>Accept the terms</value>
+    <comment>RadioButton.Content</comment>
+  </data>
+  <data name="Decline" xml:space="preserve">
+    <value>Decline</value>
+    <comment>RadioButton.Content</comment>
+  </data>
 </root>

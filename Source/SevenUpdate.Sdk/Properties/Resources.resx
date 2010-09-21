@@ -875,4 +875,10 @@
     <value>Microsoft Software License</value>
     <comment>Run.Text</comment>
   </data>
+  <data name="MicrosoftPublicLicense" xml:space="preserve">
+    <value>Microsoft Public License</value>
+  </data>
+  <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
+    <value>WPFLocalizeExtension is licensed under the</value>
+  </data>
 </root>

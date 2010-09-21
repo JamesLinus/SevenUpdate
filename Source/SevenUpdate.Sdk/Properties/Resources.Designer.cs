@@ -826,6 +826,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Microsoft Public License.
+        /// </summary>
+        public static string MicrosoftPublicLicense {
+            get {
+                return ResourceManager.GetString("MicrosoftPublicLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MultiString.
         /// </summary>
         public static string MultiString {
@@ -1776,6 +1785,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string WelcomeTitle {
             get {
                 return ResourceManager.GetString("WelcomeTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WPFLocalizeExtension is licensed under the.
+        /// </summary>
+        public static string WPFLocalizeExtensionLicense {
+            get {
+                return ResourceManager.GetString("WPFLocalizeExtensionLicense", resourceCulture);
             }
         }
     }

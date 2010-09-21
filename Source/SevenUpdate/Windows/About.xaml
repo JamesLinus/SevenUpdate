@@ -1,7 +1,5 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-
-
-<Window x:Class="SevenUpdate.Windows.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{lex:LocText SevenUpdate:Resources:AboutSevenUpdate}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Icon="/Images/wicon.ico" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MinWidth="600" d:DesignHeight="265" d:DesignWidth="616" SizeToContent="WidthAndHeight" MinHeight="245" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
+<Window x:Class="SevenUpdate.Windows.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{lex:LocText SevenUpdate:Resources:AboutSevenUpdate}" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Icon="/Images/wicon.ico" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MinWidth="600" d:DesignHeight="282" d:DesignWidth="600" SizeToContent="WidthAndHeight" MinHeight="245" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="16" />
@@ -49,6 +47,12 @@
 			<Run Text="{lex:LocText SevenUpdate:Resources:protobufLicense}" />
 			<Hyperlink NavigateUri="http://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">
 				<Run Text="{lex:LocText SevenUpdate:Resources:ApacheLicense}" />
+			</Hyperlink>
+			<Run Text="© 2008" />
+			<LineBreak />
+			<Run Text="{lex:LocText SevenUpdate:Resources:WPFLocalizeExtensionLicense}" />
+			<Hyperlink NavigateUri="http://wpflocalizeextension.codeplex.com/license" RequestNavigate="Hyperlink_RequestNavigate">
+				<Run Text="{lex:LocText SevenUpdate:Resources:MicrosoftPublicLicense}" />
 			</Hyperlink>
 			<Run Text="© 2008" />
 			<LineBreak />

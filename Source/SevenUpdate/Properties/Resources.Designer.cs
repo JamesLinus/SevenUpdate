@@ -79,6 +79,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept the terms.
+        /// </summary>
+        public static string AcceptTerms {
+            get {
+                return ResourceManager.GetString("AcceptTerms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -295,6 +304,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Decline.
+        /// </summary>
+        public static string Decline {
+            get {
+                return ResourceManager.GetString("Decline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Development Team:.
         /// </summary>
         public static string DevelopmentTeam {
@@ -309,6 +327,15 @@ namespace SevenUpdate.Properties {
         public static string DownloadAndInstallUpdates {
             get {
                 return ResourceManager.GetString("DownloadAndInstallUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downloading License Agreement, please wait....
+        /// </summary>
+        public static string DownloadingLicenseAgreement {
+            get {
+                return ResourceManager.GetString("DownloadingLicenseAgreement", resourceCulture);
             }
         }
         
@@ -561,6 +588,15 @@ namespace SevenUpdate.Properties {
         public static string MicrosoftLicense {
             get {
                 return ResourceManager.GetString("MicrosoftLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Microsoft Public License.
+        /// </summary>
+        public static string MicrosoftPublicLicense {
+            get {
+                return ResourceManager.GetString("MicrosoftPublicLicense", resourceCulture);
             }
         }
         
@@ -997,6 +1033,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Software License Agreement.
+        /// </summary>
+        public static string SoftwareLicenseAgreement {
+            get {
+                return ResourceManager.GetString("SoftwareLicenseAgreement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {
@@ -1227,6 +1272,15 @@ namespace SevenUpdate.Properties {
         public static string ViewUpdateHistory {
             get {
                 return ResourceManager.GetString("ViewUpdateHistory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WPFLocalizeExtension is licensed under the.
+        /// </summary>
+        public static string WPFLocalizeExtensionLicense {
+            get {
+                return ResourceManager.GetString("WPFLocalizeExtensionLicense", resourceCulture);
             }
         }
     }

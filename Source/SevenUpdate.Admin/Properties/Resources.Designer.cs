@@ -22,7 +22,7 @@ namespace SevenUpdate.Admin.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SevenUpdate.Admin.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SevenUpdate.Admin.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace SevenUpdate.Admin.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Checking for updates....
         /// </summary>
-        internal static string CheckingForUpdates {
+        public static string CheckingForUpdates {
             get {
                 return ResourceManager.GetString("CheckingForUpdates", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Downloading updates....
         /// </summary>
-        internal static string DownloadingUpdates {
+        public static string DownloadingUpdates {
             get {
                 return ResourceManager.GetString("DownloadingUpdates", resourceCulture);
             }
@@ -81,13 +81,13 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Downloading updates... ({0} out of {1} files complete).
         /// </summary>
-        internal static string DownloadProgress {
+        public static string DownloadProgress {
             get {
                 return ResourceManager.GetString("DownloadProgress", resourceCulture);
             }
         }
         
-        internal static System.Drawing.Icon icon {
+        public static System.Drawing.Icon icon {
             get {
                 object obj = ResourceManager.GetObject("icon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -97,7 +97,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Seven Update has completed the installation of updates.
         /// </summary>
-        internal static string InstallationCompleted {
+        public static string InstallationCompleted {
             get {
                 return ResourceManager.GetString("InstallationCompleted", resourceCulture);
             }
@@ -106,7 +106,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Installing updates....
         /// </summary>
-        internal static string InstallingUpdates {
+        public static string InstallingUpdates {
             get {
                 return ResourceManager.GetString("InstallingUpdates", resourceCulture);
             }
@@ -115,7 +115,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Installing updates {0}% complete....
         /// </summary>
-        internal static string InstallProgress {
+        public static string InstallProgress {
             get {
                 return ResourceManager.GetString("InstallProgress", resourceCulture);
             }
@@ -124,7 +124,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been downloaded.
         /// </summary>
-        internal static string UpdatesDownloaded {
+        public static string UpdatesDownloaded {
             get {
                 return ResourceManager.GetString("UpdatesDownloaded", resourceCulture);
             }
@@ -133,7 +133,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been downloaded, click here to view them.
         /// </summary>
-        internal static string UpdatesDownloadedViewThem {
+        public static string UpdatesDownloadedViewThem {
             get {
                 return ResourceManager.GetString("UpdatesDownloadedViewThem", resourceCulture);
             }
@@ -142,7 +142,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been found.
         /// </summary>
-        internal static string UpdatesFound {
+        public static string UpdatesFound {
             get {
                 return ResourceManager.GetString("UpdatesFound", resourceCulture);
             }
@@ -151,7 +151,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been found, click here to view them.
         /// </summary>
-        internal static string UpdatesFoundViewThem {
+        public static string UpdatesFoundViewThem {
             get {
                 return ResourceManager.GetString("UpdatesFoundViewThem", resourceCulture);
             }
@@ -160,7 +160,7 @@ namespace SevenUpdate.Admin.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Updates have been installed.
         /// </summary>
-        internal static string UpdatesInstalled {
+        public static string UpdatesInstalled {
             get {
                 return ResourceManager.GetString("UpdatesInstalled", resourceCulture);
             }

@@ -1,6 +1,4 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-
-
 <Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="{lex:LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<!-- Grid-->
 	<Grid>
