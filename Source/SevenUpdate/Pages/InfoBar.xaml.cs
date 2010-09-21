@@ -160,10 +160,7 @@ namespace SevenUpdate.Pages
 
                     if (e.ImportantCount > 0)
                     {
-                        if (e.ImportantCount == 1)
-                            tbViewImportantUpdates.Text = String.Format(Properties.Resources.ImportantUpdateAvailable, e.ImportantCount);
-                        else
-                            tbViewImportantUpdates.Text = String.Format(Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
+                        tbViewImportantUpdates.Text = String.Format(e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
 
                         tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -175,10 +172,7 @@ namespace SevenUpdate.Pages
                         if (e.ImportantCount == 0)
                             tbHeading.Text = Properties.Resources.NoImportantUpdates;
 
-                        if (e.OptionalCount == 1)
-                            tbViewOptionalUpdates.Text = String.Format(Properties.Resources.OptionalUpdateAvailable, e.OptionalCount);
-                        else
-                            tbViewOptionalUpdates.Text = String.Format(Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
+                        tbViewOptionalUpdates.Text = String.Format(e.OptionalCount == 1 ? Properties.Resources.OptionalUpdateAvailable : Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
 
                         tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -234,10 +228,7 @@ namespace SevenUpdate.Pages
                 tbStatus.Text = Properties.Resources.PreparingInstall;
             else
             {
-                if (e.TotalUpdates > 1)
-                    tbStatus.Text = String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress);
-                else
-                    tbStatus.Text = String.Format(Properties.Resources.InstallProgress, e.UpdateName);
+                tbStatus.Text = e.TotalUpdates > 1 ? String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress) : String.Format(Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
             }
         }
 

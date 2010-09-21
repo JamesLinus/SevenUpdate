@@ -503,7 +503,12 @@ namespace SevenUpdate.Sdk
                     break;
             }
 
-            var result = MessageBox.Show(message, Resources.SevenUpdateSDK, MessageBoxButton.OK, msgIcon);
+            MessageBoxResult result;
+
+            if (standardButtons == TaskDialogStandardButtons.Cancel || defaultButtonText != null)
+                result = MessageBox.Show(message, Resources.SevenUpdateSDK, MessageBoxButton.OKCancel, msgIcon);
+            else
+                result = MessageBox.Show(message, Resources.SevenUpdateSDK, MessageBoxButton.OK, msgIcon);
 
             switch (result)
             {

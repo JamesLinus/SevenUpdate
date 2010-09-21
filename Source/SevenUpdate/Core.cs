@@ -259,7 +259,12 @@ namespace SevenUpdate
                     break;
             }
 
-            var result = MessageBox.Show(message, Resources.SevenUpdate, MessageBoxButton.OK, msgIcon);
+            MessageBoxResult result;
+
+            if (standardButtons == TaskDialogStandardButtons.Cancel || defaultButtonText != null)
+                result = MessageBox.Show(message, Resources.SevenUpdate, MessageBoxButton.OKCancel, msgIcon);
+            else
+                result = MessageBox.Show(message, Resources.SevenUpdate, MessageBoxButton.OK, msgIcon);
 
             switch (result)
             {
