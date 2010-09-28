@@ -125,8 +125,12 @@ namespace SevenUpdate.Sdk
             // Create JumpTask
             var jumpList = new JumpList();
 
+            var startIndex = Projects.Count - 2;
+            if (startIndex < 0)
+                startIndex = 0;
+
             JumpTask jumpTask;
-            for (var x = 0; x < Projects.Count; x++)
+            for (var x = startIndex; x < Projects.Count; x++)
             {
                 jumpTask = new JumpTask
                                {
@@ -134,7 +138,7 @@ namespace SevenUpdate.Sdk
                                    IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
                                    Title = Resources.CreateUpdate,
                                    CustomCategory = Projects[x].ApplicationName,
-                                   Arguments = "-newupdate " + x
+                                   Arguments = "-newupdate " + x,
                                };
                 jumpList.JumpItems.Add(jumpTask);
                 for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
@@ -143,10 +147,11 @@ namespace SevenUpdate.Sdk
                                    {
                                        ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
                                        IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                                       Title = Resources.Edit + " " + Projects[x].UpdateNames[y],
+                                       Title = String.Format(Resources.Edit, Projects[x].UpdateNames[y]),
                                        CustomCategory = Projects[x].ApplicationName,
                                        Arguments = "-edit " + x + " " + y
                                    };
+                    
                     jumpList.JumpItems.Add(jumpTask);
                 }
             }
@@ -161,7 +166,6 @@ namespace SevenUpdate.Sdk
                                Arguments = "-newproject"
                            };
             jumpList.JumpItems.Add(jumpTask);
-
             JumpList.SetJumpList(Application.Current, jumpList);
         }
 
