@@ -99,11 +99,6 @@ namespace SevenUpdate
         internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>
-        ///   Gets a value indicating if an auto check is being performed
-        /// </summary>
-        internal static bool IsAutoCheck { get; set; }
-
-        /// <summary>
         ///   Gets or Sets a value indicating if an install is currently in progress
         /// </summary>
         internal static bool IsInstallInProgress { private get; set; }
@@ -134,6 +129,18 @@ namespace SevenUpdate
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        /// <summary>
+        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
+        /// </summary>
+        /// <param name = "name" />
+        private void OnPropertyChanged(string name)
+        {
+            var handler = PropertyChanged;
+
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(name));
+        }
 
         /// <summary>
         ///   Checks for updates
@@ -174,18 +181,6 @@ namespace SevenUpdate
             }
             else
                 ShowMessage(null, TaskDialogStandardIcon.Information, Resources.AlreadyUpdating);
-        }
-
-        /// <summary>
-        ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
-        /// </summary>
-        /// <param name = "name" />
-        private void OnPropertyChanged(string name)
-        {
-            var handler = PropertyChanged;
-
-            if (handler != null)
-                handler(this, new PropertyChangedEventArgs(name));
         }
 
         #region TaskDialog Methods

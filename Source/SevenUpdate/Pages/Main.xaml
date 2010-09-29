@@ -15,8 +15,15 @@
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="100*" />
 		</Grid.ColumnDefinitions>
-		<!-- Sidebar image -->
-		<Image RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Left" IsEnabled="True" Source="/Images/sidebar.jpg" Stretch="UniformToFill" StretchDirection="Both" Width="182" Grid.RowSpan="5" />
+
+		<Rectangle HorizontalAlignment="Left" Width="182" Grid.RowSpan="5">
+			<Rectangle.Fill>
+				<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+					<GradientStop Color="#FF0C5D64" Offset="0" />
+					<GradientStop Color="#FF218A6F" Offset="1" />
+				</LinearGradientBrush>
+			</Rectangle.Fill>
+		</Rectangle>
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" Focusable="True" />
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{lex:LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" Focusable="True" />

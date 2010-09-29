@@ -20,6 +20,8 @@
 
 #region
 
+using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -552,7 +554,7 @@ namespace SevenUpdate
     ///   The collection of updates and the application info.
     /// </summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
-    public sealed class Sui : INotifyPropertyChanged
+    public sealed class Sui : INotifyPropertyChanged, IEnumerable
     {
         #region Fields
 
@@ -608,6 +610,15 @@ namespace SevenUpdate
 
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

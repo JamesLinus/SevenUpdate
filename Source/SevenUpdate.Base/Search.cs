@@ -355,6 +355,32 @@ namespace SevenUpdate
             Task.Factory.StartNew(() => SearchForUpdates(apps));
         }
 
+        public static void SetUpdatesFound(Collection<Sui> updates)
+        {
+            importantCount = 0;
+            recommendedCount = 0;
+            optionalCount = 0;
+            foreach (var update in updates.SelectMany(app => app.Updates))
+            {
+                switch (update.Importance)
+                {
+                    case Importance.Important:
+                        importantCount++;
+                        break;
+                    case Importance.Recommended:
+                        recommendedCount++;
+                        break;
+                    case Importance.Optional:
+                    case Importance.Locale:
+                        optionalCount++;
+                        break;
+                }
+            }
+
+            if (SearchCompleted != null)
+                SearchCompleted(null, new SearchCompletedEventArgs(updates, importantCount, recommendedCount, optionalCount));
+        }
+
         #endregion
 
         #region Events

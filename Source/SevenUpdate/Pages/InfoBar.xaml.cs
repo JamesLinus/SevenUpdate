@@ -21,6 +21,8 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using SevenUpdate.Properties;
@@ -136,31 +138,47 @@ namespace SevenUpdate.Pages
         ///   Updates the UI the search for updates has completed
         /// </summary>
         /// <param name = "e">The SearchComplete data</param>
-        private void SearchCompleted(SearchCompletedEventArgs e)
+        internal void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (Core.Instance.UpdateAction == UpdateAction.ErrorOccurred)
                 return;
             Core.IsInstallInProgress = false;
-            if (e.Applications.Count > 0)
+
+            Core.Applications = e.Applications as Collection<Sui>;
+            if (Core.Applications == null)
             {
-                Core.Applications = e.Applications;
+                Core.Instance.UpdateAction = UpdateAction.NoUpdates;
+                return;
+            }
+
+            if (Core.Applications.Count > 0)
+            {
+                try
+                {
+                    Base.Serialize(Core.Applications, Base.AllUserStore + "updates.sui");
+                }
+                catch
+                {
+                }
 
                 if (Core.Settings.IncludeRecommended)
                     e.ImportantCount += e.RecommendedCount;
+                else
+                    e.OptionalCount += e.RecommendedCount;
 
                 #region GUI Updating
 
                 if (e.ImportantCount > 0 || e.OptionalCount > 0)
                 {
                     Core.Instance.UpdateAction = UpdateAction.UpdatesFound;
-                    Settings.Default.updatesFound = true;
 
                     if (e.ImportantCount > 0 && e.OptionalCount > 0)
                         line.Y1 = 50;
 
                     if (e.ImportantCount > 0)
                     {
-                        tbViewImportantUpdates.Text = String.Format(e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
+                        tbViewImportantUpdates.Text = String.Format(e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable,
+                                                                    e.ImportantCount);
 
                         tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -185,7 +203,6 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                Settings.Default.updatesFound = false;
                 Core.Instance.UpdateAction = UpdateAction.NoUpdates;
             }
         }
@@ -228,7 +245,9 @@ namespace SevenUpdate.Pages
                 tbStatus.Text = Properties.Resources.PreparingInstall;
             else
             {
-                tbStatus.Text = e.TotalUpdates > 1 ? String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress) : String.Format(Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
+                tbStatus.Text = e.TotalUpdates > 1
+                                    ? String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress)
+                                    : String.Format(Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
             }
         }
 
@@ -289,7 +308,7 @@ namespace SevenUpdate.Pages
             if (e.ErrorOccurred)
                 Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
             else
-                Core.Instance.UpdateAction = Core.IsAutoCheck ? UpdateAction.DownloadCompleted : UpdateAction.Installing;
+                Core.Instance.UpdateAction = UpdateAction.Installing;
         }
 
         #region Invoker Events
@@ -545,6 +564,13 @@ namespace SevenUpdate.Pages
 
                 if (AdminClient.Install())
                 {
+                    try
+                    {
+                        File.Delete(Base.AllUserStore + "updates.sui");
+                    }
+                    catch
+                    {
+                    }
                     Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
                     Core.IsInstallInProgress = true;
                     Settings.Default.lastInstall = DateTime.Now;

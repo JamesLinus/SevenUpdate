@@ -89,6 +89,8 @@ namespace SevenUpdate.Admin
 
         private static bool isInstalling;
 
+        private static bool waiting;
+
         #endregion
 
         #region Properties
@@ -120,7 +122,7 @@ namespace SevenUpdate.Admin
         private static void Main(string[] args)
         {
             bool createdNew;
-            var timer = new Timer(30000);
+            var timer = new Timer(10000);
             timer.Elapsed += timer_Elapsed;
             timer.Start();
 
@@ -232,7 +234,10 @@ namespace SevenUpdate.Admin
         {
             if (isInstalling)
                 return;
-            if (Process.GetProcessesByName("SevenUpdate").Length < 1)
+
+            if (Process.GetProcessesByName("SevenUpdate").Length > 0 && waiting)
+                ShutdownApp();
+            if (Process.GetProcessesByName("SevenUpdate").Length < 1 && !waiting)
                 ShutdownApp();
         }
 
@@ -248,10 +253,9 @@ namespace SevenUpdate.Admin
         private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             isInstalling = false;
-
             if (Service.Service.InstallCompleted != null && IsClientConnected)
                 Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
-
+            File.Delete(Base.AllUserStore + "updates.sui");
             ShutdownApp();
         }
 
@@ -272,6 +276,7 @@ namespace SevenUpdate.Admin
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 Install.InstallUpdates(apps);
                 isInstalling = true;
+                File.Delete(Base.AllUserStore + "updates.sui");
             }
             else
             {
@@ -285,21 +290,23 @@ namespace SevenUpdate.Admin
         /// </summary>
         private static void Search_SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
-            if (e.Applications.Count > 0)
+            isInstalling = false;
+            apps = e.Applications as Collection<Sui>;
+            if (apps.Count > 0)
             {
-                apps = e.Applications;
+                Base.Serialize(apps, Base.AllUserStore + "updates.sui");
+
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(e.Applications));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(apps));
                     isInstalling = true;
                 }
             }
             else
             {
-                isInstalling = false;
                 ShutdownApp();
             }
         }
@@ -450,6 +457,7 @@ namespace SevenUpdate.Admin
                     notifyIcon.Text = Resources.DownloadingUpdates;
                     break;
                 case NotifyType.DownloadComplete:
+                    waiting = true;
                     notifyIcon.Text = Resources.UpdatesDownloadedViewThem;
                     notifyIcon.ShowBalloonTip(5000, Resources.UpdatesDownloaded, Resources.UpdatesDownloadedViewThem, ToolTipIcon.Info);
                     break;
@@ -457,12 +465,14 @@ namespace SevenUpdate.Admin
                     notifyIcon.Text = Resources.InstallingUpdates;
                     break;
                 case NotifyType.SearchComplete:
+                    waiting = true;
                     notifyIcon.Text = Resources.UpdatesFoundViewThem;
                     notifyIcon.ShowBalloonTip(5000, Resources.UpdatesFound, Resources.UpdatesFoundViewThem, ToolTipIcon.Info);
                     break;
                 case NotifyType.InstallCompleted:
                     notifyIcon.Text = Resources.InstallationCompleted;
                     notifyIcon.ShowBalloonTip(5000, Resources.UpdatesInstalled, Resources.InstallationCompleted, ToolTipIcon.Info);
+                    ShutdownApp();
                     break;
             }
         }

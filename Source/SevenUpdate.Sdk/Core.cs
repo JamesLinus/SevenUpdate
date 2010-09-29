@@ -108,7 +108,7 @@ namespace SevenUpdate.Sdk
         /// </summary>
         public static readonly string ProjectsFile = UserStore + @"Projects.sul";
 
-        public static ObservableCollection<Project> Projects = Base.Deserialize<ObservableCollection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
+        public static Collection<Project> Projects = Base.Deserialize<Collection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
 
         internal static int UpdateIndex = -1;
         internal static int AppIndex = -1;
@@ -151,7 +151,7 @@ namespace SevenUpdate.Sdk
                                        CustomCategory = Projects[x].ApplicationName,
                                        Arguments = "-edit " + x + " " + y
                                    };
-                    
+
                     jumpList.JumpItems.Add(jumpTask);
                 }
             }

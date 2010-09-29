@@ -74,4 +74,4 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("1.2.0.1")]
-[assembly: AssemblyFileVersion("10.9.28")]
+[assembly: AssemblyFileVersion("10.9.29")]

@@ -68,19 +68,9 @@ namespace SevenUpdate
 
             Directory.CreateDirectory(Base.UserStore);
 
-
-            if (args.Length > 0)
-            {
-                if (args[0] == "Auto")
-                    Core.IsAutoCheck = true;
-                if (args[0] == "Reconnect")
-                    Core.IsReconnect = true;
-            }
-
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0)
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Base.AllUserStore + "updates.sui"))
                 return;
             Core.IsReconnect = true;
-            Core.IsAutoCheck = false;
         }
     }
 

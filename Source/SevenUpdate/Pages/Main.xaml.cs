@@ -21,6 +21,9 @@
 #region
 
 using System;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -126,10 +129,33 @@ namespace SevenUpdate.Pages
                 timer.Elapsed += timer_Elapsed;
                 AdminClient.Connect();
             }
-            else if (Core.IsAutoCheck || Settings.Default.updatesFound)
+            else if (File.Exists(Base.AllUserStore + "updates.sui"))
             {
-                Core.IsAutoCheck = false;
-                Core.CheckForUpdates(true);
+                var lastCheck = File.GetLastWriteTime(Base.AllUserStore + "updates.sui");
+
+                var today =  DateTime.Now;
+
+                if (lastCheck.Month == today.Month && lastCheck.Year == today.Year)
+                {
+                    if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day ||
+                        lastCheck.Day + 5 == today.Day)
+                    {
+                        AdminClient.Disconnect();
+                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Base.Deserialize<Collection<Sui>>(Base.AllUserStore + "updates.sui")));
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        File.Delete(Base.AllUserStore + "updates.sui");
+                    }
+                    catch
+                    {
+                    }
+                    Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
+                }
+
             }
             else
             {

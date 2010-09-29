@@ -92,17 +92,5 @@ namespace SevenUpdate.Properties {
                 this["locale"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool updatesFound {
-            get {
-                return ((bool)(this["updatesFound"]));
-            }
-            set {
-                this["updatesFound"] = value;
-            }
-        }
     }
 }
