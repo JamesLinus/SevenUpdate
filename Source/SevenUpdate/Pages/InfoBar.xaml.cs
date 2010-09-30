@@ -683,13 +683,13 @@ namespace SevenUpdate.Pages
         private void OptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         private void ImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         #endregion

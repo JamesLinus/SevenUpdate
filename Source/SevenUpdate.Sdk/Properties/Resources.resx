@@ -881,4 +881,7 @@
   <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
     <value>WPFLocalizeExtension is licensed under the</value>
   </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
 </root>

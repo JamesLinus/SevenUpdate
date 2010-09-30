@@ -1474,6 +1474,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string Tasks {
+            get {
+                return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Test {0}.
         /// </summary>
         public static string Test {

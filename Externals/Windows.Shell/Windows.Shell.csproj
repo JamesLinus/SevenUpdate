@@ -311,6 +311,8 @@
     <Compile Include="SafeHandles\SafeRegionHandle.cs" />
     <Compile Include="SafeHandles\SafeWindowHandle.cs" />
     <Compile Include="SafeHandles\ZeroInvalidHandle.cs" />
+    <Compile Include="SingleInstance.cs" />
+    <Compile Include="SingleInstanceService.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -357,6 +359,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>

@@ -75,3 +75,4 @@ using System.Windows;
 
 [assembly: AssemblyVersion("1.2.0.1")]
 [assembly: AssemblyFileVersion("10.9.29")]
+[assembly: GuidAttribute("82893A11-B7D9-48D2-87B1-9F6F19B17300")]

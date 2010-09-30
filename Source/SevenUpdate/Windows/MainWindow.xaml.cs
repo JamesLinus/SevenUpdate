@@ -38,13 +38,11 @@ namespace SevenUpdate.Windows
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
     public sealed partial class MainWindow
     {
-        internal static NavigationService NavService;
-
         public MainWindow()
         {
             InitializeComponent();
 
-            NavService = NavigationService;
+            Core.NavService = NavigationService;
         }
 
         /// <summary>

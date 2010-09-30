@@ -200,7 +200,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.GoBack();
+            Core.NavService.GoBack();
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace SevenUpdate.Pages
         {
             IterateVisualChild(lvUpdates);
             SaveUpdateSelection();
-            MainWindow.NavService.GoBack();
+            Core.NavService.GoBack();
         }
 
         #endregion

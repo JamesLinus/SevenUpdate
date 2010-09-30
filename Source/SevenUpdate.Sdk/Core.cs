@@ -120,7 +120,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   Sets the Windows 7 JumpList
         /// </summary>
-        internal static void SetJumpLists()
+        internal static void SetJumpList()
         {
             // Create JumpTask
             var jumpList = new JumpList();
@@ -162,7 +162,7 @@ namespace SevenUpdate.Sdk
                                ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
                                IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
                                Title = Resources.CreateProject,
-                               CustomCategory = "Tasks",
+                               CustomCategory = Resources.Tasks,
                                Arguments = "-newproject"
                            };
             jumpList.JumpItems.Add(jumpTask);
@@ -174,7 +174,7 @@ namespace SevenUpdate.Sdk
             IsNewProject = false;
             AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
             if (UpdateIndex < 0)
-                MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
             else
             {
                 UpdateInfo = Base.Deserialize<Collection<Update>>(UserStore + Projects[AppIndex].ApplicationName + ".sui")[UpdateIndex];
@@ -184,7 +184,7 @@ namespace SevenUpdate.Sdk
                     UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
                 if (UpdateInfo.RegistryItems == null)
                     UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
             }
         }
 
@@ -204,7 +204,7 @@ namespace SevenUpdate.Sdk
             UpdateInfo.Files = new ObservableCollection<UpdateFile>();
             UpdateInfo.RegistryItems = new ObservableCollection<RegistryItem>();
             UpdateInfo.Shortcuts = new ObservableCollection<Shortcut>();
-            MainWindow.NavService.Navigate(new Uri(@"Pages\AppInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
         }
 
         internal static void NewUpdate()
@@ -219,7 +219,7 @@ namespace SevenUpdate.Sdk
                                  Description = new ObservableCollection<LocaleString>(),
                                  Name = new ObservableCollection<LocaleString>()
                              };
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         /// <summary>

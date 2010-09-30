@@ -66,7 +66,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ChangeSettings_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
+            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void ViewUpdateHistory_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
+            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void RestoreHiddenUpdates_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
+            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
         }
 
         /// <summary>

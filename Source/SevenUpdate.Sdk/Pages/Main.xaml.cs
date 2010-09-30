@@ -268,8 +268,6 @@ namespace SevenUpdate.Sdk.Pages
             {
                 tbTitle.Foreground = Brushes.Black;
                 tbHelp.Foreground = Brushes.Black;
-                //tbTitle.TextEffects = new TextEffectCollection();
-                //tbTitle.TextEffects.Add(Core.dropShadowEffect);
             }
             else
             {

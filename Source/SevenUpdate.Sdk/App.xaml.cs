@@ -18,6 +18,13 @@
 
 #endregion
 
+using System;
+using System.IO;
+using System.Windows;
+using Microsoft.Windows.Shell;
+using SevenUpdate.Sdk.Properties;
+using SevenUpdate.Sdk.Windows;
+
 namespace SevenUpdate.Sdk
 {
     /// <summary>
@@ -25,5 +32,44 @@ namespace SevenUpdate.Sdk
     /// </summary>
     public sealed partial class App
     {
+        private readonly Guid appGuid = new Guid("{82893A11-B7D9-48D2-87B1-9F6F19B17300}");
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Directory.CreateDirectory(Core.UserStore);
+            Base.SerializationError += Core.Base_SerializationError;
+            Base.Locale = Settings.Default.locale;
+            Core.SetJumpList();
+            var si = new SingleInstance(appGuid);
+            si.ArgsRecieved += si_ArgsRecieved;
+            si.Run(() =>
+            {
+                new MainWindow().Show();
+                return MainWindow;
+            }, e.Args);
+        }
+
+        private void si_ArgsRecieved(string[] args)
+        {
+            if (args.Length > 0)
+                switch (args[0])
+                {
+                    case "-newproject":
+                        Core.NewProject();
+                        break;
+
+                    case "-newupdate":
+                        Core.AppIndex = Convert.ToInt32(args[1]);
+
+                        Core.NewUpdate();
+                        break;
+
+                    case "-edit":
+                        Core.AppIndex = Convert.ToInt32(args[1]);
+                        Core.UpdateIndex = Convert.ToInt32(args[2]);
+                        Core.EditItem();
+                        break;
+                }
+        }
     }
 }

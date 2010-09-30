@@ -26,6 +26,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Navigation;
+using System.Windows.Shell;
 using Microsoft.Windows.Dialogs;
 using Microsoft.Windows.Internal;
 using SevenUpdate.Pages;
@@ -49,6 +51,8 @@ namespace SevenUpdate
         #endregion
 
         #region Properties
+
+        internal static NavigationService NavService;
 
         public UpdateAction UpdateAction
         {
@@ -110,25 +114,59 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Recount Methods
-
-        /// <summary>
-        ///   Gets the total size of a single update
-        /// </summary>
-        /// <param name = "files">the collection of files of an update</param>
-        /// <returns>a ulong value of the size of the update</returns>
-        internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
-        {
-            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
-        }
-
-        #endregion
-
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+
+        internal static void SetJumpList()
+        {
+            var jumpList = new JumpList();
+
+            var jumpTask = new JumpTask
+                               {
+                                   ApplicationPath = Base.AppDir + "SevenUpdate.exe",
+                                   IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                                   Title = Resources.CheckForUpdates,
+                                   CustomCategory = Resources.Tasks,
+                                   Arguments = "-check",
+                               };
+            jumpList.JumpItems.Add(jumpTask);
+
+            jumpTask = new JumpTask
+                           {
+                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               Title = Resources.RestoreHiddenUpdates,
+                               CustomCategory = Resources.Tasks,
+                               Arguments = "-hidden",
+                           };
+            jumpList.JumpItems.Add(jumpTask);
+
+            jumpTask = new JumpTask
+                           {
+                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               Title = Resources.UpdateHistory,
+                               CustomCategory = Resources.Tasks,
+                               Arguments = "-history",
+                           };
+            jumpList.JumpItems.Add(jumpTask);
+
+            jumpTask = new JumpTask
+                           {
+                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               Title = Resources.ChangeSettings,
+                               CustomCategory = Resources.Tasks,
+                               Arguments = "-settings",
+                           };
+
+            jumpList.JumpItems.Add(jumpTask);
+
+            JumpList.SetJumpList(Application.Current, jumpList);
+        }
 
         /// <summary>
         ///   When a property has changed, call the <see cref = "OnPropertyChanged" /> Event
@@ -282,6 +320,20 @@ namespace SevenUpdate
         ///   Occurs when the user cancels their update selection
         /// </summary>
         internal static event EventHandler UpdateActionChanged;
+
+        #endregion
+
+        #region Recount Methods
+
+        /// <summary>
+        ///   Gets the total size of a single update
+        /// </summary>
+        /// <param name = "files">the collection of files of an update</param>
+        /// <returns>a ulong value of the size of the update</returns>
+        internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
+        {
+            return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
+        }
 
         #endregion
     }

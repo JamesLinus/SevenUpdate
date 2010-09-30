@@ -131,14 +131,14 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (!HasErrors())
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateShortcuts.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateShortcuts.xaml", UriKind.Relative));
             else
                 Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         #endregion

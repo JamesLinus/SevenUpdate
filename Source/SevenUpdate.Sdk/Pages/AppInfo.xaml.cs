@@ -129,7 +129,7 @@ namespace SevenUpdate.Sdk.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (!HasErrors())
-                MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateInfo.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
             else
                 Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
         }
@@ -165,11 +165,11 @@ namespace SevenUpdate.Sdk.Pages
 
                     Core.Projects.Add(project);
                     Base.Serialize(Core.Projects, Core.ProjectsFile);
-                    MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+                    MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
                 }
             }
             else
-                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         #endregion

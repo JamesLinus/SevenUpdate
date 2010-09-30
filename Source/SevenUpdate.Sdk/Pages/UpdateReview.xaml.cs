@@ -105,7 +105,7 @@ namespace SevenUpdate.Sdk.Pages
             if (!export)
             {
                 Core.IsNewProject = false;
-                MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
                 return;
             }
 
@@ -125,7 +125,7 @@ namespace SevenUpdate.Sdk.Pages
                 File.Copy(Core.UserStore + appName + ".sua", fileName, true);
             }
             Core.IsNewProject = false;
-            MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         private void SaveExport_Click(object sender, RoutedEventArgs e)

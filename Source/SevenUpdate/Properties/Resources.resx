@@ -642,4 +642,7 @@
     <value>Decline</value>
     <comment>RadioButton.Content</comment>
   </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
 </root>

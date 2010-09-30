@@ -103,7 +103,7 @@ namespace SevenUpdate.Pages
                 if (RestoredHiddenUpdate != null)
                     RestoredHiddenUpdate(this, new EventArgs());
             }
-            MainWindow.NavService.GoBack();
+            Core.NavService.GoBack();
         }
 
         #endregion
