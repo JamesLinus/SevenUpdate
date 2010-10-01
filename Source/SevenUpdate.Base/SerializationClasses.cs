@@ -845,7 +845,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The download size of the update in bytes (not used in the SDK)
         /// </summary>
-        [ProtoIgnore, IgnoreDataMember]
+        [ProtoMember(11, IsRequired = false), DataMember]
         public ulong Size
         {
             get { return size; }

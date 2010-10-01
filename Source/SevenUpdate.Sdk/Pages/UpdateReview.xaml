@@ -23,12 +23,12 @@
 					<CommandBinding Command="NavigationCommands.BrowseBack" />
 				</Controls:BackButton.CommandBindings>
 			</Controls:BackButton>
-			<TextBlock Style="{StaticResource glassText}" Text="{lex:LocText SevenUpdate.Sdk:Resources:Review}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
+			<TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate.Sdk:Resources:Review}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="2" Fill="White" Grid.RowSpan="6" />
 		<StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="7">
-			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="0" VerticalAlignment="Center" Grid.Row="1" Content="{lex:LocText SevenUpdate.Sdk:Resources:SaveProject}" Click="CommandLink_Click" />
-			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" VerticalAlignment="Center" Grid.Row="1" Content="{lex:LocText SevenUpdate.Sdk:Resources:SaveProjectRelease}" Note="{lex:LocText SevenUpdate.Sdk:Resources:ExportProjectNote}" Click="SaveExport_Click" Margin="0" />
+			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="0" VerticalAlignment="Center" Grid.Row="1" Content="{LocText SevenUpdate.Sdk:Resources:SaveProject}" Click="CommandLink_Click" />
+			<Controls:CommandLink HorizontalAlignment="Center" TabIndex="1" VerticalAlignment="Center" Grid.Row="1" Content="{LocText SevenUpdate.Sdk:Resources:SaveProjectRelease}" Note="{LocText SevenUpdate.Sdk:Resources:ExportProjectNote}" Click="SaveExport_Click" Margin="0" />
 		</StackPanel>
 		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Margin="12,12,0,0" VerticalAlignment="Top" Padding="2">
 			<TextBlock.Text>

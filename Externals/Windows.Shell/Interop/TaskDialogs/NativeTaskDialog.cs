@@ -121,7 +121,6 @@ namespace Microsoft.Windows.Dialogs
             }
             catch (EntryPointNotFoundException)
             {
-                throw new NotSupportedException("TaskDialog feature needs to load version 6 of comctl32.dll but a different version is current loaded in memory.");
             }
             finally
             {

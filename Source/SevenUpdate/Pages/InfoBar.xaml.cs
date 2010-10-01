@@ -25,6 +25,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 using SevenUpdate.Properties;
 using SevenUpdate.Windows;
 
@@ -242,12 +243,18 @@ namespace SevenUpdate.Pages
             }
 
             if (e.CurrentProgress == -1)
+            {
                 tbStatus.Text = Properties.Resources.PreparingInstall;
+                Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+            }
             else
             {
+                Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
+                Core.TaskBar.ProgressValue = e.CurrentProgress;
                 tbStatus.Text = e.TotalUpdates > 1
                                     ? String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress)
                                     : String.Format(Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
+
             }
         }
 
@@ -264,9 +271,20 @@ namespace SevenUpdate.Pages
             }
 
             if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-                tbStatus.Text = String.Format(Properties.Resources.DownloadPercentProgress, Base.ConvertFileSize(e.BytesTotal), (e.BytesTransferred*100/e.BytesTotal).ToString("F0"));
+            {
+                if (e.BytesTotal == e.BytesTransferred)
+                    return;
+                var progress = (e.BytesTransferred * 100 / e.BytesTotal);
+                Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
+                Core.TaskBar.ProgressValue = (Convert.ToDouble(progress)/100);
+                tbStatus.Text = String.Format(Properties.Resources.DownloadPercentProgress, Base.ConvertFileSize(e.BytesTotal), progress.ToString("F0"));
+
+            }
             else
+            {
+                Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 tbStatus.Text = String.Format(Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
+            }
         }
 
         /// <summary>
@@ -305,10 +323,7 @@ namespace SevenUpdate.Pages
 
         private static void DownloadCompleted(DownloadCompletedEventArgs e)
         {
-            if (e.ErrorOccurred)
-                Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            else
-                Core.Instance.UpdateAction = UpdateAction.Installing;
+            Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
         }
 
         #region Invoker Events
@@ -396,6 +411,7 @@ namespace SevenUpdate.Pages
             tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
             tbViewImportantUpdates.Visibility = Visibility.Collapsed;
             line.Visibility = Visibility.Collapsed;
+            Core.TaskBar.ProgressState = TaskbarItemProgressState.None;
 
             switch (action)
             {
@@ -424,9 +440,10 @@ namespace SevenUpdate.Pages
 
                 case UpdateAction.CheckingForUpdates:
                     tbHeading.Text = Properties.Resources.CheckingForUpdates;
-
                     tbHeading.Visibility = Visibility.Visible;
                     line.Y1 = 25;
+
+                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
 
                     break;
 
@@ -462,6 +479,8 @@ namespace SevenUpdate.Pages
                     btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
 
                     Core.IsInstallInProgress = true;
+
+                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
                 case UpdateAction.ErrorOccurred:
@@ -474,6 +493,7 @@ namespace SevenUpdate.Pages
                     btnAction.Visibility = Visibility.Visible;
 
                     Core.IsInstallInProgress = false;
+                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Error;
                     break;
 
                 case UpdateAction.InstallationCompleted:
@@ -497,6 +517,7 @@ namespace SevenUpdate.Pages
 
                     btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     Core.IsInstallInProgress = true;
+                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
                 case UpdateAction.NoUpdates:

@@ -124,7 +124,7 @@ namespace SevenUpdate.Admin
             bool createdNew;
             var timer = new Timer(10000);
             timer.Elapsed += timer_Elapsed;
-            timer.Start();
+            //timer.Start();
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
@@ -274,9 +274,9 @@ namespace SevenUpdate.Admin
                 if (Service.Service.DownloadCompleted != null && IsClientConnected)
                     Service.Service.DownloadCompleted(false);
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
-                Install.InstallUpdates(apps);
                 isInstalling = true;
                 File.Delete(Base.AllUserStore + "updates.sui");
+                Install.InstallUpdates(apps);
             }
             else
             {

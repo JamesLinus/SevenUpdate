@@ -26,30 +26,30 @@
 		<Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="White" Grid.RowSpan="12" />
 		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" HorizontalAlignment="Left">
 			<Controls:BackButton Grid.RowSpan="3" TabIndex="10"></Controls:BackButton>
-			<TextBlock Style="{StaticResource glassText}" Text="{lex:LocText SevenUpdate.Sdk:Resources:UpdateInformation}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
+			<TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate.Sdk:Resources:UpdateInformation}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="13" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="3" Name="line" />
 		<Rectangle Grid.ColumnSpan="3" Grid.Row="13" Fill="#FFF0F0F0" Name="rectangle" />
 		<StackPanel Grid.Column="1" Grid.Row="13" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="2">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{lex:LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="7" />
-			<Button Content="{lex:LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="8" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="7" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="8" />
 		</StackPanel>
 		<ComboBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="80" SelectionChanged="Locale_SelectionChanged" SelectedIndex="0" Name="cbxLocale" Grid.ColumnSpan="2" Margin="0,5,24,5" TabIndex="9">
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:English}" Tag="en" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Arabic}" Tag="ar" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Bengali}" Tag="bn" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Dutch}" Tag="nl" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:French}" Tag="fr" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:German}" Tag="de" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Hindi}" Tag="hi" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Japanese}" Tag="ja" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Polish}" Tag="pl" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Portuguese}" Tag="pt" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Russian}" Tag="ru" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Spanish}" Tag="es" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:English}" Tag="en" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Arabic}" Tag="ar" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Bengali}" Tag="bn" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Dutch}" Tag="nl" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:French}" Tag="fr" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:German}" Tag="de" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Hindi}" Tag="hi" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Japanese}" Tag="ja" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Polish}" Tag="pl" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Portuguese}" Tag="pt" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Russian}" Tag="ru" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Spanish}" Tag="es" />
 		</ComboBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:UpdateName}" Padding="2" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:UpdateNameToolTip}" Margin="0,10,0,0" Grid.Column="1" Grid.Row="1" />
-		<Controls:InfoTextBox MaxLength="100" Note="{lex:LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName" Grid.Column="1" Grid.Row="2">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateName}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateNameToolTip}" Margin="0,10,0,0" Grid.Column="1" Grid.Row="1" />
+		<Controls:InfoTextBox MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName" Grid.Column="1" Grid.Row="2">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="Name" Converter="{StaticResource stringToLocaleString}" ConverterParameter="Update.Name" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -58,8 +58,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:UpdateDetails}" Padding="2" Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" />
-		<Controls:InfoTextBox MaxLength="300" TextWrapping="Wrap" MaxLines="7" Note="{lex:LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}" TabIndex="1" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateDetails}" Padding="2" Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" />
+		<Controls:InfoTextBox MaxLength="300" TextWrapping="Wrap" MaxLines="7" Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}" TabIndex="1" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="Description" Converter="{StaticResource stringToLocaleString}" ConverterParameter="Update.Description" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -68,8 +68,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:UpdateInformationURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:UpdateInformationURLToolTip}" Grid.Column="1" Grid.Row="5" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Note="{lex:LocText SevenUpdate.Sdk:Resources:UpdateDetailsUrlNote}" TabIndex="2" Grid.Column="1" Grid.Row="6">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURLToolTip}" Grid.Column="1" Grid.Row="5" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsUrlNote}" TabIndex="2" Grid.Column="1" Grid.Row="6">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="InfoUrl" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -78,8 +78,8 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURLToolTip}" Grid.Column="1" Grid.Row="7" Margin="0,10,0,0" />
-		<Controls:InfoTextBox Note="{lex:LocText SevenUpdate.Sdk:Resources:LicenseUrlNote}" TabIndex="3" Grid.Column="1" Grid.Row="8">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURLToolTip}" Grid.Column="1" Grid.Row="7" Margin="0,10,0,0" />
+		<Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:LicenseUrlNote}" TabIndex="3" Grid.Column="1" Grid.Row="8">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="LicenseUrl" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -88,7 +88,7 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:SourceDownloadLocation}" Padding="2" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:SourceDownloadLocationToolTip}" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SourceDownloadLocation}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:SourceDownloadLocationToolTip}" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
 		<Controls:InfoTextBox Note="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10" Name="tbxSourceLocation">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="DownloadUrl" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
@@ -99,15 +99,15 @@
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
 		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" Margin="0,20,0,0">
-			<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ReleaseDate}" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ReleaseDateToolTip}" />
+			<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:ReleaseDate}" Padding="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,5,0" ToolTip="{LocText SevenUpdate.Sdk:Resources:ReleaseDateToolTip}" />
 			<DatePicker IsTodayHighlighted="True" DisplayDateEnd="12/21/2012" SelectedDate="{Binding Path=ReleaseDate, Converter={StaticResource dateConverter}, Mode=TwoWay}" TabIndex="5" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,4,0" MaxWidth="100" DisplayDateStart="1/1/2006" />
-			<Image Name="imgReleaseDate" Source="/Windows.Shell;component/Images/Caution.png" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ValidDateRequired}" UseLayoutRounding="True" Margin="4,0,0,0" Visibility="{Binding Path=ReleaseDate, Converter={StaticResource stringToVisibility}}" VerticalAlignment="Center" />
-			<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:UpdateImportance}" Padding="2" Margin="50,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:UpdateImportanceToolTip}" />
+			<Image Name="imgReleaseDate" Source="/Windows.Shell;component/Images/Caution.png" ToolTip="{LocText SevenUpdate.Sdk:Resources:ValidDateRequired}" UseLayoutRounding="True" Margin="4,0,0,0" Visibility="{Binding Path=ReleaseDate, Converter={StaticResource stringToVisibility}}" VerticalAlignment="Center" />
+			<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateImportance}" Padding="2" Margin="50,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateImportanceToolTip}" />
 			<ComboBox TabIndex="6" MinWidth="65" SelectedValue="{Binding Path=Importance, Mode=TwoWay}" SelectedValuePath="Tag" VerticalAlignment="Center" MinHeight="23">
-				<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Important}" Tag="Important" />
-				<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Recommended}" Tag="Recommended" />
-				<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Optional}" Tag="Optional" />
-				<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Locale}" Tag="Locale" />
+				<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Important}" Tag="Important" />
+				<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Recommended}" Tag="Recommended" />
+				<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Optional}" Tag="Optional" />
+				<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Locale}" Tag="Locale" />
 			</ComboBox>
 		</StackPanel>
 		<StackPanel Grid.Column="1" Grid.Row="11" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="0,32,0,0" />

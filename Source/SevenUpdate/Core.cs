@@ -48,6 +48,8 @@ namespace SevenUpdate
         private static bool isAdmin;
         internal static Core Instance { get { return instance ?? (instance = new Core()); } }
 
+        internal static TaskbarItemInfo TaskBar;
+
         #endregion
 
         #region Properties

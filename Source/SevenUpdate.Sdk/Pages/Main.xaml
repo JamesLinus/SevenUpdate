@@ -14,32 +14,32 @@
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="2" Fill="White" Grid.ColumnSpan="2" />
 		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,25,0,0" Grid.RowSpan="2">
-			<Controls:CommandLink Content="{lex:LocText SevenUpdate.Sdk:Resources:CreateNewProject}" Note="{lex:LocText SevenUpdate.Sdk:Resources:CreateProjectNote}" TabIndex="1" Click="NewProject_Click" />
-			<Controls:CommandLink Content="{lex:LocText SevenUpdate.Sdk:Resources:CreateNewUpdate}" Grid.Column="1" Note="{lex:LocText SevenUpdate.Sdk:Resources:AddUpdate}" TabIndex="2" Click="NewUpdate_Click" Visibility="Collapsed" Name="clNewUpdate" />
-			<Controls:CommandLink Grid.Column="1" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" Content="{lex:LocText SevenUpdate.Sdk:Resources:Edit}" />
-			<Controls:CommandLink Content="{lex:LocText SevenUpdate.Sdk:Resources:Test}" TabIndex="4" Note="{lex:LocText SevenUpdate.Sdk:Resources:TestProjectNote}" Visibility="Collapsed" Name="clTest" Margin="0" />
+			<Controls:CommandLink Content="{LocText SevenUpdate.Sdk:Resources:CreateNewProject}" Note="{LocText SevenUpdate.Sdk:Resources:CreateProjectNote}" TabIndex="1" Click="NewProject_Click" />
+			<Controls:CommandLink Content="{LocText SevenUpdate.Sdk:Resources:CreateNewUpdate}" Grid.Column="1" Note="{LocText SevenUpdate.Sdk:Resources:AddUpdate}" TabIndex="2" Click="NewUpdate_Click" Visibility="Collapsed" Name="clNewUpdate" />
+			<Controls:CommandLink Grid.Column="1" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="clEdit_Click" Content="{LocText SevenUpdate.Sdk:Resources:Edit}" />
+			<Controls:CommandLink Content="{LocText SevenUpdate.Sdk:Resources:Test}" TabIndex="4" Note="{LocText SevenUpdate.Sdk:Resources:TestProjectNote}" Visibility="Collapsed" Name="clTest" Margin="0" />
 		</StackPanel>
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
 			<Controls:BackButton IsEnabled="False" />
-			<TextBlock Style="{StaticResource glassText}" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,0,0,2" Name="tbTitle" Text="{lex:LocText SevenUpdate.Sdk:Resources:WelcomeTitle}"></TextBlock>
+			<TextBlock Style="{StaticResource glassText}" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,0,0,2" Name="tbTitle" Text="{LocText SevenUpdate.Sdk:Resources:WelcomeTitle}"></TextBlock>
 		</StackPanel>
-		<TextBlock Style="{StaticResource glassLink}" Text="{lex:LocText SevenUpdate.Sdk:Resources:HelpSupport}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand" Focusable="True" Name="tbHelp" Grid.Column="1" />
-		<TextBlock Style="{StaticResource glassLink}" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Text="{lex:LocText SevenUpdate.Sdk:Resources:AboutSevenUpdateSDK}" VerticalAlignment="Bottom" Grid.Row="3" Margin="12,0,0,12" MouseDown="TextBlock_MouseDown" Focusable="True" Name="tbAbout" />
+		<TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate.Sdk:Resources:HelpSupport}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,2" Padding="2" MouseDown="Help_MouseDown" Cursor="Hand" Focusable="True" Name="tbHelp" Grid.Column="1" />
+		<TextBlock Style="{StaticResource glassLink}" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:AboutSevenUpdateSDK}" VerticalAlignment="Bottom" Grid.Row="3" Margin="12,0,0,12" MouseDown="TextBlock_MouseDown" Focusable="True" Name="tbAbout" />
 		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="treeView_SelectedItemChanged" MouseRightButtonDown="treeView_MouseRightButtonDown" MaxWidth="400">
 			<TreeView.ContextMenu>
 				<ContextMenu>
-					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:ReleaseApplication}" Click="ReleaseApp_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:ReleaseApplication}" Click="ReleaseApp_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/App.png" />
 						</MenuItem.Icon>
 					</MenuItem>
-					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:ReleaseUpdates}" Click="ReleaseUpdates_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:ReleaseUpdates}" Click="ReleaseUpdates_Click" Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Update.png" />
 						</MenuItem.Icon>
 					</MenuItem>
 					<Separator Visibility="{Binding Path=PlacementTarget.SelectedItem.HasItems, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}, Converter={StaticResource boolToVisibility}}" />
-					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:Delete}" Click="MenuItem_Click">
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:Delete}" Click="MenuItem_Click">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
 						</MenuItem.Icon>

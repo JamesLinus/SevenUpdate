@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{lex:LocText SevenUpdate:Resources:SoftwareLicenseAgreement}" MinWidth="640" MinHeight="390" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" SizeToContent="Manual" Width="640" Height="390" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" Icon="/Images/wicon.ico" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
+<Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:SoftwareLicenseAgreement}" MinWidth="640" MinHeight="390" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" SizeToContent="Manual" Width="640" Height="390" Loaded="Window_Loaded" WindowStartupLocation="CenterOwner" Icon="/Images/wicon.ico" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -11,14 +11,14 @@
 			<ColumnDefinition Width="596*" />
 			<ColumnDefinition Width="10" />
 		</Grid.ColumnDefinitions>
-		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{lex:LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
+		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
 		<StackPanel HorizontalAlignment="Right" Name="stackPanel1" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
-			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="Action_Click" IsEnabled="False" ButtonText="{lex:LocText SevenUpdate:Resources:Finish}" />
-			<Button Content="{lex:LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel_Click" />
+			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="Action_Click" IsEnabled="False" ButtonText="{LocText SevenUpdate:Resources:Finish}" />
+			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel_Click" />
 		</StackPanel>
 		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Name="stackPanel2" VerticalAlignment="Top" Margin="20,1,0,0">
-			<RadioButton Content="{lex:LocText SevenUpdate:Resources:AcceptTerms}" Name="rbAccept" Padding="4,0,0,7" MinHeight="17" Checked="Accept_Checked" IsEnabled="False" />
-			<RadioButton Content="{lex:LocText SevenUpdate:Resources:Decline}" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
+			<RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbAccept" Padding="4,0,0,7" MinHeight="17" Checked="Accept_Checked" IsEnabled="False" />
+			<RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbDecline" MinHeight="17" Checked="Decline_Checked" IsEnabled="False" />
 		</StackPanel>
 		<RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
 	</Grid>

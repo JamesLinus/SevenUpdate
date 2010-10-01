@@ -66,6 +66,7 @@ namespace SevenUpdate
         ///   Downloads the updates using BITS
         /// </summary>
         /// <param name = "appUpdates">The application updates to download</param>
+        /// <param name="isPriority"></param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
         {
             if (appUpdates == null)
@@ -282,6 +283,8 @@ namespace SevenUpdate
                 return;
 
             e.Job.Complete();
+            if (DownloadCompleted != null)
+                DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));
 
             manager.OnJobTransferred -= ManagerOnJobTransferred;
             manager.OnJobError -= ManagerOnJobError;
@@ -295,8 +298,7 @@ namespace SevenUpdate
             {
             }
 
-            if (DownloadCompleted != null)
-                DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));
+
         }
 
         #endregion

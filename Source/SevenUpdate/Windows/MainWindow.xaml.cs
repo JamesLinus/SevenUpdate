@@ -25,7 +25,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
-using System.Windows.Navigation;
+using System.Windows.Shell;
 using SevenUpdate.Properties;
 
 #endregion
@@ -38,11 +38,13 @@ namespace SevenUpdate.Windows
     [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof (ContentPresenter))]
     public sealed partial class MainWindow
     {
+
         public MainWindow()
         {
             InitializeComponent();
-
+            Core.TaskBar = taskBar;
             Core.NavService = NavigationService;
+
         }
 
         /// <summary>

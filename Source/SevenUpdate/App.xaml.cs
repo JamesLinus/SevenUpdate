@@ -25,10 +25,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using Microsoft.Windows;
 using Microsoft.Windows.Dialogs;
-using Microsoft.Windows.Shell;
 using SevenUpdate.Properties;
-using SevenUpdate.Windows;
+
 
 #endregion
 
@@ -39,30 +39,37 @@ namespace SevenUpdate
     /// </summary>
     public sealed partial class App
     {
-        private readonly Guid appGuid = new Guid("{4BC799CE-7658-48D9-AC98-829F64638E41}");
-
-        protected override void OnStartup(StartupEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
+        protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
+            base.OnStartup(e, isFirstInstance);
             Init(e.Args);
-            Core.SetJumpList();
-            var si = new SingleInstance(appGuid);
-            si.ArgsRecieved += si_ArgsRecieved;
-            si.Run(() =>
-                       {
-                           new MainWindow().Show();
-                           return MainWindow;
-                       }, e.Args);
+            if (!isFirstInstance)
+            {
+                Shutdown(1);
+            }
+
         }
 
-        private void si_ArgsRecieved(string[] args)
+        /// <summary>
+        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
-            if (args.Length <= 0)
+            base.OnStartupNextInstance(e);
+            
+            if (e.Args.Length <= 0)
                 return;
-            switch (args[0])
+            switch (e.Args[0])
             {
 
                 case "-check":
-                    Core.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
+                    Core.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                     Core.CheckForUpdates(true);
                     break;
                 case "-history":
@@ -75,6 +82,7 @@ namespace SevenUpdate
                     Core.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
                     break;
             }
+
         }
 
         /// <summary>

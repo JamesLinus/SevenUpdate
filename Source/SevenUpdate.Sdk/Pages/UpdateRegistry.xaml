@@ -31,26 +31,26 @@
 					<CommandBinding Command="NavigationCommands.BrowseBack" />
 				</Controls:BackButton.CommandBindings>
 			</Controls:BackButton>
-			<TextBlock Style="{StaticResource glassText}" Text="{lex:LocText SevenUpdate.Sdk:Resources:RegistryTitle}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
+			<TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate.Sdk:Resources:RegistryTitle}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<!--Help Text-->
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility},ConverterParameter=True}" Grid.ColumnSpan="3" Grid.Row="9" HorizontalAlignment="Left">
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
-			<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:GetStartedRegistry}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
+			<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:GetStartedRegistry}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
 		</StackPanel>
 		<!--Naviation Buttons-->
 		<StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="3">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{lex:LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="8" />
-			<Button Content="{lex:LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="9" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="8" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="9" />
 		</StackPanel>
 		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="listBox_KeyDown" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
-					<MenuItem Click="AddRegistryItem_Click" Header="{lex:LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />
-					<MenuItem Click="ImportRegistryFile_Click" Header="{lex:LocText SevenUpdate.Sdk:Resources:ImportRegistryFile}" />
+					<MenuItem Click="AddRegistryItem_Click" Header="{LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />
+					<MenuItem Click="ImportRegistryFile_Click" Header="{LocText SevenUpdate.Sdk:Resources:ImportRegistryFile}" />
 					<Separator />
-					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:RemoveRegistryItem}" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
-					<MenuItem Header="{lex:LocText SevenUpdate.Sdk:Resources:RemoveAllRegistryItems}" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveRegistryItem}" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveAllRegistryItems}" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
 						</MenuItem.Icon>
@@ -58,14 +58,14 @@
 				</ContextMenu>
 			</ListBox.ContextMenu>
 		</ListBox>
-		<GroupBox Grid.Column="1" Grid.Row="1" Header="{lex:LocText SevenUpdate.Sdk:Resources:RegistryAction}" HorizontalAlignment="Left" Margin="0,10" Grid.ColumnSpan="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
+		<GroupBox Grid.Column="1" Grid.Row="1" Header="{LocText SevenUpdate.Sdk:Resources:RegistryAction}" HorizontalAlignment="Left" Margin="0,10" Grid.ColumnSpan="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
 			<StackPanel Orientation="Horizontal">
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:AddOrUpdate}" Margin="10" TabIndex="1" />
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:DeleteKey}" Margin="10" TabIndex="2" />
-				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{lex:LocText SevenUpdate.Sdk:Resources:DeleteValue}" Margin="10" TabIndex="3" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{LocText SevenUpdate.Sdk:Resources:AddOrUpdate}" Margin="10" TabIndex="1" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{LocText SevenUpdate.Sdk:Resources:DeleteKey}" Margin="10" TabIndex="2" />
+				<RadioButton IsChecked="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteValue}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Content="{LocText SevenUpdate.Sdk:Resources:DeleteValue}" Margin="10" TabIndex="3" />
 			</StackPanel>
 		</GroupBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:KeyPath}" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:KeyPathToolTip}" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:KeyPath}" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:KeyPathToolTip}" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
 		<Controls:InfoTextBox Note="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,0,40,0" TabIndex="4" Name="tbxKeyPath">
 			<Controls:InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Key" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
@@ -75,16 +75,16 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ValueName}" HorizontalAlignment="Left" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ValueNameToolTip}" Grid.Column="1" Grid.Row="4" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=rbtnDeleteKey}" />
-		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Note="{lex:LocText SevenUpdate.Sdk:Resources:ValueNameNote}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}}" Margin="0,0,40,0" TabIndex="5" />
-		<TextBlock Text="{lex:LocText SevenUpdate.Sdk:Resources:ValueData}" ToolTip="{lex:LocText SevenUpdate.Sdk:Resources:ValueDataToolTip}" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:ValueName}" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:ValueNameToolTip}" Grid.Column="1" Grid.Row="4" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=rbtnDeleteKey}" />
+		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.KeyValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Note="{LocText SevenUpdate.Sdk:Resources:ValueNameNote}" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource inverseEnumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.DeleteKey}}" Margin="0,0,40,0" TabIndex="5" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:ValueData}" ToolTip="{LocText SevenUpdate.Sdk:Resources:ValueDataToolTip}" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
 		<ComboBox MinWidth="75" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.ValueKind, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}" TabIndex="6">
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:Binary}" Tag="Binary" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:DWord}" Tag="DWord" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:ExpandString}" Tag="ExpandString" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:MultiString}" Tag="MultiString" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:QWord}" Tag="QWord" />
-			<ComboBoxItem Content="{lex:LocText SevenUpdate.Sdk:Resources:String}" Tag="String" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Binary}" Tag="Binary" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:DWord}" Tag="DWord" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:ExpandString}" Tag="ExpandString" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:MultiString}" Tag="MultiString" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:QWord}" Tag="QWord" />
+			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:String}" Tag="String" />
 		</ComboBox>
 		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" MaxHeight="400" VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="3" Grid.Row="8" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,5,40,0" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}" TabIndex="7" />
 	</Grid>

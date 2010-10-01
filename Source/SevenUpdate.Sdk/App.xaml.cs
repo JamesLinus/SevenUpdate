@@ -21,7 +21,7 @@
 using System;
 using System.IO;
 using System.Windows;
-using Microsoft.Windows.Shell;
+using Microsoft.Windows;
 using SevenUpdate.Sdk.Properties;
 using SevenUpdate.Sdk.Windows;
 
@@ -32,44 +32,56 @@ namespace SevenUpdate.Sdk
     /// </summary>
     public sealed partial class App
     {
-        private readonly Guid appGuid = new Guid("{82893A11-B7D9-48D2-87B1-9F6F19B17300}");
-
-        protected override void OnStartup(StartupEventArgs e)
+        /// <summary>
+        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
+        protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            Directory.CreateDirectory(Core.UserStore);
+            base.OnStartup(e, isFirstInstance);
+            
             Base.SerializationError += Core.Base_SerializationError;
             Base.Locale = Settings.Default.locale;
-            Core.SetJumpList();
-            var si = new SingleInstance(appGuid);
-            si.ArgsRecieved += si_ArgsRecieved;
-            si.Run(() =>
+
+            if (!isFirstInstance)
             {
-                new MainWindow().Show();
-                return MainWindow;
-            }, e.Args);
+                Shutdown(1);
+            }
+
+            Directory.CreateDirectory(Core.UserStore);
+            Core.SetJumpList();
         }
 
-        private void si_ArgsRecieved(string[] args)
+        /// <summary>
+        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
+        /// </summary>
+        /// <param name="e">The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
-            if (args.Length > 0)
-                switch (args[0])
-                {
-                    case "-newproject":
-                        Core.NewProject();
-                        break;
+            base.OnStartupNextInstance(e);
 
-                    case "-newupdate":
-                        Core.AppIndex = Convert.ToInt32(args[1]);
+            if (e.Args.Length <= 0)
+                return;
+            switch (e.Args[0])
+            {
+                case "-newproject":
+                    Core.NewProject();
+                    break;
 
-                        Core.NewUpdate();
-                        break;
+                case "-newupdate":
+                    Core.AppIndex = Convert.ToInt32(e.Args[1]);
 
-                    case "-edit":
-                        Core.AppIndex = Convert.ToInt32(args[1]);
-                        Core.UpdateIndex = Convert.ToInt32(args[2]);
-                        Core.EditItem();
-                        break;
-                }
+                    Core.NewUpdate();
+                    break;
+
+                case "-edit":
+                    Core.AppIndex = Convert.ToInt32(e.Args[1]);
+                    Core.UpdateIndex = Convert.ToInt32(e.Args[2]);
+                    Core.EditItem();
+                    break;
+            }
+
         }
     }
 }

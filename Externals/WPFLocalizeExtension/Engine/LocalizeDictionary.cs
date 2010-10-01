@@ -14,12 +14,11 @@ using System.Windows.Markup;
 #endregion
 
 //// Register this namespace under admirals one with prefix
-
-[assembly: XmlnsDefinition("http://schemas.root-project.org/xaml/presentation", "WPFLocalizeExtension.Engine")]
-[assembly: XmlnsDefinition("http://schemas.root-project.org/xaml/presentation", "WPFLocalizeExtension.Extensions")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
+[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
 //// Assign a default namespace prefix for the schema
 
-[assembly: XmlnsPrefix("http://schemas.root-project.org/xaml/presentation", "lex")]
+
 
 namespace WPFLocalizeExtension.Engine
 {
