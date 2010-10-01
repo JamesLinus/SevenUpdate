@@ -29,7 +29,6 @@ using Microsoft.Windows;
 using Microsoft.Windows.Dialogs;
 using SevenUpdate.Properties;
 
-
 #endregion
 
 namespace SevenUpdate
@@ -40,34 +39,31 @@ namespace SevenUpdate
     public sealed partial class App
     {
         /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
+        ///   Raises the <see cref = "InstanceAwareApplication.Startup" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
+        /// <param name = "e">The <see cref = "System.Windows.StartupEventArgs" /> instance containing the event data.</param>
+        /// <param name = "isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             base.OnStartup(e, isFirstInstance);
             Init(e.Args);
+            Core.SetJumpList();
             if (!isFirstInstance)
-            {
                 Shutdown(1);
-            }
-
         }
 
         /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
+        ///   Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "Microsoft.Windows.StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
-            
+
             if (e.Args.Length <= 0)
                 return;
             switch (e.Args[0])
             {
-
                 case "-check":
                     Core.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                     Core.CheckForUpdates(true);
@@ -82,7 +78,6 @@ namespace SevenUpdate
                     Core.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
                     break;
             }
-
         }
 
         /// <summary>

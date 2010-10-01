@@ -52,10 +52,10 @@ namespace SevenUpdate.Windows
             DataContext = updateInfo;
             helpUrl = updateInfo.HelpUrl;
             infoUrl = updateInfo.InfoUrl;
-            if (updateInfo.Status == UpdateStatus.Hidden)
-                tbStatus.Text = Base.ConvertFileSize(updateInfo.UpdateSize);
-            else
-                tbStatus.Text = updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed : String.Format(Properties.Resources.UpdateInstallDate, updateInfo.InstallDate);
+            tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
+                                ? String.Format(Properties.Resources.DownloadSize, Base.ConvertFileSize(updateInfo.UpdateSize))
+                                : String.Format(Properties.Resources.InstallationStatus,
+                                                updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed.ToLower() : Properties.Resources.Successful.ToLower(), updateInfo.InstallDate);
 
 
             ShowDialog();

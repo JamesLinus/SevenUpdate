@@ -46,9 +46,9 @@ namespace SevenUpdate
         private static UpdateAction updateAction;
 
         private static bool isAdmin;
-        internal static Core Instance { get { return instance ?? (instance = new Core()); } }
 
         internal static TaskbarItemInfo TaskBar;
+        internal static Core Instance { get { return instance ?? (instance = new Core()); } }
 
         #endregion
 
@@ -150,7 +150,7 @@ namespace SevenUpdate
                            {
                                ApplicationPath = Base.AppDir + "SevenUpdate.exe",
                                IconResourcePath = Base.AppDir + "SevenUpdate.exe",
-                               Title = Resources.UpdateHistory,
+                               Title = Resources.ViewUpdateHistory,
                                CustomCategory = Resources.Tasks,
                                Arguments = "-history",
                            };

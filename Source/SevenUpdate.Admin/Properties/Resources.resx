@@ -123,10 +123,6 @@
   <data name="DownloadingUpdates" xml:space="preserve">
     <value>Downloading updates...</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="InstallingUpdates" xml:space="preserve">
     <value>Installing updates...</value>
   </data>
@@ -153,5 +149,9 @@
   </data>
   <data name="InstallProgress" xml:space="preserve">
     <value>Installing updates {0}% complete...</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="trayIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\trayIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

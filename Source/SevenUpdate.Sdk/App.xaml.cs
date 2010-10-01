@@ -18,12 +18,15 @@
 
 #endregion
 
+#region
+
 using System;
 using System.IO;
 using System.Windows;
 using Microsoft.Windows;
 using SevenUpdate.Sdk.Properties;
-using SevenUpdate.Sdk.Windows;
+
+#endregion
 
 namespace SevenUpdate.Sdk
 {
@@ -33,30 +36,28 @@ namespace SevenUpdate.Sdk
     public sealed partial class App
     {
         /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
+        ///   Raises the <see cref = "InstanceAwareApplication.Startup" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
+        /// <param name = "e">The <see cref = "System.Windows.StartupEventArgs" /> instance containing the event data.</param>
+        /// <param name = "isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             base.OnStartup(e, isFirstInstance);
-            
+
             Base.SerializationError += Core.Base_SerializationError;
             Base.Locale = Settings.Default.locale;
 
             if (!isFirstInstance)
-            {
                 Shutdown(1);
-            }
 
             Directory.CreateDirectory(Core.UserStore);
             Core.SetJumpList();
         }
 
         /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
+        ///   Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.
         /// </summary>
-        /// <param name="e">The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "Microsoft.Windows.StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -81,7 +82,6 @@ namespace SevenUpdate.Sdk
                     Core.EditItem();
                     break;
             }
-
         }
     }
 }

@@ -379,9 +379,6 @@
   <data name="UpdateFailed" xml:space="preserve">
     <value>1 update failed</value>
   </data>
-  <data name="UpdateInstallDate" xml:space="preserve">
-    <value>Succeeded, installed on {0}</value>
-  </data>
   <data name="UpdateInstalled" xml:space="preserve">
     <value>1 update succeeded</value>
   </data>
@@ -644,5 +641,17 @@
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
+  </data>
+  <data name="DownloadSize" xml:space="preserve">
+    <value>Download size: {0}</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="InstallationStatus" xml:space="preserve">
+    <value>Installation status: {0}, installed on {1}</value>
+    <comment>TextBlock.Text</comment>
+  </data>
+  <data name="UpdateType" xml:space="preserve">
+    <value>Update type:</value>
+    <comment>TextBlock.Text</comment>
   </data>
 </root>

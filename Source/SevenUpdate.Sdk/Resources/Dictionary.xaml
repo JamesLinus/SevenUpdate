@@ -10,6 +10,42 @@
 	<Common:EnumToBool x:Key="enumToBool" />
 	<Common:InverseEnumToBool x:Key="inverseEnumToBool" />
 
+	<Style TargetType="ListBoxItem">
+		<Style.Triggers>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Background">
+					<Setter.Value>
+						<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+							<LinearGradientBrush.GradientStops>
+								<GradientStop Offset="0" Color="#FFdcebfc" />
+								<GradientStop Offset="0.5" Color="#FFd0e3fc" />
+								<GradientStop Offset="1" Color="#FFc1dbfc" />
+							</LinearGradientBrush.GradientStops>
+						</LinearGradientBrush>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
+	<Style TargetType="TreeViewItem">
+		<Style.Triggers>
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Background">
+					<Setter.Value>
+						<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+							<LinearGradientBrush.GradientStops>
+								<GradientStop Offset="0" Color="#FFdcebfc" />
+								<GradientStop Offset="0.5" Color="#FFd0e3fc" />
+								<GradientStop Offset="1" Color="#FFc1dbfc" />
+							</LinearGradientBrush.GradientStops>
+						</LinearGradientBrush>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
+		</Style.Triggers>
+	</Style>
+
 	<!--Underline TextBlock-->
 	<Style x:Key="underlineTextBlock" TargetType="TextBlock">
 		<Setter Property="Foreground" Value="#FF0066CC" />

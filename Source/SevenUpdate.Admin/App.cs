@@ -124,7 +124,7 @@ namespace SevenUpdate.Admin
             bool createdNew;
             var timer = new Timer(10000);
             timer.Elapsed += timer_Elapsed;
-            //timer.Start();
+            timer.Start();
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
@@ -197,7 +197,7 @@ namespace SevenUpdate.Admin
                             File.Delete(Base.AllUserStore + "abort.lock");
                         isAutoInstall = true;
                         isInstalling = true;
-                        notifyIcon = new NotifyIcon {Icon = Resources.icon, Text = Resources.CheckingForUpdates, Visible = true};
+                        notifyIcon = new NotifyIcon {Icon = Resources.trayIcon, Text = Resources.CheckingForUpdates, Visible = true};
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
                         Search.ErrorOccurred += Search_ErrorOccurred;
@@ -306,9 +306,7 @@ namespace SevenUpdate.Admin
                 }
             }
             else
-            {
                 ShutdownApp();
-            }
         }
 
         /// <summary>

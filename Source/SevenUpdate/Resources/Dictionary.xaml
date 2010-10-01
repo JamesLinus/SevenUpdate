@@ -13,27 +13,13 @@
 	<Common:InverseBoolConverter x:Key="inverseBool" />
 	<converters:UpdateStatusToString x:Key="statusToString" />
 
-	<DataTemplate x:Key="HeaderTemplateSortDesc">
-		<DockPanel>
-			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />
-			<Path StrokeThickness="1" Fill="Gray" Data="M 5,5 L 10,10 L 15,5 L 5,5" />
-		</DockPanel>
-	</DataTemplate>
-
-	<DataTemplate x:Key="HeaderTemplateSortAsc">
-		<DockPanel>
-			<TextBlock HorizontalAlignment="Left" Text="{Binding}" />
-			<Path StrokeThickness="1" Fill="Gray" Data="M 5,10 L 15,10 L 10,5 L 5,10" />
-		</DockPanel>
-	</DataTemplate>
-
-	<Style x:Key="HeaderTemplate" TargetType="{x:Type GridViewColumnHeader}">
+	<Style TargetType="{x:Type GridViewColumnHeader}">
 		<Setter Property="HorizontalContentAlignment" Value="Left" />
-		<Setter Property="Padding" Value="5,0" />
 	</Style>
 
-	<Style x:Key="alternatingListViewItemStyle" TargetType="{x:Type ListViewItem}">
+	<Style TargetType="{x:Type ListViewItem}" x:Key="alternatingListViewItemStyle">
 		<Style.Triggers>
+            
 			<!-- setting up triggers for alternate background colors -->
 			<Trigger Property="ItemsControl.AlternationIndex" Value="0">
 				<Setter Property="Background" Value="#F3F7FB" />
@@ -45,6 +31,19 @@
 			<DataTrigger Binding="{Binding Hidden}" Value="True">
 				<Setter Property="Foreground" Value="Gray" />
 			</DataTrigger>
+
+			<Trigger Property="IsSelected" Value="True">
+				<Setter Property="Background">
+					<Setter.Value>
+						<LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+							<LinearGradientBrush.GradientStops>
+								<GradientStop Offset="0" Color="#FFdcebfc" />
+								<GradientStop Offset="1" Color="#FFc1dbfc" />
+							</LinearGradientBrush.GradientStops>
+						</LinearGradientBrush>
+					</Setter.Value>
+				</Setter>
+			</Trigger>
 		</Style.Triggers>
 	</Style>
 

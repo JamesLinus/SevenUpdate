@@ -75,6 +75,6 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("1.2.1")]
-[assembly: AssemblyFileVersion("10.9.29")]
+[assembly: AssemblyFileVersion("10.10.1")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: GuidAttribute("4BC799CE-7658-48D9-AC98-829F64638E41")]

@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateInformation}" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="Page_Loaded" d:DesignHeight="500" d:DesignWidth="850" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
+<Page x:Class="SevenUpdate.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateInformation}" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="Page_Loaded" d:DesignHeight="500" d:DesignWidth="850">
 	<Page.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -92,7 +92,7 @@
 				</DataTemplate>
 			</ListView.Resources>
 			<ListView.View>
-				<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
+				<GridView>
 					<GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
 					<GridViewColumn Header="{LocText SevenUpdate:Resources:Name}" DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Width="400" Controls:ListViewSorter.PropertyName="Name" />
 					<GridViewColumn Header="{LocText SevenUpdate:Resources:Importance}" DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceToString}}" Width="100" Controls:ListViewSorter.PropertyName="Importance" />

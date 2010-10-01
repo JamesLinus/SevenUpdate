@@ -87,13 +87,6 @@ namespace SevenUpdate.Admin.Properties {
             }
         }
         
-        public static System.Drawing.Icon icon {
-            get {
-                object obj = ResourceManager.GetObject("icon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         /// <summary>
         ///   Looks up a localized string similar to Seven Update has completed the installation of updates.
         /// </summary>
@@ -118,6 +111,13 @@ namespace SevenUpdate.Admin.Properties {
         public static string InstallProgress {
             get {
                 return ResourceManager.GetString("InstallProgress", resourceCulture);
+            }
+        }
+        
+        public static System.Drawing.Icon trayIcon {
+            get {
+                object obj = ResourceManager.GetObject("trayIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

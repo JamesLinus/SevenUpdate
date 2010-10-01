@@ -136,14 +136,14 @@ namespace SevenUpdate
 
         private static bool WaitForAdmin()
         {
-            //if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
-            //{
-            //    var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
-            //    if (!success)
-            //        return false;
-            //    Thread.Sleep(1000);
-            //    wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
-            //}
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            {
+                var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+                if (!success)
+                    return false;
+                Thread.Sleep(1000);
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+            }
             if (wcfClient == null)
                 wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
 

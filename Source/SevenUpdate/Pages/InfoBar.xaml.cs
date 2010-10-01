@@ -203,9 +203,7 @@ namespace SevenUpdate.Pages
                 #endregion
             }
             else
-            {
                 Core.Instance.UpdateAction = UpdateAction.NoUpdates;
-            }
         }
 
         /// <summary>
@@ -254,7 +252,6 @@ namespace SevenUpdate.Pages
                 tbStatus.Text = e.TotalUpdates > 1
                                     ? String.Format(Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress)
                                     : String.Format(Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
-
             }
         }
 
@@ -274,11 +271,10 @@ namespace SevenUpdate.Pages
             {
                 if (e.BytesTotal == e.BytesTransferred)
                     return;
-                var progress = (e.BytesTransferred * 100 / e.BytesTotal);
+                var progress = (e.BytesTransferred*100/e.BytesTotal);
                 Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 Core.TaskBar.ProgressValue = (Convert.ToDouble(progress)/100);
                 tbStatus.Text = String.Format(Properties.Resources.DownloadPercentProgress, Base.ConvertFileSize(e.BytesTotal), progress.ToString("F0"));
-
             }
             else
             {

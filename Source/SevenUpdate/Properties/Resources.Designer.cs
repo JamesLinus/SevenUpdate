@@ -367,6 +367,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download size: {0}.
+        /// </summary>
+        public static string DownloadSize {
+            get {
+                return ResourceManager.GetString("DownloadSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download updates but let me choose to install them (recommended).
         /// </summary>
         public static string DownloadUpdatesButChooseToInstall {
@@ -498,6 +507,15 @@ namespace SevenUpdate.Properties {
         public static string ImportantUpdatesSelected {
             get {
                 return ResourceManager.GetString("ImportantUpdatesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installation status: {0}, installed on {1}.
+        /// </summary>
+        public static string InstallationStatus {
+            get {
+                return ResourceManager.GetString("InstallationStatus", resourceCulture);
             }
         }
         
@@ -1168,15 +1186,6 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Succeeded, installed on {0}.
-        /// </summary>
-        public static string UpdateInstallDate {
-            get {
-                return ResourceManager.GetString("UpdateInstallDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 1 update succeeded.
         /// </summary>
         public static string UpdateInstalled {
@@ -1236,6 +1245,15 @@ namespace SevenUpdate.Properties {
         public static string UpdatesReadyInstalled {
             get {
                 return ResourceManager.GetString("UpdatesReadyInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update type:.
+        /// </summary>
+        public static string UpdateType {
+            get {
+                return ResourceManager.GetString("UpdateType", resourceCulture);
             }
         }
         

@@ -1,5 +1,5 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.Options" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" Title="{LocText SevenUpdate:Resources:Options}" MinHeight="500" MinWidth="850" ShowsNavigationUI="False" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="500" d:DesignWidth="850" Loaded="Page_Loaded" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
+<Page x:Class="SevenUpdate.Pages.Options" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" Title="{LocText SevenUpdate:Resources:Options}" MinHeight="500" MinWidth="850" ShowsNavigationUI="False" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="500" d:DesignWidth="850" Loaded="Page_Loaded">
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -47,7 +47,7 @@
 					</DataTemplate>
 				</ListView.Resources>
 				<ListView.View>
-					<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
+					<GridView>
 						<GridViewColumn CellTemplate="{StaticResource itemCheckBox}" Width="25" />
 						<GridViewColumn CellTemplate="{StaticResource itemLink}" Header="{LocText SevenUpdate:Resources:Program}" Width="350" Controls:ListViewSorter.PropertyName="Name" />
 						<GridViewColumn DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Publisher}" Width="250" Controls:ListViewSorter.PropertyName="Publisher" />

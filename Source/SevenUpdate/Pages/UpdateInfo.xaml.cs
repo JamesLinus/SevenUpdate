@@ -31,7 +31,6 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using SevenUpdate.Converters;
-using SevenUpdate.Windows;
 
 #endregion
 

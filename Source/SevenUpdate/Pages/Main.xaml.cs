@@ -133,7 +133,7 @@ namespace SevenUpdate.Pages
             {
                 var lastCheck = File.GetLastWriteTime(Base.AllUserStore + "updates.sui");
 
-                var today =  DateTime.Now;
+                var today = DateTime.Now;
 
                 if (lastCheck.Month == today.Month && lastCheck.Year == today.Year)
                 {
@@ -155,7 +155,6 @@ namespace SevenUpdate.Pages
                     }
                     Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
                 }
-
             }
             else
             {

@@ -1,5 +1,5 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded" xmlns:lex="http://schemas.root-project.org/xaml/presentation">
+<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
 	<!-- Grid-->
 	<Grid>
 		<Grid.RowDefinitions>
@@ -31,10 +31,10 @@
 				</Style>
 			</ListView.ItemContainerStyle>
 			<ListView.View>
-				<GridView ColumnHeaderContainerStyle="{StaticResource HeaderTemplate}">
+				<GridView>
 					<GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
 					<GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Name}" Width="400" Controls:ListViewSorter.PropertyName="Name" />
-					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Importance}" Width="125" Controls:ListViewSorter.PropertyName="Importance" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceToString}}" Header="{LocText SevenUpdate:Resources:Importance}" Width="125" Controls:ListViewSorter.PropertyName="Importance" />
 					<GridViewColumn Header="{LocText SevenUpdate:Resources:Size}" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100" Controls:ListViewSorter.PropertyName="Size" />
 				</GridView>
 			</ListView.View>
@@ -44,7 +44,7 @@
 			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="Restore_Click" Padding="5,1" ButtonText="{LocText SevenUpdate:Resources:Restore}" IsEnabled="False" Name="btnRestore" TabIndex="1" />
 			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Command="NavigationCommands.BrowseBack" TabIndex="2" />
 		</StackPanel>
-		<TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:TotalSelectedUpdates}" VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />
+		<TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:TotalSelectedUpdates, FormatSegment1=0}" VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
 	</Grid>
 </Page>
