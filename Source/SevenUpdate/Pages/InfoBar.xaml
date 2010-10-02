@@ -41,6 +41,7 @@
 			<Rectangle.Style>
 				<Style TargetType="Rectangle">
 					<Setter Property="Fill" Value="{StaticResource greenGradient}" />
+                    <Setter Property="Visibility" Value="Visible" />
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.Canceled}">
 							<Setter Property="Fill" Value="{StaticResource redGradient}" />
@@ -67,10 +68,10 @@
 							<Setter Property="Fill" Value="{StaticResource yellowGradient}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.CheckingForUpdates}">
-							<Setter Property="Fill" Value="Transparent" />
-						</DataTrigger>
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.Installing}">
-							<Setter Property="Fill" Value="Transparent" />
+                            <Setter Property="Visibility" Value="Collapsed" />
 						</DataTrigger>
 					</Style.Triggers>
 				</Style>
