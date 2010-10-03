@@ -84,6 +84,12 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <CoreCompileDependsOn>$(CoreCompileDependsOn);CompileWin32RCFile</CoreCompileDependsOn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Win32Resource>D:\Documents\Visual Studio 2010\Projects\SevenUpdate\Source\SevenUpdate.Base\Properties\SevenUpdate.Base.res</Win32Resource>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="protobuf-net">
@@ -127,12 +133,14 @@
       <Name>SharpBits.Base</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\SevenUpdate.Base.rc" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <PropertyGroup>
+    <PreBuildEvent>"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\Bin\RC.exe" /r "D:\Documents\Visual Studio 2010\Projects\SevenUpdate\Source\SevenUpdate.Base\Properties\SevenUpdate.Base.rc"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

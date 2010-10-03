@@ -129,7 +129,8 @@ namespace SevenUpdate
             var jumpTask = new JumpTask
                                {
                                    ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                                   IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                                   IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                                   IconResourceIndex = 2,
                                    Title = Resources.CheckForUpdates,
                                    CustomCategory = Resources.Tasks,
                                    Arguments = "-check",
@@ -139,7 +140,8 @@ namespace SevenUpdate
             jumpTask = new JumpTask
                            {
                                ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               IconResourceIndex = 5,
                                Title = Resources.RestoreHiddenUpdates,
                                CustomCategory = Resources.Tasks,
                                Arguments = "-hidden",
@@ -149,7 +151,8 @@ namespace SevenUpdate
             jumpTask = new JumpTask
                            {
                                ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               IconResourceIndex = 4,
                                Title = Resources.ViewUpdateHistory,
                                CustomCategory = Resources.Tasks,
                                Arguments = "-history",
@@ -159,7 +162,8 @@ namespace SevenUpdate
             jumpTask = new JumpTask
                            {
                                ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               IconResourceIndex = 3,
                                Title = Resources.ChangeSettings,
                                CustomCategory = Resources.Tasks,
                                Arguments = "-settings",

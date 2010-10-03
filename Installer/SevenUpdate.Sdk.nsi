@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update SDK"
-!define PRODUCT_VERSION "1.2.0.0"
+!define PRODUCT_VERSION "1.2.1.0"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.Sdk.exe"
@@ -167,8 +167,6 @@ Section "Main Section" SEC01
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
   
-  File "D:\Documents\Software Development\Install Files\Seven Update\sui.ico"
-  
   SetShellVarContext current
   CreateDirectory "$APPDATA\Seven Software\Seven Update SDK"
   SetShellVarContext all
@@ -177,7 +175,7 @@ Section "Main Section" SEC01
   
   WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
   WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
-  WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\sui.ico"
+  WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,1"
   
   Call RefreshShellIcons
 SectionEnd

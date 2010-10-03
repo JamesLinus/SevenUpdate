@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update"
-!define PRODUCT_VERSION "1.2.0.0"
+!define PRODUCT_VERSION "1.2.0.1"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe"
@@ -207,8 +207,6 @@ Section "Main Section" SEC01
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.Admin.xml" /TN "SevenUpdate.Admin"'
   ${EndIf}
 	
-  File "D:\Documents\Software Development\Install Files\Seven Update\sua.ico"
-  
   SetShellVarContext current
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   SetShellVarContext all
@@ -225,7 +223,7 @@ CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\SevenUpda
   
   WriteRegStr HKCR ".sua" "" "SevenUpdate.sua"
   WriteRegStr HKCR "SevenUpdate.sua" "" "Seven Update Application Information"
-  WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\sua.ico"
+  WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,2"
   WriteRegStr HKCR "SevenUpdate.sua\shell\open\command" "" '"$INSTDIR\SevenUpdate.exe" "%1"'
 	
 SectionEnd
