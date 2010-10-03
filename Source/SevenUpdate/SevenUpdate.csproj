@@ -225,11 +225,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\GreenShield.png" />
-    <Resource Include="Images\RedShield.png" />
-    <Resource Include="Images\YellowShield.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\BlueArrow.png" />
     <Resource Include="Images\GreenArrow.png" />
   </ItemGroup>

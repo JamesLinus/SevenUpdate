@@ -78,20 +78,20 @@
 			<ComboBoxItem Content="{LocText SevenUpdate:Resources:CheckUpdatesButChooseToDownload}" Tag="{x:Static SevenUpdate:AutoUpdateOption.Notify}" />
 			<ComboBoxItem Content="{LocText SevenUpdate:Resources:NeverCheckForUpdates}" Tag="{x:Static SevenUpdate:AutoUpdateOption.Never}" />
 		</ComboBox>
-		<Image RenderOptions.BitmapScalingMode="HighQuality" Height="48" Stretch="None" StretchDirection="UpOnly" Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10">
-			<Image.Style>
-				<Style>
-					<Setter Property="Image.Source" Value="/SevenUpdate;component/Images/GreenShield.png" />
-					<Style.Triggers>
-						<DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Never}">
-							<Setter Property="Image.Source" Value="/SevenUpdate;component/Images/RedShield.png" />
-						</DataTrigger>
-						<DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Notify}">
-							<Setter Property="Image.Source" Value="{x:Null}" />
-						</DataTrigger>
-					</Style.Triggers>
-				</Style>
-			</Image.Style>
-		</Image>
-	</Grid>
+        <Rectangle Height="48" Stretch="None" Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10">
+            <Rectangle.Style>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="{StaticResource GreenShield}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Never}">
+                            <Setter Property="Fill" Value="{StaticResource RedShield}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=AutoOption}" Value="{x:Static SevenUpdate:AutoUpdateOption.Notify}">
+                            <Setter Property="Fill" Value="{x:Null}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
+    </Grid>
 </Page>

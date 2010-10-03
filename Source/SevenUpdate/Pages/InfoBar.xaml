@@ -81,31 +81,31 @@
 		<Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2">
 			<Rectangle.Style>
 				<Style TargetType="Rectangle">
-					<Setter Property="Fill" Value="{StaticResource greenShield}" />
+					<Setter Property="Fill" Value="{StaticResource GreenShield}" />
 					<Style.Triggers>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.Canceled}">
-							<Setter Property="Fill" Value="{StaticResource redShield}" />
+							<Setter Property="Fill" Value="{StaticResource RedShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.ErrorOccurred}">
-							<Setter Property="Fill" Value="{StaticResource redShield}" />
+							<Setter Property="Fill" Value="{StaticResource RedShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.CheckForUpdates}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.ConnectingToService}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.Downloading}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.DownloadCompleted}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.UpdatesFound}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.RebootNeeded}">
-							<Setter Property="Fill" Value="{StaticResource yellowShield}" />
+							<Setter Property="Fill" Value="{StaticResource OrangeShield}" />
 						</DataTrigger>
 						<DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static Pages:UpdateAction.CheckingForUpdates}">
 							<Setter Property="Fill" Value="{StaticResource SevenUpdateIcon}" />

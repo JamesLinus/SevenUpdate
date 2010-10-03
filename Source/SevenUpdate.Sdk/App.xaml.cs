@@ -42,10 +42,11 @@ namespace SevenUpdate.Sdk
         /// <param name = "isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            base.OnStartup(e, isFirstInstance);
-
             Base.SerializationError += Core.Base_SerializationError;
             Base.Locale = Settings.Default.locale;
+            base.OnStartup(e, isFirstInstance);
+
+            
 
             if (!isFirstInstance)
                 Shutdown(1);

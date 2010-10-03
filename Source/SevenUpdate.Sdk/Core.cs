@@ -135,7 +135,8 @@ namespace SevenUpdate.Sdk
                 jumpTask = new JumpTask
                                {
                                    ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                                   IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                   IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                                   IconResourceIndex = 7,
                                    Title = Resources.CreateUpdate,
                                    CustomCategory = Projects[x].ApplicationName,
                                    Arguments = "-newupdate " + x,
@@ -146,7 +147,8 @@ namespace SevenUpdate.Sdk
                     jumpTask = new JumpTask
                                    {
                                        ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                                       IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                                       IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                                       IconResourceIndex = 8,
                                        Title = String.Format(Resources.Edit, Projects[x].UpdateNames[y]),
                                        CustomCategory = Projects[x].ApplicationName,
                                        Arguments = "-edit " + x + " " + y
@@ -160,7 +162,8 @@ namespace SevenUpdate.Sdk
             jumpTask = new JumpTask
                            {
                                ApplicationPath = Base.AppDir + "SevenUpdate.Sdk.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.Sdk.exe",
+                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               IconResourceIndex = 6,
                                Title = Resources.CreateProject,
                                CustomCategory = Resources.Tasks,
                                Arguments = "-newproject"

@@ -11,6 +11,9 @@
 4                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\ChangeSettings.ico"
 5                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\History.ico"
 6                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\RestoreUpdates.ico"
+7                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\NewProject.ico"
+8                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\NewUpdate.ico"
+9                       ICON                    "D:\\Documents\\Visual Studio 2010\\Projects\\SevenUpdate\\Source\\SevenUpdate.Base\\Icons\\EditUpdate.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
