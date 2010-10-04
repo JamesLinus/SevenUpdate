@@ -1,9 +1,9 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 
 
-<Page x:Class="SevenUpdate.Sdk.Pages.AppInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" d:DesignHeight="515" d:DesignWidth="1039" KeepAlive="True" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Sdk.Pages.AppInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell" mc:Ignorable="d" MinWidth="850" MinHeight="512" d:DesignHeight="515" d:DesignWidth="1039" KeepAlive="True" Loaded="LoadAppInfo">
 	<!-- Grid-->
-	<Grid Name="grid">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="24" />
 			<ColumnDefinition Width="Auto" />
@@ -40,10 +40,10 @@
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="18" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Grid.ColumnSpan="5" Name="line" />
 		<Rectangle Grid.ColumnSpan="5" Grid.Row="18" Fill="#FFF0F0F0" Name="rectangle" />
 		<StackPanel Grid.Column="2" Grid.Row="18" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="10" Name="btnNext" />
-			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="11" Name="btnCancel" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="10" Name="btnNext" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="SaveProject" TabIndex="11" Name="btnCancel" />
 		</StackPanel>
-		<ComboBox Grid.Column="3" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80" SelectedIndex="0" SelectionChanged="Locale_SelectionChanged" Margin="0,5" TabIndex="12">
+		<ComboBox Grid.Column="3" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80" SelectedIndex="0" SelectionChanged="LoadLocaleStrings" Margin="0,5" TabIndex="12">
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:English}" Tag="en" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Arabic}" Tag="ar" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Bengali}" Tag="bn" />
@@ -70,12 +70,12 @@
 		<CheckBox Content="{LocText SevenUpdate.Sdk:Resources:Is64Bit}" Padding="4,0,0,0" VerticalAlignment="Center" ToolTip="{LocText SevenUpdate.Sdk:Resources:Is64BitToolTip}" TabIndex="1" IsChecked="{Binding Path=Is64Bit, Mode=TwoWay}" Grid.Column="3" Grid.Row="2" Margin="0,4" />
 		<StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="0,10,0,0" Grid.ColumnSpan="2">
 			<TextBlock Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:ApplicationInstallLocation}" ToolTip="{LocText SevenUpdate.Sdk:Resources:ApplicationInstallLocationToolTip}" />
-			<RadioButton Content="{LocText SevenUpdate.Sdk:Resources:FileSystem}" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" TabIndex="2" Checked="rbtnFileSystem_Checked" />
-			<RadioButton Content="{LocText SevenUpdate.Sdk:Resources:Registry}" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TabIndex="3" Checked="rbtnRegistry_Checked" IsChecked="{Binding Path=ValueName, Converter={StaticResource stringToBool}, Mode=OneTime, ConverterParameter=True}" />
+			<RadioButton Content="{LocText SevenUpdate.Sdk:Resources:FileSystem}" Name="rbtnFileSystem" HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" TabIndex="2" Checked="ChangeToFileSystemLocation" />
+			<RadioButton Content="{LocText SevenUpdate.Sdk:Resources:Registry}" Name="rbtnRegistry" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TabIndex="3" Checked="ChangeToRegistryLocation" IsChecked="{Binding Path=ValueName, Converter={StaticResource stringToBool}, Mode=OneTime, ConverterParameter=True}" />
 		</StackPanel>
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:RegistryKey}" HorizontalAlignment="Left" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToVisibility}}" ToolTip="{LocText SevenUpdate.Sdk:Resources:KeyPathToolTip}" Grid.Column="1" Grid.Row="4" Margin="0,10,10,0" VerticalAlignment="Center" Padding="2" />
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:ValueName}" ToolTip="{LocText SevenUpdate.Sdk:Resources:ValueNameToolTip}" Visibility="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToVisibility}}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" Margin="0,10,10,0" Padding="2" />
-		<Controls:InfoTextBox TabIndex="4" FontSize="14" Name="tbxAppLocation" LostKeyboardFocus="tbxAppLocation_LostKeyboardFocus" Note="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToLabel}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="0,10,0,0">
+		<Controls:InfoTextBox TabIndex="4" FontSize="14" Name="tbxAppLocation" LostKeyboardFocus="ConvertPath" Note="{Binding ElementName=rbtnRegistry, Path=IsChecked, Converter={StaticResource boolToLabel}, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="4" Margin="0,10,0,0">
 			<Controls:InfoTextBox.Text>
 				<Binding Path="Directory" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
@@ -84,7 +84,7 @@
 				</Binding>
 			</Controls:InfoTextBox.Text>
 		</Controls:InfoTextBox>
-		<TextBlock Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{LocText SevenUpdate.Sdk:Resources:LocateAppDirectory}" VerticalAlignment="Center" MouseDown="Browse_MouseDown" Cursor="Hand" Grid.Column="3" Grid.Row="4" Margin="30,10,0,0" HorizontalAlignment="Left" Focusable="True">
+		<TextBlock Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{LocText SevenUpdate.Sdk:Resources:LocateAppDirectory}" VerticalAlignment="Center" MouseDown="BrowseForAppLocation" Cursor="Hand" Grid.Column="3" Grid.Row="4" Margin="30,10,0,0" HorizontalAlignment="Left" Focusable="True">
 			<TextBlock.Style>
 				<Style TargetType="TextBlock" BasedOn="{StaticResource underlineTextBlock}">
 					<Style.Triggers>

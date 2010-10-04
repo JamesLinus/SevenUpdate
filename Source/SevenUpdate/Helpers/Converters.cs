@@ -34,7 +34,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts Importance to a localized string
     /// </summary>
-    [ValueConversion(typeof (Importance), typeof (string))]
+    [ValueConversion(typeof(Importance), typeof(string))]
     internal sealed class ImportanceToString : IValueConverter
     {
         #region IValueConverter Members
@@ -45,7 +45,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch (value is Importance ? (Importance) value : Importance.Important)
+            switch (value is Importance ? (Importance)value : Importance.Important)
             {
                 case Importance.Important:
                     return Resources.Important;
@@ -77,7 +77,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts Importance to a localized string
     /// </summary>
-    [ValueConversion(typeof (UpdateStatus), typeof (string))]
+    [ValueConversion(typeof(UpdateStatus), typeof(string))]
     internal sealed class UpdateStatusToString : IValueConverter
     {
         #region IValueConverter Members
@@ -88,7 +88,7 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch (value is UpdateStatus ? (UpdateStatus) value : UpdateStatus.Successful)
+            switch (value is UpdateStatus ? (UpdateStatus)value : UpdateStatus.Successful)
             {
                 case UpdateStatus.Hidden:
                     return Resources.Hidden;
@@ -117,7 +117,7 @@ namespace SevenUpdate.Converters
     /// <summary>
     ///   Converts a <see cref = "LocaleString" /> to a localized string
     /// </summary>
-    [ValueConversion(typeof (LocaleString), typeof (string))]
+    [ValueConversion(typeof(LocaleString), typeof(string))]
     internal sealed class LocaleStringToStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -155,9 +155,9 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    ///   Converts a ulong or group of ulongs into a string readable filesize
+    ///   Converts a ulong or group of ulong values into a string readable file size
     /// </summary>
-    [ValueConversion(typeof (UpdateFile), typeof (string))]
+    [ValueConversion(typeof(UpdateFile), typeof(string))]
     internal sealed class FileSizeConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -195,9 +195,9 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    ///   Converts an Enum to a bool value
+    ///   Converts an Enum to a Boolean value
     /// </summary>
-    [ValueConversion(typeof (UpdateStatus), typeof (bool))]
+    [ValueConversion(typeof(UpdateStatus), typeof(bool))]
     internal sealed class UpdateStatusToBoolConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -209,7 +209,7 @@ namespace SevenUpdate.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // If the UpdateStatus is hidden return False, otherwise return true
-            return ((UpdateStatus) value) != UpdateStatus.Hidden;
+            return ((UpdateStatus)value) != UpdateStatus.Hidden;
         }
 
         /// <summary>
@@ -218,16 +218,16 @@ namespace SevenUpdate.Converters
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool) value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
+            return ((bool)value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
         }
 
         #endregion
     }
 
     /// <summary>
-    ///   Converts a Bool to a readable string
+    ///   Converts a Boolean to a readable string
     /// </summary>
-    [ValueConversion(typeof (bool), typeof (string))]
+    [ValueConversion(typeof(bool), typeof(string))]
     internal sealed class Is64BitToStringConverter : IValueConverter
     {
         #region IValueConverter Members
@@ -239,7 +239,7 @@ namespace SevenUpdate.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             // If Is64Bit
-            if (((bool) value))
+            if (((bool)value))
                 return "x64";
             return "x86";
         }
@@ -257,16 +257,16 @@ namespace SevenUpdate.Converters
     }
 
     /// <summary>
-    ///   Converts the DateTime to a String
+    ///   Converts the <see cref="DateTime"/> to a String
     /// </summary>
-    [ValueConversion(typeof (DateTime), typeof (string))]
+    [ValueConversion(typeof(DateTime), typeof(string))]
     internal sealed class DateConverter : IValueConverter
     {
         #region IValueConverter Members
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTime = value is DateTime ? (DateTime) value : new DateTime();
+            var dateTime = value is DateTime ? (DateTime)value : new DateTime();
 
             if (dateTime != DateTime.MinValue)
             {

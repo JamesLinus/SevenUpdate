@@ -85,7 +85,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Loads the list of Seven Update applications and sets the UI, if no appList was downloaded, load the stored list on the system
+        ///   Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system
         /// </summary>
         private void LoadSul(ObservableCollection<Sua> officialAppList = null)
         {
@@ -197,7 +197,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
-            ListViewExtensions.LimitColumnSize(((Thumb) e.OriginalSource));
+            ListViewExtensions.LimitColumnSize(((Thumb)e.OriginalSource));
         }
 
         #endregion

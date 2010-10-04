@@ -156,7 +156,7 @@ namespace SevenUpdate.Pages
             {
                 try
                 {
-                    Base.Serialize(Core.Applications, Base.AllUserStore + "updates.sui");
+                    Base.Serialize(Core.Applications, Base.AllUserStore + @"updates.sui");
                 }
                 catch
                 {
@@ -271,9 +271,9 @@ namespace SevenUpdate.Pages
             {
                 if (e.BytesTotal == e.BytesTransferred)
                     return;
-                var progress = (e.BytesTransferred*100/e.BytesTotal);
+                var progress = (e.BytesTransferred * 100 / e.BytesTotal);
                 Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
-                Core.TaskBar.ProgressValue = (Convert.ToDouble(progress)/100);
+                Core.TaskBar.ProgressValue = (Convert.ToDouble(progress) / 100);
                 tbStatus.Text = String.Format(Properties.Resources.DownloadPercentProgress, Base.ConvertFileSize(e.BytesTotal), progress.ToString("F0"));
             }
             else

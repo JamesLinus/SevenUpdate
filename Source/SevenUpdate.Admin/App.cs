@@ -103,12 +103,12 @@ namespace SevenUpdate.Admin
             get
             {
                 var t = Base.Deserialize<Config>(Base.ConfigFile);
-                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
+                return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
         /// <summary>
-        ///   Gets or Sets a bool value indicating Seven Update UI is currently connected.
+        ///   Gets or Sets a Boolean value indicating Seven Update UI is currently connected.
         /// </summary>
         private static bool IsClientConnected { get; set; }
 
@@ -134,7 +134,7 @@ namespace SevenUpdate.Admin
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof (Service.Service));
+                        host = new ServiceHost(typeof(Service.Service));
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
                         Service.Service.ClientConnected += Service_ClientConnected;
@@ -197,7 +197,7 @@ namespace SevenUpdate.Admin
                             File.Delete(Base.AllUserStore + "abort.lock");
                         isAutoInstall = true;
                         isInstalling = true;
-                        notifyIcon = new NotifyIcon {Icon = Resources.trayIcon, Text = Resources.CheckingForUpdates, Visible = true};
+                        notifyIcon = new NotifyIcon { Icon = Resources.trayIcon, Text = Resources.CheckingForUpdates, Visible = true };
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
                         Search.ErrorOccurred += Search_ErrorOccurred;
@@ -440,9 +440,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>
-        ///   Updates the notifyIcon state
+        ///   Updates the <see cref="notifyIcon"/> state
         /// </summary>
-        /// <param name = "filter">The <see cref = "NotifyType" /> to set the notifyIcon to.</param>
+        /// <param name = "filter">The <see cref = "NotifyType" /> to set the <see cref="notifyIcon"/> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)
@@ -483,12 +483,12 @@ namespace SevenUpdate.Admin
             if (Environment.OSVersion.Version.Major < 6)
             {
                 if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
-                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Auto");
+                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Auto");
                 else
-                    Base.StartProcess(Base.AppDir + "SevenUpdate.exe", "Reconnect");
+                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Reconnect");
             }
             else
-                Base.StartProcess("schtasks.exe", "/Run /TN \"SevenUpdate\"");
+                Base.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
 
             if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
                 ShutdownApp();

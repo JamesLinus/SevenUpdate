@@ -58,22 +58,22 @@ namespace SevenUpdate
         /// <summary>
         ///   The location of the list of applications Seven Update can update
         /// </summary>
-        public static readonly string AppsFile = AllUserStore + "Apps.sul";
+        public static readonly string AppsFile = AllUserStore + @"Apps.sul";
 
         /// <summary>
         ///   The location of the application settings file
         /// </summary>
-        public static readonly string ConfigFile = AllUserStore + "App.config";
+        public static readonly string ConfigFile = AllUserStore + @"App.config";
 
         /// <summary>
         ///   The location of the hidden updates file
         /// </summary>
-        public static readonly string HiddenFile = AllUserStore + "Hidden.suh";
+        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
 
         /// <summary>
         ///   The location of the update history file
         /// </summary>
-        public static readonly string HistoryFile = AllUserStore + "History.suh";
+        public static readonly string HistoryFile = AllUserStore + @"History.suh";
 
         /// <summary>
         ///   The user application data location
@@ -100,7 +100,7 @@ namespace SevenUpdate
         ///   Checks to see if path is a registry key
         /// </summary>
         /// <param name = "path">The path to check</param>
-        /// <returns>True if path is a registry key, otherwise false</returns>
+        /// <returns>True if path is a registry key, otherwise <see langword="False"/></returns>
         public static bool IsRegistryKey(string path)
         {
             const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
@@ -135,11 +135,11 @@ namespace SevenUpdate
         /// <param name = "fileName">The file to execute</param>
         /// <param name = "arguments">The arguments to execute with the file</param>
         /// <param name = "wait">Specifies if Seven Update should wait until the process has finished executing</param>
-        /// <param name = "hidden">Specifes if the process should be executed with no UI visibile</param>
+        /// <param name = "hidden">Specifies if the process should be executed with no UI visible</param>
         /// <returns />
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
-            var proc = new Process {StartInfo = {FileName = fileName, UseShellExecute = true}};
+            var proc = new Process { StartInfo = { FileName = fileName, UseShellExecute = true } };
 
             if (arguments != null)
                 proc.StartInfo.Arguments = arguments;
@@ -211,7 +211,7 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
-        /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
+        /// <param name = "sourceUrl">The  <see cref = "Uri"/> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
         private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
         {
@@ -247,7 +247,7 @@ namespace SevenUpdate
         /// </summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
-        /// <param name = "sourceUrl">The url to the source stream that is being deserialized</param>
+        /// <param name = "sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
         {
@@ -399,7 +399,7 @@ namespace SevenUpdate
         /// </summary>
         /// <param name = "path">a string that contains a file path</param>
         /// <param name = "directory">a string that contains a directory</param>
-        /// <param name = "valueName">a string that contains a valuename of the registry key that contains the directory location</param>
+        /// <param name = "valueName">a string that contains a value name of the registry key that contains the directory location</param>
         /// <param name = "is64Bit">Specifies if the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, string valueName = null, bool is64Bit = false)
@@ -550,11 +550,11 @@ namespace SevenUpdate
         public static string ConvertFileSize(ulong bytes)
         {
             if (bytes >= 1073741824)
-                return String.Format("{0:##.##}", bytes/1073741824) + " GB";
+                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
             if (bytes >= 1048576)
-                return String.Format("{0:##.##}", bytes/1048576) + " MB";
+                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
             if (bytes >= 1024)
-                return String.Format("{0:##.##}", bytes/1024) + " KB";
+                return String.Format("{0:##.##}", bytes / 1024) + " KB";
             if (bytes < 1024)
                 return bytes + " Bytes";
             return "0 Bytes";
@@ -657,9 +657,9 @@ namespace SevenUpdate
             return sb;
         }
 
-        public static bool Contains(this string original, string value, StringComparison comparisionType)
+        public static bool Contains(this string original, string value, StringComparison comparisonType)
         {
-            return original.IndexOf(value, comparisionType) >= 0;
+            return original.IndexOf(value, comparisonType) >= 0;
         }
 
         #endregion
@@ -725,13 +725,13 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets the file size of a file
         /// </summary>
-        /// <param name = "file">The fullpath to the file</param>
+        /// <param name = "file">The full path to the file</param>
         /// <returns>A ulong value indicating the file size</returns>
         public static ulong GetFileSize(string file)
         {
             if (!File.Exists(file))
                 return 0;
-            return (ulong) new FileInfo(file).Length;
+            return (ulong)new FileInfo(file).Length;
         }
 
         #endregion

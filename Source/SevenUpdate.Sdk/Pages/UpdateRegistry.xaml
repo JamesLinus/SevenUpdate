@@ -1,7 +1,7 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Sdk.Pages.UpdateRegistry" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Sdk.Pages.UpdateRegistry" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850" Loaded="LoadUI">
 	<!-- Grid-->
-	<Grid Name="grid">
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto" MaxWidth="420" />
 			<ColumnDefinition Width="Auto" />
@@ -40,17 +40,17 @@
 		</StackPanel>
 		<!--Naviation Buttons-->
 		<StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.Column="3">
-			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="Button_Click" TabIndex="8" />
-			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="Cancel_Click" TabIndex="9" />
+			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="8" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="GoToMainPage" TabIndex="9" />
 		</StackPanel>
-		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="listBox_KeyDown" TabIndex="0">
+		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="DeleteRegistryItem" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
-					<MenuItem Click="AddRegistryItem_Click" Header="{LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />
-					<MenuItem Click="ImportRegistryFile_Click" Header="{LocText SevenUpdate.Sdk:Resources:ImportRegistryFile}" />
+					<MenuItem Click="NewRegistryItem" Header="{LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />
+					<MenuItem Click="ImportRegistryFile" Header="{LocText SevenUpdate.Sdk:Resources:ImportRegistryFile}" />
 					<Separator />
-					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveRegistryItem}" Click="miRemove_Click" Style="{StaticResource RemoveMenu}" />
-					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveAllRegistryItems}" Click="miRemoveAll_Click" Style="{StaticResource RemoveAllMenu}">
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveRegistryItem}" Click="RemoveSelected" Style="{StaticResource RemoveMenu}" />
+					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveAllRegistryItems}" Click="RemoveAll" Style="{StaticResource RemoveAllMenu}">
 						<MenuItem.Icon>
 							<Image Source="/SevenUpdate.Sdk;component/Images/Delete.png" />
 						</MenuItem.Icon>
@@ -86,6 +86,6 @@
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:QWord}" Tag="QWord" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:String}" Tag="String" />
 		</ComboBox>
-		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" MaxHeight="400" VerticalScrollBarVisibility="Auto" KeyDown="ValueData_KeyDown" Grid.ColumnSpan="3" Grid.Row="8" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,5,40,0" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}" TabIndex="7" />
+		<Controls:InfoTextBox Text="{Binding ElementName=listBox, Path=SelectedItem.Data, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" TextWrapping="Wrap" MaxHeight="400" VerticalScrollBarVisibility="Auto" KeyDown="ValidateData" Grid.ColumnSpan="3" Grid.Row="8" Grid.Column="1" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,5,40,0" IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Action, Converter={StaticResource enumToBool}, ConverterParameter={x:Static SevenUpdate:RegistryAction.Add}}" TabIndex="7" />
 	</Grid>
 </Page>

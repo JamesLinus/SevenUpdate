@@ -1,58 +1,48 @@
-#region GNU Public License Version 3
-
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
-#region
-
-using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
-using System.Windows.Media;
-using Microsoft.Windows.Dwm;
-using SevenUpdate.Sdk.Windows;
-
-#endregion
+// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace SevenUpdate.Sdk.Pages
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Windows;
+    using System.Windows.Media;
+
+    using Microsoft.Windows.Dwm;
+
+    using SevenUpdate.Sdk.Windows;
+
     /// <summary>
-    ///   Interaction logic for UpdateRegistry.xaml
+    /// Interaction logic for UpdateRegistry.xaml
     /// </summary>
     public sealed partial class UpdateReview
     {
-        #region Constructors
+        #region Constructors and Destructors
 
         /// <summary>
-        ///   The constructor for the UpdateRegistry page
+        /// Initializes a new instance of the <see cref="UpdateReview"/> class.
         /// </summary>
         public UpdateReview()
         {
-            InitializeComponent();
-            DataContext = Core.UpdateInfo;
-            MouseLeftButtonDown += Core.Rectangle_MouseLeftButtonDown;
-            AeroGlass.DwmCompositionChanged += AeroGlass_DwmCompositionChanged;
-            tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
+            this.InitializeComponent();
+            this.DataContext = Core.UpdateInfo;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
+            AeroGlass.DwmCompositionChanged += this.UpdateUI;
+            this.tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
         #endregion
 
+        #region Methods
+
+        /// <summary>
+        /// Saves the project.
+        /// </summary>
+        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
         private static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -61,7 +51,9 @@ namespace SevenUpdate.Sdk.Pages
             if (Core.AppInfo.Is64Bit)
             {
                 if (!appName.Contains("x64") && !appName.Contains("X64"))
+                {
                     appName += " (x64)";
+                }
             }
 
             var updateNames = new ObservableCollection<string>();
@@ -80,27 +72,28 @@ namespace SevenUpdate.Sdk.Pages
                 updateNames.Add(Base.GetLocaleString(Core.UpdateInfo.Name));
                 appUpdates.Add(Core.UpdateInfo);
             }
-                // If we are updating the update, lets remove the old info and add the new.
             else
             {
+                // If we are updating the update, lets remove the old info and add the new.
                 updateNames.RemoveAt(Core.UpdateIndex);
                 appUpdates.RemoveAt(Core.UpdateIndex);
                 appUpdates.Add(Core.UpdateInfo);
                 updateNames.Add(Base.GetLocaleString(Core.UpdateInfo.Name));
             }
 
-
             // Save the SUI File
             Base.Serialize(appUpdates, Core.UserStore + appName + ".sui");
 
             // Save project file
-            var project = new Project {ApplicationName = appName, UpdateNames = updateNames};
+            var project = new Project { ApplicationName = appName, UpdateNames = updateNames };
             Core.Projects.Add(project);
             Base.Serialize(Core.Projects, Core.ProjectsFile);
 
             if (Core.IsNewProject)
+            {
                 // Save the SUA file
                 Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+            }
 
             if (!export)
             {
@@ -112,7 +105,9 @@ namespace SevenUpdate.Sdk.Pages
             var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sui");
 
             if (fileName == null)
+            {
                 return;
+            }
 
             File.Copy(Core.UserStore + appName + ".sui", fileName, true);
 
@@ -121,32 +116,45 @@ namespace SevenUpdate.Sdk.Pages
                 fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sua");
 
                 if (fileName == null)
+                {
                     return;
+                }
+
                 File.Copy(Core.UserStore + appName + ".sua", fileName, true);
             }
+
             Core.IsNewProject = false;
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
-        private void SaveExport_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Updates the UI based on whether Aero Glass is enabled
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
+        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
-            SaveProject(true);
+            this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
-        #region UI Events
-
-        #region Aero
-
-        private void AeroGlass_DwmCompositionChanged(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
-        {
-            tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
-        }
-
-        #endregion
-
-        private void CommandLink_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Saves the Project
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void SaveProject(object sender, RoutedEventArgs e)
         {
             SaveProject();
+        }
+
+        /// <summary>
+        /// Saves and exports the Project
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void SaveExportProject(object sender, RoutedEventArgs e)
+        {
+            SaveProject(true);
         }
 
         #endregion

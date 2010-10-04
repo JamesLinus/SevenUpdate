@@ -125,13 +125,13 @@ namespace SevenUpdate.Pages
             if (Core.IsReconnect)
             {
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
-                timer = new Timer {Enabled = true, Interval = 30000};
+                timer = new Timer { Enabled = true, Interval = 30000 };
                 timer.Elapsed += timer_Elapsed;
                 AdminClient.Connect();
             }
-            else if (File.Exists(Base.AllUserStore + "updates.sui"))
+            else if (File.Exists(Base.AllUserStore + @"updates.sui"))
             {
-                var lastCheck = File.GetLastWriteTime(Base.AllUserStore + "updates.sui");
+                var lastCheck = File.GetLastWriteTime(Base.AllUserStore + @"updates.sui");
 
                 var today = DateTime.Now;
 
@@ -141,14 +141,14 @@ namespace SevenUpdate.Pages
                         lastCheck.Day + 5 == today.Day)
                     {
                         AdminClient.Disconnect();
-                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Base.Deserialize<Collection<Sui>>(Base.AllUserStore + "updates.sui")));
+                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Base.Deserialize<Collection<Sui>>(Base.AllUserStore + @"updates.sui")));
                     }
                 }
                 else
                 {
                     try
                     {
-                        File.Delete(Base.AllUserStore + "updates.sui");
+                        File.Delete(Base.AllUserStore + @"updates.sui");
                     }
                     catch
                     {

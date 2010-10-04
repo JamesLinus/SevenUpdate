@@ -59,7 +59,7 @@ namespace SevenUpdate.Windows
         #region Structs
 
         /// <summary>
-        ///   Data containing the update's license agreement
+        ///   Data containing the <see cref = "Update"/> license agreement
         /// </summary>
         private struct Eula
         {
@@ -69,7 +69,7 @@ namespace SevenUpdate.Windows
             internal int AppIndex { get; set; }
 
             /// <summary>
-            ///   The Url for the license agreement
+            ///   The <see cref="Uri"/> for the license agreement
             /// </summary>
             internal string LicenseUrl { get; set; }
 
@@ -97,7 +97,7 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>
-        ///   Downloads the licenseInformation
+        ///   Downloads the <see cref="licenseInformation"/>
         /// </summary>
         private void DownloadLicenseInformation()
         {
@@ -129,7 +129,7 @@ namespace SevenUpdate.Windows
                         continue;
                     if (Core.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                         continue;
-                    var sla = new Eula {LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Base.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y};
+                    var sla = new Eula { LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Base.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
 
                     licenseInformation.Add(sla);
                 }
@@ -137,7 +137,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        ///   Loads the licenseInformation and shows the form
+        ///   Loads the <see cref="licenseInformation"/> and shows the form
         /// </summary>
         /// <returns />
         internal bool? LoadLicenses()

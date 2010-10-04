@@ -252,8 +252,8 @@ namespace SevenUpdate
         ///   Sets the registry items of an update
         /// </summary>
         /// <param name = "regItems">The registry changes to install on the system</param>
-        /// <param name = "is64Bit">Indicates if the app is 64 bit</param>
-        /// <returns>a bool value indicating if an error occurred</returns>
+        /// <param name = "is64Bit">Indicates if the application is 64 bit</param>
+        /// <returns>a <see langword="Boolean"/> value indicating if an error occurred</returns>
         private static void SetRegistryItems(IList<RegistryItem> regItems, bool is64Bit)
         {
             RegistryKey key;
@@ -323,7 +323,7 @@ namespace SevenUpdate
 
                 #region Report Progress
 
-                var installProgress = (x*100)/regItems.Count;
+                var installProgress = (x * 100) / regItems.Count;
                 if (installProgress > 30)
                     installProgress -= 10;
 
@@ -362,7 +362,7 @@ namespace SevenUpdate
                             Directory.CreateDirectory(shortcuts[x].Location);
                         File.Delete(shortcuts[x].Location + linkName + @".lnk");
                         // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut) ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
+                        var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
                         // Description for the shortcut
@@ -387,7 +387,7 @@ namespace SevenUpdate
 
                 #region Report Progress
 
-                var installProgress = (x*100)/shortcuts.Count;
+                var installProgress = (x * 100) / shortcuts.Count;
                 if (installProgress > 90)
                     installProgress -= 15;
 
@@ -401,7 +401,7 @@ namespace SevenUpdate
         {
             switch (file.Action)
             {
-                    #region Delete file
+                #region Delete file
 
                 case FileAction.ExecuteThenDelete:
                 case FileAction.UnregisterThenDelete:
@@ -426,7 +426,7 @@ namespace SevenUpdate
 
                     break;
 
-                    #endregion
+                #endregion
 
                 case FileAction.Execute:
                     try
@@ -440,7 +440,7 @@ namespace SevenUpdate
                     }
                     break;
 
-                    #region Update file
+                #region Update file
 
                 case FileAction.Update:
                 case FileAction.UpdateIfExist:
@@ -457,13 +457,13 @@ namespace SevenUpdate
                             }
                             File.Move(file.Source, file.Destination);
 
-                            if (File.Exists(file.Destination + ".bak"))
-                                File.Delete(file.Destination + ".bak");
+                            if (File.Exists(file.Destination + @".bak"))
+                                File.Delete(file.Destination + @".bak");
                         }
                         catch
                         {
-                            if (!File.Exists(Base.AllUserStore + "reboot.lock"))
-                                File.Create(Base.AllUserStore + "reboot.lock").WriteByte(0);
+                            if (!File.Exists(Base.AllUserStore + @"reboot.lock"))
+                                File.Create(Base.AllUserStore + @"reboot.lock").WriteByte(0);
 
                             MoveFileEx(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + ".bak");
@@ -471,7 +471,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        Base.ReportError("FileNotFound: " + file.Source, Base.AllUserStore);
+                        Base.ReportError(@"FileNotFound: " + file.Source, Base.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -489,10 +489,10 @@ namespace SevenUpdate
                     }
 
                     if (file.Action == FileAction.UpdateThenRegister)
-                        Base.StartProcess("regsvr32", "/s" + file.Destination);
+                        Base.StartProcess(@"regsvr32", @"/s" + file.Destination);
                     break;
 
-                    #endregion
+                #endregion
             }
         }
 
@@ -526,14 +526,14 @@ namespace SevenUpdate
                                                                                     {
                                                                                         #region Report Progress
 
-                                                                                        var installProgress = (x2*100)/files.Count;
+                                                                                        var installProgress = (x2 * 100) / files.Count;
                                                                                         if (installProgress > 70)
                                                                                             installProgress -= 15;
 
                                                                                         ReportProgress(installProgress);
                                                                                     });
 
-                #endregion
+                                                                                        #endregion
             }
         }
 

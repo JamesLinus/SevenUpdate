@@ -63,7 +63,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        ///   Launches the More Information Url
+        ///   Launches the More Information <see cref="Uri"/>
         /// </summary>
         private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -71,7 +71,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        ///   Launches the Help Url
+        ///   Launches the Help <see cref="Uri"/>
         /// </summary>
         private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {

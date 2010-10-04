@@ -95,7 +95,7 @@ namespace SevenUpdate
             get
             {
                 var t = Base.Deserialize<Config>(Base.ConfigFile);
-                return t ?? new Config {AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false};
+                return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -110,7 +110,7 @@ namespace SevenUpdate
         internal static bool IsInstallInProgress { private get; set; }
 
         /// <summary>
-        ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an autocheck
+        ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an auto check
         /// </summary>
         internal static bool IsReconnect { get; set; }
 
@@ -128,8 +128,8 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
                                {
-                                   ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                                   IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                                   ApplicationPath = Base.AppDir + @"SevenUpdate.exe",
+                                   IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
                                    IconResourceIndex = 2,
                                    Title = Resources.CheckForUpdates,
                                    CustomCategory = Resources.Tasks,
@@ -139,8 +139,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               ApplicationPath = Base.AppDir + @"SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
                                IconResourceIndex = 5,
                                Title = Resources.RestoreHiddenUpdates,
                                CustomCategory = Resources.Tasks,
@@ -150,8 +150,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               ApplicationPath = Base.AppDir + @"SevenUpdate.eye",
+                               IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
                                IconResourceIndex = 4,
                                Title = Resources.ViewUpdateHistory,
                                CustomCategory = Resources.Tasks,
@@ -161,8 +161,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                            {
-                               ApplicationPath = Base.AppDir + "SevenUpdate.exe",
-                               IconResourcePath = Base.AppDir + "SevenUpdate.Base.dll",
+                               ApplicationPath = Base.AppDir + @"SevenUpdate.exe",
+                               IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
                                IconResourceIndex = 3,
                                Title = Resources.ChangeSettings,
                                CustomCategory = Resources.Tasks,
@@ -213,7 +213,7 @@ namespace SevenUpdate
                     Instance.UpdateAction = UpdateAction.CheckingForUpdates;
                     Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
                     IsInstallInProgress = true;
-                    Search.SearchForUpdatesAync(AppsToUpdate);
+                    Search.SearchForUpdatesAsync(AppsToUpdate);
                 }
                 else
                 {
@@ -230,9 +230,9 @@ namespace SevenUpdate
         #region TaskDialog Methods
 
         /// <summary>
-        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
         /// </summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name = "description">A description of the message, supplements the instruction text</param>
         /// <param name = "icon"></param>
         /// <returns>Returns the result of the message</returns>
@@ -242,9 +242,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Shows either a TaskDialog or a MessageBox if running legacy windows.
+        ///   Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
         /// </summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for TaskDialog)</param>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name = "icon">The icon to use</param>
         /// <param name = "standardButtons">The standard buttons to use (with or without the custom default button text)</param>
         /// <param name = "description">A description of the message, supplements the instruction text</param>
@@ -270,7 +270,7 @@ namespace SevenUpdate
                              };
                 if (defaultButtonText != null)
                 {
-                    var button = new TaskDialogButton("btnCustom", defaultButtonText) {Default = true, ShowElevationIcon = displayShieldOnButton};
+                    var button = new TaskDialogButton("btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
                     td.Controls.Add(button);
                 }
 

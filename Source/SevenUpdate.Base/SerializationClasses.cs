@@ -108,22 +108,26 @@ namespace SevenUpdate
         /// <summary>
         ///   Download and Installs updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember] Install = 0,
+        [ProtoEnum, EnumMember]
+        Install = 0,
 
         /// <summary>
         ///   Downloads Updates automatically
         /// </summary>
-        [ProtoEnum, EnumMember] Download = 1,
+        [ProtoEnum, EnumMember]
+        Download = 1,
 
         /// <summary>
         ///   Only checks and notifies the user of updates
         /// </summary>
-        [ProtoEnum, EnumMember] Notify = 2,
+        [ProtoEnum, EnumMember]
+        Notify = 2,
 
         /// <summary>
         ///   No automatic checking
         /// </summary>
-        [ProtoEnum, EnumMember] Never = 3
+        [ProtoEnum, EnumMember]
+        Never = 3
     }
 
     #endregion
@@ -203,7 +207,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Seven Update Application information
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Sua : INotifyPropertyChanged
     {
         #region Fields
@@ -326,7 +330,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The url pointing to the sui file containing the app updates
+        ///   The <see cref="Uri"/> pointing to the sui file containing the application updates
         /// </summary>
         [ProtoMember(7), DataMember]
         public string SuiUrl
@@ -341,7 +345,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The url for the application: Optional
+        ///   The <see cref="Uri"/> for the application: Optional
         /// </summary>
         [ProtoMember(8, IsRequired = false), DataMember]
         public string AppUrl
@@ -356,7 +360,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The help url of the update: Optional
+        ///   The help <see cref="Uri"/> of the update: Optional
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
         public string HelpUrl
@@ -407,17 +411,20 @@ namespace SevenUpdate
         /// <summary>
         ///   Adds a shortcut
         /// </summary>
-        [ProtoEnum, EnumMember] Add = 0,
+        [ProtoEnum, EnumMember]
+        Add = 0,
 
         /// <summary>
         ///   Updates a shortcut only if it exists
         /// </summary>
-        [ProtoEnum, EnumMember] Update = 1,
+        [ProtoEnum, EnumMember]
+        Update = 1,
 
         /// <summary>
         ///   Deletes a shortcut
         /// </summary>
-        [ProtoEnum, EnumMember] Delete = 2
+        [ProtoEnum, EnumMember]
+        Delete = 2
     }
 
     /// <summary>
@@ -429,47 +436,56 @@ namespace SevenUpdate
         /// <summary>
         ///   Updates a file
         /// </summary>
-        [ProtoEnum, EnumMember] Update = 0,
+        [ProtoEnum, EnumMember]
+        Update = 0,
 
         /// <summary>
         ///   Updates a file, only if it exist
         /// </summary>
-        [ProtoEnum, EnumMember] UpdateIfExist = 1,
+        [ProtoEnum, EnumMember]
+        UpdateIfExist = 1,
 
         /// <summary>
         ///   Updates a file, then registers the dll
         /// </summary>
-        [ProtoEnum, EnumMember] UpdateThenRegister = 2,
+        [ProtoEnum, EnumMember]
+        UpdateThenRegister = 2,
 
         /// <summary>
         ///   Updates a file, then executes it
         /// </summary>
-        [ProtoEnum, EnumMember] UpdateThenExecute = 3,
+        [ProtoEnum, EnumMember]
+        UpdateThenExecute = 3,
 
         /// <summary>
         ///   Compares a file, but does not update it
         /// </summary>
-        [ProtoEnum, EnumMember] CompareOnly = 4,
+        [ProtoEnum, EnumMember]
+        CompareOnly = 4,
 
         /// <summary>
         ///   Executes a file, can be on system or be downloaded
         /// </summary>
-        [ProtoEnum, EnumMember] Execute = 5,
+        [ProtoEnum, EnumMember]
+        Execute = 5,
 
         /// <summary>
         ///   Deletes a file
         /// </summary>
-        [ProtoEnum, EnumMember] Delete = 6,
+        [ProtoEnum, EnumMember]
+        Delete = 6,
 
         /// <summary>
         ///   Executes a file, then deletes it
         /// </summary>
-        [ProtoEnum, EnumMember] ExecuteThenDelete = 7,
+        [ProtoEnum, EnumMember]
+        ExecuteThenDelete = 7,
 
         /// <summary>
         ///   Unregisteres a dll, then deletes it
         /// </summary>
-        [ProtoEnum, EnumMember] UnregisterThenDelete = 8,
+        [ProtoEnum, EnumMember]
+        UnregisterThenDelete = 8,
     }
 
     /// <summary>
@@ -481,22 +497,26 @@ namespace SevenUpdate
         /// <summary>
         ///   Important update
         /// </summary>
-        [ProtoEnum, EnumMember] Important = 0,
+        [ProtoEnum, EnumMember]
+        Important = 0,
 
         /// <summary>
         ///   Locale or language
         /// </summary>
-        [ProtoEnum, EnumMember] Locale = 1,
+        [ProtoEnum, EnumMember]
+        Locale = 1,
 
         /// <summary>
         ///   Optional update
         /// </summary>
-        [ProtoEnum, EnumMember] Optional = 2,
+        [ProtoEnum, EnumMember]
+        Optional = 2,
 
         /// <summary>
         ///   Recommended update
         /// </summary>
-        [ProtoEnum, EnumMember] Recommended = 3
+        [ProtoEnum, EnumMember]
+        Recommended = 3
     }
 
     /// <summary>
@@ -508,22 +528,26 @@ namespace SevenUpdate
         /// <summary>
         ///   Indicates that the update installation failed
         /// </summary>
-        [ProtoEnum, EnumMember] Failed = 0,
+        [ProtoEnum, EnumMember]
+        Failed = 0,
 
         /// <summary>
         ///   Indicates that the update is hidden
         /// </summary>
-        [ProtoEnum, EnumMember] Hidden = 1,
+        [ProtoEnum, EnumMember]
+        Hidden = 1,
 
         /// <summary>
         ///   Indicates that the update is visible
         /// </summary>
-        [ProtoEnum, EnumMember] Visible = 2,
+        [ProtoEnum, EnumMember]
+        Visible = 2,
 
         /// <summary>
         ///   Indicates that the update installation succeeded
         /// </summary>
-        [ProtoEnum, EnumMember] Successful = 3
+        [ProtoEnum, EnumMember]
+        Successful = 3
     }
 
     /// <summary>
@@ -535,15 +559,18 @@ namespace SevenUpdate
         /// <summary>
         ///   Adds a registry entry to the machine
         /// </summary>
-        [ProtoEnum, EnumMember] Add = 0,
+        [ProtoEnum, EnumMember]
+        Add = 0,
         /// <summary>
         ///   Deletes a registry key on the machine
         /// </summary>
-        [ProtoEnum, EnumMember] DeleteKey = 1,
+        [ProtoEnum, EnumMember]
+        DeleteKey = 1,
         /// <summary>
         ///   Deletes a value of a registry key on the machine
         /// </summary>
-        [ProtoEnum, EnumMember] DeleteValue = 2
+        [ProtoEnum, EnumMember]
+        DeleteValue = 2
     }
 
     #endregion
@@ -553,7 +580,7 @@ namespace SevenUpdate
     /// <summary>
     ///   The collection of updates and the application info.
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (Sua)), KnownType(typeof (ObservableCollection<Update>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
     public sealed class Sui : INotifyPropertyChanged, IEnumerable
     {
         #region Fields
@@ -564,7 +591,7 @@ namespace SevenUpdate
         #endregion
 
         /// <summary>
-        ///   Software information for the app updates.
+        ///   Software information for the application updates.
         /// </summary>
         [ProtoMember(2), DataMember]
         public Sua AppInfo
@@ -627,8 +654,8 @@ namespace SevenUpdate
     /// <summary>
     ///   Information on how to install a software update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ObservableCollection<LocaleString>)), KnownType(typeof (UpdateFile)), KnownType(typeof (RegistryItem)),
-     KnownType(typeof (Shortcut))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)),
+     KnownType(typeof(Shortcut))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Fields
@@ -730,7 +757,7 @@ namespace SevenUpdate
         #region Optional Properties
 
         /// <summary>
-        ///   The information/change log url of the update: Optional
+        ///   The information/change log <see cref="Uri"/> of the update: Optional
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
         public string InfoUrl
@@ -745,7 +772,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The Software License Agreement Url
+        ///   The Software License Agreement <see cref="Uri"/>
         /// </summary>
         [ProtoMember(7, IsRequired = false), DataMember]
         public string LicenseUrl
@@ -884,7 +911,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Information about a file within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (FileAction))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(FileAction))]
     public sealed class UpdateFile : INotifyPropertyChanged
     {
         #region Fields
@@ -980,7 +1007,7 @@ namespace SevenUpdate
         #region Optional Properties
 
         /// <summary>
-        ///   Command line arguments for the file
+        ///   Gets or Sets the Command line arguments for the file
         /// </summary>
         [ProtoMember(6, IsRequired = false), DataMember]
         public string Args
@@ -1021,7 +1048,7 @@ namespace SevenUpdate
     /// <summary>
     ///   A registry entry within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (RegistryAction)), KnownType(typeof (RegistryHive)), KnownType(typeof (RegistryValueKind))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)), KnownType(typeof(RegistryValueKind))]
     public sealed class RegistryItem : INotifyPropertyChanged
     {
         #region Fields
@@ -1141,7 +1168,7 @@ namespace SevenUpdate
     /// <summary>
     ///   A shortcut to be created within an update
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (ShortcutAction))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
     {
         #region Fields
@@ -1189,7 +1216,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The action to peform on the shortcut
+        ///   The action to perform on the shortcut
         /// </summary>
         [ProtoMember(3), DataMember]
         public ShortcutAction Action
@@ -1300,7 +1327,7 @@ namespace SevenUpdate
     /// <summary>
     ///   Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof (UpdateStatus)), KnownType(typeof (Importance)), KnownType(typeof (ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)), KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Suh : INotifyPropertyChanged
     {
         #region Fields
@@ -1445,7 +1472,7 @@ namespace SevenUpdate
         #region Optional Properties
 
         /// <summary>
-        ///   The help url of the update: Optional
+        ///   The help <see cref="Uri"/> of the update: Optional
         /// </summary>
         [ProtoMember(9, IsRequired = false), DataMember]
         public string HelpUrl
@@ -1460,7 +1487,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   The information/change log url of the update: Optional
+        ///   The information/change log <see cref="Uri"/> of the update: Optional
         /// </summary>
         [ProtoMember(10, IsRequired = false), DataMember]
         public string InfoUrl

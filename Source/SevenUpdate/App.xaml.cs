@@ -81,18 +81,18 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets the app ready for startup
+        ///   Gets the application ready for startup
         /// </summary>
-        /// <param name = "args">The command line arguments passed to the app</param>
+        /// <param name = "args">The command line arguments passed to the application</param>
         internal static void Init(string[] args)
         {
             Base.Locale = Settings.Default.locale;
-            foreach (var t in args.Where(t => args[0].EndsWith(".sua", StringComparison.OrdinalIgnoreCase)))
+            foreach (var t in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)))
             {
                 var suaLoc = t;
                 try
                 {
-                    suaLoc = suaLoc.Replace("sevenupdate://", null);
+                    suaLoc = suaLoc.Replace(@"sevenupdate://", null);
                     var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
                     var appName = Base.GetLocaleString(sua.Name);
                     if (

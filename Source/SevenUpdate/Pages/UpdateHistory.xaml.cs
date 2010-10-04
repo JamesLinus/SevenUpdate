@@ -41,7 +41,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   The location of the update history file
         /// </summary>
-        private static readonly string HistoryFile = Base.AllUserStore + "History.suh";
+        private static readonly string HistoryFile = Base.AllUserStore + @"History.suh";
 
         /// <summary>
         ///   Gets or Sets a collection of SUH items

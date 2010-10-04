@@ -37,6 +37,35 @@ namespace SevenUpdate
     /// </summary>
     internal sealed class ServiceCallBack : IServiceCallback
     {
+        #region Events
+
+        /// <summary>
+        ///   Occurs when an error has occurred when downloading or installing updates
+        /// </summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
+
+        /// <summary>
+        ///   Occurs when the installation completed.
+        /// </summary>
+        public static event EventHandler<InstallCompletedEventArgs> InstallDone;
+
+        /// <summary>
+        ///   Occurs when the installation progress changed
+        /// </summary>
+        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
+
+        /// <summary>
+        ///   Occurs when the download completed.
+        /// </summary>
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
+
+        /// <summary>
+        ///   Occurs when the download progress changed
+        /// </summary>
+        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
+
+        #endregion
+
         #region IServiceCallback Members
 
         /// <summary>
@@ -93,39 +122,10 @@ namespace SevenUpdate
         }
 
         #endregion
-
-        #region Events
-
-        /// <summary>
-        ///   Occurs when an error has occurred when downloading or installing updates
-        /// </summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
-
-        /// <summary>
-        ///   Occurs when the installation completed.
-        /// </summary>
-        public static event EventHandler<InstallCompletedEventArgs> InstallDone;
-
-        /// <summary>
-        ///   Occurs when the installation progress changed
-        /// </summary>
-        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
-
-        /// <summary>
-        ///   Occurs when the download completed.
-        /// </summary>
-        public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
-
-        /// <summary>
-        ///   Occurs when the download progress changed
-        /// </summary>
-        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
-
-        #endregion
     }
 
     /// <summary>
-    ///   Provides static methods that control SevenUpdate.Admin for operations that require administrator access
+    ///   Provides static methods that control <see cref="SevenUpdate"/>.Admin for operations that require administrator access
     /// </summary>
     internal static class AdminClient
     {
@@ -181,7 +181,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Connects to the SevenUpdate.Admin sub program
+        ///   Connects to the <see cref="SevenUpdate"/>.Admin sub program
         /// </summary>
         internal static bool Connect()
         {
@@ -210,7 +210,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Disconnects from SevenUpdate.Admin
+        ///   Disconnects from <see cref="SevenUpdate"/>.Admin
         /// </summary>
         internal static void Disconnect()
         {
@@ -327,7 +327,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Save the settings and call SevenUpdate.Admin to commit them.
+        ///   Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.
         /// </summary>
         /// <param name = "autoOn"><c>true</c> if auto updates are enabled, otherwise <c>false</c></param>
         /// <param name = "options">the options to save</param>
@@ -353,7 +353,7 @@ namespace SevenUpdate
         public static event EventHandler<EventArgs> SettingsChanged;
 
         /// <summary>
-        ///   Occurs when the SevenUpdate.Admin serice faults or encounters a serious error
+        ///   Occurs when the SevenUpdate.Admin service faults or encounters a serious error
         /// </summary>
         public static event EventHandler<ErrorOccurredEventArgs> ServiceError;
 

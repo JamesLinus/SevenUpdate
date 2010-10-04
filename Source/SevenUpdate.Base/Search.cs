@@ -223,7 +223,7 @@ namespace SevenUpdate
             try
             {
                 // Check if machine is connected to the internet
-                var clnt = new TcpClient("www.google.com", 80);
+                var clnt = new TcpClient("sevenupdate.com", 80);
                 clnt.Close();
             }
             catch (Exception e)
@@ -350,7 +350,7 @@ namespace SevenUpdate
         ///   Searches for files without blocking the calling thread
         /// </summary>
         /// <param name = "apps">the list of Seven Update Admin.applications to check for updates</param>
-        public static void SearchForUpdatesAync(IEnumerable<Sua> apps)
+        public static void SearchForUpdatesAsync(IEnumerable<Sua> apps)
         {
             Task.Factory.StartNew(() => SearchForUpdates(apps));
         }

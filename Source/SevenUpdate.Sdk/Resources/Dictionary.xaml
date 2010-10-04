@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk" xmlns:Common="clr-namespace:Microsoft.Windows.Common;assembly=Windows.Shell" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk" xmlns:Common="clr-namespace:Microsoft.Windows.Common;assembly=Windows.Shell" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell">
 	<Sdk:StringToLocaleStringConverter x:Key="stringToLocaleString" />
 	<BooleanToVisibilityConverter x:Key="boolToVisibility" />
 	<Sdk:BoolToLabelConverter x:Key="boolToLabel" />
