@@ -30,18 +30,18 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>
-        ///   The application directory of Seven Update
+        /// The application directory of Seven Update
         /// </summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         /// <summary>
-        ///   The location of the file that contains the collection of Projects for the SDK
+        /// The location of the file that contains the collection of Projects for the SDK
         /// </summary>
         public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
                                                      @"\Seven Software\Seven Update SDK\Projects.sul";
 
         /// <summary>
-        ///   The user application data location
+        /// The user application data location
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
 
@@ -50,28 +50,34 @@ namespace SevenUpdate.Sdk
         #region Properties
 
         /// <summary>
-        ///   Gets or sets the application information of the project
+        /// Gets or sets the application information of the project
         /// </summary>
+        /// <value>The app info.</value>
         public static Sua AppInfo { get; set; }
 
         /// <summary>
-        ///   Gets or sets the index for the selected project
+        /// Gets or sets the index for the selected project
         /// </summary>
+        /// <value>The index of the app.</value>
         internal static int AppIndex { get; set; }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether aero glass is enabled
+        /// Gets or sets a value indicating whether aero glass is enabled
         /// </summary>
         internal static bool IsGlassEnabled { get; set; }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether the current project being edited is new
+        /// Gets or sets a value indicating whether the current project being edited is new
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if this instance is new project; otherwise, <see langword="false"/>.
+        /// </value>
         internal static bool IsNewProject { get; set; }
 
         /// <summary>
-        ///   Gets the collection of Project
+        /// Gets the collection of Project
         /// </summary>
+        /// <value>The projects.</value>
         internal static Collection<Project> Projects
         {
             get
@@ -81,18 +87,21 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Gets or sets the index for the current shortcut being edited
+        /// Gets or sets the index for the current shortcut being edited
         /// </summary>
+        /// <value>The selected shortcut.</value>
         internal static int SelectedShortcut { get; set; }
 
         /// <summary>
-        ///   Gets or sets the index for the selected update in the selected project
+        /// Gets or sets the index for the selected update in the selected project
         /// </summary>
+        /// <value>The index of the update.</value>
         internal static int UpdateIndex { get; set; }
 
         /// <summary>
-        ///   Gets or sets the current update being edited
+        /// Gets or sets the current update being edited
         /// </summary>
+        /// <value>The update info.</value>
         internal static Update UpdateInfo { get; set; }
 
         #endregion
@@ -103,7 +112,7 @@ namespace SevenUpdate.Sdk
         /// Checks if a file or UNC is valid
         /// </summary>
         /// <param name="path">The path we want to check</param>
-        /// <param name="is64Bit">Specifies if the application is 64 bit</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>The is valid file path.</returns>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
@@ -234,13 +243,7 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
         /// <returns>A collection of the selected files</returns>
-        internal static string[] OpenFileDialog(
-            string initialDirectory = null,
-            bool multiSelect = false,
-            string defaultDirectory = null,
-            string defaultFileName = null,
-            string defaultExtension = null,
-            bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultDirectory = null, string defaultFileName = null, string defaultExtension = null, bool navigateToShortcut = false)
         {
             if (CoreHelpers.RunningOnXP)
             {

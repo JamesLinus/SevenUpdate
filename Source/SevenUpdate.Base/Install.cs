@@ -1,121 +1,93 @@
-#region GNU Public License Version 3
-
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
-#region
-
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using IWshRuntimeLibrary;
-using Microsoft.Win32;
-using File = System.IO.File;
-
-#endregion
-
+// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 namespace SevenUpdate
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Threading.Tasks;
+
+    using IWshRuntimeLibrary;
+
+    using Microsoft.Win32;
+
+    using File = System.IO.File;
+
     /// <summary>
-    ///   Class containing methods to install updates
+    /// Class containing methods to install updates
     /// </summary>
     public static class Install
     {
-        #region Fields
+        #region Constants and Fields
 
         /// <summary>
-        ///   Gets an int that indicates to move a file on reboot
+        /// Gets an int that indicates to move a file on reboot
         /// </summary>
         private const int MoveOnReboot = 5;
 
         /// <summary>
-        ///   The localized name of the current update being installed
+        /// The localized name of the current update being installed
         /// </summary>
         private static string currentUpdateName;
 
         /// <summary>
-        ///   The index position of the current update being installed
+        /// Indicates if an error has occurred
         /// </summary>
-        private static int updateIndex;
+        private static bool errorOccurred;
 
         /// <summary>
-        ///   The total number of updates being installed
+        /// The total number of updates being installed
         /// </summary>
         private static int updateCount;
 
-        private static bool errorOccurred;
+        /// <summary>
+        /// The index position of the current update being installed
+        /// </summary>
+        private static int updateIndex;
 
         #endregion
 
         #region Events
 
         /// <summary>
-        ///   Occurs when the installation completed.
+        /// Occurs when the installation completed.
         /// </summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
 
         /// <summary>
-        ///   Occurs when the installation progress changed
+        /// Occurs when the installation progress changed
         /// </summary>
         public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
         #endregion
 
-        /// <summary>
-        ///   Moves or deletes a file on reboot
-        /// </summary>
-        /// <param name = "lpExistingFileName">The source filename</param>
-        /// <param name = "lpNewFileName">The destination filename</param>
-        /// <param name = "dwFlags">A int indicating the move operation to perform</param>
-        /// <returns><c>true</c> if successful, otherwise <c>false</c></returns>
-        [DllImport("kernel32.dll")]
-        private static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
-
-        private static void ReportProgress(int installProgress)
-        {
-            if (InstallProgressChanged != null)
-                InstallProgressChanged(null, new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
-        }
-
-        #region Update Installation
+        #region Public Methods
 
         /// <summary>
-        ///   Installs updates
+        /// Installs updates
         /// </summary>
+        /// <param name="apps">The collection of applications to install updates</param>
         public static void InstallUpdates(Collection<Sui> apps)
         {
             if (apps == null)
+            {
                 return;
+            }
 
             if (apps.Count < 1)
+            {
                 return;
-
-            #region variables
+            }
 
             updateCount = apps.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
-
-            #endregion
 
             ReportProgress(0);
 
@@ -144,27 +116,15 @@ namespace SevenUpdate
 
                     ReportProgress(5);
 
-                    #region Registry
-
                     SetRegistryItems(apps[x].Updates[y].RegistryItems, apps[x].AppInfo.Is64Bit);
-
-                    #endregion
 
                     ReportProgress(25);
 
-                    #region Files
-
                     UpdateFiles(apps[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
-
-                    #endregion
 
                     ReportProgress(75);
 
-                    #region Shortcuts
-
                     SetShortcuts(apps[x].Updates[y].Shortcuts, apps[x].AppInfo);
-
-                    #endregion
 
                     ReportProgress(95);
 
@@ -178,8 +138,6 @@ namespace SevenUpdate
                         completedUpdates++;
                         AddHistory(apps[x], apps[x].Updates[y]);
                     }
-
-                    #region If Seven Update
 
                     if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
                     {
@@ -197,6 +155,7 @@ namespace SevenUpdate
                                     {
                                         MoveFileEx(t.Destination, null, MoveOnReboot);
                                     }
+
                                     break;
                                 default:
                                     break;
@@ -207,8 +166,6 @@ namespace SevenUpdate
 
                         return;
                     }
-
-                    #endregion
 
                     ReportProgress(100);
 
@@ -223,7 +180,9 @@ namespace SevenUpdate
                 MoveFileEx(Base.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
                 if (Directory.Exists(Base.AllUserStore + "downloads"))
+                {
                     MoveFileEx(Base.AllUserStore + "downloads", null, MoveOnReboot);
+                }
             }
             else
             {
@@ -242,23 +201,83 @@ namespace SevenUpdate
                     }
                 }
             }
+
             if (InstallCompleted != null)
+            {
                 InstallCompleted(null, new InstallCompletedEventArgs(completedUpdates, failedUpdates));
+            }
 
             return;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        ///   Sets the registry items of an update
+        /// Adds an update to the update history
         /// </summary>
-        /// <param name = "regItems">The registry changes to install on the system</param>
-        /// <param name = "is64Bit">Indicates if the application is 64 bit</param>
-        /// <returns>a <see langword="Boolean"/> value indicating if an error occurred</returns>
+        /// <param name="appInfo">the application information</param>
+        /// <param name="updateInfo">the update information</param>
+        /// <param name="failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
+        private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
+        {
+            var history = Base.Deserialize<Collection<Suh>>(Base.HistoryFile) ?? new Collection<Suh>();
+            var hist = new Suh
+                {
+                    HelpUrl = appInfo.AppInfo.HelpUrl,
+                    Publisher = appInfo.AppInfo.Publisher,
+                    AppUrl = appInfo.AppInfo.AppUrl,
+                    Description = updateInfo.Description,
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
+                    InfoUrl = updateInfo.InfoUrl,
+                    InstallDate = DateTime.Now.ToShortDateString(),
+                    ReleaseDate = updateInfo.ReleaseDate,
+                    Importance = updateInfo.Importance,
+                    Name = updateInfo.Name
+                };
+
+            history.Add(hist);
+
+            Base.Serialize(history, Base.HistoryFile);
+        }
+
+        /// <summary>
+        /// Moves the file using the windows command
+        /// </summary>
+        /// <param name="sourceFileName">The source file name</param>
+        /// <param name="newFileName">The new file name</param>
+        /// <param name="flags">The flags that determine how to move the file</param>
+        /// <returns>
+        /// <see langword="true"/> if the operation was successful
+        /// </returns>
+        [DllImport("kernel32.dll")]
+        private static extern bool MoveFileEx(string sourceFileName, string newFileName, int flags);
+
+        /// <summary>
+        /// Reports the installation progress
+        /// </summary>
+        /// <param name="installProgress">The current install progress percentage</param>
+        private static void ReportProgress(int installProgress)
+        {
+            if (InstallProgressChanged != null)
+            {
+                InstallProgressChanged(null, new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
+            }
+        }
+
+        /// <summary>
+        /// Sets the registry items of an update
+        /// </summary>
+        /// <param name="regItems">The registry changes to install on the system</param>
+        /// <param name="is64Bit">Indicates if the application is 64 bit</param>
         private static void SetRegistryItems(IList<RegistryItem> regItems, bool is64Bit)
         {
             RegistryKey key;
             if (regItems == null)
+            {
                 return;
+            }
 
             for (var x = 0; x < regItems.Count; x++)
             {
@@ -281,6 +300,7 @@ namespace SevenUpdate
                         key = Registry.CurrentUser;
                         break;
                 }
+
                 switch (regItems[x].Action)
                 {
                     case RegistryAction.Add:
@@ -293,57 +313,65 @@ namespace SevenUpdate
                             Base.ReportError(e, Base.AllUserStore);
                             errorOccurred = true;
                         }
+
                         break;
                     case RegistryAction.DeleteKey:
                         try
                         {
                             if (key != null)
+                            {
                                 // ReSharper disable PossibleNullReferenceException
                                 key.OpenSubKey(regItems[x].Key, true).DeleteSubKeyTree(regItems[x].Key);
+                            }
+
                             // ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
                             Base.ReportError(e, Base.AllUserStore);
                         }
+
                         break;
                     case RegistryAction.DeleteValue:
                         try
                         {
                             // ReSharper disable PossibleNullReferenceException
                             key.OpenSubKey(regItems[x].Key, true).DeleteValue(regItems[x].KeyValue, false);
+
                             // ReSharper restore PossibleNullReferenceException
                         }
                         catch (Exception e)
                         {
                             Base.ReportError(e, Base.AllUserStore);
                         }
+
                         break;
                 }
 
-                #region Report Progress
-
                 var installProgress = (x * 100) / regItems.Count;
                 if (installProgress > 30)
+                {
                     installProgress -= 10;
+                }
 
                 ReportProgress(installProgress);
-
-                #endregion
             }
         }
 
         /// <summary>
-        ///   Installs the shortcuts of an update
+        /// Installs the shortcuts of an update
         /// </summary>
-        /// <param name = "shortcuts">the shortcuts to install on the system</param>
-        /// <param name = "appInfo">the application information</param>
+        /// <param name="shortcuts">the shortcuts to install on the system</param>
+        /// <param name="appInfo">the application information</param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, Sua appInfo)
         {
             if (shortcuts == null)
+            {
                 return;
+            }
 
             var ws = new WshShell();
+
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
@@ -353,67 +381,86 @@ namespace SevenUpdate
                     var linkName = Base.GetLocaleString(shortcuts[x].Name);
 
                     if (!shortcuts[x].Location.EndsWith(@"\"))
+                    {
                         shortcuts[x].Location = shortcuts[x].Location + @"\";
+                    }
 
-                    if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
+                    if (shortcuts[x].Action == ShortcutAction.Add ||
+                        (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
                     {
                         // ReSharper disable AssignNullToNotNullAttribute
                         if (!Directory.Exists(shortcuts[x].Location))
+                        {
                             Directory.CreateDirectory(shortcuts[x].Location);
+                        }
+
                         File.Delete(shortcuts[x].Location + linkName + @".lnk");
+
                         // ReSharper restore AssignNullToNotNullAttribute
                         var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
+
                         // Where the shortcut should point to
                         shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+
                         // Description for the shortcut
                         shortcut.Description = Base.GetLocaleString(shortcuts[x].Description);
+
                         // Location for the shortcut's icon
                         shortcut.IconLocation = Base.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+
                         // The arguments to be used for the shortcut
                         shortcut.Arguments = shortcuts[x].Arguments;
+
                         // The working directory to be used for the shortcut
                         shortcut.WorkingDirectory = appInfo.Directory;
+
                         // Create the shortcut at the given path
                         shortcut.Save();
                     }
 
                     if (shortcuts[x].Action == ShortcutAction.Delete)
+                    {
                         File.Delete(shortcuts[x].Location);
+                    }
                 }
                 catch (Exception e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
                 }
 
-                #region Report Progress
-
                 var installProgress = (x * 100) / shortcuts.Count;
                 if (installProgress > 90)
+                {
                     installProgress -= 15;
+                }
 
                 ReportProgress(installProgress);
-
-                #endregion
             }
         }
 
+        /// <summary>
+        /// Updates the file on the system
+        /// </summary>
+        /// <param name="file">The file to install or update</param>
         private static void UpdateFile(UpdateFile file)
         {
             switch (file.Action)
             {
-                #region Delete file
-
                 case FileAction.ExecuteThenDelete:
                 case FileAction.UnregisterThenDelete:
                 case FileAction.Delete:
                     if (file.Action == FileAction.ExecuteThenDelete)
                     {
                         if (File.Exists(file.Source))
+                        {
                             Base.StartProcess(file.Source, file.Args, true);
+                        }
                     }
 
                     if (file.Action == FileAction.UnregisterThenDelete)
+                    {
                         Base.StartProcess("regsvr32", "/u /s" + file.Destination);
+                    }
 
                     try
                     {
@@ -426,8 +473,6 @@ namespace SevenUpdate
 
                     break;
 
-                #endregion
-
                 case FileAction.Execute:
                     try
                     {
@@ -438,9 +483,8 @@ namespace SevenUpdate
                         Base.ReportError(e + file.Source, Base.AllUserStore);
                         errorOccurred = true;
                     }
-                    break;
 
-                #region Update file
+                    break;
 
                 case FileAction.Update:
                 case FileAction.UpdateIfExist:
@@ -452,18 +496,23 @@ namespace SevenUpdate
                         {
                             if (File.Exists(file.Destination))
                             {
-                                File.Copy(file.Destination, file.Destination + ".bak", true);
+                                File.Copy(file.Destination, file.Destination + @".bak", true);
                                 File.Delete(file.Destination);
                             }
+
                             File.Move(file.Source, file.Destination);
 
                             if (File.Exists(file.Destination + @".bak"))
+                            {
                                 File.Delete(file.Destination + @".bak");
+                            }
                         }
                         catch
                         {
                             if (!File.Exists(Base.AllUserStore + @"reboot.lock"))
+                            {
                                 File.Create(Base.AllUserStore + @"reboot.lock").WriteByte(0);
+                            }
 
                             MoveFileEx(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + ".bak");
@@ -489,19 +538,19 @@ namespace SevenUpdate
                     }
 
                     if (file.Action == FileAction.UpdateThenRegister)
+                    {
                         Base.StartProcess(@"regsvr32", @"/s" + file.Destination);
-                    break;
+                    }
 
-                #endregion
+                    break;
             }
         }
 
         /// <summary>
-        ///   Installs the files in the update
+        /// Installs the files in the update
         /// </summary>
-        /// <param name = "files">the collection of files to update</param>
-        /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
-        /// <returns><c>true</c> if updated all files without errors, otherwise <c>false</c></returns>
+        /// <param name="files">the collection of files to update</param>
+        /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
         private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             for (var x = 0; x < files.Count; x++)
@@ -511,6 +560,7 @@ namespace SevenUpdate
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
                     Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
+
                     // ReSharper restore AssignNullToNotNullAttribute
                 }
                 catch (Exception e)
@@ -519,55 +569,20 @@ namespace SevenUpdate
                     errorOccurred = true;
                 }
 
-
                 var x1 = x;
                 var x2 = x;
-                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
-                                                                                    {
-                                                                                        #region Report Progress
+                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
+                    delegate
+                    {
+                        var installProgress = (x2 * 100) / files.Count;
+                        if (installProgress > 70)
+                        {
+                            installProgress -= 15;
+                        }
 
-                                                                                        var installProgress = (x2 * 100) / files.Count;
-                                                                                        if (installProgress > 70)
-                                                                                            installProgress -= 15;
-
-                                                                                        ReportProgress(installProgress);
-                                                                                    });
-
-                                                                                        #endregion
+                        ReportProgress(installProgress);
+                    });
             }
-        }
-
-        #endregion
-
-        #region Update History
-
-        /// <summary>
-        ///   Adds an update to the update history
-        /// </summary>
-        /// <param name = "updateInfo">the update information</param>
-        /// <param name = "failed"><c>true</c> if the update failed, otherwise <c>false</c></param>
-        /// <param name = "appInfo">the application information</param>
-        private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
-        {
-            var history = Base.Deserialize<Collection<Suh>>(Base.HistoryFile) ?? new Collection<Suh>();
-            var hist = new Suh
-                           {
-                               HelpUrl = appInfo.AppInfo.HelpUrl,
-                               Publisher = appInfo.AppInfo.Publisher,
-                               PublisherUrl = appInfo.AppInfo.AppUrl,
-                               Description = updateInfo.Description,
-                               Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
-                               InfoUrl = updateInfo.InfoUrl,
-                               InstallDate = DateTime.Now.ToShortDateString(),
-                               ReleaseDate = updateInfo.ReleaseDate,
-                               Importance = updateInfo.Importance,
-                               Name = updateInfo.Name
-                           };
-
-
-            history.Add(hist);
-
-            Base.Serialize(history, Base.HistoryFile);
         }
 
         #endregion

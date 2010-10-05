@@ -97,7 +97,7 @@ namespace SevenUpdate.Pages
                 {
                     if (
                         Directory.Exists(Base.IsRegistryKey(machineAppList[x].Directory)
-                                             ? Base.GetRegistryPath(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
+                                             ? Base.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
                                              : Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                         continue;
                     // Remove the application from the list if it is no longer installed or not enabled
@@ -113,7 +113,7 @@ namespace SevenUpdate.Pages
                 {
                     if (
                         !Directory.Exists(Base.IsRegistryKey(officialAppList[x].Directory)
-                                              ? Base.GetRegistryPath(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit)
+                                              ? Base.GetRegistryValue(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit)
                                               : Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
                     {
                         // Remove the application from the applist if it is not installed

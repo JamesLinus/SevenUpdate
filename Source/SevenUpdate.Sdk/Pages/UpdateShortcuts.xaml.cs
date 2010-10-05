@@ -71,7 +71,7 @@ namespace SevenUpdate.Sdk.Pages
         private void AddShortcut(object sender, RoutedEventArgs e)
         {
             var allUserStartMenu = new StringBuilder(260);
-            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
+            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, NativeMethods.CommonPrograms, false);
 
             var file = Core.SaveFileDialog(allUserStartMenu.ToString(), null, Core.AppInfo.Name[0].Value, "lnk");
 
@@ -118,7 +118,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
@@ -143,7 +143,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
@@ -169,7 +169,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
@@ -235,7 +235,7 @@ namespace SevenUpdate.Sdk.Pages
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
             var allUserStartMenu = new StringBuilder(260);
-            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, FileSystemLocations.CSIDL_COMMON_PROGRAMS, false);
+            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, NativeMethods.CommonPrograms, false);
             var file = Core.OpenFileDialog(allUserStartMenu.ToString(), false, null, Core.AppInfo.Name[0].Value, "lnk", true);
 
             if (file == null)
@@ -330,7 +330,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);

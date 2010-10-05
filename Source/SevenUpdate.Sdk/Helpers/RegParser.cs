@@ -22,9 +22,6 @@ namespace SevenUpdate.Sdk
     /// </summary>
     internal sealed class RegistryParser
     {
-        // Event system
-
-        // Constants
         #region Constants and Fields
 
         /// <summary>

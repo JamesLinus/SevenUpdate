@@ -27,7 +27,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "AppInfo" /> class.
+        /// Initializes a new instance of the <see cref = "AppInfo" /> class.
         /// </summary>
         public AppInfo()
         {

@@ -272,7 +272,7 @@ namespace SevenUpdate.Pages
                               HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl,
                               InfoUrl = update.InfoUrl,
                               Publisher = Core.Applications[appIndex].AppInfo.Publisher,
-                              PublisherUrl = Core.Applications[appIndex].AppInfo.AppUrl,
+                              AppUrl = Core.Applications[appIndex].AppInfo.AppUrl,
                               ReleaseDate = update.ReleaseDate,
                               Status = UpdateStatus.Hidden,
                               UpdateSize = Core.GetUpdateSize(update.Files),

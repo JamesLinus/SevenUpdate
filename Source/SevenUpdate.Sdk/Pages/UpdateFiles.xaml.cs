@@ -91,7 +91,7 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile(string fullName)
         {
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
@@ -121,7 +121,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var files = Core.OpenFileDialog(directory, true);
             if (files == null)
@@ -156,7 +156,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var cfd = new CommonOpenFileDialog { Multiselect = false, IsFolderPicker = true, InitialDirectory = directory };
             if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
@@ -194,7 +194,7 @@ namespace SevenUpdate.Sdk.Pages
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
@@ -296,7 +296,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var files = Core.OpenFileDialog(directory, false, null, Path.GetFileName(Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination));
 
             if (files == null)
@@ -324,7 +324,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryPath(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
