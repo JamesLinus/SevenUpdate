@@ -1,22 +1,82 @@
-// //Copyright (c) xidar solutions
-// //Modified by Robert Baker, Seven Software 2010.
+//***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           :xidar solutions
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) xidar solutions. All rights reserved.
+//***********************************************************************
+
 namespace SharpBits.Base.Progress
 {
+    /// <summary>
+    /// </summary>
     public class JobProgress
     {
-        private BG_JOB_PROGRESS jobProgress;
+        #region Constants and Fields
 
-        internal JobProgress(BG_JOB_PROGRESS jobProgress)
+        /// <summary>
+        /// </summary>
+        private BGJobProgress jobProgress;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="jobProgress">
+        /// </param>
+        internal JobProgress(BGJobProgress jobProgress)
         {
             this.jobProgress = jobProgress;
         }
 
-        public ulong BytesTotal { get { return jobProgress.BytesTotal == ulong.MaxValue ? 0 : jobProgress.BytesTotal; } }
+        #endregion
 
-        public ulong BytesTransferred { get { return jobProgress.BytesTransferred; } }
+        #region Properties
 
-        public uint FilesTotal { get { return jobProgress.FilesTotal; } }
+        /// <summary>
+        /// </summary>
+        public ulong BytesTotal
+        {
+            get
+            {
+                return this.jobProgress.BytesTotal == ulong.MaxValue ? 0 : this.jobProgress.BytesTotal;
+            }
+        }
 
-        public uint FilesTransferred { get { return jobProgress.FilesTransferred; } }
+        /// <summary>
+        /// </summary>
+        public ulong BytesTransferred
+        {
+            get
+            {
+                return this.jobProgress.BytesTransferred;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public uint FilesTotal
+        {
+            get
+            {
+                return this.jobProgress.FilesTotal;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public uint FilesTransferred
+        {
+            get
+            {
+                return this.jobProgress.FilesTransferred;
+            }
+        }
+
+        #endregion
     }
 }

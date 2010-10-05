@@ -23,6 +23,8 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
+    using Shortcut = SevenUpdate.Shortcut;
+
     /// <summary>
     /// Interaction logic for UpdateShortcuts.xaml
     /// </summary>
@@ -31,7 +33,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UpdateShortcuts"/> class.
+        ///   Initializes a new instance of the <see cref = "UpdateShortcuts" /> class.
         /// </summary>
         public UpdateShortcuts()
         {
@@ -66,8 +68,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Adds a UpdateShortcut to the collection
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void AddShortcut(object sender, RoutedEventArgs e)
         {
             var allUserStartMenu = new StringBuilder(260);
@@ -90,117 +96,75 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Updates the UI based on whether Aero Glass is enabled
+        /// Converts a path to system variables
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
-        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
-            if (e.IsGlassEnabled)
-            {
-                this.tbTitle.Foreground = Brushes.Black;
-                this.line.Visibility = Visibility.Visible;
-                this.rectangle.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
-                this.line.Visibility = Visibility.Collapsed;
-                this.rectangle.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut icon
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void LocateIcon(object sender, MouseButtonEventArgs e)
-        {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
-                                       : Core.AppInfo.Directory;
-
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-
-            var shortcut = Core.OpenFileDialog(installDirectory);
-
-            if (shortcut == null)
+            var source = e.Source as InfoTextBox;
+            if (source == null)
             {
                 return;
             }
 
-            var fileUrl = shortcut[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
-            fileUrl = fileUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Icon = fileUrl;
-        }
-
-        /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut location
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
-        {
+            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
                                        ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-            var shortcut = Core.OpenFileDialog(installDirectory, false, null, null, "lnk", true);
 
-            if (shortcut == null)
+            var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            installUrl = installUrl.Replace(@"\\", @"\");
+
+            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
+        }
+
+        /// <summary>
+        /// Deletes the selected UpdateShortcut from the collection
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.
+        /// </param>
+        private void DeleteShortcut(object sender, KeyEventArgs e)
+        {
+            var index = this.listBox.SelectedIndex;
+            if (index < 0)
             {
                 return;
             }
 
-            var saveLoc = Path.GetDirectoryName(shortcut[0]);
-
-            var fileUrl = saveLoc.Replace(installDirectory, @"%INSTALLDIR%\", true);
-            fileUrl = fileUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Location = fileUrl;
-        }
-
-        /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut target
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
-        {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
-                                       : Core.AppInfo.Directory;
-
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-            var files = Core.OpenFileDialog(installDirectory);
-            var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
-            fileUrl = fileUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Target = fileUrl;
-        }
-
-        /// <summary>
-        /// Navigates to the next page if no errors exist
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void MoveOn(object sender, RoutedEventArgs e)
-        {
-            if (!this.HasErrors())
+            if (e.Key != Key.Delete)
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateReview.xaml", UriKind.Relative));
+                return;
             }
-            else
+
+            Core.UpdateInfo.Shortcuts.RemoveAt(index);
+            this.listBox.SelectedIndex = index - 1;
+
+            if (this.listBox.SelectedIndex < 0 && this.listBox.Items.Count > 0)
             {
-                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
+                this.listBox.SelectedIndex = 0;
             }
         }
 
         /// <summary>
         /// Navigates to the main page
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void GoToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
@@ -221,7 +185,6 @@ namespace SevenUpdate.Sdk.Pages
 
             // ReSharper disable PossibleNullReferenceException
             return this.tbxName.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxSaveLocation.GetBindingExpression(TextBox.TextProperty).HasError ||
-
                    this.tbxTarget.GetBindingExpression(TextBox.TextProperty).HasError;
 
             // ReSharper restore PossibleNullReferenceException
@@ -230,8 +193,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut to import
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
             var allUserStartMenu = new StringBuilder(260);
@@ -252,12 +219,12 @@ namespace SevenUpdate.Sdk.Pages
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
-                    Arguments = importedShortcut.Arguments,
-                    Icon = icon,
-                    Location = path,
-                    Action = ShortcutAction.Update,
-                    Target = Base.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
-                    Name = new ObservableCollection<LocaleString>(),
+                    Arguments = importedShortcut.Arguments, 
+                    Icon = icon, 
+                    Location = path, 
+                    Action = ShortcutAction.Update, 
+                    Target = Base.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit), 
+                    Name = new ObservableCollection<LocaleString>(), 
                     Description = new ObservableCollection<LocaleString>()
                 };
 
@@ -273,8 +240,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Load the <see cref="LocaleString"/>'s into the UI
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.
+        /// </param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxDescription == null || this.cbxLocale.SelectedIndex < 0)
@@ -316,86 +287,172 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Converts a path to system variables
+        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut icon
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
-        private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
-            var source = e.Source as InfoTextBox;
-            if (source == null)
-            {
-                return;
-            }
-
-            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
             var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
                                        ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
             installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
-            var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
-            installUrl = installUrl.Replace(@"\\", @"\");
+            var shortcut = Core.OpenFileDialog(installDirectory);
 
-            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
-        }
-
-        /// <summary>
-        /// Deletes the selected UpdateShortcut from the collection
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
-        private void DeleteShortcut(object sender, KeyEventArgs e)
-        {
-            var index = this.listBox.SelectedIndex;
-            if (index < 0)
+            if (shortcut == null)
             {
                 return;
             }
 
-            if (e.Key != Key.Delete)
+            var fileUrl = shortcut[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Icon = fileUrl;
+        }
+
+        /// <summary>
+        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut location
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
+        {
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            var shortcut = Core.OpenFileDialog(installDirectory, false, null, null, "lnk", true);
+
+            if (shortcut == null)
             {
                 return;
             }
 
-            Core.UpdateInfo.Shortcuts.RemoveAt(index);
-            this.listBox.SelectedIndex = index - 1;
+            var saveLoc = Path.GetDirectoryName(shortcut[0]);
 
-            if (this.listBox.SelectedIndex < 0 && this.listBox.Items.Count > 0)
+            var fileUrl = saveLoc.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Location = fileUrl;
+        }
+
+        /// <summary>
+        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut target
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
+        {
+            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       : Core.AppInfo.Directory;
+
+            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            var files = Core.OpenFileDialog(installDirectory);
+            var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
+            fileUrl = fileUrl.Replace(@"\\", @"\");
+            Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Target = fileUrl;
+        }
+
+        /// <summary>
+        /// Navigates to the next page if no errors exist
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void MoveOn(object sender, RoutedEventArgs e)
+        {
+            if (!this.HasErrors())
             {
-                this.listBox.SelectedIndex = 0;
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateReview.xaml", UriKind.Relative));
+            }
+            else
+            {
+                Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
             }
         }
 
         /// <summary>
-        /// Sets the selected shortcut
+        /// Removes all Shortcuts from the collection
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
-        private void SetSelectedShortcut(object sender, SelectionChangedEventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void RemoveAllShortcuts(object sender, RoutedEventArgs e)
         {
-            Core.SelectedShortcut = this.listBox.SelectedIndex;
+            Core.UpdateInfo.Shortcuts.RemoveAt(this.listBox.SelectedIndex);
         }
 
         /// <summary>
         /// Removes the selected Shortcuts from the collection
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void RemoveShortcut(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Shortcuts.Clear();
         }
 
         /// <summary>
-        /// Removes all Shortcuts from the collection
+        /// Sets the selected shortcut
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void RemoveAllShortcuts(object sender, RoutedEventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SetSelectedShortcut(object sender, SelectionChangedEventArgs e)
         {
-            Core.UpdateInfo.Shortcuts.RemoveAt(this.listBox.SelectedIndex);
+            Core.SelectedShortcut = this.listBox.SelectedIndex;
+        }
+
+        /// <summary>
+        /// Updates the UI based on whether Aero Glass is enabled
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
         }
 
         #endregion

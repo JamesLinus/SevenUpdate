@@ -1,17 +1,23 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System.Runtime.InteropServices;
-using Microsoft.Windows.Shell;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs
 {
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Windows.Shell;
+
     // Dummy base interface for CommonFileDialog coclasses.
-    internal interface NativeCommonFileDialog
+    /// <summary>
+    /// </summary>
+    internal interface INativeCommonFileDialog
     {
     }
 
@@ -20,24 +26,42 @@ namespace Microsoft.Windows.Dialogs
     // straightforward way. Behind the scenes, the C# compiler
     // morphs all 'new CoClass()' calls to 'new CoClassWrapper()'.
 
-    [ComImport, Guid(ShellIIDGuid.IFileOpenDialog), CoClass(typeof (FileOpenDialogRCW))]
-    internal interface NativeFileOpenDialog : IFileOpenDialog
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [Guid(ShellIidGuid.IFileOpenDialog)]
+    [CoClass(typeof(FileOpenDialogRcw))]
+    internal interface INativeFileOpenDialog : IFileOpenDialog
     {
     }
 
-    [ComImport, Guid(ShellIIDGuid.IFileSaveDialog), CoClass(typeof (FileSaveDialogRCW))]
-    internal interface NativeFileSaveDialog : IFileSaveDialog
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [Guid(ShellIidGuid.IFileSaveDialog)]
+    [CoClass(typeof(FileSaveDialogRcw))]
+    internal interface INativeFileSaveDialog : IFileSaveDialog
     {
     }
 
     // .NET classes representing runtime callable wrappers.
-    [ComImport, ClassInterface(ClassInterfaceType.None), TypeLibType(TypeLibTypeFlags.FCanCreate), Guid(ShellCLSIDGuid.FileOpenDialog)]
-    internal class FileOpenDialogRCW
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [ClassInterface(ClassInterfaceType.None)]
+    [TypeLibType(TypeLibTypeFlags.FCanCreate)]
+    [Guid(ShellClsidGuid.FileOpenDialog)]
+    internal class FileOpenDialogRcw
     {
     }
 
-    [ComImport, ClassInterface(ClassInterfaceType.None), TypeLibType(TypeLibTypeFlags.FCanCreate), Guid(ShellCLSIDGuid.FileSaveDialog)]
-    internal class FileSaveDialogRCW
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [ClassInterface(ClassInterfaceType.None)]
+    [TypeLibType(TypeLibTypeFlags.FCanCreate)]
+    [Guid(ShellClsidGuid.FileSaveDialog)]
+    internal class FileSaveDialogRcw
     {
     }
 }

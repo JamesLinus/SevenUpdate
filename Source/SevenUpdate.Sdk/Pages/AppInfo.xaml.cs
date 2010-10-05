@@ -27,7 +27,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref = "AppInfo" /> class.
+        ///   Initializes a new instance of the <see cref = "AppInfo" /> class.
         /// </summary>
         public AppInfo()
         {
@@ -68,8 +68,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the application install location
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
             var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
@@ -82,8 +86,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Changes the UI to show the file system application location
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void ChangeToFileSystemLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -105,8 +113,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Changes the UI to show the registry application location
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void ChangeToRegistryLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -125,31 +137,14 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Changes the UI depending on whether Aero Glass is enabled.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
-        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
-        {
-            if (e.IsGlassEnabled)
-            {
-                this.tbTitle.Foreground = Brushes.Black;
-                this.line.Visibility = Visibility.Collapsed;
-                this.rectangle.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
-                this.line.Visibility = Visibility.Visible;
-                this.rectangle.Visibility = Visibility.Visible;
-            }
-        }
-
-        /// <summary>
         /// Converts the application location path to system variables
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.
+        /// </param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (this.rbtnFileSystem.IsChecked.GetValueOrDefault())
@@ -183,8 +178,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Loads the application info into the UI.
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
             // ReSharper disable PossibleNullReferenceException
@@ -218,8 +217,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.
+        /// </param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxAppName == null || this.cbxLocale.SelectedIndex < 0)
@@ -275,8 +278,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Moves on to the next pages if no errors are present
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -292,8 +299,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>
         /// Saves the project and goes back to the main page
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
             if (this.btnNext.Visibility != Visibility.Visible)
@@ -335,6 +346,31 @@ namespace SevenUpdate.Sdk.Pages
             else
             {
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+            }
+        }
+
+        /// <summary>
+        /// Changes the UI depending on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
             }
         }
 

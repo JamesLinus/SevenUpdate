@@ -1,16 +1,25 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
+
 namespace Microsoft.Windows.Dialogs
 {
     /// <summary>
-    ///   Specifies the initial display location for a task dialog.
+    /// Specifies the initial display location for a task dialog.
     /// </summary>
     public enum TaskDialogStartupLocation
     {
         /// <summary>
         ///   The window placed in the center of the screen.
         /// </summary>
-        CenterScreen,
+        CenterScreen, 
+
         /// <summary>
         ///   The window centered relative to the window that launched the dialog.
         /// </summary>

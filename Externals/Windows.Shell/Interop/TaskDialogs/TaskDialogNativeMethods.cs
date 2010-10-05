@@ -1,18 +1,22 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.Windows.Internal;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs
 {
+    using System;
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Windows.Internal;
+
     /// <summary>
-    ///   Internal class containing most native interop declarations used
+    /// Internal class containing most native interop declarations used
     ///   throughout the library.
     ///   Functions that are not performance intensive belong in this class.
     /// </summary>
@@ -20,151 +24,491 @@ namespace Microsoft.Windows.Dialogs
     {
         #region TaskDialog Definitions
 
-        internal const int TASKDIALOG_IDEALWIDTH = 0; // Value for TASKDIALOGCONFIG.cxWidth
-        internal const int TASKDIALOG_BUTTON_SHIELD_ICON = 1;
-        internal const int NO_DEFAULT_BUTTON_SPECIFIED = 0;
+        /// <summary>
+        /// </summary>
+        internal const int TaskdialogIdealwidth = 0; // Value for TASKDIALOGCONFIG.cxWidth
 
+        /// <summary>
+        /// </summary>
+        internal const int TaskdialogButtonShieldIcon = 1;
+
+        /// <summary>
+        /// </summary>
+        internal const int NODefaultButtonSpecified = 0;
+
+        /// <summary>
+        /// </summary>
+        /// <param name="pTaskConfig">
+        /// </param>
+        /// <param name="pnButton">
+        /// </param>
+        /// <param name="pnRadioButton">
+        /// </param>
+        /// <param name="pVerificationFlagChecked">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport(CommonDllNames.ComCtl32, CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern HRESULT TaskDialogIndirect([In] TASKDIALOGCONFIG pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton,
-                                                          [MarshalAs(UnmanagedType.Bool), Out] out bool pVerificationFlagChecked);
+        internal static extern HRESULT TaskDialogIndirect(
+            [In] TASKDIALOGCONFIG pTaskConfig, 
+            [Out] out int pnButton, 
+            [Out] out int pnRadioButton, 
+            [MarshalAs(UnmanagedType.Bool)] [Out] out bool pVerificationFlagChecked);
 
         #region Nested type: PBST
 
+        /// <summary>
+        /// </summary>
         internal enum PBST
         {
-            PBST_NORMAL = 0x0001,
-            PBST_ERROR = 0x0002,
-            PBST_PAUSED = 0x0003
+            /// <summary>
+            /// </summary>
+            Normal = 0x0001, 
+
+            /// <summary>
+            /// </summary>
+            Error = 0x0002, 
+
+            /// <summary>
+            /// </summary>
+            Paused = 0x0003
         }
 
         #endregion
 
         #region Nested type: PFTASKDIALOGCALLBACK
 
+        /// <summary>
+        /// </summary>
+        /// <param name="hwnd">
+        /// </param>
+        /// <param name="msg">
+        /// </param>
+        /// <param name="wParam">
+        /// </param>
+        /// <param name="lParam">
+        /// </param>
+        /// <param name="lpRefData">
+        /// </param>
         internal delegate int PFTASKDIALOGCALLBACK(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, IntPtr lpRefData);
 
         #endregion
 
         #region Nested type: TASKDIALOGCONFIG
 
+        /// <summary>
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal class TASKDIALOGCONFIG
+        internal class TASKDIALOGCONFIG : IDisposable
         {
+            /// <summary>
+            /// </summary>
             internal uint cbSize;
+
+            /// <summary>
+            /// </summary>
             internal IntPtr hwndParent;
+
+            /// <summary>
+            /// </summary>
             internal IntPtr hInstance;
-            internal TASKDIALOG_FLAGS dwFlags;
-            internal TASKDIALOG_COMMON_BUTTON_FLAGS dwCommonButtons;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszWindowTitle;
+            /// <summary>
+            /// </summary>
+            internal TaskdialogFlagss dwFlags;
 
-            internal TASKDIALOGCONFIG_ICON_UNION MainIcon; // NOTE: 32-bit union field, holds pszMainIcon as well
+            /// <summary>
+            /// </summary>
+            internal TaskdialogCommonButtonFlagss dwCommonButtons;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszMainInstruction;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszWindowTitle;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszContent;
+            /// <summary>
+            /// </summary>
+            internal TaskdialogconfigIconUnion MainIcon; // NOTE: 32-bit union field, holds pszMainIcon as well
 
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszMainInstruction;
+
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszContent;
+
+            /// <summary>
+            /// </summary>
             internal uint cButtons;
+
+            /// <summary>
+            /// </summary>
             internal IntPtr pButtons; // Ptr to TASKDIALOG_BUTTON structs
+
+            /// <summary>
+            /// </summary>
             internal int nDefaultButton;
+
+            /// <summary>
+            /// </summary>
             internal uint cRadioButtons;
+
+            /// <summary>
+            /// </summary>
             internal IntPtr pRadioButtons; // Ptr to TASKDIALOG_BUTTON structs
+
+            /// <summary>
+            /// </summary>
             internal int nDefaultRadioButton;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszVerificationText;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszVerificationText;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszExpandedInformation;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszExpandedInformation;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszExpandedControlText;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszExpandedControlText;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszCollapsedControlText;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszCollapsedControlText;
 
-            internal TASKDIALOGCONFIG_ICON_UNION FooterIcon; // NOTE: 32-bit union field, holds pszFooterIcon as well
+            /// <summary>
+            /// </summary>
+            internal TaskdialogconfigIconUnion FooterIcon; // NOTE: 32-bit union field, holds pszFooterIcon as well
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszFooter;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszFooter;
 
+            /// <summary>
+            /// </summary>
             internal PFTASKDIALOGCALLBACK pfCallback;
+
+            /// <summary>
+            /// </summary>
             internal IntPtr lpCallbackData;
+
+            /// <summary>
+            /// </summary>
             internal uint cxWidth;
+
+            #region IDisposable Implementation
+
+            /// <summary>
+            /// </summary>
+            protected bool disposed /* = false*/;
+
+            /// <summary>
+            /// </summary>
+            /// <param name="disposing">
+            /// </param>
+            protected virtual void Dispose(bool disposing)
+            {
+                lock (this)
+                {
+                    // Do nothing if the object has already been disposed of.
+                    if (this.disposed)
+                    {
+                        return;
+                    }
+
+                    if (disposing)
+                    {
+                        // Release diposable objects used by this instance here.
+                    }
+
+                    // Release unmanaged resources here. Don't access reference type fields.
+
+                    // Remember that the object has been disposed of.
+                    this.disposed = true;
+                }
+            }
+
+            /// <summary>
+            /// </summary>
+            public virtual void Dispose()
+            {
+                this.Dispose(false);
+
+                // Unregister object for finalization.
+                GC.SuppressFinalize(this);
+            }
+
+            #endregion
+
+            #region Destructor
+
+            /// <summary>
+            /// </summary>
+            ~TASKDIALOGCONFIG()
+            {
+                this.Dispose(false);
+            }
+
+            #endregion
         }
 
         #endregion
 
         // NOTE: We include a "spacer" so that the struct size varies on 
         // 64-bit architectures.
-
         #region Nested type: TASKDIALOGCONFIG_ICON_UNION
 
+        /// <summary>
+        /// </summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
-        internal struct TASKDIALOGCONFIG_ICON_UNION
+        internal struct TaskdialogconfigIconUnion
         {
-            internal TASKDIALOGCONFIG_ICON_UNION(int i)
+            /// <summary>
+            /// </summary>
+            /// <param name="i">
+            /// </param>
+            internal TaskdialogconfigIconUnion(int i)
             {
-                spacer = IntPtr.Zero;
-                pszIcon = 0;
-                hMainIcon = i;
+                this.spacer = IntPtr.Zero;
+                this.pszIcon = 0;
+                this.hMainIcon = i;
             }
 
-            [FieldOffset(0)] internal int hMainIcon;
+            /// <summary>
+            /// </summary>
+            [FieldOffset(0)]
+            internal int hMainIcon;
 
-            [FieldOffset(0)] internal int pszIcon;
+            /// <summary>
+            /// </summary>
+            [FieldOffset(0)]
+            internal int pszIcon;
 
-            [FieldOffset(0)] internal IntPtr spacer;
+            /// <summary>
+            /// </summary>
+            [FieldOffset(0)]
+            internal IntPtr spacer;
+
+            /// <summary>
+            /// </summary>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public override int GetHashCode()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="obj">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public override bool Equals(object obj)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="x">
+            /// </param>
+            /// <param name="y">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public static bool operator ==(TaskdialogconfigIconUnion x, TaskdialogconfigIconUnion y)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="x">
+            /// </param>
+            /// <param name="y">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public static bool operator !=(TaskdialogconfigIconUnion x, TaskdialogconfigIconUnion y)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
 
         // NOTE: Packing must be set to 4 to make this work on 64-bit platforms.
-
         #region Nested type: TASKDIALOG_BUTTON
 
+        /// <summary>
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal struct TASKDIALOG_BUTTON
+        internal struct TaskdialogButton
         {
-            public TASKDIALOG_BUTTON(int n, string txt)
+            /// <summary>
+            /// </summary>
+            /// <param name="n">
+            /// </param>
+            /// <param name="txt">
+            /// </param>
+            public TaskdialogButton(int n, string txt)
             {
-                nButtonID = n;
-                pszButtonText = txt;
+                this.nButtonID = n;
+                this.pszButtonText = txt;
             }
 
+            /// <summary>
+            /// </summary>
             internal int nButtonID;
 
-            [MarshalAs(UnmanagedType.LPWStr)] internal string pszButtonText;
+            /// <summary>
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string pszButtonText;
+
+            /// <summary>
+            /// </summary>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public override int GetHashCode()
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="obj">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public override bool Equals(object obj)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="x">
+            /// </param>
+            /// <param name="y">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public static bool operator ==(TaskdialogButton x, TaskdialogButton y)
+            {
+                throw new NotImplementedException();
+            }
+
+            /// <summary>
+            /// </summary>
+            /// <param name="x">
+            /// </param>
+            /// <param name="y">
+            /// </param>
+            /// <returns>
+            /// </returns>
+            /// <exception cref="NotImplementedException">
+            /// </exception>
+            public static bool operator !=(TaskdialogButton x, TaskdialogButton y)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
 
         // Task Dialog - identifies common buttons.
-
         #region Nested type: TASKDIALOG_COMMON_BUTTON_FLAGS
 
+        /// <summary>
+        /// </summary>
         [Flags]
-        internal enum TASKDIALOG_COMMON_BUTTON_FLAGS
+        internal enum TaskdialogCommonButtonFlagss
         {
-            TDCBF_OK_BUTTON = 0x0001, // selected control return value IDOK
-            TDCBF_YES_BUTTON = 0x0002, // selected control return value IDYES
-            TDCBF_NO_BUTTON = 0x0004, // selected control return value IDNO
-            TDCBF_CANCEL_BUTTON = 0x0008, // selected control return value IDCANCEL
-            TDCBF_RETRY_BUTTON = 0x0010, // selected control return value IDRETRY
-            TDCBF_CLOSE_BUTTON = 0x0020 // selected control return value IDCLOSE
+            /// <summary>
+            /// </summary>
+            TdcbfokButton = 0x0001, // selected control return value IDOK
+            /// <summary>
+            /// </summary>
+            TdcbfYesButton = 0x0002, // selected control return value IDYES
+            /// <summary>
+            /// </summary>
+            TdcbfnoButton = 0x0004, // selected control return value IDNO
+            /// <summary>
+            /// </summary>
+            TdcbfCancelButton = 0x0008, // selected control return value IDCANCEL
+            /// <summary>
+            /// </summary>
+            TdcbfRetryButton = 0x0010, // selected control return value IDRETRY
+            /// <summary>
+            /// </summary>
+            TdcbfCloseButton = 0x0020 // selected control return value IDCLOSE
         }
 
         #endregion
 
         // Identify button *return values* - note that, unfortunately, these are different
         // from the inbound button values.
-
         #region Nested type: TASKDIALOG_COMMON_BUTTON_RETURN_ID
 
-        internal enum TASKDIALOG_COMMON_BUTTON_RETURN_ID
+        /// <summary>
+        /// </summary>
+        internal enum TaskdialogCommonButtonReturnID
         {
-            IDOK = 1,
-            IDCANCEL = 2,
-            IDABORT = 3,
-            IDRETRY = 4,
-            IDIGNORE = 5,
-            IDYES = 6,
-            IDNO = 7,
+            /// <summary>
+            /// </summary>
+            IDOK = 1, 
+
+            /// <summary>
+            /// </summary>
+            IDCANCEL = 2, 
+
+            /// <summary>
+            /// </summary>
+            IDABORT = 3, 
+
+            /// <summary>
+            /// </summary>
+            IDRETRY = 4, 
+
+            /// <summary>
+            /// </summary>
+            IDIGNORE = 5, 
+
+            /// <summary>
+            /// </summary>
+            IDYES = 6, 
+
+            /// <summary>
+            /// </summary>
+            IDNO = 7, 
+
+            /// <summary>
+            /// </summary>
             IDCLOSE = 8
         }
 
@@ -172,73 +516,178 @@ namespace Microsoft.Windows.Dialogs
 
         #region Nested type: TASKDIALOG_ELEMENTS
 
-        internal enum TASKDIALOG_ELEMENTS
+        /// <summary>
+        /// </summary>
+        internal enum TaskdialogElement
         {
-            TDE_CONTENT,
-            TDE_EXPANDED_INFORMATION,
-            TDE_FOOTER,
-            TDE_MAIN_INSTRUCTION
+            /// <summary>
+            /// </summary>
+            TdeContent, 
+
+            /// <summary>
+            /// </summary>
+            TdeExpandedInformation, 
+
+            /// <summary>
+            /// </summary>
+            TdeFooter, 
+
+            /// <summary>
+            /// </summary>
+            TdeMainInstruction
         }
 
         #endregion
 
         // Task Dialog - flags
-
         #region Nested type: TASKDIALOG_FLAGS
 
+        /// <summary>
+        /// </summary>
         [Flags]
-        internal enum TASKDIALOG_FLAGS
+        internal enum TaskdialogFlagss
         {
-            NONE = 0,
-            TDF_ENABLE_HYPERLINKS = 0x0001,
-            TDF_USE_HICON_MAIN = 0x0002,
-            TDF_USE_HICON_FOOTER = 0x0004,
-            TDF_ALLOW_DIALOG_CANCELLATION = 0x0008,
-            TDF_USE_COMMAND_LINKS = 0x0010,
-            TDF_USE_COMMAND_LINKS_NO_ICON = 0x0020,
-            TDF_EXPAND_FOOTER_AREA = 0x0040,
-            TDF_EXPANDED_BY_DEFAULT = 0x0080,
-            TDF_VERIFICATION_FLAG_CHECKED = 0x0100,
-            TDF_SHOW_PROGRESS_BAR = 0x0200,
-            TDF_SHOW_MARQUEE_PROGRESS_BAR = 0x0400,
-            TDF_CALLBACK_TIMER = 0x0800,
-            TDF_POSITION_RELATIVE_TO_WINDOW = 0x1000,
-            TDF_RTL_LAYOUT = 0x2000,
-            TDF_NO_DEFAULT_RADIO_BUTTON = 0x4000
+            /// <summary>
+            /// </summary>
+            NONE = 0, 
+
+            /// <summary>
+            /// </summary>
+            TdfEnableHyperlinks = 0x0001, 
+
+            /// <summary>
+            /// </summary>
+            TdfUseHiconMain = 0x0002, 
+
+            /// <summary>
+            /// </summary>
+            TdfUseHiconFooter = 0x0004, 
+
+            /// <summary>
+            /// </summary>
+            TdfAllowDialogCancellation = 0x0008, 
+
+            /// <summary>
+            /// </summary>
+            TdfUseCommandLinks = 0x0010, 
+
+            /// <summary>
+            /// </summary>
+            TdfUseCommandLinksNOIcon = 0x0020, 
+
+            /// <summary>
+            /// </summary>
+            TdfExpandFooterArea = 0x0040, 
+
+            /// <summary>
+            /// </summary>
+            TdfExpandedBYDefault = 0x0080, 
+
+            /// <summary>
+            /// </summary>
+            TdfVerificationFlagChecked = 0x0100, 
+
+            /// <summary>
+            /// </summary>
+            TdfShowProgressBar = 0x0200, 
+
+            /// <summary>
+            /// </summary>
+            TdfShowMarqueeProgressBar = 0x0400, 
+
+            /// <summary>
+            /// </summary>
+            TdfCallbackTimer = 0x0800, 
+
+            /// <summary>
+            /// </summary>
+            TdfPositionRelativeTOWindow = 0x1000, 
+
+            /// <summary>
+            /// </summary>
+            TdfRtlLayout = 0x2000, 
+
+            /// <summary>
+            /// </summary>
+            TdfnoDefaultRadioButton = 0x4000
         }
 
         #endregion
 
         #region Nested type: TASKDIALOG_ICON_ELEMENT
 
-        internal enum TASKDIALOG_ICON_ELEMENT
+        /// <summary>
+        /// </summary>
+        internal enum TaskdialogIconElement
         {
-            TDIE_ICON_MAIN,
-            TDIE_ICON_FOOTER
+            /// <summary>
+            /// </summary>
+            TdieIconMain, 
+
+            /// <summary>
+            /// </summary>
+            TdieIconFooter
         }
 
         #endregion
 
         #region Nested type: TASKDIALOG_MESSAGES
 
-        internal enum TASKDIALOG_MESSAGES
+        /// <summary>
+        /// </summary>
+        internal enum TaskdialogMessage
         {
-            TDM_NAVIGATE_PAGE = CoreNativeMethods.WM_USER + 101,
-            TDM_CLICK_BUTTON = CoreNativeMethods.WM_USER + 102, // wParam = Button ID
-            TDM_SET_MARQUEE_PROGRESS_BAR = CoreNativeMethods.WM_USER + 103, // wParam = 0 (nonMarque) wParam != 0 (Marquee)
-            TDM_SET_PROGRESS_BAR_STATE = CoreNativeMethods.WM_USER + 104, // wParam = new progress state
-            TDM_SET_PROGRESS_BAR_RANGE = CoreNativeMethods.WM_USER + 105, // lParam = MAKELPARAM(nMinRange, nMaxRange)
-            TDM_SET_PROGRESS_BAR_POS = CoreNativeMethods.WM_USER + 106, // wParam = new position
-            TDM_SET_PROGRESS_BAR_MARQUEE = CoreNativeMethods.WM_USER + 107,
+            /// <summary>
+            /// </summary>
+            TdmNavigatePage = CoreNativeMethods.WMUser + 101, 
+
+            /// <summary>
+            /// </summary>
+            TdmClickButton = CoreNativeMethods.WMUser + 102, // wParam = Button ID
+            /// <summary>
+            /// </summary>
+            TdmSetMarqueeProgressBar = CoreNativeMethods.WMUser + 103, // wParam = 0 (nonMarque) wParam != 0 (Marquee)
+            /// <summary>
+            /// </summary>
+            TdmSetProgressBarState = CoreNativeMethods.WMUser + 104, // wParam = new progress state
+            /// <summary>
+            /// </summary>
+            TdmSetProgressBarRange = CoreNativeMethods.WMUser + 105, // lParam = MAKELPARAM(nMinRange, nMaxRange)
+            /// <summary>
+            /// </summary>
+            TdmSetProgressBarPos = CoreNativeMethods.WMUser + 106, // wParam = new position
+            /// <summary>
+            /// </summary>
+            TdmSetProgressBarMarquee = CoreNativeMethods.WMUser + 107, 
+
             // wParam = 0 (stop marquee), wParam != 0 (start marquee), lparam = speed (milliseconds between repaints)
-            TDM_SET_ELEMENT_TEXT = CoreNativeMethods.WM_USER + 108, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
-            TDM_CLICK_RADIO_BUTTON = CoreNativeMethods.WM_USER + 110, // wParam = Radio Button ID
-            TDM_ENABLE_BUTTON = CoreNativeMethods.WM_USER + 111, // lParam = 0 (disable), lParam != 0 (enable), wParam = Button ID
-            TDM_ENABLE_RADIO_BUTTON = CoreNativeMethods.WM_USER + 112, // lParam = 0 (disable), lParam != 0 (enable), wParam = Radio Button ID
-            TDM_CLICK_VERIFICATION = CoreNativeMethods.WM_USER + 113, // wParam = 0 (unchecked), 1 (checked), lParam = 1 (set key focus)
-            TDM_UPDATE_ELEMENT_TEXT = CoreNativeMethods.WM_USER + 114, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
-            TDM_SET_BUTTON_ELEVATION_REQUIRED_STATE = CoreNativeMethods.WM_USER + 115, // wParam = Button ID, lParam = 0 (elevation not required), lParam != 0 (elevation required)
-            TDM_UPDATE_ICON = CoreNativeMethods.WM_USER + 116
+            /// <summary>
+            /// </summary>
+            TdmSetElementText = CoreNativeMethods.WMUser + 108, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
+            /// <summary>
+            /// </summary>
+            TdmClickRadioButton = CoreNativeMethods.WMUser + 110, // wParam = Radio Button ID
+            /// <summary>
+            /// </summary>
+            TdmEnableButton = CoreNativeMethods.WMUser + 111, // lParam = 0 (disable), lParam != 0 (enable), wParam = Button ID
+            /// <summary>
+            /// </summary>
+            TdmEnableRadioButton = CoreNativeMethods.WMUser + 112, // lParam = 0 (disable), lParam != 0 (enable), wParam = Radio Button ID
+            /// <summary>
+            /// </summary>
+            TdmClickVerification = CoreNativeMethods.WMUser + 113, // wParam = 0 (unchecked), 1 (checked), lParam = 1 (set key focus)
+            /// <summary>
+            /// </summary>
+            TdmUpdateElementText = CoreNativeMethods.WMUser + 114, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
+            /// <summary>
+            /// </summary>
+            TdmSetButtonElevationRequiredState = CoreNativeMethods.WMUser + 115, 
+
+            // wParam = Button ID, lParam = 0 (elevation not required), lParam != 0 (elevation required)
+            /// <summary>
+            /// </summary>
+            TdmUpdateIcon = CoreNativeMethods.WMUser + 116
+
             // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
         }
 
@@ -246,39 +695,91 @@ namespace Microsoft.Windows.Dialogs
 
         #region Nested type: TASKDIALOG_NOTIFICATIONS
 
-        internal enum TASKDIALOG_NOTIFICATIONS
+        /// <summary>
+        /// </summary>
+        internal enum TaskdialogNotification
         {
-            TDN_CREATED = 0,
-            TDN_NAVIGATED = 1,
-            TDN_BUTTON_CLICKED = 2, // wParam = Button ID
-            TDN_HYPERLINK_CLICKED = 3, // lParam = (LPCWSTR)pszHREF
-            TDN_TIMER = 4, // wParam = Milliseconds since dialog created or timer reset
-            TDN_DESTROYED = 5,
-            TDN_RADIO_BUTTON_CLICKED = 6, // wParam = Radio Button ID
-            TDN_DIALOG_CONSTRUCTED = 7,
-            TDN_VERIFICATION_CLICKED = 8, // wParam = 1 if checkbox checked, 0 if not, lParam is unused and always 0
-            TDN_HELP = 9,
-            TDN_EXPANDO_BUTTON_CLICKED = 10 // wParam = 0 (dialog is now collapsed), wParam != 0 (dialog is now expanded)
+            /// <summary>
+            /// </summary>
+            TdnCreated = 0, 
+
+            /// <summary>
+            /// </summary>
+            TdnNavigated = 1, 
+
+            /// <summary>
+            /// </summary>
+            TdnButtonClicked = 2, // wParam = Button ID
+            /// <summary>
+            /// </summary>
+            TdnHyperlinkClicked = 3, // lParam = (LPCWSTR)pszHREF
+            /// <summary>
+            /// </summary>
+            TdnTimer = 4, // wParam = Milliseconds since dialog created or timer reset
+            /// <summary>
+            /// </summary>
+            TdnDestroyed = 5, 
+
+            /// <summary>
+            /// </summary>
+            TdnRadioButtonClicked = 6, // wParam = Radio Button ID
+            /// <summary>
+            /// </summary>
+            TdnDialogConstructed = 7, 
+
+            /// <summary>
+            /// </summary>
+            TdnVerificationClicked = 8, // wParam = 1 if checkbox checked, 0 if not, lParam is unused and always 0
+            /// <summary>
+            /// </summary>
+            TdnHelp = 9, 
+
+            /// <summary>
+            /// </summary>
+            TdnExpandoButtonClicked = 10 // wParam = 0 (dialog is now collapsed), wParam != 0 (dialog is now expanded)
         }
 
         #endregion
 
         #region Nested type: TDIDelegate
 
-        internal delegate HRESULT TDIDelegate([In] TASKDIALOGCONFIG pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton, [Out] out bool pVerificationFlagChecked);
+        /// <summary>
+        /// </summary>
+        /// <param name="pTaskConfig">
+        /// </param>
+        /// <param name="pnButton">
+        /// </param>
+        /// <param name="pnRadioButton">
+        /// </param>
+        /// <param name="pVerificationFlagChecked">
+        /// </param>
+        internal delegate HRESULT TdiDelegate(
+            [In] TASKDIALOGCONFIG pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton, [Out] out bool pVerificationFlagChecked);
 
         #endregion
 
         // Used in the various SET_DEFAULT* TaskDialog messages
-
         #region Nested type: TD_ICON
 
-        internal enum TD_ICON
+        /// <summary>
+        /// </summary>
+        internal enum TDIcon
         {
-            TD_WARNING_ICON = 65535,
-            TD_ERROR_ICON = 65534,
-            TD_INFORMATION_ICON = 65533,
-            TD_SHIELD_ICON = 65532
+            /// <summary>
+            /// </summary>
+            TDWarningIcon = 65535, 
+
+            /// <summary>
+            /// </summary>
+            TDErrorIcon = 65534, 
+
+            /// <summary>
+            /// </summary>
+            TDInformationIcon = 65533, 
+
+            /// <summary>
+            /// </summary>
+            TDShieldIcon = 65532
         }
 
         #endregion

@@ -1,73 +1,105 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Diagnostics;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs.Controls
 {
+    using System;
+    using System.Diagnostics;
+
     /// <summary>
-    ///   Creates the push button controls used by the Common File Dialog.
+    /// Creates the push button controls used by the Common File Dialog.
     /// </summary>
-    public abstract class CommonFileDialogButton : CommonFileDialogProminentControl
+    public class CommonFileDialogButton : CommonFileDialogProminentControl
     {
+        #region Constructors and Destructors
+
         /// <summary>
         ///   Initializes a new instance of this class.
         /// </summary>
-        public CommonFileDialogButton() : base(String.Empty)
+        protected CommonFileDialogButton()
+            : base(String.Empty)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of this class with the text only.
+        /// Initializes a new instance of this class with the text only.
         /// </summary>
-        /// <param name = "text">The text to display for this control.</param>
-        public CommonFileDialogButton(string text) : base(text)
+        /// <param name="text">
+        /// The text to display for this control.
+        /// </param>
+        protected CommonFileDialogButton(string text)
+            : base(text)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of this class with the specified name and text.
+        /// Initializes a new instance of this class with the specified name and text.
         /// </summary>
-        /// <param name = "name">The name of this control.</param>
-        /// <param name = "text">The text to display for this control.</param>
-        public CommonFileDialogButton(string name, string text) : base(name, text)
+        /// <param name="name">
+        /// The name of this control.
+        /// </param>
+        /// <param name="text">
+        /// The text to display for this control.
+        /// </param>
+        protected CommonFileDialogButton(string name, string text)
+            : base(name, text)
         {
         }
 
-        /// <summary>
-        ///   Attach the PushButton control to the dialog object
-        /// </summary>
-        /// <param name = "dialog">Target dialog</param>
-        internal override void Attach(IFileDialogCustomize dialog)
-        {
-            Debug.Assert(dialog != null, "CommonFileDialogButton.Attach: dialog parameter can not be null");
+        #endregion
 
-            // Add a push button control
-            dialog.AddPushButton(Id, Text);
-
-            // Make this control prominent if needed
-            if (IsProminent)
-                dialog.MakeProminent(Id);
-
-            // Sync unmanaged properties with managed properties
-            SyncUnmanagedProperties();
-        }
+        #region Events
 
         /// <summary>
         ///   Occurs when the user clicks the control. This event is routed from COM via the event sink.
         /// </summary>
         public event EventHandler Click = delegate { };
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Attach the PushButton control to the dialog object
+        /// </summary>
+        /// <param name="dialog">
+        /// Target dialog
+        /// </param>
+        internal override void Attach(IFileDialogCustomize dialog)
+        {
+            Debug.Assert(dialog != null, "CommonFileDialogButton.Attach: dialog parameter can not be null");
+
+            // Add a push button control
+            dialog.AddPushButton(this.Id, this.Text);
+
+            // Make this control prominent if needed
+            if (this.IsProminent)
+            {
+                dialog.MakeProminent(this.Id);
+            }
+
+            // Sync unmanaged properties with managed properties
+            this.SyncUnmanagedProperties();
+        }
+
+        /// <summary>
+        /// </summary>
         internal void RaiseClickEvent()
         {
             // Make sure that this control is enabled and has a specified delegate
-            if (Enabled)
-                Click(this, EventArgs.Empty);
+            if (this.Enabled)
+            {
+                this.Click(this, EventArgs.Empty);
+            }
         }
+
+        #endregion
     }
 }

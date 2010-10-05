@@ -1,23 +1,33 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
+
 namespace Microsoft.Windows.Shell
 {
     /// <summary>
-    ///   Specifies the categories for known folders.
+    /// Specifies the categories for known folders.
     /// </summary>
     public enum FolderCategory
     {
         /// <summary>
         ///   The folder category is not specified.
         /// </summary>
-        None = 0x00,
+        None = 0x00, 
+
         /// <summary>
         ///   The folder is a virtual folder. Virtual folders are not part 
         ///   of the file system. For example, Control Panel and 
         ///   Printers are virtual folders. A number of properties 
         ///   such as folder path and redirection do not apply to this category.
         /// </summary>
-        Virtual = 0x1,
+        Virtual = 0x1, 
+
         /// <summary>
         ///   The folder is fixed. Fixed file system folders are not 
         ///   managed by the Shell and are usually given a permanent 
@@ -26,7 +36,8 @@ namespace Microsoft.Windows.Shell
         ///   A number of properties such as redirection do not apply 
         ///   to this category.
         /// </summary>
-        Fixed = 0x2,
+        Fixed = 0x2, 
+
         /// <summary>
         ///   The folder is a common folder. Common folders are 
         ///   used for sharing data and settings 
@@ -34,7 +45,8 @@ namespace Microsoft.Windows.Shell
         ///   all users share a common Documents folder as well 
         ///   as their per-user Documents folder.
         /// </summary>
-        Common = 0x3,
+        Common = 0x3, 
+
         /// <summary>
         ///   Each user has their own copy of the folder. Per-user folders 
         ///   are those stored under each user's profile and 

@@ -1,126 +1,177 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows.Markup;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs.Controls
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Windows.Markup;
+
     /// <summary>
-    ///   Defines the menu controls for the Common File Dialog.
+    /// Defines the menu controls for the Common File Dialog.
     /// </summary>
     [ContentProperty("Items")]
-    public abstract class CommonFileDialogMenu : CommonFileDialogProminentControl
+    public class CommonFileDialogMenu : CommonFileDialogProminentControl
     {
+        #region Constructors and Destructors
+
         /// <summary>
         ///   Creates a new instance of this class.
         /// </summary>
-        public CommonFileDialogMenu()
+        protected CommonFileDialogMenu()
         {
-            Initialize();
+            this.Initialize();
         }
 
         /// <summary>
-        ///   Creates a new instance of this class with the specified text.
+        /// Creates a new instance of this class with the specified text.
         /// </summary>
-        /// <param name = "text">The text to display for this control.</param>
-        public CommonFileDialogMenu(string text) : base(text)
+        /// <param name="text">
+        /// The text to display for this control.
+        /// </param>
+        protected CommonFileDialogMenu(string text)
+            : base(text)
         {
-            Initialize();
+            this.Initialize();
         }
 
         /// <summary>
-        ///   Creates a new instance of this class with the specified name and text.
+        /// Creates a new instance of this class with the specified name and text.
         /// </summary>
-        /// <param name = "name">The name of this control.</param>
-        /// <param name = "text">The text to display for this control.</param>
-        public CommonFileDialogMenu(string name, string text) : base(name, text)
+        /// <param name="name">
+        /// The name of this control.
+        /// </param>
+        /// <param name="text">
+        /// The text to display for this control.
+        /// </param>
+        protected CommonFileDialogMenu(string name, string text)
+            : base(name, text)
         {
-            Initialize();
+            this.Initialize();
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Gets the collection of CommonFileDialogMenuItem objects.
         /// </summary>
         public Collection<CommonFileDialogMenuItem> Items { get; private set; }
 
-        /// <summary>
-        ///   Initializes the item collection for this class.
-        /// </summary>
-        private void Initialize()
-        {
-            Items = new Collection<CommonFileDialogMenuItem>();
-        }
+        #endregion
+
+        #region Methods
 
         /// <summary>
-        ///   Attach the Menu control to the dialog object.
+        /// Attach the Menu control to the dialog object.
         /// </summary>
-        /// <param name = "dialog">the target dialog</param>
+        /// <param name="dialog">
+        /// the target dialog
+        /// </param>
         internal override void Attach(IFileDialogCustomize dialog)
         {
             Debug.Assert(dialog != null, "CommonFileDialogMenu.Attach: dialog parameter can not be null");
 
             // Add the menu control
-            dialog.AddMenu(Id, Text);
+            dialog.AddMenu(this.Id, this.Text);
 
             // Add the menu items
-            foreach (var item in Items)
-                dialog.AddControlItem(Id, item.Id, item.Text);
+            foreach (var item in this.Items)
+            {
+                dialog.AddControlItem(this.Id, item.Id, item.Text);
+            }
 
             // Make prominent as needed
-            if (IsProminent)
-                dialog.MakeProminent(Id);
+            if (this.IsProminent)
+            {
+                dialog.MakeProminent(this.Id);
+            }
 
             // Sync unmanaged properties with managed properties
-            SyncUnmanagedProperties();
+            this.SyncUnmanagedProperties();
         }
+
+        /// <summary>
+        /// Initializes the item collection for this class.
+        /// </summary>
+        private void Initialize()
+        {
+            this.Items = new Collection<CommonFileDialogMenuItem>();
+        }
+
+        #endregion
     }
 
     /// <summary>
-    ///   Creates the CommonFileDialogMenuItem items for the Common File Dialog.
+    /// Creates the CommonFileDialogMenuItem items for the Common File Dialog.
     /// </summary>
-    public abstract class CommonFileDialogMenuItem : CommonFileDialogControl
+    public class CommonFileDialogMenuItem : CommonFileDialogControl
     {
+        #region Constructors and Destructors
+
         /// <summary>
         ///   Creates a new instance of this class.
         /// </summary>
-        public CommonFileDialogMenuItem() : base(String.Empty)
+        protected CommonFileDialogMenuItem()
+            : base(String.Empty)
         {
         }
 
         /// <summary>
-        ///   Creates a new instance of this class with the specified text.
+        /// Creates a new instance of this class with the specified text.
         /// </summary>
-        /// <param name = "text">The text to display for this control.</param>
-        public CommonFileDialogMenuItem(string text) : base(text)
+        /// <param name="text">
+        /// The text to display for this control.
+        /// </param>
+        protected CommonFileDialogMenuItem(string text)
+            : base(text)
         {
         }
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         ///   Occurs when a user clicks a menu item.
         /// </summary>
         public event EventHandler Click = delegate { };
 
-        internal void RaiseClickEvent()
-        {
-            // Make sure that this control is enabled and has a specified delegate
-            if (Enabled)
-                Click(this, EventArgs.Empty);
-        }
+        #endregion
+
+        #region Methods
 
         /// <summary>
-        ///   Attach this control to the dialog object
+        /// Attach this control to the dialog object
         /// </summary>
-        /// <param name = "dialog">Target dialog</param>
+        /// <param name="dialog">
+        /// Target dialog
+        /// </param>
         internal override void Attach(IFileDialogCustomize dialog)
         {
             // Items are added via the menu itself
         }
+
+        /// <summary>
+        /// </summary>
+        internal void RaiseClickEvent()
+        {
+            // Make sure that this control is enabled and has a specified delegate
+            if (this.Enabled)
+            {
+                this.Click(this, EventArgs.Empty);
+            }
+        }
+
+        #endregion
     }
 }

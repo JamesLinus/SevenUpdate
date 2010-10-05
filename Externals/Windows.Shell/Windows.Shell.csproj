@@ -94,7 +94,7 @@
     <Compile Include="Dialogs\FileDialogs\CommonFileDialogProminentControl.cs" />
     <Compile Include="Dialogs\FileDialogs\CommonFileDialogRadioButtonList.cs" />
     <Compile Include="Dialogs\FileDialogs\CommonFileDialogResult.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogSeperator.cs" />
+    <Compile Include="Dialogs\FileDialogs\CommonFileDialogSeparator.cs" />
     <Compile Include="Dialogs\FileDialogs\CommonFileDialogStandardFilters.cs" />
     <Compile Include="Dialogs\FileDialogs\CommonFileDialogTextBox.cs" />
     <Compile Include="Dialogs\FileDialogs\CommonOpenFileDialog.cs" />
@@ -150,7 +150,7 @@
     <Compile Include="Common\ShellObjectCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\ShellObjectContainer.cs">
+    <Compile Include="Common\ShellContainer.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Common\ShellObjectFactory.cs">
@@ -216,13 +216,13 @@
     <Compile Include="Dialogs\TaskDialogs\TaskDialogCommandLink.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogControl.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogDefaults.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogExpandedInfoMode.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogExpandedDetailsLocation.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogHyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBar.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBarState.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogRadioButton.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogResult.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardButton.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardButtons.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardIcon.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogStartupLocation.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
@@ -279,7 +279,7 @@
     <Compile Include="KnownFolders\KnownFolders.cs" />
     <Compile Include="KnownFolders\KnownFolderSettings.cs" />
     <Compile Include="KnownFolders\NonFileSystemKnownFolder.cs" />
-    <Compile Include="KnownFolders\RedirectionCapabilities.cs" />
+    <Compile Include="KnownFolders\RedirectionCapability.cs" />
     <Compile Include="KnownFolders\RetrievalOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -361,6 +361,7 @@
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>

@@ -1,81 +1,96 @@
-#region GNU Public License Version 3
-
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
-#region
-
-using System;
-using System.Diagnostics;
-using System.Windows.Input;
-
-#endregion
+// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace SevenUpdate.Windows
 {
+    using System;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.Windows.Input;
+
     /// <summary>
-    ///   Interaction logic for Update_Details.xaml
+    /// Interaction logic for Update_Details.xaml
     /// </summary>
     public sealed partial class UpdateDetails
     {
-        private string helpUrl, infoUrl;
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
+        private string helpUrl;
+
+        /// <summary>
+        /// </summary>
+        private string infoUrl;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         ///   Constructor for the Update Details window
         /// </summary>
         public UpdateDetails()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        ///   Shows the window and displays the update information
+        /// Shows the window and displays the update information
         /// </summary>
-        /// <param name = "updateInfo">The update information to display</param>
+        /// <param name="updateInfo">
+        /// The update information to display
+        /// </param>
         internal void ShowDialog(Suh updateInfo)
         {
-            DataContext = updateInfo;
-            helpUrl = updateInfo.HelpUrl;
-            infoUrl = updateInfo.InfoUrl;
-            tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                ? String.Format(Properties.Resources.DownloadSize, Base.ConvertFileSize(updateInfo.UpdateSize))
-                                : String.Format(Properties.Resources.InstallationStatus,
-                                                updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed.ToLower() : Properties.Resources.Successful.ToLower(), updateInfo.InstallDate);
+            this.DataContext = updateInfo;
+            this.helpUrl = updateInfo.HelpUrl;
+            this.infoUrl = updateInfo.InfoUrl;
+            this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
+                                     ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Base.ConvertFileSize(updateInfo.UpdateSize))
+                                     : String.Format(
+                                         CultureInfo.CurrentCulture, 
+                                         Properties.Resources.InstallationStatus, 
+                                         updateInfo.Status == UpdateStatus.Failed
+                                             ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
+                                             : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture), 
+                                         updateInfo.InstallDate);
 
-
-            ShowDialog();
+            this.ShowDialog();
             return;
         }
 
         /// <summary>
-        ///   Launches the More Information <see cref="Uri"/>
+        /// Launches the Help <see cref="Uri"/>
         /// </summary>
-        private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(infoUrl);
+            Process.Start(this.helpUrl);
         }
 
         /// <summary>
-        ///   Launches the Help <see cref="Uri"/>
+        /// Launches the More Information <see cref="Uri"/>
         /// </summary>
-        private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(helpUrl);
+            Process.Start(this.infoUrl);
         }
+
+        #endregion
     }
 }

@@ -1,63 +1,120 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Microsoft.Windows.Internal;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Windows.Internal;
+
+    /// <summary>
+    /// </summary>
     internal class EnumUnknownClass : IEnumUnknown
     {
-        private readonly List<ICondition> conditionList = new List<ICondition>();
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
+        private readonly List<II> conditionList = new List<II>();
+
+        /// <summary>
+        /// </summary>
         private int current = -1;
 
-        internal EnumUnknownClass(IEnumerable<ICondition> conditions)
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="conditions">
+        /// </param>
+        internal EnumUnknownClass(IEnumerable<II> conditions)
         {
-            conditionList.AddRange(conditions);
+            this.conditionList.AddRange(conditions);
         }
 
-        #region IEnumUnknown Members
+        #endregion
 
+        #region Implemented Interfaces
+
+        #region IEnumUnknown
+
+        /// <summary>
+        /// </summary>
+        /// <param name="result">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public HRESULT Clone(out IEnumUnknown result)
+        {
+            result = new EnumUnknownClass(this.conditionList.ToArray());
+            return HRESULT.S_OK;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="requestedNumber">
+        /// </param>
+        /// <param name="buffer">
+        /// </param>
+        /// <param name="fetchedNumber">
+        /// </param>
+        /// <returns>
+        /// </returns>
         public HRESULT Next(uint requestedNumber, ref IntPtr buffer, ref uint fetchedNumber)
         {
-            current++;
+            this.current++;
 
-            if (current < conditionList.Count)
+            if (this.current < this.conditionList.Count)
             {
-                buffer = Marshal.GetIUnknownForObject(conditionList[current]);
+                buffer = Marshal.GetIUnknownForObject(this.conditionList[this.current]);
                 fetchedNumber = 1;
                 return HRESULT.S_OK;
             }
-            return HRESULT.S_FALSE;
+
+            return HRESULT.SFalse;
         }
 
-        public HRESULT Skip(uint number)
-        {
-            var temp = current + (int) number;
-
-            if (temp > (conditionList.Count - 1))
-                return HRESULT.S_FALSE;
-            current = temp;
-            return HRESULT.S_OK;
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         public HRESULT Reset()
         {
-            current = -1;
+            this.current = -1;
             return HRESULT.S_OK;
         }
 
-        public HRESULT Clone(out IEnumUnknown result)
+        /// <summary>
+        /// </summary>
+        /// <param name="number">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        public HRESULT Skip(uint number)
         {
-            result = new EnumUnknownClass(conditionList.ToArray());
+            var temp = this.current + (int)number;
+
+            if (temp > (this.conditionList.Count - 1))
+            {
+                return HRESULT.SFalse;
+            }
+
+            this.current = temp;
             return HRESULT.S_OK;
         }
+
+        #endregion
 
         #endregion
     }

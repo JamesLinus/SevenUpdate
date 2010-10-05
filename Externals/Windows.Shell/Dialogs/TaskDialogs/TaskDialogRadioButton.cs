@@ -1,29 +1,46 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
+
 namespace Microsoft.Windows.Dialogs
 {
     /// <summary>
-    ///   Defines a radio button that can be hosted in by a 
-    ///   <see cref = "TaskDialog" /> object.
+    /// Defines a radio button that can be hosted in by a 
+    ///   <see cref="TaskDialog"/> object.
     /// </summary>
-    public abstract class TaskDialogRadioButton : TaskDialogButtonBase
+    public class TaskDialogRadioButton : TaskDialogButtonBase
     {
+        #region Constructors and Destructors
+
         /// <summary>
         ///   Creates a new instance of this class.
         /// </summary>
-        public TaskDialogRadioButton()
+        protected TaskDialogRadioButton()
         {
         }
 
         /// <summary>
-        ///   Creates a new instance of this class with
+        /// Creates a new instance of this class with
         ///   the specified name and text.
         /// </summary>
-        /// <param name = "name">The name for this control.</param>
-        /// <param name = "text">The value for this controls 
-        ///   <see cref = "P:Microsoft.Windows.Dialogs.TaskDialogButtonBase.Text" /> property.</param>
-        public TaskDialogRadioButton(string name, string text) : base(name, text)
+        /// <param name="name">
+        /// The name for this control.
+        /// </param>
+        /// <param name="text">
+        /// The value for this controls 
+        ///   <see cref="P:Microsoft.Windows.Dialogs.TaskDialogButtonBase.Text"/> property.
+        /// </param>
+        protected TaskDialogRadioButton(string name, string text)
+            : base(name, text)
         {
         }
+
+        #endregion
     }
 }

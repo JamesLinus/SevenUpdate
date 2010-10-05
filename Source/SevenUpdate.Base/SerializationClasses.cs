@@ -26,28 +26,28 @@ namespace SevenUpdate
     public enum AutoUpdateOption
     {
         /// <summary>
-        /// Download and Installs updates automatically
+        ///   Download and Installs updates automatically
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Install = 0,
+        Install = 0, 
 
         /// <summary>
-        /// Downloads Updates automatically
+        ///   Downloads Updates automatically
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Download = 1,
+        Download = 1, 
 
         /// <summary>
-        /// Only checks and notifies the user of updates
+        ///   Only checks and notifies the user of updates
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Notify = 2,
+        Notify = 2, 
 
         /// <summary>
-        /// No automatic checking
+        ///   No automatic checking
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -63,21 +63,21 @@ namespace SevenUpdate
     public enum ShortcutAction
     {
         /// <summary>
-        /// Adds a shortcut
+        ///   Adds a shortcut
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Add = 0,
+        Add = 0, 
 
         /// <summary>
-        /// Updates a shortcut only if it exists
+        ///   Updates a shortcut only if it exists
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Update = 1,
+        Update = 1, 
 
         /// <summary>
-        /// Deletes a shortcut
+        ///   Deletes a shortcut
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -93,67 +93,67 @@ namespace SevenUpdate
     public enum FileAction
     {
         /// <summary>
-        /// Updates a file
+        ///   Updates a file
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Update = 0,
+        Update = 0, 
 
         /// <summary>
-        /// Updates a file, only if it exist
+        ///   Updates a file, only if it exist
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        UpdateIfExist = 1,
+        UpdateIfExist = 1, 
 
         /// <summary>
-        /// Updates a file, then registers the dll
+        ///   Updates a file, then registers the dll
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        UpdateThenRegister = 2,
+        UpdateThenRegister = 2, 
 
         /// <summary>
-        /// Updates a file, then executes it
+        ///   Updates a file, then executes it
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        UpdateThenExecute = 3,
+        UpdateThenExecute = 3, 
 
         /// <summary>
-        /// Compares a file, but does not update it
+        ///   Compares a file, but does not update it
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        CompareOnly = 4,
+        CompareOnly = 4, 
 
         /// <summary>
-        /// Executes a file, can be on system or be downloaded
+        ///   Executes a file, can be on system or be downloaded
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Execute = 5,
+        Execute = 5, 
 
         /// <summary>
-        /// Deletes a file
+        ///   Deletes a file
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Delete = 6,
+        Delete = 6, 
 
         /// <summary>
-        /// Executes a file, then deletes it
+        ///   Executes a file, then deletes it
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        ExecuteThenDelete = 7,
+        ExecuteThenDelete = 7, 
 
         /// <summary>
-        /// Unregisteres a dll, then deletes it
+        ///   Unregisteres a dll, then deletes it
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        UnregisterThenDelete = 8,
+        UnregisterThenDelete = 8, 
     }
 
     /// <summary>
@@ -165,28 +165,28 @@ namespace SevenUpdate
     public enum Importance
     {
         /// <summary>
-        /// Important update
+        ///   Important update
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Important = 0,
+        Important = 0, 
 
         /// <summary>
-        /// Locale or language
+        ///   Locale or language
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Locale = 1,
+        Locale = 1, 
 
         /// <summary>
-        /// Optional update
+        ///   Optional update
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Optional = 2,
+        Optional = 2, 
 
         /// <summary>
-        /// Recommended update
+        ///   Recommended update
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -202,28 +202,28 @@ namespace SevenUpdate
     public enum UpdateStatus
     {
         /// <summary>
-        /// Indicates that the update installation failed
+        ///   Indicates that the update installation failed
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Failed = 0,
+        Failed = 0, 
 
         /// <summary>
-        /// Indicates that the update is hidden
+        ///   Indicates that the update is hidden
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Hidden = 1,
+        Hidden = 1, 
 
         /// <summary>
-        /// Indicates that the update is visible
+        ///   Indicates that the update is visible
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Visible = 2,
+        Visible = 2, 
 
         /// <summary>
-        /// Indicates that the update installation succeeded
+        ///   Indicates that the update installation succeeded
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -239,21 +239,21 @@ namespace SevenUpdate
     public enum RegistryAction
     {
         /// <summary>
-        /// Adds a registry entry to the machine
+        ///   Adds a registry entry to the machine
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        Add = 0,
+        Add = 0, 
 
         /// <summary>
-        /// Deletes a registry key on the machine
+        ///   Deletes a registry key on the machine
         /// </summary>
         [ProtoEnum]
         [EnumMember]
-        DeleteKey = 1,
+        DeleteKey = 1, 
 
         /// <summary>
-        /// Deletes a value of a registry key on the machine
+        ///   Deletes a value of a registry key on the machine
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -274,12 +274,12 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The automatic update setting
+        ///   The automatic update setting
         /// </summary>
         private AutoUpdateOption autoOption;
 
         /// <summary>
-        /// A value that indicates whether to treat <see cref = "Importance.Recommended" /> updates the same as <see cref = "Importance.Important" /> updates
+        ///   A value that indicates whether to treat <see cref = "Importance.Recommended" /> updates the same as <see cref = "Importance.Important" /> updates
         /// </summary>
         private bool includeRecommended;
 
@@ -288,7 +288,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property value changes.
+        ///   Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -297,7 +297,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets which automatic update option Seven Update should use
+        ///   Gets or sets which automatic update option Seven Update should use
         /// </summary>
         /// <value>The automatic update option</value>
         [ProtoMember(1)]
@@ -319,10 +319,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates
+        ///   Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if recommended updates should be treated as important updates otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.
         /// </value>
         [ProtoMember(2)]
         [DataMember]
@@ -349,7 +349,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <param name="name">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
@@ -378,12 +380,12 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The ISO language code
+        ///   The ISO language code
         /// </summary>
         private string lang;
 
         /// <summary>
-        /// The value of the string
+        ///   The value of the string
         /// </summary>
         private string value;
 
@@ -392,7 +394,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -401,7 +403,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets an ISO language code
+        ///   Gets or sets an ISO language code
         /// </summary>
         /// <value>The iso code</value>
         [ProtoMember(1)]
@@ -423,7 +425,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the value of the string
+        ///   Gets or sets the value of the string
         /// </summary>
         /// <value>The value.</value>
         [ProtoMember(2)]
@@ -451,7 +453,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <param name="name">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
@@ -480,52 +484,52 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The <see cref = "Uri" /> for the application's website
+        ///   The <see cref = "Uri" /> for the application's website
         /// </summary>
         private string appUrl;
 
         /// <summary>
-        /// The collection of localized descriptions for the application
+        ///   The collection of localized descriptions for the application
         /// </summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>
-        /// The directory where the application is installed
+        ///   The directory where the application is installed
         /// </summary>
         private string directory;
 
         /// <summary>
-        /// The help website <see cref = "Uri" /> of the application.
+        ///   The help website <see cref = "Uri" /> of the application.
         /// </summary>
         private string helpUrl;
 
         /// <summary>
-        /// Indicates whether if the application is 64 bit
+        ///   Indicates whether if the application is 64 bit
         /// </summary>
         private bool is64Bit;
 
         /// <summary>
-        /// Indicates whether the SUA is enabled with Seven Update (SDK does not use this value)
+        ///   Indicates whether the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
         private bool isEnabled;
 
         /// <summary>
-        /// A collection of localized application names
+        ///   A collection of localized application names
         /// </summary>
         private ObservableCollection<LocaleString> name;
 
         /// <summary>
-        /// A collection of localized publisher names
+        ///   A collection of localized publisher names
         /// </summary>
         private ObservableCollection<LocaleString> publisher;
 
         /// <summary>
-        /// The <see cref = "Uri" /> pointing to the sui file containing the application updates
+        ///   The <see cref = "Uri" /> pointing to the sui file containing the application updates
         /// </summary>
         private string suiUrl;
 
         /// <summary>
-        /// The name of the value to the registry key that contains the application directory location
+        ///   The name of the value to the registry key that contains the application directory location
         /// </summary>
         private string valueName;
 
@@ -534,7 +538,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -543,7 +547,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the <see cref = "Uri" /> for the application's website
+        ///   Gets or sets the <see cref = "Uri" /> for the application's website
         /// </summary>
         /// <value>The application website</value>
         [ProtoMember(8, IsRequired = false)]
@@ -565,7 +569,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized descriptions for the application
+        ///   Gets or sets the collection of localized descriptions for the application
         /// </summary>
         /// <value>The application description</value>
         [ProtoMember(2)]
@@ -587,7 +591,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the directory where the application is installed
+        ///   Gets or sets the directory where the application is installed
         /// </summary>
         /// <value>The install directory</value>
         [ProtoMember(3)]
@@ -609,7 +613,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the help website <see cref = "Uri" /> of the application
+        ///   Gets or sets the help website <see cref = "Uri" /> of the application
         /// </summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false)]
@@ -631,10 +635,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether if the application is 64 bit
+        ///   Gets or sets a value indicating whether if the application is 64 bit
         /// </summary>
         /// <value>
-        /// <see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.
+        ///   <see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.
         /// </value>
         [ProtoMember(4)]
         [DataMember]
@@ -655,10 +659,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value)
+        ///   Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value)
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if this instance is enabled; otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.
         /// </value>
         [ProtoMember(5)]
         [DataMember]
@@ -679,7 +683,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a collection of localized application names
+        ///   Gets or sets a collection of localized application names
         /// </summary>
         /// <value>The name of the application localized</value>
         [ProtoMember(1)]
@@ -701,7 +705,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized publisher names
+        ///   Gets or sets the collection of localized publisher names
         /// </summary>
         /// <value>The publisher.</value>
         [ProtoMember(6)]
@@ -723,7 +727,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Uri"/> pointing to the sui file containing the application updates
+        ///   Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates
         /// </summary>
         /// <value>The url pointing to the sui file</value>
         [ProtoMember(7)]
@@ -745,7 +749,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the name of the value to the registry key that contains the application directory location
+        ///   Gets or sets the name of the value to the registry key that contains the application directory location
         /// </summary>
         /// <value>The name of the value.</value>
         [ProtoMember(10, IsRequired = false)]
@@ -773,7 +777,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="propertyName">
+        /// The name of the property.
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;
@@ -805,12 +811,12 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The application information
+        ///   The application information
         /// </summary>
         private Sua appInfo;
 
         /// <summary>
-        /// A collection of updates for the application
+        ///   A collection of updates for the application
         /// </summary>
         private ObservableCollection<Update> updates;
 
@@ -819,7 +825,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -828,7 +834,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the  software information for the application updates.
+        ///   Gets or sets the  software information for the application updates.
         /// </summary>
         [ProtoMember(2)]
         [DataMember]
@@ -849,7 +855,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of updates for the application
+        ///   Gets or sets the collection of updates for the application
         /// </summary>
         [ProtoMember(1)]
         [DataMember]
@@ -876,7 +882,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <param name="name">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
@@ -904,67 +912,67 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The collection localized update descriptions
+        ///   The collection localized update descriptions
         /// </summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>
-        /// The source main location to download files for the update
+        ///   The source main location to download files for the update
         /// </summary>
         private string downloadUrl;
 
         /// <summary>
-        /// The collection of files to perform actions on in the update
+        ///   The collection of files to perform actions on in the update
         /// </summary>
         private ObservableCollection<UpdateFile> files;
 
         /// <summary>
-        /// Indicates if the update is hidden
+        ///   Indicates if the update is hidden
         /// </summary>
         private bool hidden;
 
         /// <summary>
-        /// Indicates the importance type of the update
+        ///   Indicates the importance type of the update
         /// </summary>
         private Importance importance;
 
         /// <summary>
-        /// The url pointing to a resource to find more information about the update
+        ///   The url pointing to a resource to find more information about the update
         /// </summary>
         private string infoUrl;
 
         /// <summary>
-        /// The url pointing to the software license for the application/update
+        ///   The url pointing to the software license for the application/update
         /// </summary>
         private string licenseUrl;
 
         /// <summary>
-        /// The collection of localized update names
+        ///   The collection of localized update names
         /// </summary>
         private ObservableCollection<LocaleString> name;
 
         /// <summary>
-        /// The collection of registry keys and values to perform actions on in the update
+        ///   The collection of registry keys and values to perform actions on in the update
         /// </summary>
         private ObservableCollection<RegistryItem> registryItems;
 
         /// <summary>
-        /// The formatted date string depicting the release date of the update
+        ///   The formatted date string depicting the release date of the update
         /// </summary>
         private string releaseDate;
 
         /// <summary>
-        /// Indicates if the update is selected
+        ///   Indicates if the update is selected
         /// </summary>
         private bool selected;
 
         /// <summary>
-        /// The collection of shortcuts to perform actions on in the update
+        ///   The collection of shortcuts to perform actions on in the update
         /// </summary>
         private ObservableCollection<Shortcut> shortcuts;
 
         /// <summary>
-        /// The total download size in bytes of the update
+        ///   The total download size in bytes of the update
         /// </summary>
         private ulong size;
 
@@ -973,7 +981,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -982,7 +990,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the collection of localized update descriptions
+        ///   Gets or sets the collection of localized update descriptions
         /// </summary>
         /// <value>The localized description for the update</value>
         [ProtoMember(2)]
@@ -1004,7 +1012,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the source main location to download files for the update
+        ///   Gets or sets the source main location to download files for the update
         /// </summary>
         /// <value>The url to download the update files.</value>
         [ProtoMember(3)]
@@ -1026,7 +1034,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of files to perform actions on in the update
+        ///   Gets or sets the collection of files to perform actions on in the update
         /// </summary>
         /// <value>The files.</value>
         [ProtoMember(8, IsRequired = false)]
@@ -1048,10 +1056,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the update is hidden
+        ///   Gets or sets a value indicating whether the update is hidden
         /// </summary>
         /// <value>
-        /// <see langword = "true" /> if hidden; otherwise, <see langword = "false" />.
+        ///   <see langword = "true" /> if hidden; otherwise, <see langword = "false" />.
         /// </value>
         [ProtoIgnore]
         [IgnoreDataMember]
@@ -1072,7 +1080,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the importance of the update
+        ///   Gets or sets the importance of the update
         /// </summary>
         /// <value>The importance</value>
         [ProtoMember(4)]
@@ -1094,7 +1102,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the url pointing to a resource to find more information about the update
+        ///   Gets or sets the url pointing to a resource to find more information about the update
         /// </summary>
         /// <value>The info URL.</value>
         [ProtoMember(6, IsRequired = false)]
@@ -1116,7 +1124,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the url pointing to the software license for the application/update
+        ///   Gets or sets the url pointing to the software license for the application/update
         /// </summary>
         /// <value>The url pointing to the software license</value>
         [ProtoMember(7, IsRequired = false)]
@@ -1138,7 +1146,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized update names
+        ///   Gets or sets the collection of localized update names
         /// </summary>
         /// <value>The localized update names</value>
         [ProtoMember(1)]
@@ -1160,7 +1168,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of registry keys and values to perform actions on in the update
+        ///   Gets or sets the collection of registry keys and values to perform actions on in the update
         /// </summary>
         /// <value>The registry items</value>
         [ProtoMember(9, IsRequired = false)]
@@ -1182,7 +1190,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the formatted date string depicting the release date of the update
+        ///   Gets or sets the formatted date string depicting the release date of the update
         /// </summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
         [ProtoMember(5)]
@@ -1204,10 +1212,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the update is selected (not used in the SDK)
+        ///   Gets or sets a value indicating whether the update is selected (not used in the SDK)
         /// </summary>
         /// <value>
-        /// <see langword = "true" /> if selected; otherwise, <see langword = "false" />.
+        ///   <see langword = "true" /> if selected; otherwise, <see langword = "false" />.
         /// </value>
         [ProtoIgnore]
         [IgnoreDataMember]
@@ -1228,7 +1236,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of shortcuts to perform actions on in the update
+        ///   Gets or sets the collection of shortcuts to perform actions on in the update
         /// </summary>
         /// <value>The shortcuts.</value>
         [ProtoMember(10, IsRequired = false)]
@@ -1250,7 +1258,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets the total download size in bytes of the update
+        ///   Gets the total download size in bytes of the update
         /// </summary>
         /// <value>The total download size of the update</value>
         [ProtoMember(11, IsRequired = false)]
@@ -1278,7 +1286,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="propertyName">The name of the property</param>
+        /// <param name="propertyName">
+        /// The name of the property
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;
@@ -1303,32 +1313,32 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The action to perform on the <see cref = "UpdateFile" />
+        ///   The action to perform on the <see cref = "UpdateFile" />
         /// </summary>
         private FileAction action;
 
         /// <summary>
-        /// The command line arguments to execute with the file
+        ///   The command line arguments to execute with the file
         /// </summary>
         private string args;
 
         /// <summary>
-        /// The location where the file will be installed
+        ///   The location where the file will be installed
         /// </summary>
         private string destination;
 
         /// <summary>
-        /// The size of the file in bytes
+        ///   The size of the file in bytes
         /// </summary>
         private ulong fileSize;
 
         /// <summary>
-        /// The SHA-2 hash of the file
+        ///   The SHA-2 hash of the file
         /// </summary>
         private string hash;
 
         /// <summary>
-        /// The download location for the file
+        ///   The download location for the file
         /// </summary>
         private string source;
 
@@ -1337,7 +1347,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1346,7 +1356,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the action to perform on the <see cref="UpdateFile"/>
+        ///   Gets or sets the action to perform on the <see cref = "UpdateFile" />
         /// </summary>
         /// <value>The action.</value>
         [ProtoMember(1)]
@@ -1368,7 +1378,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the command line arguments to execute with the file
+        ///   Gets or sets the command line arguments to execute with the file
         /// </summary>
         /// <value>The arguments</value>
         [ProtoMember(6, IsRequired = false)]
@@ -1390,7 +1400,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the location where the file will be installed
+        ///   Gets or sets the location where the file will be installed
         /// </summary>
         /// <value>The destination.</value>
         [ProtoMember(3)]
@@ -1412,7 +1422,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the size of the file in bytes
+        ///   Gets or sets the size of the file in bytes
         /// </summary>
         /// <value>The size of the file.</value>
         [ProtoMember(5)]
@@ -1434,7 +1444,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the SHA-2 hash of the file
+        ///   Gets or sets the SHA-2 hash of the file
         /// </summary>
         /// <value>The SHA-2 hash of the file.</value>
         [ProtoMember(4)]
@@ -1456,7 +1466,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the download location for the file
+        ///   Gets or sets the download location for the file
         /// </summary>
         /// <value>The download location of the file</value>
         [ProtoMember(2)]
@@ -1484,7 +1494,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <param name="name">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
@@ -1511,27 +1523,27 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The action to perform on the <see cref = "RegistryItem" />
+        ///   The action to perform on the <see cref = "RegistryItem" />
         /// </summary>
         private RegistryAction action;
 
         /// <summary>
-        /// The data for the key value
+        ///   The data for the key value
         /// </summary>
         private string data;
 
         /// <summary>
-        /// The registry key and hive
+        ///   The registry key and hive
         /// </summary>
         private string key;
 
         /// <summary>
-        /// The value for the registry key
+        ///   The value for the registry key
         /// </summary>
         private string keyValue;
 
         /// <summary>
-        /// The type of the value
+        ///   The type of the value
         /// </summary>
         private RegistryValueKind valueKind;
 
@@ -1540,7 +1552,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1549,7 +1561,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the action to perform on the <see cref = "RegistryItem" />
+        ///   Gets or sets the action to perform on the <see cref = "RegistryItem" />
         /// </summary>
         /// <value>The action.</value>
         [ProtoMember(1)]
@@ -1571,7 +1583,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the data for the key value
+        ///   Gets or sets the data for the key value
         /// </summary>
         /// <value>The data for the registry value</value>
         [ProtoMember(6, IsRequired = false)]
@@ -1593,7 +1605,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the registry key and hive
+        ///   Gets or sets the registry key and hive
         /// </summary>
         /// <value>The registry key path</value>
         [ProtoMember(3)]
@@ -1615,7 +1627,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the value for the registry key
+        ///   Gets or sets the value for the registry key
         /// </summary>
         /// <value>The value of the key</value>
         [ProtoMember(4, IsRequired = false)]
@@ -1637,7 +1649,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the type of the value
+        ///   Gets or sets the type of the value
         /// </summary>
         /// <value>The kind of the value</value>
         [ProtoMember(5, IsRequired = false)]
@@ -1665,7 +1677,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <param name="name">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
@@ -1690,37 +1704,37 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The action to perform on the <see cref = "Shortcut" />
+        ///   The action to perform on the <see cref = "Shortcut" />
         /// </summary>
         private ShortcutAction action;
 
         /// <summary>
-        /// The command line arguments for the shortcut
+        ///   The command line arguments for the shortcut
         /// </summary>
         private string arguments;
 
         /// <summary>
-        /// The collection of localized shortcut descriptions
+        ///   The collection of localized shortcut descriptions
         /// </summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>
-        /// The icon resource for the shortcut
+        ///   The icon resource for the shortcut
         /// </summary>
         private string icon;
 
         /// <summary>
-        /// The physical location of the shortcut lnk file
+        ///   The physical location of the shortcut lnk file
         /// </summary>
         private string location;
 
         /// <summary>
-        /// The collection of localized shortcut names
+        ///   The collection of localized shortcut names
         /// </summary>
         private ObservableCollection<LocaleString> name;
 
         /// <summary>
-        /// The file or folder that is executed by the shortcut
+        ///   The file or folder that is executed by the shortcut
         /// </summary>
         private string target;
 
@@ -1729,7 +1743,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1738,7 +1752,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the action to perform on the <see cref = "Shortcut" />
+        ///   Gets or sets the action to perform on the <see cref = "Shortcut" />
         /// </summary>
         /// <value>The action.</value>
         [ProtoMember(3)]
@@ -1760,7 +1774,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the command line arguments for the shortcut
+        ///   Gets or sets the command line arguments for the shortcut
         /// </summary>
         /// <value>The arguments of the shortcut</value>
         [ProtoMember(4, IsRequired = false)]
@@ -1782,7 +1796,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized shortcut descriptions
+        ///   Gets or sets the collection of localized shortcut descriptions
         /// </summary>
         /// <value>The localized descriptions for the shortcut</value>
         [ProtoMember(5, IsRequired = false)]
@@ -1804,7 +1818,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the icon resource for the shortcut
+        ///   Gets or sets the icon resource for the shortcut
         /// </summary>
         /// <value>The icon for the shortcut</value>
         [ProtoMember(6, IsRequired = false)]
@@ -1826,7 +1840,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the physical location of the shortcut lnk file
+        ///   Gets or sets the physical location of the shortcut lnk file
         /// </summary>
         /// <value>The shortcut location</value>
         [ProtoMember(2)]
@@ -1848,7 +1862,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized shortcut names
+        ///   Gets or sets the collection of localized shortcut names
         /// </summary>
         /// <value>The localized names for the shortcut</value>
         [ProtoMember(1)]
@@ -1870,7 +1884,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the file or folder that is executed by the shortcut
+        ///   Gets or sets the file or folder that is executed by the shortcut
         /// </summary>
         /// <value>The target for the shortcut</value>
         [ProtoMember(7, IsRequired = false)]
@@ -1898,7 +1912,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="propertyName">The name of the property that changed</param>
+        /// <param name="propertyName">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;
@@ -1931,57 +1947,57 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The <see cref = "Uri" /> for the application's website
+        ///   The <see cref = "Uri" /> for the application's website
         /// </summary>
         private string appUrl;
 
         /// <summary>
-        /// The collection of localized update descriptions
+        ///   The collection of localized update descriptions
         /// </summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>
-        /// The help website <see cref = "Uri" /> of the application
+        ///   The help website <see cref = "Uri" /> of the application
         /// </summary>
         private string helpUrl;
 
         /// <summary>
-        /// The importance of the update
+        ///   The importance of the update
         /// </summary>
         private Importance importance;
 
         /// <summary>
-        /// The url pointing to a resource to find more information about the update
+        ///   The url pointing to a resource to find more information about the update
         /// </summary>
         private string infoUrl;
 
         /// <summary>
-        /// The formatted date string when the update was installed
+        ///   The formatted date string when the update was installed
         /// </summary>
         private string installDate;
 
         /// <summary>
-        /// The collection of localized update names
+        ///   The collection of localized update names
         /// </summary>
         private ObservableCollection<LocaleString> name;
 
         /// <summary>
-        /// The collection of localized publisher names
+        ///   The collection of localized publisher names
         /// </summary>
         private ObservableCollection<LocaleString> publisher;
 
         /// <summary>
-        /// The formatted date string depicting the release date of the update
+        ///   The formatted date string depicting the release date of the update
         /// </summary>
         private string releaseDate;
 
         /// <summary>
-        /// The current status of the update
+        ///   The current status of the update
         /// </summary>
         private UpdateStatus status;
 
         /// <summary>
-        /// The total download size in bytes of the update
+        ///   The total download size in bytes of the update
         /// </summary>
         private ulong updateSize;
 
@@ -1990,7 +2006,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -1999,7 +2015,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the <see cref = "Uri" /> for the application's website
+        ///   Gets or sets the <see cref = "Uri" /> for the application's website
         /// </summary>
         /// <value>The application website</value>
         [ProtoMember(8)]
@@ -2021,7 +2037,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection localized update descriptions
+        ///   Gets or sets the collection localized update descriptions
         /// </summary>
         /// <value>The localized description for the update</value>
         [ProtoMember(2)]
@@ -2043,7 +2059,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the help website <see cref = "Uri" /> of the application
+        ///   Gets or sets the help website <see cref = "Uri" /> of the application
         /// </summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false)]
@@ -2065,7 +2081,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the importance of the update
+        ///   Gets or sets the importance of the update
         /// </summary>
         /// <value>The importance</value>
         [ProtoMember(3)]
@@ -2087,7 +2103,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the url pointing to a resource to find more information about the update
+        ///   Gets or sets the url pointing to a resource to find more information about the update
         /// </summary>
         /// <value>The info URL.</value>
         [ProtoMember(10, IsRequired = false)]
@@ -2109,7 +2125,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the formatted date string when the update was installed
+        ///   Gets or sets the formatted date string when the update was installed
         /// </summary>
         /// <value>The formatted install date string (MM/DD/YYYY).</value>
         [ProtoMember(11)]
@@ -2131,7 +2147,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized update names
+        ///   Gets or sets the collection of localized update names
         /// </summary>
         /// <value>The localized update names</value>
         [ProtoMember(1)]
@@ -2153,7 +2169,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the collection of localized publisher names
+        ///   Gets or sets the collection of localized publisher names
         /// </summary>
         /// <value>The publisher.</value>
         [ProtoMember(7)]
@@ -2175,7 +2191,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the formatted date string depicting the release date of the update
+        ///   Gets or sets the formatted date string depicting the release date of the update
         /// </summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
         [ProtoMember(5)]
@@ -2197,7 +2213,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the current status of the update
+        ///   Gets or sets the current status of the update
         /// </summary>
         /// <value>The status.</value>
         [ProtoMember(4)]
@@ -2219,7 +2235,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Gets or sets the total download size in bytes of the update
+        ///   Gets or sets the total download size in bytes of the update
         /// </summary>
         /// <value>The total download size of the update</value>
         [ProtoMember(6)]
@@ -2247,7 +2263,9 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="propertyName">The name of the property that changed</param>
+        /// <param name="propertyName">
+        /// The name of the property that changed
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

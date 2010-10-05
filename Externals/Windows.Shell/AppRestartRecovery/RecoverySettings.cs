@@ -1,48 +1,54 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Diagnostics.CodeAnalysis;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.ApplicationServices
 {
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
+
     /// <summary>
-    ///   Defines methods and properties for recovery settings, and specifies options for an application that attempts
+    /// Defines methods and properties for recovery settings, and specifies options for an application that attempts
     ///   to perform final actions after a fatal event, such as an
     ///   unhandled exception.
     /// </summary>
     /// <remarks>
-    ///   This class is used to register for application recovery.
-    ///   See the <see cref = "ApplicationRestartRecoveryManager" /> class.
+    /// This class is used to register for application recovery.
+    ///   See the <see cref="ApplicationRestartRecoveryManager"/> class.
     /// </remarks>
-    public abstract class RecoverySettings
+    public class RecoverySettings
     {
-        /// <summary>
-        ///   Initializes a new instance of the <b>RecoverySettings</b> class.
-        /// </summary>
-        /// <param name = "data">A recovery data object that contains the callback method (invoked by the system
-        ///   before Windows Error Reporting terminates the application) and an optional state object.</param>
-        /// <param name = "interval">The time interval within which the 
-        ///   callback method must invoke <see cref = "ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress" /> to 
-        ///   prevent WER from terminating the application.</param>
-        /// <seealso cref = "ApplicationRestartRecoveryManager" />
-        public RecoverySettings(RecoveryData data, uint interval)
-        {
-            RecoveryData = data;
-            PingInterval = interval;
-        }
+        #region Constructors and Destructors
 
         /// <summary>
-        ///   Gets the recovery data object that contains the callback method and an optional
-        ///   parameter (usually the state of the application) to be passed to the 
-        ///   callback method.
+        /// Initializes a new instance of the <b>RecoverySettings</b> class.
         /// </summary>
-        /// <value>A <see cref = "RecoveryData" /> object.</value>
-        public RecoveryData RecoveryData { get; private set; }
+        /// <param name="data">
+        /// A recovery data object that contains the callback method (invoked by the system
+        ///   before Windows Error Reporting terminates the application) and an optional state object.
+        /// </param>
+        /// <param name="interval">
+        /// The time interval within which the 
+        ///   callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to 
+        ///   prevent WER from terminating the application.
+        /// </param>
+        /// <seealso cref="ApplicationRestartRecoveryManager"/>
+        protected RecoverySettings(RecoveryData data, uint interval)
+        {
+            this.RecoveryData = data;
+            this.PingInterval = interval;
+        }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Gets the time interval for notifying Windows Error Reporting.  
@@ -57,15 +63,33 @@ namespace Microsoft.Windows.ApplicationServices
         public uint PingInterval { get; private set; }
 
         /// <summary>
-        ///   Returns a string representation of the current state
+        ///   Gets the recovery data object that contains the callback method and an optional
+        ///   parameter (usually the state of the application) to be passed to the 
+        ///   callback method.
+        /// </summary>
+        /// <value>A <see cref = "RecoveryData" /> object.</value>
+        public RecoveryData RecoveryData { get; private set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Returns a string representation of the current state
         ///   of this object.
         /// </summary>
-        /// <returns>A <see cref = "System.String" /> object.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)",
+        /// <returns>
+        /// A <see cref="System.String"/> object.
+        /// </returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", 
+            MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)", 
             Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
-            return String.Format("delegate: {0}, state: {1}, ping: {2}", RecoveryData.Callback.Method, RecoveryData.State, PingInterval);
+            return String.Format(
+                CultureInfo.CurrentCulture, "delegate: {0}, state: {1}, ping: {2}", this.RecoveryData.Callback.Method, this.RecoveryData.State, this.PingInterval);
         }
+
+        #endregion
     }
 }

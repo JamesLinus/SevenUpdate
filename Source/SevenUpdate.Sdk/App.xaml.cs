@@ -7,6 +7,7 @@
 namespace SevenUpdate.Sdk
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Windows;
 
@@ -55,26 +56,26 @@ namespace SevenUpdate.Sdk
         {
             base.OnStartupNextInstance(e);
 
-            if (e.Args.Length <= 0)
+            if (e.GetArgs().Length <= 0)
             {
                 return;
             }
 
-            switch (e.Args[0])
+            switch (e.GetArgs()[0])
             {
                 case @"-newproject":
                     Core.NewProject();
                     break;
 
                 case @"-newupdate":
-                    Core.AppIndex = Convert.ToInt32(e.Args[1]);
+                    Core.AppIndex = Convert.ToInt32(e.GetArgs()[1], CultureInfo.CurrentCulture);
 
                     Core.NewUpdate();
                     break;
 
                 case @"-edit":
-                    Core.AppIndex = Convert.ToInt32(e.Args[1]);
-                    Core.UpdateIndex = Convert.ToInt32(e.Args[2]);
+                    Core.AppIndex = Convert.ToInt32(e.GetArgs()[1], CultureInfo.CurrentCulture);
+                    Core.UpdateIndex = Convert.ToInt32(e.GetArgs()[2], CultureInfo.CurrentCulture);
                     Core.EditItem();
                     break;
             }

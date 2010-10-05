@@ -1,23 +1,38 @@
-// //Copyright (c) xidar solutions
-// //Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Runtime.InteropServices;
-
-#endregion
+//***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           :xidar solutions
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) xidar solutions. All rights reserved.
+//***********************************************************************
 
 namespace SharpBits.Base.Job
 {
+    using System;
+    using System.Runtime.InteropServices;
+
+    /// <summary>
+    /// </summary>
     public partial class BitsJob
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
         private readonly IBackgroundCopyJob4 job4;
 
-        #region public properties
+        #endregion
 
-        #region IBackgroundCopyJob4
+        #region Properties
 
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
         public ulong MaximumDownloadTime
         {
             get
@@ -25,87 +40,49 @@ namespace SharpBits.Base.Job
                 ulong maxTime = 0;
                 try
                 {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.GetMaximumDownloadTime(out maxTime);
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetMaximumDownloadTime(out maxTime);
+                    }
                     else
+                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
+
                 return maxTime;
             }
+
             set
             {
                 try
                 {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.SetMaximumDownloadTime(value);
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.SetMaximumDownloadTime(value);
+                    }
                     else
+                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
             }
         }
 
-        public PeerCachingFlags PeerCachingFlags
-        {
-            get
-            {
-                PEER_CACHING_FLAGS peerCaching = 0;
-                try
-                {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.GetPeerCachingFlags(out peerCaching);
-                    else
-                        throw new NotSupportedException("IBackgroundCopyJob4");
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return (PeerCachingFlags) peerCaching;
-            }
-            set
-            {
-                try
-                {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.SetPeerCachingFlags((PEER_CACHING_FLAGS) value);
-                    else
-                        throw new NotSupportedException("IBackgroundCopyJob4");
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-            }
-        }
-
-        public ulong OwnerIntegrityLevel
-        {
-            get
-            {
-                ulong integrityLevel = 0;
-                try
-                {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.GetOwnerIntegrityLevel(out integrityLevel);
-                    else
-                        throw new NotSupportedException("IBackgroundCopyJob4");
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return integrityLevel;
-            }
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
         public bool OwnerElevationState
         {
             get
@@ -113,20 +90,106 @@ namespace SharpBits.Base.Job
                 var elevated = false;
                 try
                 {
-                    if (job4 != null) // only supported from IBackgroundCopyJob4 and above
-                        job4.GetOwnerElevationState(out elevated);
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetOwnerElevationState(out elevated);
+                    }
                     else
+                    {
                         throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
+
                 return elevated;
             }
         }
 
-        #endregion
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public ulong OwnerIntegrityLevel
+        {
+            get
+            {
+                ulong integrityLevel = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetOwnerIntegrityLevel(out integrityLevel);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return integrityLevel;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public PeerCachingFlags PeerCachingFlags
+        {
+            get
+            {
+                PeerCachingFlagss peerCaching = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetPeerCachingFlags(out peerCaching);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return (PeerCachingFlags)peerCaching;
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.SetPeerCachingFlags((PeerCachingFlagss)value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
 
         #endregion
     }

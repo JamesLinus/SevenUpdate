@@ -1,16 +1,19 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System.Diagnostics.CodeAnalysis;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
-    ///   Sets the state of a task dialog progress bar.
+    /// Sets the state of a task dialog progress bar.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
     public enum TaskDialogProgressBarState
@@ -18,21 +21,21 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         ///   Normal state.
         /// </summary>
-        Normal = TaskDialogNativeMethods.PBST.PBST_NORMAL,
+        Normal = TaskDialogNativeMethods.PBST.Normal, 
 
         /// <summary>
         ///   An error occurred.
         /// </summary>
-        Error = TaskDialogNativeMethods.PBST.PBST_ERROR,
+        Error = TaskDialogNativeMethods.PBST.Error, 
 
         /// <summary>
         ///   The progress is paused.
         /// </summary>
-        Paused = TaskDialogNativeMethods.PBST.PBST_PAUSED,
+        Paused = TaskDialogNativeMethods.PBST.Paused, 
 
         /// <summary>
         ///   Displays marquee (indeterminate) style progress
         /// </summary>
-        Marquee,
+        Marquee, 
     }
 }

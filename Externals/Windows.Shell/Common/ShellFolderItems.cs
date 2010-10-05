@@ -1,77 +1,130 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.InteropServices;
-using Microsoft.Windows.Internal;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Runtime.InteropServices;
+
+    using Microsoft.Windows.Internal;
+
+    /// <summary>
+    /// </summary>
     internal class ShellFolderItems : IEnumerator<ShellObject>
     {
-        #region Private Fields
+        #region Constants and Fields
 
+        /// <summary>
+        /// </summary>
         private readonly ShellContainer nativeShellFolder;
+
+        /// <summary>
+        /// </summary>
         private IEnumIDList nativeEnumIdList;
 
         #endregion
 
-        #region Internal Constructor
+        #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="nativeShellFolder">
+        /// </param>
+        /// <exception cref="FileNotFoundException">
+        /// </exception>
         internal ShellFolderItems(ShellContainer nativeShellFolder)
         {
             this.nativeShellFolder = nativeShellFolder;
 
-            var hr = nativeShellFolder.NativeShellFolder.EnumObjects(IntPtr.Zero, ShellNativeMethods.SHCONT.SHCONTF_FOLDERS | ShellNativeMethods.SHCONT.SHCONTF_NONFOLDERS, out nativeEnumIdList);
+            var hr = nativeShellFolder.NativeShellFolder.EnumObjects(
+                IntPtr.Zero, ShellNativeMethods.SHCONTs.ShcontfFolders | ShellNativeMethods.SHCONTs.ShcontfNonfolders, out this.nativeEnumIdList);
 
-
-            if (CoreErrorHelper.Succeeded((int) hr))
+            if (CoreErrorHelper.Succeeded((int)hr))
+            {
                 return;
-            if (hr == HRESULT.E_ERROR_CANCELLED)
+            }
+
+            if (hr == HRESULT.EErrorCancelled)
+            {
                 throw new FileNotFoundException();
-            Marshal.ThrowExceptionForHR((int) hr);
+            }
+
+            Marshal.ThrowExceptionForHR((int)hr);
         }
 
         #endregion
 
-        #region IEnumerator<ShellObject> Members
-
-        public ShellObject Current { get; private set; }
-
-        public void Dispose()
-        {
-            if (nativeEnumIdList == null)
-                return;
-            Marshal.ReleaseComObject(nativeEnumIdList);
-            nativeEnumIdList = null;
-        }
-
-        object IEnumerator.Current { get { return Current; } }
+        #region Properties
 
         /// <summary>
         /// </summary>
-        /// <returns />
+        public ShellObject Current { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        object IEnumerator.Current
+        {
+            get
+            {
+                return this.Current;
+            }
+        }
+
+        #endregion
+
+        #region Implemented Interfaces
+
+        #region IDisposable
+
+        /// <summary>
+        /// </summary>
+        public void Dispose()
+        {
+            if (this.nativeEnumIdList == null)
+            {
+                return;
+            }
+
+            Marshal.ReleaseComObject(this.nativeEnumIdList);
+            this.nativeEnumIdList = null;
+        }
+
+        #endregion
+
+        #region IEnumerator
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         public bool MoveNext()
         {
-            if (nativeEnumIdList == null)
+            if (this.nativeEnumIdList == null)
+            {
                 return false;
+            }
 
             IntPtr item;
             uint numItemsReturned;
             const uint itemsRequested = 1;
-            var hr = nativeEnumIdList.Next(itemsRequested, out item, out numItemsReturned);
+            var hr = this.nativeEnumIdList.Next(itemsRequested, out item, out numItemsReturned);
 
             if (numItemsReturned < itemsRequested || hr != HRESULT.S_OK)
+            {
                 return false;
+            }
 
-            Current = ShellObjectFactory.Create(item, nativeShellFolder);
+            this.Current = ShellObjectFactory.Create(item, this.nativeShellFolder);
 
             return true;
         }
@@ -80,9 +133,13 @@ namespace Microsoft.Windows.Shell
         /// </summary>
         public void Reset()
         {
-            if (nativeEnumIdList != null)
-                nativeEnumIdList.Reset();
+            if (this.nativeEnumIdList != null)
+            {
+                this.nativeEnumIdList.Reset();
+            }
         }
+
+        #endregion
 
         #endregion
     }

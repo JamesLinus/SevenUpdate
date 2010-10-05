@@ -19,7 +19,7 @@ namespace SevenUpdate.Sdk.Windows
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="About"/> class.
+        ///   Initializes a new instance of the <see cref = "About" /> class.
         /// </summary>
         public About()
         {
@@ -37,8 +37,12 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>
         /// Closes the About window
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -47,8 +51,12 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>
         /// Opens a web browser and navigates to the specified url
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.
+        /// </param>
         private void GoToUrl(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(e.Uri.AbsoluteUri);

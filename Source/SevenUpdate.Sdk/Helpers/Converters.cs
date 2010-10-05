@@ -26,11 +26,21 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>the converted object</returns>
+        /// <param name="value">
+        /// The value produced by the binding source.
+        /// </param>
+        /// <param name="targetType">
+        /// The type of the binding target property.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        /// the converted object
+        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var localeStrings = value as Collection<LocaleString>;
@@ -42,11 +52,21 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">The value that is produced by the binding target.</param>
-        /// <param name="targetType">The type to convert to.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>The original object</returns>
+        /// <param name="value">
+        /// The value that is produced by the binding target.
+        /// </param>
+        /// <param name="targetType">
+        /// The type to convert to.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        /// The original object
+        /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var valueString = value as string;
@@ -138,25 +158,41 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
+        /// <param name="value">
+        /// The value produced by the binding source.
+        /// </param>
+        /// <param name="targetType">
+        /// The type of the binding target property.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? DateTime.Parse(value.ToString()) : DateTime.Now;
+            return value != null ? DateTime.Parse(value.ToString(), CultureInfo.CurrentCulture) : DateTime.Now;
         }
 
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">The value that is produced by the binding target.</param>
-        /// <param name="targetType">The type to convert to.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
+        /// <param name="value">
+        /// The value that is produced by the binding target.
+        /// </param>
+        /// <param name="targetType">
+        /// The type to convert to.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
@@ -183,11 +219,21 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>the converted object</returns>
+        /// <param name="value">
+        /// The value produced by the binding source.
+        /// </param>
+        /// <param name="targetType">
+        /// The type of the binding target property.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        /// the converted object
+        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return (bool)value ? @"HKLM\Software\MyCompany\MyApp" : @"%PROGRAMFILES%\Seven Software\Seven Update";
@@ -196,11 +242,21 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">The value that is produced by the binding target.</param>
-        /// <param name="targetType">The type to convert to.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>The original object</returns>
+        /// <param name="value">
+        /// The value that is produced by the binding target.
+        /// </param>
+        /// <param name="targetType">
+        /// The type to convert to.
+        /// </param>
+        /// <param name="parameter">
+        /// The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        /// The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        /// The original object
+        /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

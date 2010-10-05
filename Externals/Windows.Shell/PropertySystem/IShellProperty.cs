@@ -1,23 +1,29 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using global::System;
+
     /// <summary>
-    ///   Defines the properties used by a Shell Property.
+    /// Defines the properties used by a Shell Property.
     /// </summary>
     public interface IShellProperty
     {
+        #region Properties
+
         /// <summary>
-        ///   Gets the property key that identifies this property.
+        ///   Gets the case-sensitive name of the property as it is known to the system, 
+        ///   regardless of its localized name.
         /// </summary>
-        PropertyKey PropertyKey { get; }
+        string CanonicalName { get; }
 
         /// <summary>
         ///   Get the property description object.
@@ -25,10 +31,15 @@ namespace Microsoft.Windows.Shell.PropertySystem
         ShellPropertyDescription Description { get; }
 
         /// <summary>
-        ///   Gets the case-sensitive name of the property as it is known to the system, 
-        ///   regardless of its localized name.
+        ///   Gets the image reference path and icon index associated with a property value. 
+        ///   This API is only available in Windows 7.
         /// </summary>
-        string CanonicalName { get; }
+        IconReference IconReference { get; }
+
+        /// <summary>
+        ///   Gets the property key that identifies this property.
+        /// </summary>
+        PropertyKey PropertyKey { get; }
 
         /// <summary>
         ///   Gets the value for this property using the generic Object type.
@@ -46,18 +57,22 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// </summary>
         Type ValueType { get; }
 
-        /// <summary>
-        ///   Gets the image reference path and icon index associated with a property value. 
-        ///   This API is only available in Windows 7.
-        /// </summary>
-        IconReference IconReference { get; }
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
-        ///   Gets a formatted, Unicode string representation of a property value.
+        /// Gets a formatted, Unicode string representation of a property value.
         /// </summary>
-        /// <param name = "format">One or more <c>PropertyDescriptionFormat</c> flags 
-        ///   chosen to produce the desired display format.</param>
-        /// <returns>The formatted value as a string.</returns>
+        /// <param name="format">
+        /// One or more <c>PropertyDescriptionFormat</c> flags 
+        ///   chosen to produce the desired display format.
+        /// </param>
+        /// <returns>
+        /// The formatted value as a string.
+        /// </returns>
         string FormatForDisplay(PropertyDescriptionFormat format);
+
+        #endregion
     }
 }

@@ -1,21 +1,33 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System.Runtime.InteropServices;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
-    [ComImport, Guid(ShellIIDGuid.IShellLibrary), CoClass(typeof (ShellLibraryCoClass))]
+    using System.Runtime.InteropServices;
+
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [Guid(ShellIidGuid.IShellLibrary)]
+    [CoClass(typeof(ShellLibraryCOClass))]
     internal interface INativeShellLibrary : IShellLibrary
     {
     }
 
-    [ComImport, ClassInterface(ClassInterfaceType.None), TypeLibType(TypeLibTypeFlags.FCanCreate), Guid(ShellCLSIDGuid.ShellLibrary)]
-    internal class ShellLibraryCoClass
+    /// <summary>
+    /// </summary>
+    [ComImport]
+    [ClassInterface(ClassInterfaceType.None)]
+    [TypeLibType(TypeLibTypeFlags.FCanCreate)]
+    [Guid(ShellClsidGuid.ShellLibrary)]
+    internal class ShellLibraryCOClass
     {
     }
 }

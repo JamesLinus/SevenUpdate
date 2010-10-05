@@ -25,12 +25,12 @@ namespace SevenUpdate.Helper
         #region Constants and Fields
 
         /// <summary>
-        /// Moves a file on reboot
+        ///   Moves a file on reboot
         /// </summary>
         private const int MoveOnReboot = 5;
 
         /// <summary>
-        /// The current directory the application resides in
+        ///   The current directory the application resides in
         /// </summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
@@ -39,19 +39,11 @@ namespace SevenUpdate.Helper
         #region Methods
 
         /// <summary>
-        /// Run Seven Update and auto check for updates
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
-        private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
-        {
-            Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");
-        }
-
-        /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        /// <param name="args">The arguments passed to the program at startup</param>
+        /// <param name="args">
+        /// The arguments passed to the program at startup
+        /// </param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -115,7 +107,7 @@ namespace SevenUpdate.Helper
                         }
                         catch
                         {
-                            MoveFileEx(t.FullName, AppDir + t.Name, MoveOnReboot);
+                            MoveFileEX(t.FullName, AppDir + t.Name, MoveOnReboot);
 
                             if (!File.Exists(appStore + "reboot.lock"))
                             {
@@ -139,7 +131,7 @@ namespace SevenUpdate.Helper
                     }
                     else
                     {
-                        MoveFileEx(appStore + "reboot.lock", null, MoveOnReboot);
+                        MoveFileEX(appStore + "reboot.lock", null, MoveOnReboot);
                     }
                 }
                 catch
@@ -156,10 +148,7 @@ namespace SevenUpdate.Helper
                         {
                             StartInfo =
                                 {
-                                    FileName = "schtasks.exe",
-                                    CreateNoWindow = true,
-                                    WindowStyle = ProcessWindowStyle.Hidden,
-                                    Arguments = "/Run /TN \"SevenUpdate\""
+                                   FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\"" 
                                 }
                         };
                     p.Start();
@@ -188,12 +177,34 @@ namespace SevenUpdate.Helper
         /// <summary>
         /// Moves the file using the windows command
         /// </summary>
-        /// <param name="sourceFileName">The source file name</param>
-        /// <param name="newFileName">The new file name</param>
-        /// <param name="flags">The flags that determine how to move the file</param>
-        /// <returns><see langword="true"/> if the operation was successful</returns>
+        /// <param name="sourceFileName">
+        /// The source file name
+        /// </param>
+        /// <param name="newFileName">
+        /// The new file name
+        /// </param>
+        /// <param name="flags">
+        /// The flags that determine how to move the file
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the operation was successful
+        /// </returns>
         [DllImport("kernel32.dll")]
-        private static extern bool MoveFileEx(string sourceFileName, string newFileName, int flags);
+        private static extern bool MoveFileEX(string sourceFileName, string newFileName, int flags);
+
+        /// <summary>
+        /// Run Seven Update and auto check for updates
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
+        {
+            Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");
+        }
 
         #endregion
     }

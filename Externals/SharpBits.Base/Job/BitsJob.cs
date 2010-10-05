@@ -1,92 +1,153 @@
-// //Copyright (c) xidar solutions
-// //Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using SharpBits.Base.File;
-using SharpBits.Base.Progress;
-
-#endregion
+//***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           :xidar solutions
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) xidar solutions. All rights reserved.
+//***********************************************************************
 
 namespace SharpBits.Base.Job
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Runtime.InteropServices;
+
+    using SharpBits.Base.File;
+    using SharpBits.Base.Progress;
+
+    /// <summary>
+    /// </summary>
     public partial class BitsJob
     {
-        #region member fields
+        #region Constants and Fields
 
-        private readonly BitsManager manager;
+        /// <summary>
+        /// </summary>
         internal IBackgroundCopyCallback NotificationTarget;
+
+        /// <summary>
+        /// </summary>
+        private readonly BitsManager manager;
+
+        /// <summary>
+        /// </summary>
         private bool disposed;
 
+        /// <summary>
+        /// </summary>
         private BitsError error;
+
+        /// <summary>
+        /// </summary>
         private Guid guid;
+
+        /// <summary>
+        /// </summary>
         private JobTimes jobTimes;
-        //notification
+
+        // notification
+        /// <summary>
+        /// </summary>
         private EventHandler<JobErrorNotificationEventArgs> onJobErrored;
+
+        /// <summary>
+        /// </summary>
         private EventHandler<JobNotificationEventArgs> onJobModified;
+
+        /// <summary>
+        /// </summary>
         private EventHandler<JobNotificationEventArgs> onJobTransfered;
+
+        /// <summary>
+        /// </summary>
         private JobProgress progress;
+
+        /// <summary>
+        /// </summary>
         private ProxySettings proxySettings;
 
         #endregion
 
-        #region .ctor
+        #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="manager">
+        /// </param>
+        /// <param name="job">
+        /// </param>
         internal BitsJob(BitsManager manager, IBackgroundCopyJob job)
         {
             this.manager = manager;
-            Job = job;
-            job2 = Job as IBackgroundCopyJob2;
-            job3 = Job as IBackgroundCopyJob3;
-            job4 = Job as IBackgroundCopyJob4;
+            this.Job = job;
+            this.job2 = this.Job as IBackgroundCopyJob2;
+            this.job3 = this.Job as IBackgroundCopyJob3;
+            this.job4 = this.Job as IBackgroundCopyJob4;
 
             // store existing notification handler and route message to this as well
             // otherwise it may break system download jobs
-            if (NotificationInterface != null)
-                NotificationTarget = NotificationInterface; //pointer to the existing one;
-            NotificationInterface = manager.NotificationHandler; //notification interface will be disabled when NotifyCmd is set
+            if (this.NotificationInterface != null)
+            {
+                this.NotificationTarget = this.NotificationInterface; // pointer to the existing one;
+            }
+
+            this.NotificationInterface = manager.NotificationHandler; // notification interface will be disabled when NotifyCmd is set
         }
 
         #endregion
 
-        #region public properties
-
-        #region IBackgroundCopyJob
+        #region Events
 
         /// <summary>
-        ///   Display Name, max 256 chars
         /// </summary>
-        public string DisplayName
+        public event EventHandler<JobErrorNotificationEventArgs> OnJobError
         {
-            get
+            add
             {
-                try
-                {
-                    string displayName;
-                    Job.GetDisplayName(out displayName);
-                    return displayName;
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                    return string.Empty;
-                }
+                this.onJobErrored += value;
             }
-            set
+
+            remove
             {
-                try
-                {
-                    Job.SetDisplayName(value);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
+                this.onJobErrored -= value;
             }
         }
+
+        /// <summary>
+        /// </summary>
+        public event EventHandler<JobNotificationEventArgs> OnJobModified
+        {
+            add
+            {
+                this.onJobModified += value;
+            }
+
+            remove
+            {
+                this.onJobModified -= value;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public event EventHandler<JobNotificationEventArgs> OnJobTransferred
+        {
+            add
+            {
+                this.onJobTransfered += value;
+            }
+
+            remove
+            {
+                this.onJobTransfered -= value;
+            }
+        }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///   Description, max 1024 chars
@@ -98,24 +159,272 @@ namespace SharpBits.Base.Job
                 try
                 {
                     string description;
-                    Job.GetDescription(out description);
+                    this.Job.GetDescription(out description);
                     return description;
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                     return string.Empty;
                 }
             }
+
             set
             {
                 try
                 {
-                    Job.SetDescription(value);
+                    this.Job.SetDescription(value);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Display Name, max 256 chars
+        /// </summary>
+        public string DisplayName
+        {
+            get
+            {
+                try
+                {
+                    string displayName;
+                    this.Job.GetDisplayName(out displayName);
+                    return displayName;
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                    return string.Empty;
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    this.Job.SetDisplayName(value);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public BitsError Error
+        {
+            get
+            {
+                try
+                {
+                    var state = this.State;
+                    if (state == JobState.Error || state == JobState.TransientError)
+                    {
+                        if (null == this.error)
+                        {
+                            IBackgroundCopyError copyError;
+                            this.Job.GetError(out copyError);
+                            if (null != copyError)
+                            {
+                                this.error = new BitsError(this, copyError);
+                            }
+                        }
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return this.error;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public ulong ErrorCount
+        {
+            get
+            {
+                ulong count = 0;
+                try
+                {
+                    this.Job.GetErrorCount(out count);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return count;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public BitsFilesCollection Files { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        public Guid JobId
+        {
+            get
+            {
+                try
+                {
+                    if (this.guid == Guid.Empty)
+                    {
+                        this.Job.GetId(out this.guid);
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return this.guid;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public JobTimes JobTimes
+        {
+            get
+            {
+                try
+                {
+                    BGJobTimes times;
+                    this.Job.GetTimes(out times);
+                    this.jobTimes = new JobTimes(times);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return this.jobTimes;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public JobType JobType
+        {
+            get
+            {
+                var jobType = BGJobType.Unknown;
+                try
+                {
+                    this.Job.GetType(out jobType);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return (JobType)jobType;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public uint MinimumRetryDelay
+        {
+            get
+            {
+                uint seconds = 0;
+                try
+                {
+                    this.Job.GetMinimumRetryDelay(out seconds);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return seconds;
+            }
+
+            set
+            {
+                try
+                {
+                    this.Job.SetMinimumRetryDelay(value);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public uint NoProgressTimeout
+        {
+            get
+            {
+                uint seconds = 0;
+                try
+                {
+                    this.Job.GetNoProgressTimeout(out seconds);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return seconds;
+            }
+
+            set
+            {
+                try
+                {
+                    this.Job.SetNoProgressTimeout(value);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public NotificationFlags NotificationFlags
+        {
+            get
+            {
+                BGJobNotificationTypes flags = 0;
+                try
+                {
+                    this.Job.GetNotifyFlags(out flags);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return (NotificationFlags)flags;
+            }
+
+            set
+            {
+                try
+                {
+                    this.Job.SetNotifyFlags((BGJobNotificationTypes)value);
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
                 }
             }
         }
@@ -130,12 +439,12 @@ namespace SharpBits.Base.Job
                 try
                 {
                     string owner;
-                    Job.GetOwner(out owner);
+                    this.Job.GetOwner(out owner);
                     return owner;
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                     return string.Empty;
                 }
             }
@@ -150,11 +459,11 @@ namespace SharpBits.Base.Job
             {
                 try
                 {
-                    return Utils.GetName(Owner);
+                    return Utils.GetName(this.Owner);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                     return string.Empty;
                 }
             }
@@ -168,248 +477,89 @@ namespace SharpBits.Base.Job
         {
             get
             {
-                var priority = BG_JOB_PRIORITY.BG_JOB_PRIORITY_NORMAL;
+                var priority = BGJobPriority.Normal;
                 try
                 {
-                    Job.GetPriority(out priority);
+                    this.Job.GetPriority(out priority);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
-                return (JobPriority) priority;
+
+                return (JobPriority)priority;
             }
+
             set
             {
                 try
                 {
-                    Job.SetPriority((BG_JOB_PRIORITY) value);
+                    this.Job.SetPriority((BGJobPriority)value);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
             }
         }
 
+        /// <summary>
+        /// </summary>
         public JobProgress Progress
         {
             get
             {
                 try
                 {
-                    BG_JOB_PROGRESS jobProgress;
-                    Job.GetProgress(out jobProgress);
-                    progress = new JobProgress(jobProgress);
+                    BGJobProgress jobProgress;
+                    this.Job.GetProgress(out jobProgress);
+                    this.progress = new JobProgress(jobProgress);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
-                return progress;
+
+                return this.progress;
             }
         }
 
-        public BitsFiles Files { get; private set; }
-
-        public ulong ErrorCount
+        /// <summary>
+        /// </summary>
+        public ProxySettings ProxySettings
         {
             get
             {
-                ulong count = 0;
-                try
-                {
-                    Job.GetErrorCount(out count);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return count;
+                return this.proxySettings ?? (this.proxySettings = new ProxySettings(this.Job));
             }
         }
 
-        public BitsError Error
-        {
-            get
-            {
-                try
-                {
-                    var state = State;
-                    if (state == JobState.Error || state == JobState.TransientError)
-                    {
-                        if (null == error)
-                        {
-                            IBackgroundCopyError copyError;
-                            Job.GetError(out copyError);
-                            if (null != copyError)
-                                error = new BitsError(this, copyError);
-                        }
-                    }
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return error;
-            }
-        }
-
-        public uint MinimumRetryDelay
-        {
-            get
-            {
-                uint seconds = 0;
-                try
-                {
-                    Job.GetMinimumRetryDelay(out seconds);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return seconds;
-            }
-            set
-            {
-                try
-                {
-                    Job.SetMinimumRetryDelay(value);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-            }
-        }
-
-        public uint NoProgressTimeout
-        {
-            get
-            {
-                uint seconds = 0;
-                try
-                {
-                    Job.GetNoProgressTimeout(out seconds);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return seconds;
-            }
-            set
-            {
-                try
-                {
-                    Job.SetNoProgressTimeout(value);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-            }
-        }
-
-        public Guid JobId
-        {
-            get
-            {
-                try
-                {
-                    if (guid == Guid.Empty)
-                        Job.GetId(out guid);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return guid;
-            }
-        }
-
+        /// <summary>
+        /// </summary>
         public JobState State
         {
             get
             {
-                var state = BG_JOB_STATE.BG_JOB_STATE_UNKNOWN;
+                var state = BGJobState.Unknown;
                 try
                 {
-                    Job.GetState(out state);
+                    this.Job.GetState(out state);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
-                return (JobState) state;
+
+                return (JobState)state;
             }
         }
 
-        public JobTimes JobTimes
-        {
-            get
-            {
-                try
-                {
-                    BG_JOB_TIMES times;
-                    Job.GetTimes(out times);
-                    jobTimes = new JobTimes(times);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return jobTimes;
-            }
-        }
+        /// <summary>
+        /// </summary>
+        internal IBackgroundCopyJob Job { get; private set; }
 
-        public JobType JobType
-        {
-            get
-            {
-                var jobType = BG_JOB_TYPE.BG_JOB_TYPE_UNKNOWN;
-                try
-                {
-                    Job.GetType(out jobType);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return (JobType) jobType;
-            }
-        }
-
-        public ProxySettings ProxySettings { get { return proxySettings ?? (proxySettings = new ProxySettings(Job)); } }
-
-        public NotificationFlags NotificationFlags
-        {
-            get
-            {
-                BG_JOB_NOTIFICATION_TYPE flags = 0;
-                try
-                {
-                    Job.GetNotifyFlags(out flags);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-                return (NotificationFlags) flags;
-            }
-            set
-            {
-                try
-                {
-                    Job.SetNotifyFlags((BG_JOB_NOTIFICATION_TYPE) value);
-                }
-                catch (COMException exception)
-                {
-                    manager.PublishException(this, exception);
-                }
-            }
-        }
-
+        /// <summary>
+        /// </summary>
         internal IBackgroundCopyCallback NotificationInterface
         {
             get
@@ -417,213 +567,291 @@ namespace SharpBits.Base.Job
                 object notificationInterface = null;
                 try
                 {
-                    Job.GetNotifyInterface(out notificationInterface);
+                    this.Job.GetNotifyInterface(out notificationInterface);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
+
                 return notificationInterface as IBackgroundCopyCallback;
             }
+
             set
             {
                 try
                 {
-                    Job.SetNotifyInterface(value);
+                    this.Job.SetNotifyInterface(value);
                 }
                 catch (COMException exception)
                 {
-                    manager.PublishException(this, exception);
+                    this.manager.PublishException(this, exception);
                 }
             }
         }
 
-        public BitsFiles EnumFiles()
-        {
-            try
-            {
-                IEnumBackgroundCopyFiles fileList;
-                Job.EnumFiles(out fileList);
-                Files = new BitsFiles(this, fileList);
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-            return Files;
-        }
+        #endregion
 
-        public void Suspend()
-        {
-            try
-            {
-                Job.Suspend();
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
+        #region Public Methods
 
-        public void Resume()
-        {
-            try
-            {
-                Job.Resume();
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
-
-        public void Cancel()
-        {
-            try
-            {
-                Job.Cancel();
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
-
-        public void Complete()
-        {
-            try
-            {
-                Job.Complete();
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
-
-        public void TakeOwnership()
-        {
-            try
-            {
-                Job.TakeOwnership();
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="remoteName">
+        /// </param>
+        /// <param name="localName">
+        /// </param>
         public void AddFile(string remoteName, string localName)
         {
             try
             {
-                Job.AddFile(remoteName, localName);
+                this.Job.AddFile(remoteName, localName);
             }
             catch (COMException exception)
             {
-                manager.PublishException(this, exception);
+                this.manager.PublishException(this, exception);
             }
         }
 
+        /// <summary>
+        /// </summary>
+        /// <param name="fileInfo">
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         public void AddFile(BitsFileInfo fileInfo)
         {
             if (fileInfo == null)
+            {
                 throw new ArgumentNullException("fileInfo");
-            AddFile(fileInfo.RemoteName, fileInfo.LocalName);
+            }
+
+            this.AddFile(fileInfo.RemoteName, fileInfo.LocalName);
         }
 
-        internal void AddFiles(BG_FILE_INFO[] files)
-        {
-            try
-            {
-                var count = Convert.ToUInt32(files.Length);
-                Job.AddFileSet(count, files);
-            }
-            catch (COMException exception)
-            {
-                manager.PublishException(this, exception);
-            }
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="files">
+        /// </param>
         public void AddFiles(Collection<BitsFileInfo> files)
         {
-            var fileArray = new BG_FILE_INFO[files.Count];
+            var fileArray = new BGFileInfo[files.Count];
             for (var i = 0; i < files.Count; i++)
-                fileArray[i] = files[i].BgFileInfo;
+            {
+                fileArray[i] = files[i].BGFileInfo;
+            }
+
             AddFiles(fileArray);
         }
 
-        #endregion
-
-        #endregion
-
-        #region notification
-
-        internal void JobTransferred(object sender, NotificationEventArgs e)
+        /// <summary>
+        /// </summary>
+        public void Cancel()
         {
-            if (onJobTransfered != null)
-                onJobTransfered(sender, new JobNotificationEventArgs());
+            try
+            {
+                this.Job.Cancel();
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
         }
 
-        internal void JobModified(object sender, NotificationEventArgs e)
+        /// <summary>
+        /// </summary>
+        public void Complete()
         {
-            if (onJobModified != null)
-                onJobModified(sender, new JobNotificationEventArgs());
+            try
+            {
+                this.Job.Complete();
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
         }
 
-        internal void JobError(object sender, ErrorNotificationEventArgs e)
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
+        public BitsFilesCollection EnumFiles()
         {
-            if (null != onJobErrored)
-                onJobErrored(sender, new JobErrorNotificationEventArgs(e.Error));
+            try
+            {
+                IEnumBackgroundCopyFiles fileList;
+                this.Job.EnumFiles(out fileList);
+                this.Files = new BitsFilesCollection(this, fileList);
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+
+            return this.Files;
+        }
+
+        /// <summary>
+        /// </summary>
+        public void Resume()
+        {
+            try
+            {
+                this.Job.Resume();
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public void Suspend()
+        {
+            try
+            {
+                this.Job.Suspend();
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public void TakeOwnership()
+        {
+            try
+            {
+                this.Job.TakeOwnership();
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
         }
 
         #endregion
 
-        #region public events
+        #region Implemented Interfaces
 
-        public event EventHandler<JobNotificationEventArgs> OnJobModified { add { onJobModified += value; } remove { onJobModified -= value; } }
+        #region IDisposable
 
-        public event EventHandler<JobNotificationEventArgs> OnJobTransferred { add { onJobTransfered += value; } remove { onJobTransfered -= value; } }
-
-        public event EventHandler<JobErrorNotificationEventArgs> OnJobError { add { onJobErrored += value; } remove { onJobErrored -= value; } }
-
-        #endregion
-
-        #region internal
-
-        internal IBackgroundCopyJob Job { get; private set; }
-
-        internal void PublishException(COMException exception)
-        {
-            manager.PublishException(this, exception);
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
+        /// <summary>
+        /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         #endregion
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// </summary>
+        /// <param name="files">
+        /// </param>
+        internal void AddFiles(BGFileInfo[] files)
+        {
+            try
+            {
+                var count = Convert.ToUInt32(files.Length);
+                this.Job.AddFileSet(count, files);
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        internal void JobError(object sender, ErrorNotificationEventArgs e)
+        {
+            if (null != this.onJobErrored)
+            {
+                this.onJobErrored(sender, new JobErrorNotificationEventArgs(e.Error));
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        internal void JobModified(object sender, NotificationEventArgs e)
+        {
+            if (this.onJobModified != null)
+            {
+                this.onJobModified(sender, new JobNotificationEventArgs());
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        internal void JobTransferred(object sender, NotificationEventArgs e)
+        {
+            if (this.onJobTransfered != null)
+            {
+                this.onJobTransfered(sender, new JobNotificationEventArgs());
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="exception">
+        /// </param>
+        internal void PublishException(COMException exception)
+        {
+            this.manager.PublishException(this, exception);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="disposing">
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed)
+            if (!this.disposed)
             {
                 if (disposing)
                 {
-                    if (NotificationTarget != null)
-                        NotificationInterface = NotificationTarget;
-                    if (Files != null)
-                        Files.Dispose();
-                    Job = null;
+                    if (this.NotificationTarget != null)
+                    {
+                        this.NotificationInterface = this.NotificationTarget;
+                    }
+
+                    if (this.Files != null)
+                    {
+                        this.Files.Dispose();
+                    }
+
+                    this.Job = null;
+                    if (this.manager != null)
+                    {
+                        this.manager.Dispose();
+                    }
                 }
             }
-            disposed = true;
+
+            this.disposed = true;
         }
+
+        #endregion
     }
 }

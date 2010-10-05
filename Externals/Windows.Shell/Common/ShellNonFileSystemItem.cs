@@ -1,15 +1,31 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
+
 namespace Microsoft.Windows.Shell
 {
     /// <summary>
-    ///   Represents a non filesystem item (e.g. virtual items inside Control Panel)
+    /// Represents a non filesystem item (e.g. virtual items inside Control Panel)
     /// </summary>
     public class ShellNonFileSystemItem : ShellObjectNode
     {
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="shellItem">
+        /// </param>
         internal ShellNonFileSystemItem(IShellItem2 shellItem)
         {
-            nativeShellItem = shellItem;
+            this.nativeShellItem = shellItem;
         }
+
+        #endregion
     }
 }

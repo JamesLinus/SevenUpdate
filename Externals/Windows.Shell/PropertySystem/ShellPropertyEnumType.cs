@@ -1,40 +1,60 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using Microsoft.Windows.Internal;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using Microsoft.Windows.Internal;
+
     /// <summary>
-    ///   Defines the enumeration values for a property type.
+    /// Defines the enumeration values for a property type.
     /// </summary>
     public class ShellPropertyEnumType
     {
-        #region Private Properties
+        #region Constants and Fields
 
+        /// <summary>
+        /// </summary>
         private string displayText;
-        private PropEnumType? enumType;
-        private object enumerationValue;
-        private object minValue, setValue;
 
-        private IPropertyEnumType NativePropertyEnumType { set; get; }
+        /// <summary>
+        /// </summary>
+        private PropEnumType? enumType;
+
+        /// <summary>
+        /// </summary>
+        private object enumerationValue;
+
+        /// <summary>
+        /// </summary>
+        private object minValue;
+
+        /// <summary>
+        /// </summary>
+        private object setValue;
 
         #endregion
 
-        #region Internal Constructor
+        #region Constructors and Destructors
 
+        /// <summary>
+        /// </summary>
+        /// <param name="nativePropertyEnumType">
+        /// </param>
         internal ShellPropertyEnumType(IPropertyEnumType nativePropertyEnumType)
         {
-            NativePropertyEnumType = nativePropertyEnumType;
+            this.NativePropertyEnumType = nativePropertyEnumType;
         }
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
         ///   Gets display text from an enumeration information structure.
@@ -43,9 +63,12 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (displayText == null)
-                    NativePropertyEnumType.GetDisplayText(out displayText);
-                return displayText;
+                if (this.displayText == null)
+                {
+                    this.NativePropertyEnumType.GetDisplayText(out this.displayText);
+                }
+
+                return this.displayText;
             }
         }
 
@@ -56,13 +79,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (!enumType.HasValue)
+                if (!this.enumType.HasValue)
                 {
                     PropEnumType tempEnumType;
-                    NativePropertyEnumType.GetEnumType(out tempEnumType);
-                    enumType = tempEnumType;
+                    this.NativePropertyEnumType.GetEnumType(out tempEnumType);
+                    this.enumType = tempEnumType;
                 }
-                return enumType.Value;
+
+                return this.enumType.Value;
             }
         }
 
@@ -73,13 +97,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (minValue == null)
+                if (this.minValue == null)
                 {
                     PropVariant propVar;
-                    NativePropertyEnumType.GetRangeMinValue(out propVar);
-                    minValue = propVar.Value;
+                    this.NativePropertyEnumType.GetRangeMinValue(out propVar);
+                    this.minValue = propVar.Value;
                 }
-                return minValue;
+
+                return this.minValue;
             }
         }
 
@@ -90,13 +115,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (setValue == null)
+                if (this.setValue == null)
                 {
                     PropVariant propVar;
-                    NativePropertyEnumType.GetRangeSetValue(out propVar);
-                    setValue = propVar.Value;
+                    this.NativePropertyEnumType.GetRangeSetValue(out propVar);
+                    this.setValue = propVar.Value;
                 }
-                return setValue;
+
+                return this.setValue;
             }
         }
 
@@ -107,15 +133,20 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (enumerationValue == null)
+                if (this.enumerationValue == null)
                 {
                     PropVariant propVar;
-                    NativePropertyEnumType.GetValue(out propVar);
-                    enumerationValue = propVar.Value;
+                    this.NativePropertyEnumType.GetValue(out propVar);
+                    this.enumerationValue = propVar.Value;
                 }
-                return enumerationValue;
+
+                return this.enumerationValue;
             }
         }
+
+        /// <summary>
+        /// </summary>
+        private IPropertyEnumType NativePropertyEnumType { get; set; }
 
         #endregion
     }

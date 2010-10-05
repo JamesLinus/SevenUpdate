@@ -31,10 +31,18 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the system folder(s) of a path
         /// </summary>
-        /// <param name="owner">The HWND owner.</param>
-        /// <param name="path">The path to output the expanded system variable</param>
-        /// <param name="nFolder">The n folder.</param>
-        /// <param name="fCreate">if set to <see langword="true"/> the path will be created</param>
+        /// <param name="owner">
+        /// The HWND owner.
+        /// </param>
+        /// <param name="path">
+        /// The path to output the expanded system variable
+        /// </param>
+        /// <param name="nFolder">
+        /// The n folder.
+        /// </param>
+        /// <param name="fCreate">
+        /// if set to <see langword="true"/> the path will be created
+        /// </param>
         /// <returns>
         /// a string of the path with expanded system variables
         /// </returns>

@@ -1,71 +1,96 @@
-﻿#region GNU Public License Version 3
-
-// Copyright 2007-2010 Robert Baker, Seven Software.
+﻿// Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
-#region
-
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.ServiceModel;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Forms;
-using Microsoft.Win32;
-using SevenUpdate.Admin.Properties;
-using Application = System.Windows.Application;
-using Timer = System.Timers.Timer;
-
-#endregion
+// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace SevenUpdate.Admin
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Globalization;
+    using System.IO;
+    using System.ServiceModel;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Timers;
+    using System.Windows.Forms;
+
+    using Microsoft.Win32;
+
+    using SevenUpdate.Admin.Properties;
+    using SevenUpdate.Service;
+
+    using Application = System.Windows.Application;
+    using Timer = System.Timers.Timer;
+
     /// <summary>
-    ///   The main class of the application
+    /// The main class of the application
     /// </summary>
     internal static class App
     {
+        #region Constants and Fields
+
+        /// <summary>
+        ///   The collection of applications to update
+        /// </summary>
+        private static Collection<Sui> apps;
+
+        /// <summary>
+        ///   The WCF service host
+        /// </summary>
+        private static ServiceHost host;
+
+        /// <summary>
+        ///   Indicates if the installation was executed by automatic settings
+        /// </summary>
+        private static bool isAutoInstall;
+
+        /// <summary>
+        ///   Indicates if the program is currently installing updates
+        /// </summary>
+        private static bool isInstalling;
+
+        /// <summary>
+        ///   The notifyIcon used only when Auto Updating
+        /// </summary>
+        private static NotifyIcon notifyIcon;
+
+        /// <summary>
+        ///   Indicates if the program is waiting
+        /// </summary>
+        private static bool waiting;
+
+        #endregion
+
         #region Enums
 
         /// <summary>
-        ///   Defines constants for the notification type, such has SearchComplete
+        /// Defines constants for the notification type, such has SearchComplete
         /// </summary>
         private enum NotifyType
         {
             /// <summary>
             ///   Indicates searching is completed
             /// </summary>
-            SearchComplete,
+            SearchComplete, 
+
             /// <summary>
             ///   Indicates the downloading of updates has started
             /// </summary>
-            DownloadStarted,
+            DownloadStarted, 
+
             /// <summary>
             ///   Indicates download has completed
             /// </summary>
-            DownloadComplete,
+            DownloadComplete, 
+
             /// <summary>
             ///   Indicates that the installation of updates has begun
             /// </summary>
-            InstallStarted,
+            InstallStarted, 
+
             /// <summary>
             ///   Indicates that the installation of updates has completed
             /// </summary>
@@ -74,29 +99,15 @@ namespace SevenUpdate.Admin
 
         #endregion
 
-        #region Fields
-
-        private static Collection<Sui> apps;
-
-        private static ServiceHost host;
-
-        /// <summary>
-        ///   The notifyIcon used only when Auto Updating
-        /// </summary>
-        private static NotifyIcon notifyIcon;
-
-        private static bool isAutoInstall;
-
-        private static bool isInstalling;
-
-        private static bool waiting;
-
-        #endregion
-
         #region Properties
 
         /// <summary>
-        ///   Gets the update configuration settings
+        ///   Gets or sets a value indicating whether Seven Update UI is currently connected.
+        /// </summary>
+        private static bool IsClientConnected { get; set; }
+
+        /// <summary>
+        ///   Gets Seven Updates program settings
         /// </summary>
         private static Config Settings
         {
@@ -107,76 +118,246 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        ///   Gets or Sets a Boolean value indicating Seven Update UI is currently connected.
-        /// </summary>
-        private static bool IsClientConnected { get; set; }
-
         #endregion
 
+        #region Methods
+
         /// <summary>
-        ///   The main execution method
+        /// Reports that the download has completed and starts update installation if necessary
         /// </summary>
-        /// <param name = "args">The command line arguments</param>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
+            {
+                if (Service.DownloadCompleted != null && IsClientConnected)
+                {
+                    Service.DownloadCompleted(false);
+                }
+
+                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
+                isInstalling = true;
+                File.Delete(Base.AllUserStore + "updates.sui");
+                Install.InstallUpdates(apps);
+            }
+            else
+            {
+                isInstalling = false;
+                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
+            }
+        }
+
+        /// <summary>
+        /// Reports that the download progress has changed
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            isInstalling = true;
+            if (Service.DownloadProgressChanged != null && IsClientConnected)
+            {
+                Service.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
+            }
+
+            Application.Current.Dispatcher.BeginInvoke(
+                UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
+        }
+
+        /// <summary>
+        /// Starts the downloading of updates
+        /// </summary>
+        /// <param name="appUpdates">
+        /// The collection of applications and updates
+        /// </param>
+        private static void DownloadUpdates(Collection<Sui> appUpdates)
+        {
+            try
+            {
+                apps = appUpdates;
+                Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
+            }
+            catch (Exception e)
+            {
+                Base.ReportError(e, Base.AllUserStore);
+            }
+        }
+
+        /// <summary>
+        /// Runs when there is an error searching for updates
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            if (e.Type == ErrorType.FatalNetworkError)
+            {
+                ShutdownApp();
+            }
+        }
+
+        /// <summary>
+        /// Reports an error when the host faults
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.EventArgs"/> instance containing the event data.
+        /// </param>
+        private static void HostFaulted(object sender, EventArgs e)
+        {
+            IsClientConnected = false;
+            Base.ReportError("Host Fault", Base.AllUserStore);
+            if (Service.ErrorOccurred != null)
+            {
+                Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
+            }
+
+            try
+            {
+                host.Abort();
+            }
+            catch
+            {
+            }
+
+            ShutdownApp();
+        }
+
+        /// <summary>
+        /// Reports an error if an unknown message received
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.ServiceModel.UnknownMessageReceivedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
+        {
+            Base.ReportError(e.Message.ToString(), Base.AllUserStore);
+        }
+
+        /// <summary>
+        /// Reports the installation has completed
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.InstallCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
+        {
+            isInstalling = false;
+            if (Service.InstallCompleted != null && IsClientConnected)
+            {
+                Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
+            }
+
+            File.Delete(Base.AllUserStore + "updates.sui");
+            ShutdownApp();
+        }
+
+        /// <summary>
+        /// Reports when the installation progress has changed
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.InstallProgressChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        {
+            if (Service.InstallProgressChanged != null && IsClientConnected)
+            {
+                Service.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
+            }
+
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
+        }
+
+        /// <summary>
+        /// The main execution method
+        /// </summary>
+        /// <param name="args">
+        /// The command line arguments
+        /// </param>
         [STAThread]
         private static void Main(string[] args)
         {
             bool createdNew;
             var timer = new Timer(10000);
-            timer.Elapsed += timer_Elapsed;
+            timer.Elapsed += ShutdownApp;
             timer.Start();
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
-                #region WCF Hosts
-
                 try
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof(Service.Service));
+                        host = new ServiceHost(typeof(Service));
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
-                        Service.Service.ClientConnected += Service_ClientConnected;
-                        Service.Service.ClientDisconnected += Service_ClientDisconnected;
-                        Service.Service.DownloadUpdates += Service_DownloadUpdates;
-                        SystemEvents.SessionEnding += SystemEvents_SessionEnding;
-                        Search.SearchCompleted += Search_SearchCompleted;
-                        Search.ErrorOccurred += Search_ErrorOccurred;
-                        Download.DownloadCompleted += Download_DownloadCompleted;
-                        Download.DownloadProgressChanged += Download_DownloadProgressChanged;
-                        Install.InstallCompleted += Install_InstallCompleted;
-                        Install.InstallProgressChanged += Install_InstallProgressChanged;
+                        Service.ClientConnected += ServiceClientConnected;
+                        Service.ClientDisconnected += ServiceClientDisconnected;
+                        Service.DownloadUpdates += DownloadUpdates;
+                        SystemEvents.SessionEnding += PreventClose;
+                        Search.SearchCompleted += SearchCompleted;
+                        Search.ErrorOccurred += ErrorOccurred;
+                        Download.DownloadCompleted += DownloadCompleted;
+                        Download.DownloadProgressChanged += DownloadProgressChanged;
+                        Install.InstallCompleted += InstallCompleted;
+                        Install.InstallProgressChanged += InstallProgressChanged;
                         host.Open();
                         if (!Directory.Exists(Base.AllUserStore))
+                        {
                             Directory.CreateDirectory(Base.AllUserStore);
+                        }
                     }
                 }
                 catch (FaultException e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
-                    if (Service.Service.ErrorOccurred != null)
-                        Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    if (Service.ErrorOccurred != null)
+                    {
+                        Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    }
 
-                    SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+                    SystemEvents.SessionEnding -= PreventClose;
                     ShutdownApp();
                 }
                 catch (Exception e)
                 {
                     Base.ReportError(e, Base.AllUserStore);
-                    if (Service.Service.ErrorOccurred != null)
-                        Service.Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    if (Service.ErrorOccurred != null)
+                    {
+                        Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    }
 
-                    SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+                    SystemEvents.SessionEnding -= PreventClose;
 
                     ShutdownApp();
                 }
-
-                #endregion
             }
-            var app = new Application();
 
-            #region Arguments
+            var app = new Application();
 
             try
             {
@@ -191,20 +372,26 @@ namespace SevenUpdate.Admin
                             ShutdownApp();
                         }
                     }
+
                     if (args[0] == "Auto")
                     {
                         if (File.Exists(Base.AllUserStore + "abort.lock"))
+                        {
                             File.Delete(Base.AllUserStore + "abort.lock");
+                        }
+
                         isAutoInstall = true;
                         isInstalling = true;
                         notifyIcon = new NotifyIcon { Icon = Resources.trayIcon, Text = Resources.CheckingForUpdates, Visible = true };
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
-                        Search.ErrorOccurred += Search_ErrorOccurred;
+                        Search.ErrorOccurred += ErrorOccurred;
                         Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
                     }
                     else
+                    {
                         ShutdownApp();
+                    }
                 }
             }
             catch (Exception e)
@@ -212,10 +399,8 @@ namespace SevenUpdate.Admin
                 Base.ReportError(e, Base.AllUserStore);
             }
 
-            #endregion
-
             app.Run();
-            SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            SystemEvents.SessionEnding -= PreventClose;
             try
             {
                 if (notifyIcon != null)
@@ -230,98 +415,16 @@ namespace SevenUpdate.Admin
             }
         }
 
-        private static void timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (isInstalling)
-                return;
-
-            if (Process.GetProcessesByName("SevenUpdate").Length > 0 && waiting)
-                ShutdownApp();
-            if (Process.GetProcessesByName("SevenUpdate").Length < 1 && !waiting)
-                ShutdownApp();
-        }
-
-        #region Events
-
-        private static void Install_InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
-        {
-            if (Service.Service.InstallProgressChanged != null && IsClientConnected)
-                Service.Service.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(Resources.InstallProgress, e.CurrentProgress));
-        }
-
-        private static void Install_InstallCompleted(object sender, InstallCompletedEventArgs e)
-        {
-            isInstalling = false;
-            if (Service.Service.InstallCompleted != null && IsClientConnected)
-                Service.Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
-            File.Delete(Base.AllUserStore + "updates.sui");
-            ShutdownApp();
-        }
-
-        private static void Download_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            isInstalling = true;
-            if (Service.Service.DownloadProgressChanged != null && IsClientConnected)
-                Service.Service.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
-        }
-
-        private static void Download_DownloadCompleted(object sender, DownloadCompletedEventArgs e)
-        {
-            if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
-            {
-                if (Service.Service.DownloadCompleted != null && IsClientConnected)
-                    Service.Service.DownloadCompleted(false);
-                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
-                isInstalling = true;
-                File.Delete(Base.AllUserStore + "updates.sui");
-                Install.InstallUpdates(apps);
-            }
-            else
-            {
-                isInstalling = false;
-                Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
-            }
-        }
-
         /// <summary>
-        ///   Runs when the search for updates has completed for an auto update
+        /// Prevents the system from shutting down until the installation is safely stopped
         /// </summary>
-        private static void Search_SearchCompleted(object sender, SearchCompletedEventArgs e)
-        {
-            isInstalling = false;
-            apps = e.Applications as Collection<Sui>;
-            if (apps.Count > 0)
-            {
-                Base.Serialize(apps, Base.AllUserStore + "updates.sui");
-
-                if (Settings.AutoOption == AutoUpdateOption.Notify)
-                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
-                else
-                {
-                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(apps));
-                    isInstalling = true;
-                }
-            }
-            else
-                ShutdownApp();
-        }
-
-        /// <summary>
-        ///   Runs when there is an error searching for updates
-        /// </summary>
-        private static void Search_ErrorOccurred(object sender, ErrorOccurredEventArgs e)
-        {
-            if (e.Type == ErrorType.FatalNetworkError)
-                ShutdownApp();
-        }
-
-        /// <summary>
-        ///   Prevents the system from shutting down until the installation is safely stopped
-        /// </summary>
-        private static void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
             {
@@ -341,76 +444,102 @@ namespace SevenUpdate.Admin
                 fs.WriteByte(0);
                 fs.Close();
             }
+
             e.Cancel = true;
         }
 
-        #endregion
-
-        #region Service events
-
-        private static void Service_DownloadUpdates(Collection<Sui> appUpdates)
+        /// <summary>
+        /// Starts Seven Update UI
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.EventArgs"/> instance containing the event data.
+        /// </param>
+        private static void RunSevenUpdate(object sender, EventArgs e)
         {
-            try
+            if (Environment.OSVersion.Version.Major < 6)
             {
-                apps = appUpdates;
-                Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
+                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
+                    notifyIcon.Text == Resources.CheckingForUpdates)
+                {
+                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Auto");
+                }
+                else
+                {
+                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Reconnect");
+                }
             }
-            catch (Exception e)
+            else
             {
-                Base.ReportError(e, Base.AllUserStore);
+                Base.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
+            }
+
+            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
+                notifyIcon.Text == Resources.CheckingForUpdates)
+            {
+                ShutdownApp();
             }
         }
 
         /// <summary>
-        ///   Error Event when the .NetPipe binding faults
+        /// Runs when the search for updates has completed for an auto update
         /// </summary>
-        private static void HostFaulted(object sender, EventArgs e)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.SearchCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
-            IsClientConnected = false;
-            Base.ReportError("Host Fault", Base.AllUserStore);
-            if (Service.Service.ErrorOccurred != null)
-                Service.Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
-            try
+            isInstalling = false;
+            apps = e.Applications as Collection<Sui>;
+            if (apps.Count > 0)
             {
-                host.Abort();
+                Base.Serialize(apps, Base.AllUserStore + "updates.sui");
+
+                if (Settings.AutoOption == AutoUpdateOption.Notify)
+                {
+                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
+                }
+                else
+                {
+                    Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(apps));
+                    isInstalling = true;
+                }
             }
-            catch
+            else
             {
+                ShutdownApp();
             }
-
-            ShutdownApp();
-        }
-
-        private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
-        {
-            Base.ReportError(e.Message.ToString(), Base.AllUserStore);
         }
 
         /// <summary>
-        ///   Occurs when Seven Update UI connects to the admin process
+        /// Occurs when Seven Update UI connects to the admin process
         /// </summary>
-        private static void Service_ClientConnected()
+        private static void ServiceClientConnected()
         {
             IsClientConnected = true;
         }
 
         /// <summary>
-        ///   Occurs when the Seven Update UI disconnected
+        /// Occurs when the Seven Update UI disconnected
         /// </summary>
-        private static void Service_ClientDisconnected()
+        private static void ServiceClientDisconnected()
         {
             IsClientConnected = false;
 
             if (isInstalling == false)
+            {
                 ShutdownApp();
+            }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
-        ///   Shuts down the process and removes the icon of the notification bar
+        /// Shuts down the process and removes the icon of the notification bar
         /// </summary>
         private static void ShutdownApp()
         {
@@ -426,27 +555,63 @@ namespace SevenUpdate.Admin
                 {
                 }
             }
+
             Environment.Exit(0);
         }
 
         /// <summary>
-        ///   Updates the notify icon text
+        /// Shutdowns the application
         /// </summary>
-        /// <param name = "text">The string to set the notifyIcon text</param>
-        private static void UpdateNotifyIcon(string text)
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void ShutdownApp(object sender, ElapsedEventArgs e)
         {
-            if (notifyIcon != null)
-                notifyIcon.Text = text;
+            if (isInstalling)
+            {
+                return;
+            }
+
+            if (Process.GetProcessesByName("SevenUpdate").Length > 0 && waiting)
+            {
+                ShutdownApp();
+            }
+
+            if (Process.GetProcessesByName("SevenUpdate").Length < 1 && !waiting)
+            {
+                ShutdownApp();
+            }
         }
 
         /// <summary>
-        ///   Updates the <see cref="notifyIcon"/> state
+        /// Updates the notify icon text
         /// </summary>
-        /// <param name = "filter">The <see cref = "NotifyType" /> to set the <see cref="notifyIcon"/> to.</param>
+        /// <param name="text">
+        /// The string to set the <see cref="notifyIcon"/> text
+        /// </param>
+        private static void UpdateNotifyIcon(string text)
+        {
+            if (notifyIcon != null)
+            {
+                notifyIcon.Text = text;
+            }
+        }
+
+        /// <summary>
+        /// Updates the <see cref="notifyIcon"/> state
+        /// </summary>
+        /// <param name="filter">
+        /// The <see cref="NotifyType"/> to set the <see cref="notifyIcon"/> to.
+        /// </param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)
+            {
                 return;
+            }
 
             notifyIcon.Visible = true;
             switch (filter)
@@ -473,25 +638,6 @@ namespace SevenUpdate.Admin
                     ShutdownApp();
                     break;
             }
-        }
-
-        /// <summary>
-        ///   Starts Seven Update UI
-        /// </summary>
-        private static void RunSevenUpdate(object sender, EventArgs e)
-        {
-            if (Environment.OSVersion.Version.Major < 6)
-            {
-                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
-                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Auto");
-                else
-                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Reconnect");
-            }
-            else
-                Base.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
-
-            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
-                ShutdownApp();
         }
 
         #endregion

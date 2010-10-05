@@ -20,7 +20,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// Gets a value indicating whether an error has occurred
+        ///   Gets a value indicating whether an error has occurred
         /// </summary>
         private static bool errorOccurred;
 
@@ -50,8 +50,12 @@ namespace SevenUpdate
         /// <summary>
         /// Downloads the updates using BITS
         /// </summary>
-        /// <param name="appUpdates">The application updates to download</param>
-        /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
+        /// <param name="appUpdates">
+        /// The application updates to download
+        /// </param>
+        /// <param name="isPriority">
+        /// if set to <see langword="true"/> the updates will download with priority
+        /// </param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
         {
             if (appUpdates == null)
@@ -217,10 +221,65 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>
+        /// Reports when a download completes
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
+        {
+            if (File.Exists(Base.AllUserStore + "abort.lock"))
+            {
+                File.Delete(Base.AllUserStore + "abort.lock");
+                return;
+            }
+
+            if (e.Job == null)
+            {
+                return;
+            }
+
+            if (e.Job.DisplayName != "SevenUpdate")
+            {
+                return;
+            }
+
+            if (e.Job.State != JobState.Transferred)
+            {
+                return;
+            }
+
+            e.Job.Complete();
+            if (DownloadCompleted != null)
+            {
+                DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));
+            }
+
+            manager.OnJobTransferred -= ReportDownloadComplete;
+            manager.OnJobError -= ReportDownloadError;
+            manager.OnJobModified -= ReportDownloadProgress;
+            try
+            {
+                manager.Dispose();
+                manager = null;
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Reports a download error
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.
+        /// </param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -265,8 +324,12 @@ namespace SevenUpdate
         /// <summary>
         /// Reports the download progress
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// </param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Base.AllUserStore + "abort.lock"))
@@ -292,55 +355,9 @@ namespace SevenUpdate
 
             if (DownloadProgressChanged != null && e.Job.Progress.BytesTotal > 0 && e.Job.Progress.BytesTransferred > 0)
             {
-                var eventArgs = new DownloadProgressChangedEventArgs(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+                var eventArgs = new DownloadProgressChangedEventArgs(
+                    e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
                 DownloadProgressChanged(null, eventArgs);
-            }
-        }
-
-        /// <summary>
-        /// Reports when a download completes
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
-        private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
-        {
-            if (File.Exists(Base.AllUserStore + "abort.lock"))
-            {
-                File.Delete(Base.AllUserStore + "abort.lock");
-                return;
-            }
-
-            if (e.Job == null)
-            {
-                return;
-            }
-
-            if (e.Job.DisplayName != "SevenUpdate")
-            {
-                return;
-            }
-
-            if (e.Job.State != JobState.Transferred)
-            {
-                return;
-            }
-
-            e.Job.Complete();
-            if (DownloadCompleted != null)
-            {
-                DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));
-            }
-
-            manager.OnJobTransferred -= ReportDownloadComplete;
-            manager.OnJobError -= ReportDownloadError;
-            manager.OnJobModified -= ReportDownloadProgress;
-            try
-            {
-                manager.Dispose();
-                manager = null;
-            }
-            catch
-            {
             }
         }
 

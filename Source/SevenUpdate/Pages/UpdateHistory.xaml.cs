@@ -1,42 +1,25 @@
-#region GNU Public License Version 3
-
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
-//   
-//      Seven Update is free software: you can redistribute it and/or modify
-//      it under the terms of the GNU General Public License as published by
-//      the Free Software Foundation, either version 3 of the License, or
-//      (at your option) any later version.
-//  
-//      Seven Update is distributed in the hope that it will be useful,
-//      but WITHOUT ANY WARRANTY; without even the implied warranty of
-//      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//      GNU General Public License for more details.
-//   
-//      You should have received a copy of the GNU General Public License
-//      along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-#endregion
-
-#region
-
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
-using SevenUpdate.Windows;
-
-#endregion
+// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace SevenUpdate.Pages
 {
+    using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
+    using System.Windows;
+    using System.Windows.Data;
+    using System.Windows.Input;
+
+    using SevenUpdate.Windows;
+
     /// <summary>
-    ///   Interaction logic for Update_History.xaml
+    /// Interaction logic for Update_History.xaml
     /// </summary>
     public partial class UpdateHistory
     {
-        #region Fields
+        #region Constants and Fields
 
         /// <summary>
         ///   The location of the update history file
@@ -50,76 +33,96 @@ namespace SevenUpdate.Pages
 
         #endregion
 
+        #region Constructors and Destructors
+
         /// <summary>
         ///   The constructor for the Update History page
         /// </summary>
         public UpdateHistory()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
+
+        #endregion
 
         #region Methods
 
         /// <summary>
-        ///   Gets the update history and loads it to the listView
+        /// Gets the update history and loads it to the listView
         /// </summary>
         private void GetHistory()
         {
-            updateHistory = Base.Deserialize<ObservableCollection<Suh>>(HistoryFile);
-            if (updateHistory == null)
+            this.updateHistory = Base.Deserialize<ObservableCollection<Suh>>(HistoryFile);
+            if (this.updateHistory == null)
+            {
                 return;
+            }
 
-            lvUpdateHistory.ItemsSource = updateHistory;
-            updateHistory.CollectionChanged += History_CollectionChanged;
+            this.lvUpdateHistory.ItemsSource = this.updateHistory;
+            this.updateHistory.CollectionChanged += this.History_CollectionChanged;
         }
 
-        #endregion
-
-        #region UI Events
-
         /// <summary>
-        ///   Loads the update history when the page is loaded
+        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
         /// </summary>
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            GetHistory();
-        }
-
-        #region ListView Related
-
-        /// <summary>
-        ///   Updates the <see cref = "CollectionView" /> when the <c>updateHistory</c> collection changes
-        /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
         private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
+            {
                 return;
-            var dataView = CollectionViewSource.GetDefaultView(lvUpdateHistory.ItemsSource);
+            }
+
+            var dataView = CollectionViewSource.GetDefaultView(this.lvUpdateHistory.ItemsSource);
             dataView.Refresh();
         }
 
         /// <summary>
-        ///   Shows the selected update details
+        /// Shows the selected update details
         /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount != 2 || lvUpdateHistory.SelectedIndex == -1)
+            if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
+            {
                 return;
+            }
+
             var details = new UpdateDetails();
-            details.ShowDialog(updateHistory[lvUpdateHistory.SelectedIndex]);
+            details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
 
         /// <summary>
-        ///   Shows the selected update details
+        /// Shows the selected update details
         /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
         private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
-            details.ShowDialog(updateHistory[lvUpdateHistory.SelectedIndex]);
+            details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
 
-        #endregion
+        /// <summary>
+        /// Loads the update history when the page is loaded
+        /// </summary>
+        /// <param name="sender">
+        /// </param>
+        /// <param name="e">
+        /// </param>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.GetHistory();
+        }
 
         #endregion
     }

@@ -1,39 +1,59 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections;
-using System.Runtime.InteropServices.ComTypes;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using global::System;
+    using global::System.Collections;
+    using global::System.Runtime.InteropServices.ComTypes;
+
     /// <summary>
-    ///   Base class for all the strongly-typed properties
+    /// Base class for all the strongly-typed properties
     /// </summary>
     public abstract class PropertyStoreItems
     {
     }
 
+    /// <summary>
+    /// </summary>
     public partial class ShellProperties
     {
-        #region Nested type: PropertyContactJA
-
         /// <summary>
-        ///   Contact.JA Properties
+        /// Contact.JA Properties
         /// </summary>
         public class PropertyContactJA : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertyContactJA(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -44,16 +64,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {897B3694-FE9E-43E6-8066-260F590C0100}, 2</para>
             ///</summary>
-            public ShellProperty<String> CompanyNamePhonetic
+            public ShellProperty<string> CompanyNamePhonetic
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.JA.CompanyNamePhonetic;
+                    var key = Shell.PropertySystem.System.Contact.JA.CompanyNamePhonetic;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -64,16 +86,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {897B3694-FE9E-43E6-8066-260F590C0100}, 3</para>
             ///</summary>
-            public ShellProperty<String> FirstNamePhonetic
+            public ShellProperty<string> FirstNamePhonetic
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.JA.FirstNamePhonetic;
+                    var key = Shell.PropertySystem.System.Contact.JA.FirstNamePhonetic;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -84,42 +108,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {897B3694-FE9E-43E6-8066-260F590C0100}, 4</para>
             ///</summary>
-            public ShellProperty<String> LastNamePhonetic
+            public ShellProperty<string> LastNamePhonetic
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.JA.LastNamePhonetic;
+                    var key = Shell.PropertySystem.System.Contact.JA.LastNamePhonetic;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertyDevicesNotifications
-
         /// <summary>
-        ///   Devices.Notifications Properties
+        /// Devices.Notifications Properties
         /// </summary>
         public class PropertyDevicesNotifications : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertyDevicesNotifications(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -130,16 +165,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {C4C07F2B-8524-4E66-AE3A-A6235F103BEB}, 2</para>
             ///</summary>
-            public ShellProperty<Byte?> LowBattery
+            public ShellProperty<byte?> LowBattery
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.LowBattery;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.LowBattery;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -150,16 +187,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {6614EF48-4EFE-4424-9EDA-C79F404EDF3E}, 2</para>
             ///</summary>
-            public ShellProperty<Byte?> MissedCall
+            public ShellProperty<byte?> MissedCall
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.MissedCall;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.MissedCall;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -170,16 +209,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {2BE9260A-2012-4742-A555-F41B638B7DCB}, 2</para>
             ///</summary>
-            public ShellProperty<Byte?> NewMessage
+            public ShellProperty<byte?> NewMessage
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.NewMessage;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.NewMessage;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -190,16 +231,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {59569556-0A08-4212-95B9-FAE2AD6413DB}, 2</para>
             ///</summary>
-            public ShellProperty<Byte?> NewVoicemail
+            public ShellProperty<byte?> NewVoicemail
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.NewVoicemail;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.NewVoicemail;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -210,16 +253,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: {A0E00EE1-F0C7-4D41-B8E7-26A7BD8D38B0}, 2</para>
             ///</summary>
-            public ShellProperty<UInt64?> StorageFull
+            public ShellProperty<ulong?> StorageFull
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.StorageFull;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.StorageFull;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -230,42 +275,185 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: {A0E00EE1-F0C7-4D41-B8E7-26A7BD8D38B0}, 3</para>
             ///</summary>
-            public ShellProperty<UInt64?> StorageFullLinkText
+            public ShellProperty<ulong?> StorageFullLinkText
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notifications.StorageFullLinkText;
+                    var key = Shell.PropertySystem.System.Devices.Notifications.StorageFullLinkText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystem
-
         /// <summary>
-        ///   .System Properties
+        /// .System Properties
         /// </summary>
         public class PropertySystem : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            /// <summary>
+            /// </summary>
+            private PropertySystemAppUserModel internalPropertySystemAppUserModel;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemAudio internalPropertySystemAudio;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemCalendar internalPropertySystemCalendar;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemCommunication internalPropertySystemCommunication;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemComputer internalPropertySystemComputer;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemContact internalPropertySystemContact;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemDrm internalPropertySystemDRM;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemDevice internalPropertySystemDevice;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemDeviceInterface internalPropertySystemDeviceInterface;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemDevices internalPropertySystemDevices;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemDocument internalPropertySystemDocument;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemGps internalPropertySystemGPS;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemIdentity internalPropertySystemIdentity;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemIdentityProvider internalPropertySystemIdentityProvider;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemImage internalPropertySystemImage;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemJournal internalPropertySystemJournal;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemLayoutPattern internalPropertySystemLayoutPattern;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemLink internalPropertySystemLink;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemMedia internalPropertySystemMedia;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemMessage internalPropertySystemMessage;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemMusic internalPropertySystemMusic;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemNote internalPropertySystemNote;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemPhoto internalPropertySystemPhoto;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemPropGroup internalPropertySystemPropGroup;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemPropList internalPropertySystemPropList;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemRecordedTV internalPropertySystemRecordedTV;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemSearch internalPropertySystemSearch;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemShell internalPropertySystemShell;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemSoftware internalPropertySystemSoftware;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemSync internalPropertySystemSync;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemTask internalPropertySystemTask;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemVideo internalPropertySystemVideo;
+
+            /// <summary>
+            /// </summary>
+            private PropertySystemVolume internalPropertySystemVolume;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystem(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -276,16 +464,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {65A98875-3C80-40AB-ABBC-EFDAF77DBEE2}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> AcquisitionID
+            public ShellProperty<int?> AcquisitionID
             {
                 get
                 {
-                    var key = SystemProperties.System.AcquisitionID;
+                    var key = Windows.Shell.PropertySystem.System.AcquisitionID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
+                }
+            }
+
+            /// <summary>
+            ///   System.AppUserModel Properties
+            /// </summary>
+            public PropertySystemAppUserModel AppUserModel
+            {
+                get
+                {
+                    return this.internalPropertySystemAppUserModel ?? (this.internalPropertySystemAppUserModel = new PropertySystemAppUserModel(this.shellObjectParent));
                 }
             }
 
@@ -296,16 +497,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 18 (PIDSI_APPNAME)</para>
             ///</summary>
-            public ShellProperty<String> ApplicationName
+            public ShellProperty<string> ApplicationName
             {
                 get
                 {
-                    var key = SystemProperties.System.ApplicationName;
+                    var key = Windows.Shell.PropertySystem.System.ApplicationName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Audio Properties
+            /// </summary>
+            public PropertySystemAudio Audio
+            {
+                get
+                {
+                    return this.internalPropertySystemAudio ?? (this.internalPropertySystemAudio = new PropertySystemAudio(this.shellObjectParent));
                 }
             }
 
@@ -316,16 +530,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 4 (PIDSI_AUTHOR)</para>
             ///</summary>
-            public ShellProperty<String[]> Author
+            public ShellProperty<string[]> Author
             {
                 get
                 {
-                    var key = SystemProperties.System.Author;
+                    var key = Windows.Shell.PropertySystem.System.Author;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Calendar Properties
+            /// </summary>
+            public PropertySystemCalendar Calendar
+            {
+                get
+                {
+                    return this.internalPropertySystemCalendar ?? (this.internalPropertySystemCalendar = new PropertySystemCalendar(this.shellObjectParent));
                 }
             }
 
@@ -336,16 +563,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 3 (PID_VOLUME_CAPACITY)  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<UInt64?> Capacity
+            public ShellProperty<ulong?> Capacity
             {
                 get
                 {
-                    var key = SystemProperties.System.Capacity;
+                    var key = Windows.Shell.PropertySystem.System.Capacity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -356,16 +585,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 2 (PIDDSI_CATEGORY)</para>
             ///</summary>
-            public ShellProperty<String[]> Category
+            public ShellProperty<string[]> Category
             {
                 get
                 {
-                    var key = SystemProperties.System.Category;
+                    var key = Windows.Shell.PropertySystem.System.Category;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -376,16 +607,30 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 6 (PIDSI_COMMENTS)</para>
             ///</summary>
-            public ShellProperty<String> Comment
+            public ShellProperty<string> Comment
             {
                 get
                 {
-                    var key = SystemProperties.System.Comment;
+                    var key = Windows.Shell.PropertySystem.System.Comment;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Communication Properties
+            /// </summary>
+            public PropertySystemCommunication Communication
+            {
+                get
+                {
+                    return this.internalPropertySystemCommunication ??
+                           (this.internalPropertySystemCommunication = new PropertySystemCommunication(this.shellObjectParent));
                 }
             }
 
@@ -396,16 +641,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 15 (PIDDSI_COMPANY)</para>
             ///</summary>
-            public ShellProperty<String> Company
+            public ShellProperty<string> Company
             {
                 get
                 {
-                    var key = SystemProperties.System.Company;
+                    var key = Windows.Shell.PropertySystem.System.Company;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Computer Properties
+            /// </summary>
+            public PropertySystemComputer Computer
+            {
+                get
+                {
+                    return this.internalPropertySystemComputer ?? (this.internalPropertySystemComputer = new PropertySystemComputer(this.shellObjectParent));
                 }
             }
 
@@ -416,16 +674,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 5 (PID_COMPUTERNAME)</para>
             ///</summary>
-            public ShellProperty<String> ComputerName
+            public ShellProperty<string> ComputerName
             {
                 get
                 {
-                    var key = SystemProperties.System.ComputerName;
+                    var key = Windows.Shell.PropertySystem.System.ComputerName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Contact Properties
+            /// </summary>
+            public PropertySystemContact Contact
+            {
+                get
+                {
+                    return this.internalPropertySystemContact ?? (this.internalPropertySystemContact = new PropertySystemContact(this.shellObjectParent));
                 }
             }
 
@@ -441,12 +712,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.ContainedItems;
+                    var key = Windows.Shell.PropertySystem.System.ContainedItems;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr[]>;
+                    return this.hashtable[key] as ShellProperty<IntPtr[]>;
                 }
             }
 
@@ -456,16 +729,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 27</para>
             /// </summary>
-            public ShellProperty<String> ContentStatus
+            public ShellProperty<string> ContentStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.ContentStatus;
+                    var key = Windows.Shell.PropertySystem.System.ContentStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -475,16 +750,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 26</para>
             /// </summary>
-            public ShellProperty<String> ContentType
+            public ShellProperty<string> ContentType
             {
                 get
                 {
-                    var key = SystemProperties.System.ContentType;
+                    var key = Windows.Shell.PropertySystem.System.ContentType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -495,16 +772,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 11 (PIDMSI_COPYRIGHT)</para>
             ///</summary>
-            public ShellProperty<String> Copyright
+            public ShellProperty<string> Copyright
             {
                 get
                 {
-                    var key = SystemProperties.System.Copyright;
+                    var key = Windows.Shell.PropertySystem.System.Copyright;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.DRM Properties
+            /// </summary>
+            public PropertySystemDrm DRM
+            {
+                get
+                {
+                    return this.internalPropertySystemDRM ?? (this.internalPropertySystemDRM = new PropertySystemDrm(this.shellObjectParent));
                 }
             }
 
@@ -519,12 +809,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateAccessed;
+                    var key = Windows.Shell.PropertySystem.System.DateAccessed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -540,12 +832,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateAcquired;
+                    var key = Windows.Shell.PropertySystem.System.DateAcquired;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -559,12 +853,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateArchived;
+                    var key = Windows.Shell.PropertySystem.System.DateArchived;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -578,12 +874,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateCompleted;
+                    var key = Windows.Shell.PropertySystem.System.DateCompleted;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -598,12 +896,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateCreated;
+                    var key = Windows.Shell.PropertySystem.System.DateCreated;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -618,12 +918,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateImported;
+                    var key = Windows.Shell.PropertySystem.System.DateImported;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -638,12 +940,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DateModified;
+                    var key = Windows.Shell.PropertySystem.System.DateModified;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -654,16 +958,63 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Buffer -- VT_VECTOR | VT_UI1  (For variants: VT_ARRAY | VT_UI1)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 2 (PID_DESCRIPTIONID)</para>
             ///</summary>
-            public ShellProperty<Byte[]> DescriptionID
+            public ShellProperty<byte[]> DescriptionID
             {
                 get
                 {
-                    var key = SystemProperties.System.DescriptionID;
+                    var key = Windows.Shell.PropertySystem.System.DescriptionID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Device Properties
+            /// </summary>
+            public PropertySystemDevice Device
+            {
+                get
+                {
+                    return this.internalPropertySystemDevice ?? (this.internalPropertySystemDevice = new PropertySystemDevice(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.DeviceInterface Properties
+            /// </summary>
+            public PropertySystemDeviceInterface DeviceInterface
+            {
+                get
+                {
+                    return this.internalPropertySystemDeviceInterface ??
+                           (this.internalPropertySystemDeviceInterface = new PropertySystemDeviceInterface(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Devices Properties
+            /// </summary>
+            public PropertySystemDevices Devices
+            {
+                get
+                {
+                    return this.internalPropertySystemDevices ?? (this.internalPropertySystemDevices = new PropertySystemDevices(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Document Properties
+            /// </summary>
+            public PropertySystemDocument Document
+            {
+                get
+                {
+                    return this.internalPropertySystemDocument ?? (this.internalPropertySystemDocument = new PropertySystemDocument(this.shellObjectParent));
                 }
             }
 
@@ -677,12 +1028,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.DueDate;
+                    var key = Windows.Shell.PropertySystem.System.DueDate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -696,12 +1049,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.EndDate;
+                    var key = Windows.Shell.PropertySystem.System.EndDate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -712,16 +1067,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 18 (PID_STG_ALLOCSIZE)</para>
             ///</summary>
-            public ShellProperty<UInt64?> FileAllocationSize
+            public ShellProperty<ulong?> FileAllocationSize
             {
                 get
                 {
-                    var key = SystemProperties.System.FileAllocationSize;
+                    var key = Windows.Shell.PropertySystem.System.FileAllocationSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -732,16 +1089,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 13 (PID_STG_ATTRIBUTES)</para>
             ///</summary>
-            public ShellProperty<UInt32?> FileAttributes
+            public ShellProperty<uint?> FileAttributes
             {
                 get
                 {
-                    var key = SystemProperties.System.FileAttributes;
+                    var key = Windows.Shell.PropertySystem.System.FileAttributes;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -752,16 +1111,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 12</para>
             ///</summary>
-            public ShellProperty<UInt64?> FileCount
+            public ShellProperty<ulong?> FileCount
             {
                 get
                 {
-                    var key = SystemProperties.System.FileCount;
+                    var key = Windows.Shell.PropertySystem.System.FileCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -772,16 +1133,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 3 (PIDVSI_FileDescription)</para>
             ///</summary>
-            public ShellProperty<String> FileDescription
+            public ShellProperty<string> FileDescription
             {
                 get
                 {
-                    var key = SystemProperties.System.FileDescription;
+                    var key = Windows.Shell.PropertySystem.System.FileDescription;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -809,16 +1172,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E4F10A3C-49E6-405D-8288-A23BD4EEAA6C}, 100</para>
             ///</summary>
-            public ShellProperty<String> FileExtension
+            public ShellProperty<string> FileExtension
             {
                 get
                 {
-                    var key = SystemProperties.System.FileExtension;
+                    var key = Windows.Shell.PropertySystem.System.FileExtension;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -830,16 +1195,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 21 (PID_STG_FRN)</para>
             ///</summary>
-            public ShellProperty<UInt64?> FileFRN
+            public ShellProperty<ulong?> FileFrn
             {
                 get
                 {
-                    var key = SystemProperties.System.FileFRN;
+                    var key = Windows.Shell.PropertySystem.System.FileFrn;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -870,16 +1237,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {41CF5AE0-F75A-4806-BD87-59C7D9248EB9}, 100</para>
             ///</summary>
-            public ShellProperty<String> FileName
+            public ShellProperty<string> FileName
             {
                 get
                 {
-                    var key = SystemProperties.System.FileName;
+                    var key = Windows.Shell.PropertySystem.System.FileName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -890,16 +1259,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Misc) {9B174B34-40FF-11D2-A27E-00C04FC30871}, 4 (PID_MISC_OWNER)</para>
             ///</summary>
-            public ShellProperty<String> FileOwner
+            public ShellProperty<string> FileOwner
             {
                 get
                 {
-                    var key = SystemProperties.System.FileOwner;
+                    var key = Windows.Shell.PropertySystem.System.FileOwner;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -910,16 +1281,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 4 (PIDVSI_FileVersion)</para>
             ///</summary>
-            public ShellProperty<String> FileVersion
+            public ShellProperty<string> FileVersion
             {
                 get
                 {
-                    var key = SystemProperties.System.FileVersion;
+                    var key = Windows.Shell.PropertySystem.System.FileVersion;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -930,16 +1303,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Buffer -- VT_VECTOR | VT_UI1  (For variants: VT_ARRAY | VT_UI1)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 0 (PID_FINDDATA)</para>
             ///</summary>
-            public ShellProperty<Byte[]> FindData
+            public ShellProperty<byte[]> FindData
             {
                 get
                 {
-                    var key = SystemProperties.System.FindData;
+                    var key = Windows.Shell.PropertySystem.System.FindData;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -950,16 +1325,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {67DF94DE-0CA7-4D6F-B792-053A3E4F03CF}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> FlagColor
+            public ShellProperty<ushort?> FlagColor
             {
                 get
                 {
-                    var key = SystemProperties.System.FlagColor;
+                    var key = Windows.Shell.PropertySystem.System.FlagColor;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -971,16 +1348,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {45EAE747-8E2A-40AE-8CBF-CA52ABA6152A}, 100</para>
             ///</summary>
-            public ShellProperty<String> FlagColorText
+            public ShellProperty<string> FlagColorText
             {
                 get
                 {
-                    var key = SystemProperties.System.FlagColorText;
+                    var key = Windows.Shell.PropertySystem.System.FlagColorText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -991,16 +1370,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 12</para>
             ///</summary>
-            public ShellProperty<Int32?> FlagStatus
+            public ShellProperty<int?> FlagStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.FlagStatus;
+                    var key = Windows.Shell.PropertySystem.System.FlagStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -1012,16 +1393,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {DC54FD2E-189D-4871-AA01-08C2F57A4ABC}, 100</para>
             ///</summary>
-            public ShellProperty<String> FlagStatusText
+            public ShellProperty<string> FlagStatusText
             {
                 get
                 {
-                    var key = SystemProperties.System.FlagStatusText;
+                    var key = Windows.Shell.PropertySystem.System.FlagStatusText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1032,16 +1415,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 2 (PID_VOLUME_FREE)  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<UInt64?> FreeSpace
+            public ShellProperty<ulong?> FreeSpace
             {
                 get
                 {
-                    var key = SystemProperties.System.FreeSpace;
+                    var key = Windows.Shell.PropertySystem.System.FreeSpace;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -1054,16 +1439,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {1E3EE840-BC2B-476C-8237-2ACD1A839B22}, 6</para>
             ///</summary>
-            public ShellProperty<String> FullText
+            public ShellProperty<string> FullText
             {
                 get
                 {
-                    var key = SystemProperties.System.FullText;
+                    var key = Windows.Shell.PropertySystem.System.FullText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.GPS Properties
+            /// </summary>
+            public PropertySystemGps GPS
+            {
+                get
+                {
+                    return this.internalPropertySystemGPS ?? (this.internalPropertySystemGPS = new PropertySystemGps(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Identity Properties
+            /// </summary>
+            public PropertySystemIdentity Identity
+            {
+                get
+                {
+                    return this.internalPropertySystemIdentity ?? (this.internalPropertySystemIdentity = new PropertySystemIdentity(this.shellObjectParent));
                 }
             }
 
@@ -1073,16 +1482,41 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {A26F4AFC-7346-4299-BE47-EB1AE613139F}, 100</para>
             /// </summary>
-            public ShellProperty<String> IdentityProperty
+            public ShellProperty<string> IdentityProperty
             {
                 get
                 {
-                    var key = SystemProperties.System.IdentityProperty;
+                    var key = Windows.Shell.PropertySystem.System.IdentityProperty;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.IdentityProvider Properties
+            /// </summary>
+            public PropertySystemIdentityProvider IdentityProvider
+            {
+                get
+                {
+                    return this.internalPropertySystemIdentityProvider ??
+                           (this.internalPropertySystemIdentityProvider = new PropertySystemIdentityProvider(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Image Properties
+            /// </summary>
+            public PropertySystemImage Image
+            {
+                get
+                {
+                    return this.internalPropertySystemImage ?? (this.internalPropertySystemImage = new PropertySystemImage(this.shellObjectParent));
                 }
             }
 
@@ -1092,16 +1526,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {D7750EE0-C6A4-48EC-B53E-B87B52E6D073}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> ImageParsingName
+            public ShellProperty<string[]> ImageParsingName
             {
                 get
                 {
-                    var key = SystemProperties.System.ImageParsingName;
+                    var key = Windows.Shell.PropertySystem.System.ImageParsingName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -1111,16 +1547,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Int32 -- VT_I4</para>
             ///   <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 11</para>
             /// </summary>
-            public ShellProperty<Int32?> Importance
+            public ShellProperty<int?> Importance
             {
                 get
                 {
-                    var key = SystemProperties.System.Importance;
+                    var key = Windows.Shell.PropertySystem.System.Importance;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -1132,16 +1570,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A3B29791-7713-4E1D-BB40-17DB85F01831}, 100</para>
             ///</summary>
-            public ShellProperty<String> ImportanceText
+            public ShellProperty<string> ImportanceText
             {
                 get
                 {
-                    var key = SystemProperties.System.ImportanceText;
+                    var key = Windows.Shell.PropertySystem.System.ImportanceText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1152,16 +1592,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 17</para>
             ///</summary>
-            public ShellProperty<String> InfoTipText
+            public ShellProperty<string> InfoTipText
             {
                 get
                 {
-                    var key = SystemProperties.System.InfoTipText;
+                    var key = Windows.Shell.PropertySystem.System.InfoTipText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1172,16 +1614,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 5 (PIDVSI_InternalName)</para>
             ///</summary>
-            public ShellProperty<String> InternalName
+            public ShellProperty<string> InternalName
             {
                 get
                 {
-                    var key = SystemProperties.System.InternalName;
+                    var key = Windows.Shell.PropertySystem.System.InternalName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1192,16 +1636,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {F23F425C-71A1-4FA8-922F-678EA4A60408}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsAttachment
+            public ShellProperty<bool?> IsAttachment
             {
                 get
                 {
-                    var key = SystemProperties.System.IsAttachment;
+                    var key = Windows.Shell.PropertySystem.System.IsAttachment;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1212,16 +1658,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 5</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsDefaultNonOwnerSaveLocation
+            public ShellProperty<bool?> IsDefaultNonOwnerSaveLocation
             {
                 get
                 {
-                    var key = SystemProperties.System.IsDefaultNonOwnerSaveLocation;
+                    var key = Windows.Shell.PropertySystem.System.IsDefaultNonOwnerSaveLocation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1232,16 +1680,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 3</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsDefaultSaveLocation
+            public ShellProperty<bool?> IsDefaultSaveLocation
             {
                 get
                 {
-                    var key = SystemProperties.System.IsDefaultSaveLocation;
+                    var key = Windows.Shell.PropertySystem.System.IsDefaultSaveLocation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1251,16 +1701,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {5CDA5FC8-33EE-4FF3-9094-AE7BD8868C4D}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsDeleted
+            public ShellProperty<bool?> IsDeleted
             {
                 get
                 {
-                    var key = SystemProperties.System.IsDeleted;
+                    var key = Windows.Shell.PropertySystem.System.IsDeleted;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1271,16 +1723,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {90E5E14E-648B-4826-B2AA-ACAF790E3513}, 10</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsEncrypted
+            public ShellProperty<bool?> IsEncrypted
             {
                 get
                 {
-                    var key = SystemProperties.System.IsEncrypted;
+                    var key = Windows.Shell.PropertySystem.System.IsEncrypted;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1290,16 +1744,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {5DA84765-E3FF-4278-86B0-A27967FBDD03}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsFlagged
+            public ShellProperty<bool?> IsFlagged
             {
                 get
                 {
-                    var key = SystemProperties.System.IsFlagged;
+                    var key = Windows.Shell.PropertySystem.System.IsFlagged;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1309,16 +1765,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {A6F360D2-55F9-48DE-B909-620E090A647C}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsFlaggedComplete
+            public ShellProperty<bool?> IsFlaggedComplete
             {
                 get
                 {
-                    var key = SystemProperties.System.IsFlaggedComplete;
+                    var key = Windows.Shell.PropertySystem.System.IsFlaggedComplete;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1329,16 +1787,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {346C8BD1-2E6A-4C45-89A4-61B78E8E700F}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsIncomplete
+            public ShellProperty<bool?> IsIncomplete
             {
                 get
                 {
-                    var key = SystemProperties.System.IsIncomplete;
+                    var key = Windows.Shell.PropertySystem.System.IsIncomplete;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1349,16 +1809,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 8</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsLocationSupported
+            public ShellProperty<bool?> IsLocationSupported
             {
                 get
                 {
-                    var key = SystemProperties.System.IsLocationSupported;
+                    var key = Windows.Shell.PropertySystem.System.IsLocationSupported;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1369,16 +1831,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 2</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsPinnedToNameSpaceTree
+            public ShellProperty<bool?> IsPinnedToNameSpaceTree
             {
                 get
                 {
-                    var key = SystemProperties.System.IsPinnedToNameSpaceTree;
+                    var key = Windows.Shell.PropertySystem.System.IsPinnedToNameSpaceTree;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1389,16 +1853,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 10</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsRead
+            public ShellProperty<bool?> IsRead
             {
                 get
                 {
-                    var key = SystemProperties.System.IsRead;
+                    var key = Windows.Shell.PropertySystem.System.IsRead;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1409,16 +1875,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 4</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsSearchOnlyItem
+            public ShellProperty<bool?> IsSearchOnlyItem
             {
                 get
                 {
-                    var key = SystemProperties.System.IsSearchOnlyItem;
+                    var key = Windows.Shell.PropertySystem.System.IsSearchOnlyItem;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1429,16 +1897,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 33</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsSendToTarget
+            public ShellProperty<bool?> IsSendToTarget
             {
                 get
                 {
-                    var key = SystemProperties.System.IsSendToTarget;
+                    var key = Windows.Shell.PropertySystem.System.IsSendToTarget;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1449,16 +1919,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {EF884C5B-2BFE-41BB-AAE5-76EEDF4F9902}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsShared
+            public ShellProperty<bool?> IsShared
             {
                 get
                 {
-                    var key = SystemProperties.System.IsShared;
+                    var key = Windows.Shell.PropertySystem.System.IsShared;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -1471,16 +1943,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D0A04F0A-462A-48A4-BB2F-3706E88DBD7D}, 100</para>
             ///</summary>
-            public ShellProperty<String[]> ItemAuthors
+            public ShellProperty<string[]> ItemAuthors
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemAuthors;
+                    var key = Windows.Shell.PropertySystem.System.ItemAuthors;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -1490,16 +1964,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {048658AD-2DB8-41A4-BBB6-AC1EF1207EB1}, 100</para>
             /// </summary>
-            public ShellProperty<String> ItemClassType
+            public ShellProperty<string> ItemClassType
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemClassType;
+                    var key = Windows.Shell.PropertySystem.System.ItemClassType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1516,12 +1992,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemDate;
+                    var key = Windows.Shell.PropertySystem.System.ItemDate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -1547,16 +2025,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 2 (PID_STG_DIRECTORY)</para>
             ///</summary>
-            public ShellProperty<String> ItemFolderNameDisplay
+            public ShellProperty<string> ItemFolderNameDisplay
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemFolderNameDisplay;
+                    var key = Windows.Shell.PropertySystem.System.ItemFolderNameDisplay;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1580,16 +2060,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 6</para>
             ///</summary>
-            public ShellProperty<String> ItemFolderPathDisplay
+            public ShellProperty<string> ItemFolderPathDisplay
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemFolderPathDisplay;
+                    var key = Windows.Shell.PropertySystem.System.ItemFolderPathDisplay;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1616,16 +2098,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {DABD30ED-0043-4789-A7F8-D013A4736622}, 100</para>
             ///</summary>
-            public ShellProperty<String> ItemFolderPathDisplayNarrow
+            public ShellProperty<string> ItemFolderPathDisplayNarrow
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemFolderPathDisplayNarrow;
+                    var key = Windows.Shell.PropertySystem.System.ItemFolderPathDisplayNarrow;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1642,16 +2126,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6B8DA074-3B5C-43BC-886F-0A2CDCE00B6F}, 100</para>
             ///</summary>
-            public ShellProperty<String> ItemName
+            public ShellProperty<string> ItemName
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemName;
+                    var key = Windows.Shell.PropertySystem.System.ItemName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1699,16 +2185,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 10 (PID_STG_NAME)</para>
             ///</summary>
-            public ShellProperty<String> ItemNameDisplay
+            public ShellProperty<string> ItemNameDisplay
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemNameDisplay;
+                    var key = Windows.Shell.PropertySystem.System.ItemNameDisplay;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1734,16 +2222,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D7313FF1-A77A-401C-8C99-3DBDD68ADD36}, 100</para>
             ///</summary>
-            public ShellProperty<String> ItemNamePrefix
+            public ShellProperty<string> ItemNamePrefix
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemNamePrefix;
+                    var key = Windows.Shell.PropertySystem.System.ItemNamePrefix;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1758,16 +2248,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D4D0AA16-9948-41A4-AA85-D97FF9646993}, 100</para>
             ///</summary>
-            public ShellProperty<String[]> ItemParticipants
+            public ShellProperty<string[]> ItemParticipants
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemParticipants;
+                    var key = Windows.Shell.PropertySystem.System.ItemParticipants;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -1798,16 +2290,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 7</para>
             ///</summary>
-            public ShellProperty<String> ItemPathDisplay
+            public ShellProperty<string> ItemPathDisplay
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemPathDisplay;
+                    var key = Windows.Shell.PropertySystem.System.ItemPathDisplay;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1834,16 +2328,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 8</para>
             ///</summary>
-            public ShellProperty<String> ItemPathDisplayNarrow
+            public ShellProperty<string> ItemPathDisplayNarrow
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemPathDisplayNarrow;
+                    var key = Windows.Shell.PropertySystem.System.ItemPathDisplayNarrow;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1875,16 +2371,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 11</para>
             ///</summary>
-            public ShellProperty<String> ItemType
+            public ShellProperty<string> ItemType
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemType;
+                    var key = Windows.Shell.PropertySystem.System.ItemType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1915,16 +2413,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 4 (PID_STG_STORAGETYPE)</para>
             ///</summary>
-            public ShellProperty<String> ItemTypeText
+            public ShellProperty<string> ItemTypeText
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemTypeText;
+                    var key = Windows.Shell.PropertySystem.System.ItemTypeText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -1943,16 +2443,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Query) {49691C90-7E17-101A-A91C-08002B2ECDA9}, 9 (DISPID_QUERY_VIRTUALPATH)</para>
             ///</summary>
-            public ShellProperty<String> ItemUrl
+            public ShellProperty<string> ItemUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.ItemUrl;
+                    var key = Windows.Shell.PropertySystem.System.ItemUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Journal Properties
+            /// </summary>
+            public PropertySystemJournal Journal
+            {
+                get
+                {
+                    return this.internalPropertySystemJournal ?? (this.internalPropertySystemJournal = new PropertySystemJournal(this.shellObjectParent));
                 }
             }
 
@@ -1963,16 +2476,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 5 (PIDSI_KEYWORDS)</para>
             ///</summary>
-            public ShellProperty<String[]> Keywords
+            public ShellProperty<string[]> Keywords
             {
                 get
                 {
-                    var key = SystemProperties.System.Keywords;
+                    var key = Windows.Shell.PropertySystem.System.Keywords;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -1985,16 +2500,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {1E3EE840-BC2B-476C-8237-2ACD1A839B22}, 3</para>
             ///</summary>
-            public ShellProperty<String[]> Kind
+            public ShellProperty<string[]> Kind
             {
                 get
                 {
-                    var key = SystemProperties.System.Kind;
+                    var key = Windows.Shell.PropertySystem.System.Kind;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -2006,16 +2523,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {F04BEF95-C585-4197-A2B7-DF46FDC9EE6D}, 100</para>
             ///</summary>
-            public ShellProperty<String> KindText
+            public ShellProperty<string> KindText
             {
                 get
                 {
-                    var key = SystemProperties.System.KindText;
+                    var key = Windows.Shell.PropertySystem.System.KindText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2026,16 +2545,63 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 28</para>
             ///</summary>
-            public ShellProperty<String> Language
+            public ShellProperty<string> Language
             {
                 get
                 {
-                    var key = SystemProperties.System.Language;
+                    var key = Windows.Shell.PropertySystem.System.Language;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.LayoutPattern Properties
+            /// </summary>
+            public PropertySystemLayoutPattern LayoutPattern
+            {
+                get
+                {
+                    return this.internalPropertySystemLayoutPattern ??
+                           (this.internalPropertySystemLayoutPattern = new PropertySystemLayoutPattern(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Link Properties
+            /// </summary>
+            public PropertySystemLink Link
+            {
+                get
+                {
+                    return this.internalPropertySystemLink ?? (this.internalPropertySystemLink = new PropertySystemLink(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Media Properties
+            /// </summary>
+            public PropertySystemMedia Media
+            {
+                get
+                {
+                    return this.internalPropertySystemMedia ?? (this.internalPropertySystemMedia = new PropertySystemMedia(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Message Properties
+            /// </summary>
+            public PropertySystemMessage Message
+            {
+                get
+                {
+                    return this.internalPropertySystemMessage ?? (this.internalPropertySystemMessage = new PropertySystemMessage(this.shellObjectParent));
                 }
             }
 
@@ -2045,16 +2611,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {FDF84370-031A-4ADD-9E91-0D775F1C6605}, 100</para>
             /// </summary>
-            public ShellProperty<String> MileageInformation
+            public ShellProperty<string> MileageInformation
             {
                 get
                 {
-                    var key = SystemProperties.System.MileageInformation;
+                    var key = Windows.Shell.PropertySystem.System.MileageInformation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2065,16 +2633,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {0B63E350-9CCC-11D0-BCDB-00805FCCCE04}, 5</para>
             ///</summary>
-            public ShellProperty<String> MIMEType
+            public ShellProperty<string> MimeType
             {
                 get
                 {
-                    var key = SystemProperties.System.MIMEType;
+                    var key = Windows.Shell.PropertySystem.System.MimeType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Music Properties
+            /// </summary>
+            public PropertySystemMusic Music
+            {
+                get
+                {
+                    return this.internalPropertySystemMusic ?? (this.internalPropertySystemMusic = new PropertySystemMusic(this.shellObjectParent));
                 }
             }
 
@@ -2085,16 +2666,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Guid -- VT_CLSID</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 6</para>
             ///</summary>
-            public ShellProperty<IntPtr?> NamespaceCLSID
+            public ShellProperty<IntPtr?> NamespaceClsid
             {
                 get
                 {
-                    var key = SystemProperties.System.NamespaceCLSID;
+                    var key = Windows.Shell.PropertySystem.System.NamespaceClsid;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Note Properties
+            /// </summary>
+            public PropertySystemNote Note
+            {
+                get
+                {
+                    return this.internalPropertySystemNote ?? (this.internalPropertySystemNote = new PropertySystemNote(this.shellObjectParent));
                 }
             }
 
@@ -2104,16 +2698,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {00000000-0000-0000-0000-000000000000}, 0</para>
             /// </summary>
-            public ShellProperty<Object> Null
+            public ShellProperty<object> Null
             {
                 get
                 {
-                    var key = SystemProperties.System.Null;
+                    var key = Windows.Shell.PropertySystem.System.Null;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -2123,16 +2719,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt32 -- VT_UI4</para>
             ///   <para>FormatID: {A94688B6-7D9F-4570-A648-E3DFC0AB2B3F}, 100</para>
             /// </summary>
-            public ShellProperty<UInt32?> OfflineAvailability
+            public ShellProperty<uint?> OfflineAvailability
             {
                 get
                 {
-                    var key = SystemProperties.System.OfflineAvailability;
+                    var key = Windows.Shell.PropertySystem.System.OfflineAvailability;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -2142,16 +2740,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt32 -- VT_UI4</para>
             ///   <para>FormatID: {6D24888F-4718-4BDA-AFED-EA0FB4386CD8}, 100</para>
             /// </summary>
-            public ShellProperty<UInt32?> OfflineStatus
+            public ShellProperty<uint?> OfflineStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.OfflineStatus;
+                    var key = Windows.Shell.PropertySystem.System.OfflineStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -2162,16 +2762,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 6</para>
             ///</summary>
-            public ShellProperty<String> OriginalFileName
+            public ShellProperty<string> OriginalFileName
             {
                 get
                 {
-                    var key = SystemProperties.System.OriginalFileName;
+                    var key = Windows.Shell.PropertySystem.System.OriginalFileName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2182,16 +2784,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {5D76B67F-9B3D-44BB-B6AE-25DA4F638A67}, 6</para>
             ///</summary>
-            public ShellProperty<String> OwnerSID
+            public ShellProperty<string> OwnerSid
             {
                 get
                 {
-                    var key = SystemProperties.System.OwnerSID;
+                    var key = Windows.Shell.PropertySystem.System.OwnerSid;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2202,16 +2806,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 21 (PIDMSI_PARENTAL_RATING)</para>
             ///</summary>
-            public ShellProperty<String> ParentalRating
+            public ShellProperty<string> ParentalRating
             {
                 get
                 {
-                    var key = SystemProperties.System.ParentalRating;
+                    var key = Windows.Shell.PropertySystem.System.ParentalRating;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2221,16 +2827,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {10984E0A-F9F2-4321-B7EF-BAF195AF4319}, 100</para>
             /// </summary>
-            public ShellProperty<String> ParentalRatingReason
+            public ShellProperty<string> ParentalRatingReason
             {
                 get
                 {
-                    var key = SystemProperties.System.ParentalRatingReason;
+                    var key = Windows.Shell.PropertySystem.System.ParentalRatingReason;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2240,16 +2848,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {A7FE0840-1344-46F0-8D37-52ED712A4BF9}, 100</para>
             /// </summary>
-            public ShellProperty<String> ParentalRatingsOrganization
+            public ShellProperty<string> ParentalRatingsOrganization
             {
                 get
                 {
-                    var key = SystemProperties.System.ParentalRatingsOrganization;
+                    var key = Windows.Shell.PropertySystem.System.ParentalRatingsOrganization;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2260,16 +2870,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Any -- VT_NULL  Legacy code may treat this as VT_UNKNOWN.</para>
             ///  <para>FormatID: {DFB9A04D-362F-4CA3-B30B-0254B17B5B84}, 100</para>
             ///</summary>
-            public ShellProperty<Object> ParsingBindContext
+            public ShellProperty<object> ParsingBindContext
             {
                 get
                 {
-                    var key = SystemProperties.System.ParsingBindContext;
+                    var key = Windows.Shell.PropertySystem.System.ParsingBindContext;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -2281,16 +2893,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 24</para>
             ///</summary>
-            public ShellProperty<String> ParsingName
+            public ShellProperty<string> ParsingName
             {
                 get
                 {
-                    var key = SystemProperties.System.ParsingName;
+                    var key = Windows.Shell.PropertySystem.System.ParsingName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2306,16 +2920,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 30</para>
             ///</summary>
-            public ShellProperty<String> ParsingPath
+            public ShellProperty<string> ParsingPath
             {
                 get
                 {
-                    var key = SystemProperties.System.ParsingPath;
+                    var key = Windows.Shell.PropertySystem.System.ParsingPath;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2326,16 +2942,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 9</para>
             ///</summary>
-            public ShellProperty<Int32?> PerceivedType
+            public ShellProperty<int?> PerceivedType
             {
                 get
                 {
-                    var key = SystemProperties.System.PerceivedType;
+                    var key = Windows.Shell.PropertySystem.System.PerceivedType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -2346,16 +2964,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 5  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<UInt32?> PercentFull
+            public ShellProperty<uint?> PercentFull
             {
                 get
                 {
-                    var key = SystemProperties.System.PercentFull;
+                    var key = Windows.Shell.PropertySystem.System.PercentFull;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Photo Properties
+            /// </summary>
+            public PropertySystemPhoto Photo
+            {
+                get
+                {
+                    return this.internalPropertySystemPhoto ?? (this.internalPropertySystemPhoto = new PropertySystemPhoto(this.shellObjectParent));
                 }
             }
 
@@ -2366,16 +2997,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {9C1FCF74-2D97-41BA-B4AE-CB2E3661A6E4}, 5</para>
             ///</summary>
-            public ShellProperty<UInt16?> Priority
+            public ShellProperty<ushort?> Priority
             {
                 get
                 {
-                    var key = SystemProperties.System.Priority;
+                    var key = Windows.Shell.PropertySystem.System.Priority;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -2387,16 +3020,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D98BE98B-B86B-4095-BF52-9D23B2E0A752}, 100</para>
             ///</summary>
-            public ShellProperty<String> PriorityText
+            public ShellProperty<string> PriorityText
             {
                 get
                 {
-                    var key = SystemProperties.System.PriorityText;
+                    var key = Windows.Shell.PropertySystem.System.PriorityText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2406,16 +3041,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {39A7F922-477C-48DE-8BC8-B28441E342E3}, 100</para>
             /// </summary>
-            public ShellProperty<String> Project
+            public ShellProperty<string> Project
             {
                 get
                 {
-                    var key = SystemProperties.System.Project;
+                    var key = Windows.Shell.PropertySystem.System.Project;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.PropGroup Properties
+            /// </summary>
+            public PropertySystemPropGroup PropGroup
+            {
+                get
+                {
+                    return this.internalPropertySystemPropGroup ?? (this.internalPropertySystemPropGroup = new PropertySystemPropGroup(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.PropList Properties
+            /// </summary>
+            public PropertySystemPropList PropList
+            {
+                get
+                {
+                    return this.internalPropertySystemPropList ?? (this.internalPropertySystemPropList = new PropertySystemPropList(this.shellObjectParent));
                 }
             }
 
@@ -2426,16 +3085,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {F21D9941-81F0-471A-ADEE-4E74B49217ED}, 100</para>
             ///</summary>
-            public ShellProperty<String> ProviderItemID
+            public ShellProperty<string> ProviderItemID
             {
                 get
                 {
-                    var key = SystemProperties.System.ProviderItemID;
+                    var key = Windows.Shell.PropertySystem.System.ProviderItemID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2447,16 +3108,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 9 (PIDMSI_RATING)</para>
             ///</summary>
-            public ShellProperty<UInt32?> Rating
+            public ShellProperty<uint?> Rating
             {
                 get
                 {
-                    var key = SystemProperties.System.Rating;
+                    var key = Windows.Shell.PropertySystem.System.Rating;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -2468,16 +3131,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {90197CA7-FD8F-4E8C-9DA3-B57E1E609295}, 100</para>
             ///</summary>
-            public ShellProperty<String> RatingText
+            public ShellProperty<string> RatingText
             {
                 get
                 {
-                    var key = SystemProperties.System.RatingText;
+                    var key = Windows.Shell.PropertySystem.System.RatingText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.RecordedTV Properties
+            /// </summary>
+            public PropertySystemRecordedTV RecordedTV
+            {
+                get
+                {
+                    return this.internalPropertySystemRecordedTV ?? (this.internalPropertySystemRecordedTV = new PropertySystemRecordedTV(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Search Properties
+            /// </summary>
+            public PropertySystemSearch Search
+            {
+                get
+                {
+                    return this.internalPropertySystemSearch ?? (this.internalPropertySystemSearch = new PropertySystemSearch(this.shellObjectParent));
                 }
             }
 
@@ -2488,16 +3175,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {F8D3F6AC-4874-42CB-BE59-AB454B30716A}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> Sensitivity
+            public ShellProperty<ushort?> Sensitivity
             {
                 get
                 {
-                    var key = SystemProperties.System.Sensitivity;
+                    var key = Windows.Shell.PropertySystem.System.Sensitivity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -2509,16 +3198,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D0C7F054-3F72-4725-8527-129A577CB269}, 100</para>
             ///</summary>
-            public ShellProperty<String> SensitivityText
+            public ShellProperty<string> SensitivityText
             {
                 get
                 {
-                    var key = SystemProperties.System.SensitivityText;
+                    var key = Windows.Shell.PropertySystem.System.SensitivityText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2529,36 +3220,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 25</para>
             ///</summary>
-            public ShellProperty<UInt32?> SFGAOFlags
+            public ShellProperty<uint?> SfgaoFlags
             {
                 get
                 {
-                    var key = SystemProperties.System.SFGAOFlags;
+                    var key = Windows.Shell.PropertySystem.System.SfgaoFlags;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.SharedWith -- PKEY_SharedWith</para>
-            ///  <para>Description: Who is the item shared with?
-            ///  </para>
-            ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
-            ///  <para>FormatID: {EF884C5B-2BFE-41BB-AAE5-76EEDF4F9902}, 200</para>
-            ///</summary>
-            public ShellProperty<String[]> SharedWith
-            {
-                get
-                {
-                    var key = SystemProperties.System.SharedWith;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
-
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -2569,16 +3242,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 12 (PIDMSI_SHARE_USER_RATING)</para>
             ///</summary>
-            public ShellProperty<UInt32?> ShareUserRating
+            public ShellProperty<uint?> ShareUserRating
             {
                 get
                 {
-                    var key = SystemProperties.System.ShareUserRating;
+                    var key = Windows.Shell.PropertySystem.System.ShareUserRating;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.SharedWith -- PKEY_SharedWith</para>
+            ///  <para>Description: Who is the item shared with?
+            ///  </para>
+            ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
+            ///  <para>FormatID: {EF884C5B-2BFE-41BB-AAE5-76EEDF4F9902}, 200</para>
+            ///</summary>
+            public ShellProperty<string[]> SharedWith
+            {
+                get
+                {
+                    var key = Windows.Shell.PropertySystem.System.SharedWith;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -2589,16 +3286,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {EF884C5B-2BFE-41BB-AAE5-76EEDF4F9902}, 300</para>
             ///</summary>
-            public ShellProperty<UInt32?> SharingStatus
+            public ShellProperty<uint?> SharingStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.SharingStatus;
+                    var key = Windows.Shell.PropertySystem.System.SharingStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Shell Properties
+            /// </summary>
+            public PropertySystemShell Shell
+            {
+                get
+                {
+                    return this.internalPropertySystemShell ?? (this.internalPropertySystemShell = new PropertySystemShell(this.shellObjectParent));
                 }
             }
 
@@ -2610,16 +3320,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {A09F084E-AD41-489F-8076-AA5BE3082BCA}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> SimpleRating
+            public ShellProperty<uint?> SimpleRating
             {
                 get
                 {
-                    var key = SystemProperties.System.SimpleRating;
+                    var key = Windows.Shell.PropertySystem.System.SimpleRating;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -2630,16 +3342,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 12 (PID_STG_SIZE)</para>
             ///</summary>
-            public ShellProperty<UInt64?> Size
+            public ShellProperty<ulong?> Size
             {
                 get
                 {
-                    var key = SystemProperties.System.Size;
+                    var key = Windows.Shell.PropertySystem.System.Size;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Software Properties
+            /// </summary>
+            public PropertySystemSoftware Software
+            {
+                get
+                {
+                    return this.internalPropertySystemSoftware ?? (this.internalPropertySystemSoftware = new PropertySystemSoftware(this.shellObjectParent));
                 }
             }
 
@@ -2650,16 +3375,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 305</para>
             ///</summary>
-            public ShellProperty<String> SoftwareUsed
+            public ShellProperty<string> SoftwareUsed
             {
                 get
                 {
-                    var key = SystemProperties.System.SoftwareUsed;
+                    var key = Windows.Shell.PropertySystem.System.SoftwareUsed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2669,16 +3396,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {668CDFA5-7A1B-4323-AE4B-E527393A1D81}, 100</para>
             /// </summary>
-            public ShellProperty<String> SourceItem
+            public ShellProperty<string> SourceItem
             {
                 get
                 {
-                    var key = SystemProperties.System.SourceItem;
+                    var key = Windows.Shell.PropertySystem.System.SourceItem;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2692,12 +3421,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.StartDate;
+                    var key = Windows.Shell.PropertySystem.System.StartDate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -2707,16 +3438,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: (FMTID_IntSite) {000214A1-0000-0000-C000-000000000046}, 9</para>
             /// </summary>
-            public ShellProperty<String> Status
+            public ShellProperty<string> Status
             {
                 get
                 {
-                    var key = SystemProperties.System.Status;
+                    var key = Windows.Shell.PropertySystem.System.Status;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2727,16 +3460,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 3 (PIDSI_SUBJECT)</para>
             ///</summary>
-            public ShellProperty<String> Subject
+            public ShellProperty<string> Subject
             {
                 get
                 {
-                    var key = SystemProperties.System.Subject;
+                    var key = Windows.Shell.PropertySystem.System.Subject;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   System.Sync Properties
+            /// </summary>
+            public PropertySystemSync Sync
+            {
+                get
+                {
+                    return this.internalPropertySystemSync ?? (this.internalPropertySystemSync = new PropertySystemSync(this.shellObjectParent));
+                }
+            }
+
+            /// <summary>
+            ///   System.Task Properties
+            /// </summary>
+            public PropertySystemTask Task
+            {
+                get
+                {
+                    return this.internalPropertySystemTask ?? (this.internalPropertySystemTask = new PropertySystemTask(this.shellObjectParent));
                 }
             }
 
@@ -2751,12 +3508,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Thumbnail;
+                    var key = Windows.Shell.PropertySystem.System.Thumbnail;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
                 }
             }
 
@@ -2768,16 +3527,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: {446D16B1-8DAD-4870-A748-402EA43D788C}, 100</para>
             ///</summary>
-            public ShellProperty<UInt64?> ThumbnailCacheId
+            public ShellProperty<ulong?> ThumbnailCacheId
             {
                 get
                 {
-                    var key = SystemProperties.System.ThumbnailCacheId;
+                    var key = Windows.Shell.PropertySystem.System.ThumbnailCacheId;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -2792,12 +3553,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.ThumbnailStream;
+                    var key = Windows.Shell.PropertySystem.System.ThumbnailStream;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IStream>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IStream>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IStream>;
+                    return this.hashtable[key] as ShellProperty<IStream>;
                 }
             }
 
@@ -2808,16 +3571,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 2 (PIDSI_TITLE)</para>
             ///</summary>
-            public ShellProperty<String> Title
+            public ShellProperty<string> Title
             {
                 get
                 {
-                    var key = SystemProperties.System.Title;
+                    var key = Windows.Shell.PropertySystem.System.Title;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -2828,16 +3593,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_ShellDetails) {28636AA6-953D-11D2-B5D6-00C04FD918D0}, 14</para>
             ///</summary>
-            public ShellProperty<UInt64?> TotalFileSize
+            public ShellProperty<ulong?> TotalFileSize
             {
                 get
                 {
-                    var key = SystemProperties.System.TotalFileSize;
+                    var key = Windows.Shell.PropertySystem.System.TotalFileSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -2848,250 +3615,75 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 9 (PIDVSI_Trademarks)</para>
             ///</summary>
-            public ShellProperty<String> Trademarks
+            public ShellProperty<string> Trademarks
             {
                 get
                 {
-                    var key = SystemProperties.System.Trademarks;
+                    var key = Windows.Shell.PropertySystem.System.Trademarks;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
-
-            #endregion
-
-            #region sub-namespaces
-
-            private PropertySystemAppUserModel internalPropertySystemAppUserModel;
-
-            private PropertySystemAudio internalPropertySystemAudio;
-
-            private PropertySystemCalendar internalPropertySystemCalendar;
-
-            private PropertySystemCommunication internalPropertySystemCommunication;
-
-            private PropertySystemComputer internalPropertySystemComputer;
-
-            private PropertySystemContact internalPropertySystemContact;
-            private PropertySystemDRM internalPropertySystemDRM;
-
-            private PropertySystemDevice internalPropertySystemDevice;
-
-            private PropertySystemDeviceInterface internalPropertySystemDeviceInterface;
-
-            private PropertySystemDevices internalPropertySystemDevices;
-
-            private PropertySystemDocument internalPropertySystemDocument;
-            private PropertySystemGPS internalPropertySystemGPS;
-            private PropertySystemIdentity internalPropertySystemIdentity;
-            private PropertySystemIdentityProvider internalPropertySystemIdentityProvider;
-            private PropertySystemImage internalPropertySystemImage;
-            private PropertySystemJournal internalPropertySystemJournal;
-            private PropertySystemLayoutPattern internalPropertySystemLayoutPattern;
-            private PropertySystemLink internalPropertySystemLink;
-            private PropertySystemMedia internalPropertySystemMedia;
-            private PropertySystemMessage internalPropertySystemMessage;
-            private PropertySystemMusic internalPropertySystemMusic;
-            private PropertySystemNote internalPropertySystemNote;
-            private PropertySystemPhoto internalPropertySystemPhoto;
-            private PropertySystemPropGroup internalPropertySystemPropGroup;
-            private PropertySystemPropList internalPropertySystemPropList;
-            private PropertySystemRecordedTV internalPropertySystemRecordedTV;
-            private PropertySystemSearch internalPropertySystemSearch;
-            private PropertySystemShell internalPropertySystemShell;
-            private PropertySystemSoftware internalPropertySystemSoftware;
-            private PropertySystemSync internalPropertySystemSync;
-            private PropertySystemTask internalPropertySystemTask;
-            private PropertySystemVideo internalPropertySystemVideo;
-            private PropertySystemVolume internalPropertySystemVolume;
-
-            /// <summary>
-            ///   System.AppUserModel Properties
-            /// </summary>
-            public PropertySystemAppUserModel AppUserModel { get { return internalPropertySystemAppUserModel ?? (internalPropertySystemAppUserModel = new PropertySystemAppUserModel(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Audio Properties
-            /// </summary>
-            public PropertySystemAudio Audio { get { return internalPropertySystemAudio ?? (internalPropertySystemAudio = new PropertySystemAudio(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Calendar Properties
-            /// </summary>
-            public PropertySystemCalendar Calendar { get { return internalPropertySystemCalendar ?? (internalPropertySystemCalendar = new PropertySystemCalendar(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Communication Properties
-            /// </summary>
-            public PropertySystemCommunication Communication { get { return internalPropertySystemCommunication ?? (internalPropertySystemCommunication = new PropertySystemCommunication(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Computer Properties
-            /// </summary>
-            public PropertySystemComputer Computer { get { return internalPropertySystemComputer ?? (internalPropertySystemComputer = new PropertySystemComputer(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Contact Properties
-            /// </summary>
-            public PropertySystemContact Contact { get { return internalPropertySystemContact ?? (internalPropertySystemContact = new PropertySystemContact(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Device Properties
-            /// </summary>
-            public PropertySystemDevice Device { get { return internalPropertySystemDevice ?? (internalPropertySystemDevice = new PropertySystemDevice(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.DeviceInterface Properties
-            /// </summary>
-            public PropertySystemDeviceInterface DeviceInterface { get { return internalPropertySystemDeviceInterface ?? (internalPropertySystemDeviceInterface = new PropertySystemDeviceInterface(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Devices Properties
-            /// </summary>
-            public PropertySystemDevices Devices { get { return internalPropertySystemDevices ?? (internalPropertySystemDevices = new PropertySystemDevices(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Document Properties
-            /// </summary>
-            public PropertySystemDocument Document { get { return internalPropertySystemDocument ?? (internalPropertySystemDocument = new PropertySystemDocument(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.DRM Properties
-            /// </summary>
-            public PropertySystemDRM DRM { get { return internalPropertySystemDRM ?? (internalPropertySystemDRM = new PropertySystemDRM(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.GPS Properties
-            /// </summary>
-            public PropertySystemGPS GPS { get { return internalPropertySystemGPS ?? (internalPropertySystemGPS = new PropertySystemGPS(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Identity Properties
-            /// </summary>
-            public PropertySystemIdentity Identity { get { return internalPropertySystemIdentity ?? (internalPropertySystemIdentity = new PropertySystemIdentity(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.IdentityProvider Properties
-            /// </summary>
-            public PropertySystemIdentityProvider IdentityProvider { get { return internalPropertySystemIdentityProvider ?? (internalPropertySystemIdentityProvider = new PropertySystemIdentityProvider(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Image Properties
-            /// </summary>
-            public PropertySystemImage Image { get { return internalPropertySystemImage ?? (internalPropertySystemImage = new PropertySystemImage(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Journal Properties
-            /// </summary>
-            public PropertySystemJournal Journal { get { return internalPropertySystemJournal ?? (internalPropertySystemJournal = new PropertySystemJournal(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.LayoutPattern Properties
-            /// </summary>
-            public PropertySystemLayoutPattern LayoutPattern { get { return internalPropertySystemLayoutPattern ?? (internalPropertySystemLayoutPattern = new PropertySystemLayoutPattern(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Link Properties
-            /// </summary>
-            public PropertySystemLink Link { get { return internalPropertySystemLink ?? (internalPropertySystemLink = new PropertySystemLink(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Media Properties
-            /// </summary>
-            public PropertySystemMedia Media { get { return internalPropertySystemMedia ?? (internalPropertySystemMedia = new PropertySystemMedia(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Message Properties
-            /// </summary>
-            public PropertySystemMessage Message { get { return internalPropertySystemMessage ?? (internalPropertySystemMessage = new PropertySystemMessage(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Music Properties
-            /// </summary>
-            public PropertySystemMusic Music { get { return internalPropertySystemMusic ?? (internalPropertySystemMusic = new PropertySystemMusic(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Note Properties
-            /// </summary>
-            public PropertySystemNote Note { get { return internalPropertySystemNote ?? (internalPropertySystemNote = new PropertySystemNote(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Photo Properties
-            /// </summary>
-            public PropertySystemPhoto Photo { get { return internalPropertySystemPhoto ?? (internalPropertySystemPhoto = new PropertySystemPhoto(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.PropGroup Properties
-            /// </summary>
-            public PropertySystemPropGroup PropGroup { get { return internalPropertySystemPropGroup ?? (internalPropertySystemPropGroup = new PropertySystemPropGroup(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.PropList Properties
-            /// </summary>
-            public PropertySystemPropList PropList { get { return internalPropertySystemPropList ?? (internalPropertySystemPropList = new PropertySystemPropList(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.RecordedTV Properties
-            /// </summary>
-            public PropertySystemRecordedTV RecordedTV { get { return internalPropertySystemRecordedTV ?? (internalPropertySystemRecordedTV = new PropertySystemRecordedTV(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Search Properties
-            /// </summary>
-            public PropertySystemSearch Search { get { return internalPropertySystemSearch ?? (internalPropertySystemSearch = new PropertySystemSearch(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Shell Properties
-            /// </summary>
-            public PropertySystemShell Shell { get { return internalPropertySystemShell ?? (internalPropertySystemShell = new PropertySystemShell(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Software Properties
-            /// </summary>
-            public PropertySystemSoftware Software { get { return internalPropertySystemSoftware ?? (internalPropertySystemSoftware = new PropertySystemSoftware(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Sync Properties
-            /// </summary>
-            public PropertySystemSync Sync { get { return internalPropertySystemSync ?? (internalPropertySystemSync = new PropertySystemSync(shellObjectParent)); } }
-
-            /// <summary>
-            ///   System.Task Properties
-            /// </summary>
-            public PropertySystemTask Task { get { return internalPropertySystemTask ?? (internalPropertySystemTask = new PropertySystemTask(shellObjectParent)); } }
 
             /// <summary>
             ///   System.Video Properties
             /// </summary>
-            public PropertySystemVideo Video { get { return internalPropertySystemVideo ?? (internalPropertySystemVideo = new PropertySystemVideo(shellObjectParent)); } }
+            public PropertySystemVideo Video
+            {
+                get
+                {
+                    return this.internalPropertySystemVideo ?? (this.internalPropertySystemVideo = new PropertySystemVideo(this.shellObjectParent));
+                }
+            }
 
             /// <summary>
             ///   System.Volume Properties
             /// </summary>
-            public PropertySystemVolume Volume { get { return internalPropertySystemVolume ?? (internalPropertySystemVolume = new PropertySystemVolume(shellObjectParent)); } }
+            public PropertySystemVolume Volume
+            {
+                get
+                {
+                    return this.internalPropertySystemVolume ?? (this.internalPropertySystemVolume = new PropertySystemVolume(this.shellObjectParent));
+                }
+            }
 
             #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemAppUserModel
-
         /// <summary>
-        ///   System.AppUserModel Properties
+        /// System.AppUserModel Properties
         /// </summary>
         public class PropertySystemAppUserModel : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemAppUserModel(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -3101,16 +3693,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 8</para>
             /// </summary>
-            public ShellProperty<Boolean?> ExcludeFromShowInNewInstall
+            public ShellProperty<bool?> ExcludeFromShowInNewInstall
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.ExcludeFromShowInNewInstall;
+                    var key = Shell.PropertySystem.System.AppUserModel.ExcludeFromShowInNewInstall;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3120,16 +3714,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 5</para>
             /// </summary>
-            public ShellProperty<String> ID
+            public ShellProperty<string> ID
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.ID;
+                    var key = Shell.PropertySystem.System.AppUserModel.ID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3139,16 +3735,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 6</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsDestListSeparator
+            public ShellProperty<bool?> IsDestListSeparator
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.IsDestListSeparator;
+                    var key = Shell.PropertySystem.System.AppUserModel.IsDestListSeparator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3158,16 +3756,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 9</para>
             /// </summary>
-            public ShellProperty<Boolean?> PreventPinning
+            public ShellProperty<bool?> PreventPinning
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.PreventPinning;
+                    var key = Shell.PropertySystem.System.AppUserModel.PreventPinning;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3177,16 +3777,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 2</para>
             /// </summary>
-            public ShellProperty<String> RelaunchCommand
+            public ShellProperty<string> RelaunchCommand
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.RelaunchCommand;
+                    var key = Shell.PropertySystem.System.AppUserModel.RelaunchCommand;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3196,16 +3798,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 4</para>
             /// </summary>
-            public ShellProperty<String> RelaunchDisplayNameResource
+            public ShellProperty<string> RelaunchDisplayNameResource
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.RelaunchDisplayNameResource;
+                    var key = Shell.PropertySystem.System.AppUserModel.RelaunchDisplayNameResource;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3215,42 +3819,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3}, 3</para>
             /// </summary>
-            public ShellProperty<String> RelaunchIconResource
+            public ShellProperty<string> RelaunchIconResource
             {
                 get
                 {
-                    var key = SystemProperties.System.AppUserModel.RelaunchIconResource;
+                    var key = Shell.PropertySystem.System.AppUserModel.RelaunchIconResource;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemAudio
-
         /// <summary>
-        ///   System.Audio Properties
+        /// System.Audio Properties
         /// </summary>
         public class PropertySystemAudio : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemAudio(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -3261,16 +3876,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 7 (PIDASI_CHANNEL_COUNT)</para>
             ///</summary>
-            public ShellProperty<UInt32?> ChannelCount
+            public ShellProperty<uint?> ChannelCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.ChannelCount;
+                    var key = Shell.PropertySystem.System.Audio.ChannelCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -3281,16 +3898,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 10 (PIDASI_COMPRESSION)</para>
             ///</summary>
-            public ShellProperty<String> Compression
+            public ShellProperty<string> Compression
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.Compression;
+                    var key = Shell.PropertySystem.System.Audio.Compression;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3301,16 +3920,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 4 (PIDASI_AVG_DATA_RATE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> EncodingBitrate
+            public ShellProperty<uint?> EncodingBitrate
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.EncodingBitrate;
+                    var key = Shell.PropertySystem.System.Audio.EncodingBitrate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -3321,16 +3942,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)  Legacy code may treat this as VT_BSTR.</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 2 (PIDASI_FORMAT)</para>
             ///</summary>
-            public ShellProperty<String> Format
+            public ShellProperty<string> Format
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.Format;
+                    var key = Shell.PropertySystem.System.Audio.Format;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3340,16 +3963,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {E6822FEE-8C17-4D62-823C-8E9CFCBD1D5C}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsVariableBitRate
+            public ShellProperty<bool?> IsVariableBitRate
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.IsVariableBitRate;
+                    var key = Shell.PropertySystem.System.Audio.IsVariableBitRate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3359,16 +3984,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt32 -- VT_UI4</para>
             ///   <para>FormatID: {2579E5D0-1116-4084-BD9A-9B4F7CB4DF5E}, 100</para>
             /// </summary>
-            public ShellProperty<UInt32?> PeakValue
+            public ShellProperty<uint?> PeakValue
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.PeakValue;
+                    var key = Shell.PropertySystem.System.Audio.PeakValue;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -3379,16 +4006,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 5 (PIDASI_SAMPLE_RATE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> SampleRate
+            public ShellProperty<uint?> SampleRate
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.SampleRate;
+                    var key = Shell.PropertySystem.System.Audio.SampleRate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -3399,16 +4028,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 6 (PIDASI_SAMPLE_SIZE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> SampleSize
+            public ShellProperty<uint?> SampleSize
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.SampleSize;
+                    var key = Shell.PropertySystem.System.Audio.SampleSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -3419,16 +4050,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 9 (PIDASI_STREAM_NAME)</para>
             ///</summary>
-            public ShellProperty<String> StreamName
+            public ShellProperty<string> StreamName
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.StreamName;
+                    var key = Shell.PropertySystem.System.Audio.StreamName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3439,42 +4072,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 8 (PIDASI_STREAM_NUMBER)</para>
             ///</summary>
-            public ShellProperty<UInt16?> StreamNumber
+            public ShellProperty<ushort?> StreamNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Audio.StreamNumber;
+                    var key = Shell.PropertySystem.System.Audio.StreamNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemCalendar
-
         /// <summary>
-        ///   System.Calendar Properties
+        /// System.Calendar Properties
         /// </summary>
         public class PropertySystemCalendar : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemCalendar(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -3485,16 +4129,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {293CA35A-09AA-4DD2-B180-1FE245728A52}, 100</para>
             ///</summary>
-            public ShellProperty<String> Duration
+            public ShellProperty<string> Duration
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.Duration;
+                    var key = Shell.PropertySystem.System.Calendar.Duration;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3505,16 +4151,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {BFEE9149-E3E2-49A7-A862-C05988145CEC}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsOnline
+            public ShellProperty<bool?> IsOnline
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.IsOnline;
+                    var key = Shell.PropertySystem.System.Calendar.IsOnline;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3524,16 +4172,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {315B9C8D-80A9-4EF9-AE16-8E746DA51D70}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsRecurring
+            public ShellProperty<bool?> IsRecurring
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.IsRecurring;
+                    var key = Shell.PropertySystem.System.Calendar.IsRecurring;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3543,16 +4193,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {F6272D18-CECC-40B1-B26A-3911717AA7BD}, 100</para>
             /// </summary>
-            public ShellProperty<String> Location
+            public ShellProperty<string> Location
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.Location;
+                    var key = Shell.PropertySystem.System.Calendar.Location;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3562,16 +4214,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {D55BAE5A-3892-417A-A649-C6AC5AAAEAB3}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> OptionalAttendeeAddresses
+            public ShellProperty<string[]> OptionalAttendeeAddresses
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.OptionalAttendeeAddresses;
+                    var key = Shell.PropertySystem.System.Calendar.OptionalAttendeeAddresses;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -3581,16 +4235,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {09429607-582D-437F-84C3-DE93A2B24C3C}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> OptionalAttendeeNames
+            public ShellProperty<string[]> OptionalAttendeeNames
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.OptionalAttendeeNames;
+                    var key = Shell.PropertySystem.System.Calendar.OptionalAttendeeNames;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -3601,16 +4257,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {744C8242-4DF5-456C-AB9E-014EFB9021E3}, 100</para>
             ///</summary>
-            public ShellProperty<String> OrganizerAddress
+            public ShellProperty<string> OrganizerAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.OrganizerAddress;
+                    var key = Shell.PropertySystem.System.Calendar.OrganizerAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3621,16 +4279,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {AAA660F9-9865-458E-B484-01BC7FE3973E}, 100</para>
             ///</summary>
-            public ShellProperty<String> OrganizerName
+            public ShellProperty<string> OrganizerName
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.OrganizerName;
+                    var key = Shell.PropertySystem.System.Calendar.OrganizerName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3644,12 +4304,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.ReminderTime;
+                    var key = Shell.PropertySystem.System.Calendar.ReminderTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -3659,16 +4321,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {0BA7D6C3-568D-4159-AB91-781A91FB71E5}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> RequiredAttendeeAddresses
+            public ShellProperty<string[]> RequiredAttendeeAddresses
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.RequiredAttendeeAddresses;
+                    var key = Shell.PropertySystem.System.Calendar.RequiredAttendeeAddresses;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -3678,16 +4342,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {B33AF30B-F552-4584-936C-CB93E5CDA29F}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> RequiredAttendeeNames
+            public ShellProperty<string[]> RequiredAttendeeNames
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.RequiredAttendeeNames;
+                    var key = Shell.PropertySystem.System.Calendar.RequiredAttendeeNames;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -3697,16 +4363,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {00F58A38-C54B-4C40-8696-97235980EAE1}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> Resources
+            public ShellProperty<string[]> Resources
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.Resources;
+                    var key = Shell.PropertySystem.System.Calendar.Resources;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -3717,16 +4385,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {188C1F91-3C40-4132-9EC5-D8B03B72A8A2}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> ResponseStatus
+            public ShellProperty<ushort?> ResponseStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.ResponseStatus;
+                    var key = Shell.PropertySystem.System.Calendar.ResponseStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -3737,16 +4407,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {5BF396D4-5EB2-466F-BDE9-2FB3F2361D6E}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> ShowTimeAs
+            public ShellProperty<ushort?> ShowTimeAs
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.ShowTimeAs;
+                    var key = Shell.PropertySystem.System.Calendar.ShowTimeAs;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -3758,42 +4430,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {53DA57CF-62C0-45C4-81DE-7610BCEFD7F5}, 100</para>
             ///</summary>
-            public ShellProperty<String> ShowTimeAsText
+            public ShellProperty<string> ShowTimeAsText
             {
                 get
                 {
-                    var key = SystemProperties.System.Calendar.ShowTimeAsText;
+                    var key = Shell.PropertySystem.System.Calendar.ShowTimeAsText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemCommunication
-
         /// <summary>
-        ///   System.Communication Properties
+        /// System.Communication Properties
         /// </summary>
         public class PropertySystemCommunication : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemCommunication(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -3804,16 +4487,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 9</para>
             ///</summary>
-            public ShellProperty<String> AccountName
+            public ShellProperty<string> AccountName
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.AccountName;
+                    var key = Shell.PropertySystem.System.Communication.AccountName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3828,12 +4513,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.DateItemExpires;
+                    var key = Shell.PropertySystem.System.Communication.DateItemExpires;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -3844,16 +4531,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {83A6347E-6FE4-4F40-BA9C-C4865240D1F4}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> FollowupIconIndex
+            public ShellProperty<int?> FollowupIconIndex
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.FollowupIconIndex;
+                    var key = Shell.PropertySystem.System.Communication.FollowupIconIndex;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -3864,16 +4553,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {C9C34F84-2241-4401-B607-BD20ED75AE7F}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> HeaderItem
+            public ShellProperty<bool?> HeaderItem
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.HeaderItem;
+                    var key = Shell.PropertySystem.System.Communication.HeaderItem;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -3884,16 +4575,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {EC0B4191-AB0B-4C66-90B6-C6637CDEBBAB}, 100</para>
             ///</summary>
-            public ShellProperty<String> PolicyTag
+            public ShellProperty<string> PolicyTag
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.PolicyTag;
+                    var key = Shell.PropertySystem.System.Communication.PolicyTag;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3904,16 +4597,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {8619A4B6-9F4D-4429-8C0F-B996CA59E335}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> SecurityFlags
+            public ShellProperty<int?> SecurityFlags
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.SecurityFlags;
+                    var key = Shell.PropertySystem.System.Communication.SecurityFlags;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -3923,16 +4618,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {807B653A-9E91-43EF-8F97-11CE04EE20C5}, 100</para>
             /// </summary>
-            public ShellProperty<String> Suffix
+            public ShellProperty<string> Suffix
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.Suffix;
+                    var key = Shell.PropertySystem.System.Communication.Suffix;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -3942,16 +4639,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt16 -- VT_UI2</para>
             ///   <para>FormatID: {BE1A72C6-9A1D-46B7-AFE7-AFAF8CEF4999}, 100</para>
             /// </summary>
-            public ShellProperty<UInt16?> TaskStatus
+            public ShellProperty<ushort?> TaskStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.TaskStatus;
+                    var key = Shell.PropertySystem.System.Communication.TaskStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -3963,42 +4662,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A6744477-C237-475B-A075-54F34498292A}, 100</para>
             ///</summary>
-            public ShellProperty<String> TaskStatusText
+            public ShellProperty<string> TaskStatusText
             {
                 get
                 {
-                    var key = SystemProperties.System.Communication.TaskStatusText;
+                    var key = Shell.PropertySystem.System.Communication.TaskStatusText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemComputer
-
         /// <summary>
-        ///   System.Computer Properties
+        /// System.Computer Properties
         /// </summary>
         public class PropertySystemComputer : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemComputer(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -4009,42 +4719,57 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt64 -- VT_VECTOR | VT_UI8  (For variants: VT_ARRAY | VT_UI8)</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 7  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<UInt64[]> DecoratedFreeSpace
+            public ShellProperty<ulong[]> DecoratedFreeSpace
             {
                 get
                 {
-                    var key = SystemProperties.System.Computer.DecoratedFreeSpace;
+                    var key = Shell.PropertySystem.System.Computer.DecoratedFreeSpace;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64[]>;
+                    return this.hashtable[key] as ShellProperty<ulong[]>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemContact
-
         /// <summary>
-        ///   System.Contact Properties
+        /// System.Contact Properties
         /// </summary>
         public class PropertySystemContact : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            /// <summary>
+            /// </summary>
+            private PropertyContactJA internalPropertyContactJA;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemContact(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -4058,12 +4783,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Anniversary;
+                    var key = Shell.PropertySystem.System.Contact.Anniversary;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -4073,16 +4800,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CD102C9C-5540-4A88-A6F6-64E4981C8CD1}, 100</para>
             /// </summary>
-            public ShellProperty<String> AssistantName
+            public ShellProperty<string> AssistantName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.AssistantName;
+                    var key = Shell.PropertySystem.System.Contact.AssistantName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4092,16 +4821,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9A93244D-A7AD-4FF8-9B99-45EE4CC09AF6}, 100</para>
             /// </summary>
-            public ShellProperty<String> AssistantTelephone
+            public ShellProperty<string> AssistantTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.AssistantTelephone;
+                    var key = Shell.PropertySystem.System.Contact.AssistantTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4115,12 +4846,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Birthday;
+                    var key = Shell.PropertySystem.System.Contact.Birthday;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -4130,16 +4863,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {730FB6DD-CF7C-426B-A03F-BD166CC9EE24}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddress
+            public ShellProperty<string> BusinessAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddress;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4149,16 +4884,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {402B5934-EC5A-48C3-93E6-85E86A2D934E}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddressCity
+            public ShellProperty<string> BusinessAddressCity
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddressCity;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressCity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4168,35 +4905,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {B0B87314-FCF6-4FEB-8DFF-A50DA6AF561C}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddressCountry
+            public ShellProperty<string> BusinessAddressCountry
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddressCountry;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressCountry;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.Contact.BusinessAddressPostalCode -- PKEY_Contact_BusinessAddressPostalCode</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///   <para>FormatID: {E1D4A09E-D758-4CD1-B6EC-34A8B5A73F80}, 100</para>
-            /// </summary>
-            public ShellProperty<String> BusinessAddressPostalCode
-            {
-                get
-                {
-                    var key = SystemProperties.System.Contact.BusinessAddressPostalCode;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4206,16 +4926,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {BC4E71CE-17F9-48D5-BEE9-021DF0EA5409}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddressPostOfficeBox
+            public ShellProperty<string> BusinessAddressPostOfficeBox
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddressPostOfficeBox;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressPostOfficeBox;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.Contact.BusinessAddressPostalCode -- PKEY_Contact_BusinessAddressPostalCode</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///   <para>FormatID: {E1D4A09E-D758-4CD1-B6EC-34A8B5A73F80}, 100</para>
+            /// </summary>
+            public ShellProperty<string> BusinessAddressPostalCode
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressPostalCode;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4225,16 +4968,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {446F787F-10C4-41CB-A6C4-4D0343551597}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddressState
+            public ShellProperty<string> BusinessAddressState
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddressState;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressState;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4244,16 +4989,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {DDD1460F-C0BF-4553-8CE4-10433C908FB0}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessAddressStreet
+            public ShellProperty<string> BusinessAddressStreet
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessAddressStreet;
+                    var key = Shell.PropertySystem.System.Contact.BusinessAddressStreet;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4264,16 +5011,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {91EFF6F3-2E27-42CA-933E-7C999FBE310B}, 100</para>
             ///</summary>
-            public ShellProperty<String> BusinessFaxNumber
+            public ShellProperty<string> BusinessFaxNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessFaxNumber;
+                    var key = Shell.PropertySystem.System.Contact.BusinessFaxNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4283,16 +5032,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {56310920-2491-4919-99CE-EADB06FAFDB2}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessHomePage
+            public ShellProperty<string> BusinessHomePage
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessHomePage;
+                    var key = Shell.PropertySystem.System.Contact.BusinessHomePage;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4302,16 +5053,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {6A15E5A0-0A1E-4CD7-BB8C-D2F1B0C929BC}, 100</para>
             /// </summary>
-            public ShellProperty<String> BusinessTelephone
+            public ShellProperty<string> BusinessTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.BusinessTelephone;
+                    var key = Shell.PropertySystem.System.Contact.BusinessTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4321,16 +5074,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {BF53D1C3-49E0-4F7F-8567-5A821D8AC542}, 100</para>
             /// </summary>
-            public ShellProperty<String> CallbackTelephone
+            public ShellProperty<string> CallbackTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.CallbackTelephone;
+                    var key = Shell.PropertySystem.System.Contact.CallbackTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4340,16 +5095,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {8FDC6DEA-B929-412B-BA90-397A257465FE}, 100</para>
             /// </summary>
-            public ShellProperty<String> CarTelephone
+            public ShellProperty<string> CarTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.CarTelephone;
+                    var key = Shell.PropertySystem.System.Contact.CarTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4359,16 +5116,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {D4729704-8EF1-43EF-9024-2BD381187FD5}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> Children
+            public ShellProperty<string[]> Children
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Children;
+                    var key = Shell.PropertySystem.System.Contact.Children;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -4378,16 +5137,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {8589E481-6040-473D-B171-7FA89C2708ED}, 100</para>
             /// </summary>
-            public ShellProperty<String> CompanyMainTelephone
+            public ShellProperty<string> CompanyMainTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.CompanyMainTelephone;
+                    var key = Shell.PropertySystem.System.Contact.CompanyMainTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4397,16 +5158,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {FC9F7306-FF8F-4D49-9FB6-3FFE5C0951EC}, 100</para>
             /// </summary>
-            public ShellProperty<String> Department
+            public ShellProperty<string> Department
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Department;
+                    var key = Shell.PropertySystem.System.Contact.Department;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4416,16 +5179,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {F8FA7FA3-D12B-4785-8A4E-691A94F7A3E7}, 100</para>
             /// </summary>
-            public ShellProperty<String> EmailAddress
+            public ShellProperty<string> EmailAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.EmailAddress;
+                    var key = Shell.PropertySystem.System.Contact.EmailAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4435,16 +5200,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {38965063-EDC8-4268-8491-B7723172CF29}, 100</para>
             /// </summary>
-            public ShellProperty<String> EmailAddress2
+            public ShellProperty<string> EmailAddress2
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.EmailAddress2;
+                    var key = Shell.PropertySystem.System.Contact.EmailAddress2;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4454,16 +5221,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {644D37B4-E1B3-4BAD-B099-7E7C04966ACA}, 100</para>
             /// </summary>
-            public ShellProperty<String> EmailAddress3
+            public ShellProperty<string> EmailAddress3
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.EmailAddress3;
+                    var key = Shell.PropertySystem.System.Contact.EmailAddress3;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4473,16 +5242,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {84D8F337-981D-44B3-9615-C7596DBA17E3}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> EmailAddresses
+            public ShellProperty<string[]> EmailAddresses
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.EmailAddresses;
+                    var key = Shell.PropertySystem.System.Contact.EmailAddresses;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -4492,16 +5263,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CC6F4F24-6083-4BD4-8754-674D0DE87AB8}, 100</para>
             /// </summary>
-            public ShellProperty<String> EmailName
+            public ShellProperty<string> EmailName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.EmailName;
+                    var key = Shell.PropertySystem.System.Contact.EmailName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4511,16 +5284,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {F1A24AA7-9CA7-40F6-89EC-97DEF9FFE8DB}, 100</para>
             /// </summary>
-            public ShellProperty<String> FileAsName
+            public ShellProperty<string> FileAsName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.FileAsName;
+                    var key = Shell.PropertySystem.System.Contact.FileAsName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4530,16 +5305,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {14977844-6B49-4AAD-A714-A4513BF60460}, 100</para>
             /// </summary>
-            public ShellProperty<String> FirstName
+            public ShellProperty<string> FirstName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.FirstName;
+                    var key = Shell.PropertySystem.System.Contact.FirstName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4549,16 +5326,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {635E9051-50A5-4BA2-B9DB-4ED056C77296}, 100</para>
             /// </summary>
-            public ShellProperty<String> FullName
+            public ShellProperty<string> FullName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.FullName;
+                    var key = Shell.PropertySystem.System.Contact.FullName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4568,16 +5347,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {3C8CEE58-D4F0-4CF9-B756-4E5D24447BCD}, 100</para>
             /// </summary>
-            public ShellProperty<String> Gender
+            public ShellProperty<string> Gender
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Gender;
+                    var key = Shell.PropertySystem.System.Contact.Gender;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4587,16 +5368,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt16 -- VT_UI2</para>
             ///   <para>FormatID: {3C8CEE58-D4F0-4CF9-B756-4E5D24447BCD}, 101</para>
             /// </summary>
-            public ShellProperty<UInt16?> GenderValue
+            public ShellProperty<ushort?> GenderValue
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.GenderValue;
+                    var key = Shell.PropertySystem.System.Contact.GenderValue;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -4606,16 +5389,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {5DC2253F-5E11-4ADF-9CFE-910DD01E3E70}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> Hobbies
+            public ShellProperty<string[]> Hobbies
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Hobbies;
+                    var key = Shell.PropertySystem.System.Contact.Hobbies;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -4625,16 +5410,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {98F98354-617A-46B8-8560-5B1B64BF1F89}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeAddress
+            public ShellProperty<string> HomeAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddress;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4644,16 +5431,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 65</para>
             /// </summary>
-            public ShellProperty<String> HomeAddressCity
+            public ShellProperty<string> HomeAddressCity
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddressCity;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressCity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4663,35 +5452,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {08A65AA1-F4C9-43DD-9DDF-A33D8E7EAD85}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeAddressCountry
+            public ShellProperty<string> HomeAddressCountry
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddressCountry;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressCountry;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.Contact.HomeAddressPostalCode -- PKEY_Contact_HomeAddressPostalCode</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///   <para>FormatID: {8AFCC170-8A46-4B53-9EEE-90BAE7151E62}, 100</para>
-            /// </summary>
-            public ShellProperty<String> HomeAddressPostalCode
-            {
-                get
-                {
-                    var key = SystemProperties.System.Contact.HomeAddressPostalCode;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4701,16 +5473,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7B9F6399-0A3F-4B12-89BD-4ADC51C918AF}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeAddressPostOfficeBox
+            public ShellProperty<string> HomeAddressPostOfficeBox
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddressPostOfficeBox;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressPostOfficeBox;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.Contact.HomeAddressPostalCode -- PKEY_Contact_HomeAddressPostalCode</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///   <para>FormatID: {8AFCC170-8A46-4B53-9EEE-90BAE7151E62}, 100</para>
+            /// </summary>
+            public ShellProperty<string> HomeAddressPostalCode
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressPostalCode;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4720,16 +5515,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {C89A23D0-7D6D-4EB8-87D4-776A82D493E5}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeAddressState
+            public ShellProperty<string> HomeAddressState
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddressState;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressState;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4739,16 +5536,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {0ADEF160-DB3F-4308-9A21-06237B16FA2A}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeAddressStreet
+            public ShellProperty<string> HomeAddressStreet
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeAddressStreet;
+                    var key = Shell.PropertySystem.System.Contact.HomeAddressStreet;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4758,16 +5557,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {660E04D6-81AB-4977-A09F-82313113AB26}, 100</para>
             /// </summary>
-            public ShellProperty<String> HomeFaxNumber
+            public ShellProperty<string> HomeFaxNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeFaxNumber;
+                    var key = Shell.PropertySystem.System.Contact.HomeFaxNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4777,16 +5578,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 20</para>
             /// </summary>
-            public ShellProperty<String> HomeTelephone
+            public ShellProperty<string> HomeTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.HomeTelephone;
+                    var key = Shell.PropertySystem.System.Contact.HomeTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4796,16 +5599,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {D68DBD8A-3374-4B81-9972-3EC30682DB3D}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> IMAddress
+            public ShellProperty<string[]> IMAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.IMAddress;
+                    var key = Shell.PropertySystem.System.Contact.IMAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -4815,16 +5620,29 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {F3D8F40D-50CB-44A2-9718-40CB9119495D}, 100</para>
             /// </summary>
-            public ShellProperty<String> Initials
+            public ShellProperty<string> Initials
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Initials;
+                    var key = Shell.PropertySystem.System.Contact.Initials;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   Contact.JA Properties
+            /// </summary>
+            public PropertyContactJA JA
+            {
+                get
+                {
+                    return this.internalPropertyContactJA ?? (this.internalPropertyContactJA = new PropertyContactJA(this.shellObjectParent));
                 }
             }
 
@@ -4834,16 +5652,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 6</para>
             /// </summary>
-            public ShellProperty<String> JobTitle
+            public ShellProperty<string> JobTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.JobTitle;
+                    var key = Shell.PropertySystem.System.Contact.JobTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4853,16 +5673,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {97B0AD89-DF49-49CC-834E-660974FD755B}, 100</para>
             /// </summary>
-            public ShellProperty<String> Label
+            public ShellProperty<string> Label
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Label;
+                    var key = Shell.PropertySystem.System.Contact.Label;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4872,16 +5694,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {8F367200-C270-457C-B1D4-E07C5BCD90C7}, 100</para>
             /// </summary>
-            public ShellProperty<String> LastName
+            public ShellProperty<string> LastName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.LastName;
+                    var key = Shell.PropertySystem.System.Contact.LastName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4891,16 +5715,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {C0AC206A-827E-4650-95AE-77E2BB74FCC9}, 100</para>
             /// </summary>
-            public ShellProperty<String> MailingAddress
+            public ShellProperty<string> MailingAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.MailingAddress;
+                    var key = Shell.PropertySystem.System.Contact.MailingAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4910,16 +5736,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 71</para>
             /// </summary>
-            public ShellProperty<String> MiddleName
+            public ShellProperty<string> MiddleName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.MiddleName;
+                    var key = Shell.PropertySystem.System.Contact.MiddleName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4929,16 +5757,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 35</para>
             /// </summary>
-            public ShellProperty<String> MobileTelephone
+            public ShellProperty<string> MobileTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.MobileTelephone;
+                    var key = Shell.PropertySystem.System.Contact.MobileTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4948,16 +5778,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 74</para>
             /// </summary>
-            public ShellProperty<String> NickName
+            public ShellProperty<string> NickName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.NickName;
+                    var key = Shell.PropertySystem.System.Contact.NickName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4967,16 +5799,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 7</para>
             /// </summary>
-            public ShellProperty<String> OfficeLocation
+            public ShellProperty<string> OfficeLocation
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OfficeLocation;
+                    var key = Shell.PropertySystem.System.Contact.OfficeLocation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -4986,16 +5820,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {508161FA-313B-43D5-83A1-C1ACCF68622C}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddress
+            public ShellProperty<string> OtherAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddress;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5005,16 +5841,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {6E682923-7F7B-4F0C-A337-CFCA296687BF}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddressCity
+            public ShellProperty<string> OtherAddressCity
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddressCity;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressCity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5024,35 +5862,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {8F167568-0AAE-4322-8ED9-6055B7B0E398}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddressCountry
+            public ShellProperty<string> OtherAddressCountry
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddressCountry;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressCountry;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.Contact.OtherAddressPostalCode -- PKEY_Contact_OtherAddressPostalCode</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///   <para>FormatID: {95C656C1-2ABF-4148-9ED3-9EC602E3B7CD}, 100</para>
-            /// </summary>
-            public ShellProperty<String> OtherAddressPostalCode
-            {
-                get
-                {
-                    var key = SystemProperties.System.Contact.OtherAddressPostalCode;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5062,16 +5883,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {8B26EA41-058F-43F6-AECC-4035681CE977}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddressPostOfficeBox
+            public ShellProperty<string> OtherAddressPostOfficeBox
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddressPostOfficeBox;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressPostOfficeBox;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.Contact.OtherAddressPostalCode -- PKEY_Contact_OtherAddressPostalCode</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///   <para>FormatID: {95C656C1-2ABF-4148-9ED3-9EC602E3B7CD}, 100</para>
+            /// </summary>
+            public ShellProperty<string> OtherAddressPostalCode
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressPostalCode;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5081,16 +5925,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {71B377D6-E570-425F-A170-809FAE73E54E}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddressState
+            public ShellProperty<string> OtherAddressState
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddressState;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressState;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5100,16 +5946,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {FF962609-B7D6-4999-862D-95180D529AEA}, 100</para>
             /// </summary>
-            public ShellProperty<String> OtherAddressStreet
+            public ShellProperty<string> OtherAddressStreet
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.OtherAddressStreet;
+                    var key = Shell.PropertySystem.System.Contact.OtherAddressStreet;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5119,16 +5967,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {D6304E01-F8F5-4F45-8B15-D024A6296789}, 100</para>
             /// </summary>
-            public ShellProperty<String> PagerTelephone
+            public ShellProperty<string> PagerTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PagerTelephone;
+                    var key = Shell.PropertySystem.System.Contact.PagerTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5138,16 +5988,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 69</para>
             /// </summary>
-            public ShellProperty<String> PersonalTitle
+            public ShellProperty<string> PersonalTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PersonalTitle;
+                    var key = Shell.PropertySystem.System.Contact.PersonalTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5157,16 +6009,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {C8EA94F0-A9E3-4969-A94B-9C62A95324E0}, 100</para>
             /// </summary>
-            public ShellProperty<String> PrimaryAddressCity
+            public ShellProperty<string> PrimaryAddressCity
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryAddressCity;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressCity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5176,35 +6030,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {E53D799D-0F3F-466E-B2FF-74634A3CB7A4}, 100</para>
             /// </summary>
-            public ShellProperty<String> PrimaryAddressCountry
+            public ShellProperty<string> PrimaryAddressCountry
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryAddressCountry;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressCountry;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.Contact.PrimaryAddressPostalCode -- PKEY_Contact_PrimaryAddressPostalCode</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///   <para>FormatID: {18BBD425-ECFD-46EF-B612-7B4A6034EDA0}, 100</para>
-            /// </summary>
-            public ShellProperty<String> PrimaryAddressPostalCode
-            {
-                get
-                {
-                    var key = SystemProperties.System.Contact.PrimaryAddressPostalCode;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5214,16 +6051,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {DE5EF3C7-46E1-484E-9999-62C5308394C1}, 100</para>
             /// </summary>
-            public ShellProperty<String> PrimaryAddressPostOfficeBox
+            public ShellProperty<string> PrimaryAddressPostOfficeBox
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryAddressPostOfficeBox;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressPostOfficeBox;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.Contact.PrimaryAddressPostalCode -- PKEY_Contact_PrimaryAddressPostalCode</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///   <para>FormatID: {18BBD425-ECFD-46EF-B612-7B4A6034EDA0}, 100</para>
+            /// </summary>
+            public ShellProperty<string> PrimaryAddressPostalCode
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressPostalCode;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5233,16 +6093,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {F1176DFE-7138-4640-8B4C-AE375DC70A6D}, 100</para>
             /// </summary>
-            public ShellProperty<String> PrimaryAddressState
+            public ShellProperty<string> PrimaryAddressState
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryAddressState;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressState;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5252,16 +6114,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {63C25B20-96BE-488F-8788-C09C407AD812}, 100</para>
             /// </summary>
-            public ShellProperty<String> PrimaryAddressStreet
+            public ShellProperty<string> PrimaryAddressStreet
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryAddressStreet;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryAddressStreet;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5271,16 +6135,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 48</para>
             /// </summary>
-            public ShellProperty<String> PrimaryEmailAddress
+            public ShellProperty<string> PrimaryEmailAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryEmailAddress;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryEmailAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5290,16 +6156,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 25</para>
             /// </summary>
-            public ShellProperty<String> PrimaryTelephone
+            public ShellProperty<string> PrimaryTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.PrimaryTelephone;
+                    var key = Shell.PropertySystem.System.Contact.PrimaryTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5309,16 +6177,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7268AF55-1CE4-4F6E-A41F-B6E4EF10E4A9}, 100</para>
             /// </summary>
-            public ShellProperty<String> Profession
+            public ShellProperty<string> Profession
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Profession;
+                    var key = Shell.PropertySystem.System.Contact.Profession;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5328,16 +6198,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {9D2408B6-3167-422B-82B0-F583B7A7CFE3}, 100</para>
             /// </summary>
-            public ShellProperty<String> SpouseName
+            public ShellProperty<string> SpouseName
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.SpouseName;
+                    var key = Shell.PropertySystem.System.Contact.SpouseName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5347,16 +6219,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {176DC63C-2688-4E89-8143-A347800F25E9}, 73</para>
             /// </summary>
-            public ShellProperty<String> Suffix
+            public ShellProperty<string> Suffix
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.Suffix;
+                    var key = Shell.PropertySystem.System.Contact.Suffix;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5366,16 +6240,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {C554493C-C1F7-40C1-A76C-EF8C0614003E}, 100</para>
             /// </summary>
-            public ShellProperty<String> TelexNumber
+            public ShellProperty<string> TelexNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.TelexNumber;
+                    var key = Shell.PropertySystem.System.Contact.TelexNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5385,16 +6261,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {AAF16BAC-2B55-45E6-9F6D-415EB94910DF}, 100</para>
             /// </summary>
-            public ShellProperty<String> TTYTDDTelephone
+            public ShellProperty<string> TtytddTelephone
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.TTYTDDTelephone;
+                    var key = Shell.PropertySystem.System.Contact.TtytddTelephone;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5404,175 +6282,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 18</para>
             /// </summary>
-            public ShellProperty<String> WebPage
+            public ShellProperty<string> WebPage
             {
                 get
                 {
-                    var key = SystemProperties.System.Contact.WebPage;
+                    var key = Shell.PropertySystem.System.Contact.WebPage;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
-
-            #endregion
-
-            #region sub-namespaces
-
-            private PropertyContactJA internalPropertyContactJA;
-
-            /// <summary>
-            ///   Contact.JA Properties
-            /// </summary>
-            public PropertyContactJA JA { get { return internalPropertyContactJA ?? (internalPropertyContactJA = new PropertyContactJA(shellObjectParent)); } }
 
             #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemDRM
-
         /// <summary>
-        ///   System.DRM Properties
-        /// </summary>
-        public class PropertySystemDRM : PropertyStoreItems
-        {
-            private readonly Hashtable hashtable = new Hashtable();
-            private readonly ShellObject shellObjectParent;
-
-            internal PropertySystemDRM(ShellObject parent)
-            {
-                shellObjectParent = parent;
-            }
-
-            #region Properties
-
-            ///<summary>
-            ///  <para>Name:     System.DRM.DatePlayExpires -- PKEY_DRM_DatePlayExpires</para>
-            ///  <para>Description: Indicates when play expires for digital rights management.
-            ///  </para>
-            ///  <para>Type:     DateTime -- VT_FILETIME  (For variants: VT_DATE)</para>
-            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 6 (PIDDRSI_PLAYEXPIRES)</para>
-            ///</summary>
-            public ShellProperty<DateTime?> DatePlayExpires
-            {
-                get
-                {
-                    var key = SystemProperties.System.DRM.DatePlayExpires;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
-
-                    return hashtable[key] as ShellProperty<DateTime?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.DRM.DatePlayStarts -- PKEY_DRM_DatePlayStarts</para>
-            ///  <para>Description: Indicates when play starts for digital rights management.
-            ///  </para>
-            ///  <para>Type:     DateTime -- VT_FILETIME  (For variants: VT_DATE)</para>
-            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 5 (PIDDRSI_PLAYSTARTS)</para>
-            ///</summary>
-            public ShellProperty<DateTime?> DatePlayStarts
-            {
-                get
-                {
-                    var key = SystemProperties.System.DRM.DatePlayStarts;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
-
-                    return hashtable[key] as ShellProperty<DateTime?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.DRM.Description -- PKEY_DRM_Description</para>
-            ///  <para>Description: Displays the description for digital rights management.
-            ///  </para>
-            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 3 (PIDDRSI_DESCRIPTION)</para>
-            ///</summary>
-            public ShellProperty<String> Description
-            {
-                get
-                {
-                    var key = SystemProperties.System.DRM.Description;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.DRM.IsProtected -- PKEY_DRM_IsProtected</para>
-            ///  <para>Description: 
-            ///  </para>
-            ///  <para>Type:     Boolean -- VT_BOOL</para>
-            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 2 (PIDDRSI_PROTECTED)</para>
-            ///</summary>
-            public ShellProperty<Boolean?> IsProtected
-            {
-                get
-                {
-                    var key = SystemProperties.System.DRM.IsProtected;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
-
-                    return hashtable[key] as ShellProperty<Boolean?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.DRM.PlayCount -- PKEY_DRM_PlayCount</para>
-            ///  <para>Description: Indicates the play count for digital rights management.
-            ///  </para>
-            ///  <para>Type:     UInt32 -- VT_UI4</para>
-            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 4 (PIDDRSI_PLAYCOUNT)</para>
-            ///</summary>
-            public ShellProperty<UInt32?> PlayCount
-            {
-                get
-                {
-                    var key = SystemProperties.System.DRM.PlayCount;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
-
-                    return hashtable[key] as ShellProperty<UInt32?>;
-                }
-            }
-
-            #endregion
-
-            #region sub-namespaces
-
-            #endregion
-        }
-
-        #endregion
-
-        #region Nested type: PropertySystemDevice
-
-        /// <summary>
-        ///   System.Device Properties
+        /// System.Device Properties
         /// </summary>
         public class PropertySystemDevice : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemDevice(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -5583,42 +6339,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {0B48F35A-BE6E-4F17-B108-3C4073D1669A}, 15</para>
             ///</summary>
-            public ShellProperty<String> PrinterURL
+            public ShellProperty<string> PrinterUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.Device.PrinterURL;
+                    var key = Shell.PropertySystem.System.Device.PrinterUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemDeviceInterface
-
         /// <summary>
-        ///   System.DeviceInterface Properties
+        /// System.DeviceInterface Properties
         /// </summary>
         public class PropertySystemDeviceInterface : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemDeviceInterface(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -5629,16 +6396,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {847C66DE-B8D6-4AF9-ABC3-6F4F926BC039}, 14</para>
             ///</summary>
-            public ShellProperty<String> PrinterDriverDirectory
+            public ShellProperty<string> PrinterDriverDirectory
             {
                 get
                 {
-                    var key = SystemProperties.System.DeviceInterface.PrinterDriverDirectory;
+                    var key = Shell.PropertySystem.System.DeviceInterface.PrinterDriverDirectory;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5649,16 +6418,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {AFC47170-14F5-498C-8F30-B0D19BE449C6}, 11</para>
             ///</summary>
-            public ShellProperty<String> PrinterDriverName
+            public ShellProperty<string> PrinterDriverName
             {
                 get
                 {
-                    var key = SystemProperties.System.DeviceInterface.PrinterDriverName;
+                    var key = Shell.PropertySystem.System.DeviceInterface.PrinterDriverName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5669,16 +6440,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {0A7B84EF-0C27-463F-84EF-06C5070001BE}, 10</para>
             ///</summary>
-            public ShellProperty<String> PrinterName
+            public ShellProperty<string> PrinterName
             {
                 get
                 {
-                    var key = SystemProperties.System.DeviceInterface.PrinterName;
+                    var key = Shell.PropertySystem.System.DeviceInterface.PrinterName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5689,42 +6462,57 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {EEC7B761-6F94-41B1-949F-C729720DD13C}, 12</para>
             ///</summary>
-            public ShellProperty<String> PrinterPortName
+            public ShellProperty<string> PrinterPortName
             {
                 get
                 {
-                    var key = SystemProperties.System.DeviceInterface.PrinterPortName;
+                    var key = Shell.PropertySystem.System.DeviceInterface.PrinterPortName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemDevices
-
         /// <summary>
-        ///   System.Devices Properties
+        /// System.Devices Properties
         /// </summary>
         public class PropertySystemDevices : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            /// <summary>
+            /// </summary>
+            private PropertyDevicesNotifications internalPropertyDevicesNotifications;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemDevices(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -5735,16 +6523,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 10</para>
             ///</summary>
-            public ShellProperty<Byte?> BatteryLife
+            public ShellProperty<byte?> BatteryLife
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.BatteryLife;
+                    var key = Shell.PropertySystem.System.Devices.BatteryLife;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -5755,16 +6545,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 22</para>
             ///</summary>
-            public ShellProperty<Byte?> BatteryPlusCharging
+            public ShellProperty<byte?> BatteryPlusCharging
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.BatteryPlusCharging;
+                    var key = Shell.PropertySystem.System.Devices.BatteryPlusCharging;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -5775,16 +6567,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 23</para>
             ///</summary>
-            public ShellProperty<String> BatteryPlusChargingText
+            public ShellProperty<string> BatteryPlusChargingText
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.BatteryPlusChargingText;
+                    var key = Shell.PropertySystem.System.Devices.BatteryPlusChargingText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5795,16 +6589,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 91</para>
             ///</summary>
-            public ShellProperty<String[]> Category
+            public ShellProperty<string[]> Category
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Category;
+                    var key = Shell.PropertySystem.System.Devices.Category;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -5815,16 +6611,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 94</para>
             ///</summary>
-            public ShellProperty<String[]> CategoryGroup
+            public ShellProperty<string[]> CategoryGroup
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.CategoryGroup;
+                    var key = Shell.PropertySystem.System.Devices.CategoryGroup;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -5835,16 +6633,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 92</para>
             ///</summary>
-            public ShellProperty<String[]> CategoryPlural
+            public ShellProperty<string[]> CategoryPlural
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.CategoryPlural;
+                    var key = Shell.PropertySystem.System.Devices.CategoryPlural;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -5855,16 +6655,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 11</para>
             ///</summary>
-            public ShellProperty<Byte?> ChargingState
+            public ShellProperty<byte?> ChargingState
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.ChargingState;
+                    var key = Shell.PropertySystem.System.Devices.ChargingState;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -5875,16 +6677,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 55</para>
             ///</summary>
-            public ShellProperty<Boolean?> Connected
+            public ShellProperty<bool?> Connected
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Connected;
+                    var key = Shell.PropertySystem.System.Devices.Connected;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -5899,12 +6703,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.ContainerId;
+                    var key = Shell.PropertySystem.System.Devices.ContainerId;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
                 }
             }
 
@@ -5915,16 +6721,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {880F70A2-6082-47AC-8AAB-A739D1A300C3}, 153</para>
             ///</summary>
-            public ShellProperty<String> DefaultTooltip
+            public ShellProperty<string> DefaultTooltip
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.DefaultTooltip;
+                    var key = Shell.PropertySystem.System.Devices.DefaultTooltip;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5935,16 +6743,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 81</para>
             ///</summary>
-            public ShellProperty<String> DeviceDescription1
+            public ShellProperty<string> DeviceDescription1
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.DeviceDescription1;
+                    var key = Shell.PropertySystem.System.Devices.DeviceDescription1;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5955,16 +6765,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 82</para>
             ///</summary>
-            public ShellProperty<String> DeviceDescription2
+            public ShellProperty<string> DeviceDescription2
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.DeviceDescription2;
+                    var key = Shell.PropertySystem.System.Devices.DeviceDescription2;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -5975,16 +6787,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 52</para>
             ///</summary>
-            public ShellProperty<String[]> DiscoveryMethod
+            public ShellProperty<string[]> DiscoveryMethod
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.DiscoveryMethod;
+                    var key = Shell.PropertySystem.System.Devices.DiscoveryMethod;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -5995,16 +6809,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {656A3BB3-ECC0-43FD-8477-4AE0404A96CD}, 12288</para>
             ///</summary>
-            public ShellProperty<String> FriendlyName
+            public ShellProperty<string> FriendlyName
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.FriendlyName;
+                    var key = Shell.PropertySystem.System.Devices.FriendlyName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6015,16 +6831,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D08DD4C0-3A9E-462E-8290-7B636B2576B9}, 3</para>
             ///</summary>
-            public ShellProperty<String[]> FunctionPaths
+            public ShellProperty<string[]> FunctionPaths
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.FunctionPaths;
+                    var key = Shell.PropertySystem.System.Devices.FunctionPaths;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -6035,16 +6853,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D08DD4C0-3A9E-462E-8290-7B636B2576B9}, 2</para>
             ///</summary>
-            public ShellProperty<String[]> InterfacePaths
+            public ShellProperty<string[]> InterfacePaths
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.InterfacePaths;
+                    var key = Shell.PropertySystem.System.Devices.InterfacePaths;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -6055,16 +6875,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 86</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsDefault
+            public ShellProperty<bool?> IsDefault
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.IsDefault;
+                    var key = Shell.PropertySystem.System.Devices.IsDefault;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6075,16 +6897,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 85</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsNetworkConnected
+            public ShellProperty<bool?> IsNetworkConnected
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.IsNetworkConnected;
+                    var key = Shell.PropertySystem.System.Devices.IsNetworkConnected;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6095,16 +6919,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 84</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsShared
+            public ShellProperty<bool?> IsShared
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.IsShared;
+                    var key = Shell.PropertySystem.System.Devices.IsShared;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6115,16 +6941,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {83DA6326-97A6-4088-9453-A1923F573B29}, 9</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsSoftwareInstalling
+            public ShellProperty<bool?> IsSoftwareInstalling
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.IsSoftwareInstalling;
+                    var key = Shell.PropertySystem.System.Devices.IsSoftwareInstalling;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6135,16 +6963,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 77</para>
             ///</summary>
-            public ShellProperty<Boolean?> LaunchDeviceStageFromExplorer
+            public ShellProperty<bool?> LaunchDeviceStageFromExplorer
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.LaunchDeviceStageFromExplorer;
+                    var key = Shell.PropertySystem.System.Devices.LaunchDeviceStageFromExplorer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6155,16 +6985,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 70</para>
             ///</summary>
-            public ShellProperty<Boolean?> LocalMachine
+            public ShellProperty<bool?> LocalMachine
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.LocalMachine;
+                    var key = Shell.PropertySystem.System.Devices.LocalMachine;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6175,16 +7007,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {656A3BB3-ECC0-43FD-8477-4AE0404A96CD}, 8192</para>
             ///</summary>
-            public ShellProperty<String> Manufacturer
+            public ShellProperty<string> Manufacturer
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Manufacturer;
+                    var key = Shell.PropertySystem.System.Devices.Manufacturer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6195,16 +7029,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 5</para>
             ///</summary>
-            public ShellProperty<Byte?> MissedCalls
+            public ShellProperty<byte?> MissedCalls
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.MissedCalls;
+                    var key = Shell.PropertySystem.System.Devices.MissedCalls;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -6215,16 +7051,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {656A3BB3-ECC0-43FD-8477-4AE0404A96CD}, 8194</para>
             ///</summary>
-            public ShellProperty<String> ModelName
+            public ShellProperty<string> ModelName
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.ModelName;
+                    var key = Shell.PropertySystem.System.Devices.ModelName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6235,36 +7073,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {656A3BB3-ECC0-43FD-8477-4AE0404A96CD}, 8195</para>
             ///</summary>
-            public ShellProperty<String> ModelNumber
+            public ShellProperty<string> ModelNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.ModelNumber;
+                    var key = Shell.PropertySystem.System.Devices.ModelNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.Devices.NetworkedTooltip -- PKEY_Devices_NetworkedTooltip</para>
-            ///  <para>Description: Tooltip for connection state
-            ///  </para>
-            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///  <para>FormatID: {880F70A2-6082-47AC-8AAB-A739D1A300C3}, 152</para>
-            ///</summary>
-            public ShellProperty<String> NetworkedTooltip
-            {
-                get
-                {
-                    var key = SystemProperties.System.Devices.NetworkedTooltip;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6275,16 +7095,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 7</para>
             ///</summary>
-            public ShellProperty<String> NetworkName
+            public ShellProperty<string> NetworkName
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.NetworkName;
+                    var key = Shell.PropertySystem.System.Devices.NetworkName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6295,16 +7117,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 8</para>
             ///</summary>
-            public ShellProperty<String> NetworkType
+            public ShellProperty<string> NetworkType
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.NetworkType;
+                    var key = Shell.PropertySystem.System.Devices.NetworkType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Devices.NetworkedTooltip -- PKEY_Devices_NetworkedTooltip</para>
+            ///  <para>Description: Tooltip for connection state
+            ///  </para>
+            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///  <para>FormatID: {880F70A2-6082-47AC-8AAB-A739D1A300C3}, 152</para>
+            ///</summary>
+            public ShellProperty<string> NetworkedTooltip
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Devices.NetworkedTooltip;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6315,16 +7161,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 4</para>
             ///</summary>
-            public ShellProperty<UInt16?> NewPictures
+            public ShellProperty<ushort?> NewPictures
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.NewPictures;
+                    var key = Shell.PropertySystem.System.Devices.NewPictures;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Devices.NotWorkingProperly -- PKEY_Devices_IsNotWorkingProperly</para>
+            ///  <para>Description: If VARIANT_TRUE, the device is not working properly.
+            ///  </para>
+            ///  <para>Type:     Boolean -- VT_BOOL</para>
+            ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 83</para>
+            ///</summary>
+            public ShellProperty<bool?> NotWorkingProperly
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Devices.NotWorkingProperly;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6335,16 +7205,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {06704B0C-E830-4C81-9178-91E4E95A80A0}, 3</para>
             ///</summary>
-            public ShellProperty<String> Notification
+            public ShellProperty<string> Notification
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Notification;
+                    var key = Shell.PropertySystem.System.Devices.Notification;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6359,32 +7231,26 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.NotificationStore;
+                    var key = Shell.PropertySystem.System.Devices.NotificationStore;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
                 }
             }
 
-            ///<summary>
-            ///  <para>Name:     System.Devices.NotWorkingProperly -- PKEY_Devices_IsNotWorkingProperly</para>
-            ///  <para>Description: If VARIANT_TRUE, the device is not working properly.
-            ///  </para>
-            ///  <para>Type:     Boolean -- VT_BOOL</para>
-            ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 83</para>
-            ///</summary>
-            public ShellProperty<Boolean?> NotWorkingProperly
+            /// <summary>
+            ///   Devices.Notifications Properties
+            /// </summary>
+            public PropertyDevicesNotifications Notifications
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.NotWorkingProperly;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
-
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.internalPropertyDevicesNotifications ??
+                           (this.internalPropertyDevicesNotifications = new PropertyDevicesNotifications(this.shellObjectParent));
                 }
             }
 
@@ -6395,16 +7261,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {78C34FC8-104A-4ACA-9EA4-524D52996E57}, 56</para>
             ///</summary>
-            public ShellProperty<Boolean?> Paired
+            public ShellProperty<bool?> Paired
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Paired;
+                    var key = Shell.PropertySystem.System.Devices.Paired;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6415,16 +7283,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D08DD4C0-3A9E-462E-8290-7B636B2576B9}, 10</para>
             ///</summary>
-            public ShellProperty<String> PrimaryCategory
+            public ShellProperty<string> PrimaryCategory
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.PrimaryCategory;
+                    var key = Shell.PropertySystem.System.Devices.PrimaryCategory;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6435,16 +7305,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 9</para>
             ///</summary>
-            public ShellProperty<Byte?> Roaming
+            public ShellProperty<byte?> Roaming
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Roaming;
+                    var key = Shell.PropertySystem.System.Devices.Roaming;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -6455,16 +7327,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {AFD97640-86A3-4210-B67C-289C41AABE55}, 2</para>
             ///</summary>
-            public ShellProperty<Boolean?> SafeRemovalRequired
+            public ShellProperty<bool?> SafeRemovalRequired
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.SafeRemovalRequired;
+                    var key = Shell.PropertySystem.System.Devices.SafeRemovalRequired;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -6475,16 +7349,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {880F70A2-6082-47AC-8AAB-A739D1A300C3}, 151</para>
             ///</summary>
-            public ShellProperty<String> SharedTooltip
+            public ShellProperty<string> SharedTooltip
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.SharedTooltip;
+                    var key = Shell.PropertySystem.System.Devices.SharedTooltip;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6495,16 +7371,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 2</para>
             ///</summary>
-            public ShellProperty<Byte?> SignalStrength
+            public ShellProperty<byte?> SignalStrength
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.SignalStrength;
+                    var key = Shell.PropertySystem.System.Devices.SignalStrength;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -6515,16 +7393,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D08DD4C0-3A9E-462E-8290-7B636B2576B9}, 257</para>
             ///</summary>
-            public ShellProperty<String> Status1
+            public ShellProperty<string> Status1
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Status1;
+                    var key = Shell.PropertySystem.System.Devices.Status1;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6535,16 +7415,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D08DD4C0-3A9E-462E-8290-7B636B2576B9}, 258</para>
             ///</summary>
-            public ShellProperty<String> Status2
+            public ShellProperty<string> Status2
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Status2;
+                    var key = Shell.PropertySystem.System.Devices.Status2;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6555,16 +7437,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 12</para>
             ///</summary>
-            public ShellProperty<UInt64?> StorageCapacity
+            public ShellProperty<ulong?> StorageCapacity
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.StorageCapacity;
+                    var key = Shell.PropertySystem.System.Devices.StorageCapacity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -6575,16 +7459,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 13</para>
             ///</summary>
-            public ShellProperty<UInt64?> StorageFreeSpace
+            public ShellProperty<ulong?> StorageFreeSpace
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.StorageFreeSpace;
+                    var key = Shell.PropertySystem.System.Devices.StorageFreeSpace;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -6595,16 +7481,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 14</para>
             ///</summary>
-            public ShellProperty<UInt32?> StorageFreeSpacePercent
+            public ShellProperty<uint?> StorageFreeSpacePercent
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.StorageFreeSpacePercent;
+                    var key = Shell.PropertySystem.System.Devices.StorageFreeSpacePercent;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -6615,16 +7503,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 3</para>
             ///</summary>
-            public ShellProperty<Byte?> TextMessages
+            public ShellProperty<byte?> TextMessages
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.TextMessages;
+                    var key = Shell.PropertySystem.System.Devices.TextMessages;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -6635,49 +7525,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {49CD1F76-5626-4B17-A4E8-18B4AA1A2213}, 6</para>
             ///</summary>
-            public ShellProperty<Byte?> Voicemail
+            public ShellProperty<byte?> Voicemail
             {
                 get
                 {
-                    var key = SystemProperties.System.Devices.Voicemail;
+                    var key = Shell.PropertySystem.System.Devices.Voicemail;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            private PropertyDevicesNotifications internalPropertyDevicesNotifications;
-
-            /// <summary>
-            ///   Devices.Notifications Properties
-            /// </summary>
-            public PropertyDevicesNotifications Notifications { get { return internalPropertyDevicesNotifications ?? (internalPropertyDevicesNotifications = new PropertyDevicesNotifications(shellObjectParent)); } }
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemDocument
-
         /// <summary>
-        ///   System.Document Properties
+        /// System.Document Properties
         /// </summary>
         public class PropertySystemDocument : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemDocument(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -6688,16 +7582,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 4 (PIDDSI_BYTECOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> ByteCount
+            public ShellProperty<int?> ByteCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.ByteCount;
+                    var key = Shell.PropertySystem.System.Document.ByteCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6708,16 +7604,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 16 (PIDSI_CHARCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> CharacterCount
+            public ShellProperty<int?> CharacterCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.CharacterCount;
+                    var key = Shell.PropertySystem.System.Document.CharacterCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6727,16 +7625,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {276D7BB0-5B34-4FB0-AA4B-158ED12A1809}, 100</para>
             /// </summary>
-            public ShellProperty<String> ClientID
+            public ShellProperty<string> ClientID
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.ClientID;
+                    var key = Shell.PropertySystem.System.Document.ClientID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6746,16 +7646,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {F334115E-DA1B-4509-9B3D-119504DC7ABB}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> Contributor
+            public ShellProperty<string[]> Contributor
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Contributor;
+                    var key = Shell.PropertySystem.System.Document.Contributor;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -6770,12 +7672,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.DateCreated;
+                    var key = Shell.PropertySystem.System.Document.DateCreated;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -6790,12 +7694,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.DatePrinted;
+                    var key = Shell.PropertySystem.System.Document.DatePrinted;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -6810,12 +7716,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.DateSaved;
+                    var key = Shell.PropertySystem.System.Document.DateSaved;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -6825,16 +7733,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {1E005EE6-BF27-428B-B01C-79676ACD2870}, 100</para>
             /// </summary>
-            public ShellProperty<String> Division
+            public ShellProperty<string> Division
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Division;
+                    var key = Shell.PropertySystem.System.Document.Division;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6844,16 +7754,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {E08805C8-E395-40DF-80D2-54F0D6C43154}, 100</para>
             /// </summary>
-            public ShellProperty<String> DocumentID
+            public ShellProperty<string> DocumentID
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.DocumentID;
+                    var key = Shell.PropertySystem.System.Document.DocumentID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6864,16 +7776,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 9 (PIDDSI_HIDDENCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> HiddenSlideCount
+            public ShellProperty<int?> HiddenSlideCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.HiddenSlideCount;
+                    var key = Shell.PropertySystem.System.Document.HiddenSlideCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6884,16 +7798,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 8 (PIDSI_LASTAUTHOR)</para>
             ///</summary>
-            public ShellProperty<String> LastAuthor
+            public ShellProperty<string> LastAuthor
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.LastAuthor;
+                    var key = Shell.PropertySystem.System.Document.LastAuthor;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6904,16 +7820,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 5 (PIDDSI_LINECOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> LineCount
+            public ShellProperty<int?> LineCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.LineCount;
+                    var key = Shell.PropertySystem.System.Document.LineCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6924,16 +7842,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 14 (PIDDSI_MANAGER)</para>
             ///</summary>
-            public ShellProperty<String> Manager
+            public ShellProperty<string> Manager
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Manager;
+                    var key = Shell.PropertySystem.System.Document.Manager;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -6944,16 +7864,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 10 (PIDDSI_MMCLIPCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> MultimediaClipCount
+            public ShellProperty<int?> MultimediaClipCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.MultimediaClipCount;
+                    var key = Shell.PropertySystem.System.Document.MultimediaClipCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6964,16 +7886,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 8 (PIDDSI_NOTECOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> NoteCount
+            public ShellProperty<int?> NoteCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.NoteCount;
+                    var key = Shell.PropertySystem.System.Document.NoteCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -6984,16 +7908,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 14 (PIDSI_PAGECOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> PageCount
+            public ShellProperty<int?> PageCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.PageCount;
+                    var key = Shell.PropertySystem.System.Document.PageCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -7004,16 +7930,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 6 (PIDDSI_PARCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> ParagraphCount
+            public ShellProperty<int?> ParagraphCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.ParagraphCount;
+                    var key = Shell.PropertySystem.System.Document.ParagraphCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -7024,16 +7952,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 3 (PIDDSI_PRESFORMAT)</para>
             ///</summary>
-            public ShellProperty<String> PresentationFormat
+            public ShellProperty<string> PresentationFormat
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.PresentationFormat;
+                    var key = Shell.PropertySystem.System.Document.PresentationFormat;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7044,16 +7974,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 9 (PIDSI_REVNUMBER)</para>
             ///</summary>
-            public ShellProperty<String> RevisionNumber
+            public ShellProperty<string> RevisionNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.RevisionNumber;
+                    var key = Shell.PropertySystem.System.Document.RevisionNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7064,16 +7996,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 19</para>
             ///</summary>
-            public ShellProperty<Int32?> Security
+            public ShellProperty<int?> Security
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Security;
+                    var key = Shell.PropertySystem.System.Document.Security;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -7084,16 +8018,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 7 (PIDDSI_SLIDECOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> SlideCount
+            public ShellProperty<int?> SlideCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.SlideCount;
+                    var key = Shell.PropertySystem.System.Document.SlideCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -7104,16 +8040,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 7 (PIDSI_TEMPLATE)</para>
             ///</summary>
-            public ShellProperty<String> Template
+            public ShellProperty<string> Template
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Template;
+                    var key = Shell.PropertySystem.System.Document.Template;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7124,16 +8062,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 10 (PIDSI_EDITTIME)</para>
             ///</summary>
-            public ShellProperty<UInt64?> TotalEditingTime
+            public ShellProperty<ulong?> TotalEditingTime
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.TotalEditingTime;
+                    var key = Shell.PropertySystem.System.Document.TotalEditingTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -7143,16 +8083,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: (FMTID_DocumentSummaryInformation) {D5CDD502-2E9C-101B-9397-08002B2CF9AE}, 29</para>
             /// </summary>
-            public ShellProperty<String> Version
+            public ShellProperty<string> Version
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.Version;
+                    var key = Shell.PropertySystem.System.Document.Version;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7163,42 +8105,198 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_SummaryInformation) {F29F85E0-4FF9-1068-AB91-08002B27B3D9}, 15 (PIDSI_WORDCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> WordCount
+            public ShellProperty<int?> WordCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Document.WordCount;
+                    var key = Shell.PropertySystem.System.Document.WordCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
             #endregion
+        }
 
-            #region sub-namespaces
+        /// <summary>
+        /// System.DRM Properties
+        /// </summary>
+        public class PropertySystemDrm : PropertyStoreItems
+        {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
+            private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
+            private readonly ShellObject shellObjectParent;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
+            internal PropertySystemDrm(ShellObject parent)
+            {
+                this.shellObjectParent = parent;
+            }
+
+            #endregion
+
+            #region Properties
+
+            ///<summary>
+            ///  <para>Name:     System.DRM.DatePlayExpires -- PKEY_DRM_DatePlayExpires</para>
+            ///  <para>Description: Indicates when play expires for digital rights management.
+            ///  </para>
+            ///  <para>Type:     DateTime -- VT_FILETIME  (For variants: VT_DATE)</para>
+            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 6 (PIDDRSI_PLAYEXPIRES)</para>
+            ///</summary>
+            public ShellProperty<DateTime?> DatePlayExpires
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.DRM.DatePlayExpires;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.DRM.DatePlayStarts -- PKEY_DRM_DatePlayStarts</para>
+            ///  <para>Description: Indicates when play starts for digital rights management.
+            ///  </para>
+            ///  <para>Type:     DateTime -- VT_FILETIME  (For variants: VT_DATE)</para>
+            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 5 (PIDDRSI_PLAYSTARTS)</para>
+            ///</summary>
+            public ShellProperty<DateTime?> DatePlayStarts
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.DRM.DatePlayStarts;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.DRM.Description -- PKEY_DRM_Description</para>
+            ///  <para>Description: Displays the description for digital rights management.
+            ///  </para>
+            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 3 (PIDDRSI_DESCRIPTION)</para>
+            ///</summary>
+            public ShellProperty<string> Description
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.DRM.Description;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.DRM.IsProtected -- PKEY_DRM_IsProtected</para>
+            ///  <para>Description: 
+            ///  </para>
+            ///  <para>Type:     Boolean -- VT_BOOL</para>
+            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 2 (PIDDRSI_PROTECTED)</para>
+            ///</summary>
+            public ShellProperty<bool?> IsProtected
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.DRM.IsProtected;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<bool?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.DRM.PlayCount -- PKEY_DRM_PlayCount</para>
+            ///  <para>Description: Indicates the play count for digital rights management.
+            ///  </para>
+            ///  <para>Type:     UInt32 -- VT_UI4</para>
+            ///  <para>FormatID: (FMTID_DRM) {AEAC19E4-89AE-4508-B9B7-BB867ABEE2ED}, 4 (PIDDRSI_PLAYCOUNT)</para>
+            ///</summary>
+            public ShellProperty<uint?> PlayCount
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.DRM.PlayCount;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
 
             #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemGPS
-
         /// <summary>
-        ///   System.GPS Properties
+        /// System.GPS Properties
         /// </summary>
-        public class PropertySystemGPS : PropertyStoreItems
+        public class PropertySystemGps : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
-            internal PropertySystemGPS(ShellObject parent)
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
+            internal PropertySystemGps(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -7210,16 +8308,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {827EDB4F-5B73-44A7-891D-FDFFABEA35CA}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> Altitude
+            public ShellProperty<double?> Altitude
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Altitude;
+                    var key = Shell.PropertySystem.System.GPS.Altitude;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -7230,16 +8330,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {78342DCB-E358-4145-AE9A-6BFE4E0F9F51}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> AltitudeDenominator
+            public ShellProperty<uint?> AltitudeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.AltitudeDenominator;
+                    var key = Shell.PropertySystem.System.GPS.AltitudeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7250,16 +8352,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {2DAD1EB7-816D-40D3-9EC3-C9773BE2AADE}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> AltitudeNumerator
+            public ShellProperty<uint?> AltitudeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.AltitudeNumerator;
+                    var key = Shell.PropertySystem.System.GPS.AltitudeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7270,16 +8374,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: {46AC629D-75EA-4515-867F-6DC4321C5844}, 100</para>
             ///</summary>
-            public ShellProperty<Byte?> AltitudeRef
+            public ShellProperty<byte?> AltitudeRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.AltitudeRef;
+                    var key = Shell.PropertySystem.System.GPS.AltitudeRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -7290,16 +8396,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {972E333E-AC7E-49F1-8ADF-A70D07A9BCAB}, 100</para>
             ///</summary>
-            public ShellProperty<String> AreaInformation
+            public ShellProperty<string> AreaInformation
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.AreaInformation;
+                    var key = Shell.PropertySystem.System.GPS.AreaInformation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.GPS.DOP -- PKEY_GPS_DOP</para>
+            ///  <para>Description: Indicates the GPS DOP (data degree of precision).  Calculated from PKEY_GPS_DOPNumerator and PKEY_GPS_DOPDenominator
+            ///  </para>
+            ///  <para>Type:     Double -- VT_R8</para>
+            ///  <para>FormatID: {0CF8FB02-1837-42F1-A697-A7017AA289B9}, 100</para>
+            ///</summary>
+            public ShellProperty<double?> DOP
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.GPS.DOP;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -7314,12 +8444,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Date;
+                    var key = Shell.PropertySystem.System.GPS.Date;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -7331,16 +8463,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {C66D4B3C-E888-47CC-B99F-9DCA3EE34DEA}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> DestBearing
+            public ShellProperty<double?> DestBearing
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestBearing;
+                    var key = Shell.PropertySystem.System.GPS.DestBearing;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -7351,16 +8485,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {7ABCF4F8-7C3F-4988-AC91-8D2C2E97ECA5}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DestBearingDenominator
+            public ShellProperty<uint?> DestBearingDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestBearingDenominator;
+                    var key = Shell.PropertySystem.System.GPS.DestBearingDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7371,16 +8507,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {BA3B1DA9-86EE-4B5D-A2A4-A271A429F0CF}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DestBearingNumerator
+            public ShellProperty<uint?> DestBearingNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestBearingNumerator;
+                    var key = Shell.PropertySystem.System.GPS.DestBearingNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7391,16 +8529,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {9AB84393-2A0F-4B75-BB22-7279786977CB}, 100</para>
             ///</summary>
-            public ShellProperty<String> DestBearingRef
+            public ShellProperty<string> DestBearingRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestBearingRef;
+                    var key = Shell.PropertySystem.System.GPS.DestBearingRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7412,16 +8552,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {A93EAE04-6804-4F24-AC81-09B266452118}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> DestDistance
+            public ShellProperty<double?> DestDistance
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestDistance;
+                    var key = Shell.PropertySystem.System.GPS.DestDistance;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -7432,16 +8574,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {9BC2C99B-AC71-4127-9D1C-2596D0D7DCB7}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DestDistanceDenominator
+            public ShellProperty<uint?> DestDistanceDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestDistanceDenominator;
+                    var key = Shell.PropertySystem.System.GPS.DestDistanceDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7452,16 +8596,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {2BDA47DA-08C6-4FE1-80BC-A72FC517C5D0}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DestDistanceNumerator
+            public ShellProperty<uint?> DestDistanceNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestDistanceNumerator;
+                    var key = Shell.PropertySystem.System.GPS.DestDistanceNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7472,16 +8618,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {ED4DF2D3-8695-450B-856F-F5C1C53ACB66}, 100</para>
             ///</summary>
-            public ShellProperty<String> DestDistanceRef
+            public ShellProperty<string> DestDistanceRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestDistanceRef;
+                    var key = Shell.PropertySystem.System.GPS.DestDistanceRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7494,16 +8642,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue Double -- VT_VECTOR | VT_R8  (For variants: VT_ARRAY | VT_R8)</para>
             ///  <para>FormatID: {9D1D7CC5-5C39-451C-86B3-928E2D18CC47}, 100</para>
             ///</summary>
-            public ShellProperty<Double[]> DestLatitude
+            public ShellProperty<double[]> DestLatitude
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLatitude;
+                    var key = Shell.PropertySystem.System.GPS.DestLatitude;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double[]>;
+                    return this.hashtable[key] as ShellProperty<double[]>;
                 }
             }
 
@@ -7514,16 +8664,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {3A372292-7FCA-49A7-99D5-E47BB2D4E7AB}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> DestLatitudeDenominator
+            public ShellProperty<uint[]> DestLatitudeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLatitudeDenominator;
+                    var key = Shell.PropertySystem.System.GPS.DestLatitudeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7534,16 +8686,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {ECF4B6F6-D5A6-433C-BB92-4076650FC890}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> DestLatitudeNumerator
+            public ShellProperty<uint[]> DestLatitudeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLatitudeNumerator;
+                    var key = Shell.PropertySystem.System.GPS.DestLatitudeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7554,16 +8708,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {CEA820B9-CE61-4885-A128-005D9087C192}, 100</para>
             ///</summary>
-            public ShellProperty<String> DestLatitudeRef
+            public ShellProperty<string> DestLatitudeRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLatitudeRef;
+                    var key = Shell.PropertySystem.System.GPS.DestLatitudeRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7576,16 +8732,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue Double -- VT_VECTOR | VT_R8  (For variants: VT_ARRAY | VT_R8)</para>
             ///  <para>FormatID: {47A96261-CB4C-4807-8AD3-40B9D9DBC6BC}, 100</para>
             ///</summary>
-            public ShellProperty<Double[]> DestLongitude
+            public ShellProperty<double[]> DestLongitude
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLongitude;
+                    var key = Shell.PropertySystem.System.GPS.DestLongitude;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double[]>;
+                    return this.hashtable[key] as ShellProperty<double[]>;
                 }
             }
 
@@ -7596,16 +8754,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {425D69E5-48AD-4900-8D80-6EB6B8D0AC86}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> DestLongitudeDenominator
+            public ShellProperty<uint[]> DestLongitudeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLongitudeDenominator;
+                    var key = Shell.PropertySystem.System.GPS.DestLongitudeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7616,16 +8776,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {A3250282-FB6D-48D5-9A89-DBCACE75CCCF}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> DestLongitudeNumerator
+            public ShellProperty<uint[]> DestLongitudeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLongitudeNumerator;
+                    var key = Shell.PropertySystem.System.GPS.DestLongitudeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7636,16 +8798,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {182C1EA6-7C1C-4083-AB4B-AC6C9F4ED128}, 100</para>
             ///</summary>
-            public ShellProperty<String> DestLongitudeRef
+            public ShellProperty<string> DestLongitudeRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DestLongitudeRef;
+                    var key = Shell.PropertySystem.System.GPS.DestLongitudeRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7656,36 +8820,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {AAF4EE25-BD3B-4DD7-BFC4-47F77BB00F6D}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> Differential
+            public ShellProperty<ushort?> Differential
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Differential;
+                    var key = Shell.PropertySystem.System.GPS.Differential;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.GPS.DOP -- PKEY_GPS_DOP</para>
-            ///  <para>Description: Indicates the GPS DOP (data degree of precision).  Calculated from PKEY_GPS_DOPNumerator and PKEY_GPS_DOPDenominator
-            ///  </para>
-            ///  <para>Type:     Double -- VT_R8</para>
-            ///  <para>FormatID: {0CF8FB02-1837-42F1-A697-A7017AA289B9}, 100</para>
-            ///</summary>
-            public ShellProperty<Double?> DOP
-            {
-                get
-                {
-                    var key = SystemProperties.System.GPS.DOP;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
-
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -7696,16 +8842,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {A0BE94C5-50BA-487B-BD35-0654BE8881ED}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DOPDenominator
+            public ShellProperty<uint?> DopDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DOPDenominator;
+                    var key = Shell.PropertySystem.System.GPS.DopDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7716,16 +8864,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {47166B16-364F-4AA0-9F31-E2AB3DF449C3}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DOPNumerator
+            public ShellProperty<uint?> DopNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.DOPNumerator;
+                    var key = Shell.PropertySystem.System.GPS.DopNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7737,16 +8887,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {16473C91-D017-4ED9-BA4D-B6BAA55DBCF8}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> ImgDirection
+            public ShellProperty<double?> ImgDirection
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.ImgDirection;
+                    var key = Shell.PropertySystem.System.GPS.ImgDirection;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -7757,16 +8909,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {10B24595-41A2-4E20-93C2-5761C1395F32}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ImgDirectionDenominator
+            public ShellProperty<uint?> ImgDirectionDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.ImgDirectionDenominator;
+                    var key = Shell.PropertySystem.System.GPS.ImgDirectionDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7777,16 +8931,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {DC5877C7-225F-45F7-BAC7-E81334B6130A}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ImgDirectionNumerator
+            public ShellProperty<uint?> ImgDirectionNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.ImgDirectionNumerator;
+                    var key = Shell.PropertySystem.System.GPS.ImgDirectionNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -7797,16 +8953,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A4AAA5B7-1AD0-445F-811A-0F8F6E67F6B5}, 100</para>
             ///</summary>
-            public ShellProperty<String> ImgDirectionRef
+            public ShellProperty<string> ImgDirectionRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.ImgDirectionRef;
+                    var key = Shell.PropertySystem.System.GPS.ImgDirectionRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7818,16 +8976,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue Double -- VT_VECTOR | VT_R8  (For variants: VT_ARRAY | VT_R8)</para>
             ///  <para>FormatID: {8727CFFF-4868-4EC6-AD5B-81B98521D1AB}, 100</para>
             ///</summary>
-            public ShellProperty<Double[]> Latitude
+            public ShellProperty<double[]> Latitude
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Latitude;
+                    var key = Shell.PropertySystem.System.GPS.Latitude;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double[]>;
+                    return this.hashtable[key] as ShellProperty<double[]>;
                 }
             }
 
@@ -7838,16 +8998,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {16E634EE-2BFF-497B-BD8A-4341AD39EEB9}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> LatitudeDenominator
+            public ShellProperty<uint[]> LatitudeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LatitudeDenominator;
+                    var key = Shell.PropertySystem.System.GPS.LatitudeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7858,16 +9020,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {7DDAAAD1-CCC8-41AE-B750-B2CB8031AEA2}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> LatitudeNumerator
+            public ShellProperty<uint[]> LatitudeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LatitudeNumerator;
+                    var key = Shell.PropertySystem.System.GPS.LatitudeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7878,16 +9042,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {029C0252-5B86-46C7-ACA0-2769FFC8E3D4}, 100</para>
             ///</summary>
-            public ShellProperty<String> LatitudeRef
+            public ShellProperty<string> LatitudeRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LatitudeRef;
+                    var key = Shell.PropertySystem.System.GPS.LatitudeRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7899,16 +9065,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue Double -- VT_VECTOR | VT_R8  (For variants: VT_ARRAY | VT_R8)</para>
             ///  <para>FormatID: {C4C4DBB2-B593-466B-BBDA-D03D27D5E43A}, 100</para>
             ///</summary>
-            public ShellProperty<Double[]> Longitude
+            public ShellProperty<double[]> Longitude
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Longitude;
+                    var key = Shell.PropertySystem.System.GPS.Longitude;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double[]>;
+                    return this.hashtable[key] as ShellProperty<double[]>;
                 }
             }
 
@@ -7919,16 +9087,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {BE6E176C-4534-4D2C-ACE5-31DEDAC1606B}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> LongitudeDenominator
+            public ShellProperty<uint[]> LongitudeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LongitudeDenominator;
+                    var key = Shell.PropertySystem.System.GPS.LongitudeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7939,16 +9109,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue UInt32 -- VT_VECTOR | VT_UI4  (For variants: VT_ARRAY | VT_UI4)</para>
             ///  <para>FormatID: {02B0F689-A914-4E45-821D-1DDA452ED2C4}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32[]> LongitudeNumerator
+            public ShellProperty<uint[]> LongitudeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LongitudeNumerator;
+                    var key = Shell.PropertySystem.System.GPS.LongitudeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32[]>;
+                    return this.hashtable[key] as ShellProperty<uint[]>;
                 }
             }
 
@@ -7959,16 +9131,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {33DCF22B-28D5-464C-8035-1EE9EFD25278}, 100</para>
             ///</summary>
-            public ShellProperty<String> LongitudeRef
+            public ShellProperty<string> LongitudeRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.LongitudeRef;
+                    var key = Shell.PropertySystem.System.GPS.LongitudeRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7979,16 +9153,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {2CA2DAE6-EDDC-407D-BEF1-773942ABFA95}, 100</para>
             ///</summary>
-            public ShellProperty<String> MapDatum
+            public ShellProperty<string> MapDatum
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.MapDatum;
+                    var key = Shell.PropertySystem.System.GPS.MapDatum;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -7999,16 +9175,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A015ED5D-AAEA-4D58-8A86-3C586920EA0B}, 100</para>
             ///</summary>
-            public ShellProperty<String> MeasureMode
+            public ShellProperty<string> MeasureMode
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.MeasureMode;
+                    var key = Shell.PropertySystem.System.GPS.MeasureMode;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8019,16 +9197,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {59D49E61-840F-4AA9-A939-E2099B7F6399}, 100</para>
             ///</summary>
-            public ShellProperty<String> ProcessingMethod
+            public ShellProperty<string> ProcessingMethod
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.ProcessingMethod;
+                    var key = Shell.PropertySystem.System.GPS.ProcessingMethod;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8039,16 +9219,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {467EE575-1F25-4557-AD4E-B8B58B0D9C15}, 100</para>
             ///</summary>
-            public ShellProperty<String> Satellites
+            public ShellProperty<string> Satellites
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Satellites;
+                    var key = Shell.PropertySystem.System.GPS.Satellites;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8060,16 +9242,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {DA5D0862-6E76-4E1B-BABD-70021BD25494}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> Speed
+            public ShellProperty<double?> Speed
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Speed;
+                    var key = Shell.PropertySystem.System.GPS.Speed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -8080,16 +9264,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {7D122D5A-AE5E-4335-8841-D71E7CE72F53}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> SpeedDenominator
+            public ShellProperty<uint?> SpeedDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.SpeedDenominator;
+                    var key = Shell.PropertySystem.System.GPS.SpeedDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8100,16 +9286,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {ACC9CE3D-C213-4942-8B48-6D0820F21C6D}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> SpeedNumerator
+            public ShellProperty<uint?> SpeedNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.SpeedNumerator;
+                    var key = Shell.PropertySystem.System.GPS.SpeedNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8121,16 +9309,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {ECF7F4C9-544F-4D6D-9D98-8AD79ADAF453}, 100</para>
             ///</summary>
-            public ShellProperty<String> SpeedRef
+            public ShellProperty<string> SpeedRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.SpeedRef;
+                    var key = Shell.PropertySystem.System.GPS.SpeedRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8142,16 +9332,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {125491F4-818F-46B2-91B5-D537753617B2}, 100</para>
             ///</summary>
-            public ShellProperty<String> Status
+            public ShellProperty<string> Status
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Status;
+                    var key = Shell.PropertySystem.System.GPS.Status;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8163,16 +9355,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {76C09943-7C33-49E3-9E7E-CDBA872CFADA}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> Track
+            public ShellProperty<double?> Track
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.Track;
+                    var key = Shell.PropertySystem.System.GPS.Track;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -8183,16 +9377,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {C8D1920C-01F6-40C0-AC86-2F3A4AD00770}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> TrackDenominator
+            public ShellProperty<uint?> TrackDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.TrackDenominator;
+                    var key = Shell.PropertySystem.System.GPS.TrackDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8203,16 +9399,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {702926F4-44A6-43E1-AE71-45627116893B}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> TrackNumerator
+            public ShellProperty<uint?> TrackNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.TrackNumerator;
+                    var key = Shell.PropertySystem.System.GPS.TrackNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8223,16 +9421,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {35DBE6FE-44C3-4400-AAAE-D2C799C407E8}, 100</para>
             ///</summary>
-            public ShellProperty<String> TrackRef
+            public ShellProperty<string> TrackRef
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.TrackRef;
+                    var key = Shell.PropertySystem.System.GPS.TrackRef;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8243,42 +9443,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Buffer -- VT_VECTOR | VT_UI1  (For variants: VT_ARRAY | VT_UI1)</para>
             ///  <para>FormatID: {22704DA4-C6B2-4A99-8E56-F16DF8C92599}, 100</para>
             ///</summary>
-            public ShellProperty<Byte[]> VersionID
+            public ShellProperty<byte[]> VersionID
             {
                 get
                 {
-                    var key = SystemProperties.System.GPS.VersionID;
+                    var key = Shell.PropertySystem.System.GPS.VersionID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemIdentity
-
         /// <summary>
-        ///   System.Identity Properties
+        /// System.Identity Properties
         /// </summary>
         public class PropertySystemIdentity : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemIdentity(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8289,16 +9500,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Blob -- VT_BLOB</para>
             ///  <para>FormatID: {8C3B93A4-BAED-1A83-9A32-102EE313F6EB}, 100</para>
             ///</summary>
-            public ShellProperty<Byte[]> Blob
+            public ShellProperty<byte[]> Blob
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.Blob;
+                    var key = Shell.PropertySystem.System.Identity.Blob;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -8309,16 +9522,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {7D683FC9-D155-45A8-BB1F-89D19BCB792F}, 100</para>
             ///</summary>
-            public ShellProperty<String> DisplayName
+            public ShellProperty<string> DisplayName
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.DisplayName;
+                    var key = Shell.PropertySystem.System.Identity.DisplayName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8329,16 +9544,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {A4108708-09DF-4377-9DFC-6D99986D5A67}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsMeIdentity
+            public ShellProperty<bool?> IsMeIdentity
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.IsMeIdentity;
+                    var key = Shell.PropertySystem.System.Identity.IsMeIdentity;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -8349,16 +9566,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {FCC16823-BAED-4F24-9B32-A0982117F7FA}, 100</para>
             ///</summary>
-            public ShellProperty<String> PrimaryEmailAddress
+            public ShellProperty<string> PrimaryEmailAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.PrimaryEmailAddress;
+                    var key = Shell.PropertySystem.System.Identity.PrimaryEmailAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8373,12 +9592,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.ProviderID;
+                    var key = Shell.PropertySystem.System.Identity.ProviderID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
                 }
             }
 
@@ -8389,16 +9610,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E55FC3B0-2B60-4220-918E-B21E8BF16016}, 100</para>
             ///</summary>
-            public ShellProperty<String> UniqueID
+            public ShellProperty<string> UniqueID
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.UniqueID;
+                    var key = Shell.PropertySystem.System.Identity.UniqueID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8409,42 +9632,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C4322503-78CA-49C6-9ACC-A68E2AFD7B6B}, 100</para>
             ///</summary>
-            public ShellProperty<String> UserName
+            public ShellProperty<string> UserName
             {
                 get
                 {
-                    var key = SystemProperties.System.Identity.UserName;
+                    var key = Shell.PropertySystem.System.Identity.UserName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemIdentityProvider
-
         /// <summary>
-        ///   System.IdentityProvider Properties
+        /// System.IdentityProvider Properties
         /// </summary>
         public class PropertySystemIdentityProvider : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemIdentityProvider(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8455,16 +9689,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {B96EFF7B-35CA-4A35-8607-29E3A54C46EA}, 100</para>
             ///</summary>
-            public ShellProperty<String> Name
+            public ShellProperty<string> Name
             {
                 get
                 {
-                    var key = SystemProperties.System.IdentityProvider.Name;
+                    var key = Shell.PropertySystem.System.IdentityProvider.Name;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8475,42 +9711,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {2425166F-5642-4864-992F-98FD98F294C3}, 100</para>
             ///</summary>
-            public ShellProperty<String> Picture
+            public ShellProperty<string> Picture
             {
                 get
                 {
-                    var key = SystemProperties.System.IdentityProvider.Picture;
+                    var key = Shell.PropertySystem.System.IdentityProvider.Picture;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemImage
-
         /// <summary>
-        ///   System.Image Properties
+        /// System.Image Properties
         /// </summary>
         public class PropertySystemImage : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemImage(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8521,16 +9768,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 7 (PIDISI_BITDEPTH)</para>
             ///</summary>
-            public ShellProperty<UInt32?> BitDepth
+            public ShellProperty<uint?> BitDepth
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.BitDepth;
+                    var key = Shell.PropertySystem.System.Image.BitDepth;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8541,16 +9790,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 40961</para>
             ///</summary>
-            public ShellProperty<UInt16?> ColorSpace
+            public ShellProperty<ushort?> ColorSpace
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.ColorSpace;
+                    var key = Shell.PropertySystem.System.Image.ColorSpace;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -8561,16 +9812,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {364B6FA9-37AB-482A-BE2B-AE02F60D4318}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> CompressedBitsPerPixel
+            public ShellProperty<double?> CompressedBitsPerPixel
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.CompressedBitsPerPixel;
+                    var key = Shell.PropertySystem.System.Image.CompressedBitsPerPixel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -8581,16 +9834,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {1F8844E1-24AD-4508-9DFD-5326A415CE02}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> CompressedBitsPerPixelDenominator
+            public ShellProperty<uint?> CompressedBitsPerPixelDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.CompressedBitsPerPixelDenominator;
+                    var key = Shell.PropertySystem.System.Image.CompressedBitsPerPixelDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8601,16 +9856,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {D21A7148-D32C-4624-8900-277210F79C0F}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> CompressedBitsPerPixelNumerator
+            public ShellProperty<uint?> CompressedBitsPerPixelNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.CompressedBitsPerPixelNumerator;
+                    var key = Shell.PropertySystem.System.Image.CompressedBitsPerPixelNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8621,16 +9878,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 259</para>
             ///</summary>
-            public ShellProperty<UInt16?> Compression
+            public ShellProperty<ushort?> Compression
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.Compression;
+                    var key = Shell.PropertySystem.System.Image.Compression;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -8642,16 +9901,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {3F08E66F-2F44-4BB9-A682-AC35D2562322}, 100</para>
             ///</summary>
-            public ShellProperty<String> CompressionText
+            public ShellProperty<string> CompressionText
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.CompressionText;
+                    var key = Shell.PropertySystem.System.Image.CompressionText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8662,16 +9923,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 13 (PIDISI_DIMENSIONS)</para>
             ///</summary>
-            public ShellProperty<String> Dimensions
+            public ShellProperty<string> Dimensions
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.Dimensions;
+                    var key = Shell.PropertySystem.System.Image.Dimensions;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8682,16 +9945,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 5 (PIDISI_RESOLUTIONX)</para>
             ///</summary>
-            public ShellProperty<Double?> HorizontalResolution
+            public ShellProperty<double?> HorizontalResolution
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.HorizontalResolution;
+                    var key = Shell.PropertySystem.System.Image.HorizontalResolution;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -8702,16 +9967,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 3 (PIDISI_CX)</para>
             ///</summary>
-            public ShellProperty<UInt32?> HorizontalSize
+            public ShellProperty<uint?> HorizontalSize
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.HorizontalSize;
+                    var key = Shell.PropertySystem.System.Image.HorizontalSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -8721,16 +9988,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {10DABE05-32AA-4C29-BF1A-63E2D220587F}, 100</para>
             /// </summary>
-            public ShellProperty<String> ImageID
+            public ShellProperty<string> ImageID
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.ImageID;
+                    var key = Shell.PropertySystem.System.Image.ImageID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8740,16 +10009,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Int16 -- VT_I2</para>
             ///   <para>FormatID: {19B51FA6-1F92-4A5C-AB48-7DF0ABD67444}, 100</para>
             /// </summary>
-            public ShellProperty<Int16?> ResolutionUnit
+            public ShellProperty<short?> ResolutionUnit
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.ResolutionUnit;
+                    var key = Shell.PropertySystem.System.Image.ResolutionUnit;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<short?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int16?>;
+                    return this.hashtable[key] as ShellProperty<short?>;
                 }
             }
 
@@ -8760,16 +10031,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 6 (PIDISI_RESOLUTIONY)</para>
             ///</summary>
-            public ShellProperty<Double?> VerticalResolution
+            public ShellProperty<double?> VerticalResolution
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.VerticalResolution;
+                    var key = Shell.PropertySystem.System.Image.VerticalResolution;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -8780,42 +10053,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 4 (PIDISI_CY)</para>
             ///</summary>
-            public ShellProperty<UInt32?> VerticalSize
+            public ShellProperty<uint?> VerticalSize
             {
                 get
                 {
-                    var key = SystemProperties.System.Image.VerticalSize;
+                    var key = Shell.PropertySystem.System.Image.VerticalSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemJournal
-
         /// <summary>
-        ///   System.Journal Properties
+        /// System.Journal Properties
         /// </summary>
         public class PropertySystemJournal : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemJournal(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8825,16 +10109,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {DEA7C82C-1D89-4A66-9427-A4E3DEBABCB1}, 100</para>
             /// </summary>
-            public ShellProperty<String[]> Contacts
+            public ShellProperty<string[]> Contacts
             {
                 get
                 {
-                    var key = SystemProperties.System.Journal.Contacts;
+                    var key = Shell.PropertySystem.System.Journal.Contacts;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -8844,42 +10130,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {95BEB1FC-326D-4644-B396-CD3ED90E6DDF}, 100</para>
             /// </summary>
-            public ShellProperty<String> EntryType
+            public ShellProperty<string> EntryType
             {
                 get
                 {
-                    var key = SystemProperties.System.Journal.EntryType;
+                    var key = Shell.PropertySystem.System.Journal.EntryType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemLayoutPattern
-
         /// <summary>
-        ///   System.LayoutPattern Properties
+        /// System.LayoutPattern Properties
         /// </summary>
         public class PropertySystemLayoutPattern : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemLayoutPattern(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8891,16 +10188,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 500</para>
             ///</summary>
-            public ShellProperty<String> ContentViewModeForBrowse
+            public ShellProperty<string> ContentViewModeForBrowse
             {
                 get
                 {
-                    var key = SystemProperties.System.LayoutPattern.ContentViewModeForBrowse;
+                    var key = Shell.PropertySystem.System.LayoutPattern.ContentViewModeForBrowse;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8912,42 +10211,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 501</para>
             ///</summary>
-            public ShellProperty<String> ContentViewModeForSearch
+            public ShellProperty<string> ContentViewModeForSearch
             {
                 get
                 {
-                    var key = SystemProperties.System.LayoutPattern.ContentViewModeForSearch;
+                    var key = Shell.PropertySystem.System.LayoutPattern.ContentViewModeForSearch;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemLink
-
         /// <summary>
-        ///   System.Link Properties
+        /// System.Link Properties
         /// </summary>
         public class PropertySystemLink : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemLink(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -8957,16 +10267,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {436F2667-14E2-4FEB-B30A-146C53B5B674}, 100</para>
             /// </summary>
-            public ShellProperty<String> Arguments
+            public ShellProperty<string> Arguments
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.Arguments;
+                    var key = Shell.PropertySystem.System.Link.Arguments;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8976,16 +10288,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: (PSGUID_LINK) {B9B4B3FC-2B51-4A42-B5D8-324146AFCF25}, 5</para>
             /// </summary>
-            public ShellProperty<String> Comment
+            public ShellProperty<string> Comment
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.Comment;
+                    var key = Shell.PropertySystem.System.Link.Comment;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -8999,12 +10313,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.DateVisited;
+                    var key = Shell.PropertySystem.System.Link.DateVisited;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -9014,16 +10330,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {5CBF2787-48CF-4208-B90E-EE5E5D420294}, 21  (PKEYs relating to URLs.  Used by IE History.)</para>
             /// </summary>
-            public ShellProperty<String> Description
+            public ShellProperty<string> Description
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.Description;
+                    var key = Shell.PropertySystem.System.Link.Description;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9034,16 +10352,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (PSGUID_LINK) {B9B4B3FC-2B51-4A42-B5D8-324146AFCF25}, 3 (PID_LINK_TARGET_TYPE)</para>
             ///</summary>
-            public ShellProperty<Int32?> Status
+            public ShellProperty<int?> Status
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.Status;
+                    var key = Shell.PropertySystem.System.Link.Status;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -9054,16 +10374,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {7A7D76F4-B630-4BD7-95FF-37CC51A975C9}, 2</para>
             ///</summary>
-            public ShellProperty<String[]> TargetExtension
+            public ShellProperty<string[]> TargetExtension
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.TargetExtension;
+                    var key = Shell.PropertySystem.System.Link.TargetExtension;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9079,16 +10401,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_LINK) {B9B4B3FC-2B51-4A42-B5D8-324146AFCF25}, 2 (PID_LINK_TARGET)</para>
             ///</summary>
-            public ShellProperty<String> TargetParsingPath
+            public ShellProperty<string> TargetParsingPath
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.TargetParsingPath;
+                    var key = Shell.PropertySystem.System.Link.TargetParsingPath;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9100,16 +10424,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_LINK) {B9B4B3FC-2B51-4A42-B5D8-324146AFCF25}, 8</para>
             ///</summary>
-            public ShellProperty<UInt32?> TargetSFGAOFlags
+            public ShellProperty<uint?> TargetSfgaoFlags
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.TargetSFGAOFlags;
+                    var key = Shell.PropertySystem.System.Link.TargetSfgaoFlags;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -9121,16 +10447,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D6942081-D53B-443D-AD47-5E059D9CD27A}, 3</para>
             ///</summary>
-            public ShellProperty<String[]> TargetSFGAOFlagsStrings
+            public ShellProperty<string[]> TargetSfgaoFlagsStrings
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.TargetSFGAOFlagsStrings;
+                    var key = Shell.PropertySystem.System.Link.TargetSfgaoFlagsStrings;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9140,42 +10468,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {5CBF2787-48CF-4208-B90E-EE5E5D420294}, 2  (PKEYs relating to URLs.  Used by IE History.)</para>
             /// </summary>
-            public ShellProperty<String> TargetUrl
+            public ShellProperty<string> TargetUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.Link.TargetUrl;
+                    var key = Shell.PropertySystem.System.Link.TargetUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemMedia
-
         /// <summary>
-        ///   System.Media Properties
+        /// System.Media Properties
         /// </summary>
         public class PropertySystemMedia : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemMedia(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -9186,16 +10525,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 32 (PIDMSI_AUTHOR_URL)</para>
             ///</summary>
-            public ShellProperty<String> AuthorUrl
+            public ShellProperty<string> AuthorUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.AuthorUrl;
+                    var key = Shell.PropertySystem.System.Media.AuthorUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9205,16 +10546,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt32 -- VT_UI4</para>
             ///   <para>FormatID: {09EDD5B6-B301-43C5-9990-D00302EFFD46}, 100</para>
             /// </summary>
-            public ShellProperty<UInt32?> AverageLevel
+            public ShellProperty<uint?> AverageLevel
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.AverageLevel;
+                    var key = Shell.PropertySystem.System.Media.AverageLevel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -9225,16 +10568,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 13 (PIDMSI_CLASS_PRIMARY_ID)</para>
             ///</summary>
-            public ShellProperty<String> ClassPrimaryID
+            public ShellProperty<string> ClassPrimaryID
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ClassPrimaryID;
+                    var key = Shell.PropertySystem.System.Media.ClassPrimaryID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9245,16 +10590,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 14 (PIDMSI_CLASS_SECONDARY_ID)</para>
             ///</summary>
-            public ShellProperty<String> ClassSecondaryID
+            public ShellProperty<string> ClassSecondaryID
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ClassSecondaryID;
+                    var key = Shell.PropertySystem.System.Media.ClassSecondaryID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9265,16 +10612,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 24 (PIDMSI_COLLECTION_GROUP_ID)</para>
             ///</summary>
-            public ShellProperty<String> CollectionGroupID
+            public ShellProperty<string> CollectionGroupID
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.CollectionGroupID;
+                    var key = Shell.PropertySystem.System.Media.CollectionGroupID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9285,16 +10634,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 25 (PIDMSI_COLLECTION_ID)</para>
             ///</summary>
-            public ShellProperty<String> CollectionID
+            public ShellProperty<string> CollectionID
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.CollectionID;
+                    var key = Shell.PropertySystem.System.Media.CollectionID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9305,16 +10656,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 18 (PIDMSI_CONTENTDISTRIBUTOR)</para>
             ///</summary>
-            public ShellProperty<String> ContentDistributor
+            public ShellProperty<string> ContentDistributor
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ContentDistributor;
+                    var key = Shell.PropertySystem.System.Media.ContentDistributor;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9325,16 +10678,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 26 (PIDMSI_CONTENT_ID)</para>
             ///</summary>
-            public ShellProperty<String> ContentID
+            public ShellProperty<string> ContentID
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ContentID;
+                    var key = Shell.PropertySystem.System.Media.ContentID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9345,16 +10700,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 27 (PIDMSI_TOOL_NAME)</para>
             ///</summary>
-            public ShellProperty<String> CreatorApplication
+            public ShellProperty<string> CreatorApplication
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.CreatorApplication;
+                    var key = Shell.PropertySystem.System.Media.CreatorApplication;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9365,16 +10722,40 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 28 (PIDMSI_TOOL_VERSION)</para>
             ///</summary>
-            public ShellProperty<String> CreatorApplicationVersion
+            public ShellProperty<string> CreatorApplicationVersion
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.CreatorApplicationVersion;
+                    var key = Shell.PropertySystem.System.Media.CreatorApplicationVersion;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Media.DVDID -- PKEY_Media_DVDID</para>
+            ///  <para>Description: 
+            ///  </para>
+            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 15 (PIDMSI_DVDID)</para>
+            ///</summary>
+            public ShellProperty<string> DVDID
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Media.DVDID;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9389,12 +10770,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.DateEncoded;
+                    var key = Shell.PropertySystem.System.Media.DateEncoded;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -9404,16 +10787,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {DE41CC29-6971-4290-B472-F59F2E2F31E2}, 100</para>
             /// </summary>
-            public ShellProperty<String> DateReleased
+            public ShellProperty<string> DateReleased
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.DateReleased;
+                    var key = Shell.PropertySystem.System.Media.DateReleased;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9424,36 +10809,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt64 -- VT_UI8</para>
             ///  <para>FormatID: (FMTID_AudioSummaryInformation) {64440490-4C8B-11D1-8B70-080036B11A03}, 3 (PIDASI_TIMELENGTH)</para>
             ///</summary>
-            public ShellProperty<UInt64?> Duration
+            public ShellProperty<ulong?> Duration
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.Duration;
+                    var key = Shell.PropertySystem.System.Media.Duration;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.Media.DVDID -- PKEY_Media_DVDID</para>
-            ///  <para>Description: 
-            ///  </para>
-            ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 15 (PIDMSI_DVDID)</para>
-            ///</summary>
-            public ShellProperty<String> DVDID
-            {
-                get
-                {
-                    var key = SystemProperties.System.Media.DVDID;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -9464,16 +10831,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 36 (PIDMSI_ENCODED_BY)</para>
             ///</summary>
-            public ShellProperty<String> EncodedBy
+            public ShellProperty<string> EncodedBy
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.EncodedBy;
+                    var key = Shell.PropertySystem.System.Media.EncodedBy;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9484,16 +10853,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 37 (PIDMSI_ENCODING_SETTINGS)</para>
             ///</summary>
-            public ShellProperty<String> EncodingSettings
+            public ShellProperty<string> EncodingSettings
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.EncodingSettings;
+                    var key = Shell.PropertySystem.System.Media.EncodingSettings;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9504,16 +10875,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (PSGUID_IMAGESUMMARYINFORMATION) {6444048F-4C8B-11D1-8B70-080036B11A03}, 12 (PIDISI_FRAMECOUNT)</para>
             ///</summary>
-            public ShellProperty<UInt32?> FrameCount
+            public ShellProperty<uint?> FrameCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.FrameCount;
+                    var key = Shell.PropertySystem.System.Media.FrameCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -9524,16 +10897,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 16 (PIDMSI_MCDI)</para>
             ///</summary>
-            public ShellProperty<String> MCDI
+            public ShellProperty<string> MCDI
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.MCDI;
+                    var key = Shell.PropertySystem.System.Media.MCDI;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9544,16 +10919,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 17 (PIDMSI_PROVIDER)</para>
             ///</summary>
-            public ShellProperty<String> MetadataContentProvider
+            public ShellProperty<string> MetadataContentProvider
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.MetadataContentProvider;
+                    var key = Shell.PropertySystem.System.Media.MetadataContentProvider;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9564,16 +10941,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 22 (PIDMSI_PRODUCER)</para>
             ///</summary>
-            public ShellProperty<String[]> Producer
+            public ShellProperty<string[]> Producer
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.Producer;
+                    var key = Shell.PropertySystem.System.Media.Producer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9584,16 +10963,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 33 (PIDMSI_PROMOTION_URL)</para>
             ///</summary>
-            public ShellProperty<String> PromotionUrl
+            public ShellProperty<string> PromotionUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.PromotionUrl;
+                    var key = Shell.PropertySystem.System.Media.PromotionUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9604,16 +10985,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 38</para>
             ///</summary>
-            public ShellProperty<String> ProtectionType
+            public ShellProperty<string> ProtectionType
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ProtectionType;
+                    var key = Shell.PropertySystem.System.Media.ProtectionType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9624,16 +11007,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 39</para>
             ///</summary>
-            public ShellProperty<String> ProviderRating
+            public ShellProperty<string> ProviderRating
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ProviderRating;
+                    var key = Shell.PropertySystem.System.Media.ProviderRating;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9644,16 +11029,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 40</para>
             ///</summary>
-            public ShellProperty<String> ProviderStyle
+            public ShellProperty<string> ProviderStyle
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.ProviderStyle;
+                    var key = Shell.PropertySystem.System.Media.ProviderStyle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9664,35 +11051,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 30 (PIDMSI_PUBLISHER)</para>
             ///</summary>
-            public ShellProperty<String> Publisher
+            public ShellProperty<string> Publisher
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.Publisher;
+                    var key = Shell.PropertySystem.System.Media.Publisher;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.Media.SubscriptionContentId -- PKEY_Media_SubscriptionContentId</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
-            ///   <para>FormatID: {9AEBAE7A-9644-487D-A92C-657585ED751A}, 100</para>
-            /// </summary>
-            public ShellProperty<String> SubscriptionContentId
-            {
-                get
-                {
-                    var key = SystemProperties.System.Media.SubscriptionContentId;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
-
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9703,16 +11073,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 38 (PIDSI_MUSIC_SUB_TITLE)</para>
             ///</summary>
-            public ShellProperty<String> SubTitle
+            public ShellProperty<string> SubTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.SubTitle;
+                    var key = Shell.PropertySystem.System.Media.SubTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.Media.SubscriptionContentId -- PKEY_Media_SubscriptionContentId</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
+            ///   <para>FormatID: {9AEBAE7A-9644-487D-A92C-657585ED751A}, 100</para>
+            /// </summary>
+            public ShellProperty<string> SubscriptionContentId
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Media.SubscriptionContentId;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9723,16 +11116,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 35 (PIDMSI_UNIQUE_FILE_IDENTIFIER)</para>
             ///</summary>
-            public ShellProperty<String> UniqueFileIdentifier
+            public ShellProperty<string> UniqueFileIdentifier
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.UniqueFileIdentifier;
+                    var key = Shell.PropertySystem.System.Media.UniqueFileIdentifier;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9743,16 +11138,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 41</para>
             ///</summary>
-            public ShellProperty<String> UserNoAutoInfo
+            public ShellProperty<string> UserNoAutoInfo
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.UserNoAutoInfo;
+                    var key = Shell.PropertySystem.System.Media.UserNoAutoInfo;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9763,16 +11160,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 34 (PIDMSI_USER_WEB_URL)</para>
             ///</summary>
-            public ShellProperty<String> UserWebUrl
+            public ShellProperty<string> UserWebUrl
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.UserWebUrl;
+                    var key = Shell.PropertySystem.System.Media.UserWebUrl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9783,16 +11182,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 23 (PIDMSI_WRITER)</para>
             ///</summary>
-            public ShellProperty<String[]> Writer
+            public ShellProperty<string[]> Writer
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.Writer;
+                    var key = Shell.PropertySystem.System.Media.Writer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9803,42 +11204,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 5 (PIDSI_MUSIC_YEAR)</para>
             ///</summary>
-            public ShellProperty<UInt32?> Year
+            public ShellProperty<uint?> Year
             {
                 get
                 {
-                    var key = SystemProperties.System.Media.Year;
+                    var key = Shell.PropertySystem.System.Media.Year;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemMessage
-
         /// <summary>
-        ///   System.Message Properties
+        /// System.Message Properties
         /// </summary>
         public class PropertySystemMessage : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemMessage(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -9848,16 +11260,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {3143BF7C-80A8-4854-8880-E2E40189BDD0}, 100</para>
             /// </summary>
-            public ShellProperty<String> AttachmentContents
+            public ShellProperty<string> AttachmentContents
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.AttachmentContents;
+                    var key = Shell.PropertySystem.System.Message.AttachmentContents;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9868,16 +11282,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 21</para>
             ///</summary>
-            public ShellProperty<String[]> AttachmentNames
+            public ShellProperty<string[]> AttachmentNames
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.AttachmentNames;
+                    var key = Shell.PropertySystem.System.Message.AttachmentNames;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9888,16 +11304,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 2</para>
             ///</summary>
-            public ShellProperty<String[]> BccAddress
+            public ShellProperty<string[]> BccAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.BccAddress;
+                    var key = Shell.PropertySystem.System.Message.BccAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9908,16 +11326,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 3</para>
             ///</summary>
-            public ShellProperty<String[]> BccName
+            public ShellProperty<string[]> BccName
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.BccName;
+                    var key = Shell.PropertySystem.System.Message.BccName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9928,16 +11348,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 4</para>
             ///</summary>
-            public ShellProperty<String[]> CcAddress
+            public ShellProperty<string[]> CCAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.CcAddress;
+                    var key = Shell.PropertySystem.System.Message.CCAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9948,16 +11370,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 5</para>
             ///</summary>
-            public ShellProperty<String[]> CcName
+            public ShellProperty<string[]> CCName
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.CcName;
+                    var key = Shell.PropertySystem.System.Message.CCName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -9967,16 +11391,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {DC8F80BD-AF1E-4289-85B6-3DFC1B493992}, 100</para>
             /// </summary>
-            public ShellProperty<String> ConversationID
+            public ShellProperty<string> ConversationID
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ConversationID;
+                    var key = Shell.PropertySystem.System.Message.ConversationID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -9987,16 +11413,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Buffer -- VT_VECTOR | VT_UI1  (For variants: VT_ARRAY | VT_UI1)</para>
             ///  <para>FormatID: {DC8F80BD-AF1E-4289-85B6-3DFC1B493992}, 101</para>
             ///</summary>
-            public ShellProperty<Byte[]> ConversationIndex
+            public ShellProperty<byte[]> ConversationIndex
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ConversationIndex;
+                    var key = Shell.PropertySystem.System.Message.ConversationIndex;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -10011,12 +11439,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.DateReceived;
+                    var key = Shell.PropertySystem.System.Message.DateReceived;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -10031,12 +11461,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.DateSent;
+                    var key = Shell.PropertySystem.System.Message.DateSent;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -10048,16 +11480,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {A82D9EE7-CA67-4312-965E-226BCEA85023}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> Flags
+            public ShellProperty<int?> Flags
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.Flags;
+                    var key = Shell.PropertySystem.System.Message.Flags;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -10067,16 +11501,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///   <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 13</para>
             /// </summary>
-            public ShellProperty<String[]> FromAddress
+            public ShellProperty<string[]> FromAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.FromAddress;
+                    var key = Shell.PropertySystem.System.Message.FromAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10087,16 +11523,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 14</para>
             ///</summary>
-            public ShellProperty<String[]> FromName
+            public ShellProperty<string[]> FromName
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.FromName;
+                    var key = Shell.PropertySystem.System.Message.FromName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10107,16 +11545,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {9C1FCF74-2D97-41BA-B4AE-CB2E3661A6E4}, 8</para>
             ///</summary>
-            public ShellProperty<Boolean?> HasAttachments
+            public ShellProperty<bool?> HasAttachments
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.HasAttachments;
+                    var key = Shell.PropertySystem.System.Message.HasAttachments;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -10126,16 +11566,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Int32 -- VT_I4</para>
             ///   <para>FormatID: {9A9BC088-4F6D-469E-9919-E705412040F9}, 100</para>
             /// </summary>
-            public ShellProperty<Int32?> IsFwdOrReply
+            public ShellProperty<int?> IsFwdOrReply
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.IsFwdOrReply;
+                    var key = Shell.PropertySystem.System.Message.IsFwdOrReply;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -10146,16 +11588,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {CD9ED458-08CE-418F-A70E-F912C7BB9C5C}, 103</para>
             ///</summary>
-            public ShellProperty<String> MessageClass
+            public ShellProperty<string> MessageClass
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.MessageClass;
+                    var key = Shell.PropertySystem.System.Message.MessageClass;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10166,16 +11610,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {9098F33C-9A7D-48A8-8DE5-2E1227A64E91}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> ProofInProgress
+            public ShellProperty<bool?> ProofInProgress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ProofInProgress;
+                    var key = Shell.PropertySystem.System.Message.ProofInProgress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -10185,16 +11631,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {0BE1C8E7-1981-4676-AE14-FDD78F05A6E7}, 100</para>
             /// </summary>
-            public ShellProperty<String> SenderAddress
+            public ShellProperty<string> SenderAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.SenderAddress;
+                    var key = Shell.PropertySystem.System.Message.SenderAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10204,16 +11652,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {0DA41CFA-D224-4A18-AE2F-596158DB4B3A}, 100</para>
             /// </summary>
-            public ShellProperty<String> SenderName
+            public ShellProperty<string> SenderName
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.SenderName;
+                    var key = Shell.PropertySystem.System.Message.SenderName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10224,16 +11674,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 15</para>
             ///</summary>
-            public ShellProperty<String> Store
+            public ShellProperty<string> Store
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.Store;
+                    var key = Shell.PropertySystem.System.Message.Store;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10244,16 +11696,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 16</para>
             ///</summary>
-            public ShellProperty<String[]> ToAddress
+            public ShellProperty<string[]> ToAddress
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ToAddress;
+                    var key = Shell.PropertySystem.System.Message.ToAddress;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10264,16 +11718,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {1F856A9F-6900-4ABA-9505-2D5F1B4D66CB}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> ToDoFlags
+            public ShellProperty<int?> ToDoFlags
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ToDoFlags;
+                    var key = Shell.PropertySystem.System.Message.ToDoFlags;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -10283,16 +11739,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {BCCC8A3C-8CEF-42E5-9B1C-C69079398BC7}, 100</para>
             /// </summary>
-            public ShellProperty<String> ToDoTitle
+            public ShellProperty<string> ToDoTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ToDoTitle;
+                    var key = Shell.PropertySystem.System.Message.ToDoTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10303,42 +11761,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {E3E0584C-B788-4A5A-BB20-7F5A44C9ACDD}, 17</para>
             ///</summary>
-            public ShellProperty<String[]> ToName
+            public ShellProperty<string[]> ToName
             {
                 get
                 {
-                    var key = SystemProperties.System.Message.ToName;
+                    var key = Shell.PropertySystem.System.Message.ToName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemMusic
-
         /// <summary>
-        ///   System.Music Properties
+        /// System.Music Properties
         /// </summary>
         public class PropertySystemMusic : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemMusic(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -10349,16 +11818,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 13 (PIDSI_MUSIC_ALBUM_ARTIST)</para>
             ///</summary>
-            public ShellProperty<String> AlbumArtist
+            public ShellProperty<string> AlbumArtist
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.AlbumArtist;
+                    var key = Shell.PropertySystem.System.Music.AlbumArtist;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10370,16 +11841,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 100</para>
             ///</summary>
-            public ShellProperty<String> AlbumID
+            public ShellProperty<string> AlbumID
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.AlbumID;
+                    var key = Shell.PropertySystem.System.Music.AlbumID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10390,16 +11863,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 4 (PIDSI_MUSIC_ALBUM)</para>
             ///</summary>
-            public ShellProperty<String> AlbumTitle
+            public ShellProperty<string> AlbumTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.AlbumTitle;
+                    var key = Shell.PropertySystem.System.Music.AlbumTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10410,16 +11885,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 2 (PIDSI_MUSIC_ARTIST)</para>
             ///</summary>
-            public ShellProperty<String[]> Artist
+            public ShellProperty<string[]> Artist
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Artist;
+                    var key = Shell.PropertySystem.System.Music.Artist;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10430,16 +11907,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 35 (PIDSI_MUSIC_BEATS_PER_MINUTE)</para>
             ///</summary>
-            public ShellProperty<String> BeatsPerMinute
+            public ShellProperty<string> BeatsPerMinute
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.BeatsPerMinute;
+                    var key = Shell.PropertySystem.System.Music.BeatsPerMinute;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10450,16 +11929,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 19 (PIDMSI_COMPOSER)</para>
             ///</summary>
-            public ShellProperty<String[]> Composer
+            public ShellProperty<string[]> Composer
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Composer;
+                    var key = Shell.PropertySystem.System.Music.Composer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10470,16 +11951,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 36 (PIDSI_MUSIC_CONDUCTOR)</para>
             ///</summary>
-            public ShellProperty<String[]> Conductor
+            public ShellProperty<string[]> Conductor
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Conductor;
+                    var key = Shell.PropertySystem.System.Music.Conductor;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10490,16 +11973,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 33 (PIDSI_MUSIC_CONTENT_GROUP_DESCRIPTION)</para>
             ///</summary>
-            public ShellProperty<String> ContentGroupDescription
+            public ShellProperty<string> ContentGroupDescription
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.ContentGroupDescription;
+                    var key = Shell.PropertySystem.System.Music.ContentGroupDescription;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10511,16 +11996,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {FD122953-FA93-4EF7-92C3-04C946B2F7C8}, 100</para>
             ///</summary>
-            public ShellProperty<String> DisplayArtist
+            public ShellProperty<string> DisplayArtist
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.DisplayArtist;
+                    var key = Shell.PropertySystem.System.Music.DisplayArtist;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10531,16 +12018,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 11 (PIDSI_MUSIC_GENRE)</para>
             ///</summary>
-            public ShellProperty<String[]> Genre
+            public ShellProperty<string[]> Genre
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Genre;
+                    var key = Shell.PropertySystem.System.Music.Genre;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -10551,16 +12040,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 34 (PIDSI_MUSIC_INITIAL_KEY)</para>
             ///</summary>
-            public ShellProperty<String> InitialKey
+            public ShellProperty<string> InitialKey
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.InitialKey;
+                    var key = Shell.PropertySystem.System.Music.InitialKey;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10571,16 +12062,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {C449D5CB-9EA4-4809-82E8-AF9D59DED6D1}, 100</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsCompilation
+            public ShellProperty<bool?> IsCompilation
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.IsCompilation;
+                    var key = Shell.PropertySystem.System.Music.IsCompilation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -10591,16 +12084,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 12 (PIDSI_MUSIC_LYRICS)</para>
             ///</summary>
-            public ShellProperty<String> Lyrics
+            public ShellProperty<string> Lyrics
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Lyrics;
+                    var key = Shell.PropertySystem.System.Music.Lyrics;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10611,16 +12106,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 39 (PIDSI_MUSIC_MOOD)</para>
             ///</summary>
-            public ShellProperty<String> Mood
+            public ShellProperty<string> Mood
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Mood;
+                    var key = Shell.PropertySystem.System.Music.Mood;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10631,16 +12128,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 37 (PIDSI_MUSIC_PART_OF_SET)</para>
             ///</summary>
-            public ShellProperty<String> PartOfSet
+            public ShellProperty<string> PartOfSet
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.PartOfSet;
+                    var key = Shell.PropertySystem.System.Music.PartOfSet;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10651,16 +12150,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 31 (PIDMSI_PERIOD)</para>
             ///</summary>
-            public ShellProperty<String> Period
+            public ShellProperty<string> Period
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.Period;
+                    var key = Shell.PropertySystem.System.Music.Period;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10670,16 +12171,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Blob -- VT_BLOB</para>
             ///   <para>FormatID: {6B223B6A-162E-4AA9-B39F-05D678FC6D77}, 100</para>
             /// </summary>
-            public ShellProperty<Byte[]> SynchronizedLyrics
+            public ShellProperty<byte[]> SynchronizedLyrics
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.SynchronizedLyrics;
+                    var key = Shell.PropertySystem.System.Music.SynchronizedLyrics;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -10690,42 +12193,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_MUSIC) {56A3372E-CE9C-11D2-9F0E-006097C686F6}, 7 (PIDSI_MUSIC_TRACK)</para>
             ///</summary>
-            public ShellProperty<UInt32?> TrackNumber
+            public ShellProperty<uint?> TrackNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Music.TrackNumber;
+                    var key = Shell.PropertySystem.System.Music.TrackNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemNote
-
         /// <summary>
-        ///   System.Note Properties
+        /// System.Note Properties
         /// </summary>
         public class PropertySystemNote : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemNote(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -10735,16 +12249,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt16 -- VT_UI2</para>
             ///   <para>FormatID: {4776CAFA-BCE4-4CB1-A23E-265E76D8EB11}, 100</para>
             /// </summary>
-            public ShellProperty<UInt16?> Color
+            public ShellProperty<ushort?> Color
             {
                 get
                 {
-                    var key = SystemProperties.System.Note.Color;
+                    var key = Shell.PropertySystem.System.Note.Color;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -10756,42 +12272,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {46B4E8DE-CDB2-440D-885C-1658EB65B914}, 100</para>
             ///</summary>
-            public ShellProperty<String> ColorText
+            public ShellProperty<string> ColorText
             {
                 get
                 {
-                    var key = SystemProperties.System.Note.ColorText;
+                    var key = Shell.PropertySystem.System.Note.ColorText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemPhoto
-
         /// <summary>
-        ///   System.Photo Properties
+        /// System.Photo Properties
         /// </summary>
         public class PropertySystemPhoto : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemPhoto(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -10802,16 +12329,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37378</para>
             ///</summary>
-            public ShellProperty<Double?> Aperture
+            public ShellProperty<double?> Aperture
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Aperture;
+                    var key = Shell.PropertySystem.System.Photo.Aperture;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -10822,16 +12351,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {E1A9A38B-6685-46BD-875E-570DC7AD7320}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ApertureDenominator
+            public ShellProperty<uint?> ApertureDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ApertureDenominator;
+                    var key = Shell.PropertySystem.System.Photo.ApertureDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -10842,16 +12373,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {0337ECEC-39FB-4581-A0BD-4C4CC51E9914}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ApertureNumerator
+            public ShellProperty<uint?> ApertureNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ApertureNumerator;
+                    var key = Shell.PropertySystem.System.Photo.ApertureNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -10867,16 +12400,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {1A701BF6-478C-4361-83AB-3701BB053C58}, 100 (PropertyTagExifBrightness)</para>
             ///</summary>
-            public ShellProperty<Double?> Brightness
+            public ShellProperty<double?> Brightness
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Brightness;
+                    var key = Shell.PropertySystem.System.Photo.Brightness;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -10887,16 +12422,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {6EBE6946-2321-440A-90F0-C043EFD32476}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> BrightnessDenominator
+            public ShellProperty<uint?> BrightnessDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.BrightnessDenominator;
+                    var key = Shell.PropertySystem.System.Photo.BrightnessDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -10907,16 +12444,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {9E7D118F-B314-45A0-8CFB-D654B917C9E9}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> BrightnessNumerator
+            public ShellProperty<uint?> BrightnessNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.BrightnessNumerator;
+                    var key = Shell.PropertySystem.System.Photo.BrightnessNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -10927,16 +12466,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 271 (PropertyTagEquipMake)</para>
             ///</summary>
-            public ShellProperty<String> CameraManufacturer
+            public ShellProperty<string> CameraManufacturer
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.CameraManufacturer;
+                    var key = Shell.PropertySystem.System.Photo.CameraManufacturer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10947,16 +12488,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 272 (PropertyTagEquipModel)</para>
             ///</summary>
-            public ShellProperty<String> CameraModel
+            public ShellProperty<string> CameraModel
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.CameraModel;
+                    var key = Shell.PropertySystem.System.Photo.CameraModel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10967,16 +12510,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 273</para>
             ///</summary>
-            public ShellProperty<String> CameraSerialNumber
+            public ShellProperty<string> CameraSerialNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.CameraSerialNumber;
+                    var key = Shell.PropertySystem.System.Photo.CameraSerialNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -10988,16 +12533,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {2A785BA9-8D23-4DED-82E6-60A350C86A10}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> Contrast
+            public ShellProperty<uint?> Contrast
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Contrast;
+                    var key = Shell.PropertySystem.System.Photo.Contrast;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11009,16 +12556,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {59DDE9F2-5253-40EA-9A8B-479E96C6249A}, 100</para>
             ///</summary>
-            public ShellProperty<String> ContrastText
+            public ShellProperty<string> ContrastText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ContrastText;
+                    var key = Shell.PropertySystem.System.Photo.ContrastText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11033,12 +12582,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.DateTaken;
+                    var key = Shell.PropertySystem.System.Photo.DateTaken;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -11049,16 +12600,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {F85BF840-A925-4BC2-B0C4-8E36B598679E}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> DigitalZoom
+            public ShellProperty<double?> DigitalZoom
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.DigitalZoom;
+                    var key = Shell.PropertySystem.System.Photo.DigitalZoom;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11069,16 +12622,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {745BAF0E-E5C1-4CFB-8A1B-D031A0A52393}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DigitalZoomDenominator
+            public ShellProperty<uint?> DigitalZoomDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.DigitalZoomDenominator;
+                    var key = Shell.PropertySystem.System.Photo.DigitalZoomDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11089,16 +12644,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {16CBB924-6500-473B-A5BE-F1599BCBE413}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> DigitalZoomNumerator
+            public ShellProperty<uint?> DigitalZoomNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.DigitalZoomNumerator;
+                    var key = Shell.PropertySystem.System.Photo.DigitalZoomNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11109,16 +12666,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 18248</para>
             ///</summary>
-            public ShellProperty<String[]> Event
+            public ShellProperty<string[]> Event
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Event;
+                    var key = Shell.PropertySystem.System.Photo.Event;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -11129,16 +12688,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {D35F743A-EB2E-47F2-A286-844132CB1427}, 100</para>
             ///</summary>
-            public ShellProperty<String> EXIFVersion
+            public ShellProperty<string> ExifVersion
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.EXIFVersion;
+                    var key = Shell.PropertySystem.System.Photo.ExifVersion;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11149,16 +12710,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37380</para>
             ///</summary>
-            public ShellProperty<Double?> ExposureBias
+            public ShellProperty<double?> ExposureBias
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureBias;
+                    var key = Shell.PropertySystem.System.Photo.ExposureBias;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11169,16 +12732,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {AB205E50-04B7-461C-A18C-2F233836E627}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> ExposureBiasDenominator
+            public ShellProperty<int?> ExposureBiasDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureBiasDenominator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureBiasDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -11189,16 +12754,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {738BF284-1D87-420B-92CF-5834BF6EF9ED}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> ExposureBiasNumerator
+            public ShellProperty<int?> ExposureBiasNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureBiasNumerator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureBiasNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -11209,16 +12776,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {967B5AF8-995A-46ED-9E11-35B3C5B9782D}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> ExposureIndex
+            public ShellProperty<double?> ExposureIndex
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureIndex;
+                    var key = Shell.PropertySystem.System.Photo.ExposureIndex;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11229,16 +12798,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {93112F89-C28B-492F-8A9D-4BE2062CEE8A}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ExposureIndexDenominator
+            public ShellProperty<uint?> ExposureIndexDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureIndexDenominator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureIndexDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11249,16 +12820,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {CDEDCF30-8919-44DF-8F4C-4EB2FFDB8D89}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ExposureIndexNumerator
+            public ShellProperty<uint?> ExposureIndexNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureIndexNumerator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureIndexNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11269,16 +12842,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 34850 (PropertyTagExifExposureProg)</para>
             ///</summary>
-            public ShellProperty<UInt32?> ExposureProgram
+            public ShellProperty<uint?> ExposureProgram
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureProgram;
+                    var key = Shell.PropertySystem.System.Photo.ExposureProgram;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11290,16 +12865,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {FEC690B7-5F30-4646-AE47-4CAAFBA884A3}, 100</para>
             ///</summary>
-            public ShellProperty<String> ExposureProgramText
+            public ShellProperty<string> ExposureProgramText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureProgramText;
+                    var key = Shell.PropertySystem.System.Photo.ExposureProgramText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11310,16 +12887,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 33434</para>
             ///</summary>
-            public ShellProperty<Double?> ExposureTime
+            public ShellProperty<double?> ExposureTime
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureTime;
+                    var key = Shell.PropertySystem.System.Photo.ExposureTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11330,16 +12909,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {55E98597-AD16-42E0-B624-21599A199838}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ExposureTimeDenominator
+            public ShellProperty<uint?> ExposureTimeDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureTimeDenominator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureTimeDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11350,16 +12931,84 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {257E44E2-9031-4323-AC38-85C552871B2E}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ExposureTimeNumerator
+            public ShellProperty<uint?> ExposureTimeNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ExposureTimeNumerator;
+                    var key = Shell.PropertySystem.System.Photo.ExposureTimeNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Photo.FNumber -- PKEY_Photo_FNumber</para>
+            ///  <para>Description: PropertyTagExifFNumber.  Calculated from PKEY_Photo_FNumberNumerator and PKEY_Photo_FNumberDenominator
+            ///  </para>
+            ///  <para>Type:     Double -- VT_R8</para>
+            ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 33437</para>
+            ///</summary>
+            public ShellProperty<double?> FNumber
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Photo.FNumber;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<double?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Photo.FNumberDenominator -- PKEY_Photo_FNumberDenominator</para>
+            ///  <para>Description: Denominator of PKEY_Photo_FNumber
+            ///  </para>
+            ///  <para>Type:     UInt32 -- VT_UI4</para>
+            ///  <para>FormatID: {E92A2496-223B-4463-A4E3-30EABBA79D80}, 100</para>
+            ///</summary>
+            public ShellProperty<uint?> FNumberDenominator
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Photo.FNumberDenominator;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<uint?>;
+                }
+            }
+
+            ///<summary>
+            ///  <para>Name:     System.Photo.FNumberNumerator -- PKEY_Photo_FNumberNumerator</para>
+            ///  <para>Description: Numerator of PKEY_Photo_FNumber
+            ///  </para>
+            ///  <para>Type:     UInt32 -- VT_UI4</para>
+            ///  <para>FormatID: {1B97738A-FDFC-462F-9D93-1957E08BE90C}, 100</para>
+            ///</summary>
+            public ShellProperty<uint?> FNumberNumerator
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.Photo.FNumberNumerator;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11370,16 +13019,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Byte -- VT_UI1</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37385</para>
             ///</summary>
-            public ShellProperty<Byte?> Flash
+            public ShellProperty<byte?> Flash
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Flash;
+                    var key = Shell.PropertySystem.System.Photo.Flash;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte?>;
+                    return this.hashtable[key] as ShellProperty<byte?>;
                 }
             }
 
@@ -11390,16 +13041,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 41483</para>
             ///</summary>
-            public ShellProperty<Double?> FlashEnergy
+            public ShellProperty<double?> FlashEnergy
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashEnergy;
+                    var key = Shell.PropertySystem.System.Photo.FlashEnergy;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11410,16 +13063,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {D7B61C70-6323-49CD-A5FC-C84277162C97}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FlashEnergyDenominator
+            public ShellProperty<uint?> FlashEnergyDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashEnergyDenominator;
+                    var key = Shell.PropertySystem.System.Photo.FlashEnergyDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11430,16 +13085,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {FCAD3D3D-0858-400F-AAA3-2F66CCE2A6BC}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FlashEnergyNumerator
+            public ShellProperty<uint?> FlashEnergyNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashEnergyNumerator;
+                    var key = Shell.PropertySystem.System.Photo.FlashEnergyNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11449,16 +13106,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {AABAF6C9-E0C5-4719-8585-57B103E584FE}, 100</para>
             /// </summary>
-            public ShellProperty<String> FlashManufacturer
+            public ShellProperty<string> FlashManufacturer
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashManufacturer;
+                    var key = Shell.PropertySystem.System.Photo.FlashManufacturer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11468,16 +13127,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {FE83BB35-4D1A-42E2-916B-06F3E1AF719E}, 100</para>
             /// </summary>
-            public ShellProperty<String> FlashModel
+            public ShellProperty<string> FlashModel
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashModel;
+                    var key = Shell.PropertySystem.System.Photo.FlashModel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11489,76 +13150,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6B8B68F6-200B-47EA-8D25-D8050F57339F}, 100</para>
             ///</summary>
-            public ShellProperty<String> FlashText
+            public ShellProperty<string> FlashText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FlashText;
+                    var key = Shell.PropertySystem.System.Photo.FlashText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.Photo.FNumber -- PKEY_Photo_FNumber</para>
-            ///  <para>Description: PropertyTagExifFNumber.  Calculated from PKEY_Photo_FNumberNumerator and PKEY_Photo_FNumberDenominator
-            ///  </para>
-            ///  <para>Type:     Double -- VT_R8</para>
-            ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 33437</para>
-            ///</summary>
-            public ShellProperty<Double?> FNumber
-            {
-                get
-                {
-                    var key = SystemProperties.System.Photo.FNumber;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
-
-                    return hashtable[key] as ShellProperty<Double?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.Photo.FNumberDenominator -- PKEY_Photo_FNumberDenominator</para>
-            ///  <para>Description: Denominator of PKEY_Photo_FNumber
-            ///  </para>
-            ///  <para>Type:     UInt32 -- VT_UI4</para>
-            ///  <para>FormatID: {E92A2496-223B-4463-A4E3-30EABBA79D80}, 100</para>
-            ///</summary>
-            public ShellProperty<UInt32?> FNumberDenominator
-            {
-                get
-                {
-                    var key = SystemProperties.System.Photo.FNumberDenominator;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
-
-                    return hashtable[key] as ShellProperty<UInt32?>;
-                }
-            }
-
-            ///<summary>
-            ///  <para>Name:     System.Photo.FNumberNumerator -- PKEY_Photo_FNumberNumerator</para>
-            ///  <para>Description: Numerator of PKEY_Photo_FNumber
-            ///  </para>
-            ///  <para>Type:     UInt32 -- VT_UI4</para>
-            ///  <para>FormatID: {1B97738A-FDFC-462F-9D93-1957E08BE90C}, 100</para>
-            ///</summary>
-            public ShellProperty<UInt32?> FNumberNumerator
-            {
-                get
-                {
-                    var key = SystemProperties.System.Photo.FNumberNumerator;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
-
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11569,16 +13172,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37386</para>
             ///</summary>
-            public ShellProperty<Double?> FocalLength
+            public ShellProperty<double?> FocalLength
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalLength;
+                    var key = Shell.PropertySystem.System.Photo.FocalLength;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11589,16 +13194,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {305BC615-DCA1-44A5-9FD4-10C0BA79412E}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalLengthDenominator
+            public ShellProperty<uint?> FocalLengthDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalLengthDenominator;
+                    var key = Shell.PropertySystem.System.Photo.FocalLengthDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11608,16 +13215,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt16 -- VT_UI2</para>
             ///   <para>FormatID: {A0E74609-B84D-4F49-B860-462BD9971F98}, 100</para>
             /// </summary>
-            public ShellProperty<UInt16?> FocalLengthInFilm
+            public ShellProperty<ushort?> FocalLengthInFilm
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalLengthInFilm;
+                    var key = Shell.PropertySystem.System.Photo.FocalLengthInFilm;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -11628,16 +13237,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {776B6B3B-1E3D-4B0C-9A0E-8FBAF2A8492A}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalLengthNumerator
+            public ShellProperty<uint?> FocalLengthNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalLengthNumerator;
+                    var key = Shell.PropertySystem.System.Photo.FocalLengthNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11649,16 +13260,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {CFC08D97-C6F7-4484-89DD-EBEF4356FE76}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> FocalPlaneXResolution
+            public ShellProperty<double?> FocalPlaneXResolution
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneXResolution;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneXResolution;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11669,16 +13282,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {0933F3F5-4786-4F46-A8E8-D64DD37FA521}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalPlaneXResolutionDenominator
+            public ShellProperty<uint?> FocalPlaneXResolutionDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneXResolutionDenominator;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneXResolutionDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11689,16 +13304,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {DCCB10AF-B4E2-4B88-95F9-031B4D5AB490}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalPlaneXResolutionNumerator
+            public ShellProperty<uint?> FocalPlaneXResolutionNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneXResolutionNumerator;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneXResolutionNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11710,16 +13327,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {4FFFE4D0-914F-4AC4-8D6F-C9C61DE169B1}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> FocalPlaneYResolution
+            public ShellProperty<double?> FocalPlaneYResolution
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneYResolution;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneYResolution;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11730,16 +13349,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {1D6179A6-A876-4031-B013-3347B2B64DC8}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalPlaneYResolutionDenominator
+            public ShellProperty<uint?> FocalPlaneYResolutionDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneYResolutionDenominator;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneYResolutionDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11750,16 +13371,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {A2E541C5-4440-4BA8-867E-75CFC06828CD}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> FocalPlaneYResolutionNumerator
+            public ShellProperty<uint?> FocalPlaneYResolutionNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.FocalPlaneYResolutionNumerator;
+                    var key = Shell.PropertySystem.System.Photo.FocalPlaneYResolutionNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11772,16 +13395,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {FA304789-00C7-4D80-904A-1E4DCC7265AA}, 100 (PropertyTagExifGainControl)</para>
             ///</summary>
-            public ShellProperty<Double?> GainControl
+            public ShellProperty<double?> GainControl
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.GainControl;
+                    var key = Shell.PropertySystem.System.Photo.GainControl;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11792,16 +13417,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {42864DFD-9DA4-4F77-BDED-4AAD7B256735}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> GainControlDenominator
+            public ShellProperty<uint?> GainControlDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.GainControlDenominator;
+                    var key = Shell.PropertySystem.System.Photo.GainControlDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11812,16 +13439,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {8E8ECF7C-B7B8-4EB8-A63F-0EE715C96F9E}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> GainControlNumerator
+            public ShellProperty<uint?> GainControlNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.GainControlNumerator;
+                    var key = Shell.PropertySystem.System.Photo.GainControlNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11833,16 +13462,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C06238B2-0BF9-4279-A723-25856715CB9D}, 100</para>
             ///</summary>
-            public ShellProperty<String> GainControlText
+            public ShellProperty<string> GainControlText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.GainControlText;
+                    var key = Shell.PropertySystem.System.Photo.GainControlText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11853,16 +13484,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 34855</para>
             ///</summary>
-            public ShellProperty<UInt16?> ISOSpeed
+            public ShellProperty<ushort?> IsoSpeed
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ISOSpeed;
+                    var key = Shell.PropertySystem.System.Photo.IsoSpeed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -11872,16 +13505,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {E6DDCAF7-29C5-4F0A-9A68-D19412EC7090}, 100</para>
             /// </summary>
-            public ShellProperty<String> LensManufacturer
+            public ShellProperty<string> LensManufacturer
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.LensManufacturer;
+                    var key = Shell.PropertySystem.System.Photo.LensManufacturer;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11891,16 +13526,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {E1277516-2B5F-4869-89B1-2E585BD38B7A}, 100</para>
             /// </summary>
-            public ShellProperty<String> LensModel
+            public ShellProperty<string> LensModel
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.LensModel;
+                    var key = Shell.PropertySystem.System.Photo.LensModel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -11911,16 +13548,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37384</para>
             ///</summary>
-            public ShellProperty<UInt32?> LightSource
+            public ShellProperty<uint?> LightSource
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.LightSource;
+                    var key = Shell.PropertySystem.System.Photo.LightSource;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -11930,16 +13569,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Buffer -- VT_VECTOR | VT_UI1  (For variants: VT_ARRAY | VT_UI1)</para>
             ///   <para>FormatID: {FA303353-B659-4052-85E9-BCAC79549B84}, 100</para>
             /// </summary>
-            public ShellProperty<Byte[]> MakerNote
+            public ShellProperty<byte[]> MakerNote
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MakerNote;
+                    var key = Shell.PropertySystem.System.Photo.MakerNote;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -11949,16 +13590,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     UInt64 -- VT_UI8</para>
             ///   <para>FormatID: {813F4124-34E6-4D17-AB3E-6B1F3C2247A1}, 100</para>
             /// </summary>
-            public ShellProperty<UInt64?> MakerNoteOffset
+            public ShellProperty<ulong?> MakerNoteOffset
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MakerNoteOffset;
+                    var key = Shell.PropertySystem.System.Photo.MakerNoteOffset;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt64?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ulong?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt64?>;
+                    return this.hashtable[key] as ShellProperty<ulong?>;
                 }
             }
 
@@ -11969,16 +13612,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: {08F6D7C2-E3F2-44FC-AF1E-5AA5C81A2D3E}, 100</para>
             ///</summary>
-            public ShellProperty<Double?> MaxAperture
+            public ShellProperty<double?> MaxAperture
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MaxAperture;
+                    var key = Shell.PropertySystem.System.Photo.MaxAperture;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -11989,16 +13634,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {C77724D4-601F-46C5-9B89-C53F93BCEB77}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> MaxApertureDenominator
+            public ShellProperty<uint?> MaxApertureDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MaxApertureDenominator;
+                    var key = Shell.PropertySystem.System.Photo.MaxApertureDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12009,16 +13656,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {C107E191-A459-44C5-9AE6-B952AD4B906D}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> MaxApertureNumerator
+            public ShellProperty<uint?> MaxApertureNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MaxApertureNumerator;
+                    var key = Shell.PropertySystem.System.Photo.MaxApertureNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12029,16 +13678,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37383</para>
             ///</summary>
-            public ShellProperty<UInt16?> MeteringMode
+            public ShellProperty<ushort?> MeteringMode
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MeteringMode;
+                    var key = Shell.PropertySystem.System.Photo.MeteringMode;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -12050,16 +13701,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {F628FD8C-7BA8-465A-A65B-C5AA79263A9E}, 100</para>
             ///</summary>
-            public ShellProperty<String> MeteringModeText
+            public ShellProperty<string> MeteringModeText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.MeteringModeText;
+                    var key = Shell.PropertySystem.System.Photo.MeteringModeText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12070,16 +13723,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 274 (PropertyTagOrientation)</para>
             ///</summary>
-            public ShellProperty<UInt16?> Orientation
+            public ShellProperty<ushort?> Orientation
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Orientation;
+                    var key = Shell.PropertySystem.System.Photo.Orientation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -12091,16 +13746,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A9EA193C-C511-498A-A06B-58E2776DCC28}, 100</para>
             ///</summary>
-            public ShellProperty<String> OrientationText
+            public ShellProperty<string> OrientationText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.OrientationText;
+                    var key = Shell.PropertySystem.System.Photo.OrientationText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12111,16 +13768,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: {E8309B6E-084C-49B4-B1FC-90A80331B638}, 100</para>
             ///</summary>
-            public ShellProperty<String[]> PeopleNames
+            public ShellProperty<string[]> PeopleNames
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.PeopleNames;
+                    var key = Shell.PropertySystem.System.Photo.PeopleNames;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -12132,16 +13791,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: {341796F1-1DF9-4B1C-A564-91BDEFA43877}, 100</para>
             ///</summary>
-            public ShellProperty<UInt16?> PhotometricInterpretation
+            public ShellProperty<ushort?> PhotometricInterpretation
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.PhotometricInterpretation;
+                    var key = Shell.PropertySystem.System.Photo.PhotometricInterpretation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -12153,16 +13814,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {821437D6-9EAB-4765-A589-3B1CBBD22A61}, 100</para>
             ///</summary>
-            public ShellProperty<String> PhotometricInterpretationText
+            public ShellProperty<string> PhotometricInterpretationText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.PhotometricInterpretationText;
+                    var key = Shell.PropertySystem.System.Photo.PhotometricInterpretationText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12174,16 +13837,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {6D217F6D-3F6A-4825-B470-5F03CA2FBE9B}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> ProgramMode
+            public ShellProperty<uint?> ProgramMode
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ProgramMode;
+                    var key = Shell.PropertySystem.System.Photo.ProgramMode;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12195,16 +13860,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {7FE3AA27-2648-42F3-89B0-454E5CB150C3}, 100</para>
             ///</summary>
-            public ShellProperty<String> ProgramModeText
+            public ShellProperty<string> ProgramModeText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ProgramModeText;
+                    var key = Shell.PropertySystem.System.Photo.ProgramModeText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12214,16 +13881,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {318A6B45-087F-4DC2-B8CC-05359551FC9E}, 100</para>
             /// </summary>
-            public ShellProperty<String> RelatedSoundFile
+            public ShellProperty<string> RelatedSoundFile
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.RelatedSoundFile;
+                    var key = Shell.PropertySystem.System.Photo.RelatedSoundFile;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12235,16 +13904,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {49237325-A95A-4F67-B211-816B2D45D2E0}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> Saturation
+            public ShellProperty<uint?> Saturation
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Saturation;
+                    var key = Shell.PropertySystem.System.Photo.Saturation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12256,16 +13927,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {61478C08-B600-4A84-BBE4-E99C45F0A072}, 100</para>
             ///</summary>
-            public ShellProperty<String> SaturationText
+            public ShellProperty<string> SaturationText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.SaturationText;
+                    var key = Shell.PropertySystem.System.Photo.SaturationText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12277,16 +13950,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {FC6976DB-8349-4970-AE97-B3C5316A08F0}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> Sharpness
+            public ShellProperty<uint?> Sharpness
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.Sharpness;
+                    var key = Shell.PropertySystem.System.Photo.Sharpness;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12298,16 +13973,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {51EC3F47-DD50-421D-8769-334F50424B1E}, 100</para>
             ///</summary>
-            public ShellProperty<String> SharpnessText
+            public ShellProperty<string> SharpnessText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.SharpnessText;
+                    var key = Shell.PropertySystem.System.Photo.SharpnessText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12318,16 +13995,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37377</para>
             ///</summary>
-            public ShellProperty<Double?> ShutterSpeed
+            public ShellProperty<double?> ShutterSpeed
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ShutterSpeed;
+                    var key = Shell.PropertySystem.System.Photo.ShutterSpeed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -12338,16 +14017,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {E13D8975-81C7-4948-AE3F-37CAE11E8FF7}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> ShutterSpeedDenominator
+            public ShellProperty<int?> ShutterSpeedDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ShutterSpeedDenominator;
+                    var key = Shell.PropertySystem.System.Photo.ShutterSpeedDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -12358,16 +14039,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: {16EA4042-D6F4-4BCA-8349-7C78D30FB333}, 100</para>
             ///</summary>
-            public ShellProperty<Int32?> ShutterSpeedNumerator
+            public ShellProperty<int?> ShutterSpeedNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.ShutterSpeedNumerator;
+                    var key = Shell.PropertySystem.System.Photo.ShutterSpeedNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -12378,16 +14061,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Double -- VT_R8</para>
             ///  <para>FormatID: (FMTID_ImageProperties) {14B81DA1-0135-4D31-96D9-6CBFC9671A99}, 37382</para>
             ///</summary>
-            public ShellProperty<Double?> SubjectDistance
+            public ShellProperty<double?> SubjectDistance
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.SubjectDistance;
+                    var key = Shell.PropertySystem.System.Photo.SubjectDistance;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Double?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<double?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Double?>;
+                    return this.hashtable[key] as ShellProperty<double?>;
                 }
             }
 
@@ -12398,16 +14083,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {0C840A88-B043-466D-9766-D4B26DA3FA77}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> SubjectDistanceDenominator
+            public ShellProperty<uint?> SubjectDistanceDenominator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.SubjectDistanceDenominator;
+                    var key = Shell.PropertySystem.System.Photo.SubjectDistanceDenominator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12418,16 +14105,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {8AF4961C-F526-43E5-AA81-DB768219178D}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> SubjectDistanceNumerator
+            public ShellProperty<uint?> SubjectDistanceNumerator
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.SubjectDistanceNumerator;
+                    var key = Shell.PropertySystem.System.Photo.SubjectDistanceNumerator;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12438,16 +14127,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)  Legacy code may treat this as VT_LPSTR.</para>
             ///  <para>FormatID: {B812F15D-C2D8-4BBF-BACD-79744346113F}, 100</para>
             ///</summary>
-            public ShellProperty<String[]> TagViewAggregate
+            public ShellProperty<string[]> TagViewAggregate
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.TagViewAggregate;
+                    var key = Shell.PropertySystem.System.Photo.TagViewAggregate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -12457,16 +14148,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {9A8EBB75-6458-4E82-BACB-35C0095B03BB}, 100</para>
             /// </summary>
-            public ShellProperty<Boolean?> TranscodedForSync
+            public ShellProperty<bool?> TranscodedForSync
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.TranscodedForSync;
+                    var key = Shell.PropertySystem.System.Photo.TranscodedForSync;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -12477,16 +14170,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {EE3D3D8A-5381-4CFA-B13B-AAF66B5F4EC9}, 100</para>
             ///</summary>
-            public ShellProperty<UInt32?> WhiteBalance
+            public ShellProperty<uint?> WhiteBalance
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.WhiteBalance;
+                    var key = Shell.PropertySystem.System.Photo.WhiteBalance;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -12498,42 +14193,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6336B95E-C7A7-426D-86FD-7AE3D39C84B4}, 100</para>
             ///</summary>
-            public ShellProperty<String> WhiteBalanceText
+            public ShellProperty<string> WhiteBalanceText
             {
                 get
                 {
-                    var key = SystemProperties.System.Photo.WhiteBalanceText;
+                    var key = Shell.PropertySystem.System.Photo.WhiteBalanceText;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemPropGroup
-
         /// <summary>
-        ///   System.PropGroup Properties
+        /// System.PropGroup Properties
         /// </summary>
         public class PropertySystemPropGroup : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemPropGroup(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -12543,16 +14249,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {900A403B-097B-4B95-8AE2-071FDAEEB118}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Advanced
+            public ShellProperty<object> Advanced
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Advanced;
+                    var key = Shell.PropertySystem.System.PropGroup.Advanced;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12562,16 +14270,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {2804D469-788F-48AA-8570-71B9C187E138}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Audio
+            public ShellProperty<object> Audio
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Audio;
+                    var key = Shell.PropertySystem.System.PropGroup.Audio;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12581,16 +14291,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {9973D2B5-BFD8-438A-BA94-5349B293181A}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Calendar
+            public ShellProperty<object> Calendar
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Calendar;
+                    var key = Shell.PropertySystem.System.PropGroup.Calendar;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12600,16 +14312,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {DE00DE32-547E-4981-AD4B-542F2E9007D8}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Camera
+            public ShellProperty<object> Camera
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Camera;
+                    var key = Shell.PropertySystem.System.PropGroup.Camera;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12619,16 +14333,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {DF975FD3-250A-4004-858F-34E29A3E37AA}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Contact
+            public ShellProperty<object> Contact
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Contact;
+                    var key = Shell.PropertySystem.System.PropGroup.Contact;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12638,16 +14354,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {D0DAB0BA-368A-4050-A882-6C010FD19A4F}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Content
+            public ShellProperty<object> Content
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Content;
+                    var key = Shell.PropertySystem.System.PropGroup.Content;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12657,16 +14375,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {8969B275-9475-4E00-A887-FF93B8B41E44}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Description
+            public ShellProperty<object> Description
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Description;
+                    var key = Shell.PropertySystem.System.PropGroup.Description;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12676,35 +14396,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {E3A7D2C1-80FC-4B40-8F34-30EA111BDC2E}, 100</para>
             /// </summary>
-            public ShellProperty<Object> FileSystem
+            public ShellProperty<object> FileSystem
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.FileSystem;
+                    var key = Shell.PropertySystem.System.PropGroup.FileSystem;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
-                }
-            }
-
-            /// <summary>
-            ///   <para>Name:     System.PropGroup.General -- PKEY_PropGroup_General</para>
-            ///   <para>Description: </para>
-            ///   <para>Type:     Null -- VT_NULL</para>
-            ///   <para>FormatID: {CC301630-B192-4C22-B372-9F4C6D338E07}, 100</para>
-            /// </summary>
-            public ShellProperty<Object> General
-            {
-                get
-                {
-                    var key = SystemProperties.System.PropGroup.General;
-
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
-
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12714,16 +14417,39 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {F3713ADA-90E3-4E11-AAE5-FDC17685B9BE}, 100</para>
             /// </summary>
-            public ShellProperty<Object> GPS
+            public ShellProperty<object> GPS
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.GPS;
+                    var key = Shell.PropertySystem.System.PropGroup.GPS;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
+                }
+            }
+
+            /// <summary>
+            ///   <para>Name:     System.PropGroup.General -- PKEY_PropGroup_General</para>
+            ///   <para>Description: </para>
+            ///   <para>Type:     Null -- VT_NULL</para>
+            ///   <para>FormatID: {CC301630-B192-4C22-B372-9F4C6D338E07}, 100</para>
+            /// </summary>
+            public ShellProperty<object> General
+            {
+                get
+                {
+                    var key = Shell.PropertySystem.System.PropGroup.General;
+
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
+
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12733,16 +14459,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {E3690A87-0FA8-4A2A-9A9F-FCE8827055AC}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Image
+            public ShellProperty<object> Image
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Image;
+                    var key = Shell.PropertySystem.System.PropGroup.Image;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12752,16 +14480,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {61872CF7-6B5E-4B4B-AC2D-59DA84459248}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Media
+            public ShellProperty<object> Media
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Media;
+                    var key = Shell.PropertySystem.System.PropGroup.Media;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12771,16 +14501,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {8859A284-DE7E-4642-99BA-D431D044B1EC}, 100</para>
             /// </summary>
-            public ShellProperty<Object> MediaAdvanced
+            public ShellProperty<object> MediaAdvanced
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.MediaAdvanced;
+                    var key = Shell.PropertySystem.System.PropGroup.MediaAdvanced;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12790,16 +14522,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {7FD7259D-16B4-4135-9F97-7C96ECD2FA9E}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Message
+            public ShellProperty<object> Message
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Message;
+                    var key = Shell.PropertySystem.System.PropGroup.Message;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12809,16 +14543,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {68DD6094-7216-40F1-A029-43FE7127043F}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Music
+            public ShellProperty<object> Music
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Music;
+                    var key = Shell.PropertySystem.System.PropGroup.Music;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12828,16 +14564,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {2598D2FB-5569-4367-95DF-5CD3A177E1A5}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Origin
+            public ShellProperty<object> Origin
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Origin;
+                    var key = Shell.PropertySystem.System.PropGroup.Origin;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12847,16 +14585,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {0CB2BF5A-9EE7-4A86-8222-F01E07FDADAF}, 100</para>
             /// </summary>
-            public ShellProperty<Object> PhotoAdvanced
+            public ShellProperty<object> PhotoAdvanced
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.PhotoAdvanced;
+                    var key = Shell.PropertySystem.System.PropGroup.PhotoAdvanced;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12866,16 +14606,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {E7B33238-6584-4170-A5C0-AC25EFD9DA56}, 100</para>
             /// </summary>
-            public ShellProperty<Object> RecordedTV
+            public ShellProperty<object> RecordedTV
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.RecordedTV;
+                    var key = Shell.PropertySystem.System.PropGroup.RecordedTV;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
@@ -12885,42 +14627,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Null -- VT_NULL</para>
             ///   <para>FormatID: {BEBE0920-7671-4C54-A3EB-49FDDFC191EE}, 100</para>
             /// </summary>
-            public ShellProperty<Object> Video
+            public ShellProperty<object> Video
             {
                 get
                 {
-                    var key = SystemProperties.System.PropGroup.Video;
+                    var key = Shell.PropertySystem.System.PropGroup.Video;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemPropList
-
         /// <summary>
-        ///   System.PropList Properties
+        /// System.PropList Properties
         /// </summary>
         public class PropertySystemPropList : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemPropList(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -12932,16 +14685,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 11</para>
             ///</summary>
-            public ShellProperty<String> ConflictPrompt
+            public ShellProperty<string> ConflictPrompt
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.ConflictPrompt;
+                    var key = Shell.PropertySystem.System.PropList.ConflictPrompt;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12953,16 +14708,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 13</para>
             ///</summary>
-            public ShellProperty<String> ContentViewModeForBrowse
+            public ShellProperty<string> ContentViewModeForBrowse
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.ContentViewModeForBrowse;
+                    var key = Shell.PropertySystem.System.PropList.ContentViewModeForBrowse;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12974,16 +14731,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 14</para>
             ///</summary>
-            public ShellProperty<String> ContentViewModeForSearch
+            public ShellProperty<string> ContentViewModeForSearch
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.ContentViewModeForSearch;
+                    var key = Shell.PropertySystem.System.PropList.ContentViewModeForSearch;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -12995,16 +14754,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 9</para>
             ///</summary>
-            public ShellProperty<String> ExtendedTileInfo
+            public ShellProperty<string> ExtendedTileInfo
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.ExtendedTileInfo;
+                    var key = Shell.PropertySystem.System.PropList.ExtendedTileInfo;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13017,16 +14778,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 10</para>
             ///</summary>
-            public ShellProperty<String> FileOperationPrompt
+            public ShellProperty<string> FileOperationPrompt
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.FileOperationPrompt;
+                    var key = Shell.PropertySystem.System.PropList.FileOperationPrompt;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13038,16 +14801,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 2</para>
             ///</summary>
-            public ShellProperty<String> FullDetails
+            public ShellProperty<string> FullDetails
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.FullDetails;
+                    var key = Shell.PropertySystem.System.PropList.FullDetails;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13059,16 +14824,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 4 (PID_PROPLIST_INFOTIP)</para>
             ///</summary>
-            public ShellProperty<String> InfoTip
+            public ShellProperty<string> InfoTip
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.InfoTip;
+                    var key = Shell.PropertySystem.System.PropList.InfoTip;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13081,16 +14848,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {49D1091F-082E-493F-B23F-D2308AA9668C}, 100</para>
             ///</summary>
-            public ShellProperty<String> NonPersonal
+            public ShellProperty<string> NonPersonal
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.NonPersonal;
+                    var key = Shell.PropertySystem.System.PropList.NonPersonal;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13101,16 +14870,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 8</para>
             ///</summary>
-            public ShellProperty<String> PreviewDetails
+            public ShellProperty<string> PreviewDetails
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.PreviewDetails;
+                    var key = Shell.PropertySystem.System.PropList.PreviewDetails;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13122,16 +14893,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 6</para>
             ///</summary>
-            public ShellProperty<String> PreviewTitle
+            public ShellProperty<string> PreviewTitle
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.PreviewTitle;
+                    var key = Shell.PropertySystem.System.PropList.PreviewTitle;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13143,16 +14916,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 5 (PID_PROPLIST_QUICKTIP)</para>
             ///</summary>
-            public ShellProperty<String> QuickTip
+            public ShellProperty<string> QuickTip
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.QuickTip;
+                    var key = Shell.PropertySystem.System.PropList.QuickTip;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13163,16 +14938,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {C9944A21-A406-48FE-8225-AEC7E24C211B}, 3 (PID_PROPLIST_TILEINFO)</para>
             ///</summary>
-            public ShellProperty<String> TileInfo
+            public ShellProperty<string> TileInfo
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.TileInfo;
+                    var key = Shell.PropertySystem.System.PropList.TileInfo;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13183,42 +14960,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_WebView) {F2275480-F782-4291-BD94-F13693513AEC}, 0 (PID_DISPLAY_PROPERTIES)</para>
             ///</summary>
-            public ShellProperty<String> XPDetailsPanel
+            public ShellProperty<string> XPDetailsPanel
             {
                 get
                 {
-                    var key = SystemProperties.System.PropList.XPDetailsPanel;
+                    var key = Shell.PropertySystem.System.PropList.XPDetailsPanel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemRecordedTV
-
         /// <summary>
-        ///   System.RecordedTV Properties
+        /// System.RecordedTV Properties
         /// </summary>
         public class PropertySystemRecordedTV : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemRecordedTV(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -13229,16 +15017,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 7</para>
             ///</summary>
-            public ShellProperty<UInt32?> ChannelNumber
+            public ShellProperty<uint?> ChannelNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.ChannelNumber;
+                    var key = Shell.PropertySystem.System.RecordedTV.ChannelNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -13249,16 +15039,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 4</para>
             ///</summary>
-            public ShellProperty<String> Credits
+            public ShellProperty<string> Credits
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.Credits;
+                    var key = Shell.PropertySystem.System.RecordedTV.Credits;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13272,12 +15064,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.DateContentExpires;
+                    var key = Shell.PropertySystem.System.RecordedTV.DateContentExpires;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -13288,16 +15082,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 2</para>
             ///</summary>
-            public ShellProperty<String> EpisodeName
+            public ShellProperty<string> EpisodeName
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.EpisodeName;
+                    var key = Shell.PropertySystem.System.RecordedTV.EpisodeName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13307,16 +15103,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 16</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsATSCContent
+            public ShellProperty<bool?> IsAtscContent
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsATSCContent;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsAtscContent;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13326,16 +15124,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 12</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsClosedCaptioningAvailable
+            public ShellProperty<bool?> IsClosedCaptioningAvailable
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsClosedCaptioningAvailable;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsClosedCaptioningAvailable;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13345,16 +15145,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 17</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsDTVContent
+            public ShellProperty<bool?> IsDtvContent
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsDTVContent;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsDtvContent;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13364,16 +15166,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 18</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsHDContent
+            public ShellProperty<bool?> IsHDContent
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsHDContent;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsHDContent;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13383,16 +15187,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 13</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsRepeatBroadcast
+            public ShellProperty<bool?> IsRepeatBroadcast
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsRepeatBroadcast;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsRepeatBroadcast;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13402,16 +15208,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 14</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsSAP
+            public ShellProperty<bool?> IsSap
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.IsSAP;
+                    var key = Shell.PropertySystem.System.RecordedTV.IsSap;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13421,16 +15229,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {2C53C813-FB63-4E22-A1AB-0B331CA1E273}, 100</para>
             /// </summary>
-            public ShellProperty<String> NetworkAffiliation
+            public ShellProperty<string> NetworkAffiliation
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.NetworkAffiliation;
+                    var key = Shell.PropertySystem.System.RecordedTV.NetworkAffiliation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13444,12 +15254,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.OriginalBroadcastDate;
+                    var key = Shell.PropertySystem.System.RecordedTV.OriginalBroadcastDate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -13459,16 +15271,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 3</para>
             /// </summary>
-            public ShellProperty<String> ProgramDescription
+            public ShellProperty<string> ProgramDescription
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.ProgramDescription;
+                    var key = Shell.PropertySystem.System.RecordedTV.ProgramDescription;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13482,12 +15296,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.RecordingTime;
+                    var key = Shell.PropertySystem.System.RecordedTV.RecordingTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -13498,16 +15314,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {6D748DE2-8D38-4CC3-AC60-F009B057C557}, 5</para>
             ///</summary>
-            public ShellProperty<String> StationCallSign
+            public ShellProperty<string> StationCallSign
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.StationCallSign;
+                    var key = Shell.PropertySystem.System.RecordedTV.StationCallSign;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13517,42 +15335,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {1B5439E7-EBA1-4AF8-BDD7-7AF1D4549493}, 100</para>
             /// </summary>
-            public ShellProperty<String> StationName
+            public ShellProperty<string> StationName
             {
                 get
                 {
-                    var key = SystemProperties.System.RecordedTV.StationName;
+                    var key = Shell.PropertySystem.System.RecordedTV.StationName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemSearch
-
         /// <summary>
-        ///   System.Search Properties
+        /// System.Search Properties
         /// </summary>
         public class PropertySystemSearch : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemSearch(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -13563,16 +15392,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {560C36C0-503A-11CF-BAA1-00004C752A9A}, 2</para>
             ///</summary>
-            public ShellProperty<String> AutoSummary
+            public ShellProperty<string> AutoSummary
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.AutoSummary;
+                    var key = Shell.PropertySystem.System.Search.AutoSummary;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13583,16 +15414,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {BCEEE283-35DF-4D53-826A-F36A3EEFC6BE}, 100</para>
             ///</summary>
-            public ShellProperty<String> ContainerHash
+            public ShellProperty<string> ContainerHash
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.ContainerHash;
+                    var key = Shell.PropertySystem.System.Search.ContainerHash;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13604,16 +15437,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Storage) {B725F130-47EF-101A-A5F1-02608C9EEBAC}, 19 (PID_STG_CONTENTS)</para>
             ///</summary>
-            public ShellProperty<String> Contents
+            public ShellProperty<string> Contents
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.Contents;
+                    var key = Shell.PropertySystem.System.Search.Contents;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13625,16 +15460,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_Query) {49691C90-7E17-101A-A91C-08002B2ECDA9}, 5 (PROPID_QUERY_WORKID)</para>
             ///</summary>
-            public ShellProperty<Int32?> EntryID
+            public ShellProperty<int?> EntryID
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.EntryID;
+                    var key = Shell.PropertySystem.System.Search.EntryID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -13644,16 +15481,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Blob -- VT_BLOB</para>
             ///   <para>FormatID: {7B03B546-FA4F-4A52-A2FE-03D5311E5865}, 100</para>
             /// </summary>
-            public ShellProperty<Byte[]> ExtendedProperties
+            public ShellProperty<byte[]> ExtendedProperties
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.ExtendedProperties;
+                    var key = Shell.PropertySystem.System.Search.ExtendedProperties;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Byte[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<byte[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Byte[]>;
+                    return this.hashtable[key] as ShellProperty<byte[]>;
                 }
             }
 
@@ -13668,12 +15507,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.GatherTime;
+                    var key = Shell.PropertySystem.System.Search.GatherTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -13685,16 +15526,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_Query) {49691C90-7E17-101A-A91C-08002B2ECDA9}, 4 (PROPID_QUERY_HITCOUNT)</para>
             ///</summary>
-            public ShellProperty<Int32?> HitCount
+            public ShellProperty<int?> HitCount
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.HitCount;
+                    var key = Shell.PropertySystem.System.Search.HitCount;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -13705,16 +15548,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {0B63E343-9CCC-11D0-BCDB-00805FCCCE04}, 23</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsClosedDirectory
+            public ShellProperty<bool?> IsClosedDirectory
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.IsClosedDirectory;
+                    var key = Shell.PropertySystem.System.Search.IsClosedDirectory;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13725,16 +15570,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: {0B63E343-9CCC-11D0-BCDB-00805FCCCE04}, 24</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsFullyContained
+            public ShellProperty<bool?> IsFullyContained
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.IsFullyContained;
+                    var key = Shell.PropertySystem.System.Search.IsFullyContained;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -13745,16 +15592,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {560C36C0-503A-11CF-BAA1-00004C752A9A}, 3</para>
             ///</summary>
-            public ShellProperty<String> QueryFocusedSummary
+            public ShellProperty<string> QueryFocusedSummary
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.QueryFocusedSummary;
+                    var key = Shell.PropertySystem.System.Search.QueryFocusedSummary;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13765,16 +15614,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {560C36C0-503A-11CF-BAA1-00004C752A9A}, 4</para>
             ///</summary>
-            public ShellProperty<String> QueryFocusedSummaryWithFallback
+            public ShellProperty<string> QueryFocusedSummaryWithFallback
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.QueryFocusedSummaryWithFallback;
+                    var key = Shell.PropertySystem.System.Search.QueryFocusedSummaryWithFallback;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13785,16 +15636,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Int32 -- VT_I4</para>
             ///  <para>FormatID: (FMTID_Query) {49691C90-7E17-101A-A91C-08002B2ECDA9}, 3 (PROPID_QUERY_RANK)</para>
             ///</summary>
-            public ShellProperty<Int32?> Rank
+            public ShellProperty<int?> Rank
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.Rank;
+                    var key = Shell.PropertySystem.System.Search.Rank;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Int32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<int?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Int32?>;
+                    return this.hashtable[key] as ShellProperty<int?>;
                 }
             }
 
@@ -13805,16 +15658,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {A06992B3-8CAF-4ED7-A547-B259E32AC9FC}, 100</para>
             ///</summary>
-            public ShellProperty<String> Store
+            public ShellProperty<string> Store
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.Store;
+                    var key = Shell.PropertySystem.System.Search.Store;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13825,16 +15680,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {0B63E343-9CCC-11D0-BCDB-00805FCCCE04}, 2</para>
             ///</summary>
-            public ShellProperty<String> UrlToIndex
+            public ShellProperty<string> UrlToIndex
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.UrlToIndex;
+                    var key = Shell.PropertySystem.System.Search.UrlToIndex;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13845,42 +15702,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue Any -- VT_VECTOR | VT_NULL  (For variants: VT_ARRAY | VT_NULL)</para>
             ///  <para>FormatID: {0B63E343-9CCC-11D0-BCDB-00805FCCCE04}, 12</para>
             ///</summary>
-            public ShellProperty<Object> UrlToIndexWithModificationTime
+            public ShellProperty<object> UrlToIndexWithModificationTime
             {
                 get
                 {
-                    var key = SystemProperties.System.Search.UrlToIndexWithModificationTime;
+                    var key = Shell.PropertySystem.System.Search.UrlToIndexWithModificationTime;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Object>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<object>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Object>;
+                    return this.hashtable[key] as ShellProperty<object>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemShell
-
         /// <summary>
-        ///   System.Shell Properties
+        /// System.Shell Properties
         /// </summary>
         public class PropertySystemShell : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemShell(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -13891,16 +15759,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {DE35258C-C695-4CBC-B982-38B0AD24CED0}, 2</para>
             ///</summary>
-            public ShellProperty<String> OmitFromView
+            public ShellProperty<string> OmitFromView
             {
                 get
                 {
-                    var key = SystemProperties.System.Shell.OmitFromView;
+                    var key = Shell.PropertySystem.System.Shell.OmitFromView;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -13911,42 +15781,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: {D6942081-D53B-443D-AD47-5E059D9CD27A}, 2</para>
             ///</summary>
-            public ShellProperty<String[]> SFGAOFlagsStrings
+            public ShellProperty<string[]> SfgaoFlagsStrings
             {
                 get
                 {
-                    var key = SystemProperties.System.Shell.SFGAOFlagsStrings;
+                    var key = Shell.PropertySystem.System.Shell.SfgaoFlagsStrings;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemSoftware
-
         /// <summary>
-        ///   System.Software Properties
+        /// System.Software Properties
         /// </summary>
         public class PropertySystemSoftware : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemSoftware(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -13961,12 +15842,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Software.DateLastUsed;
+                    var key = Shell.PropertySystem.System.Software.DateLastUsed;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<DateTime?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<DateTime?>;
+                    return this.hashtable[key] as ShellProperty<DateTime?>;
                 }
             }
 
@@ -13977,42 +15860,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (PSFMTID_VERSION) {0CEF7D53-FA64-11D1-A203-0000F81FEDEE}, 7</para>
             ///</summary>
-            public ShellProperty<String> ProductName
+            public ShellProperty<string> ProductName
             {
                 get
                 {
-                    var key = SystemProperties.System.Software.ProductName;
+                    var key = Shell.PropertySystem.System.Software.ProductName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemSync
-
         /// <summary>
-        ///   System.Sync Properties
+        /// System.Sync Properties
         /// </summary>
         public class PropertySystemSync : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemSync(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -14022,16 +15916,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 13</para>
             /// </summary>
-            public ShellProperty<String> Comments
+            public ShellProperty<string> Comments
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.Comments;
+                    var key = Shell.PropertySystem.System.Sync.Comments;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14041,16 +15937,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CE50C159-2FB8-41FD-BE68-D3E042E274BC}, 4</para>
             /// </summary>
-            public ShellProperty<String> ConflictDescription
+            public ShellProperty<string> ConflictDescription
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ConflictDescription;
+                    var key = Shell.PropertySystem.System.Sync.ConflictDescription;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14060,16 +15958,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CE50C159-2FB8-41FD-BE68-D3E042E274BC}, 6</para>
             /// </summary>
-            public ShellProperty<String> ConflictFirstLocation
+            public ShellProperty<string> ConflictFirstLocation
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ConflictFirstLocation;
+                    var key = Shell.PropertySystem.System.Sync.ConflictFirstLocation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14079,16 +15979,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CE50C159-2FB8-41FD-BE68-D3E042E274BC}, 7</para>
             /// </summary>
-            public ShellProperty<String> ConflictSecondLocation
+            public ShellProperty<string> ConflictSecondLocation
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ConflictSecondLocation;
+                    var key = Shell.PropertySystem.System.Sync.ConflictSecondLocation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14102,12 +16004,14 @@ namespace Microsoft.Windows.Shell.PropertySystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.HandlerCollectionID;
+                    var key = Shell.PropertySystem.System.Sync.HandlerCollectionID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<IntPtr?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<IntPtr?>;
+                    return this.hashtable[key] as ShellProperty<IntPtr?>;
                 }
             }
 
@@ -14117,16 +16021,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 3</para>
             /// </summary>
-            public ShellProperty<String> HandlerID
+            public ShellProperty<string> HandlerID
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.HandlerID;
+                    var key = Shell.PropertySystem.System.Sync.HandlerID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14136,16 +16042,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CE50C159-2FB8-41FD-BE68-D3E042E274BC}, 2</para>
             /// </summary>
-            public ShellProperty<String> HandlerName
+            public ShellProperty<string> HandlerName
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.HandlerName;
+                    var key = Shell.PropertySystem.System.Sync.HandlerName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14156,16 +16064,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 8</para>
             ///</summary>
-            public ShellProperty<UInt32?> HandlerType
+            public ShellProperty<uint?> HandlerType
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.HandlerType;
+                    var key = Shell.PropertySystem.System.Sync.HandlerType;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14176,16 +16086,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 9</para>
             ///</summary>
-            public ShellProperty<String> HandlerTypeLabel
+            public ShellProperty<string> HandlerTypeLabel
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.HandlerTypeLabel;
+                    var key = Shell.PropertySystem.System.Sync.HandlerTypeLabel;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14195,16 +16107,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 6</para>
             /// </summary>
-            public ShellProperty<String> ItemID
+            public ShellProperty<string> ItemID
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ItemID;
+                    var key = Shell.PropertySystem.System.Sync.ItemID;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14214,16 +16128,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {CE50C159-2FB8-41FD-BE68-D3E042E274BC}, 3</para>
             /// </summary>
-            public ShellProperty<String> ItemName
+            public ShellProperty<string> ItemName
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ItemName;
+                    var key = Shell.PropertySystem.System.Sync.ItemName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14234,16 +16150,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 23</para>
             ///</summary>
-            public ShellProperty<UInt32?> ProgressPercentage
+            public ShellProperty<uint?> ProgressPercentage
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.ProgressPercentage;
+                    var key = Shell.PropertySystem.System.Sync.ProgressPercentage;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14254,16 +16172,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 24</para>
             ///</summary>
-            public ShellProperty<UInt32?> State
+            public ShellProperty<uint?> State
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.State;
+                    var key = Shell.PropertySystem.System.Sync.State;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14273,42 +16193,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {7BD5533E-AF15-44DB-B8C8-BD6624E1D032}, 10</para>
             /// </summary>
-            public ShellProperty<String> Status
+            public ShellProperty<string> Status
             {
                 get
                 {
-                    var key = SystemProperties.System.Sync.Status;
+                    var key = Shell.PropertySystem.System.Sync.Status;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemTask
-
         /// <summary>
-        ///   System.Task Properties
+        /// System.Task Properties
         /// </summary>
         public class PropertySystemTask : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemTask(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -14318,16 +16249,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {D37D52C6-261C-4303-82B3-08B926AC6F12}, 100</para>
             /// </summary>
-            public ShellProperty<String> BillingInformation
+            public ShellProperty<string> BillingInformation
             {
                 get
                 {
-                    var key = SystemProperties.System.Task.BillingInformation;
+                    var key = Shell.PropertySystem.System.Task.BillingInformation;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14337,16 +16270,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {084D8A0A-E6D5-40DE-BF1F-C8820E7C877C}, 100</para>
             /// </summary>
-            public ShellProperty<String> CompletionStatus
+            public ShellProperty<string> CompletionStatus
             {
                 get
                 {
-                    var key = SystemProperties.System.Task.CompletionStatus;
+                    var key = Shell.PropertySystem.System.Task.CompletionStatus;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14356,42 +16291,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///   <para>FormatID: {08C7CC5F-60F2-4494-AD75-55E3E0B5ADD0}, 100</para>
             /// </summary>
-            public ShellProperty<String> Owner
+            public ShellProperty<string> Owner
             {
                 get
                 {
-                    var key = SystemProperties.System.Task.Owner;
+                    var key = Shell.PropertySystem.System.Task.Owner;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemVideo
-
         /// <summary>
-        ///   System.Video Properties
+        /// System.Video Properties
         /// </summary>
         public class PropertySystemVideo : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemVideo(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -14402,16 +16348,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 10 (PIDVSI_COMPRESSION)</para>
             ///</summary>
-            public ShellProperty<String> Compression
+            public ShellProperty<string> Compression
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.Compression;
+                    var key = Shell.PropertySystem.System.Video.Compression;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14422,16 +16370,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Multivalue String -- VT_VECTOR | VT_LPWSTR  (For variants: VT_ARRAY | VT_BSTR)</para>
             ///  <para>FormatID: (PSGUID_MEDIAFILESUMMARYINFORMATION) {64440492-4C8B-11D1-8B70-080036B11A03}, 20 (PIDMSI_DIRECTOR)</para>
             ///</summary>
-            public ShellProperty<String[]> Director
+            public ShellProperty<string[]> Director
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.Director;
+                    var key = Shell.PropertySystem.System.Video.Director;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String[]>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string[]>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String[]>;
+                    return this.hashtable[key] as ShellProperty<string[]>;
                 }
             }
 
@@ -14442,16 +16392,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 8 (PIDVSI_DATA_RATE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> EncodingBitrate
+            public ShellProperty<uint?> EncodingBitrate
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.EncodingBitrate;
+                    var key = Shell.PropertySystem.System.Video.EncodingBitrate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14462,16 +16414,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 44</para>
             ///</summary>
-            public ShellProperty<UInt32?> FourCC
+            public ShellProperty<uint?> FourCC
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.FourCC;
+                    var key = Shell.PropertySystem.System.Video.FourCC;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14482,16 +16436,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 4</para>
             ///</summary>
-            public ShellProperty<UInt32?> FrameHeight
+            public ShellProperty<uint?> FrameHeight
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.FrameHeight;
+                    var key = Shell.PropertySystem.System.Video.FrameHeight;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14502,16 +16458,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 6 (PIDVSI_FRAME_RATE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> FrameRate
+            public ShellProperty<uint?> FrameRate
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.FrameRate;
+                    var key = Shell.PropertySystem.System.Video.FrameRate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14522,16 +16480,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 3</para>
             ///</summary>
-            public ShellProperty<UInt32?> FrameWidth
+            public ShellProperty<uint?> FrameWidth
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.FrameWidth;
+                    var key = Shell.PropertySystem.System.Video.FrameWidth;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14543,16 +16503,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 42</para>
             ///</summary>
-            public ShellProperty<UInt32?> HorizontalAspectRatio
+            public ShellProperty<uint?> HorizontalAspectRatio
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.HorizontalAspectRatio;
+                    var key = Shell.PropertySystem.System.Video.HorizontalAspectRatio;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14563,16 +16525,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 9 (PIDVSI_SAMPLE_SIZE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> SampleSize
+            public ShellProperty<uint?> SampleSize
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.SampleSize;
+                    var key = Shell.PropertySystem.System.Video.SampleSize;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14583,16 +16547,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 2 (PIDVSI_STREAM_NAME)</para>
             ///</summary>
-            public ShellProperty<String> StreamName
+            public ShellProperty<string> StreamName
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.StreamName;
+                    var key = Shell.PropertySystem.System.Video.StreamName;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14603,16 +16569,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt16 -- VT_UI2</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 11 (PIDVSI_STREAM_NUMBER)</para>
             ///</summary>
-            public ShellProperty<UInt16?> StreamNumber
+            public ShellProperty<ushort?> StreamNumber
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.StreamNumber;
+                    var key = Shell.PropertySystem.System.Video.StreamNumber;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt16?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<ushort?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt16?>;
+                    return this.hashtable[key] as ShellProperty<ushort?>;
                 }
             }
 
@@ -14623,16 +16591,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 43 (PIDVSI_TOTAL_BITRATE)</para>
             ///</summary>
-            public ShellProperty<UInt32?> TotalBitrate
+            public ShellProperty<uint?> TotalBitrate
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.TotalBitrate;
+                    var key = Shell.PropertySystem.System.Video.TotalBitrate;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
@@ -14642,16 +16612,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 46</para>
             /// </summary>
-            public ShellProperty<Boolean?> TranscodedForSync
+            public ShellProperty<bool?> TranscodedForSync
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.TranscodedForSync;
+                    var key = Shell.PropertySystem.System.Video.TranscodedForSync;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -14663,42 +16635,53 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     UInt32 -- VT_UI4</para>
             ///  <para>FormatID: (FMTID_VideoSummaryInformation) {64440491-4C8B-11D1-8B70-080036B11A03}, 45</para>
             ///</summary>
-            public ShellProperty<UInt32?> VerticalAspectRatio
+            public ShellProperty<uint?> VerticalAspectRatio
             {
                 get
                 {
-                    var key = SystemProperties.System.Video.VerticalAspectRatio;
+                    var key = Shell.PropertySystem.System.Video.VerticalAspectRatio;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<UInt32?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<uint?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<UInt32?>;
+                    return this.hashtable[key] as ShellProperty<uint?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
 
-        #endregion
-
-        #region Nested type: PropertySystemVolume
-
         /// <summary>
-        ///   System.Volume Properties
+        /// System.Volume Properties
         /// </summary>
         public class PropertySystemVolume : PropertyStoreItems
         {
+            #region Constants and Fields
+
+            /// <summary>
+            /// </summary>
             private readonly Hashtable hashtable = new Hashtable();
+
+            /// <summary>
+            /// </summary>
             private readonly ShellObject shellObjectParent;
 
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// </summary>
+            /// <param name="parent">
+            /// </param>
             internal PropertySystemVolume(ShellObject parent)
             {
-                shellObjectParent = parent;
+                this.shellObjectParent = parent;
             }
+
+            #endregion
 
             #region Properties
 
@@ -14709,16 +16692,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     String -- VT_LPWSTR  (For variants: VT_BSTR)</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 4 (PID_VOLUME_FILESYSTEM)  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<String> FileSystem
+            public ShellProperty<string> FileSystem
             {
                 get
                 {
-                    var key = SystemProperties.System.Volume.FileSystem;
+                    var key = Shell.PropertySystem.System.Volume.FileSystem;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<String>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<string>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<String>;
+                    return this.hashtable[key] as ShellProperty<string>;
                 }
             }
 
@@ -14728,16 +16713,18 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///   <para>Type:     Boolean -- VT_BOOL</para>
             ///   <para>FormatID: {149C0B69-2C2D-48FC-808F-D318D78C4636}, 2</para>
             /// </summary>
-            public ShellProperty<Boolean?> IsMappedDrive
+            public ShellProperty<bool?> IsMappedDrive
             {
                 get
                 {
-                    var key = SystemProperties.System.Volume.IsMappedDrive;
+                    var key = Shell.PropertySystem.System.Volume.IsMappedDrive;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
@@ -14748,26 +16735,22 @@ namespace Microsoft.Windows.Shell.PropertySystem
             ///  <para>Type:     Boolean -- VT_BOOL</para>
             ///  <para>FormatID: (FMTID_Volume) {9B174B35-40FF-11D2-A27E-00C04FC30871}, 10  (Filesystem Volume Properties)</para>
             ///</summary>
-            public ShellProperty<Boolean?> IsRoot
+            public ShellProperty<bool?> IsRoot
             {
                 get
                 {
-                    var key = SystemProperties.System.Volume.IsRoot;
+                    var key = Shell.PropertySystem.System.Volume.IsRoot;
 
-                    if (!hashtable.ContainsKey(key))
-                        hashtable.Add(key, shellObjectParent.Properties.CreateTypedProperty<Boolean?>(key));
+                    if (!this.hashtable.ContainsKey(key))
+                    {
+                        this.hashtable.Add(key, this.shellObjectParent.Properties.CreateTypedProperty<bool?>(key));
+                    }
 
-                    return hashtable[key] as ShellProperty<Boolean?>;
+                    return this.hashtable[key] as ShellProperty<bool?>;
                 }
             }
 
             #endregion
-
-            #region sub-namespaces
-
-            #endregion
         }
-
-        #endregion
     }
 }

@@ -1,60 +1,181 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Microsoft.Windows.Internal;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+
+    using Microsoft.Windows.Internal;
+
     /// <summary>
-    ///   A Shell Library in the Shell Namespace
+    /// A Shell Library in the Shell Namespace
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", 
+        Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
     public sealed class ShellLibrary : ShellContainer, IList<ShellFileSystemFolder>
     {
-        #region Private Fields
+        #region Constants and Fields
 
+        /// <summary>
+        /// </summary>
+        internal const string FileExtension = ".library-ms";
+
+        /// <summary>
+        /// </summary>
         private static readonly Guid[] FolderTypesGuids = {
-                                                              new Guid(ShellKFIDGuid.GenericLibrary), new Guid(ShellKFIDGuid.DocumentsLibrary), new Guid(ShellKFIDGuid.MusicLibrary),
-                                                              new Guid(ShellKFIDGuid.PicturesLibrary), new Guid(ShellKFIDGuid.VideosLibrary)
+                                                              new Guid(ShellKfidGuid.GenericLibrary), new Guid(ShellKfidGuid.DocumentsLibrary), 
+                                                              new Guid(ShellKfidGuid.MusicLibrary), new Guid(ShellKfidGuid.PicturesLibrary), 
+                                                              new Guid(ShellKfidGuid.VideosLibrary)
                                                           };
 
+        /// <summary>
+        /// </summary>
         private readonly IKnownFolder knownFolder;
+
+        /// <summary>
+        /// </summary>
         private INativeShellLibrary nativeShellLibrary;
 
         #endregion
 
-        #region Private Constructor
+        // Construct the ShellLibrary object from a native Shell Library
+        #region Constructors and Destructors
 
-        //Construct the ShellLibrary object from a native Shell Library
+        /// <summary>
+        /// Creates a shell library in the Libraries Known Folder, 
+        ///   using the given shell library name.
+        /// </summary>
+        /// <param name="libraryName">
+        /// The name of this library
+        /// </param>
+        /// <param name="overwrite">
+        /// Allow overwriting an existing library; if one exists with the same name
+        /// </param>
+        public ShellLibrary(string libraryName, bool overwrite)
+        {
+            CoreHelpers.ThrowIfNotWin7();
+
+            if (String.IsNullOrEmpty(libraryName))
+            {
+                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
+            }
+
+            this.Name = libraryName;
+            var guid = new Guid(ShellKfidGuid.Libraries);
+
+            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LsfOverrideexisting : ShellNativeMethods.LIBRARYSAVEFLAGS.LsfFailifthere;
+
+            this.nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+            this.nativeShellLibrary.SaveInKnownFolder(ref guid, libraryName, flags, out this.nativeShellItem);
+        }
+
+        /// <summary>
+        /// Creates a shell library in a given Known Folder, 
+        ///   using the given shell library name.
+        /// </summary>
+        /// <param name="libraryName">
+        /// The name of this library
+        /// </param>
+        /// <param name="sourceKnownFolder">
+        /// The known folder
+        /// </param>
+        /// <param name="overwrite">
+        /// Override an existing library with the same name
+        /// </param>
+        public ShellLibrary(string libraryName, IKnownFolder sourceKnownFolder, bool overwrite)
+        {
+            CoreHelpers.ThrowIfNotWin7();
+            if (String.IsNullOrEmpty(libraryName))
+            {
+                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
+            }
+
+            this.knownFolder = sourceKnownFolder;
+
+            this.Name = libraryName;
+            var guid = this.knownFolder.FolderId;
+
+            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LsfOverrideexisting : ShellNativeMethods.LIBRARYSAVEFLAGS.LsfFailifthere;
+
+            this.nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+            this.nativeShellLibrary.SaveInKnownFolder(ref guid, libraryName, flags, out this.nativeShellItem);
+        }
+
+        /// <summary>
+        /// Creates a shell library in a given local folder, 
+        ///   using the given shell library name.
+        /// </summary>
+        /// <param name="libraryName">
+        /// The name of this library
+        /// </param>
+        /// <param name="folderPath">
+        /// The path to the local folder
+        /// </param>
+        /// <param name="overwrite">
+        /// Override an existing library with the same name
+        /// </param>
+        public ShellLibrary(string libraryName, string folderPath, bool overwrite)
+        {
+            CoreHelpers.ThrowIfNotWin7();
+
+            if (String.IsNullOrEmpty(libraryName))
+            {
+                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
+            }
+
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException("Folder path not found.");
+            }
+
+            this.Name = libraryName;
+
+            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LsfOverrideexisting : ShellNativeMethods.LIBRARYSAVEFLAGS.LsfFailifthere;
+
+            var guid = new Guid(ShellIidGuid.IShellItem);
+
+            IShellItem shellItemIn;
+            ShellNativeMethods.SHCreateItemFromParsingName(folderPath, IntPtr.Zero, ref guid, out shellItemIn);
+
+            this.nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+            this.nativeShellLibrary.Save(shellItemIn, libraryName, flags, out this.nativeShellItem);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="nativeShellLibrary">
+        /// </param>
         private ShellLibrary(INativeShellLibrary nativeShellLibrary)
         {
             CoreHelpers.ThrowIfNotWin7();
             this.nativeShellLibrary = nativeShellLibrary;
         }
 
-        #endregion
-
-        #region Public Constructors
-
         /// <summary>
-        ///   Creates a shell library in the Libraries Known Folder, 
+        /// Creates a shell library in the Libraries Known Folder, 
         ///   using the given IKnownFolder
         /// </summary>
-        /// <param name = "sourceKnownFolder">KnownFolder from which to create the new Shell Library</param>
-        /// <param name = "isReadOnly">If <B>true</B> , opens the library in read-only mode.</param>
+        /// <param name="sourceKnownFolder">
+        /// KnownFolder from which to create the new Shell Library
+        /// </param>
+        /// <param name="isReadOnly">
+        /// If <B>true</B> , opens the library in read-only mode.
+        /// </param>
         private ShellLibrary(IKnownFolder sourceKnownFolder, bool isReadOnly)
         {
             CoreHelpers.ThrowIfNotWin7();
@@ -62,21 +183,21 @@ namespace Microsoft.Windows.Shell
             Debug.Assert(sourceKnownFolder != null);
 
             // Keep a reference locally
-            knownFolder = sourceKnownFolder;
+            this.knownFolder = sourceKnownFolder;
 
-            nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
+            this.nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
 
-            var flags = isReadOnly ? ShellNativeMethods.STGM.Read : ShellNativeMethods.STGM.ReadWrite;
+            var flags = isReadOnly ? ShellNativeMethods.STGMs.Read : ShellNativeMethods.STGMs.ReadWrite;
 
             // Get the IShellItem2
-            nativeShellItem = ((ShellObject) sourceKnownFolder).NativeShellItem2;
+            this.nativeShellItem = ((ShellObject)sourceKnownFolder).NativeShellItem2;
 
             var guid = sourceKnownFolder.FolderId;
 
             // Load the library from the IShellItem2
             try
             {
-                nativeShellLibrary.LoadLibraryFromKnownFolder(ref guid, flags);
+                this.nativeShellLibrary.LoadLibraryFromKnownFolder(ref guid, flags);
             }
             catch (InvalidCastException)
             {
@@ -89,154 +210,50 @@ namespace Microsoft.Windows.Shell
         }
 
         /// <summary>
-        ///   Creates a shell library in the Libraries Known Folder, 
-        ///   using the given shell library name.
+        /// 
+        ///   Release resources
         /// </summary>
-        /// <param name = "libraryName">The name of this library</param>
-        /// <param name = "overwrite">Allow overwriting an existing library; if one exists with the same name</param>
-        public ShellLibrary(string libraryName, bool overwrite)
+        ~ShellLibrary()
         {
-            CoreHelpers.ThrowIfNotWin7();
-
-            if (String.IsNullOrEmpty(libraryName))
-                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
-
-            Name = libraryName;
-            var guid = new Guid(ShellKFIDGuid.Libraries);
-
-            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_OVERRIDEEXISTING : ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_FAILIFTHERE;
-
-            nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-            nativeShellLibrary.SaveInKnownFolder(ref guid, libraryName, flags, out nativeShellItem);
-        }
-
-        /// <summary>
-        ///   Creates a shell library in a given Known Folder, 
-        ///   using the given shell library name.
-        /// </summary>
-        /// <param name = "libraryName">The name of this library</param>
-        /// <param name = "sourceKnownFolder">The known folder</param>
-        /// <param name = "overwrite">Override an existing library with the same name</param>
-        public ShellLibrary(string libraryName, IKnownFolder sourceKnownFolder, bool overwrite)
-        {
-            CoreHelpers.ThrowIfNotWin7();
-            if (String.IsNullOrEmpty(libraryName))
-                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
-
-            knownFolder = sourceKnownFolder;
-
-            Name = libraryName;
-            var guid = knownFolder.FolderId;
-
-            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_OVERRIDEEXISTING : ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_FAILIFTHERE;
-
-            nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-            nativeShellLibrary.SaveInKnownFolder(ref guid, libraryName, flags, out nativeShellItem);
-        }
-
-        /// <summary>
-        ///   Creates a shell library in a given local folder, 
-        ///   using the given shell library name.
-        /// </summary>
-        /// <param name = "libraryName">The name of this library</param>
-        /// <param name = "folderPath">The path to the local folder</param>
-        /// <param name = "overwrite">Override an existing library with the same name</param>
-        public ShellLibrary(string libraryName, string folderPath, bool overwrite)
-        {
-            CoreHelpers.ThrowIfNotWin7();
-
-            if (String.IsNullOrEmpty(libraryName))
-                throw new ArgumentNullException("libraryName", "libraryName cannot be empty.");
-
-            if (!Directory.Exists(folderPath))
-                throw new DirectoryNotFoundException("Folder path not found.");
-
-            Name = libraryName;
-
-            var flags = overwrite ? ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_OVERRIDEEXISTING : ShellNativeMethods.LIBRARYSAVEFLAGS.LSF_FAILIFTHERE;
-
-            var guid = new Guid(ShellIIDGuid.IShellItem);
-
-            IShellItem shellItemIn;
-            ShellNativeMethods.SHCreateItemFromParsingName(folderPath, IntPtr.Zero, ref guid, out shellItemIn);
-
-            nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-            nativeShellLibrary.Save(shellItemIn, libraryName, flags, out nativeShellItem);
+            this.Dispose(false);
         }
 
         #endregion
 
-        #region Public Properties
+        #region Properties
 
         /// <summary>
-        ///   The name of the library, every library must 
-        ///   have a name
+        ///   Indicates whether this feature is supported on the current platform.
         /// </summary>
-        /// <exception cref = "COMException">Will throw if no Icon is set</exception>
-        public override string Name
+        public new static bool IsPlatformSupported
         {
             get
             {
-                if (base.Name == null && NativeShellItem != null)
-                    base.Name = Path.GetFileNameWithoutExtension(ShellHelper.GetParsingName(NativeShellItem));
-
-                return base.Name;
+                // We need Windows 7 onwards ...
+                return CoreHelpers.RunningOnWin7;
             }
         }
 
         /// <summary>
-        ///   The Resource Reference to the icon.
+        ///   Get a the known folder FOLDERID_Libraries
         /// </summary>
-        public IconReference IconResourceId
+        public static IKnownFolder LibrariesKnownFolder
         {
             get
             {
-                string iconRef;
-                nativeShellLibrary.GetIcon(out iconRef);
-                return new IconReference(iconRef);
-            }
-
-            set
-            {
-                nativeShellLibrary.SetIcon(value.ReferencePath);
-                nativeShellLibrary.Commit();
+                CoreHelpers.ThrowIfNotWin7();
+                return KnownFolderHelper.FromKnownFolderId(new Guid(ShellKfidGuid.Libraries));
             }
         }
 
         /// <summary>
-        ///   One of predefined Library types
+        ///   The count of the items in the list.
         /// </summary>
-        /// <exception cref = "COMException">Will throw if no Library Type is set</exception>
-        public LibraryFolderType LibraryType
+        public int Count
         {
             get
             {
-                Guid folderTypeGuid;
-                nativeShellLibrary.GetFolderType(out folderTypeGuid);
-
-                return GetFolderTypefromGuid(folderTypeGuid);
-            }
-
-            set
-            {
-                var guid = FolderTypesGuids[(int) value];
-                nativeShellLibrary.SetFolderType(ref guid);
-                nativeShellLibrary.Commit();
-            }
-        }
-
-        /// <summary>
-        ///   The Guid of the Library type
-        /// </summary>
-        /// <exception cref = "COMException">Will throw if no Library Type is set</exception>
-        public Guid LibraryTypeId
-        {
-            get
-            {
-                Guid folderTypeGuid;
-                nativeShellLibrary.GetFolderType(out folderTypeGuid);
-
-                return folderTypeGuid;
+                return this.ItemsList.Count;
             }
         }
 
@@ -251,11 +268,11 @@ namespace Microsoft.Windows.Shell
         {
             get
             {
-                var guid = new Guid(ShellIIDGuid.IShellItem);
+                var guid = new Guid(ShellIidGuid.IShellItem);
 
                 IShellItem saveFolderItem;
 
-                nativeShellLibrary.GetDefaultSaveFolder(ShellNativeMethods.DEFAULTSAVEFOLDERTYPE.DSFT_DETECT, ref guid, out saveFolderItem);
+                this.nativeShellLibrary.GetDefaultSaveFolder(ShellNativeMethods.DEFAULTSAVEFOLDERTYPE.DsftDetect, ref guid, out saveFolderItem);
 
                 return ShellHelper.GetParsingName(saveFolderItem);
             }
@@ -263,21 +280,44 @@ namespace Microsoft.Windows.Shell
             set
             {
                 if (String.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException("value");
+                }
 
                 if (!Directory.Exists(value))
+                {
                     throw new DirectoryNotFoundException("DefaultSaveFolder Path not found.");
+                }
 
                 var fullPath = new DirectoryInfo(value).FullName;
 
-                var guid = new Guid(ShellIIDGuid.IShellItem);
+                var guid = new Guid(ShellIidGuid.IShellItem);
                 IShellItem saveFolderItem;
 
                 ShellNativeMethods.SHCreateItemFromParsingName(fullPath, IntPtr.Zero, ref guid, out saveFolderItem);
 
-                nativeShellLibrary.SetDefaultSaveFolder(ShellNativeMethods.DEFAULTSAVEFOLDERTYPE.DSFT_DETECT, saveFolderItem);
+                this.nativeShellLibrary.SetDefaultSaveFolder(ShellNativeMethods.DEFAULTSAVEFOLDERTYPE.DsftDetect, saveFolderItem);
 
-                nativeShellLibrary.Commit();
+                this.nativeShellLibrary.Commit();
+            }
+        }
+
+        /// <summary>
+        ///   The Resource Reference to the icon.
+        /// </summary>
+        public IconReference IconResourceId
+        {
+            get
+            {
+                string iconRef;
+                this.nativeShellLibrary.GetIcon(out iconRef);
+                return new IconReference(iconRef);
+            }
+
+            set
+            {
+                this.nativeShellLibrary.SetIcon(value.ReferencePath);
+                this.nativeShellLibrary.Commit();
             }
         }
 
@@ -289,35 +329,149 @@ namespace Microsoft.Windows.Shell
         {
             get
             {
-                ShellNativeMethods.LIBRARYOPTIONFLAGS flags;
+                ShellNativeMethods.LIBRARYOPTIONFLAGSs flags;
 
-                nativeShellLibrary.GetOptions(out flags);
+                this.nativeShellLibrary.GetOptions(out flags);
 
-                return ((flags & ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_PINNEDTONAVPANE) == ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_PINNEDTONAVPANE);
+                return (flags & ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofPinnedtonavpane) == ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofPinnedtonavpane;
             }
 
             set
             {
-                var flags = ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_DEFAULT;
+                var flags = ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofDefault;
 
                 if (value)
-                    flags |= ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_PINNEDTONAVPANE;
+                {
+                    flags |= ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofPinnedtonavpane;
+                }
                 else
-                    flags &= ~ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_PINNEDTONAVPANE;
+                {
+                    flags &= ~ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofPinnedtonavpane;
+                }
 
-                nativeShellLibrary.SetOptions(ShellNativeMethods.LIBRARYOPTIONFLAGS.LOF_PINNEDTONAVPANE, flags);
-                nativeShellLibrary.Commit();
+                this.nativeShellLibrary.SetOptions(ShellNativeMethods.LIBRARYOPTIONFLAGSs.LofPinnedtonavpane, flags);
+                this.nativeShellLibrary.Commit();
             }
         }
 
-        private static LibraryFolderType GetFolderTypefromGuid(Guid folderTypeGuid)
+        /// <summary>
+        ///   Indicates whether this list is read-only or not.
+        /// </summary>
+        public bool IsReadOnly
         {
-            for (var i = 0; i < FolderTypesGuids.Length; i++)
+            get
             {
-                if (folderTypeGuid.Equals(FolderTypesGuids[i]))
-                    return (LibraryFolderType) i;
+                return false;
             }
-            throw new ArgumentOutOfRangeException("folderTypeGuid", "Invalid FoldeType Guid");
+        }
+
+        /// <summary>
+        ///   One of predefined Library types
+        /// </summary>
+        /// <exception cref = "COMException">Will throw if no Library Type is set</exception>
+        public LibraryFolderType LibraryType
+        {
+            get
+            {
+                Guid folderTypeGuid;
+                this.nativeShellLibrary.GetFolderType(out folderTypeGuid);
+
+                return GetFolderTypefromGuid(folderTypeGuid);
+            }
+
+            set
+            {
+                var guid = FolderTypesGuids[(int)value];
+                this.nativeShellLibrary.SetFolderType(ref guid);
+                this.nativeShellLibrary.Commit();
+            }
+        }
+
+        /// <summary>
+        ///   The Guid of the Library type
+        /// </summary>
+        /// <exception cref = "COMException">Will throw if no Library Type is set</exception>
+        public Guid LibraryTypeId
+        {
+            get
+            {
+                Guid folderTypeGuid;
+                this.nativeShellLibrary.GetFolderType(out folderTypeGuid);
+
+                return folderTypeGuid;
+            }
+        }
+
+        /// <summary>
+        ///   The name of the library, every library must 
+        ///   have a name
+        /// </summary>
+        /// <exception cref = "COMException">Will throw if no Icon is set</exception>
+        public override string Name
+        {
+            get
+            {
+                if (base.Name == null && this.NativeShellItem != null)
+                {
+                    base.Name = Path.GetFileNameWithoutExtension(ShellHelper.GetParsingName(this.NativeShellItem));
+                }
+
+                return base.Name;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        internal override IShellItem NativeShellItem
+        {
+            get
+            {
+                return this.NativeShellItem2;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        internal override IShellItem2 NativeShellItem2
+        {
+            get
+            {
+                return this.nativeShellItem;
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        private List<ShellFileSystemFolder> ItemsList
+        {
+            get
+            {
+                return this.GetFolders();
+            }
+        }
+
+        #endregion
+
+        #region Indexers
+
+        /// <summary>
+        ///   Retrieves the folder at the specified index
+        /// </summary>
+        /// <param name = "index">The index of the folder to retrieve.</param>
+        /// <returns>A folder.</returns>
+        public ShellFileSystemFolder this[int index]
+        {
+            get
+            {
+                return this.ItemsList[index];
+            }
+
+            set
+            {
+                // Index related options are not supported by IShellLibrary
+                // doesn't support them.
+                throw new NotImplementedException();
+            }
         }
 
         #endregion
@@ -325,45 +479,17 @@ namespace Microsoft.Windows.Shell
         #region Public Methods
 
         /// <summary>
-        ///   Close the library, and release its associated file system resources
+        /// Load the library using a number of options
         /// </summary>
-        public void Close()
-        {
-            Dispose();
-        }
-
-        #endregion
-
-        #region Internal Properties
-
-        internal const string FileExtension = ".library-ms";
-
-        internal override IShellItem NativeShellItem { get { return NativeShellItem2; } }
-
-        internal override IShellItem2 NativeShellItem2 { get { return nativeShellItem; } }
-
-        #endregion
-
-        #region Static Shell Library methods
-
-        /// <summary>
-        ///   Get a the known folder FOLDERID_Libraries
-        /// </summary>
-        public static IKnownFolder LibrariesKnownFolder
-        {
-            get
-            {
-                CoreHelpers.ThrowIfNotWin7();
-                return KnownFolderHelper.FromKnownFolderId(new Guid(ShellKFIDGuid.Libraries));
-            }
-        }
-
-        /// <summary>
-        ///   Load the library using a number of options
-        /// </summary>
-        /// <param name = "libraryName">The name of the library</param>
-        /// <param name = "isReadOnly">If <B>true</B>, loads the library in read-only mode.</param>
-        /// <returns>A ShellLibrary Object</returns>
+        /// <param name="libraryName">
+        /// The name of the library
+        /// </param>
+        /// <param name="isReadOnly">
+        /// If <B>true</B>, loads the library in read-only mode.
+        /// </param>
+        /// <returns>
+        /// A ShellLibrary Object
+        /// </returns>
         public static ShellLibrary Load(string libraryName, bool isReadOnly)
         {
             CoreHelpers.ThrowIfNotWin7();
@@ -371,30 +497,40 @@ namespace Microsoft.Windows.Shell
             var kf = KnownFolders.Libraries;
             var librariesFolderPath = (kf != null) ? kf.Path : string.Empty;
 
-            var guid = new Guid(ShellIIDGuid.IShellItem);
+            var guid = new Guid(ShellIidGuid.IShellItem);
             IShellItem nativeShellItem;
             var shellItemPath = Path.Combine(librariesFolderPath, libraryName + FileExtension);
             var hr = ShellNativeMethods.SHCreateItemFromParsingName(shellItemPath, IntPtr.Zero, ref guid, out nativeShellItem);
 
             if (!CoreErrorHelper.Succeeded(hr))
+            {
                 throw Marshal.GetExceptionForHR(hr);
+            }
 
-            var nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-            var flags = isReadOnly ? ShellNativeMethods.STGM.Read : ShellNativeMethods.STGM.ReadWrite;
+            var nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+            var flags = isReadOnly ? ShellNativeMethods.STGMs.Read : ShellNativeMethods.STGMs.ReadWrite;
             nativeShellLibrary.LoadLibraryFromItem(nativeShellItem, flags);
 
-            var library = new ShellLibrary(nativeShellLibrary) {nativeShellItem = (IShellItem2) nativeShellItem, Name = libraryName};
+            var library = new ShellLibrary(nativeShellLibrary) { nativeShellItem = (IShellItem2)nativeShellItem, Name = libraryName };
 
             return library;
         }
 
         /// <summary>
-        ///   Load the library using a number of options
+        /// Load the library using a number of options
         /// </summary>
-        /// <param name = "libraryName">The name of the library.</param>
-        /// <param name = "folderPath">The path to the library.</param>
-        /// <param name = "isReadOnly">If <B>true</B>, opens the library in read-only mode.</param>
-        /// <returns>A ShellLibrary Object</returns>
+        /// <param name="libraryName">
+        /// The name of the library.
+        /// </param>
+        /// <param name="folderPath">
+        /// The path to the library.
+        /// </param>
+        /// <param name="isReadOnly">
+        /// If <B>true</B>, opens the library in read-only mode.
+        /// </param>
+        /// <returns>
+        /// A ShellLibrary Object
+        /// </returns>
         public static ShellLibrary Load(string libraryName, string folderPath, bool isReadOnly)
         {
             CoreHelpers.ThrowIfNotWin7();
@@ -404,81 +540,56 @@ namespace Microsoft.Windows.Shell
             var item = ShellFile.FromFilePath(shellItemPath);
 
             var nativeShellItem = item.NativeShellItem;
-            var nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-            var flags = isReadOnly ? ShellNativeMethods.STGM.Read : ShellNativeMethods.STGM.ReadWrite;
+            var nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+            var flags = isReadOnly ? ShellNativeMethods.STGMs.Read : ShellNativeMethods.STGMs.ReadWrite;
             nativeShellLibrary.LoadLibraryFromItem(nativeShellItem, flags);
 
-            var library = new ShellLibrary(nativeShellLibrary) {nativeShellItem = (IShellItem2) nativeShellItem, Name = libraryName};
+            var library = new ShellLibrary(nativeShellLibrary) { nativeShellItem = (IShellItem2)nativeShellItem, Name = libraryName };
 
             return library;
         }
 
         /// <summary>
-        ///   Load the library using a number of options
+        /// Load the library using a number of options
         /// </summary>
-        /// <param name = "nativeShellItem">IShellItem</param>
-        /// <param name = "isReadOnly">read-only flag</param>
-        /// <returns>A ShellLibrary Object</returns>
-        internal static ShellLibrary FromShellItem(IShellItem nativeShellItem, bool isReadOnly)
-        {
-            CoreHelpers.ThrowIfNotWin7();
-
-            var nativeShellLibrary = (INativeShellLibrary) new ShellLibraryCoClass();
-
-            var flags = isReadOnly ? ShellNativeMethods.STGM.Read : ShellNativeMethods.STGM.ReadWrite;
-
-            nativeShellLibrary.LoadLibraryFromItem(nativeShellItem, flags);
-
-            var library = new ShellLibrary(nativeShellLibrary) {nativeShellItem = (IShellItem2) nativeShellItem};
-
-            return library;
-        }
-
-        /// <summary>
-        ///   Load the library using a number of options
-        /// </summary>
-        /// <param name = "sourceKnownFolder">A known folder.</param>
-        /// <param name = "isReadOnly">If <B>true</B>, opens the library in read-only mode.</param>
-        /// <returns>A ShellLibrary Object</returns>
+        /// <param name="sourceKnownFolder">
+        /// A known folder.
+        /// </param>
+        /// <param name="isReadOnly">
+        /// If <B>true</B>, opens the library in read-only mode.
+        /// </param>
+        /// <returns>
+        /// A ShellLibrary Object
+        /// </returns>
         public static ShellLibrary Load(IKnownFolder sourceKnownFolder, bool isReadOnly)
         {
             CoreHelpers.ThrowIfNotWin7();
             return new ShellLibrary(sourceKnownFolder, isReadOnly);
         }
 
-        private static void ShowManageLibraryUI(ShellObject shellLibrary, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
-        {
-            var hr = 0;
-
-            var staWorker =
-                new Thread(
-                    () =>
-                        {
-                            hr = ShellNativeMethods.SHShowManageLibraryUI(shellLibrary.NativeShellItem, windowHandle, title, instruction,
-                                                                          allowAllLocations
-                                                                              ? ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_NOUNINDEXABLELOCATIONWARNING
-                                                                              : ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LMD_DEFAULT);
-                        });
-
-            staWorker.SetApartmentState(ApartmentState.STA);
-            staWorker.Start();
-            staWorker.Join();
-
-            if (!CoreErrorHelper.Succeeded(hr))
-                Marshal.ThrowExceptionForHR(hr);
-        }
-
         /// <summary>
-        ///   Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
         /// </summary>
-        /// <param name = "libraryName">The name of the library</param>
-        /// <param name = "folderPath">The path to the library.</param>
-        /// <param name = "windowHandle">The parent window,or IntPtr.Zero for no parent</param>
-        /// <param name = "title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name = "instruction">An optional help string to display for the library management dialog</param>
-        /// <param name = "allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <param name="libraryName">
+        /// The name of the library
+        /// </param>
+        /// <param name="folderPath">
+        /// The path to the library.
+        /// </param>
+        /// <param name="windowHandle">
+        /// The parent window,or IntPtr.Zero for no parent
+        /// </param>
+        /// <param name="title">
+        /// A title for the library management dialog, or null to use the library name as the title
+        /// </param>
+        /// <param name="instruction">
+        /// An optional help string to display for the library management dialog
+        /// </param>
+        /// <param name="allowAllLocations">
+        /// If true, do not show warning dialogs about locations that cannot be indexed
+        /// </param>
         /// <remarks>
-        ///   If the library is already open in read-write mode, the dialog will not save the changes.
+        /// If the library is already open in read-write mode, the dialog will not save the changes.
         /// </remarks>
         public static void ShowManageLibraryUI(string libraryName, string folderPath, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
         {
@@ -486,20 +597,29 @@ namespace Microsoft.Windows.Shell
             // Access Violations if called from an MTA thread so we wrap this
             // call up into a Worker thread that performs all operations in a
             // single threaded apartment
-            using (var shellLibrary = Load(libraryName, folderPath, true))
-                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            using (var shellLibrary = Load(libraryName, folderPath, true)) ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
         }
 
         /// <summary>
-        ///   Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
         /// </summary>
-        /// <param name = "libraryName">The name of the library</param>
-        /// <param name = "windowHandle">The parent window,or IntPtr.Zero for no parent</param>
-        /// <param name = "title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name = "instruction">An optional help string to display for the library management dialog</param>
-        /// <param name = "allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <param name="libraryName">
+        /// The name of the library
+        /// </param>
+        /// <param name="windowHandle">
+        /// The parent window,or IntPtr.Zero for no parent
+        /// </param>
+        /// <param name="title">
+        /// A title for the library management dialog, or null to use the library name as the title
+        /// </param>
+        /// <param name="instruction">
+        /// An optional help string to display for the library management dialog
+        /// </param>
+        /// <param name="allowAllLocations">
+        /// If true, do not show warning dialogs about locations that cannot be indexed
+        /// </param>
         /// <remarks>
-        ///   If the library is already open in read-write mode, the dialog will not save the changes.
+        /// If the library is already open in read-write mode, the dialog will not save the changes.
         /// </remarks>
         public static void ShowManageLibraryUI(string libraryName, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
         {
@@ -507,20 +627,29 @@ namespace Microsoft.Windows.Shell
             // Access Violations if called from an MTA thread so we wrap this
             // call up into a Worker thread that performs all operations in a
             // single threaded apartment
-            using (var shellLibrary = Load(libraryName, true))
-                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            using (var shellLibrary = Load(libraryName, true)) ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
         }
 
         /// <summary>
-        ///   Shows the library management dialog which enables users to mange the library folders and default save location.
+        /// Shows the library management dialog which enables users to mange the library folders and default save location.
         /// </summary>
-        /// <param name = "sourceKnownFolder">A known folder.</param>
-        /// <param name = "windowHandle">The parent window,or IntPtr.Zero for no parent</param>
-        /// <param name = "title">A title for the library management dialog, or null to use the library name as the title</param>
-        /// <param name = "instruction">An optional help string to display for the library management dialog</param>
-        /// <param name = "allowAllLocations">If true, do not show warning dialogs about locations that cannot be indexed</param>
+        /// <param name="sourceKnownFolder">
+        /// A known folder.
+        /// </param>
+        /// <param name="windowHandle">
+        /// The parent window,or IntPtr.Zero for no parent
+        /// </param>
+        /// <param name="title">
+        /// A title for the library management dialog, or null to use the library name as the title
+        /// </param>
+        /// <param name="instruction">
+        /// An optional help string to display for the library management dialog
+        /// </param>
+        /// <param name="allowAllLocations">
+        /// If true, do not show warning dialogs about locations that cannot be indexed
+        /// </param>
         /// <remarks>
-        ///   If the library is already open in read-write mode, the dialog will not save the changes.
+        /// If the library is already open in read-write mode, the dialog will not save the changes.
         /// </remarks>
         public static void ShowManageLibraryUI(IKnownFolder sourceKnownFolder, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
         {
@@ -528,59 +657,141 @@ namespace Microsoft.Windows.Shell
             // Access Violations if called from an MTA thread so we wrap this
             // call up into a Worker thread that performs all operations in a
             // single threaded apartment
-            using (var shellLibrary = Load(sourceKnownFolder, true))
-                ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+            using (var shellLibrary = Load(sourceKnownFolder, true)) ShowManageLibraryUI(shellLibrary, windowHandle, title, instruction, allowAllLocations);
+        }
+
+        /// <summary>
+        /// Add an existing folder to this library
+        /// </summary>
+        /// <param name="folderPath">
+        /// The path to the folder to be added to the library.
+        /// </param>
+        public void Add(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                throw new DirectoryNotFoundException("Folder path not found.");
+            }
+
+            this.Add(ShellFileSystemFolder.FromFolderPath(folderPath));
+        }
+
+        /// <summary>
+        /// Close the library, and release its associated file system resources
+        /// </summary>
+        public void Close()
+        {
+            this.Dispose();
+        }
+
+        /// <summary>
+        /// Determines if an item with the specified path exists in the collection.
+        /// </summary>
+        /// <param name="fullPath">
+        /// The path of the item.
+        /// </param>
+        /// <returns>
+        /// <B>true</B> if the item exists in the collection.
+        /// </returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)", 
+            Justification = "We are not currently handling globalization or localization")]
+        public bool Contains(string fullPath)
+        {
+            if (String.IsNullOrEmpty(fullPath))
+            {
+                throw new ArgumentNullException("fullPath");
+            }
+
+            var list = this.ItemsList;
+
+            return list.Any(folder => fullPath.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Remove a folder or search connector
+        /// </summary>
+        /// <param name="folderPath">
+        /// The path of the item to remove.
+        /// </param>
+        /// <returns>
+        /// <B>true</B> if the item was removed.
+        /// </returns>
+        public bool Remove(string folderPath)
+        {
+            var item = ShellFileSystemFolder.FromFolderPath(folderPath);
+            return Remove(item);
         }
 
         #endregion
 
-        /// <summary>
-        ///   Indicates whether this feature is supported on the current platform.
-        /// </summary>
-        public new static bool IsPlatformSupported
-        {
-            get
-            {
-                // We need Windows 7 onwards ...
-                return CoreHelpers.RunningOnWin7;
-            }
-        }
+        #region Implemented Interfaces
 
-        #region IList<ShellFileSystemFolder> Members
+        #region ICollection<ShellFileSystemFolder>
 
         /// <summary>
-        ///   Add a new FileSystemFolder or SearchConnector
+        /// Add a new FileSystemFolder or SearchConnector
         /// </summary>
-        /// <param name = "item">The folder to add to the library.</param>
+        /// <param name="item">
+        /// The folder to add to the library.
+        /// </param>
         public void Add(ShellFileSystemFolder item)
         {
-            nativeShellLibrary.AddFolder(item.NativeShellItem);
-            nativeShellLibrary.Commit();
+            this.nativeShellLibrary.AddFolder(item.NativeShellItem);
+            this.nativeShellLibrary.Commit();
         }
 
         /// <summary>
-        ///   Clear all items of this Library
+        /// Clear all items of this Library
         /// </summary>
         public void Clear()
         {
-            var list = ItemsList;
+            var list = this.ItemsList;
             foreach (var folder in list)
-                nativeShellLibrary.RemoveFolder(folder.NativeShellItem);
+            {
+                this.nativeShellLibrary.RemoveFolder(folder.NativeShellItem);
+            }
 
-            nativeShellLibrary.Commit();
+            this.nativeShellLibrary.Commit();
         }
 
         /// <summary>
-        ///   Remove a folder or search connector
+        /// Determines if a folder exists in the collection.
         /// </summary>
-        /// <param name = "item">The item to remove.</param>
-        /// <returns><B>true</B> if the item was removed.</returns>
+        /// <param name="item">
+        /// The folder.
+        /// </param>
+        /// <returns>
+        /// <B>true</B>, if the folder exists in the collection.
+        /// </returns>
+        [SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)", 
+            Justification = "We are not currently handling globalization or localization")]
+        public bool Contains(ShellFileSystemFolder item)
+        {
+            if (item == null)
+            {
+                throw new ArgumentNullException("item");
+            }
+
+            var list = this.ItemsList;
+
+            return list.Any(folder => item.Path.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        /// <summary>
+        /// Remove a folder or search connector
+        /// </summary>
+        /// <param name="item">
+        /// The item to remove.
+        /// </param>
+        /// <returns>
+        /// <B>true</B> if the item was removed.
+        /// </returns>
         public bool Remove(ShellFileSystemFolder item)
         {
             try
             {
-                nativeShellLibrary.RemoveFolder(item.NativeShellItem);
-                nativeShellLibrary.Commit();
+                this.nativeShellLibrary.RemoveFolder(item.NativeShellItem);
+                this.nativeShellLibrary.Commit();
             }
             catch (COMException)
             {
@@ -591,56 +802,77 @@ namespace Microsoft.Windows.Shell
         }
 
         /// <summary>
-        ///   Retrieves the collection enumerator.
+        /// Copies the collection to an array.
         /// </summary>
-        /// <returns>The enumerator.</returns>
-        public new IEnumerator<ShellFileSystemFolder> GetEnumerator()
+        /// <param name="array">
+        /// The array to copy to.
+        /// </param>
+        /// <param name="arrayIndex">
+        /// The index in the array at which to start the copy.
+        /// </param>
+        void ICollection<ShellFileSystemFolder>.CopyTo(ShellFileSystemFolder[] array, int arrayIndex)
         {
-            return ItemsList.GetEnumerator();
+            throw new NotImplementedException();
         }
 
+        #endregion
+
+        #region IEnumerable
+
         /// <summary>
-        ///   Retrieves the collection enumerator.
+        /// Retrieves the collection enumerator.
         /// </summary>
-        /// <returns>The enumerator.</returns>
+        /// <returns>
+        /// The enumerator.
+        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ItemsList.GetEnumerator();
+            return this.ItemsList.GetEnumerator();
         }
 
+        #endregion
+
+        #region IEnumerable<ShellFileSystemFolder>
+
         /// <summary>
-        ///   Determines if a folder exists in the collection.
+        /// Retrieves the collection enumerator.
         /// </summary>
-        /// <param name = "item">The folder.</param>
-        /// <returns><B>true</B>, if the folder exists in the collection.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)",
-            Justification = "We are not currently handling globalization or localization")]
-        public bool Contains(ShellFileSystemFolder item)
+        /// <returns>
+        /// The enumerator.
+        /// </returns>
+        public new IEnumerator<ShellFileSystemFolder> GetEnumerator()
         {
-            if (item == null)
-                throw new ArgumentNullException("item");
-
-            var list = ItemsList;
-
-            return list.Any(folder => item.Path.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase));
+            return this.ItemsList.GetEnumerator();
         }
 
+        #endregion
+
+        #region IList<ShellFileSystemFolder>
+
         /// <summary>
-        ///   Searches for the specified FileSystemFolder and returns the zero-based index of the
+        /// Searches for the specified FileSystemFolder and returns the zero-based index of the
         ///   first occurrence within Library list.
         /// </summary>
-        /// <param name = "item">The item to search for.</param>
-        /// <returns>The index of the item in the collection, or -1 if the item does not exist.</returns>
+        /// <param name="item">
+        /// The item to search for.
+        /// </param>
+        /// <returns>
+        /// The index of the item in the collection, or -1 if the item does not exist.
+        /// </returns>
         public int IndexOf(ShellFileSystemFolder item)
         {
-            return ItemsList.IndexOf(item);
+            return this.ItemsList.IndexOf(item);
         }
 
         /// <summary>
-        ///   Inserts a FileSystemFolder at the specified index.
+        /// Inserts a FileSystemFolder at the specified index.
         /// </summary>
-        /// <param name = "index">The index to insert at.</param>
-        /// <param name = "item">The FileSystemFolder to insert.</param>
+        /// <param name="index">
+        /// The index to insert at.
+        /// </param>
+        /// <param name="item">
+        /// The FileSystemFolder to insert.
+        /// </param>
         void IList<ShellFileSystemFolder>.Insert(int index, ShellFileSystemFolder item)
         {
             // Index related options are not supported by IShellLibrary
@@ -649,9 +881,11 @@ namespace Microsoft.Windows.Shell
         }
 
         /// <summary>
-        ///   Removes an item at the specified index.
+        /// Removes an item at the specified index.
         /// </summary>
-        /// <param name = "index">The index to remove.</param>
+        /// <param name="index">
+        /// The index to remove.
+        /// </param>
         void IList<ShellFileSystemFolder>.RemoveAt(int index)
         {
             // Index related options are not supported by IShellLibrary
@@ -659,126 +893,134 @@ namespace Microsoft.Windows.Shell
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        ///   Retrieves the folder at the specified index
-        /// </summary>
-        /// <param name = "index">The index of the folder to retrieve.</param>
-        /// <returns>A folder.</returns>
-        public ShellFileSystemFolder this[int index]
-        {
-            get { return ItemsList[index]; }
-            set
-            {
-                // Index related options are not supported by IShellLibrary
-                // doesn't support them.
-                throw new NotImplementedException();
-            }
-        }
-
-        /// <summary>
-        ///   Copies the collection to an array.
-        /// </summary>
-        /// <param name = "array">The array to copy to.</param>
-        /// <param name = "arrayIndex">The index in the array at which to start the copy.</param>
-        void ICollection<ShellFileSystemFolder>.CopyTo(ShellFileSystemFolder[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   The count of the items in the list.
-        /// </summary>
-        public int Count { get { return ItemsList.Count; } }
-
-        /// <summary>
-        ///   Indicates whether this list is read-only or not.
-        /// </summary>
-        public bool IsReadOnly { get { return false; } }
+        #endregion
 
         #endregion
 
-        /// <summary>
-        ///   Add an existing folder to this library
-        /// </summary>
-        /// <param name = "folderPath">The path to the folder to be added to the library.</param>
-        public void Add(string folderPath)
-        {
-            if (!Directory.Exists(folderPath))
-                throw new DirectoryNotFoundException("Folder path not found.");
+        #region Methods
 
-            Add(ShellFileSystemFolder.FromFolderPath(folderPath));
+        /// <summary>
+        /// Load the library using a number of options
+        /// </summary>
+        /// <param name="nativeShellItem">
+        /// IShellItem
+        /// </param>
+        /// <param name="isReadOnly">
+        /// read-only flag
+        /// </param>
+        /// <returns>
+        /// A ShellLibrary Object
+        /// </returns>
+        internal static ShellLibrary FromShellItem(IShellItem nativeShellItem, bool isReadOnly)
+        {
+            CoreHelpers.ThrowIfNotWin7();
+
+            var nativeShellLibrary = (INativeShellLibrary)new ShellLibraryCOClass();
+
+            var flags = isReadOnly ? ShellNativeMethods.STGMs.Read : ShellNativeMethods.STGMs.ReadWrite;
+
+            nativeShellLibrary.LoadLibraryFromItem(nativeShellItem, flags);
+
+            var library = new ShellLibrary(nativeShellLibrary) { nativeShellItem = (IShellItem2)nativeShellItem };
+
+            return library;
         }
 
         /// <summary>
-        ///   Remove a folder or search connector
+        /// Release resources
         /// </summary>
-        /// <param name = "folderPath">The path of the item to remove.</param>
-        /// <returns><B>true</B> if the item was removed.</returns>
-        public bool Remove(string folderPath)
-        {
-            var item = ShellFileSystemFolder.FromFolderPath(folderPath);
-            return Remove(item);
-        }
-
-        /// <summary>
-        ///   Determines if an item with the specified path exists in the collection.
-        /// </summary>
-        /// <param name = "fullPath">The path of the item.</param>
-        /// <returns><B>true</B> if the item exists in the collection.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1309:UseOrdinalStringComparison", MessageId = "System.String.Equals(System.String,System.StringComparison)",
-            Justification = "We are not currently handling globalization or localization")]
-        public bool Contains(string fullPath)
-        {
-            if (String.IsNullOrEmpty(fullPath))
-                throw new ArgumentNullException("fullPath");
-
-            var list = ItemsList;
-
-            return list.Any(folder => fullPath.Equals(folder.Path, StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        #region Disposable Pattern
-
-        /// <summary>
-        ///   Release resources
-        /// </summary>
-        /// <param name = "disposing">Indicates that this was called from Dispose(), rather than from the finalizer.</param>
+        /// <param name="disposing">
+        /// Indicates that this was called from Dispose(), rather than from the finalizer.
+        /// </param>
         protected override void Dispose(bool disposing)
         {
-            if (nativeShellLibrary != null)
+            if (this.nativeShellLibrary != null)
             {
-                Marshal.ReleaseComObject(nativeShellLibrary);
-                nativeShellLibrary = null;
+                Marshal.ReleaseComObject(this.nativeShellLibrary);
+                this.nativeShellLibrary = null;
             }
 
             base.Dispose(disposing);
         }
 
         /// <summary>
-        ///   Release resources
         /// </summary>
-        ~ShellLibrary()
+        /// <param name="folderTypeGuid">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// </exception>
+        private static LibraryFolderType GetFolderTypefromGuid(Guid folderTypeGuid)
         {
-            Dispose(false);
+            for (var i = 0; i < FolderTypesGuids.Length; i++)
+            {
+                if (folderTypeGuid.Equals(FolderTypesGuids[i]))
+                {
+                    return (LibraryFolderType)i;
+                }
+            }
+
+            throw new ArgumentOutOfRangeException("folderTypeGuid", "Invalid FoldeType Guid");
         }
 
-        #endregion
+        /// <summary>
+        /// </summary>
+        /// <param name="shellLibrary">
+        /// </param>
+        /// <param name="windowHandle">
+        /// </param>
+        /// <param name="title">
+        /// </param>
+        /// <param name="instruction">
+        /// </param>
+        /// <param name="allowAllLocations">
+        /// </param>
+        private static void ShowManageLibraryUI(ShellObject shellLibrary, IntPtr windowHandle, string title, string instruction, bool allowAllLocations)
+        {
+            var hr = 0;
 
-        #region Private Properties
+            var staWorker =
+                new Thread(
+                    () =>
+                        {
+                            hr = ShellNativeMethods.SHShowManageLibraryUI(
+                                shellLibrary.NativeShellItem, 
+                                windowHandle, 
+                                title, 
+                                instruction, 
+                                allowAllLocations
+                                    ? ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LmdNounindexablelocationwarning
+                                    : ShellNativeMethods.LIBRARYMANAGEDIALOGOPTIONS.LmdDefault);
+                        });
 
-        private List<ShellFileSystemFolder> ItemsList { get { return GetFolders(); } }
+            staWorker.SetApartmentState(ApartmentState.STA);
+            staWorker.Start();
+            staWorker.Join();
 
+            if (!CoreErrorHelper.Succeeded(hr))
+            {
+                Marshal.ThrowExceptionForHR(hr);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         private List<ShellFileSystemFolder> GetFolders()
         {
             var list = new List<ShellFileSystemFolder>();
             IShellItemArray itemArray;
 
-            var shellItemArrayGuid = new Guid(ShellIIDGuid.IShellItemArray);
+            var shellItemArrayGuid = new Guid(ShellIidGuid.IShellItemArray);
 
-            var hr = nativeShellLibrary.GetFolders(ShellNativeMethods.LIBRARYFOLDERFILTER.LFF_ALLITEMS, ref shellItemArrayGuid, out itemArray);
+            var hr = this.nativeShellLibrary.GetFolders(ShellNativeMethods.LIBRARYFOLDERFILTER.LffAllitems, ref shellItemArrayGuid, out itemArray);
 
-            if (!CoreErrorHelper.Succeeded((int) hr))
+            if (!CoreErrorHelper.Succeeded((int)hr))
+            {
                 return list;
+            }
 
             uint count;
             itemArray.GetCount(out count);

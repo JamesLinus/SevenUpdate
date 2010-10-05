@@ -1,27 +1,74 @@
-// //Copyright (c) xidar solutions
-// //Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-
-#endregion
+//***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           :xidar solutions
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) xidar solutions. All rights reserved.
+//***********************************************************************
 
 namespace SharpBits.Base.Job
 {
+    using System;
+
+    /// <summary>
+    /// </summary>
     public class JobTimes
     {
-        private BG_JOB_TIMES jobTimes;
+        #region Constants and Fields
 
-        internal JobTimes(BG_JOB_TIMES jobTimes)
+        /// <summary>
+        /// </summary>
+        private BGJobTimes jobTimes;
+
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="jobTimes">
+        /// </param>
+        internal JobTimes(BGJobTimes jobTimes)
         {
             this.jobTimes = jobTimes;
         }
 
-        public DateTime CreationTime { get { return Utils.FileTime2DateTime(jobTimes.CreationTime); } }
+        #endregion
 
-        public DateTime ModificationTime { get { return Utils.FileTime2DateTime(jobTimes.ModificationTime); } }
+        #region Properties
 
-        public DateTime TransferCompletionTime { get { return Utils.FileTime2DateTime(jobTimes.TransferCompletionTime); } }
+        /// <summary>
+        /// </summary>
+        public DateTime CreationTime
+        {
+            get
+            {
+                return Utils.FileTime2DateTime(this.jobTimes.CreationTime);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public DateTime ModificationTime
+        {
+            get
+            {
+                return Utils.FileTime2DateTime(this.jobTimes.ModificationTime);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public DateTime TransferCompletionTime
+        {
+            get
+            {
+                return Utils.FileTime2DateTime(this.jobTimes.TransferCompletionTime);
+            }
+        }
+
+        #endregion
     }
 }

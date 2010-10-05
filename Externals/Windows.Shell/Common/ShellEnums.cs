@@ -1,101 +1,104 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System.Diagnostics.CodeAnalysis;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
-    ///   CommonFileDialog AddPlace locations
+    /// CommonFileDialog AddPlace locations
     /// </summary>
     public enum FileDialogAddPlaceLocation
     {
         /// <summary>
         ///   At the bottom of the Favorites or Places list.
         /// </summary>
-        Bottom = 0x00000000,
+        Bottom = 0x00000000, 
 
         /// <summary>
         ///   At the top of the Favorites or Places list.
         /// </summary>
-        Top = 0x00000001,
+        Top = 0x00000001, 
     }
 
     /// <summary>
-    ///   One of the values that indicates how the ShellObject DisplayName should look.
+    /// One of the values that indicates how the ShellObject DisplayName should look.
     /// </summary>
     public enum DisplayNameType : uint
     {
         /// <summary>
         ///   Returns the display name relative to the desktop.
         /// </summary>
-        Default = 0x00000000,
+        Default = 0x00000000, 
 
         /// <summary>
         ///   Returns the parsing name relative to the parent folder.
         /// </summary>
-        RelativeToParent = 0x80018001,
+        RelativeToParent = 0x80018001, 
 
         /// <summary>
         ///   Returns the path relative to the parent folder in a 
         ///   friendly format as displayed in an address bar.
         /// </summary>
-        RelativeToParentAddressBar = 0x8007c001,
+        RelativeToParentAddressBar = 0x8007c001, 
 
         /// <summary>
         ///   Returns the parsing name relative to the desktop.
         /// </summary>
-        RelativeToDesktop = 0x80028000,
+        RelativeToDesktop = 0x80028000, 
 
         /// <summary>
         ///   Returns the editing name relative to the parent folder.
         /// </summary>
-        RelativeToParentEditing = 0x80031001,
+        RelativeToParentEditing = 0x80031001, 
 
         /// <summary>
         ///   Returns the editing name relative to the desktop.
         /// </summary>
-        RelativeToDesktopEditing = 0x8004c000,
+        RelativeToDesktopEditing = 0x8004c000, 
 
         /// <summary>
         ///   Returns the display name relative to the file system path.
         /// </summary>
-        FileSystemPath = 0x80058000,
+        FileSystemPath = 0x80058000, 
 
         /// <summary>
         ///   Returns the display name relative to a URL.
         /// </summary>
-        Url = 0x80068000,
+        Url = 0x80068000, 
     }
 
     /// <summary>
-    ///   Available Library folder types
+    /// Available Library folder types
     /// </summary>
     public enum LibraryFolderType
     {
         /// <summary>
         ///   General Items
         /// </summary>
-        Generic = 0,
+        Generic = 0, 
 
         /// <summary>
         ///   Documents
         /// </summary>
-        Documents,
+        Documents, 
 
         /// <summary>
         ///   Music
         /// </summary>
-        Music,
+        Music, 
 
         /// <summary>
         ///   Pictures
         /// </summary>
-        Pictures,
+        Pictures, 
 
         /// <summary>
         ///   Videos
@@ -104,70 +107,70 @@ namespace Microsoft.Windows.Shell
     }
 
     /// <summary>
-    ///   Flags controlling the appearance of a window
+    /// Flags controlling the appearance of a window
     /// </summary>
     public enum WindowShowCommand : uint
     {
         /// <summary>
         ///   Hides the window and activates another window.
         /// </summary>
-        Hide = 0,
+        Hide = 0, 
 
         /// <summary>
         ///   Activates and displays the window (including restoring
         ///   it to its original size and position).
         /// </summary>
-        Normal = 1,
+        Normal = 1, 
 
         /// <summary>
         ///   Minimizes the window.
         /// </summary>
-        Minimized = 2,
+        Minimized = 2, 
 
         /// <summary>
         ///   Maximizes the window.
         /// </summary>
-        Maximized = 3,
+        Maximized = 3, 
 
         /// <summary>
         ///   Similar to <see cref = "Normal" />, except that the window
         ///   is not activated.
         /// </summary>
-        ShowNoActivate = 4,
+        ShowNoActivate = 4, 
 
         /// <summary>
         ///   Activates the window and displays it in its current size
         ///   and position.
         /// </summary>
-        Show = 5,
+        Show = 5, 
 
         /// <summary>
         ///   Minimizes the window and activates the next top-level window.
         /// </summary>
-        Minimize = 6,
+        Minimize = 6, 
 
         /// <summary>
         ///   Minimizes the window and does not activate it.
         /// </summary>
-        ShowMinimizedNoActivate = 7,
+        ShowMinimizedNoActivate = 7, 
 
         /// <summary>
         ///   Similar to <see cref = "Normal" />, except that the window is not
         ///   activated.
         /// </summary>
-        ShowNA = 8,
+        ShowNA = 8, 
 
         /// <summary>
         ///   Activates and displays the window, restoring it to its original
         ///   size and position.
         /// </summary>
-        Restore = 9,
+        Restore = 9, 
 
         /// <summary>
         ///   Sets the show state based on the initial value specified when
         ///   the process was created.
         /// </summary>
-        Default = 10,
+        Default = 10, 
 
         /// <summary>
         ///   Minimizes a window, even if the thread owning the window is not
@@ -177,78 +180,81 @@ namespace Microsoft.Windows.Shell
         ForceMinimize = 11
     }
 
+    /// <summary>
+    /// </summary>
     public enum SearchConditionOperation
     {
         /// <summary>
         ///   An implicit comparison between the value of the property and the value of the constant.
         /// </summary>
-        Implicit = 0,
+        Implicit = 0, 
 
         /// <summary>
         ///   The value of the property and the value of the constant must be equal.
         /// </summary>
-        Equal = 1,
+        Equal = 1, 
 
         /// <summary>
         ///   The value of the property and the value of the constant must not be equal.
         /// </summary>
-        NotEqual = 2,
+        NotEqual = 2, 
 
         /// <summary>
         ///   The value of the property must be less than the value of the constant.
         /// </summary>
-        LessThan = 3,
+        LessThan = 3, 
 
         /// <summary>
         ///   The value of the property must be greater than the value of the constant.
         /// </summary>
-        GreaterThan = 4,
+        GreaterThan = 4, 
 
         /// <summary>
         ///   The value of the property must be less than or equal to the value of the constant.
         /// </summary>
-        LessThanOrEqual = 5,
+        LessThanOrEqual = 5, 
 
         /// <summary>
         ///   The value of the property must be greater than or equal to the value of the constant.
         /// </summary>
-        GreaterThanOrEqual = 6,
+        GreaterThanOrEqual = 6, 
 
         /// <summary>
         ///   The value of the property must begin with the value of the constant.
         /// </summary>
-        ValueStartsWith = 7,
+        ValueStartsWith = 7, 
 
         /// <summary>
         ///   The value of the property must end with the value of the constant.
         /// </summary>
-        ValueEndsWith = 8,
+        ValueEndsWith = 8, 
 
         /// <summary>
         ///   The value of the property must contain the value of the constant.
         /// </summary>
-        ValueContains = 9,
+        ValueContains = 9, 
 
         /// <summary>
         ///   The value of the property must not contain the value of the constant.
         /// </summary>
-        ValueNotContains = 10,
+        ValueNotContains = 10, 
 
         /// <summary>
         ///   The value of the property must match the value of the constant, where '?' 
         ///   matches any single character and '*' matches any sequence of characters.
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DOS")] DosWildcards = 11,
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "DOS")]
+        DosWildcards = 11, 
 
         /// <summary>
         ///   The value of the property must contain a word that is the value of the constant.
         /// </summary>
-        WordEqual = 12,
+        WordEqual = 12, 
 
         /// <summary>
         ///   The value of the property must contain a word that begins with the value of the constant.
         /// </summary>
-        WordStartsWith = 13,
+        WordStartsWith = 13, 
 
         /// <summary>
         ///   The application is free to interpret this in any suitable way.
@@ -257,71 +263,71 @@ namespace Microsoft.Windows.Shell
     }
 
     /// <summary>
-    ///   Set of flags to be used with <see cref = "Microsoft.Windows.Shell.SearchConditionFactory" />.
+    /// Set of flags to be used with <see cref="Microsoft.Windows.Shell.SearchConditionFactory"/>.
     /// </summary>
     public enum SearchConditionType
     {
         /// <summary>
         ///   Indicates that the values of the subterms are combined by "AND".
         /// </summary>
-        And = 0,
+        And = 0, 
 
         /// <summary>
         ///   Indicates that the values of the subterms are combined by "OR".
         /// </summary>
-        Or = 1,
+        Or = 1, 
 
         /// <summary>
         ///   Indicates a "NOT" comparison of subterms.
         /// </summary>
-        Not = 2,
+        Not = 2, 
 
         /// <summary>
         ///   Indicates that the node is a comparison between a property and a 
         ///   constant value using a <see cref = "Microsoft.Windows.Shell.SearchConditionOperation" />.
         /// </summary>
-        Leaf = 3,
+        Leaf = 3, 
     }
 
     /// <summary>
-    ///   Used to describe the view mode.
+    /// Used to describe the view mode.
     /// </summary>
     public enum FolderLogicalViewMode
     {
         /// <summary>
         ///   The view is not specified.
         /// </summary>
-        Unspecified = -1,
+        Unspecified = -1, 
 
         /// <summary>
         ///   The minimum valid enumeration value. Used for validation purposes only.
         /// </summary>
-        First = 1,
+        First = 1, 
 
         /// <summary>
         ///   Details view.
         /// </summary>
-        Details = 1,
+        Details = 1, 
 
         /// <summary>
         ///   Tiles view.
         /// </summary>
-        Tiles = 2,
+        Tiles = 2, 
 
         /// <summary>
         ///   Icons view.
         /// </summary>
-        Icons = 3,
+        Icons = 3, 
 
         /// <summary>
         ///   Windows 7 and later. List view.
         /// </summary>
-        List = 4,
+        List = 4, 
 
         /// <summary>
         ///   Windows 7 and later. Content view.
         /// </summary>
-        Content = 5,
+        Content = 5, 
 
         /// <summary>
         ///   The maximum valid enumeration value. Used for validation purposes only.
@@ -330,7 +336,7 @@ namespace Microsoft.Windows.Shell
     }
 
     /// <summary>
-    ///   The direction in which the items are sorted.
+    /// The direction in which the items are sorted.
     /// </summary>
     public enum SortDirection
     {
@@ -338,17 +344,17 @@ namespace Microsoft.Windows.Shell
         ///   The items are sorted in descending order. Whether the sort is alphabetical, numerical, 
         ///   and so on, is determined by the data type of the column indicated in propkey.
         /// </summary>
-        Descending = -1,
+        Descending = -1, 
 
         /// <summary>
         ///   The items are sorted in ascending order. Whether the sort is alphabetical, numerical, 
         ///   and so on, is determined by the data type of the column indicated in propkey.
         /// </summary>
-        Ascending = 1,
+        Ascending = 1, 
     }
 
     /// <summary>
-    ///   Provides a set of flags to be used with IQueryParser::SetOption and 
+    /// Provides a set of flags to be used with IQueryParser::SetOption and 
     ///   IQueryParser::GetOption to indicate individual options.
     /// </summary>
     public enum StructuredQuerySingleOption
@@ -356,7 +362,7 @@ namespace Microsoft.Windows.Shell
         /// <summary>
         ///   The value should be VT_LPWSTR and the path to a file containing a schema binary.
         /// </summary>
-        Schema,
+        Schema, 
 
         /// <summary>
         ///   The value must be VT_EMPTY (the default) or a VT_UI4 that is an LCID. It is used
@@ -364,7 +370,7 @@ namespace Microsoft.Windows.Shell
         ///   other information is available. The default value is the current keyboard locale.
         ///   Retrieving the value always returns a VT_UI4.
         /// </summary>
-        Locale,
+        Locale, 
 
         /// <summary>
         ///   This option is used to override the default word breaker used when identifying keywords
@@ -374,7 +380,7 @@ namespace Microsoft.Windows.Shell
         ///   the IWordBreaker interface. Retrieving the option always returns a VT_UNKNOWN with an object
         ///   supporting the IWordBreaker interface.
         /// </summary>
-        WordBreaker,
+        WordBreaker, 
 
         /// <summary>
         ///   The value should be VT_EMPTY or VT_BOOL with VARIANT_TRUE to allow natural query
@@ -382,7 +388,7 @@ namespace Microsoft.Windows.Shell
         ///   Retrieving the option always returns a VT_BOOL.
         ///   This option is now deprecated, use SQSO_SYNTAX.
         /// </summary>
-        NaturalSyntax,
+        NaturalSyntax, 
 
         /// <summary>
         ///   The value should be VT_BOOL with VARIANT_TRUE to generate query expressions
@@ -392,48 +398,48 @@ namespace Microsoft.Windows.Shell
         ///   will generally want to set this option to true.
         ///   Retrieving the option always returns a VT_BOOL.
         /// </summary>
-        AutomaticWildcard,
+        AutomaticWildcard, 
 
         /// <summary>
         ///   Reserved. The value should be VT_EMPTY (the default) or VT_I4.
         ///   Retrieving the option always returns a VT_I4.
         /// </summary>
-        TraceLevel,
+        TraceLevel, 
 
         /// <summary>
         ///   The value must be a VT_UI4 that is a LANGID. It defaults to the default user UI language.
         /// </summary>
-        LanguageKeywords,
+        LanguageKeywords, 
 
         /// <summary>
         ///   The value must be a VT_UI4 that is a STRUCTURED_QUERY_SYNTAX value.
         ///   It defaults to SQS_NATURAL_QUERY_SYNTAX.
         /// </summary>
-        Syntax,
+        Syntax, 
 
         /// <summary>
         ///   The value must be a VT_BLOB that is a copy of a TIME_ZONE_INFORMATION structure.
         ///   It defaults to the current time zone.
         /// </summary>
-        TimeZone,
+        TimeZone, 
 
         /// <summary>
         ///   This setting decides what connector should be assumed between conditions when none is specified.
         ///   The value must be a VT_UI4 that is a CONDITION_TYPE. Only CT_AND_CONDITION and CT_OR_CONDITION
         ///   are valid. It defaults to CT_AND_CONDITION.
         /// </summary>
-        ImplicitConnector,
+        ImplicitConnector, 
 
         /// <summary>
         ///   This setting decides whether there are special requirements on the case of connector keywords (such
         ///   as AND or OR). The value must be a VT_UI4 that is a CASE_REQUIREMENT value.
         ///   It defaults to CASE_REQUIREMENT_UPPER_IF_AQS.
         /// </summary>
-        ConnectorCase,
+        ConnectorCase, 
     }
 
     /// <summary>
-    ///   Provides a set of flags to be used with IQueryParser::SetMultiOption 
+    /// Provides a set of flags to be used with IQueryParser::SetMultiOption 
     ///   to indicate individual options.
     /// </summary>
     public enum StructuredQueryMultipleOption
@@ -445,14 +451,14 @@ namespace Microsoft.Windows.Shell
         ///   property name P, some operation and a value V will then be replaced by a predicate
         ///   with property name Q, operation cop and value V before further processing happens.
         /// </summary>
-        VirtualProperty,
+        VirtualProperty, 
 
         /// <summary>
         ///   The key should be a value type name V. The value should be a
         ///   VT_LPWSTR with a property name P. A predicate with no property name and a value of type
         ///   V (or any subtype of V) will then use property P.
         /// </summary>
-        DefaultProperty,
+        DefaultProperty, 
 
         /// <summary>
         ///   The key should be a value type name V. The value should be a
@@ -461,7 +467,7 @@ namespace Microsoft.Windows.Shell
         ///   expression, that will be used. If it returns NULL, normal processing will be used
         ///   instead.
         /// </summary>
-        GeneratorForType,
+        GeneratorForType, 
 
         /// <summary>
         ///   The key should be a property name P. The value should be a VT_VECTOR|VT_LPWSTR,
@@ -469,11 +475,11 @@ namespace Microsoft.Windows.Shell
         ///   added to those of the loaded schema and used during resolution. A second call with the
         ///   same key will replace the current map. If the value is VT_NULL, the map will be removed.
         /// </summary>
-        MapProperty,
+        MapProperty, 
     }
 
     /// <summary>
-    ///   Used by IQueryParserManager::SetOption to set parsing options. 
+    /// Used by IQueryParserManager::SetOption to set parsing options. 
     ///   This can be used to specify schemas and localization options.
     /// </summary>
     public enum QueryParserManagerOption
@@ -483,7 +489,7 @@ namespace Microsoft.Windows.Shell
         ///   The default value is StructuredQuerySchema.bin for the SystemIndex catalog 
         ///   and StructuredQuerySchemaTrivial.bin for the trivial catalog.
         /// </summary>
-        SchemaBiaryName = 0,
+        SchemaBiaryName = 0, 
 
         /// <summary>
         ///   Either a VT_BOOL or a VT_LPWSTR. If the value is a VT_BOOL and is FALSE, 
@@ -493,32 +499,32 @@ namespace Microsoft.Windows.Shell
         ///   contain the full path of the folder in which the pre-localized schema binary can be found. 
         ///   The default value is VT_BOOL with TRUE.
         /// </summary>
-        PreLocalizedSchemaBinaryPath = (SchemaBiaryName + 1),
+        PreLocalizedSchemaBinaryPath = SchemaBiaryName + 1, 
 
         /// <summary>
         ///   A VT_LPWSTR containing the full path to the folder that contains the 
         ///   unlocalized schema binary. The default value is "%SYSTEMROOT%\System32".
         /// </summary>
-        UnLocalizedSchemaBinaryPath = (PreLocalizedSchemaBinaryPath + 1),
+        UNLocalizedSchemaBinaryPath = PreLocalizedSchemaBinaryPath + 1, 
 
         /// <summary>
         ///   A VT_LPWSTR containing the full path to the folder that contains the 
         ///   localized schema binary that can be read and written to as needed. 
         ///   The default value is "%LOCALAPPDATA%\Microsoft\Windows".
         /// </summary>
-        LocalizedSchemaBinaryPath = (UnLocalizedSchemaBinaryPath + 1),
+        LocalizedSchemaBinaryPath = UNLocalizedSchemaBinaryPath + 1, 
 
         /// <summary>
         ///   A VT_BOOL. If TRUE, then the paths for pre-localized and localized binaries 
         ///   have "\(LCID)" appended to them, where language code identifier (LCID) is 
         ///   the decimal locale ID for the localized language. The default is TRUE.
         /// </summary>
-        AppendLCIDToLocalizedPath = (LocalizedSchemaBinaryPath + 1),
+        AppendLcidToLocalizedPath = LocalizedSchemaBinaryPath + 1, 
 
         /// <summary>
         ///   A VT_UNKNOWN with an object supporting ISchemaLocalizerSupport. 
         ///   This object will be used instead of the default localizer support object.
         /// </summary>
-        LocalizerSupport = (AppendLCIDToLocalizedPath + 1)
+        LocalizerSupport = AppendLcidToLocalizedPath + 1
     }
 }

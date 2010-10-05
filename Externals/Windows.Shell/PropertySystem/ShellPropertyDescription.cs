@@ -1,189 +1,127 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using Microsoft.Windows.Internal;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using global::System;
+    using global::System.Collections.Generic;
+    using global::System.Collections.ObjectModel;
+    using global::System.Runtime.InteropServices;
+    using global::System.Runtime.InteropServices.ComTypes;
+
+    using Microsoft.Windows.Internal;
+
     /// <summary>
-    ///   Defines the shell property description information for a property.
+    /// Defines the shell property description information for a property.
     /// </summary>
     public class ShellPropertyDescription : IDisposable
     {
-        #region Private Fields
+        #region Constants and Fields
 
+        /// <summary>
+        /// </summary>
         private PropertyAggregationType? aggregationTypes;
+
+        /// <summary>
+        /// </summary>
         private string canonicalName;
+
+        /// <summary>
+        /// </summary>
         private PropertyColumnState? columnState;
+
+        /// <summary>
+        /// </summary>
         private PropertyConditionOperation? conditionOperation;
+
+        /// <summary>
+        /// </summary>
         private PropertyConditionType? conditionType;
+
+        /// <summary>
+        /// </summary>
         private uint? defaultColumWidth;
+
+        /// <summary>
+        /// </summary>
         private string displayName;
+
+        /// <summary>
+        /// </summary>
         private PropertyDisplayType? displayType;
+
+        /// <summary>
+        /// </summary>
         private string editInvitation;
+
+        /// <summary>
+        /// </summary>
         private PropertyGroupingRange? groupingRange;
+
+        /// <summary>
+        /// </summary>
         private IPropertyDescription nativePropertyDescription;
+
+        /// <summary>
+        /// </summary>
         private ReadOnlyCollection<ShellPropertyEnumType> propertyEnumTypes;
+
+        /// <summary>
+        /// </summary>
         private PropertyKey propertyKey;
+
+        /// <summary>
+        /// </summary>
         private PropertyTypeFlags? propertyTypeFlags;
+
+        /// <summary>
+        /// </summary>
         private PropertyViewFlags? propertyViewFlags;
+
+        /// <summary>
+        /// </summary>
         private PropertySortDescription? sortDescription;
+
+        /// <summary>
+        /// </summary>
         private Type valueType;
+
+        /// <summary>
+        /// </summary>
         private VarEnum? varEnumType;
 
         #endregion
 
-        #region Public Properties
+        #region Constructors and Destructors
 
         /// <summary>
-        ///   Gets the case-sensitive name of a property as it is known to the system, 
-        ///   regardless of its localized name.
         /// </summary>
-        public string CanonicalName
+        /// <param name="key">
+        /// </param>
+        internal ShellPropertyDescription(PropertyKey key)
         {
-            get
-            {
-                if (canonicalName == null)
-                    PropertySystemNativeMethods.PSGetNameFromPropertyKey(ref propertyKey, out canonicalName);
-
-                return canonicalName;
-            }
+            this.propertyKey = key;
         }
 
         /// <summary>
-        ///   Gets the property key identifying the underlying property.
+        /// 
+        ///   Release the native objects
         /// </summary>
-        public PropertyKey PropertyKey { get { return propertyKey; } }
-
-        /// <summary>
-        ///   Gets the display name of the property as it is shown in any user interface (UI).
-        /// </summary>
-        public string DisplayName
+        ~ShellPropertyDescription()
         {
-            get
-            {
-                if (NativePropertyDescription != null && displayName == null)
-                {
-                    IntPtr dispNameptr;
-
-                    var hr = NativePropertyDescription.GetDisplayName(out dispNameptr);
-
-                    if (CoreErrorHelper.Succeeded((int) hr) && dispNameptr != IntPtr.Zero)
-                    {
-                        displayName = Marshal.PtrToStringUni(dispNameptr);
-
-                        // Free the string
-                        Marshal.FreeCoTaskMem(dispNameptr);
-                    }
-                }
-
-                return displayName;
-            }
+            this.Dispose(false);
         }
 
-        /// <summary>
-        ///   Gets the text used in edit controls hosted in various dialog boxes.
-        /// </summary>
-        public string EditInvitation
-        {
-            get
-            {
-                if (NativePropertyDescription != null && editInvitation == null)
-                {
-                    // EditInvitation can be empty, so ignore the HR value, but don't throw an exception
-                    IntPtr ptr;
+        #endregion
 
-                    var hr = NativePropertyDescription.GetEditInvitation(out ptr);
-
-                    if (CoreErrorHelper.Succeeded((int) hr) && ptr != IntPtr.Zero)
-                    {
-                        editInvitation = Marshal.PtrToStringUni(ptr);
-                        // Free the string
-                        Marshal.FreeCoTaskMem(ptr);
-                    }
-                }
-
-                return editInvitation;
-            }
-        }
-
-        /// <summary>
-        ///   Gets the VarEnum OLE type for this property.
-        /// </summary>
-        public VarEnum VarEnumType
-        {
-            get
-            {
-                if (NativePropertyDescription != null && varEnumType == null)
-                {
-                    VarEnum tempType;
-
-                    var hr = NativePropertyDescription.GetPropertyType(out tempType);
-
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        varEnumType = tempType;
-                }
-
-                return varEnumType.HasValue ? varEnumType.Value : default(VarEnum);
-            }
-        }
-
-        /// <summary>
-        ///   Gets the .NET system type for a value of this property, or
-        ///   null if the value is empty.
-        /// </summary>
-        public Type ValueType { get { return valueType ?? (valueType = VarEnumToSystemType(VarEnumType)); } }
-
-        /// <summary>
-        ///   Gets the current data type used to display the property.
-        /// </summary>
-        public PropertyDisplayType DisplayType
-        {
-            get
-            {
-                if (NativePropertyDescription != null && displayType == null)
-                {
-                    PropertyDisplayType tempDisplayType;
-
-                    var hr = NativePropertyDescription.GetDisplayType(out tempDisplayType);
-
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        displayType = tempDisplayType;
-                }
-
-                return displayType.HasValue ? displayType.Value : default(PropertyDisplayType);
-            }
-        }
-
-        /// <summary>
-        ///   Gets the default user interface (UI) column width for this property.
-        /// </summary>
-        public uint DefaultColumWidth
-        {
-            get
-            {
-                if (NativePropertyDescription != null && !defaultColumWidth.HasValue)
-                {
-                    uint tempDefaultColumWidth;
-
-                    var hr = NativePropertyDescription.GetDefaultColumnWidth(out tempDefaultColumWidth);
-
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        defaultColumWidth = tempDefaultColumWidth;
-                }
-
-                return defaultColumWidth.HasValue ? defaultColumWidth.Value : default(uint);
-            }
-        }
+        #region Properties
 
         /// <summary>
         ///   Gets a value that describes how the property values are displayed when 
@@ -193,53 +131,36 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (NativePropertyDescription != null && aggregationTypes == null)
+                if (this.NativePropertyDescription != null && this.aggregationTypes == null)
                 {
                     PropertyAggregationType tempAggregationTypes;
 
-                    var hr = NativePropertyDescription.GetAggregationType(out tempAggregationTypes);
+                    var hr = this.NativePropertyDescription.GetAggregationType(out tempAggregationTypes);
 
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        aggregationTypes = tempAggregationTypes;
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.aggregationTypes = tempAggregationTypes;
+                    }
                 }
 
-                return aggregationTypes.HasValue ? aggregationTypes.Value : default(PropertyAggregationType);
+                return this.aggregationTypes.HasValue ? this.aggregationTypes.Value : default(PropertyAggregationType);
             }
         }
 
         /// <summary>
-        ///   Gets a list of the possible values for this property.
+        ///   Gets the case-sensitive name of a property as it is known to the system, 
+        ///   regardless of its localized name.
         /// </summary>
-        public ReadOnlyCollection<ShellPropertyEnumType> PropertyEnumTypes
+        public string CanonicalName
         {
             get
             {
-                if (NativePropertyDescription != null && propertyEnumTypes == null)
+                if (this.canonicalName == null)
                 {
-                    var propEnumTypeList = new List<ShellPropertyEnumType>();
-
-                    var guid = new Guid(ShellIIDGuid.IPropertyEnumTypeList);
-                    IPropertyEnumTypeList nativeList;
-                    var hr = NativePropertyDescription.GetEnumTypeList(ref guid, out nativeList);
-
-                    if (nativeList != null && CoreErrorHelper.Succeeded((int) hr))
-                    {
-                        uint count;
-                        nativeList.GetCount(out count);
-                        guid = new Guid(ShellIIDGuid.IPropertyEnumType);
-
-                        for (uint i = 0; i < count; i++)
-                        {
-                            IPropertyEnumType nativeEnumType;
-                            nativeList.GetAt(i, ref guid, out nativeEnumType);
-                            propEnumTypeList.Add(new ShellPropertyEnumType(nativeEnumType));
-                        }
-                    }
-
-                    propertyEnumTypes = new ReadOnlyCollection<ShellPropertyEnumType>(propEnumTypeList);
+                    PropertySystemNativeMethods.PSGetNameFromPropertyKey(ref this.propertyKey, out this.canonicalName);
                 }
 
-                return propertyEnumTypes;
+                return this.canonicalName;
             }
         }
 
@@ -252,50 +173,19 @@ namespace Microsoft.Windows.Shell.PropertySystem
             get
             {
                 // If default/first value, try to get it again, otherwise used the cached one.
-                if (NativePropertyDescription != null && columnState == null)
+                if (this.NativePropertyDescription != null && this.columnState == null)
                 {
                     PropertyColumnState state;
 
-                    var hr = NativePropertyDescription.GetColumnState(out state);
+                    var hr = this.NativePropertyDescription.GetColumnState(out state);
 
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        columnState = state;
-                }
-
-                return columnState.HasValue ? columnState.Value : default(PropertyColumnState);
-            }
-        }
-
-        /// <summary>
-        ///   Gets the condition type to use when displaying the property in 
-        ///   the query builder user interface (UI). This influences the list 
-        ///   of predicate conditions (for example, equals, less than, and 
-        ///   contains) that are shown for this property.
-        /// </summary>
-        /// <remarks>
-        ///   For more information, see the <c>conditionType</c> attribute 
-        ///   of the <c>typeInfo</c> element in the property's .propdesc file.
-        /// </remarks>
-        public PropertyConditionType ConditionType
-        {
-            get
-            {
-                // If default/first value, try to get it again, otherwise used the cached one.
-                if (NativePropertyDescription != null && conditionType == null)
-                {
-                    PropertyConditionType tempConditionType;
-                    PropertyConditionOperation tempConditionOperation;
-
-                    var hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
-
-                    if (CoreErrorHelper.Succeeded((int) hr))
+                    if (CoreErrorHelper.Succeeded((int)hr))
                     {
-                        conditionOperation = tempConditionOperation;
-                        conditionType = tempConditionType;
+                        this.columnState = state;
                     }
                 }
 
-                return conditionType.HasValue ? conditionType.Value : default(PropertyConditionType);
+                return this.columnState.HasValue ? this.columnState.Value : default(PropertyColumnState);
             }
         }
 
@@ -315,21 +205,153 @@ namespace Microsoft.Windows.Shell.PropertySystem
             get
             {
                 // If default/first value, try to get it again, otherwise used the cached one.
-                if (NativePropertyDescription != null && conditionOperation == null)
+                if (this.NativePropertyDescription != null && this.conditionOperation == null)
                 {
                     PropertyConditionType tempConditionType;
                     PropertyConditionOperation tempConditionOperation;
 
-                    var hr = NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
+                    var hr = this.NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
 
-                    if (CoreErrorHelper.Succeeded((int) hr))
+                    if (CoreErrorHelper.Succeeded((int)hr))
                     {
-                        conditionOperation = tempConditionOperation;
-                        conditionType = tempConditionType;
+                        this.conditionOperation = tempConditionOperation;
+                        this.conditionType = tempConditionType;
                     }
                 }
 
-                return conditionOperation.HasValue ? conditionOperation.Value : default(PropertyConditionOperation);
+                return this.conditionOperation.HasValue ? this.conditionOperation.Value : default(PropertyConditionOperation);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the condition type to use when displaying the property in 
+        ///   the query builder user interface (UI). This influences the list 
+        ///   of predicate conditions (for example, equals, less than, and 
+        ///   contains) that are shown for this property.
+        /// </summary>
+        /// <remarks>
+        ///   For more information, see the <c>conditionType</c> attribute 
+        ///   of the <c>typeInfo</c> element in the property's .propdesc file.
+        /// </remarks>
+        public PropertyConditionType ConditionType
+        {
+            get
+            {
+                // If default/first value, try to get it again, otherwise used the cached one.
+                if (this.NativePropertyDescription != null && this.conditionType == null)
+                {
+                    PropertyConditionType tempConditionType;
+                    PropertyConditionOperation tempConditionOperation;
+
+                    var hr = this.NativePropertyDescription.GetConditionType(out tempConditionType, out tempConditionOperation);
+
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.conditionOperation = tempConditionOperation;
+                        this.conditionType = tempConditionType;
+                    }
+                }
+
+                return this.conditionType.HasValue ? this.conditionType.Value : default(PropertyConditionType);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the default user interface (UI) column width for this property.
+        /// </summary>
+        public uint DefaultColumWidth
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && !this.defaultColumWidth.HasValue)
+                {
+                    uint tempDefaultColumWidth;
+
+                    var hr = this.NativePropertyDescription.GetDefaultColumnWidth(out tempDefaultColumWidth);
+
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.defaultColumWidth = tempDefaultColumWidth;
+                    }
+                }
+
+                return this.defaultColumWidth.HasValue ? this.defaultColumWidth.Value : default(uint);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the display name of the property as it is shown in any user interface (UI).
+        /// </summary>
+        public string DisplayName
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && this.displayName == null)
+                {
+                    IntPtr dispNameptr;
+
+                    var hr = this.NativePropertyDescription.GetDisplayName(out dispNameptr);
+
+                    if (CoreErrorHelper.Succeeded((int)hr) && dispNameptr != IntPtr.Zero)
+                    {
+                        this.displayName = Marshal.PtrToStringUni(dispNameptr);
+
+                        // Free the string
+                        Marshal.FreeCoTaskMem(dispNameptr);
+                    }
+                }
+
+                return this.displayName;
+            }
+        }
+
+        /// <summary>
+        ///   Gets the current data type used to display the property.
+        /// </summary>
+        public PropertyDisplayType DisplayType
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && this.displayType == null)
+                {
+                    PropertyDisplayType tempDisplayType;
+
+                    var hr = this.NativePropertyDescription.GetDisplayType(out tempDisplayType);
+
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.displayType = tempDisplayType;
+                    }
+                }
+
+                return this.displayType.HasValue ? this.displayType.Value : default(PropertyDisplayType);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the text used in edit controls hosted in various dialog boxes.
+        /// </summary>
+        public string EditInvitation
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && this.editInvitation == null)
+                {
+                    // EditInvitation can be empty, so ignore the HR value, but don't throw an exception
+                    IntPtr ptr;
+
+                    var hr = this.NativePropertyDescription.GetEditInvitation(out ptr);
+
+                    if (CoreErrorHelper.Succeeded((int)hr) && ptr != IntPtr.Zero)
+                    {
+                        this.editInvitation = Marshal.PtrToStringUni(ptr);
+
+                        // Free the string
+                        Marshal.FreeCoTaskMem(ptr);
+                    }
+                }
+
+                return this.editInvitation;
             }
         }
 
@@ -346,17 +368,77 @@ namespace Microsoft.Windows.Shell.PropertySystem
             get
             {
                 // If default/first value, try to get it again, otherwise used the cached one.
-                if (NativePropertyDescription != null && groupingRange == null)
+                if (this.NativePropertyDescription != null && this.groupingRange == null)
                 {
                     PropertyGroupingRange tempGroupingRange;
 
-                    var hr = NativePropertyDescription.GetGroupingRange(out tempGroupingRange);
+                    var hr = this.NativePropertyDescription.GetGroupingRange(out tempGroupingRange);
 
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        groupingRange = tempGroupingRange;
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.groupingRange = tempGroupingRange;
+                    }
                 }
 
-                return groupingRange.HasValue ? groupingRange.Value : default(PropertyGroupingRange);
+                return this.groupingRange.HasValue ? this.groupingRange.Value : default(PropertyGroupingRange);
+            }
+        }
+
+        /// <summary>
+        ///   Gets a value that determines if the native property description is present on the system.
+        /// </summary>
+        public bool HasSystemDescription
+        {
+            get
+            {
+                return this.NativePropertyDescription != null;
+            }
+        }
+
+        /// <summary>
+        ///   Gets a list of the possible values for this property.
+        /// </summary>
+        public ReadOnlyCollection<ShellPropertyEnumType> PropertyEnumTypes
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && this.propertyEnumTypes == null)
+                {
+                    var propEnumTypeList = new List<ShellPropertyEnumType>();
+
+                    var guid = new Guid(ShellIidGuid.IPropertyEnumTypeList);
+                    IPropertyEnumTypeList nativeList;
+                    var hr = this.NativePropertyDescription.GetEnumTypeList(ref guid, out nativeList);
+
+                    if (nativeList != null && CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        uint count;
+                        nativeList.GetCount(out count);
+                        guid = new Guid(ShellIidGuid.IPropertyEnumType);
+
+                        for (uint i = 0; i < count; i++)
+                        {
+                            IPropertyEnumType nativeEnumType;
+                            nativeList.GetAt(i, ref guid, out nativeEnumType);
+                            propEnumTypeList.Add(new ShellPropertyEnumType(nativeEnumType));
+                        }
+                    }
+
+                    this.propertyEnumTypes = new ReadOnlyCollection<ShellPropertyEnumType>(propEnumTypeList);
+                }
+
+                return this.propertyEnumTypes;
+            }
+        }
+
+        /// <summary>
+        ///   Gets the property key identifying the underlying property.
+        /// </summary>
+        public PropertyKey PropertyKey
+        {
+            get
+            {
+                return this.propertyKey;
             }
         }
 
@@ -374,17 +456,19 @@ namespace Microsoft.Windows.Shell.PropertySystem
             get
             {
                 // If default/first value, try to get it again, otherwise used the cached one.
-                if (NativePropertyDescription != null && sortDescription == null)
+                if (this.NativePropertyDescription != null && this.sortDescription == null)
                 {
                     PropertySortDescription tempSortDescription;
 
-                    var hr = NativePropertyDescription.GetSortDescription(out tempSortDescription);
+                    var hr = this.NativePropertyDescription.GetSortDescription(out tempSortDescription);
 
-                    if (CoreErrorHelper.Succeeded((int) hr))
-                        sortDescription = tempSortDescription;
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.sortDescription = tempSortDescription;
+                    }
                 }
 
-                return sortDescription.HasValue ? sortDescription.Value : default(PropertySortDescription);
+                return this.sortDescription.HasValue ? this.sortDescription.Value : default(PropertySortDescription);
             }
         }
 
@@ -395,16 +479,51 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (NativePropertyDescription != null && propertyTypeFlags == null)
+                if (this.NativePropertyDescription != null && this.propertyTypeFlags == null)
                 {
                     PropertyTypeFlags tempFlags;
 
-                    var hr = NativePropertyDescription.GetTypeFlags(PropertyTypeFlags.MaskAll, out tempFlags);
+                    var hr = this.NativePropertyDescription.GetTypeFlags(PropertyTypeFlags.MaskAll, out tempFlags);
 
-                    propertyTypeFlags = CoreErrorHelper.Succeeded((int) hr) ? tempFlags : default(PropertyTypeFlags);
+                    this.propertyTypeFlags = CoreErrorHelper.Succeeded((int)hr) ? tempFlags : default(PropertyTypeFlags);
                 }
 
-                return propertyTypeFlags.HasValue ? propertyTypeFlags.Value : default(PropertyTypeFlags);
+                return this.propertyTypeFlags.HasValue ? this.propertyTypeFlags.Value : default(PropertyTypeFlags);
+            }
+        }
+
+        /// <summary>
+        ///   Gets the .NET system type for a value of this property, or
+        ///   null if the value is empty.
+        /// </summary>
+        public Type ValueType
+        {
+            get
+            {
+                return this.valueType ?? (this.valueType = VarEnumToSystemType(this.VarEnumType));
+            }
+        }
+
+        /// <summary>
+        ///   Gets the VarEnum OLE type for this property.
+        /// </summary>
+        public VarEnum VarEnumType
+        {
+            get
+            {
+                if (this.NativePropertyDescription != null && this.varEnumType == null)
+                {
+                    VarEnum tempType;
+
+                    var hr = this.NativePropertyDescription.GetPropertyType(out tempType);
+
+                    if (CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        this.varEnumType = tempType;
+                    }
+                }
+
+                return this.varEnumType.HasValue ? this.varEnumType.Value : default(VarEnum);
             }
         }
 
@@ -415,45 +534,66 @@ namespace Microsoft.Windows.Shell.PropertySystem
         {
             get
             {
-                if (NativePropertyDescription != null && propertyViewFlags == null)
+                if (this.NativePropertyDescription != null && this.propertyViewFlags == null)
                 {
                     PropertyViewFlags tempFlags;
-                    var hr = NativePropertyDescription.GetViewFlags(out tempFlags);
+                    var hr = this.NativePropertyDescription.GetViewFlags(out tempFlags);
 
-                    propertyViewFlags = CoreErrorHelper.Succeeded((int) hr) ? tempFlags : default(PropertyViewFlags);
+                    this.propertyViewFlags = CoreErrorHelper.Succeeded((int)hr) ? tempFlags : default(PropertyViewFlags);
                 }
 
-                return propertyViewFlags.HasValue ? propertyViewFlags.Value : default(PropertyViewFlags);
+                return this.propertyViewFlags.HasValue ? this.propertyViewFlags.Value : default(PropertyViewFlags);
             }
         }
 
         /// <summary>
-        ///   Gets a value that determines if the native property description is present on the system.
+        ///   Get the native property description COM interface
         /// </summary>
-        public bool HasSystemDescription { get { return NativePropertyDescription != null; } }
+        internal IPropertyDescription NativePropertyDescription
+        {
+            get
+            {
+                if (this.nativePropertyDescription == null)
+                {
+                    var guid = new Guid(ShellIidGuid.IPropertyDescription);
+                    PropertySystemNativeMethods.PSGetPropertyDescription(ref this.propertyKey, ref guid, out this.nativePropertyDescription);
+                }
+
+                return this.nativePropertyDescription;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
-        ///   Gets the localized display string that describes the current sort order.
+        /// Gets the localized display string that describes the current sort order.
         /// </summary>
-        /// <param name = "descending">Indicates the sort order should 
-        ///   reference the string "Z on top"; otherwise, the sort order should reference the string "A on top".</param>
-        /// <returns>The sort description for this property.</returns>
+        /// <param name="descending">
+        /// Indicates the sort order should 
+        ///   reference the string "Z on top"; otherwise, the sort order should reference the string "A on top".
+        /// </param>
+        /// <returns>
+        /// The sort description for this property.
+        /// </returns>
         /// <remarks>
-        ///   The string retrieved by this method is determined by flags set in the 
+        /// The string retrieved by this method is determined by flags set in the 
         ///   <c>sortDescription</c> attribute of the <c>labelInfo</c> element in the property's .propdesc file.
         /// </remarks>
         public string GetSortDescriptionLabel(bool descending)
         {
             var label = String.Empty;
 
-            if (NativePropertyDescription != null)
+            if (this.NativePropertyDescription != null)
             {
                 IntPtr ptr;
-                var hr = NativePropertyDescription.GetSortDescriptionLabel(descending, out ptr);
+                var hr = this.NativePropertyDescription.GetSortDescriptionLabel(descending, out ptr);
 
-                if (CoreErrorHelper.Succeeded((int) hr) && ptr != IntPtr.Zero)
+                if (CoreErrorHelper.Succeeded((int)hr) && ptr != IntPtr.Zero)
                 {
                     label = Marshal.PtrToStringUni(ptr);
+
                     // Free the string
                     Marshal.FreeCoTaskMem(ptr);
                 }
@@ -464,209 +604,190 @@ namespace Microsoft.Windows.Shell.PropertySystem
 
         #endregion
 
-        #region Internal Constructor
+        #region Implemented Interfaces
 
-        internal ShellPropertyDescription(PropertyKey key)
-        {
-            propertyKey = key;
-        }
-
-        #endregion
-
-        #region Internal Methods
+        #region IDisposable
 
         /// <summary>
-        ///   Get the native property description COM interface
-        /// </summary>
-        internal IPropertyDescription NativePropertyDescription
-        {
-            get
-            {
-                if (nativePropertyDescription == null)
-                {
-                    var guid = new Guid(ShellIIDGuid.IPropertyDescription);
-                    PropertySystemNativeMethods.PSGetPropertyDescription(ref propertyKey, ref guid, out nativePropertyDescription);
-                }
-
-                return nativePropertyDescription;
-            }
-        }
-
-        internal static Type VarEnumToSystemType(VarEnum VarEnumType)
-        {
-            switch (VarEnumType)
-            {
-                case (VarEnum.VT_EMPTY):
-                case (VarEnum.VT_NULL):
-
-                    return typeof (Object);
-
-                case (VarEnum.VT_UI1):
-
-                    return typeof (Byte?);
-
-                case (VarEnum.VT_I2):
-
-                    return typeof (Int16?);
-
-                case (VarEnum.VT_UI2):
-
-                    return typeof (UInt16?);
-
-                case (VarEnum.VT_I4):
-
-                    return typeof (Int32?);
-
-                case (VarEnum.VT_UI4):
-
-                    return typeof (UInt32?);
-
-                case (VarEnum.VT_I8):
-
-                    return typeof (Int64?);
-
-                case (VarEnum.VT_UI8):
-
-                    return typeof (UInt64?);
-
-                case (VarEnum.VT_R8):
-
-                    return typeof (Double?);
-
-                case (VarEnum.VT_BOOL):
-
-                    return typeof (Boolean?);
-
-                case (VarEnum.VT_FILETIME):
-
-                    return typeof (DateTime?);
-
-                case (VarEnum.VT_CLSID):
-
-                    return typeof (IntPtr?);
-
-                case (VarEnum.VT_CF):
-
-                    return typeof (IntPtr?);
-
-                case (VarEnum.VT_BLOB):
-
-                    return typeof (Byte[]);
-
-                case (VarEnum.VT_LPWSTR):
-
-                    return typeof (String);
-
-                case (VarEnum.VT_UNKNOWN):
-
-                    return typeof (IntPtr?);
-
-                case (VarEnum.VT_STREAM):
-
-                    return typeof (IStream);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_UI1):
-
-                    return typeof (Byte[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_I2):
-
-                    return typeof (Int16[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_UI2):
-
-                    return typeof (UInt16[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_I4):
-
-                    return typeof (Int32[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_UI4):
-
-                    return typeof (UInt32[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_I8):
-
-                    return typeof (Int64[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_UI8):
-
-                    return typeof (UInt64[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_R8):
-
-                    return typeof (Double[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_BOOL):
-
-                    return typeof (Boolean[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_FILETIME):
-
-                    return typeof (DateTime[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_CLSID):
-
-                    return typeof (IntPtr[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_CF):
-
-                    return typeof (IntPtr[]);
-
-                case (VarEnum.VT_VECTOR | VarEnum.VT_LPWSTR):
-
-                    return typeof (String[]);
-
-                default:
-
-                    return typeof (Object);
-            }
-        }
-
-        #endregion
-
-        #region IDisposable Members
-
-        /// <summary>
-        ///   Release the native objects
+        /// Release the native objects
         /// </summary>
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         #endregion
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        ///   Release the native objects
         /// </summary>
-        /// <param name = "disposing">Indicates that this is being called from Dispose(), rather than the finalizer.</param>
-        public void Dispose(bool disposing)
+        /// <param name="varEnumType">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        internal static Type VarEnumToSystemType(VarEnum varEnumType)
         {
-            if (nativePropertyDescription != null)
+            switch (varEnumType)
             {
-                Marshal.ReleaseComObject(nativePropertyDescription);
-                nativePropertyDescription = null;
+                case VarEnum.VT_EMPTY:
+                case VarEnum.VT_NULL:
+
+                    return typeof(Object);
+
+                case VarEnum.VT_UI1:
+
+                    return typeof(Byte?);
+
+                case VarEnum.VT_I2:
+
+                    return typeof(Int16?);
+
+                case VarEnum.VT_UI2:
+
+                    return typeof(UInt16?);
+
+                case VarEnum.VT_I4:
+
+                    return typeof(Int32?);
+
+                case VarEnum.VT_UI4:
+
+                    return typeof(UInt32?);
+
+                case VarEnum.VT_I8:
+
+                    return typeof(Int64?);
+
+                case VarEnum.VT_UI8:
+
+                    return typeof(UInt64?);
+
+                case VarEnum.VT_R8:
+
+                    return typeof(Double?);
+
+                case VarEnum.VT_BOOL:
+
+                    return typeof(Boolean?);
+
+                case VarEnum.VT_FILETIME:
+
+                    return typeof(DateTime?);
+
+                case VarEnum.VT_CLSID:
+
+                    return typeof(IntPtr?);
+
+                case VarEnum.VT_CF:
+
+                    return typeof(IntPtr?);
+
+                case VarEnum.VT_BLOB:
+
+                    return typeof(Byte[]);
+
+                case VarEnum.VT_LPWSTR:
+
+                    return typeof(String);
+
+                case VarEnum.VT_UNKNOWN:
+
+                    return typeof(IntPtr?);
+
+                case VarEnum.VT_STREAM:
+
+                    return typeof(IStream);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_UI1:
+
+                    return typeof(Byte[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_I2:
+
+                    return typeof(Int16[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_UI2:
+
+                    return typeof(UInt16[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_I4:
+
+                    return typeof(Int32[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_UI4:
+
+                    return typeof(UInt32[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_I8:
+
+                    return typeof(Int64[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_UI8:
+
+                    return typeof(UInt64[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_R8:
+
+                    return typeof(Double[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_BOOL:
+
+                    return typeof(Boolean[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_FILETIME:
+
+                    return typeof(DateTime[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_CLSID:
+
+                    return typeof(IntPtr[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_CF:
+
+                    return typeof(IntPtr[]);
+
+                case VarEnum.VT_VECTOR | VarEnum.VT_LPWSTR:
+
+                    return typeof(String[]);
+
+                default:
+
+                    return typeof(Object);
+            }
+        }
+
+        /// <summary>
+        /// Release the native objects
+        /// </summary>
+        /// <param name="disposing">
+        /// Indicates that this is being called from Dispose(), rather than the finalizer.
+        /// </param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.nativePropertyDescription != null)
+            {
+                Marshal.ReleaseComObject(this.nativePropertyDescription);
+                this.nativePropertyDescription = null;
             }
 
             if (!disposing)
+            {
                 return;
+            }
+
             // and the managed ones
-            canonicalName = null;
-            displayName = null;
-            editInvitation = null;
-            defaultColumWidth = null;
-            valueType = null;
-            propertyEnumTypes = null;
+            this.canonicalName = null;
+            this.displayName = null;
+            this.editInvitation = null;
+            this.defaultColumWidth = null;
+            this.valueType = null;
+            this.propertyEnumTypes = null;
         }
 
-        /// <summary>
-        ///   Release the native objects
-        /// </summary>
-        ~ShellPropertyDescription()
-        {
-            Dispose(false);
-        }
+        #endregion
     }
 }

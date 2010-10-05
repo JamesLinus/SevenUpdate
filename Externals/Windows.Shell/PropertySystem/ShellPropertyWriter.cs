@@ -1,48 +1,75 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Runtime.InteropServices;
-using Microsoft.Windows.Internal;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using global::System;
+    using global::System.Runtime.InteropServices;
+
+    using Microsoft.Windows.Internal;
+
     /// <summary>
-    ///   Creates a property writer capable of setting multiple properties for a given ShellObject.
+    /// Creates a property writer capable of setting multiple properties for a given ShellObject.
     /// </summary>
     public class ShellPropertyWriter : IDisposable
     {
         // Reference to our writable PropertyStore
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
+        internal IPropertyStore WritablePropStore;
 
         /// <summary>
         ///   The value was set but truncated in a string value or rounded if a numeric value.
         /// </summary>
         protected const int InPlaceStringTruncated = 0x00401A0;
 
-        internal IPropertyStore WritablePropStore;
+        #endregion
 
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// </summary>
+        /// <param name="parent">
+        /// </param>
+        /// <exception cref="ExternalException">
+        /// </exception>
+        /// <exception cref="ExternalException">
+        /// </exception>
+        /// <exception cref="ExternalException">
+        /// </exception>
         internal ShellPropertyWriter(ShellObject parent)
         {
-            ParentShellObject = parent;
+            this.ParentShellObject = parent;
 
             // Open the property store for this shell object...
-            var guid = new Guid(ShellIIDGuid.IPropertyStore);
+            var guid = new Guid(ShellIidGuid.IPropertyStore);
 
             try
             {
-                var hr = ParentShellObject.NativeShellItem2.GetPropertyStore(ShellNativeMethods.GETPROPERTYSTOREFLAGS.GPS_READWRITE, ref guid, out WritablePropStore);
+                var hr = this.ParentShellObject.NativeShellItem2.GetPropertyStore(
+                    ShellNativeMethods.GETPROPERTYSTOREFLAGSs.GpsReadwrite, ref guid, out this.WritablePropStore);
 
                 if (!CoreErrorHelper.Succeeded(hr))
+                {
                     throw new ExternalException("Unable to get writable property store for this property.", Marshal.GetExceptionForHR(hr));
+                }
+
                 // If we succeed in creating a valid property store for this ShellObject,
                 // then set it on the parent shell object for others to use.
                 // Once this writer is closed/commited, we will set the 
-                if (ParentShellObject.NativePropertyStore == null)
-                    ParentShellObject.NativePropertyStore = WritablePropStore;
+                if (this.ParentShellObject.NativePropertyStore == null)
+                {
+                    this.ParentShellObject.NativePropertyStore = this.WritablePropStore;
+                }
             }
             catch (InvalidComObjectException e)
             {
@@ -55,86 +82,137 @@ namespace Microsoft.Windows.Shell.PropertySystem
         }
 
         /// <summary>
-        ///   Reference to parent ShellObject (associated with this writer)
         /// </summary>
-        protected ShellObject ParentShellObject { get; private set; }
-
-        #region IDisposable Members
-
-        /// <summary>
-        ///   Release the native objects.
-        /// </summary>
-        public void Dispose()
+        ~ShellPropertyWriter()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            this.Dispose(false);
         }
 
         #endregion
 
+        #region Properties
+
         /// <summary>
-        ///   Writes the given property key and value.
+        ///   Reference to parent ShellObject (associated with this writer)
         /// </summary>
-        /// <param name = "key">The property key.</param>
-        /// <param name = "value">The value associated with the key.</param>
+        protected ShellObject ParentShellObject { get; private set; }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Call this method to commit the writes (calls to WriteProperty method)
+        ///   and dispose off the writer.
+        /// </summary>
+        public void Close()
+        {
+            // Close the property writer (commit, etc)
+            if (this.WritablePropStore != null)
+            {
+                this.WritablePropStore.Commit();
+
+                Marshal.ReleaseComObject(this.WritablePropStore);
+                this.WritablePropStore = null;
+            }
+
+            this.ParentShellObject.NativePropertyStore = null;
+        }
+
+        /// <summary>
+        /// Writes the given property key and value.
+        /// </summary>
+        /// <param name="key">
+        /// The property key.
+        /// </param>
+        /// <param name="value">
+        /// The value associated with the key.
+        /// </param>
         public void WriteProperty(PropertyKey key, object value)
         {
             WriteProperty(key, value, true);
         }
 
         /// <summary>
-        ///   Writes the given property key and value. To allow truncation of the given value, set allowTruncatedValue
+        /// Writes the given property key and value. To allow truncation of the given value, set allowTruncatedValue
         ///   to true.
         /// </summary>
-        /// <param name = "key">The property key.</param>
-        /// <param name = "value">The value associated with the key.</param>
-        /// <param name = "allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
-        /// <exception cref = "System.InvalidOperationException">If the writable property store is already 
-        ///   closed.</exception>
-        /// <exception cref = "System.ArgumentOutOfRangeException">If AllowTruncatedValue is set to false 
+        /// <param name="key">
+        /// The property key.
+        /// </param>
+        /// <param name="value">
+        /// The value associated with the key.
+        /// </param>
+        /// <param name="allowTruncatedValue">
+        /// True to allow truncation (default); otherwise False.
+        /// </param>
+        /// <exception cref="System.InvalidOperationException">
+        /// If the writable property store is already 
+        ///   closed.
+        /// </exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// If AllowTruncatedValue is set to false 
         ///   and while setting the value on the property it had to be truncated in a string or rounded in 
-        ///   a numeric value.</exception>
+        ///   a numeric value.
+        /// </exception>
         public void WriteProperty(PropertyKey key, object value, bool allowTruncatedValue)
         {
-            if (WritablePropStore == null)
+            if (this.WritablePropStore == null)
+            {
                 throw new InvalidOperationException("Writeable store has been closed.");
+            }
 
             var propVar = PropVariant.FromObject(value);
-            var result = WritablePropStore.SetValue(ref key, ref propVar);
+            var result = this.WritablePropStore.SetValue(ref key, ref propVar);
 
             if (!allowTruncatedValue && (result == InPlaceStringTruncated))
             {
                 // At this point we can't revert back the commit
                 // so don't commit, close the property store and throw an exception
                 // to let the user know.
-                Marshal.ReleaseComObject(WritablePropStore);
-                WritablePropStore = null;
+                Marshal.ReleaseComObject(this.WritablePropStore);
+                this.WritablePropStore = null;
 
-                throw new ArgumentOutOfRangeException("value", "A value had to be truncated in a string or rounded if a numeric value. Set AllowTruncatedValue to true to prevent this exception.");
+                throw new ArgumentOutOfRangeException(
+                    "value", "A value had to be truncated in a string or rounded if a numeric value. Set AllowTruncatedValue to true to prevent this exception.");
             }
 
             if (!CoreErrorHelper.Succeeded(result))
+            {
                 throw new ExternalException("Unable to set property.", Marshal.GetExceptionForHR(result));
+            }
         }
 
         /// <summary>
-        ///   Writes the specified property given the canonical name and a value.
+        /// Writes the specified property given the canonical name and a value.
         /// </summary>
-        /// <param name = "canonicalName">The canonical name.</param>
-        /// <param name = "value">The property value.</param>
+        /// <param name="canonicalName">
+        /// The canonical name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
         public void WriteProperty(string canonicalName, object value)
         {
             WriteProperty(canonicalName, value, true);
         }
 
         /// <summary>
-        ///   Writes the specified property given the canonical name and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// Writes the specified property given the canonical name and a value. To allow truncation of the given value, set allowTruncatedValue
         ///   to true.
         /// </summary>
-        /// <param name = "canonicalName">The canonical name.</param>
-        /// <param name = "value">The property value.</param>
-        /// <param name = "allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
-        /// <exception cref = "System.ArgumentException">If the given canonical name is not valid.</exception>
+        /// <param name="canonicalName">
+        /// The canonical name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
+        /// <param name="allowTruncatedValue">
+        /// True to allow truncation (default); otherwise False.
+        /// </param>
+        /// <exception cref="System.ArgumentException">
+        /// If the given canonical name is not valid.
+        /// </exception>
         public void WriteProperty(string canonicalName, object value, bool allowTruncatedValue)
         {
             // Get the PropertyKey using the canonicalName passed in
@@ -143,90 +221,115 @@ namespace Microsoft.Windows.Shell.PropertySystem
             var result = PropertySystemNativeMethods.PSGetPropertyKeyFromName(canonicalName, out propKey);
 
             if (!CoreErrorHelper.Succeeded(result))
+            {
                 throw new ArgumentException("The given CanonicalName is not valid.", Marshal.GetExceptionForHR(result));
+            }
 
             WriteProperty(propKey, value, allowTruncatedValue);
         }
 
         /// <summary>
-        ///   Writes the specified property using an IShellProperty and a value.
+        /// Writes the specified property using an IShellProperty and a value.
         /// </summary>
-        /// <param name = "shellProperty">The property name.</param>
-        /// <param name = "value">The property value.</param>
+        /// <param name="shellProperty">
+        /// The property name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
         public void WriteProperty(IShellProperty shellProperty, object value)
         {
             WriteProperty(shellProperty, value, true);
         }
 
         /// <summary>
-        ///   Writes the specified property given an IShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// Writes the specified property given an IShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
         ///   to true.
         /// </summary>
-        /// <param name = "shellProperty">The property name.</param>
-        /// <param name = "value">The property value.</param>
-        /// <param name = "allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
+        /// <param name="shellProperty">
+        /// The property name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
+        /// <param name="allowTruncatedValue">
+        /// True to allow truncation (default); otherwise False.
+        /// </param>
         public void WriteProperty(IShellProperty shellProperty, object value, bool allowTruncatedValue)
         {
             WriteProperty(shellProperty.PropertyKey, value, allowTruncatedValue);
         }
 
         /// <summary>
-        ///   Writes the specified property using a strongly-typed ShellProperty and a value.
+        /// Writes the specified property using a strongly-typed ShellProperty and a value.
         /// </summary>
-        /// <typeparam name = "T">The type of the property name.</typeparam>
-        /// <param name = "shellProperty">The property name.</param>
-        /// <param name = "value">The property value.</param>
+        /// <typeparam name="T">
+        /// The type of the property name.
+        /// </typeparam>
+        /// <param name="shellProperty">
+        /// The property name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
         public void WriteProperty<T>(ShellProperty<T> shellProperty, T value)
         {
             WriteProperty(shellProperty, value, true);
         }
 
         /// <summary>
-        ///   Writes the specified property given a strongly-typed ShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
+        /// Writes the specified property given a strongly-typed ShellProperty and a value. To allow truncation of the given value, set allowTruncatedValue
         ///   to true.
         /// </summary>
-        /// <typeparam name = "T">The type of the property name.</typeparam>
-        /// <param name = "shellProperty">The property name.</param>
-        /// <param name = "value">The property value.</param>
-        /// <param name = "allowTruncatedValue">True to allow truncation (default); otherwise False.</param>
+        /// <typeparam name="T">
+        /// The type of the property name.
+        /// </typeparam>
+        /// <param name="shellProperty">
+        /// The property name.
+        /// </param>
+        /// <param name="value">
+        /// The property value.
+        /// </param>
+        /// <param name="allowTruncatedValue">
+        /// True to allow truncation (default); otherwise False.
+        /// </param>
         public void WriteProperty<T>(ShellProperty<T> shellProperty, T value, bool allowTruncatedValue)
         {
             WriteProperty(shellProperty.PropertyKey, value, allowTruncatedValue);
         }
 
-        /// <summary>
-        /// </summary>
-        ~ShellPropertyWriter()
-        {
-            Dispose(false);
-        }
+        #endregion
+
+        #region Implemented Interfaces
+
+        #region IDisposable
 
         /// <summary>
-        ///   Release the native and managed objects.
+        /// Release the native objects.
         /// </summary>
-        /// <param name = "disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Release the native and managed objects.
+        /// </summary>
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources; false to release only unmanaged resources.
         /// </param>
         protected virtual void Dispose(bool disposing)
         {
-            Close();
+            this.Close();
         }
 
-        /// <summary>
-        ///   Call this method to commit the writes (calls to WriteProperty method)
-        ///   and dispose off the writer.
-        /// </summary>
-        public void Close()
-        {
-            // Close the property writer (commit, etc)
-            if (WritablePropStore != null)
-            {
-                WritablePropStore.Commit();
-
-                Marshal.ReleaseComObject(WritablePropStore);
-                WritablePropStore = null;
-            }
-
-            ParentShellObject.NativePropertyStore = null;
-        }
+        #endregion
     }
 }

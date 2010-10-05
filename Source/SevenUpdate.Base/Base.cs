@@ -9,6 +9,7 @@ namespace SevenUpdate
     using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -30,37 +31,37 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// The all users application data location
+        ///   The all users application data location
         /// </summary>
         public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
 
         /// <summary>
-        /// The application directory of Seven Update
+        ///   The application directory of Seven Update
         /// </summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         /// <summary>
-        /// The location of the list of applications Seven Update can update
+        ///   The location of the list of applications Seven Update can update
         /// </summary>
         public static readonly string AppsFile = AllUserStore + @"Apps.sul";
 
         /// <summary>
-        /// The location of the application settings file
+        ///   The location of the application settings file
         /// </summary>
         public static readonly string ConfigFile = AllUserStore + @"App.config";
 
         /// <summary>
-        /// The location of the hidden updates file
+        ///   The location of the hidden updates file
         /// </summary>
         public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
 
         /// <summary>
-        /// The location of the update history file
+        ///   The location of the update history file
         /// </summary>
         public static readonly string HistoryFile = AllUserStore + @"History.suh";
 
         /// <summary>
-        /// The location of the user application data location
+        ///   The location of the user application data location
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
 
@@ -83,16 +84,16 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>
-        /// Gets or sets the ISO language code
+        ///   Gets or sets the ISO language code
         /// </summary>
         /// <value>The locale.</value>
         public static string Locale { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether if a reboot is needed
+        ///   Gets a value indicating whether if a reboot is needed
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if a reboot is needed otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.
         /// </value>
         public static bool RebootNeeded
         {
@@ -109,10 +110,18 @@ namespace SevenUpdate
         /// <summary>
         /// Determines if a string contains another string
         /// </summary>
-        /// <param name="original">The original string to check</param>
-        /// <param name="value">The value to check the string for</param>
-        /// <param name="comparisonType">Type of the comparison.</param>
-        /// <returns><see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.</returns>
+        /// <param name="original">
+        /// The original string to check
+        /// </param>
+        /// <param name="value">
+        /// The value to check the string for
+        /// </param>
+        /// <param name="comparisonType">
+        /// Type of the comparison.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.
+        /// </returns>
         public static bool Contains(this string original, string value, StringComparison comparisonType)
         {
             return original.IndexOf(value, comparisonType) >= 0;
@@ -121,23 +130,27 @@ namespace SevenUpdate
         /// <summary>
         /// Converts bytes into the proper increments depending on size
         /// </summary>
-        /// <param name="bytes">the fileSize in bytes</param>
-        /// <returns>the formatted string of converted bytes</returns>
+        /// <param name="bytes">
+        /// the fileSize in bytes
+        /// </param>
+        /// <returns>
+        /// the formatted string of converted bytes
+        /// </returns>
         public static string ConvertFileSize(ulong bytes)
         {
             if (bytes >= 1073741824)
             {
-                return String.Format("{0:##.##}", bytes / 1073741824) + " GB";
+                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1073741824) + " GB";
             }
 
             if (bytes >= 1048576)
             {
-                return String.Format("{0:##.##}", bytes / 1048576) + " MB";
+                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1048576) + " MB";
             }
 
             if (bytes >= 1024)
             {
-                return String.Format("{0:##.##}", bytes / 1024) + " KB";
+                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1024) + " KB";
             }
 
             if (bytes < 1024)
@@ -151,16 +164,26 @@ namespace SevenUpdate
         /// <summary>
         /// Expands the file location variables
         /// </summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="directory">a string that contains a directory</param>
-        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
-        /// <returns>a string of the path expanded</returns>
+        /// <param name="path">
+        /// a string that contains a file path
+        /// </param>
+        /// <param name="directory">
+        /// a string that contains a directory
+        /// </param>
+        /// <param name="valueName">
+        /// a string that contains a value name of the registry key that contains the directory location
+        /// </param>
+        /// <param name="is64Bit">
+        /// if set to <see langword="true"/> the application is 64 bit
+        /// </param>
+        /// <returns>
+        /// a string of the path expanded
+        /// </returns>
         public static string ConvertPath(string path, string directory, string valueName = null, bool is64Bit = false)
         {
             path = path.Replace(
-                "%INSTALLDIR%",
-                !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit),
+                "%INSTALLDIR%", 
+                !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), 
                 true);
             path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, is64Bit), true);
             return ConvertPath(path, true, is64Bit);
@@ -169,10 +192,18 @@ namespace SevenUpdate
         /// <summary>
         /// Expands the system variables in a string
         /// </summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="expand"><c>true</c> to expand system variable, <c>false</c> to converts paths into system variables</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
-        /// <returns>a string of the path expanded</returns>
+        /// <param name="path">
+        /// a string that contains a file path
+        /// </param>
+        /// <param name="expand">
+        /// <c>true</c> to expand system variable, <c>false</c> to converts paths into system variables
+        /// </param>
+        /// <param name="is64Bit">
+        /// if set to <see langword="true"/> the application is 64 bit
+        /// </param>
+        /// <returns>
+        /// a string of the path expanded
+        /// </returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
         {
             if (path == null)
@@ -305,9 +336,15 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="fileName">the file that contains the object to DeSerialize</param>
-        /// <returns>returns the object</returns>
+        /// <typeparam name="T">
+        /// the object to deserialize
+        /// </typeparam>
+        /// <param name="fileName">
+        /// the file that contains the object to DeSerialize
+        /// </param>
+        /// <returns>
+        /// returns the object
+        /// </returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
             var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
@@ -318,10 +355,18 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="stream">The Stream to deserialize</param>
-        /// <param name="sourceUrl">The Uri to the source stream that is being deserialized</param>
-        /// <returns>returns the object</returns>
+        /// <typeparam name="T">
+        /// the object to deserialize
+        /// </typeparam>
+        /// <param name="stream">
+        /// The Stream to deserialize
+        /// </param>
+        /// <param name="sourceUrl">
+        /// The Uri to the source stream that is being deserialized
+        /// </param>
+        /// <returns>
+        /// returns the object
+        /// </returns>
         public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
         {
             var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl));
@@ -332,8 +377,12 @@ namespace SevenUpdate
         /// <summary>
         /// Downloads a file
         /// </summary>
-        /// <param name="url">A Uri pointing to the location of the file to download</param>
-        /// <returns>the downloaded file <see cref="Stream"/></returns>
+        /// <param name="url">
+        /// A Uri pointing to the location of the file to download
+        /// </param>
+        /// <returns>
+        /// the downloaded file <see cref="Stream"/>
+        /// </returns>
         public static Stream DownloadFile(string url)
         {
             // Get a data stream from the url
@@ -344,8 +393,12 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the file size of a file
         /// </summary>
-        /// <param name="file">The full path to the file</param>
-        /// <returns>A UInt64 value indicating the file size</returns>
+        /// <param name="file">
+        /// The full path to the file
+        /// </param>
+        /// <returns>
+        /// A UInt64 value indicating the file size
+        /// </returns>
         public static ulong GetFileSize(string file)
         {
             if (!File.Exists(file))
@@ -359,8 +412,12 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the SHA-2 Hash of a file
         /// </summary>
-        /// <param name="file">The full path to the file to calculate the hash</param>
-        /// <returns>The SHA-2 Hash of the file</returns>
+        /// <param name="file">
+        /// The full path to the file to calculate the hash
+        /// </param>
+        /// <returns>
+        /// The SHA-2 Hash of the file
+        /// </returns>
         public static string GetHash(string file)
         {
             if (!File.Exists(file))
@@ -380,7 +437,7 @@ namespace SevenUpdate
 
             foreach (var hashByte in sha2.Hash)
             {
-                buff.Append(String.Format("{0:X1}", hashByte));
+                buff.Append(String.Format(CultureInfo.CurrentCulture, "{0:X1}", hashByte));
             }
 
             return buff.ToString();
@@ -389,8 +446,12 @@ namespace SevenUpdate
         /// <summary>
         /// Gets the preferred localized string from a collection of localized strings
         /// </summary>
-        /// <param name="localeStrings">A collection of <see cref="LocaleString"/>'s</param>
-        /// <returns>a localized string</returns>
+        /// <param name="localeStrings">
+        /// A collection of <see cref="LocaleString"/>'s
+        /// </param>
+        /// <returns>
+        /// a localized string
+        /// </returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
             foreach (var t in localeStrings.Where(t => t.Lang == Locale))
@@ -404,9 +465,15 @@ namespace SevenUpdate
         /// <summary>
         /// Gets and converts the registry key
         /// </summary>
-        /// <param name="registryKey">The registry key</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
-        /// <returns>The parsed registry key</returns>
+        /// <param name="registryKey">
+        /// The registry key
+        /// </param>
+        /// <param name="is64Bit">
+        /// if set to <see langword="true"/> the application is 64 bit
+        /// </param>
+        /// <returns>
+        /// The parsed registry key
+        /// </returns>
         public static string GetRegistryKey(string registryKey, bool is64Bit)
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
@@ -430,10 +497,18 @@ namespace SevenUpdate
         /// <summary>
         /// Gets a string from a registry path
         /// </summary>
-        /// <param name="registryKey">The path to the registry key</param>
-        /// <param name="valueName">The value name to get the data from</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
-        /// <returns>The value retrieved from the registry path</returns>
+        /// <param name="registryKey">
+        /// The path to the registry key
+        /// </param>
+        /// <param name="valueName">
+        /// The value name to get the data from
+        /// </param>
+        /// <param name="is64Bit">
+        /// if set to <see langword="true"/> the application is 64 bit
+        /// </param>
+        /// <returns>
+        /// The value retrieved from the registry path
+        /// </returns>
         public static string GetRegistryValue(string registryKey, string valueName, bool is64Bit)
         {
             try
@@ -472,22 +547,36 @@ namespace SevenUpdate
         /// <summary>
         /// Checks to see if path is a registry key
         /// </summary>
-        /// <param name="path">The path to check</param>
-        /// <returns><see langword="true"/> if the path is a registry key otherwise, <see langword="false"/></returns>
+        /// <param name="path">
+        /// The path to check
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the path is a registry key otherwise, <see langword="false"/>
+        /// </returns>
         public static bool IsRegistryKey(string path)
         {
-            const string Pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
-            return Regex.IsMatch(path, Pattern, RegexOptions.IgnoreCase);
+            const string pattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+            return Regex.IsMatch(path, pattern, RegexOptions.IgnoreCase);
         }
 
         /// <summary>
         /// Replaces a string within a string
         /// </summary>
-        /// <param name="str">the string that will be searched</param>
-        /// <param name="find">a string to find in the complete string</param>
-        /// <param name="replace">a string to use to replace the find string in the complete string</param>
-        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
-        /// <returns>The replacement string</returns>
+        /// <param name="str">
+        /// the string that will be searched
+        /// </param>
+        /// <param name="find">
+        /// a string to find in the complete string
+        /// </param>
+        /// <param name="replace">
+        /// a string to use to replace the find string in the complete string
+        /// </param>
+        /// <param name="ignoreCase">
+        /// if set to <see langword="true"/> case is ignored
+        /// </param>
+        /// <returns>
+        /// The replacement string
+        /// </returns>
         public static string Replace(this string str, string find, string replace, bool ignoreCase)
         {
             if (str == null || find == null)
@@ -512,7 +601,7 @@ namespace SevenUpdate
 
             while (pos + findLength <= expressionLength)
             {
-                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase))
+                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
                 {
                     // Add the replaced string
                     sb.Append(replace);
@@ -536,11 +625,21 @@ namespace SevenUpdate
         /// <summary>
         /// Replaces a string within a string
         /// </summary>
-        /// <param name="sb">The <see cref="StringBuilder"/> object</param>
-        /// <param name="find">a string to find in the complete string</param>
-        /// <param name="replace">a string to use to replace the find string in the complete string</param>
-        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
-        /// <returns>The <see cref="StringBuilder"/> with replacements</returns>
+        /// <param name="sb">
+        /// The <see cref="StringBuilder"/> object
+        /// </param>
+        /// <param name="find">
+        /// a string to find in the complete string
+        /// </param>
+        /// <param name="replace">
+        /// a string to use to replace the find string in the complete string
+        /// </param>
+        /// <param name="ignoreCase">
+        /// if set to <see langword="true"/> case is ignored
+        /// </param>
+        /// <returns>
+        /// The <see cref="StringBuilder"/> with replacements
+        /// </returns>
         public static StringBuilder Replace(this StringBuilder sb, string find, string replace, bool ignoreCase)
         {
             if (sb == null || find == null)
@@ -567,7 +666,7 @@ namespace SevenUpdate
 
             while (pos + findLength <= expressionLength)
             {
-                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase))
+                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
                 {
                     // Add the replaced string
                     sb2.Append(replace);
@@ -593,8 +692,12 @@ namespace SevenUpdate
         /// <summary>
         /// Reports the error that occurred to a log file
         /// </summary>
-        /// <param name="message">The message to write in the log</param>
-        /// <param name="directoryStore">The directory to store the log</param>
+        /// <param name="message">
+        /// The message to write in the log
+        /// </param>
+        /// <param name="directoryStore">
+        /// The directory to store the log
+        /// </param>
         public static void ReportError(string message, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
@@ -607,8 +710,12 @@ namespace SevenUpdate
         /// <summary>
         /// Reports the error that occurred to a log file
         /// </summary>
-        /// <param name="exception">The exception to write in the log</param>
-        /// <param name="directoryStore">The directory to store the log</param>
+        /// <param name="exception">
+        /// The exception to write in the log
+        /// </param>
+        /// <param name="directoryStore">
+        /// The directory to store the log
+        /// </param>
         public static void ReportError(Exception exception, string directoryStore)
         {
             TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
@@ -651,9 +758,15 @@ namespace SevenUpdate
         /// <summary>
         /// Serializes an object into a file
         /// </summary>
-        /// <typeparam name="T">the object</typeparam>
-        /// <param name="item">the object to serialize</param>
-        /// <param name="fileName">the location of a file that will be serialized</param>
+        /// <typeparam name="T">
+        /// the object
+        /// </typeparam>
+        /// <param name="item">
+        /// the object to serialize
+        /// </param>
+        /// <param name="fileName">
+        /// the location of a file that will be serialized
+        /// </param>
         public static void Serialize<T>(T item, string fileName) where T : class
         {
             var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
@@ -663,11 +776,21 @@ namespace SevenUpdate
         /// <summary>
         /// Starts a process on the system
         /// </summary>
-        /// <param name="fileName">The file to execute</param>
-        /// <param name="arguments">The arguments to execute with the file</param>
-        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
-        /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
+        /// <param name="fileName">
+        /// The file to execute
+        /// </param>
+        /// <param name="arguments">
+        /// The arguments to execute with the file
+        /// </param>
+        /// <param name="wait">
+        /// if set to <see langword="true"/> the calling thread will be blocked until process has exited
+        /// </param>
+        /// <param name="hidden">
+        /// if set to <see langword="true"/> the process will execute with no UI
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the process has executed successfully
+        /// </returns>
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
             var proc = new Process { StartInfo = { FileName = fileName, UseShellExecute = true } };
@@ -712,9 +835,15 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="fileName">the file that contains the object to DeSerialize</param>
-        /// <returns>returns the object</returns>
+        /// <typeparam name="T">
+        /// the object to deserialize
+        /// </typeparam>
+        /// <param name="fileName">
+        /// the file that contains the object to DeSerialize
+        /// </param>
+        /// <returns>
+        /// returns the object
+        /// </returns>
         private static T DeserializeFile<T>(string fileName) where T : class
         {
             if (File.Exists(fileName))
@@ -744,10 +873,18 @@ namespace SevenUpdate
         /// <summary>
         /// DeSerializes an object
         /// </summary>
-        /// <typeparam name="T">the object to deserialize</typeparam>
-        /// <param name="stream">The Stream to deserialize</param>
-        /// <param name="sourceUrl">The <see cref="Uri"/> to the source stream that is being deserialized</param>
-        /// <returns>returns the object</returns>
+        /// <typeparam name="T">
+        /// the object to deserialize
+        /// </typeparam>
+        /// <param name="stream">
+        /// The Stream to deserialize
+        /// </param>
+        /// <param name="sourceUrl">
+        /// The <see cref="Uri"/> to the source stream that is being deserialized
+        /// </param>
+        /// <returns>
+        /// returns the object
+        /// </returns>
         private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
         {
             try
@@ -769,9 +906,15 @@ namespace SevenUpdate
         /// <summary>
         /// Serializes an object into a file
         /// </summary>
-        /// <typeparam name="T">the object</typeparam>
-        /// <param name="item">the object to serialize</param>
-        /// <param name="fileName">the location of a file that will be serialized</param>
+        /// <typeparam name="T">
+        /// the object
+        /// </typeparam>
+        /// <param name="item">
+        /// the object to serialize
+        /// </param>
+        /// <param name="fileName">
+        /// the location of a file that will be serialized
+        /// </param>
         private static void SerializeFile<T>(T item, string fileName) where T : class
         {
             try
@@ -806,28 +949,30 @@ namespace SevenUpdate
         /// <summary>
         /// Waits for the process to exit then triggers an event
         /// </summary>
-        /// <param name="process">The process.</param>
+        /// <param name="process">
+        /// The process.
+        /// </param>
         private static void WaitForExit(Process process)
         {
             Task.Factory.StartNew(
                 () =>
-                {
-                    try
                     {
-                        process.WaitForExit();
-                        if (ProcessExited != null)
+                        try
                         {
-                            ProcessExited(null, new ProcessEventArgs(process));
+                            process.WaitForExit();
+                            if (ProcessExited != null)
+                            {
+                                ProcessExited(null, new ProcessEventArgs(process));
+                            }
                         }
-                    }
-                    catch
-                    {
-                        if (ProcessExited != null)
+                        catch
                         {
-                            ProcessExited(null, new ProcessEventArgs(null));
+                            if (ProcessExited != null)
+                            {
+                                ProcessExited(null, new ProcessEventArgs(null));
+                            }
                         }
-                    }
-                });
+                    });
         }
 
         #endregion

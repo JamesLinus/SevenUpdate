@@ -1,26 +1,26 @@
-﻿//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
-
-#endregion
+﻿//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell.PropertySystem
 {
+    using global::System;
+    using global::System.Diagnostics.CodeAnalysis;
+    using global::System.Globalization;
+    using global::System.Runtime.InteropServices;
+
     /// <summary>
-    ///   Defines a unique key for a Shell Property
+    /// Defines a unique key for a Shell Property
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct PropertyKey : IEquatable<PropertyKey>
     {
-        #region Private Fields
-
-        #endregion
-
         #region Public Properties
 
         /// <summary>
@@ -38,25 +38,35 @@ namespace Microsoft.Windows.Shell.PropertySystem
         #region Public Construction
 
         /// <summary>
-        ///   PropertyKey Constructor
+        /// PropertyKey Constructor
         /// </summary>
-        /// <param name = "formatId">A unique GUID for the property</param>
-        /// <param name = "propertyId">Property identifier (PID)</param>
-        public PropertyKey(Guid formatId, Int32 propertyId) : this()
+        /// <param name="formatId">
+        /// A unique GUID for the property
+        /// </param>
+        /// <param name="propertyId">
+        /// Property identifier (PID)
+        /// </param>
+        public PropertyKey(Guid formatId, int propertyId)
+            : this()
         {
-            FormatId = formatId;
-            PropertyId = propertyId;
+            this.FormatId = formatId;
+            this.PropertyId = propertyId;
         }
 
         /// <summary>
-        ///   PropertyKey Constructor
+        /// PropertyKey Constructor
         /// </summary>
-        /// <param name = "formatId">A string represenstion of a GUID for the property</param>
-        /// <param name = "propertyId">Property identifier (PID)</param>
-        public PropertyKey(string formatId, Int32 propertyId) : this()
+        /// <param name="formatId">
+        /// A string represenstion of a GUID for the property
+        /// </param>
+        /// <param name="propertyId">
+        /// Property identifier (PID)
+        /// </param>
+        public PropertyKey(string formatId, int propertyId)
+            : this()
         {
-            FormatId = new Guid(formatId);
-            PropertyId = propertyId;
+            this.FormatId = new Guid(formatId);
+            this.PropertyId = propertyId;
         }
 
         #endregion
@@ -64,13 +74,17 @@ namespace Microsoft.Windows.Shell.PropertySystem
         #region IEquatable<PropertyKey> Members
 
         /// <summary>
-        ///   Returns whether this object is equal to another. This is vital for performance of value types.
+        /// Returns whether this object is equal to another. This is vital for performance of value types.
         /// </summary>
-        /// <param name = "other">The object to compare against.</param>
-        /// <returns>Equality result.</returns>
+        /// <param name="other">
+        /// The object to compare against.
+        /// </param>
+        /// <returns>
+        /// Equality result.
+        /// </returns>
         public bool Equals(PropertyKey other)
         {
-            return other.Equals((object) this);
+            return other.Equals((object)this);
         }
 
         #endregion
@@ -78,29 +92,38 @@ namespace Microsoft.Windows.Shell.PropertySystem
         #region equality and hashing
 
         /// <summary>
-        ///   Returns the hash code of the object. This is vital for performance of value types.
+        /// Returns the hash code of the object. This is vital for performance of value types.
         /// </summary>
-        /// <returns />
+        /// <returns>
+        /// </returns>
         public override int GetHashCode()
         {
-            return FormatId.GetHashCode() ^ PropertyId;
+            return this.FormatId.GetHashCode() ^ this.PropertyId;
         }
 
         /// <summary>
-        ///   Returns whether this object is equal to another. This is vital for performance of value types.
+        /// Returns whether this object is equal to another. This is vital for performance of value types.
         /// </summary>
-        /// <param name = "obj">The object to compare against.</param>
-        /// <returns>Equality result.</returns>
+        /// <param name="obj">
+        /// The object to compare against.
+        /// </param>
+        /// <returns>
+        /// Equality result.
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (obj == null)
+            {
                 return false;
+            }
 
             if (!(obj is PropertyKey))
+            {
                 return false;
+            }
 
-            var other = (PropertyKey) obj;
-            return other.FormatId.Equals(FormatId) && (other.PropertyId == PropertyId);
+            var other = (PropertyKey)obj;
+            return other.FormatId.Equals(this.FormatId) && (other.PropertyId == this.PropertyId);
         }
 
         /// <summary>
@@ -109,8 +132,8 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <param name = "a">Object a.</param>
         /// <param name = "b">Object b.</param>
         /// <returns>true if object a equals object b. false otherwise.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b"),
-         SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
         public static bool operator ==(PropertyKey a, PropertyKey b)
         {
             return a.Equals(b);
@@ -122,21 +145,23 @@ namespace Microsoft.Windows.Shell.PropertySystem
         /// <param name = "a">Object a.</param>
         /// <param name = "b">Object b.</param>
         /// <returns>true if object a does not equal object b. false otherwise.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b"),
-         SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "b")]
+        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "a")]
         public static bool operator !=(PropertyKey a, PropertyKey b)
         {
             return !a.Equals(b);
         }
 
         /// <summary>
-        ///   Override ToString() to provide a user friendly string representation
+        /// Override ToString() to provide a user friendly string representation
         /// </summary>
-        /// <returns>String representing the property key</returns>
+        /// <returns>
+        /// String representing the property key
+        /// </returns>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)")]
         public override string ToString()
         {
-            return String.Format("{0}, {1}", FormatId.ToString("B"), PropertyId);
+            return String.Format(CultureInfo.CurrentCulture, "{0}, {1}", this.FormatId.ToString("B", CultureInfo.CurrentCulture), this.PropertyId);
         }
 
         #endregion

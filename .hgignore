@@ -4,3 +4,9 @@ glob:obj
 glob:resharper
 glob:*.user
 glob:_ReSharper*
+glob:Source/SevenUpdate.Sdk/Settings.StyleCop
+glob:Source/SevenUpdate.Sdk/StyleCop.Cache
+glob:Source/StyleCop.Cache
+glob:Source/SevenUpdate.crdata
+glob:Source/SevenUpdate/StyleCop.Cache
+glob:StyleCop.Cache

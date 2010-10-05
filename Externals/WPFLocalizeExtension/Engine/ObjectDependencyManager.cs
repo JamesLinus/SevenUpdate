@@ -1,22 +1,33 @@
-﻿#region
-
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-#endregion
-
+﻿//***********************************************************************
+// Assembly         : WPFLocalizeExtension
+// Author           : sevenalive
+// Created          : 09-19-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
+
     /// <summary>
-    ///   This class ensures, that a specific object lives as long a associated object is alive.
+    /// This class ensures, that a specific object lives as long a associated object is alive.
     /// </summary>
     public static class ObjectDependencyManager
     {
+        #region Constants and Fields
+
         /// <summary>
         ///   This member holds the list of all <see cref = "WeakReference" />s and their appropriate objects.
         /// </summary>
         private static readonly Dictionary<object, List<WeakReference>> InternalList;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes static members of the <see cref = "ObjectDependencyManager" /> class. 
@@ -28,40 +39,54 @@ namespace WPFLocalizeExtension.Engine
             InternalList = new Dictionary<object, List<WeakReference>>();
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
-        ///   This method adds a new object dependency
+        /// This method adds a new object dependency
         /// </summary>
-        /// <param name = "weakRefDp">The <see cref = "WeakReference" />, which ensures the live cycle of <paramref name = "objToHold" /></param>
-        /// <param name = "objToHold">The object, which should stay alive as long <paramref name = "weakRefDp" /> is alive</param>
+        /// <param name="weakRefDP">
+        /// The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="objToHold"/>
+        /// </param>
+        /// <param name="objToHold">
+        /// The object, which should stay alive as long <paramref name="weakRefDP"/> is alive
+        /// </param>
         /// <returns>
-        ///   true, if the binding was successfully, otherwise false
+        /// true, if the binding was successfully, otherwise false
         /// </returns>
-        /// <exception cref = "System.ArgumentNullException">
-        ///   The <paramref name = "objToHold" /> cannot be null
+        /// <exception cref="System.ArgumentNullException">
+        /// The <paramref name="objToHold"/> cannot be null
         /// </exception>
-        /// <exception cref = "System.ArgumentException">
-        ///   <paramref name = "objToHold" /> cannot be type of <see cref = "WeakReference" />
+        /// <exception cref="System.ArgumentException">
+        /// <paramref name="objToHold"/> cannot be type of <see cref="WeakReference"/>
         /// </exception>
-        /// <exception cref = "System.InvalidOperationException">
-        ///   The <see cref = "WeakReference" />.Target cannot be the same as <paramref name = "objToHold" />
+        /// <exception cref="System.InvalidOperationException">
+        /// The <see cref="WeakReference"/>.Target cannot be the same as <paramref name="objToHold"/>
         /// </exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static bool AddObjectDependency(WeakReference weakRefDp, object objToHold)
+        public static bool AddObjectDependency(WeakReference weakRefDP, object objToHold)
         {
             // run the clean up to ensure that only objects are watched they are realy still alive
             CleanUp();
 
             // if the objToHold is null, we cannot handle this afterwards.
             if (objToHold == null)
+            {
                 throw new ArgumentNullException("objToHold", "The objToHold cannot be null");
+            }
 
             // if the objToHold is a weakreference, we cannot handle this type afterwards.
-            if (objToHold.GetType() == typeof (WeakReference))
+            if (objToHold.GetType() == typeof(WeakReference))
+            {
                 throw new ArgumentException("objToHold cannot be type of WeakReference", "objToHold");
+            }
 
             // if the target of the weakreference is the objToHold, this would be a cycling play.
-            if (weakRefDp.Target == objToHold)
+            if (weakRefDP.Target == objToHold)
+            {
                 throw new InvalidOperationException("The WeakReference.Target cannot be the same as objToHold");
+            }
 
             // holds the status of registration of the object dependency
             var itemRegistered = false;
@@ -70,7 +95,7 @@ namespace WPFLocalizeExtension.Engine
             if (!InternalList.ContainsKey(objToHold))
             {
                 // add the objToHold to the internal list.
-                var lst = new List<WeakReference> {weakRefDp};
+                var lst = new List<WeakReference> { weakRefDP };
 
                 InternalList.Add(objToHold, lst);
 
@@ -80,9 +105,9 @@ namespace WPFLocalizeExtension.Engine
             {
                 // otherweise, check if the weakRefDp exists and add it if necessary
                 var lst = InternalList[objToHold];
-                if (!lst.Contains(weakRefDp))
+                if (!lst.Contains(weakRefDP))
                 {
-                    lst.Add(weakRefDp);
+                    lst.Add(weakRefDP);
 
                     itemRegistered = true;
                 }
@@ -93,7 +118,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>
-        ///   This method cleans up all independent (!<see cref = "WeakReference" />.IsAlive) objects.
+        /// This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects.
         /// </summary>
         public static void CleanUp()
         {
@@ -102,10 +127,10 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>
-        ///   This method cleans up all independent (!<see cref = "WeakReference" />.IsAlive) objects or a single object.
+        /// This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects or a single object.
         /// </summary>
-        /// <param name = "objToRemove">
-        ///   If defined, the associated object dependency will be removed instead of a full CleanUp
+        /// <param name="objToRemove">
+        /// If defined, the associated object dependency will be removed instead of a full CleanUp
         /// </param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void CleanUp(object objToRemove)
@@ -115,7 +140,9 @@ namespace WPFLocalizeExtension.Engine
             {
                 // if the key wasnt found, throw an exception.
                 if (!InternalList.Remove(objToRemove))
+                {
                     throw new Exception("Key was not found!");
+                }
 
                 // stop here
                 return;
@@ -134,12 +161,16 @@ namespace WPFLocalizeExtension.Engine
                 {
                     // if this weak reference is no more alive, remove it
                     if (!kvp.Value[i].IsAlive)
+                    {
                         kvp.Value.RemoveAt(i);
+                    }
                 }
 
                 // if the list of weak references is empty, temove the whole entry
                 if (kvp.Value.Count == 0)
+                {
                     keysToRemove.Add(kvp.Key);
+                }
             }
 
             // step recursive through all keys that have to be remove
@@ -152,5 +183,7 @@ namespace WPFLocalizeExtension.Engine
             // clear up the keysToRemove
             keysToRemove.Clear();
         }
+
+        #endregion
     }
 }

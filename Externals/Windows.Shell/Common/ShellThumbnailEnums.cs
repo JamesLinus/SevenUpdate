@@ -1,34 +1,37 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System.Diagnostics.CodeAnalysis;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System.Diagnostics.CodeAnalysis;
+
     /// <summary>
-    ///   Represents the different retrieval options for the thumbnail or icon,
+    /// Represents the different retrieval options for the thumbnail or icon,
     ///   such as extracting the thumbnail or icon from a file, 
     ///   from the cache only, or from memory only.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "The members of this enum do not represent flags")]
-    public enum ShellThumbnailRetrievalOptions
+    public enum ShellThumbnailRetrievalOption
     {
         /// <summary>
         ///   The default behavior loads a thumbnail. If there is no thumbnail for the current ShellItem,  
         ///   the icon is retrieved. The thumbnail or icon is extracted if it is not currently cached.
         /// </summary>
-        Default,
+        Default, 
 
         /// <summary>
         ///   The CacheOnly behavior returns a cached thumbnail if it is available. Allows access to the disk,
         ///   but only to retrieve a cached item. If no cached thumbnail is available, a cached per-instance icon is returned but  
         ///   a thumbnail or icon is not extracted.
         /// </summary>
-        CacheOnly = ShellNativeMethods.SIIGBF.SIIGBF_INCACHEONLY,
+        CacheOnly = ShellNativeMethods.SIIGBFs.SiigbfIncacheonly, 
 
         /// <summary>
         ///   The MemoryOnly behavior returns the item only if it is in memory. The disk is not accessed even if the item is cached. 
@@ -37,29 +40,29 @@ namespace Microsoft.Windows.Shell
         ///   even if it is cached, always requires the disk to be accessed, so this method should not be 
         ///   called from the user interface (UI) thread without passing ShellThumbnailCacheOptions.MemoryOnly.
         /// </summary>
-        MemoryOnly = ShellNativeMethods.SIIGBF.SIIGBF_MEMORYONLY,
+        MemoryOnly = ShellNativeMethods.SIIGBFs.SiigbfMemoryonly, 
     }
 
     /// <summary>
-    ///   Represents the format options for the thumbnails and icons.
+    /// Represents the format options for the thumbnails and icons.
     /// </summary>
     [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "The members of this enum do not represent flags")]
-    public enum ShellThumbnailFormatOptions
+    public enum ShellThumbnailFormatOption
     {
         /// <summary>
         ///   The default behavior loads a thumbnail. An HBITMAP for the icon of the item is retrieved if there is no thumbnail for the current Shell Item.
         /// </summary>
-        Default,
+        Default, 
 
         /// <summary>
         ///   The ThumbnailOnly behavior returns only the thumbnails, never the icon. Note that not all items have thumbnails 
         ///   so ShellThumbnailFormatOptions.ThumbnailOnly can fail in these cases.
         /// </summary>
-        ThumbnailOnly = ShellNativeMethods.SIIGBF.SIIGBF_THUMBNAILONLY,
+        ThumbnailOnly = ShellNativeMethods.SIIGBFs.SiigbfThumbnailonly, 
 
         /// <summary>
         ///   The IconOnly behavior returns only the icon, never the thumbnail.
         /// </summary>
-        IconOnly = ShellNativeMethods.SIIGBF.SIIGBF_ICONONLY,
+        IconOnly = ShellNativeMethods.SIIGBFs.SiigbfIcononly, 
     }
 }

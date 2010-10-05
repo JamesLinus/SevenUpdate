@@ -23,22 +23,22 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>
-        /// Location of the SUI for Seven Update
+        ///   Location of the SUI for Seven Update
         /// </summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
 
         /// <summary>
-        /// The number of important updates found
+        ///   The number of important updates found
         /// </summary>
         private static int importantCount;
 
         /// <summary>
-        /// The number of optional updates found
+        ///   The number of optional updates found
         /// </summary>
         private static int optionalCount;
 
         /// <summary>
-        /// The number of recommended updates found
+        ///   The number of recommended updates found
         /// </summary>
         private static int recommendedCount;
 
@@ -47,12 +47,12 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        /// Occurs if an error occurred
+        ///   Occurs if an error occurred
         /// </summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>
-        /// Occurs when the searching of updates has completed.
+        ///   Occurs when the searching of updates has completed.
         /// </summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchCompleted;
 
@@ -63,7 +63,9 @@ namespace SevenUpdate
         /// <summary>
         /// Searches for updates while blocking the calling thread
         /// </summary>
-        /// <param name="apps">The collection of applications to check for updates</param>
+        /// <param name="apps">
+        /// The collection of applications to check for updates
+        /// </param>
         public static void SearchForUpdates(IEnumerable<Sua> apps)
         {
             importantCount = 0;
@@ -103,13 +105,13 @@ namespace SevenUpdate
                 {
                     app.AppInfo = new Sua
                         {
-                            AppUrl = "http://sevenupdate.com/",
-                            Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
-                            Publisher = publisher,
-                            Name = name,
-                            HelpUrl = "http://sevenupdate.com/support/",
-                            Is64Bit = true,
-                            IsEnabled = true,
+                            AppUrl = "http://sevenupdate.com/", 
+                            Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
+                            Publisher = publisher, 
+                            Name = name, 
+                            HelpUrl = "http://sevenupdate.com/support/", 
+                            Is64Bit = true, 
+                            IsEnabled = true, 
                             SuiUrl = SevenUpdateSui
                         };
 
@@ -212,7 +214,9 @@ namespace SevenUpdate
         /// <summary>
         /// Searches for files without blocking the calling thread
         /// </summary>
-        /// <param name="apps">The collection of applications to check for updates</param>
+        /// <param name="apps">
+        /// The collection of applications to check for updates
+        /// </param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> apps)
         {
             Task.Factory.StartNew(() => SearchForUpdates(apps));
@@ -221,7 +225,9 @@ namespace SevenUpdate
         /// <summary>
         /// Manually sets an <see cref="Sui"/> collection has updates found
         /// </summary>
-        /// <param name="updates">The updates to set as found</param>
+        /// <param name="updates">
+        /// The updates to set as found
+        /// </param>
         public static void SetUpdatesFound(Collection<Sui> updates)
         {
             importantCount = 0;
@@ -257,8 +263,12 @@ namespace SevenUpdate
         /// <summary>
         /// Checks for updates
         /// </summary>
-        /// <param name="app">a collection of applications to check for updates</param>
-        /// <param name="hidden">a collection of hidden updates</param>
+        /// <param name="app">
+        /// a collection of applications to check for updates
+        /// </param>
+        /// <param name="hidden">
+        /// a collection of hidden updates
+        /// </param>
         /// <returns>
         /// returns <c>true</c> if found updates, otherwise <c>false</c>
         /// </returns>

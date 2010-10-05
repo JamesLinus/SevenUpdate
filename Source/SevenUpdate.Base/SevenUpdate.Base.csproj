@@ -106,9 +106,9 @@
     <Compile Include="Base.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="EventArgs.cs" />
-    <Compile Include="FileSystemLocations.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Install.cs" />
-    <Compile Include="InvokeMethods.cs" />
+    <Compile Include="DispatcherObjectDelegates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -24,12 +24,12 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>
-        /// The localized name of the application
+        ///   The localized name of the application
         /// </summary>
         private string applicationName;
 
         /// <summary>
-        /// The collection of localized update names
+        ///   The collection of localized update names
         /// </summary>
         private ObservableCollection<string> updateNames;
 
@@ -38,7 +38,7 @@ namespace SevenUpdate.Sdk
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,7 +47,7 @@ namespace SevenUpdate.Sdk
         #region Properties
 
         /// <summary>
-        /// Gets or sets the localized application name
+        ///   Gets or sets the localized application name
         /// </summary>
         /// <value>The name of the application.</value>
         [ProtoMember(1)]
@@ -67,7 +67,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Gets or sets the update names.
+        ///   Gets or sets the update names.
         /// </summary>
         /// <value>The update names.</value>
         [ProtoMember(2)]
@@ -93,7 +93,9 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The name of the property changed</param>
+        /// <param name="name">
+        /// The name of the property changed
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

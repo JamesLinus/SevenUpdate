@@ -1,32 +1,60 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using Microsoft.Windows.Internal;
-using Microsoft.Windows.Shell;
-using Microsoft.Windows.Shell.PropertySystem;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Dialogs
 {
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Security.Permissions;
+
+    using Microsoft.Windows.Internal;
+    using Microsoft.Windows.Shell;
+    using Microsoft.Windows.Shell.PropertySystem;
+
     /// <summary>
-    ///   Creates a Vista or Windows 7 Common File Dialog, allowing the user to select the filename and location for a saved file.
+    /// Creates a Vista or Windows 7 Common File Dialog, allowing the user to select the filename and location for a saved file.
     /// </summary>
-    /// <permission cref = "System.Security.Permissions.FileDialogPermission">
-    ///   to save a file. Associated enumeration: <see cref = "System.Security.Permissions.SecurityAction.Demand" />.
+    /// <permission cref="System.Security.Permissions.FileDialogPermission">
+    /// to save a file. Associated enumeration: <see cref="System.Security.Permissions.SecurityAction.Demand"/>.
     /// </permission>
     [FileDialogPermission(SecurityAction.Demand, Save = true)]
     public sealed class CommonSaveFileDialog : CommonFileDialog
     {
-        private NativeFileSaveDialog saveDialogCoClass;
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
+        private bool alwaysAppendDefaultExtension;
+
+        /// <summary>
+        /// </summary>
+        private bool createPrompt;
+
+        /// <summary>
+        /// </summary>
+        private bool isExpandedMode;
+
+        /// <summary>
+        /// </summary>
+        private bool overwritePrompt = true;
+
+        /// <summary>
+        /// </summary>
+        private INativeFileSaveDialog saveDialogCoClass;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         ///   Creates a new instance of this class.
@@ -36,76 +64,19 @@ namespace Microsoft.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Creates a new instance of this class with the specified name.
+        /// Creates a new instance of this class with the specified name.
         /// </summary>
-        /// <param name = "name">The name of this dialog.</param>
-        public CommonSaveFileDialog(string name) : base(name)
+        /// <param name="name">
+        /// The name of this dialog.
+        /// </param>
+        public CommonSaveFileDialog(string name)
+            : base(name)
         {
         }
 
-        #region Public API specific to Save
+        #endregion
 
-        private bool alwaysAppendDefaultExtension;
-        private bool createPrompt;
-        private bool isExpandedMode;
-        private bool overwritePrompt = true;
-
-        /// <summary>
-        ///   Gets or sets a value that controls whether to prompt before 
-        ///   overwriting an existing file of the same name. Default value is true.
-        /// </summary>
-        /// <permission cref = "System.InvalidOperationException">
-        ///   This property cannot be changed when the dialog is showing.
-        /// </permission>
-        public bool OverwritePrompt
-        {
-            get { return overwritePrompt; }
-            set
-            {
-                ThrowIfDialogShowing("OverwritePrompt" + IllegalPropertyChangeString);
-                overwritePrompt = value;
-            }
-        }
-
-        /// <summary>
-        ///   Gets or sets a value that controls whether to prompt for creation if the item returned in the save dialog does not exist.
-        /// </summary>
-        /// <remarks>
-        ///   Note that this does not actually create the item.
-        /// </remarks>
-        /// <permission cref = "System.InvalidOperationException">
-        ///   This property cannot be changed when the dialog is showing.
-        /// </permission>
-        public bool CreatePrompt
-        {
-            get { return createPrompt; }
-            set
-            {
-                ThrowIfDialogShowing("CreatePrompt" + IllegalPropertyChangeString);
-                createPrompt = value;
-            }
-        }
-
-        /// <summary>
-        ///   Gets or sets a value that controls whether to the save dialog 
-        ///   displays in expanded mode.
-        /// </summary>
-        /// <remarks>
-        ///   Expanded mode controls whether the dialog
-        ///   shows folders for browsing or hides them.
-        /// </remarks>
-        /// <permission cref = "System.InvalidOperationException">
-        ///   This property cannot be changed when the dialog is showing.
-        /// </permission>
-        public bool IsExpandedMode
-        {
-            get { return isExpandedMode; }
-            set
-            {
-                ThrowIfDialogShowing("IsExpandedMode" + IllegalPropertyChangeString);
-                isExpandedMode = value;
-            }
-        }
+        #region Properties
 
         /// <summary>
         ///   Gets or sets a value that controls whether the 
@@ -118,11 +89,15 @@ namespace Microsoft.Windows.Dialogs
         /// </permission>
         public bool AlwaysAppendDefaultExtension
         {
-            get { return alwaysAppendDefaultExtension; }
+            get
+            {
+                return this.alwaysAppendDefaultExtension;
+            }
+
             set
             {
-                ThrowIfDialogShowing("AlwaysAppendDefaultExtension" + IllegalPropertyChangeString);
-                alwaysAppendDefaultExtension = value;
+                this.ThrowIfDialogShowing("AlwaysAppendDefaultExtension" + IllegalPropertyChangeString);
+                this.alwaysAppendDefaultExtension = value;
             }
         }
 
@@ -140,19 +115,23 @@ namespace Microsoft.Windows.Dialogs
         {
             get
             {
-                InitializeNativeFileDialog();
-                var nativeDialog = GetNativeFileDialog() as IFileSaveDialog;
+                this.InitializeNativeFileDialog();
+                var nativeDialog = this.GetNativeFileDialog() as IFileSaveDialog;
 
                 if (nativeDialog != null)
                 {
                     IPropertyStore propertyStore;
                     var hr = nativeDialog.GetProperties(out propertyStore);
 
-                    if (!CoreErrorHelper.Succeeded((int) hr))
-                        throw Marshal.GetExceptionForHR((int) hr);
+                    if (!CoreErrorHelper.Succeeded((int)hr))
+                    {
+                        throw Marshal.GetExceptionForHR((int)hr);
+                    }
 
                     if (propertyStore != null)
+                    {
                         return new ShellPropertyCollection(propertyStore);
+                    }
                 }
 
                 return null;
@@ -160,35 +139,93 @@ namespace Microsoft.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Sets an item to appear as the initial entry in a <b>Save As</b> dialog.
+        ///   Gets or sets a value that controls whether to prompt for creation if the item returned in the save dialog does not exist.
         /// </summary>
-        /// <param name = "item">The initial entry to be set in the dialog.</param>
         /// <remarks>
-        ///   The name of the item is displayed in the file name edit box, 
-        ///   and the containing folder is opened in the view. This would generally be 
-        ///   used when the application is saving an item that already exists.
+        ///   Note that this does not actually create the item.
         /// </remarks>
-        public void SetSaveAsItem(ShellObject item)
+        /// <permission cref = "System.InvalidOperationException">
+        ///   This property cannot be changed when the dialog is showing.
+        /// </permission>
+        public bool CreatePrompt
         {
-            InitializeNativeFileDialog();
-            var nativeDialog = GetNativeFileDialog() as IFileSaveDialog;
+            get
+            {
+                return this.createPrompt;
+            }
 
-            // Get the native IShellItem from ShellObject
-            if (nativeDialog != null)
-                nativeDialog.SetSaveAsItem(item.NativeShellItem);
+            set
+            {
+                this.ThrowIfDialogShowing("CreatePrompt" + IllegalPropertyChangeString);
+                this.createPrompt = value;
+            }
         }
 
         /// <summary>
-        ///   Specifies which properties will be collected in the save dialog.
+        ///   Gets or sets a value that controls whether to the save dialog 
+        ///   displays in expanded mode.
         /// </summary>
-        /// <param name = "appendDefault">True to show default properties for the currently selected 
+        /// <remarks>
+        ///   Expanded mode controls whether the dialog
+        ///   shows folders for browsing or hides them.
+        /// </remarks>
+        /// <permission cref = "System.InvalidOperationException">
+        ///   This property cannot be changed when the dialog is showing.
+        /// </permission>
+        public bool IsExpandedMode
+        {
+            get
+            {
+                return this.isExpandedMode;
+            }
+
+            set
+            {
+                this.ThrowIfDialogShowing("IsExpandedMode" + IllegalPropertyChangeString);
+                this.isExpandedMode = value;
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets a value that controls whether to prompt before 
+        ///   overwriting an existing file of the same name. Default value is true.
+        /// </summary>
+        /// <permission cref = "System.InvalidOperationException">
+        ///   This property cannot be changed when the dialog is showing.
+        /// </permission>
+        public bool OverwritePrompt
+        {
+            get
+            {
+                return this.overwritePrompt;
+            }
+
+            set
+            {
+                this.ThrowIfDialogShowing("OverwritePrompt" + IllegalPropertyChangeString);
+                this.overwritePrompt = value;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Specifies which properties will be collected in the save dialog.
+        /// </summary>
+        /// <param name="appendDefault">
+        /// True to show default properties for the currently selected 
         ///   filetype in addition to the properties specified by propertyList. False to show only properties 
         ///   specified by pList.
-        ///   <param name = "propertyList">List of properties to collect. This parameter can be null.</param>
         /// </param>
-        /// <param name = "propertyList" />
+        /// <param name="propertyList">
+        /// List of properties to collect. This parameter can be null.
+        /// </param>
+        /// <param name="propertyList">
+        /// </param>
         /// <remarks>
-        ///   SetCollectedPropertyKeys can be called at any time before the dialog is displayed or while it 
+        /// SetCollectedPropertyKeys can be called at any time before the dialog is displayed or while it 
         ///   is visible. If different properties are to be collected depending on the chosen filetype, 
         ///   then SetCollectedProperties can be called in response to CommonFileDialog::FileTypeChanged event.
         ///   Note: By default, no properties are collected in the save dialog.
@@ -205,14 +242,17 @@ namespace Microsoft.Windows.Dialogs
                     // The string we pass to PSGetPropertyDescriptionListFromString must
                     // start with "prop:", followed a list of canonical names for each 
                     // property that is to collected.
-                    // 
                     // Add "prop:" at the start of the string if we are starting our for loop.
                     if (propertyListStr == null)
+                    {
                         propertyListStr = "prop:";
+                    }
 
                     // For each property, append the canonical name, followed by a semicolon
                     if (!string.IsNullOrEmpty(canonicalName))
+                    {
                         propertyListStr += canonicalName + ";";
+                    }
                 }
             }
 
@@ -222,7 +262,7 @@ namespace Microsoft.Windows.Dialogs
             }
             else
             {
-                var guid = new Guid(ShellIIDGuid.IPropertyDescriptionList);
+                var guid = new Guid(ShellIidGuid.IPropertyDescriptionList);
                 IPropertyDescriptionList propertyDescriptionList = null;
 
                 try
@@ -232,79 +272,158 @@ namespace Microsoft.Windows.Dialogs
                     // If we get a IPropertyDescriptionList, setit on the native dialog.
                     if (CoreErrorHelper.Succeeded(hr))
                     {
-                        InitializeNativeFileDialog();
-                        var nativeDialog = GetNativeFileDialog() as IFileSaveDialog;
+                        this.InitializeNativeFileDialog();
+                        var nativeDialog = this.GetNativeFileDialog() as IFileSaveDialog;
 
                         if (nativeDialog != null)
                         {
                             hr = nativeDialog.SetCollectedProperties(propertyDescriptionList, appendDefault);
 
                             if (!CoreErrorHelper.Succeeded(hr))
+                            {
                                 Marshal.ThrowExceptionForHR(hr);
+                            }
                         }
                     }
                 }
                 finally
                 {
                     if (propertyDescriptionList != null)
+                    {
                         Marshal.ReleaseComObject(propertyDescriptionList);
+                    }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets an item to appear as the initial entry in a <b>Save As</b> dialog.
+        /// </summary>
+        /// <param name="item">
+        /// The initial entry to be set in the dialog.
+        /// </param>
+        /// <remarks>
+        /// The name of the item is displayed in the file name edit box, 
+        ///   and the containing folder is opened in the view. This would generally be 
+        ///   used when the application is saving an item that already exists.
+        /// </remarks>
+        public void SetSaveAsItem(ShellObject item)
+        {
+            this.InitializeNativeFileDialog();
+            var nativeDialog = this.GetNativeFileDialog() as IFileSaveDialog;
+
+            // Get the native IShellItem from ShellObject
+            if (nativeDialog != null)
+            {
+                nativeDialog.SetSaveAsItem(item.NativeShellItem);
             }
         }
 
         #endregion
 
-        protected override void InitializeNativeFileDialog()
+        #region Methods
+
+        /// <summary>
+        /// </summary>
+        /// <param name="flags">
+        /// </param>
+        /// <returns>
+        /// </returns>
+        internal override ShellNativeMethods.FOSs GetDerivedOptionFlags(ShellNativeMethods.FOSs flags)
         {
-            if (saveDialogCoClass == null)
-                saveDialogCoClass = new NativeFileSaveDialog();
+            if (this.overwritePrompt)
+            {
+                flags |= ShellNativeMethods.FOSs.FosOverwriteprompt;
+            }
+
+            if (this.createPrompt)
+            {
+                flags |= ShellNativeMethods.FOSs.FosCreateprompt;
+            }
+
+            if (!this.isExpandedMode)
+            {
+                flags |= ShellNativeMethods.FOSs.FosDefaultnominimode;
+            }
+
+            if (this.alwaysAppendDefaultExtension)
+            {
+                flags |= ShellNativeMethods.FOSs.FosStrictfiletypes;
+            }
+
+            return flags;
         }
 
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         internal override IFileDialog GetNativeFileDialog()
         {
-            Debug.Assert(saveDialogCoClass != null, "Must call Initialize() before fetching dialog interface");
-            return saveDialogCoClass;
+            Debug.Assert(this.saveDialogCoClass != null, "Must call Initialize() before fetching dialog interface");
+            return this.saveDialogCoClass;
         }
 
-        protected override void PopulateWithFileNames(Collection<string> names)
-        {
-            IShellItem item;
-            saveDialogCoClass.GetResult(out item);
-
-            if (item == null)
-                throw new InvalidOperationException("Retrieved a null shell item from dialog");
-            names.Clear();
-            names.Add(GetFileNameFromShellItem(item));
-        }
-
+        /// <summary>
+        /// </summary>
+        /// <param name="items">
+        /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// </exception>
         internal override void PopulateWithIShellItems(Collection<IShellItem> items)
         {
             IShellItem item;
-            saveDialogCoClass.GetResult(out item);
+            this.saveDialogCoClass.GetResult(out item);
 
             if (item == null)
+            {
                 throw new InvalidOperationException("Retrieved a null shell item from dialog");
+            }
+
             items.Clear();
             items.Add(item);
         }
 
+        /// <summary>
+        /// </summary>
         protected override void CleanUpNativeFileDialog()
         {
-            if (saveDialogCoClass != null)
-                Marshal.ReleaseComObject(saveDialogCoClass);
+            if (this.saveDialogCoClass != null)
+            {
+                Marshal.ReleaseComObject(this.saveDialogCoClass);
+            }
         }
 
-        internal override ShellNativeMethods.FOS GetDerivedOptionFlags(ShellNativeMethods.FOS flags)
+        /// <summary>
+        /// </summary>
+        protected override void InitializeNativeFileDialog()
         {
-            if (overwritePrompt)
-                flags |= ShellNativeMethods.FOS.FOS_OVERWRITEPROMPT;
-            if (createPrompt)
-                flags |= ShellNativeMethods.FOS.FOS_CREATEPROMPT;
-            if (!isExpandedMode)
-                flags |= ShellNativeMethods.FOS.FOS_DEFAULTNOMINIMODE;
-            if (alwaysAppendDefaultExtension)
-                flags |= ShellNativeMethods.FOS.FOS_STRICTFILETYPES;
-            return flags;
+            if (this.saveDialogCoClass == null)
+            {
+                this.saveDialogCoClass = new INativeFileSaveDialog();
+            }
         }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="names">
+        /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// </exception>
+        protected override void PopulateWithFileNames(Collection<string> names)
+        {
+            IShellItem item;
+            this.saveDialogCoClass.GetResult(out item);
+
+            if (item == null)
+            {
+                throw new InvalidOperationException("Retrieved a null shell item from dialog");
+            }
+
+            names.Clear();
+            names.Add(GetFileNameFromShellItem(item));
+        }
+
+        #endregion
     }
 }

@@ -1,32 +1,28 @@
-//Copyright (c) Microsoft Corporation.  All rights reserved.
-//Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-
-#endregion
+//***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+//***********************************************************************
 
 namespace Microsoft.Windows.Shell
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.IO;
+
     /// <summary>
-    ///   Represents a registered or known folder in the system.
+    /// Represents a registered or known folder in the system.
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
+    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", 
+        Justification = "This will complicate the class hierarchy and naming convention used in the Shell area")]
     public interface IKnownFolder : IDisposable, IEnumerable<ShellObject>
     {
-        /// <summary>
-        ///   Gets the path for this known folder.
-        /// </summary>
-        string Path { get; }
-
-        /// <summary>
-        ///   Gets the category designation for this known folder.
-        /// </summary>
-        FolderCategory Category { get; }
+        #region Properties
 
         /// <summary>
         ///   Gets this known folder's canonical name.
@@ -34,35 +30,40 @@ namespace Microsoft.Windows.Shell
         string CanonicalName { get; }
 
         /// <summary>
+        ///   Gets the category designation for this known folder.
+        /// </summary>
+        FolderCategory Category { get; }
+
+        /// <summary>
+        ///   Gets an value that describes this known folder's behaviors.
+        /// </summary>
+        DefinitionOptions DefinitionOptions { get; }
+
+        /// <summary>
         ///   Gets this known folder's description.
         /// </summary>
         string Description { get; }
 
         /// <summary>
-        ///   Gets the unique identifier for this known folder's parent folder.
+        ///   Gets this known folder's file attributes, 
+        ///   such as "read-only".
         /// </summary>
-        Guid ParentId { get; }
+        FileAttributes FileAttributes { get; }
 
         /// <summary>
-        ///   Gets this known folder's relative path.
+        ///   Gets the unique identifier for this known folder.
         /// </summary>
-        string RelativePath { get; }
+        Guid FolderId { get; }
 
         /// <summary>
-        ///   Gets this known folder's parsing name.
+        ///   Gets a string representation of this known folder's type.
         /// </summary>
-        string ParsingName { get; }
+        string FolderType { get; }
 
         /// <summary>
-        ///   Gets this known folder's tool tip text.
+        ///   Gets the unique identifier for this known folder's type.
         /// </summary>
-        string Tooltip { get; }
-
-        /// <summary>
-        ///   Gets the resource identifier for this 
-        ///   known folder's tool tip text.
-        /// </summary>
-        string TooltipResourceId { get; }
+        Guid FolderTypeId { get; }
 
         /// <summary>
         ///   Gets this known folder's localized name.
@@ -76,35 +77,19 @@ namespace Microsoft.Windows.Shell
         string LocalizedNameResourceId { get; }
 
         /// <summary>
-        ///   Gets this known folder's security attributes.
+        ///   Gets the unique identifier for this known folder's parent folder.
         /// </summary>
-        string Security { get; }
+        Guid ParentId { get; }
 
         /// <summary>
-        ///   Gets this known folder's file attributes, 
-        ///   such as "read-only".
+        ///   Gets this known folder's parsing name.
         /// </summary>
-        FileAttributes FileAttributes { get; }
+        string ParsingName { get; }
 
         /// <summary>
-        ///   Gets an value that describes this known folder's behaviors.
+        ///   Gets the path for this known folder.
         /// </summary>
-        DefinitionOptions DefinitionOptions { get; }
-
-        /// <summary>
-        ///   Gets the unique identifier for this known folder's type.
-        /// </summary>
-        Guid FolderTypeId { get; }
-
-        /// <summary>
-        ///   Gets a string representation of this known folder's type.
-        /// </summary>
-        string FolderType { get; }
-
-        /// <summary>
-        ///   Gets the unique identifier for this known folder.
-        /// </summary>
-        Guid FolderId { get; }
+        string Path { get; }
 
         /// <summary>
         ///   Gets a value that indicates whether this known folder's path exists on the computer.
@@ -121,6 +106,29 @@ namespace Microsoft.Windows.Shell
         ///   can have its path set to a new value, 
         ///   including any restrictions on the redirection.
         /// </summary>
-        RedirectionCapabilities Redirection { get; }
+        RedirectionCapability Redirection { get; }
+
+        /// <summary>
+        ///   Gets this known folder's relative path.
+        /// </summary>
+        string RelativePath { get; }
+
+        /// <summary>
+        ///   Gets this known folder's security attributes.
+        /// </summary>
+        string Security { get; }
+
+        /// <summary>
+        ///   Gets this known folder's tool tip text.
+        /// </summary>
+        string Tooltip { get; }
+
+        /// <summary>
+        ///   Gets the resource identifier for this 
+        ///   known folder's tool tip text.
+        /// </summary>
+        string TooltipResourceId { get; }
+
+        #endregion
     }
 }

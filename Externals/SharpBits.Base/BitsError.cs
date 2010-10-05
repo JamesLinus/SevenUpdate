@@ -1,48 +1,70 @@
-// //Copyright (c) xidar solutions
-// //Modified by Robert Baker, Seven Software 2010.
-
-#region
-
-using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using SharpBits.Base.File;
-using SharpBits.Base.Job;
-
-#endregion
+//***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           :xidar solutions
+// Created          : 09-17-2010
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) xidar solutions. All rights reserved.
+//***********************************************************************
 
 namespace SharpBits.Base
 {
+    using System;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+
+    using SharpBits.Base.File;
+    using SharpBits.Base.Job;
+
+    /// <summary>
+    /// </summary>
     public class BitsError
     {
+        #region Constants and Fields
+
+        /// <summary>
+        /// </summary>
         private readonly IBackgroundCopyError error;
+
+        /// <summary>
+        /// </summary>
         private readonly BitsJob job;
 
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitsError"/> class.
+        /// </summary>
+        /// <param name="job">
+        /// The job.
+        /// </param>
+        /// <param name="error">
+        /// The error.
+        /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// </exception>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
+            {
                 throw new ArgumentNullException("IBackgroundCopyError");
+            }
+
             this.error = error;
             this.job = job;
         }
 
-        public string Description
-        {
-            get
-            {
-                var description = string.Empty;
-                try
-                {
-                    error.GetErrorDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
-                }
-                catch (COMException exception)
-                {
-                    job.PublishException(exception);
-                }
-                return description;
-            }
-        }
+        #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Gets the context description.
+        /// </summary>
+        /// <value>The context description.</value>
         public string ContextDescription
         {
             get
@@ -50,70 +72,43 @@ namespace SharpBits.Base
                 var description = string.Empty;
                 try
                 {
-                    error.GetErrorContextDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+                    this.error.GetErrorContextDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
                 }
                 catch (COMException exception)
                 {
-                    job.PublishException(exception);
+                    this.job.PublishException(exception);
                 }
+
                 return description;
             }
         }
 
-        public string Protocol
+        /// <summary>
+        ///   Gets the description.
+        /// </summary>
+        /// <value>The description.</value>
+        public string Description
         {
             get
             {
-                var protocol = string.Empty;
+                var description = string.Empty;
                 try
                 {
-                    error.GetProtocol(out protocol);
+                    this.error.GetErrorDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
                 }
                 catch (COMException exception)
                 {
-                    job.PublishException(exception);
+                    this.job.PublishException(exception);
                 }
-                return protocol;
+
+                return description;
             }
         }
 
-        public BitsFile File
-        {
-            get
-            {
-                try
-                {
-                    IBackgroundCopyFile errorFile;
-                    error.GetFile(out errorFile);
-                    return new BitsFile(job, errorFile);
-                }
-                catch (COMException exception)
-                {
-                    job.PublishException(exception);
-                }
-                return null; //couldn't create new job
-            }
-        }
-
-        public ErrorContext ErrorContext
-        {
-            get
-            {
-                try
-                {
-                    BG_ERROR_CONTEXT context;
-                    int errorCode;
-                    error.GetError(out context, out errorCode);
-                    return (ErrorContext) context;
-                }
-                catch (COMException exception)
-                {
-                    job.PublishException(exception);
-                }
-                return ErrorContext.UnknownError;
-            }
-        }
-
+        /// <summary>
+        ///   Gets the error code.
+        /// </summary>
+        /// <value>The error code.</value>
         public int ErrorCode
         {
             get
@@ -121,16 +116,88 @@ namespace SharpBits.Base
                 var errorCode = 0;
                 try
                 {
-                    BG_ERROR_CONTEXT context;
-                    error.GetError(out context, out errorCode);
+                    BGErrorContext context;
+                    this.error.GetError(out context, out errorCode);
                     return errorCode;
                 }
                 catch (COMException exception)
                 {
-                    job.PublishException(exception);
+                    this.job.PublishException(exception);
                 }
+
                 return errorCode;
             }
         }
+
+        /// <summary>
+        ///   Gets the error context.
+        /// </summary>
+        /// <value>The error context.</value>
+        public ErrorContext ErrorContext
+        {
+            get
+            {
+                try
+                {
+                    BGErrorContext context;
+                    int errorCode;
+                    this.error.GetError(out context, out errorCode);
+                    return (ErrorContext)context;
+                }
+                catch (COMException exception)
+                {
+                    this.job.PublishException(exception);
+                }
+
+                return ErrorContext.UnknownError;
+            }
+        }
+
+        /// <summary>
+        ///   Gets the file.
+        /// </summary>
+        /// <value>The file.</value>
+        public BitsFile File
+        {
+            get
+            {
+                try
+                {
+                    IBackgroundCopyFile errorFile;
+                    this.error.GetFile(out errorFile);
+                    return new BitsFile(this.job, errorFile);
+                }
+                catch (COMException exception)
+                {
+                    this.job.PublishException(exception);
+                }
+
+                return null; // couldn't create new job
+            }
+        }
+
+        /// <summary>
+        ///   Gets the protocol.
+        /// </summary>
+        /// <value>The protocol.</value>
+        public string Protocol
+        {
+            get
+            {
+                var protocol = string.Empty;
+                try
+                {
+                    this.error.GetProtocol(out protocol);
+                }
+                catch (COMException exception)
+                {
+                    this.job.PublishException(exception);
+                }
+
+                return protocol;
+            }
+        }
+
+        #endregion
     }
 }
