@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     using System;
 
@@ -20,11 +20,9 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes the data associated with the TaskDialog tick event.
+        /// Initializes a new instance of the <see cref="TaskDialogTickEventArgs"/> class.
         /// </summary>
-        /// <param name="totalTicks">
-        /// The total number of ticks since the control was activated.
-        /// </param>
+        /// <param name="totalTicks">The total number of ticks since the control was activated.</param>
         public TaskDialogTickEventArgs(int totalTicks)
         {
             this.Ticks = totalTicks;
@@ -35,7 +33,7 @@ namespace Microsoft.Windows.Dialogs
         #region Properties
 
         /// <summary>
-        ///   Gets a value that determines the current number of ticks.
+        ///   Gets  a value indicating whether the current number of ticks.
         /// </summary>
         public int Ticks { get; private set; }
 

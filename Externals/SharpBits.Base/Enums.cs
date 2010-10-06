@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base
 {

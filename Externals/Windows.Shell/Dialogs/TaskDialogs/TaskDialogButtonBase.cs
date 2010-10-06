@@ -1,42 +1,33 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     using System;
 
-    // ContentProperty allows us to specify the text 
-    // of the button as the child text of
-    // a button element in XAML, as well as explicitly 
-    // set with 'Text="<text>"'
-    // Note that this attribute is inherited, so it 
-    // applies to command-links and radio buttons as well.
     /// <summary>
-    /// Defines the abstract base class for task dialog buttons. 
-    ///   Classes that inherit from this class will inherit 
-    ///   the Text property defined in this class.
+    /// Defines the abstract base class for task dialog buttons.
+    /// Classes that inherit from this class will inherit
+    /// the Text property defined in this class.
     /// </summary>
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
         #region Constants and Fields
 
-        /// <summary>
-        /// </summary>
+        /// <summary> Default control </summary>
         private bool defaultControl;
 
-        /// <summary>
-        /// </summary>
+        /// <summary> <see langword="true"/> to enable, <see langword="false"/> to disable </summary>
         private bool enabled = true;
 
-        /// <summary>
-        /// </summary>
+        /// <summary> The text for the button</summary>
         private string text;
 
         #endregion
@@ -44,22 +35,17 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance on a task dialog button.
+        /// Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.
         /// </summary>
         protected TaskDialogButtonBase()
         {
         }
 
         /// <summary>
-        /// Creates a new instance on a task dialog button with
-        ///   the specified name and text.
+        /// Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this button.
-        /// </param>
-        /// <param name="text">
-        /// The label for this button.
-        /// </param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
         protected TaskDialogButtonBase(string name, string text)
             : base(name)
         {
@@ -86,9 +72,11 @@ namespace Microsoft.Windows.Dialogs
         #region Properties
 
         /// <summary>
-        ///   Gets or sets a value that indicates whether
-        ///   this button is the default button.
+        /// Gets or sets a value indicating whether this button is the default button.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if default; otherwise, <see langword="false"/>.
+        /// </value>
         public bool Default
         {
             get
@@ -105,7 +93,7 @@ namespace Microsoft.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Gets or sets a value that determines whether the
+        ///   Gets or sets a value indicating whether whether the
         ///   button is enabled. The enabled state can cannot be changed
         ///   before the dialog is shown.
         /// </summary>
@@ -162,6 +150,7 @@ namespace Microsoft.Windows.Dialogs
         #region Methods
 
         /// <summary>
+        /// Raises the click event.
         /// </summary>
         internal void RaiseClickEvent()
         {

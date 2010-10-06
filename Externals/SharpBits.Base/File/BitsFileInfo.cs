@@ -1,36 +1,36 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base.File
 {
     /// <summary>
+    /// The file info for the <see cref="BitsFile"/>
     /// </summary>
     public class BitsFileInfo
     {
         #region Constructors and Destructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BitsFileInfo"/> class.
         /// </summary>
-        /// <param name="fileInfo">
-        /// </param>
+        /// <param name="fileInfo">The file info.</param>
         internal BitsFileInfo(BGFileInfo fileInfo)
         {
             this.BGFileInfo = fileInfo;
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BitsFileInfo"/> class.
         /// </summary>
-        /// <param name="remoteName">
-        /// </param>
-        /// <param name="localName">
-        /// </param>
+        /// <param name="remoteName">Name of the remote.</param>
+        /// <param name="localName">Name of the local.</param>
         protected BitsFileInfo(string remoteName, string localName)
         {
             this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };
@@ -41,7 +41,9 @@ namespace SharpBits.Base.File
         #region Properties
 
         /// <summary>
+        /// Gets the local file name
         /// </summary>
+        /// <value>The name of the local.</value>
         public string LocalName
         {
             get
@@ -51,6 +53,7 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
+        /// Gets the remote file name
         /// </summary>
         public string RemoteName
         {
@@ -61,7 +64,9 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
+        /// Gets the BG file info.
         /// </summary>
+        /// <value>The BG file info.</value>
         internal BGFileInfo BGFileInfo { get; private set; }
 
         #endregion

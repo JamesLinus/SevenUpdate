@@ -101,6 +101,7 @@ namespace Microsoft.Windows
         /// <summary>
         /// Gets the arguments passed to the other application.
         /// </summary>
+        /// <returns>Returns the arguments passed to the application</returns>
         /// <value>
         /// The arguments passed to the other application.
         /// </value>

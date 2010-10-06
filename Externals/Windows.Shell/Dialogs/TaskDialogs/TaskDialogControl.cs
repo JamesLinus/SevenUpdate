@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
     /// Declares the abstract base class for all custom task dialog controls.
@@ -18,18 +18,16 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of a task dialog control.
+        /// Initializes a new instance of the <see cref="TaskDialogControl"/> class.
         /// </summary>
         protected TaskDialogControl()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of a task dialog control with the specified name.
+        /// Initializes a new instance of the <see cref="TaskDialogControl"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this control.
-        /// </param>
+        /// <param name="name">The name for this control.</param>
         protected TaskDialogControl(string name)
             : base(name)
         {

@@ -79,122 +79,23 @@
     <Compile Include="AppRestartRecovery\RecoverySettings.cs" />
     <Compile Include="AppRestartRecovery\RestartRestrictions.cs" />
     <Compile Include="AppRestartRecovery\RestartSettings.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialog.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogButton.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogCheckBox.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogComboBox.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogControl.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogControlCollection.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogFilter.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogFilterCollection.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogFolderChangeEventArgs.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogGroupBox.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogLabel.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogMenu.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogProminentControl.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogRadioButtonList.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogResult.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogSeparator.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogStandardFilters.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonFileDialogTextBox.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonOpenFileDialog.cs" />
-    <Compile Include="Dialogs\FileDialogs\CommonSaveFileDialog.cs" />
-    <Compile Include="Dialogs\FileDialogs\ICommonFileDialogIndexedControls.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Converters.cs" />
-    <Compile Include="Common\DefaultShellImageSizes.cs">
+    <Compile Include="Dialogs\DialogControl.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\EnumUnknown.cs">
+    <Compile Include="Dialogs\DialogControlCollection.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\IconReference.cs">
+    <Compile Include="Dialogs\DialogsDefaults.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\ShellEnums.cs">
+    <Compile Include="Dialogs\IDialogControlHost.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\ShellFile.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellFileSystemFolder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellFolder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellFolderItems.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellItemArray.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellLibrary.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellLink.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellNonFileSystemFolder.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellNonFileSystemItem.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellObject.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellObjectCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellContainer.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellObjectFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellObjectNode.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Common\ShellThumbnail.cs" />
-    <Compile Include="Common\ShellThumbnailEnums.cs" />
     <Compile Include="EventArgs.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="InstanceAwareApplication.cs" />
-    <Compile Include="Interop\Common\Shortcut.cs" />
-    <Compile Include="Common\SortColumn.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\ControlBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\ListBoxItemBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\ProgressBarBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\TextBoxBaseBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\ToggleButtonBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\TypeHandlerFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\VisualStateBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\VisualStateBehaviorFactory.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controls\Behaviors\ButtonBaseBehavior.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Controls\CommandLink.cs" />
     <Compile Include="Controls\BackButton.cs" />
     <Compile Include="Controls\InfoTextBox.cs" />
@@ -204,10 +105,6 @@
     <Compile Include="Controls\UacButton.cs" />
     <Compile Include="Controls\ValidationRules.cs" />
     <Compile Include="Dwm\AeroGlass.cs" />
-    <Compile Include="Dialogs\Common\DialogControl.cs" />
-    <Compile Include="Dialogs\Common\DialogControlCollection.cs" />
-    <Compile Include="Dialogs\Common\DialogsDefaults.cs" />
-    <Compile Include="Dialogs\Common\IDialogControlHost.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialog.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogBar.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogButton.cs" />
@@ -226,61 +123,36 @@
     <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardIcon.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogStartupLocation.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
-    <Compile Include="Interop\AppRestartRecovery\AppRestartRecoveryNativeMethods.cs" />
-    <Compile Include="Interop\TaskDialogs\CommonDllNames.cs" />
-    <Compile Include="Interop\Common\ShellCOMClasses.cs">
+    <Compile Include="AppRestartRecovery\AppRestartRecoveryNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\Common\ShellCOMGuids.cs">
+    <Compile Include="Shortcut.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\Common\ShellCOMInterfaces.cs">
+    <Compile Include="Internal\CoreErrorHelper.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\Common\ShellNativeMethods.cs">
+    <Compile Include="Internal\CoreHelpers.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\CoreErrorHelper.cs" />
-    <Compile Include="Interop\CoreHelpers.cs" />
-    <Compile Include="Interop\CoreNativeMethods.cs" />
-    <Compile Include="Interop\Dialogs\DialogsCOMClasses.cs">
+    <Compile Include="Internal\CoreNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\Dialogs\DialogsCOMInterfaces.cs">
+    <Compile Include="Dialogs\DialogShowState.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\Dialogs\DialogShowState.cs" />
-    <Compile Include="Interop\KnownFolders\KnownFoldersCOMGuids.cs">
+    <Compile Include="Dialogs\TaskDialogs\CommonDllNames.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\KnownFolders\KnownFoldersCOMInterfaces.cs">
+    <Compile Include="Dialogs\TaskDialogs\NativeTaskDialog.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\KnownFolders\KnownFoldersNativeMethods.cs">
+    <Compile Include="Dialogs\TaskDialogs\NativeTaskDialogSettings.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\PropertySystem\PropertySystemCOMInterfaces.cs">
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Interop\PropertySystem\PropertySystemNativeMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Interop\TaskDialogs\NativeTaskDialog.cs" />
-    <Compile Include="Interop\TaskDialogs\NativeTaskDialogSettings.cs" />
-    <Compile Include="Interop\TaskDialogs\TaskDialogNativeMethods.cs" />
-    <Compile Include="KnownFolders\DefinitionOptions.cs" />
-    <Compile Include="KnownFolders\FileSystemKnownFolder.cs" />
-    <Compile Include="KnownFolders\FolderCategory.cs" />
-    <Compile Include="KnownFolders\FolderProperties.cs" />
-    <Compile Include="KnownFolders\FoldersIdentifiers.cs" />
-    <Compile Include="KnownFolders\FolderTypes.cs" />
-    <Compile Include="KnownFolders\IKnownFolder.cs" />
-    <Compile Include="KnownFolders\KnownFolderHelper.cs" />
-    <Compile Include="KnownFolders\KnownFolders.cs" />
-    <Compile Include="KnownFolders\KnownFolderSettings.cs" />
-    <Compile Include="KnownFolders\NonFileSystemKnownFolder.cs" />
-    <Compile Include="KnownFolders\RedirectionCapability.cs" />
-    <Compile Include="KnownFolders\RetrievalOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -294,26 +166,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="PropertySystem\IShellProperty.cs" />
-    <Compile Include="PropertySystem\PropertyKey.cs" />
-    <Compile Include="PropertySystem\PropVariant.cs" />
-    <Compile Include="PropertySystem\PropVariantNativeMethods.cs" />
-    <Compile Include="PropertySystem\ShellProperties.cs" />
-    <Compile Include="PropertySystem\ShellProperty.cs" />
-    <Compile Include="PropertySystem\ShellPropertyCollection.cs" />
-    <Compile Include="PropertySystem\ShellPropertyDescription.cs" />
-    <Compile Include="PropertySystem\ShellPropertyDescriptionsCache.cs" />
-    <Compile Include="PropertySystem\ShellPropertyEnums.cs" />
-    <Compile Include="PropertySystem\ShellPropertyEnumType.cs" />
-    <Compile Include="PropertySystem\ShellPropertyWriter.cs" />
-    <Compile Include="PropertySystem\StronglyTypedProperties.cs" />
-    <Compile Include="PropertySystem\SystemProperties.cs" />
     <Compile Include="Resources\SR.cs" />
     <Compile Include="Resources\SRID.cs" />
-    <Compile Include="SafeHandles\SafeIconHandle.cs" />
-    <Compile Include="SafeHandles\SafeRegionHandle.cs" />
-    <Compile Include="SafeHandles\SafeWindowHandle.cs" />
-    <Compile Include="SafeHandles\ZeroInvalidHandle.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -365,6 +219,7 @@
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

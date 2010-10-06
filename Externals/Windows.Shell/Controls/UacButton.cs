@@ -1,3 +1,12 @@
+// ***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive (Robert Baker)
+// Created          : 09-17-2010
+// Last Modified By : sevenalive (Robert Baker)
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 // Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -71,7 +80,7 @@ namespace Microsoft.Windows.Controls
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes static members of the <see cref = "UacButton" /> class.
+        /// Initializes static members of the <see cref="UacButton"/> class.
         /// </summary>
         static UacButton()
         {
@@ -95,12 +104,12 @@ namespace Microsoft.Windows.Controls
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "UacButton" /> class.
+        /// Initializes a new instance of the <see cref="UacButton"/> class.
         /// </summary>
         public UacButton()
         {
             this.Loaded += this.OnLoaded;
-            this.IsEnabledChanged += this.ChangeUacIcon;
+            this.IsEnabledChanged += (o, args) => this.ChangeUacIcon(args);
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
             var imgShield = new Image { Source = this.IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
@@ -116,7 +125,7 @@ namespace Microsoft.Windows.Controls
         #region Events
 
         /// <summary>
-        ///   Occurs when a property has changed
+        /// Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -212,12 +221,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="ButtonText"/> property
         /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -238,12 +243,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="IsShieldNeeded"/> property
         /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         /// <remarks>
         /// Adds or removes the UACShieldAdorner as appropriate
         /// </remarks>
@@ -265,12 +266,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="ShieldIcon"/> property
         /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -288,12 +285,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Changes the UAC icon
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        private void ChangeUacIcon(DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsShieldDisplayed)
             {
@@ -315,9 +308,9 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         /// <returns>
         /// If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,
-        ///   <see cref="Button.ToolTip"/> is returned.
-        ///   Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
-        ///   based on <see cref="IsShieldNeeded"/>
+        /// <see cref="Button.ToolTip"/> is returned.
+        /// Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
+        /// based on <see cref="IsShieldNeeded"/>
         /// </returns>
         /// <remarks>
         /// </remarks>
@@ -334,12 +327,8 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Called when the control is loaded
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.ToolTip = this.GetToolTip();
@@ -348,9 +337,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">
-        /// The property name that has changed
-        /// </param>
+        /// <param name="name">The property name that has changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

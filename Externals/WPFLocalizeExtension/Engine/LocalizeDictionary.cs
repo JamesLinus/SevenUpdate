@@ -1,21 +1,16 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
-#region
-
-using System.Windows.Markup;
-
-#endregion
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 
 //// Register this namespace under admirals one with prefix
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
 //// Assign a default namespace prefix for the schema
 
 namespace WPFLocalizeExtension.Engine
@@ -85,8 +80,7 @@ namespace WPFLocalizeExtension.Engine
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Prevents a default instance of the <see cref = "LocalizeDictionary" /> class from being created.
-        ///   Static Constructor
+        ///   Prevents a default instance of the <see cref = "Localize" /> class from being created.
         /// </summary>
         private Localize()
         {
@@ -98,7 +92,7 @@ namespace WPFLocalizeExtension.Engine
         #region Events
 
         /// <summary>
-        ///   Get raised if the <see cref = "LocalizeDictionary" />.Culture is changed.
+        ///   Get raised if the LocalizeDictionary.Culture is changed.
         /// </summary>
         internal event Action OnCultureChanged;
 
@@ -107,7 +101,7 @@ namespace WPFLocalizeExtension.Engine
         #region Properties
 
         /// <summary>
-        ///   Gets the default <see cref = "CultureInfo" /> to initialize the <see cref = "LocalizeDictionary" />.<see cref = "CultureInfo" />
+        ///   Gets the default <see cref = "CultureInfo" /> to initialize the LocalizeDictionary.<see cref = "CultureInfo" />
         /// </summary>
         public static CultureInfo DefaultCultureInfo
         {
@@ -118,8 +112,8 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>
-        ///   Gets the <see cref = "LocalizeDictionary" /> singleton.
-        ///   If the underlying instance is null, a instance will be created.
+        ///   Gets the LocalizeDictionary singleton.
+        ///   If the underlying instance is <see langword="null"/>, a instance will be created.
         /// </summary>
         public static Localize Instance
         {
@@ -152,10 +146,10 @@ namespace WPFLocalizeExtension.Engine
         ///   On set, <see cref = "OnCultureChanged" /> is raised.
         /// </summary>
         /// <exception cref = "System.InvalidOperationException">
-        ///   You have to set <see cref = "LocalizeDictionary" />.Culture first or 
+        ///   You have to set LocalizeDictionary.Culture first or 
         ///   wait until System.Windows.Application.Current.MainWindow is created.
         ///   Otherwise you will get an Exception.</exception>
-        /// <exception cref = "System.ArgumentNullException">thrown if Culture will be set to null</exception>
+        /// <exception cref = "System.ArgumentNullException">thrown if Culture will be set to <see langword="null"/></exception>
         public CultureInfo Culture
         {
             get
@@ -208,7 +202,7 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>
         /// Getter of <see cref="DependencyProperty"/> Culture.
         ///   Only supported at DesignTime.
-        ///   If its in Runtime, <see cref="LocalizeDictionary"/>.Culture will be returned.
+        ///   If its in Runtime, LocalizeDictionary.Culture will be returned.
         /// </summary>
         /// <param name="obj">
         /// The dependency object to get the design culture from.
@@ -303,7 +297,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>
-        /// Attach an WeakEventListener to the <see cref="LocalizeDictionary"/>
+        /// Attach an WeakEventListener to the LocalizeDictionary
         /// </summary>
         /// <param name="listener">
         /// The listener to attach
@@ -372,13 +366,13 @@ namespace WPFLocalizeExtension.Engine
         /// The founded object or NULL if not found or wrong <typeparamref name="TType"/> is given
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        /// <paramref name="resourceDictionary"/> is null
+        /// <paramref name="resourceDictionary"/> is <see langword="null"/>
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// <paramref name="resourceDictionary"/> is empty
         /// </exception>
         /// <exception cref="System.ArgumentNullException">
-        /// <paramref name="resourceKey"/> is null
+        /// <paramref name="resourceKey"/> is <see langword="null"/>
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// <paramref name="resourceKey"/> is empty
@@ -424,7 +418,7 @@ namespace WPFLocalizeExtension.Engine
                     throw new ArgumentNullException("resourceKey");
                 }
 
-                if (resourceKey != null && String.IsNullOrEmpty(resourceKey))
+                if (String.IsNullOrEmpty(resourceKey))
                 {
                     throw new ArgumentException("resourceKey is empty", "resourceKey");
                 }
@@ -469,7 +463,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>
-        /// Detach an WeakEventListener to the <see cref="LocalizeDictionary"/>
+        /// Detach an WeakEventListener to the LocalizeDictionary
         /// </summary>
         /// <param name="listener">
         /// The listener to detach
@@ -504,7 +498,7 @@ namespace WPFLocalizeExtension.Engine
         /// If the searched <see cref="ResourceManager"/> wasn't found (only in runtime)
         /// </exception>
         /// <exception cref="System.ArgumentException">
-        /// If the <paramref name="resourceKey"/> is null or empty
+        /// If the <paramref name="resourceKey"/> is <see langword="null"/> or empty
         /// </exception>
         public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey)
         {
@@ -539,7 +533,7 @@ namespace WPFLocalizeExtension.Engine
         /// If the searched <see cref="ResourceManager"/> wasn't found (only in runtime)
         /// </exception>
         /// <exception cref="System.ArgumentException">
-        /// If the <paramref name="resourceKey"/> is null or empty
+        /// If the <paramref name="resourceKey"/> is <see langword="null"/> or empty
         /// </exception>
         public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
         {
@@ -563,7 +557,7 @@ namespace WPFLocalizeExtension.Engine
         #region Methods
 
         /// <summary>
-        /// Callback function. Used to set the <see cref="LocalizeDictionary"/>.Culture if set in Xaml.
+        /// Callback function. Used to set the LocalizeDictionary.Culture if set in Xaml.
         ///   Only supported at DesignTime.
         /// </summary>
         /// <param name="obj">
@@ -626,7 +620,7 @@ namespace WPFLocalizeExtension.Engine
         /// If the searched <see cref="ResourceManager"/> wasn't found
         /// </exception>
         /// <exception cref="System.ArgumentException">
-        /// If the <paramref name="resourceKey"/> is null or empty
+        /// If the <paramref name="resourceKey"/> is <see langword="null"/> or empty
         /// </exception>
         private ResourceManager GetResourceManager(string resourceAssembly, string resourceDictionary, string resourceKey)
         {
@@ -728,6 +722,7 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
+
                     // cast it to a ResourceManager for better working with
                     resManager = (ResourceManager)resManObject;
                 }
@@ -881,7 +876,7 @@ namespace WPFLocalizeExtension.Engine
             }
 
             /// <summary>
-            /// This method is called if the <see cref="LocalizeDictionary"/>.OnCultureChanged
+            /// This method is called if the LocalizeDictionary.OnCultureChanged
             ///   is called and the listening process is enabled
             /// </summary>
             private void Instance_OnCultureChanged()

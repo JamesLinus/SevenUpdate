@@ -1,12 +1,12 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
 namespace Microsoft.Windows.ApplicationServices
 {
@@ -35,8 +35,8 @@ namespace Microsoft.Windows.ApplicationServices
         ///   after this method is invoked.
         /// </remarks>
         /// <param name="success">
-        /// <b>true</b> to indicate the the program was able to complete its recovery
-        ///   work before terminating; otherwise <b>false</b>.
+        /// <see langword="true"/> to indicate the the program was able to complete its recovery
+        ///   work before terminating; otherwise <see langword="false"/>.
         /// </param>
         public static void ApplicationRecoveryFinished(bool success)
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Windows.ApplicationServices
 
             var hr = AppRestartRecoveryNativeMethods.ApplicationRecoveryInProgress(out canceled);
 
-            if (hr == HRESULT.EFail)
+            if (hr == HRESULT.Fail)
             {
                 throw new InvalidOperationException("This method must be called from the registered callback method.");
             }
@@ -111,7 +111,7 @@ namespace Microsoft.Windows.ApplicationServices
 
             if (!CoreErrorHelper.Succeeded((int)hr))
             {
-                throw hr == HRESULT.EInvalidarg
+                throw hr == HRESULT.InvalidArg
                           ? (Exception)new ArgumentException("Application was not registered for recovery due to bad parameters.")
                           : new ExternalException("Application failed to register for recovery.");
             }
@@ -145,12 +145,12 @@ namespace Microsoft.Windows.ApplicationServices
 
             var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, settings.Restrictions);
 
-            if (hr == HRESULT.EFail)
+            if (hr == HRESULT.Fail)
             {
                 throw new InvalidOperationException("Application failed to registered for restart.");
             }
 
-            if (hr == HRESULT.EInvalidarg)
+            if (hr == HRESULT.InvalidArg)
             {
                 throw new ArgumentException("Failed to register application for restart due to bad parameters.");
             }
@@ -169,7 +169,7 @@ namespace Microsoft.Windows.ApplicationServices
 
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRecoveryCallback();
 
-            if (hr == HRESULT.EFail)
+            if (hr == HRESULT.Fail)
             {
                 throw new ExternalException("Unregister for recovery failed.");
             }
@@ -188,7 +188,7 @@ namespace Microsoft.Windows.ApplicationServices
 
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRestart();
 
-            if (hr == HRESULT.EFail)
+            if (hr == HRESULT.Fail)
             {
                 throw new ExternalException("Unregister for restart failed.");
             }

@@ -1,4 +1,12 @@
-﻿// Copyright 2007-2010 Robert Baker, Seven Software.
+﻿// ***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive (Robert Baker)
+// Created          : 09-17-2010
+// Last Modified By : sevenalive (Robert Baker)
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 // This file is part of Seven Update.
 // Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -177,11 +185,6 @@ namespace Microsoft.Windows.Controls
         #region Constants and Fields
 
         /// <summary>
-        ///   Indicates if the <see cref = "InfoTextBox" /> has text
-        /// </summary>
-        public static readonly DependencyProperty HasTextProperty = HasTextPropertyKey.DependencyProperty;
-
-        /// <summary>
         ///   The text to display when there is no text in the <see cref = "InfoTextBox" />
         /// </summary>
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
@@ -196,8 +199,7 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   Indicates if the <see cref = "InfoTextBox" /> has text
         /// </summary>
-        private static readonly DependencyPropertyKey HasTextPropertyKey = DependencyProperty.RegisterReadOnly(
-            "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>
         ///   The adorner label
@@ -246,7 +248,7 @@ namespace Microsoft.Windows.Controls
 
             private set
             {
-                this.SetValue(HasTextPropertyKey, value);
+                this.SetValue(HasTextProperty, value);
             }
         }
 

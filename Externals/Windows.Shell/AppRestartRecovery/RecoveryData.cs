@@ -1,12 +1,12 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
 namespace Microsoft.Windows.ApplicationServices
 {
@@ -36,15 +36,10 @@ namespace Microsoft.Windows.ApplicationServices
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a recovery data wrapper with a callback method and the current
-        ///   state of the application.
+        /// Initializes a new instance of the <see cref="RecoveryData"/> class.
         /// </summary>
-        /// <param name="callback">
-        /// The callback delegate.
-        /// </param>
-        /// <param name="state">
-        /// The current state of the application.
-        /// </param>
+        /// <param name="callback">The callback delegate.</param>
+        /// <param name="state">The current state of the application.</param>
         protected RecoveryData(RecoveryCallback callback, object state)
         {
             this.Callback = callback;
@@ -56,12 +51,12 @@ namespace Microsoft.Windows.ApplicationServices
         #region Properties
 
         /// <summary>
-        ///   Gets or sets a value that determines the recovery callback function.
+        ///   Gets or sets a value indicating whether the recovery callback function.
         /// </summary>
         public RecoveryCallback Callback { get; set; }
 
         /// <summary>
-        ///   Gets or sets a value that determines the application state.
+        ///   Gets or sets a value indicating whether the application state.
         /// </summary>
         public object State { get; set; }
 

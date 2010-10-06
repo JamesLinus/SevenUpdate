@@ -1,8 +1,14 @@
-// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+// ***********************************************************************
+// Assembly         : SevenUpdate.Sdk
+// Author           : sevenalive
+// Created          : 09-17-2010
+//
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+//
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -11,15 +17,20 @@ namespace SevenUpdate.Sdk.Pages
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
 
     using Microsoft.Windows.Controls;
-    using Microsoft.Windows.Dialogs;
+    using Microsoft.Windows.Dialogs.TaskDialogs;
     using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Helpers;
     using SevenUpdate.Sdk.Windows;
+
+    using Application = System.Windows.Application;
+    using KeyEventArgs = System.Windows.Input.KeyEventArgs;
+    using TextBox = System.Windows.Controls.TextBox;
 
     /// <summary>
     /// Interaction logic for UpdateFiles.xaml
@@ -149,11 +160,11 @@ namespace SevenUpdate.Sdk.Pages
             var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                 : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = directory };
 
-            var cfd = new CommonOpenFileDialog { Multiselect = false, IsFolderPicker = true, InitialDirectory = directory };
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+            if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
             {
-                this.AddFiles(Directory.GetFiles(cfd.FileName, "*.*", SearchOption.AllDirectories));
+                this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
             }
         }
 
@@ -293,7 +304,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Deletes an item from the <see cref="ListBox"/> on delete key down
+        /// Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down
         /// </summary>
         /// <param name="sender">
         /// The source of the event.

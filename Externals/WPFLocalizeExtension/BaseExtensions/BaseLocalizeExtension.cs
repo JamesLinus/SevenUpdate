@@ -1,12 +1,12 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.BaseExtensions
 {
     using System;
@@ -24,11 +24,9 @@ namespace WPFLocalizeExtension.BaseExtensions
 
     /// <summary>
     /// Implements the BaseLocalizeExtension.
-    ///   Represents a LocalizationExtension which provides a localized object of a .resx dictionary.
+    /// Represents a LocalizationExtension which provides a localized object of a .resx dictionary.
     /// </summary>
-    /// <typeparam name="TValue">
-    /// The type of the provided value.
-    /// </typeparam>
+    /// <typeparam name="TValue">The type of the provided value.</typeparam>
     /// <remarks>
     /// If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled properties
     /// </remarks>
@@ -55,7 +53,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Holds the Name of the .resx dictionary.
-        ///   If it's null, "Resources" will get returned
+        ///   If it's <see langword="null"/>, "Resources" will get returned
         /// </summary>
         private string dict;
 
@@ -83,8 +81,8 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// <param name="key">
         /// Three types are supported:
         ///   Direct: passed key = key;
-        ///   Dict/Key pair: this have to be separated like ResXDictionaryName:ResourceKey
-        ///   Assembly/Dict/Key pair: this have to be separated like ResXDictionaryName:ResourceKey
+        ///   Dict/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
+        ///   Assembly/Dict/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
         /// </param>
         /// <remarks>
         /// This constructor register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
@@ -112,7 +110,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Gets or sets the name of the Assembly where the .resx is located.
-        ///   If it's null, the executing assembly (where this LocalizeEngine is located at) will get returned
+        ///   If it's <see langword="null"/>, the executing assembly (where this LocalizeEngine is located at) will get returned
         /// </summary>
         public string Assembly
         {
@@ -155,7 +153,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.
-        ///   If it's null, "Resources" will get returned
+        ///   If it's <see langword="null"/>, "Resources" will get returned
         /// </summary>
         public string Dict
         {
@@ -239,7 +237,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
         /// </param>
         /// <returns>
-        /// The founded item from the .resx directory or null if not founded
+        /// The founded item from the .resx directory or <see langword="null"/> if not founded
         /// </returns>
         /// <remarks>
         /// This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
@@ -326,7 +324,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// The resolved value.
         /// </param>
         /// <returns>
-        /// True if the resolve was success, otherwise false.
+        /// True if the resolve was success, otherwise <see langword="false"/>.
         /// </returns>
         /// <exception>
         /// If the Assembly, Dict, Key pair was not found.
@@ -347,7 +345,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// The target culture.
         /// </param>
         /// <returns>
-        /// True if the resolve was success, otherwise false.
+        /// True if the resolve was success, otherwise <see langword="false"/>.
         /// </returns>
         /// <exception>
         /// If the Assembly, Dict, Key pair was not found.
@@ -458,14 +456,13 @@ namespace WPFLocalizeExtension.BaseExtensions
         #region IWeakEventListener
 
         /// <summary>
+        /// Receives events from the centralized event manager.
         /// </summary>
-        /// <param name="managerType">
-        /// </param>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
+        /// <param name="managerType">The type of the <see cref="T:System.Windows.WeakEventManager"/> calling this method.</param>
+        /// <param name="sender">Object that originated the event.</param>
+        /// <param name="e">Event data.</param>
         /// <returns>
+        /// <see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
@@ -552,7 +549,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         /// If Culture property defines a valid <see cref="CultureInfo"/>, a <see cref="CultureInfo"/> instance will get
-        ///   created and returned, otherwise <see cref="LocalizeDictionary"/>.Culture will get returned.
+        ///   created and returned, otherwise LocalizeDictionary.Culture will get returned.
         /// </summary>
         /// <returns>
         /// The <see cref="CultureInfo"/>
@@ -610,19 +607,13 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         /// This method will be called through the interface, passed to the
-        ///   <see cref="LocalizeDictionary"/>.<see cref="LocalizeDictionary.WeakCultureChangedEventManager"/> to get notified on culture changed
+        /// LocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed
         /// </summary>
-        /// <param name="managerType">
-        /// The manager Type.
-        /// </param>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The event argument.
-        /// </param>
+        /// <param name="managerType">The manager Type.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event argument.</param>
         /// <returns>
-        /// true if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return false if it receives an event that it does not recognize or handle.
+        /// <see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>
         protected virtual bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {

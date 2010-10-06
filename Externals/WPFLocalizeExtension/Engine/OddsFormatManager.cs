@@ -81,7 +81,7 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>
         ///   Gets the <see cref = "OddsFormatManager" /> singleton.
-        ///   If the underlying instance is null, a instance will be created.
+        ///   If the underlying instance is <see langword="null"/>, a instance will be created.
         /// </summary>
         public static OddsFormatManager Instance
         {
@@ -115,7 +115,7 @@ namespace WPFLocalizeExtension.Engine
         /// </summary>
         /// <exception cref = "System.InvalidOperationException">
         ///   You have to set <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> first or 
-        ///   wait until System.Windows.Application.Current.MainWindow is created.
+        ///   wait until MainWindow is created.
         ///   Otherwise you will get an Exception.</exception>
         /// <exception cref = "System.ArgumentNullException">thrown if OddsFormatType is not defined</exception>
         public OddsFormatType OddsFormatType
@@ -397,7 +397,7 @@ namespace WPFLocalizeExtension.Engine
             }
 
             /// <summary>
-            /// This method is called if the <see cref="LocalizeDictionary"/>.OnCultureChanged
+            /// This method is called if the LocalizeDictionary.OnCultureChanged
             ///   is called and the listening process is enabled
             /// </summary>
             private void Instance_OnCultureChanged()

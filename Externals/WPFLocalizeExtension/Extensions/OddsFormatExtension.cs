@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -278,19 +278,17 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Provides the Value for the first Binding
         /// </summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>.</param>
+        /// <returns>
+        /// The founded item from the .resx directory or <see langword="null"/> if not founded.
+        /// </returns>
         /// <remarks>
         /// This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
-        ///   to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.
-        ///   !PROOF: On every single <see cref="UserControl"/>, Window, and Page, 
-        ///   there is a new SparedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!
-        ///   Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).
+        /// to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.
+        /// !PROOF: On every single <see cref="UserControl"/>, Window, and Page,
+        /// there is a new SparedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!
+        /// Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).
         /// </remarks>
-        /// <param name="serviceProvider">
-        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>.
-        /// </param>
-        /// <returns>
-        /// The founded item from the .resx directory or null if not founded.
-        /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>.
         /// </exception>
@@ -355,15 +353,11 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        /// Sets a binding between a <see cref="DependencyObject"/> with its 
-        ///   <see cref="DependencyProperty"/> and this <c>BaseLocalizeExtension</c>.
+        /// Sets a binding between a <see cref="DependencyObject"/> with its
+        /// <see cref="DependencyProperty"/> and this <c>BaseLocalizeExtension</c>.
         /// </summary>
-        /// <param name="targetObject">
-        /// The target dependency object
-        /// </param>
-        /// <param name="targetProperty">
-        /// The target dependency property
-        /// </param>
+        /// <param name="targetObject">The target dependency object</param>
+        /// <param name="targetProperty">The target dependency property</param>
         /// <returns>
         /// TRUE if the binding was setup successfully, otherwise FALSE (Binding already exists).
         /// </returns>
@@ -407,9 +401,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Returns the Key that identifies a resource (Assembly:Dictionary:Key)
         /// </summary>
-        /// <returns>
-        /// Format: Assembly:Dictionary:Key
-        /// </returns>
+        /// <returns>Format: Assembly:Dictionary:Key</returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{0} -> {1}", this.DisplayValue, this.GetForcedOddsFormatOrDefault());
@@ -423,22 +415,16 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>
         /// This method will be called through the interface, passed to the
-        ///   <see cref="LocalizeDictionary.WeakCultureChangedEventManager"/> to get notified on culture changed
+        /// <see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed
         /// </summary>
-        /// <param name="managerType">
-        /// The manager Type.
-        /// </param>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The event argument.
-        /// </param>
+        /// <param name="managerType">The manager Type.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The event argument.</param>
         /// <returns>
-        /// true if the listener handled the event. It is considered an error by the 
-        ///   <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a 
-        ///   listener for an event that the listener does not handle. Regardless, 
-        ///   the method should return false if it receives an event that it does not recognize or handle.
+        /// <see langword="true"/> if the listener handled the event. It is considered an error by the
+        /// <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a
+        /// listener for an event that the listener does not handle. Regardless,
+        /// the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
@@ -471,7 +457,8 @@ namespace WPFLocalizeExtension.Extensions
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
             //// reference: http://www.bonusbaggers.com/odds-conversion-chart
-            var dict = new Dictionary<decimal, string> {
+            var dict = new Dictionary<decimal, string> 
+            {
                     { 11.00m, "10/1" }, 
                     { 10.00m, "9/1" }, 
                     { 9.50m, "17/2" }, 
@@ -551,12 +538,8 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Tries the get UK odds lookup value.
         /// </summary>
-        /// <param name="valToCheck">
-        /// The value to check.
-        /// </param>
-        /// <param name="retVal">
-        /// The return value. NULL if nothing was found.
-        /// </param>
+        /// <param name="valToCheck">The value to check.</param>
+        /// <param name="retVal">The return value. NULL if nothing was found.</param>
         /// <returns>
         /// TRUE if the value was found, otherwise FALSE.
         /// </returns>
@@ -575,11 +558,9 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>
         /// If Culture property defines a valid <see cref="CultureInfo"/>, a <see cref="CultureInfo"/> instance will get
-        ///   created and returned, otherwise <see cref="LocalizeDictionary"/>.Culture will get returned.
+        /// created and returned, otherwise LocalizeDictionary.Culture will get returned.
         /// </summary>
-        /// <returns>
-        /// The <see cref="CultureInfo"/>.
-        /// </returns>
+        /// <returns>The <see cref="CultureInfo"/>.</returns>
         /// <exception cref="System.ArgumentException">
         /// thrown if the parameter Culture don't defines a valid <see cref="CultureInfo"/>.
         /// </exception>
@@ -600,9 +581,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Set the Value of the <see cref="DependencyProperty"/> to the passed Value.
         /// </summary>
-        /// <param name="newValue">
-        /// The new Value
-        /// </param>
+        /// <param name="newValue">The new Value</param>
         private void SetNewValue(object newValue)
         {
             // if the list of dependency objects is empty or the target property is null, return

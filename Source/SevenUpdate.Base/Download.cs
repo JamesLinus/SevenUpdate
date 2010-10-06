@@ -1,8 +1,14 @@
-﻿// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+﻿// ***********************************************************************
+// Assembly         : SevenUpdate.Base
+// Author           : sevenalive
+// Created          : 09-17-2010
+//
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+//
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
@@ -91,7 +97,7 @@ namespace SevenUpdate
             {
                 try
                 {
-                    job.EnumFiles();
+                    job.EnumerateFiles();
                 }
                 catch
                 {
@@ -140,7 +146,8 @@ namespace SevenUpdate
             {
                 for (var y = 0; y < appUpdates[x].Updates.Count; y++)
                 {
-                    // Create download directory consisting of appname and update title
+                    // Create download directory consisting of application name and update title
+
                     var downloadDir = Base.AllUserStore + @"downloads\" + appUpdates[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
@@ -187,7 +194,7 @@ namespace SevenUpdate
 
             try
             {
-                bitsJob.EnumFiles();
+                bitsJob.EnumerateFiles();
             }
             catch
             {

@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -55,7 +55,7 @@ namespace WPFLocalizeExtension.Extensions
         /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
         /// </param>
         /// <returns>
-        /// The founded item from the .resx directory or null if not founded
+        /// The founded item from the .resx directory or <see langword="null"/> if not founded
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>

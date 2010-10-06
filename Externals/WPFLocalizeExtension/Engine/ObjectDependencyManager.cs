@@ -1,12 +1,12 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -46,17 +46,17 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>
         /// This method adds a new object dependency
         /// </summary>
-        /// <param name="weakRefDP">
+        /// <param name="weakRef">
         /// The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="objToHold"/>
         /// </param>
         /// <param name="objToHold">
-        /// The object, which should stay alive as long <paramref name="weakRefDP"/> is alive
+        /// The object, which should stay alive as long <paramref name="weakRef"/> is alive
         /// </param>
         /// <returns>
-        /// true, if the binding was successfully, otherwise false
+        /// <see langword="true"/>, if the binding was successfully, otherwise <see langword="false"/>
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        /// The <paramref name="objToHold"/> cannot be null
+        /// The <paramref name="objToHold"/> cannot be <see langword="null"/>
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// <paramref name="objToHold"/> cannot be type of <see cref="WeakReference"/>
@@ -65,7 +65,7 @@ namespace WPFLocalizeExtension.Engine
         /// The <see cref="WeakReference"/>.Target cannot be the same as <paramref name="objToHold"/>
         /// </exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static bool AddObjectDependency(WeakReference weakRefDP, object objToHold)
+        public static bool AddObjectDependency(WeakReference weakRef, object objToHold)
         {
             // run the clean up to ensure that only objects are watched they are realy still alive
             CleanUp();
@@ -83,7 +83,7 @@ namespace WPFLocalizeExtension.Engine
             }
 
             // if the target of the weakreference is the objToHold, this would be a cycling play.
-            if (weakRefDP.Target == objToHold)
+            if (weakRef.Target == objToHold)
             {
                 throw new InvalidOperationException("The WeakReference.Target cannot be the same as objToHold");
             }
@@ -95,7 +95,7 @@ namespace WPFLocalizeExtension.Engine
             if (!InternalList.ContainsKey(objToHold))
             {
                 // add the objToHold to the internal list.
-                var lst = new List<WeakReference> { weakRefDP };
+                var lst = new List<WeakReference> { weakRef };
 
                 InternalList.Add(objToHold, lst);
 
@@ -105,9 +105,9 @@ namespace WPFLocalizeExtension.Engine
             {
                 // otherweise, check if the weakRefDp exists and add it if necessary
                 var lst = InternalList[objToHold];
-                if (!lst.Contains(weakRefDP))
+                if (!lst.Contains(weakRef))
                 {
-                    lst.Add(weakRefDP);
+                    lst.Add(weakRef);
 
                     itemRegistered = true;
                 }

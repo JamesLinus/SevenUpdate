@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base
 {
@@ -17,7 +17,7 @@ namespace SharpBits.Base
     using SharpBits.Base.Job;
 
     /// <summary>
-    /// Use the IBackgroundCopyManager interface to create transfer jobs, 
+    /// Use the <see cref="IBackgroundCopyManager"/> interface to create transfer jobs, 
     ///   retrieve an enumerator object that contains the jobs in the queue, 
     ///   and to retrieve individual jobs from the queue.
     /// </summary>
@@ -26,49 +26,53 @@ namespace SharpBits.Base
         #region Constants and Fields
 
         /// <summary>
-        /// </summary>
-        internal JobOwner CurrentOwner;
-
-        /// <summary>
+        ///   Indicates if this instance is disposed
         /// </summary>
         private bool disposed;
 
         /// <summary>
+        /// Occurs when there is an interface error
         /// </summary>
-        private EventHandler<BitsInterfaceNotificationEventArgs> onInterfaceError;
+        private EventHandler<BitsInterfaceNotificationEventArgs> interfaceError;
 
         /// <summary>
+        /// Occurs when a job is added
         /// </summary>
-        private EventHandler<NotificationEventArgs> onJobAdded;
+        private EventHandler<NotificationEventArgs> jobAdded;
 
         /// <summary>
+        /// Occurs when a job error occurs
         /// </summary>
-        private EventHandler<ErrorNotificationEventArgs> onJobErrored;
+        private EventHandler<ErrorNotificationEventArgs> jobErrored;
 
         /// <summary>
+        /// Occurs when a job is modified
         /// </summary>
-        private EventHandler<NotificationEventArgs> onJobModified;
+        private EventHandler<NotificationEventArgs> jobModified;
 
         /// <summary>
+        /// Occurs when a job is removed
         /// </summary>
-        private EventHandler<NotificationEventArgs> onJobRemoved;
+        private EventHandler<NotificationEventArgs> jobRemoved;
 
         /// <summary>
+        /// Occurs when a job has transfered
         /// </summary>
-        private EventHandler<NotificationEventArgs> onJobTransfered;
+        private EventHandler<NotificationEventArgs> jobTransferred;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BitsManager"/> class.
         /// </summary>
         public BitsManager()
         {
             // Set threading apartment
             Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
             NativeMethods.COInitializeSecurity(
-                IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthnLevels.Connect, RpcImpLevel.Impersonate, IntPtr.Zero, EoAuthnCap.None, IntPtr.Zero);
+                IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthLevels.Connect, RpcImpLevel.Impersonate, IntPtr.Zero, EoAuthCap.None, IntPtr.Zero);
 
             this.BackgroundCopyManager = new BackgroundCopyManager() as IBackgroundCopyManager;
             this.Jobs = new BitsJobsDictionary(this); // will be set correctly later after initialization
@@ -83,92 +87,98 @@ namespace SharpBits.Base
         #region Events
 
         /// <summary>
+        /// Occurs when an interface error occurs
         /// </summary>
         public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
         {
             add
             {
-                this.onInterfaceError += value;
+                this.interfaceError += value;
             }
 
             remove
             {
-                this.onInterfaceError -= value;
+                this.interfaceError -= value;
             }
         }
 
         /// <summary>
+        /// Occurs when a <see cref="BitsJob"/> is added
         /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobAdded
         {
             add
             {
-                this.onJobAdded += value;
+                this.jobAdded += value;
             }
 
             remove
             {
-                this.onJobAdded -= value;
+                this.jobAdded -= value;
             }
         }
 
         /// <summary>
+        /// Occurs when a <see cref="BitsJob"/> error occurs
         /// </summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobError
         {
             add
             {
-                this.onJobErrored += value;
+                this.jobErrored += value;
             }
 
             remove
             {
-                this.onJobErrored -= value;
+                this.jobErrored -= value;
             }
         }
 
         /// <summary>
+        /// Occurs when a <see cref="BitsJob"/> is modified
         /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobModified
         {
             add
             {
-                this.onJobModified += value;
+                this.jobModified += value;
             }
 
             remove
             {
-                this.onJobModified -= value;
+                this.jobModified -= value;
             }
         }
 
         /// <summary>
+        /// Occurs when a <see cref="BitsJob"/> is removed
         /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobRemoved
         {
             add
             {
-                this.onJobRemoved += value;
+                this.jobRemoved += value;
             }
 
             remove
             {
-                this.onJobRemoved -= value;
+                this.jobRemoved -= value;
             }
         }
 
         /// <summary>
+        /// Occurs when a <see cref="BitsJob"/> is transfered
         /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobTransferred
         {
             add
             {
-                this.onJobTransfered += value;
+                this.jobTransferred += value;
             }
 
             remove
             {
-                this.onJobTransfered -= value;
+                this.jobTransferred -= value;
             }
         }
 
@@ -177,7 +187,9 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>
+        /// Gets the bits version.
         /// </summary>
+        /// <value>The bits version.</value>
         public BitsVersion BitsVersion
         {
             get
@@ -187,15 +199,27 @@ namespace SharpBits.Base
         }
 
         /// <summary>
+        /// Gets the collection of <see cref="BitsJob"/>
         /// </summary>
+        /// <value>The collection of <see cref="BitsJob"/></value>
         public BitsJobsDictionary Jobs { get; private set; }
 
         /// <summary>
+        /// Gets the background copy manager.
         /// </summary>
+        /// <value>The background copy manager.</value>
         internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
 
         /// <summary>
+        /// Gets or sets current owner of the job
         /// </summary>
+        /// <value>The current owner.</value>
+        internal JobOwner CurrentOwner { get; set; }
+
+        /// <summary>
+        /// Gets the notification handler.
+        /// </summary>
+        /// <value>The notification handler.</value>
         internal BitsNotification NotificationHandler { get; private set; }
 
         #endregion
@@ -205,52 +229,46 @@ namespace SharpBits.Base
         /// <summary>
         /// Creates a new transfer job.
         /// </summary>
-        /// <param name="displayName">
-        /// Null-terminated string that contains a display name for the job. 
-        ///   Typically, the display name is used to identify the job in a user interface. 
-        ///   Note that more than one job may have the same display name. Must not be NULL. 
-        ///   The name is limited to 256 characters, not including the null terminator.
-        /// </param>
-        /// <param name="jobType">
-        /// Type of transfer job, such as JobType.Download. For a list of transfer types, see the JobType enumeration
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="displayName">Null-terminated string that contains a display name for the job.
+        /// Typically, the display name is used to identify the job in a user interface.
+        /// Note that more than one job may have the same display name. Must not be NULL.
+        /// The name is limited to 256 characters, not including the <see langword="null"/> terminator.</param>
+        /// <param name="jobType">Type of transfer job, such as <see cref="JobType"/>.Download. For a list of transfer types, see the <see cref="JobType"/> enumeration</param>
+        /// <returns>The <see cref="BitsJob"/> created</returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
         {
             Guid guid;
-            IBackgroundCopyJob pJob;
-            this.BackgroundCopyManager.CreateJob(displayName, (BGJobType)jobType, out guid, out pJob);
+            IBackgroundCopyJob copyJob;
+            this.BackgroundCopyManager.CreateJob(displayName, (BGJobType)jobType, out guid, out copyJob);
             BitsJob job;
             lock (this.Jobs)
             {
-                job = new BitsJob(this, pJob);
+                job = new BitsJob(this, copyJob);
                 this.Jobs.Add(guid, job);
             }
 
-            if (null != this.onJobAdded)
+            if (null != this.jobAdded)
             {
-                this.onJobAdded(this, new NotificationEventArgs(job));
+                this.jobAdded(this, new NotificationEventArgs(job));
             }
 
             return job;
         }
 
         /// <summary>
+        /// Enumerates the collection of <see cref="BitsJob"/>
         /// </summary>
-        /// <returns>
-        /// </returns>
+        /// <returns>The collection of <see cref="BitsJob"/></returns>
         public BitsJobsDictionary EnumJobs()
         {
             return this.EnumJobs(JobOwner.CurrentUser);
         }
 
         /// <summary>
+        /// Enumerates the collection of <see cref="BitsJob"/>
         /// </summary>
-        /// <param name="jobOwner">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="jobOwner">The job owner.</param>
+        /// <returns>The collection of <see cref="BitsJob"/></returns>
         public BitsJobsDictionary EnumJobs(JobOwner jobOwner)
         {
             if (this.BackgroundCopyManager == null)
@@ -260,7 +278,7 @@ namespace SharpBits.Base
 
             this.CurrentOwner = jobOwner;
             IEnumBackgroundCopyJobs jobList;
-            this.BackgroundCopyManager.EnumJobs((UInt32)jobOwner, out jobList);
+            this.BackgroundCopyManager.EnumJobs((uint)jobOwner, out jobList);
             if (this.Jobs == null)
             {
                 this.Jobs = new BitsJobsDictionary(this, jobList);
@@ -274,15 +292,14 @@ namespace SharpBits.Base
         }
 
         /// <summary>
+        /// Gets the error description.
         /// </summary>
-        /// <param name="hResult">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        public string GetErrorDescription(int hResult)
+        /// <param name="result">The h result.</param>
+        /// <returns>The error description</returns>
+        public string GetErrorDescription(int result)
         {
             string description;
-            this.BackgroundCopyManager.GetErrorDescription(hResult, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+            this.BackgroundCopyManager.GetErrorDescription(result, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
             return description;
         }
 
@@ -293,6 +310,7 @@ namespace SharpBits.Base
         #region IDisposable
 
         /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -307,38 +325,37 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>
+        /// Notifies the on job removal.
         /// </summary>
-        /// <param name="job">
-        /// </param>
+        /// <param name="job">The job to remove</param>
         internal void NotifyOnJobRemoval(BitsJob job)
         {
-            if (null != this.onJobRemoved)
+            if (null != this.jobRemoved)
             {
-                this.onJobRemoved(this, new NotificationEventArgs(job));
+                this.jobRemoved(this, new NotificationEventArgs(job));
             }
         }
 
         /// <summary>
+        /// Publishes the exception.
         /// </summary>
-        /// <param name="job">
-        /// </param>
-        /// <param name="exception">
-        /// </param>
+        /// <param name="job">The job the exception occurred</param>
+        /// <param name="exception">The exception</param>
         internal void PublishException(BitsJob job, COMException exception)
         {
-            if (this.onInterfaceError == null)
+            if (this.interfaceError == null)
             {
                 return;
             }
 
             var description = this.GetErrorDescription(exception.ErrorCode);
-            this.onInterfaceError(this, new BitsInterfaceNotificationEventArgs(job, exception, description));
+            this.interfaceError(this, new BitsInterfaceNotificationEventArgs(job, exception, description));
         }
 
         /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// </param>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -361,11 +378,10 @@ namespace SharpBits.Base
         }
 
         /// <summary>
+        /// Notifications the handler on job error event.
         /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
             // route the event to the job
@@ -376,18 +392,17 @@ namespace SharpBits.Base
             }
 
             // publish the event to other subscribers
-            if (this.onJobErrored != null)
+            if (this.jobErrored != null)
             {
-                this.onJobErrored(sender, e);
+                this.jobErrored(sender, e);
             }
         }
 
         /// <summary>
+        /// Notifications the handler on job modified event.
         /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
@@ -398,18 +413,17 @@ namespace SharpBits.Base
             }
 
             // publish the event to other subscribers
-            if (this.onJobModified != null)
+            if (this.jobModified != null)
             {
-                this.onJobModified(sender, e);
+                this.jobModified(sender, e);
             }
         }
 
         /// <summary>
+        /// Notifications the handler on job transferred event.
         /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
@@ -420,9 +434,9 @@ namespace SharpBits.Base
             }
 
             // publish the event to other subscribers
-            if (this.onJobTransfered != null)
+            if (this.jobTransferred != null)
             {
-                this.onJobTransfered(sender, e);
+                this.jobTransferred(sender, e);
             }
         }
 

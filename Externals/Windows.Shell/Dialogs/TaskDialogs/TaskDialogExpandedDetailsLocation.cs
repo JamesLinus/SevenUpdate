@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
     /// Specifies the options for expand/collapse sections in dialogs.

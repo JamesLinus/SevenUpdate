@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base.File
 {
@@ -17,24 +17,29 @@ namespace SharpBits.Base.File
     using SharpBits.Base.Progress;
 
     /// <summary>
+    /// A file that can be added to a <see cref="BitsJob"/>
     /// </summary>
     public sealed partial class BitsFile : IDisposable
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The current job
         /// </summary>
         private readonly BitsJob job;
 
         /// <summary>
+        /// Indicates if the file has been disposed
         /// </summary>
         private bool disposed;
 
         /// <summary>
+        /// The current <see cref="BitsFile"/>
         /// </summary>
         private IBackgroundCopyFile file;
 
         /// <summary>
+        /// The current <see cref="BitsFile"/> progress
         /// </summary>
         private FileProgress progress;
 
@@ -43,18 +48,17 @@ namespace SharpBits.Base.File
         #region Constructors and Destructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BitsFile"/> class.
         /// </summary>
-        /// <param name="job">
-        /// </param>
-        /// <param name="file">
-        /// </param>
+        /// <param name="job">The current job</param>
+        /// <param name="file">The current file within the job</param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
         {
             if (null == file)
             {
-                throw new ArgumentNullException("IBackgroundCopyFile");
+                throw new ArgumentNullException(@"IBackgroundCopyFile");
             }
 
             this.file = file;
@@ -67,7 +71,9 @@ namespace SharpBits.Base.File
         #region Properties
 
         /// <summary>
+        /// Gets the local name of the file
         /// </summary>
+        /// <value>The filename of the local file</value>
         public string LocalName
         {
             get
@@ -87,16 +93,18 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
+        /// Gets the progress.
         /// </summary>
+        /// <value>The progress.</value>
         public FileProgress Progress
         {
             get
             {
                 if (null == this.progress)
                 {
-                    BGFileProgress fileProgress;
                     try
                     {
+                        BGFileProgress fileProgress;
                         this.file.GetProgress(out fileProgress);
                         this.progress = new FileProgress(fileProgress);
                     }
@@ -111,7 +119,9 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
+        /// Gets or sets the remote name of the file
         /// </summary>
+        /// <value>The remote name of the file</value>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public string RemoteName
@@ -159,6 +169,7 @@ namespace SharpBits.Base.File
         #region IDisposable
 
         /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -173,9 +184,9 @@ namespace SharpBits.Base.File
         #region Methods
 
         /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing">
-        /// </param>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)

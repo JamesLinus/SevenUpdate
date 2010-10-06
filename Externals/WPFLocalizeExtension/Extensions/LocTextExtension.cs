@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -237,7 +237,7 @@ namespace WPFLocalizeExtension.Extensions
         /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
         /// </param>
         /// <returns>
-        /// The founded item from the .resx directory or null if not founded
+        /// The founded item from the .resx directory or <see langword="null"/> if not founded
         /// </returns>
         /// <exception cref="System.InvalidOperationException">
         /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>
@@ -276,7 +276,7 @@ namespace WPFLocalizeExtension.Extensions
         /// This method returns the finished formatted text
         /// </summary>
         /// <param name="input">
-        /// If the passed string not null, it will be used, otherwise a fresh localized text will be loaded.
+        /// If the passed string not <see langword="null"/>, it will be used, otherwise a fresh localized text will be loaded.
         /// </param>
         /// <returns>
         /// Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX]
@@ -329,13 +329,13 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>
         /// This method formats the localized text.
-        ///   If the passed target text is null, string.empty will be returned.
+        ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
         /// </summary>
         /// <param name="target">
         /// The text to format.
         /// </param>
         /// <returns>
-        /// Returns the formated text or string.empty, if the target text was null.
+        /// Returns the formated text or string.empty, if the target text was <see langword="null"/>.
         /// </returns>
         protected virtual string FormatText(string target)
         {
@@ -352,7 +352,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>
         /// Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType"/>.
-        ///   If the prefix or suffix is null, it will be returned a string.empty.
+        ///   If the prefix or suffix is <see langword="null"/>, it will be returned a string.empty.
         /// </summary>
         /// <param name="at">
         /// The <see cref="TextAppendType"/> defines the format of the return value

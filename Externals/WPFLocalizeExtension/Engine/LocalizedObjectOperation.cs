@@ -1,12 +1,12 @@
-﻿//***********************************************************************
+﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : sevenalive
+// Author           : Bernhard Millauer
 // Created          : 09-19-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -40,7 +40,7 @@ namespace WPFLocalizeExtension.Engine
             }
             catch
             {
-                return "No localized ErrorMessage founded for ErrorNr: " + errorNo;
+                return "No localized ErrorMessage founded for Error: " + errorNo;
             }
         }
 

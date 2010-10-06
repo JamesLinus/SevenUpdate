@@ -1,8 +1,14 @@
-// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+// ***********************************************************************
+// Assembly         : SevenUpdate.Sdk
+// Author           : sevenalive
+// Created          : 09-17-2010
+//
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+//
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -10,14 +16,19 @@ namespace SevenUpdate.Sdk.Pages
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
 
     using Microsoft.Windows.Dialogs;
+    using Microsoft.Windows.Dialogs.TaskDialogs;
     using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Helpers;
     using SevenUpdate.Sdk.Windows;
+
+    using Application = System.Windows.Application;
+    using TextBox = System.Windows.Controls.TextBox;
 
     /// <summary>
     /// Interaction logic for AppInfo.xaml
@@ -66,7 +77,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the application install location
+        /// Opens a <see cref="OpenFileDialog"/> to browse for the application install location
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -76,10 +87,11 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
-            var cfd = new CommonOpenFileDialog { IsFolderPicker = true, Multiselect = false };
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+            var folderBrowserDialog = new FolderBrowserDialog();
+
+            if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
             {
-                this.tbxAppLocation.Text = Base.ConvertPath(cfd.FileName, false, Core.AppInfo.Is64Bit);
+                this.tbxAppLocation.Text = Base.ConvertPath(folderBrowserDialog.SelectedPath, false, Core.AppInfo.Is64Bit);
             }
         }
 

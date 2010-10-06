@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
     /// Represents a command-link.
@@ -18,6 +18,7 @@ namespace Microsoft.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>
+        /// The instruction for the task dialog
         /// </summary>
         private string instruction;
 
@@ -26,38 +27,28 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of this class.
+        /// Initializes a new instance of the <see cref="TaskDialogCommandLink"/> class.
         /// </summary>
         protected TaskDialogCommandLink()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified name and label.
+        /// Initializes a new instance of the <see cref="TaskDialogCommandLink"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this button.
-        /// </param>
-        /// <param name="text">
-        /// The label for this button.
-        /// </param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
         protected TaskDialogCommandLink(string name, string text)
             : base(name, text)
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified name,label, and instruction.
+        /// Initializes a new instance of the <see cref="TaskDialogCommandLink"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this button.
-        /// </param>
-        /// <param name="text">
-        /// The label for this button.
-        /// </param>
-        /// <param name="instruction">
-        /// The instruction for this command link.
-        /// </param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
+        /// <param name="instruction">The instruction for this command link.</param>
         protected TaskDialogCommandLink(string name, string text, string instruction)
             : base(name, text)
         {

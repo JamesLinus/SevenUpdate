@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
     /// Implements a button that can be hosted in a task dialog.
@@ -18,6 +18,7 @@ namespace Microsoft.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>
+        /// Indicates whether to show the UAC icon
         /// </summary>
         private bool showElevationIcon;
 
@@ -26,21 +27,17 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of this class.
+        /// Initializes a new instance of the <see cref="TaskDialogButton"/> class.
         /// </summary>
         public TaskDialogButton()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified property settings.
+        /// Initializes a new instance of the <see cref="TaskDialogButton"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name of the button.
-        /// </param>
-        /// <param name="text">
-        /// The button label.
-        /// </param>
+        /// <param name="name">The name of the button.</param>
+        /// <param name="text">The button label.</param>
         public TaskDialogButton(string name, string text)
             : base(name, text)
         {
@@ -51,8 +48,11 @@ namespace Microsoft.Windows.Dialogs
         #region Properties
 
         /// <summary>
-        ///   Gets or sets a value that controls whether the elevation icon is displayed.
+        /// Gets or sets a value indicating whether the elevation icon is displayed.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if [show elevation icon]; otherwise, <see langword="false"/>.
+        /// </value>
         public bool ShowElevationIcon
         {
             get

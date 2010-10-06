@@ -91,9 +91,6 @@
 						<DataTrigger Binding="{Binding ElementName=rbtnFileSystem, Path=IsChecked}" Value="True">
 							<Setter Property="Visibility" Value="Visible" />
 						</DataTrigger>
-						<DataTrigger Binding="{Binding Source={x:Static Internal:CoreHelpers.RunningOnXP}}" Value="True">
-							<Setter Property="Visibility" Value="Collapsed" />
-						</DataTrigger>
 					</Style.Triggers>
 				</Style>
 			</TextBlock.Style>

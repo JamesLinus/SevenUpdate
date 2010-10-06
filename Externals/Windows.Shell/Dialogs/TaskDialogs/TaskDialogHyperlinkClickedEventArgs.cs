@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     using System;
 
@@ -20,11 +20,9 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        /// Creates a new instance of this class with the specified link text.
+        /// Initializes a new instance of the <see cref="TaskDialogHyperlinkClickedEventArgs"/> class.
         /// </summary>
-        /// <param name="link">
-        /// The text of the hyperlink that was clicked.
-        /// </param>
+        /// <param name="link">The text of the hyperlink that was clicked.</param>
         public TaskDialogHyperlinkClickedEventArgs(string link)
         {
             this.LinkText = link;

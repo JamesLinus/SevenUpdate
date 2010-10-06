@@ -1,34 +1,41 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base
 {
+    using SharpBits.Base.Job;
+
     /// <summary>
+    /// The proxy settings for the <see cref="BitsJob"/>
     /// </summary>
     public class ProxySettings
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The job for the proxy settings
         /// </summary>
         private readonly IBackgroundCopyJob job;
 
         /// <summary>
+        /// The proxy bypass list
         /// </summary>
         private string proxyBypassList;
 
         /// <summary>
+        /// The proxy list
         /// </summary>
         private string proxyList;
 
         /// <summary>
+        /// The usage of proxy
         /// </summary>
         private BGJobProxyUsage proxyUsage;
 
@@ -37,9 +44,9 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ProxySettings"/> class.
         /// </summary>
-        /// <param name="job">
-        /// </param>
+        /// <param name="job">The job to set the proxy settings for</param>
         internal ProxySettings(IBackgroundCopyJob job)
         {
             this.job = job;
@@ -51,7 +58,9 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>
+        /// Gets or sets the proxy bypass list.
         /// </summary>
+        /// <value>The proxy bypass list.</value>
         public string ProxyBypassList
         {
             get
@@ -66,7 +75,9 @@ namespace SharpBits.Base
         }
 
         /// <summary>
+        /// Gets or sets the proxy list.
         /// </summary>
+        /// <value>The proxy list.</value>
         public string ProxyList
         {
             get
@@ -81,7 +92,9 @@ namespace SharpBits.Base
         }
 
         /// <summary>
+        /// Gets or sets the proxy usage.
         /// </summary>
+        /// <value>The proxy usage.</value>
         public ProxyUsage ProxyUsage
         {
             get
@@ -100,6 +113,7 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>
+        /// Updates <see cref="BitsJob"/> with the proxy usage
         /// </summary>
         public void Update()
         {

@@ -1,15 +1,17 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
+    using System.Windows.Controls;
+
     /// <summary>
     /// Defines a common class for all task dialog bar controls, such as the progress and marquee bars.
     /// </summary>
@@ -18,6 +20,7 @@ namespace Microsoft.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>
+        /// The <see cref="ProgressBar"/> State
         /// </summary>
         private TaskDialogProgressBarState state;
 
@@ -26,18 +29,16 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of this class.
+        /// Initializes a new instance of the <see cref="TaskDialogBar"/> class.
         /// </summary>
         public TaskDialogBar()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified name.
+        /// Initializes a new instance of the <see cref="TaskDialogBar"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this control.
-        /// </param>
+        /// <param name="name">The name for this control.</param>
         protected TaskDialogBar(string name)
             : base(name)
         {

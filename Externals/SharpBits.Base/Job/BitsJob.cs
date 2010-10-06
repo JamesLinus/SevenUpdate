@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base.Job
 {
@@ -18,53 +18,59 @@ namespace SharpBits.Base.Job
     using SharpBits.Base.Progress;
 
     /// <summary>
+    /// Contains data about the files to download or upload using BITS
     /// </summary>
     public partial class BitsJob
     {
         #region Constants and Fields
 
         /// <summary>
-        /// </summary>
-        internal IBackgroundCopyCallback NotificationTarget;
-
-        /// <summary>
+        ///   The BITS manager
         /// </summary>
         private readonly BitsManager manager;
 
         /// <summary>
+        ///   Indicates if the <see cref = "BitsJob" /> has been disposed
         /// </summary>
         private bool disposed;
 
         /// <summary>
+        ///   Data about the error
         /// </summary>
         private BitsError error;
 
         /// <summary>
+        ///   The job GUID
         /// </summary>
         private Guid guid;
 
         /// <summary>
+        ///   Occurs when a job has has an error occur
+        /// </summary>
+        private EventHandler<JobErrorNotificationEventArgs> jobErrored;
+
+        /// <summary>
+        ///   Occurs when a job has been modified
+        /// </summary>
+        private EventHandler<JobNotificationEventArgs> jobModified;
+
+        /// <summary>
+        ///   The times for the current job
         /// </summary>
         private JobTimes jobTimes;
 
-        // notification
         /// <summary>
+        ///   Occurs when a job as transferred
         /// </summary>
-        private EventHandler<JobErrorNotificationEventArgs> onJobErrored;
+        private EventHandler<JobNotificationEventArgs> jobTransferred;
 
         /// <summary>
-        /// </summary>
-        private EventHandler<JobNotificationEventArgs> onJobModified;
-
-        /// <summary>
-        /// </summary>
-        private EventHandler<JobNotificationEventArgs> onJobTransfered;
-
-        /// <summary>
+        ///   The current progress of the job
         /// </summary>
         private JobProgress progress;
 
         /// <summary>
+        ///   The proxy settings of the job
         /// </summary>
         private ProxySettings proxySettings;
 
@@ -73,10 +79,13 @@ namespace SharpBits.Base.Job
         #region Constructors and Destructors
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="BitsJob"/> class.
         /// </summary>
         /// <param name="manager">
+        /// The manager for the BITS
         /// </param>
         /// <param name="job">
+        /// The current job
         /// </param>
         internal BitsJob(BitsManager manager, IBackgroundCopyJob job)
         {
@@ -101,47 +110,50 @@ namespace SharpBits.Base.Job
         #region Events
 
         /// <summary>
+        ///   Occurs when the job occurred an error.
         /// </summary>
         public event EventHandler<JobErrorNotificationEventArgs> OnJobError
         {
             add
             {
-                this.onJobErrored += value;
+                this.jobErrored += value;
             }
 
             remove
             {
-                this.onJobErrored -= value;
+                this.jobErrored -= value;
             }
         }
 
         /// <summary>
+        ///   Occurs when the job has been modified.
         /// </summary>
         public event EventHandler<JobNotificationEventArgs> OnJobModified
         {
             add
             {
-                this.onJobModified += value;
+                this.jobModified += value;
             }
 
             remove
             {
-                this.onJobModified -= value;
+                this.jobModified -= value;
             }
         }
 
         /// <summary>
+        ///   Occurs when the job has been transferred.
         /// </summary>
         public event EventHandler<JobNotificationEventArgs> OnJobTransferred
         {
             add
             {
-                this.onJobTransfered += value;
+                this.jobTransferred += value;
             }
 
             remove
             {
-                this.onJobTransfered -= value;
+                this.jobTransferred -= value;
             }
         }
 
@@ -150,8 +162,9 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
-        ///   Description, max 1024 chars
+        ///   Gets or sets the description, max 1024 chars
         /// </summary>
+        /// <value>The description.</value>
         public string Description
         {
             get
@@ -183,8 +196,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        ///   Display Name, max 256 chars
+        ///   Gets or sets the display name, max 256 chars
         /// </summary>
+        /// <value>The display name.</value>
         public string DisplayName
         {
             get
@@ -216,7 +230,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the error that occurred
         /// </summary>
+        /// <value>The error.</value>
         public BitsError Error
         {
             get
@@ -247,7 +263,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the error count.
         /// </summary>
+        /// <value>The error count.</value>
         public ulong ErrorCount
         {
             get
@@ -267,10 +285,13 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the collection of <see cref = "BitsFile" />'s for the job
         /// </summary>
+        /// <value>The files.</value>
         public BitsFilesCollection Files { get; private set; }
 
         /// <summary>
+        ///   Gets the GUID of the current job
         /// </summary>
         public Guid JobId
         {
@@ -293,6 +314,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the job times for the current <see cref = "BitsJob" />
         /// </summary>
         public JobTimes JobTimes
         {
@@ -314,6 +336,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the type of the current <see cref = "BitsJob" />
         /// </summary>
         public JobType JobType
         {
@@ -334,7 +357,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets or sets the minimum retry delay.
         /// </summary>
+        /// <value>The minimum retry delay.</value>
         public uint MinimumRetryDelay
         {
             get
@@ -366,7 +391,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets or sets the no progress timeout.
         /// </summary>
+        /// <value>The no progress timeout.</value>
         public uint NoProgressTimeout
         {
             get
@@ -398,7 +425,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets or sets the notification flags.
         /// </summary>
+        /// <value>The notification flags.</value>
         public NotificationFlags NotificationFlags
         {
             get
@@ -430,8 +459,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        ///   SID of the job owner
+        ///   Gets the SID of the job owner
         /// </summary>
+        /// <value>The owner.</value>
         public string Owner
         {
             get
@@ -451,8 +481,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        ///   resolved owner name from job owner SID
+        ///   Gets the resolved owner name from job owner SID
         /// </summary>
+        /// <value>The name of the owner.</value>
         public string OwnerName
         {
             get
@@ -470,9 +501,12 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        ///   Job priority
-        ///   can not be set for jobs already in state Canceled or Acknowledged
+        ///   Gets or sets the Job priority
         /// </summary>
+        /// <remarks>
+        ///   Can not be set for jobs already in state Canceled or Acknowledged
+        /// </remarks>
+        /// <value>The priority.</value>
         public JobPriority Priority
         {
             get
@@ -504,7 +538,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the progress.
         /// </summary>
+        /// <value>The progress.</value>
         public JobProgress Progress
         {
             get
@@ -525,7 +561,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the proxy settings.
         /// </summary>
+        /// <value>The proxy settings.</value>
         public ProxySettings ProxySettings
         {
             get
@@ -535,7 +573,9 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the state.
         /// </summary>
+        /// <value>The state.</value>
         public JobState State
         {
             get
@@ -555,11 +595,15 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        ///   Gets the current <see cref = "BitsJob" />
         /// </summary>
+        /// <value>The <see cref = "BitsJob" /></value>
         internal IBackgroundCopyJob Job { get; private set; }
 
         /// <summary>
+        ///   Gets or sets the notification interface.
         /// </summary>
+        /// <value>The notification interface.</value>
         internal IBackgroundCopyCallback NotificationInterface
         {
             get
@@ -590,15 +634,24 @@ namespace SharpBits.Base.Job
             }
         }
 
+        /// <summary>
+        ///   Gets or sets the notification target
+        /// </summary>
+        /// <value>The notification target.</value>
+        internal IBackgroundCopyCallback NotificationTarget { get; set; }
+
         #endregion
 
         #region Public Methods
 
         /// <summary>
+        /// Adds the file.
         /// </summary>
         /// <param name="remoteName">
+        /// Name of the remote.
         /// </param>
         /// <param name="localName">
+        /// Name of the local.
         /// </param>
         public void AddFile(string remoteName, string localName)
         {
@@ -613,8 +666,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Adds the file.
         /// </summary>
         /// <param name="fileInfo">
+        /// The file info.
         /// </param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
@@ -629,8 +684,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Adds the files the current <see cref="BitsJob"/>
         /// </summary>
         /// <param name="files">
+        /// The files.
         /// </param>
         public void AddFiles(Collection<BitsFileInfo> files)
         {
@@ -640,10 +697,11 @@ namespace SharpBits.Base.Job
                 fileArray[i] = files[i].BGFileInfo;
             }
 
-            AddFiles(fileArray);
+            this.AddFiles(fileArray);
         }
 
         /// <summary>
+        /// Cancels the <see cref="BitsJob"/>
         /// </summary>
         public void Cancel()
         {
@@ -658,6 +716,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Completes and removes the <see cref="BitsJob"/> from the collection
         /// </summary>
         public void Complete()
         {
@@ -672,10 +731,12 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Enumerate the <see cref="BitsFile"/> collection
         /// </summary>
         /// <returns>
+        /// The collection of <see cref="BitsFile"/>'s
         /// </returns>
-        public BitsFilesCollection EnumFiles()
+        public BitsFilesCollection EnumerateFiles()
         {
             try
             {
@@ -692,6 +753,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Resumes the <see cref="BitsJob"/>
         /// </summary>
         public void Resume()
         {
@@ -706,6 +768,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Suspends the <see cref="BitsJob"/>
         /// </summary>
         public void Suspend()
         {
@@ -720,6 +783,7 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Takes the ownership.
         /// </summary>
         public void TakeOwnership()
         {
@@ -740,6 +804,7 @@ namespace SharpBits.Base.Job
         #region IDisposable
 
         /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         public void Dispose()
         {
@@ -754,8 +819,10 @@ namespace SharpBits.Base.Job
         #region Methods
 
         /// <summary>
+        /// Adds the files to the current job
         /// </summary>
         /// <param name="files">
+        /// The files.
         /// </param>
         internal void AddFiles(BGFileInfo[] files)
         {
@@ -771,50 +838,61 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Fires the event when the job has occurred an error
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.
         /// </param>
         internal void JobError(object sender, ErrorNotificationEventArgs e)
         {
-            if (null != this.onJobErrored)
+            if (null != this.jobErrored)
             {
-                this.onJobErrored(sender, new JobErrorNotificationEventArgs(e.Error));
+                this.jobErrored(sender, new JobErrorNotificationEventArgs(e.Error));
             }
         }
 
         /// <summary>
+        /// Fires the event when the job has been modified
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
         /// </param>
         internal void JobModified(object sender, NotificationEventArgs e)
         {
-            if (this.onJobModified != null)
+            if (this.jobModified != null)
             {
-                this.onJobModified(sender, new JobNotificationEventArgs());
+                this.jobModified(sender, new JobNotificationEventArgs());
             }
         }
 
         /// <summary>
+        /// Fires the event when the job has transferred
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
         /// </param>
         internal void JobTransferred(object sender, NotificationEventArgs e)
         {
-            if (this.onJobTransfered != null)
+            if (this.jobTransferred != null)
             {
-                this.onJobTransfered(sender, new JobNotificationEventArgs());
+                this.jobTransferred(sender, new JobNotificationEventArgs());
             }
         }
 
         /// <summary>
+        /// Publishes the exception.
         /// </summary>
         /// <param name="exception">
+        /// The exception.
         /// </param>
         internal void PublishException(COMException exception)
         {
@@ -822,8 +900,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
         /// </summary>
         /// <param name="disposing">
+        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
         /// </param>
         protected virtual void Dispose(bool disposing)
         {

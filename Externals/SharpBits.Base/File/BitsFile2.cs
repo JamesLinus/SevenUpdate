@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base.File
 {
@@ -14,13 +14,17 @@ namespace SharpBits.Base.File
     using System.Collections.ObjectModel;
     using System.Runtime.InteropServices;
 
+    using SharpBits.Base.Job;
+
     /// <summary>
+    /// A file that can be added to a <see cref="BitsJob"/>
     /// </summary>
     public sealed partial class BitsFile
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The file to download
         /// </summary>
         private readonly IBackgroundCopyFile2 file2;
 
@@ -29,7 +33,9 @@ namespace SharpBits.Base.File
         #region Properties
 
         /// <summary>
+        /// Gets the file ranges.
         /// </summary>
+        /// <value>The file ranges.</value>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public Collection<FileRange> FileRanges

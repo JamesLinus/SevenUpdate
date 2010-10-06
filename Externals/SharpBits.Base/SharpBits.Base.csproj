@@ -106,6 +106,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BGEnums.cs" />
     <Compile Include="BitsCredentials.cs" />
     <Compile Include="BitsError.cs" />
     <Compile Include="File\BitsFile.cs" />

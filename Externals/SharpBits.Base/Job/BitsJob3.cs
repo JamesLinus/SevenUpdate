@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base.Job
 {
@@ -17,12 +17,14 @@ namespace SharpBits.Base.Job
     using SharpBits.Base.File;
 
     /// <summary>
+    /// Contains data about the files to download or upload using BITS
     /// </summary>
     public partial class BitsJob : IDisposable
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The current job
         /// </summary>
         private readonly IBackgroundCopyJob3 job3;
 
@@ -31,7 +33,9 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
+        /// Gets or sets the file acl flags.
         /// </summary>
+        /// <value>The file acl flags.</value>
         /// <exception cref="NotSupportedException">
         /// </exception>
         /// <exception cref="NotSupportedException">
@@ -40,7 +44,7 @@ namespace SharpBits.Base.Job
         {
             get
             {
-                FileAclFlagss flags = 0;
+                BGFileAclFlags flags = 0;
                 try
                 {
                     if (this.job3 != null)
@@ -68,7 +72,7 @@ namespace SharpBits.Base.Job
                     if (this.job3 != null)
                     {
                         // only supported from IBackgroundCopyJob3 and above
-                        this.job3.SetFileAclFlags((FileAclFlagss)value);
+                        this.job3.SetFileAclFlags((BGFileAclFlags)value);
                     }
                     else
                     {
@@ -87,13 +91,11 @@ namespace SharpBits.Base.Job
         #region Public Methods
 
         /// <summary>
+        /// Adds the file with ranges.
         /// </summary>
-        /// <param name="remoteName">
-        /// </param>
-        /// <param name="localName">
-        /// </param>
-        /// <param name="fileRanges">
-        /// </param>
+        /// <param name="remoteName">Name of the remote.</param>
+        /// <param name="localName">Name of the local.</param>
+        /// <param name="fileRanges">The file ranges.</param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void AddFileWithRanges(string remoteName, string localName, Collection<FileRange> fileRanges)
@@ -123,11 +125,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
+        /// Replaces the remote prefix.
         /// </summary>
-        /// <param name="oldPrefix">
-        /// </param>
-        /// <param name="newPrefix">
-        /// </param>
+        /// <param name="oldPrefix">The old prefix.</param>
+        /// <param name="newPrefix">The new prefix.</param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void ReplaceRemotePrefix(string oldPrefix, string newPrefix)

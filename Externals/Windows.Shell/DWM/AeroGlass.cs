@@ -41,8 +41,11 @@ namespace Microsoft.Windows.Dwm
         #region Properties
 
         /// <summary>
-        ///   Get determines if AeroGlass is enabled on the desktop. Set enables/disables AreoGlass on the desktop.
+        /// Gets or sets a value indicating whether DWM is enabled on the desktop.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if this instance is enabled; otherwise, <see langword="false"/>.
+        /// </value>
         public static bool IsEnabled
         {
             get
@@ -113,16 +116,16 @@ namespace Microsoft.Windows.Dwm
         /// <param name="margins">
         /// The region to add glass
         /// </param>
-        public static void EnableGlass(Window window, CoreNativeMethods.MARGINS margins = new CoreNativeMethods.MARGINS())
+        public static void EnableGlass(Window window, CoreNativeMethods.Margins margins = new CoreNativeMethods.Margins())
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
                 return;
             }
 
-            if (margins.CYTopHeight == 0 && margins.CYBottomHeight == 0 && margins.CXRightWidth == 0 && margins.CXLeftWidth == 0)
+            if (margins.topHeight == 0 && margins.bottomHeight == 0 && margins.rightWidth == 0 && margins.leftWidth == 0)
             {
-                margins = new CoreNativeMethods.MARGINS(true);
+                margins = new CoreNativeMethods.Margins(true);
             }
 
             var windowHandle = new WindowInteropHelper(window).Handle;
@@ -141,25 +144,21 @@ namespace Microsoft.Windows.Dwm
         }
 
         /// <summary>
-        /// Resets the AeroGlass exclusion area.
+        /// Resets the Aero Glass exclusion area.
         /// </summary>
-        /// <param name="margins">
-        /// </param>
-        /// <param name="window">
-        /// </param>
-        public static void ResetAeroGlass(CoreNativeMethods.MARGINS margins, Window window)
+        /// <param name="margins">The margins.</param>
+        /// <param name="window">The window.</param>
+        public static void ResetAeroGlass(CoreNativeMethods.Margins margins, Window window)
         {
             ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
         }
 
         /// <summary>
-        /// Resets the AeroGlass exclusion area.
+        /// Resets the Aero Glass exclusion area.
         /// </summary>
-        /// <param name="margins">
-        /// </param>
-        /// <param name="windowHandle">
-        /// </param>
-        public static void ResetAeroGlass(CoreNativeMethods.MARGINS margins, IntPtr windowHandle)
+        /// <param name="margins">The margins.</param>
+        /// <param name="windowHandle">The window handle.</param>
+        public static void ResetAeroGlass(CoreNativeMethods.Margins margins, IntPtr windowHandle)
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -170,18 +169,14 @@ namespace Microsoft.Windows.Dwm
         }
 
         /// <summary>
-        /// Excludes a UI element from the AeroGlass frame.
+        /// Excludes a UI element from the Aero Glass frame.
         /// </summary>
-        /// <param name="element">
-        /// The element to exclude.
-        /// </param>
-        /// <param name="window">
-        /// The window the element resides in
-        /// </param>
+        /// <param name="element">The element to exclude.</param>
+        /// <param name="window">The window the element resides in</param>
         /// <remarks>
         /// c
-        ///   Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not 
-        ///   render properly on top of an AeroGlass frame.
+        /// Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
+        /// render properly on top of an Aero Glass frame.
         /// </remarks>
         public void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
@@ -194,8 +189,8 @@ namespace Microsoft.Windows.Dwm
 
             // calculate total size of window nonclient area
             var hwndSource = PresentationSource.FromVisual(window) as HwndSource;
-            var windowRect = new CoreNativeMethods.RECT();
-            var clientRect = new CoreNativeMethods.RECT();
+            var windowRect = new CoreNativeMethods.Rect();
+            var clientRect = new CoreNativeMethods.Rect();
             CoreNativeMethods.GetWindowRect(hwndSource.Handle, ref windowRect);
             CoreNativeMethods.GetClientRect(hwndSource.Handle, ref clientRect);
             var nonClientSize = new Size(
@@ -208,12 +203,12 @@ namespace Microsoft.Windows.Dwm
             var bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new CoreNativeMethods.MARGINS
+            var margins = new CoreNativeMethods.Margins
                 {
-                    CXLeftWidth = (int)topLeftFrame.X, 
-                    CXRightWidth = (int)(window.ActualWidth - bottomRightFrame.X), 
-                    CYTopHeight = (int)topLeftFrame.Y, 
-                    CYBottomHeight = (int)(window.ActualHeight - bottomRightFrame.Y)
+                    leftWidth = (int)topLeftFrame.X, 
+                    rightWidth = (int)(window.ActualWidth - bottomRightFrame.X), 
+                    topHeight = (int)topLeftFrame.Y, 
+                    bottomHeight = (int)(window.ActualHeight - bottomRightFrame.Y)
                 };
 
             // Extend the Frame into client area
@@ -224,20 +219,6 @@ namespace Microsoft.Windows.Dwm
 
         #region Methods
 
-        /// <summary>
-        /// </summary>
-        /// <param name="hwnd">
-        /// </param>
-        /// <param name="msg">
-        /// </param>
-        /// <param name="wParam">
-        /// </param>
-        /// <param name="lParam">
-        /// </param>
-        /// <param name="handled">
-        /// </param>
-        /// <returns>
-        /// </returns>
         private static IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == CoreNativeMethods.DwmMessages.WMDwmCompositionChanged || msg == CoreNativeMethods.DwmMessages.WMDwmnRenderingChanged)
@@ -256,17 +237,16 @@ namespace Microsoft.Windows.Dwm
         #endregion
 
         /// <summary>
-        /// Event argument for The DwmCompositionChanged event
+        /// Event argument for The <see cref="DwmCompositionChanged"/> event
         /// </summary>
         public class DwmCompositionChangedEventArgs : EventArgs
         {
             #region Constructors and Destructors
 
             /// <summary>
-            /// Event argument for DwmCompositionChanged event
+            /// Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.
             /// </summary>
-            /// <param name="isGlassEnabled">
-            /// </param>
+            /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
             internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
             {
                 this.IsGlassEnabled = isGlassEnabled;
@@ -277,8 +257,11 @@ namespace Microsoft.Windows.Dwm
             #region Properties
 
             /// <summary>
-            ///   Gets a bool specifying if DWM/Glass is currently enabled.
+            /// Gets a value indicating whether DWM/Glass is currently enabled.
             /// </summary>
+            /// <value>
+            /// <see langword="true"/> if this instance is glass enabled; otherwise, <see langword="false"/>.
+            /// </value>
             public bool IsGlassEnabled { get; private set; }
 
             #endregion

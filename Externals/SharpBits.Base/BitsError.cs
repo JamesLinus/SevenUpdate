@@ -1,12 +1,12 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : SharpBits.Base
-// Author           :xidar solutions
+// Author           : xidar solutions
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
 // Copyright        : (c) xidar solutions. All rights reserved.
-//***********************************************************************
+// ***********************************************************************
 
 namespace SharpBits.Base
 {
@@ -17,17 +17,18 @@ namespace SharpBits.Base
     using SharpBits.Base.File;
     using SharpBits.Base.Job;
 
-    /// <summary>
-    /// </summary>
+    /// <summary>Bits error</summary>
     public class BitsError
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The error that occurred
         /// </summary>
         private readonly IBackgroundCopyError error;
 
         /// <summary>
+        /// The job the error occurred on
         /// </summary>
         private readonly BitsJob job;
 
@@ -38,19 +39,15 @@ namespace SharpBits.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsError"/> class.
         /// </summary>
-        /// <param name="job">
-        /// The job.
-        /// </param>
-        /// <param name="error">
-        /// The error.
-        /// </param>
+        /// <param name="job">The job the error occurred on</param>
+        /// <param name="error">The error that occurred</param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
             {
-                throw new ArgumentNullException("IBackgroundCopyError");
+                throw new ArgumentNullException(@"IBackgroundCopyError");
             }
 
             this.error = error;
@@ -154,9 +151,9 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Gets the file.
+        /// Gets the file.
         /// </summary>
-        /// <value>The file.</value>
+        /// <value>The file that occurred the error</value>
         public BitsFile File
         {
             get
@@ -177,7 +174,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Gets the protocol.
+        /// Gets the protocol.
         /// </summary>
         /// <value>The protocol.</value>
         public string Protocol

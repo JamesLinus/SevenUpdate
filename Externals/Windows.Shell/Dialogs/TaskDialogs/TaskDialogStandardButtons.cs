@@ -1,20 +1,20 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     using System;
 
     /// <summary>
     /// Identifies one of the standard buttons that 
-    ///   can be displayed via TaskDialog.
+    ///   can be displayed via <see cref="TaskDialog"/>.
     /// </summary>
     [Flags]
     public enum TaskDialogStandardButtons

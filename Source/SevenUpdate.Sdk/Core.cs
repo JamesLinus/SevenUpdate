@@ -1,8 +1,14 @@
-﻿// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+﻿// ***********************************************************************
+// Assembly         : SevenUpdate.Sdk
+// Author           : sevenalive
+// Created          : 09-17-2010
+//
+// Last Modified By : sevenalive
+// Last Modified On : 10-05-2010
+// Description      : 
+//
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -13,15 +19,21 @@ namespace SevenUpdate.Sdk
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows;
+    using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Shell;
 
-    using Microsoft.Win32;
     using Microsoft.Windows.Dialogs;
+    using Microsoft.Windows.Dialogs.TaskDialogs;
     using Microsoft.Windows.Internal;
 
     using SevenUpdate.Sdk.Properties;
     using SevenUpdate.Sdk.Windows;
+
+    using Application = System.Windows.Application;
+    using MessageBox = System.Windows.MessageBox;
+    using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+    using Shortcut = SevenUpdate.Shortcut;
 
     /// <summary>
     /// Contains methods that are essential for the program
@@ -237,10 +249,10 @@ namespace SevenUpdate.Sdk
             AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
             UpdateInfo = new Update
                 {
-                    Files = new ObservableCollection<UpdateFile>(), 
-                    RegistryItems = new ObservableCollection<RegistryItem>(), 
-                    Shortcuts = new ObservableCollection<Shortcut>(), 
-                    Description = new ObservableCollection<LocaleString>(), 
+                    Files = new ObservableCollection<UpdateFile>(),
+                    RegistryItems = new ObservableCollection<RegistryItem>(),
+                    Shortcuts = new ObservableCollection<Shortcut>(),
+                    Description = new ObservableCollection<LocaleString>(),
                     Name = new ObservableCollection<LocaleString>()
                 };
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
@@ -270,171 +282,128 @@ namespace SevenUpdate.Sdk
         /// <returns>
         /// A collection of the selected files
         /// </returns>
-        internal static string[] OpenFileDialog(
-            string initialDirectory = null, 
-            bool multiSelect = false, 
-            string defaultDirectory = null, 
-            string defaultFileName = null, 
-            string defaultExtension = null, 
-            bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultDirectory = null, string defaultFileName = null, string defaultExtension = null, bool navigateToShortcut = false)
         {
-            if (CoreHelpers.RunningOnXP)
-            {
-                var ofd = new OpenFileDialog
-                    {
-                        Multiselect = multiSelect, 
-                        FileName = defaultFileName, 
-                        CheckFileExists = true, 
-                        DefaultExt = defaultExtension, 
-                        InitialDirectory = initialDirectory, 
-                        DereferenceLinks = navigateToShortcut
-                    };
-
-                switch (defaultExtension)
+            var openFileDialog = new OpenFileDialog
                 {
-                    case "sua":
-                        ofd.Filter = Resources.Sua + " (*.sua)|*.sua";
-                        break;
-                    case "sui":
-                        ofd.Filter = Resources.Sui + " (*.sui)|*.sui";
-                        break;
-                    case "reg":
-                        ofd.Filter = Resources.RegFile + " (*.reg)|*.reg";
-                        break;
-                    case "lnk":
-                        ofd.Filter = Resources.Shortcut + " (*.lnk)|*.lnk";
-                        break;
-                    default:
-                        ofd.AddExtension = false;
-                        ofd.Filter = Resources.AllFiles + "|*.*";
-                        break;
-                }
-
-                return ofd.ShowDialog(Application.Current.MainWindow).GetValueOrDefault() ? ofd.FileNames : null;
-            }
-
-            var cfd = new CommonOpenFileDialog
-                {
-                    InitialDirectory = initialDirectory, 
-                    EnsureFileExists = true, 
-                    EnsureValidNames = true, 
-                    Multiselect = true, 
-                    DefaultDirectory = defaultDirectory, 
-                    NavigateToShortcut = navigateToShortcut, 
-                    DefaultExtension = defaultExtension, 
-                    DefaultFileName = defaultFileName
+                    AutoUpgradeEnabled = true,
+                    Multiselect = multiSelect,
+                    InitialDirectory = initialDirectory,
+                    DereferenceLinks = navigateToShortcut,
+                    CheckFileExists = true,
+                    DefaultExt = defaultExtension,
+                    ValidateNames = true
                 };
             switch (defaultExtension)
             {
                 case "sua":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sua, "*.sua"));
+                    openFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
                     break;
                 case "sui":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sui, "*.sui"));
+                    openFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
                     break;
                 case "reg":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.RegFile, "*.reg"));
+                    openFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
                     break;
                 case "lnk":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Shortcut, "*.lnk"));
+                    openFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
+                    break;
+                default:
+                    openFileDialog.AddExtension = false;
+                    openFileDialog.Filter = Resources.AllFiles + @"|*.*";
                     break;
             }
 
-            if (cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK)
+            return openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
+        }
+
+        /// <summary>
+        /// Gets the IWin32 window.
+        /// </summary>
+        /// <param name="visual">The visual object</param>
+        /// <returns>The Win32 Window</returns>
+        internal static IWin32Window GetIWin32Window(this System.Windows.Media.Visual visual)
+        {
+            var source = PresentationSource.FromVisual(visual) as System.Windows.Interop.HwndSource;
+            IWin32Window win = new OldWindow(source.Handle);
+            return win;
+        }
+
+        /// <summary>
+        /// The old window
+        /// </summary>
+        private sealed class OldWindow : IWin32Window
+        {
+            /// <summary>
+            /// The pointer to the window
+            /// </summary>
+            private readonly IntPtr windowHandle;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="OldWindow"/> class.
+            /// </summary>
+            /// <param name="handle">The handle.</param>
+            public OldWindow(IntPtr handle)
             {
-                var fileNames = new string[cfd.FileNames.Count];
-                cfd.FileNames.CopyTo(fileNames, 0);
-                return fileNames;
+                this.windowHandle = handle;
             }
 
-            return null;
+            #region IWin32Window Members
+
+            /// <summary>
+            /// Gets the handle to the window represented by the implementer.
+            /// </summary>
+            /// <value></value>
+            /// <returns>A handle to the window represented by the implementer.</returns>
+            IntPtr System.Windows.Forms.IWin32Window.Handle
+            {
+                get { return this.windowHandle; }
+            }
+
+            #endregion
         }
 
         /// <summary>
         /// Opens a SaveFileDialog
         /// </summary>
-        /// <param name="initialDirectory">
-        /// Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory
-        /// </param>
-        /// <param name="defaultDirectory">
-        /// Sets the folder or path used as a default if there is not a recently used folder value available
-        /// </param>
-        /// <param name="defaultFileName">
-        /// Sets the default file name
-        /// </param>
-        /// <param name="defaultExtension">
-        /// Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names
-        /// </param>
-        /// <returns>
-        /// Gets the selected filename
-        /// </returns>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="defaultDirectory">Sets the folder or path used as a default if there is not a recently used folder value available</param>
+        /// <param name="defaultFileName">Sets the default file name</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
+        /// <returns>Gets the selected filename</returns>
         internal static string SaveFileDialog(string initialDirectory, string defaultDirectory, string defaultFileName, string defaultExtension = null)
         {
-            if (CoreHelpers.RunningOnXP)
-            {
-                var ofd = new SaveFileDialog
-                    {
-                        FileName = defaultFileName, 
-                        CheckFileExists = false, 
-                        DefaultExt = defaultExtension, 
-                        AddExtension = true, 
-                        InitialDirectory = initialDirectory, 
-                        ValidateNames = true
-                    };
-
-                switch (defaultExtension)
+            var saveFileDialog = new System.Windows.Forms.SaveFileDialog
                 {
-                    case @"sua":
-                        ofd.Filter = Resources.Sua + " (*.sua)|*.sua";
-                        break;
-                    case @"sui":
-                        ofd.Filter = Resources.Sui + " (*.sui)|*.sui";
-                        break;
-                    case @"reg":
-                        ofd.Filter = Resources.RegFile + " (*.reg)|*.reg";
-                        break;
-                    case @"lnk":
-                        ofd.Filter = Resources.Shortcut + " (*.lnk)|*.lnk";
-                        break;
-                    default:
-                        ofd.AddExtension = false;
-                        ofd.Filter = Resources.AllFiles + "|*.*";
-                        break;
-                }
-
-                return ofd.ShowDialog(Application.Current.MainWindow).GetValueOrDefault() ? ofd.FileName : null;
-            }
-
-            var cfd = new CommonSaveFileDialog
-                {
-                    InitialDirectory = initialDirectory, 
-                    EnsureValidNames = true, 
-                    DefaultDirectory = defaultDirectory, 
-                    DefaultExtension = defaultExtension, 
-                    DefaultFileName = defaultFileName, 
-                    AlwaysAppendDefaultExtension = true, 
-                    AddToMostRecentlyUsedList = true
+                    FileName = defaultFileName,
+                    CheckFileExists = false,
+                    DefaultExt = defaultExtension,
+                    AddExtension = true,
+                    InitialDirectory = initialDirectory,
+                    ValidateNames = true
                 };
+
             switch (defaultExtension)
             {
-                case "sua":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sua, "*.sua"));
+                case @"sua":
+                    saveFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
                     break;
-                case "sui":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Sui, "*.sui"));
+                case @"sui":
+                    saveFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
                     break;
-                case "reg":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.RegFile, "*.reg"));
+                case @"reg":
+                    saveFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
                     break;
-                case "lnk":
-                    cfd.Filters.Add(new CommonFileDialogFilter(Resources.Shortcut, "*.lnk"));
+                case @"lnk":
+                    saveFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
                     break;
                 default:
-                    cfd.AlwaysAppendDefaultExtension = false;
+                    saveFileDialog.AddExtension = false;
+                    saveFileDialog.Filter = Resources.AllFiles + @"|*.*";
                     break;
             }
 
-            return cfd.ShowDialog(Application.Current.MainWindow) == CommonFileDialogResult.OK ? cfd.FileName : null;
+            return saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
         }
 
         /// <summary>
@@ -470,23 +439,23 @@ namespace SevenUpdate.Sdk
             {
                 jumpTask = new JumpTask
                     {
-                        ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe", 
-                        IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
-                        IconResourceIndex = 7, 
-                        Title = Resources.CreateUpdate, 
-                        CustomCategory = Projects[x].ApplicationName, 
-                        Arguments = @"-newupdate " + x, 
+                        ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
+                        IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
+                        IconResourceIndex = 7,
+                        Title = Resources.CreateUpdate,
+                        CustomCategory = Projects[x].ApplicationName,
+                        Arguments = @"-newupdate " + x,
                     };
                 jumpList.JumpItems.Add(jumpTask);
                 for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
                 {
                     jumpTask = new JumpTask
                         {
-                            ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe", 
-                            IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
-                            IconResourceIndex = 8, 
-                            Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]), 
-                            CustomCategory = Projects[x].ApplicationName, 
+                            ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
+                            IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
+                            IconResourceIndex = 8,
+                            Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]),
+                            CustomCategory = Projects[x].ApplicationName,
                             Arguments = @"-edit " + x + " " + y
                         };
 
@@ -497,11 +466,11 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe", 
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 6, 
-                    Title = Resources.CreateProject, 
-                    CustomCategory = Resources.Tasks, 
+                    ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
+                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
+                    IconResourceIndex = 6,
+                    Title = Resources.CreateProject,
+                    CustomCategory = Resources.Tasks,
                     Arguments = @"-newproject"
                 };
             jumpList.JumpItems.Add(jumpTask);
@@ -509,7 +478,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
+        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
@@ -526,7 +495,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
+        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
@@ -546,7 +515,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
+        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
@@ -570,7 +539,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
+        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
@@ -597,25 +566,25 @@ namespace SevenUpdate.Sdk
         /// Returns the result of the message
         /// </returns>
         internal static TaskDialogResult ShowMessage(
-            string instructionText, 
-            TaskDialogStandardIcon icon, 
-            TaskDialogStandardButtons standardButtons, 
-            string description = null, 
-            string footerText = null, 
-            string defaultButtonText = null, 
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
                 var td = new TaskDialog
                     {
-                        Caption = Resources.SevenUpdateSDK, 
-                        InstructionText = instructionText, 
-                        Text = description, 
-                        Icon = icon, 
-                        FooterText = footerText, 
-                        FooterIcon = TaskDialogStandardIcon.Information, 
-                        Cancelable = true, 
+                        Caption = Resources.SevenUpdateSDK,
+                        InstructionText = instructionText,
+                        Text = description,
+                        Icon = icon,
+                        FooterText = footerText,
+                        FooterIcon = TaskDialogStandardIcon.Information,
+                        Cancelable = true,
                     };
                 if (defaultButtonText != null)
                 {

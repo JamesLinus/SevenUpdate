@@ -1,3 +1,12 @@
+// ***********************************************************************
+// Assembly         : Windows.Shell
+// Author           : sevenalive (Robert Baker)
+// Created          : 09-17-2010
+// Last Modified By : sevenalive (Robert Baker)
+// Last Modified On : 10-05-2010
+// Description      : 
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 // Copyright 2007-2010 Robert Baker, Seven Software.
 // This file is part of Seven Update.
 // Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.

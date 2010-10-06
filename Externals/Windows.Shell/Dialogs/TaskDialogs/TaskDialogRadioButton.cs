@@ -1,14 +1,14 @@
-//***********************************************************************
+// ***********************************************************************
 // Assembly         : Windows.Shell
-// Author           : sevenalive
+// Author           : Microsoft
 // Created          : 09-17-2010
-// Last Modified By : sevenalive
+// Last Modified By : sevenalive (Robert Baker)
 // Last Modified On : 10-05-2010
 // Description      : 
-// Copyright        : (c) Seven Software. All rights reserved.
-//***********************************************************************
+// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// ***********************************************************************
 
-namespace Microsoft.Windows.Dialogs
+namespace Microsoft.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
     /// Defines a radio button that can be hosted in by a 
@@ -19,23 +19,18 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of this class.
+        /// Initializes a new instance of the <see cref="TaskDialogRadioButton"/> class.
         /// </summary>
         protected TaskDialogRadioButton()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with
-        ///   the specified name and text.
+        /// Initializes a new instance of the <see cref="TaskDialogRadioButton"/> class.
         /// </summary>
-        /// <param name="name">
-        /// The name for this control.
-        /// </param>
-        /// <param name="text">
-        /// The value for this controls 
-        ///   <see cref="P:Microsoft.Windows.Dialogs.TaskDialogButtonBase.Text"/> property.
-        /// </param>
+        /// <param name="name">The name for this control.</param>
+        /// <param name="text">The value for this controls
+        /// <see cref="P:Microsoft.Windows.Dialogs.TaskDialogButtonBase.Text"/> property.</param>
         protected TaskDialogRadioButton(string name, string text)
             : base(name, text)
         {
