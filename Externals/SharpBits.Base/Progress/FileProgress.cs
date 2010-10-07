@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Progress
 {
     using System;
@@ -22,7 +19,7 @@ namespace SharpBits.Base.Progress
         #region Constants and Fields
 
         /// <summary>
-        /// The current file progress
+        ///   The current file progress
         /// </summary>
         private BGFileProgress fileProgress;
 
@@ -33,7 +30,9 @@ namespace SharpBits.Base.Progress
         /// <summary>
         /// Initializes a new instance of the <see cref="FileProgress"/> class.
         /// </summary>
-        /// <param name="fileProgress">The file progress.</param>
+        /// <param name="fileProgress">
+        /// The file progress.
+        /// </param>
         internal FileProgress(BGFileProgress fileProgress)
         {
             this.fileProgress = fileProgress;
@@ -44,7 +43,7 @@ namespace SharpBits.Base.Progress
         #region Properties
 
         /// <summary>
-        /// Gets the total number of bytes downloaded
+        ///   Gets the total number of bytes downloaded
         /// </summary>
         /// <value>The bytes total.</value>
         public ulong BytesTotal
@@ -56,7 +55,7 @@ namespace SharpBits.Base.Progress
         }
 
         /// <summary>
-        /// Gets the total number of bytes transferred.
+        ///   Gets the total number of bytes transferred.
         /// </summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
@@ -68,10 +67,10 @@ namespace SharpBits.Base.Progress
         }
 
         /// <summary>
-        /// Gets a value indicating whether this <see cref="FileProgress"/> is completed.
+        ///   Gets a value indicating whether this <see cref = "FileProgress" /> is completed.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if completed; otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if completed; otherwise, <see langword = "false" />.
         /// </value>
         public bool Completed
         {

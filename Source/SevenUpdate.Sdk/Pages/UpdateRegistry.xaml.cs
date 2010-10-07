@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
@@ -14,13 +10,12 @@ namespace SevenUpdate.Sdk.Pages
     using System;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dwm;
     using System.Windows.Input;
     using System.Windows.Media;
 
     using Microsoft.Win32;
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Windows;
 
@@ -130,7 +125,7 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
-            var files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), false, null, null, "reg");
+            var files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), false, "reg");
             if (files == null)
             {
                 return;
@@ -236,7 +231,7 @@ namespace SevenUpdate.Sdk.Pages
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {

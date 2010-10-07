@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Helper
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Helper
@@ -62,13 +58,13 @@ namespace SevenUpdate.Helper
                 {
                     Process.GetProcessesByName("SevenUpdate")[0].CloseMainWindow();
                 }
-                catch
+                catch (Exception)
                 {
                     try
                     {
                         Process.GetProcessesByName("SevenUpdate")[0].Kill();
                     }
-                    catch
+                    catch (Exception)
                     {
                     }
                 }
@@ -77,7 +73,7 @@ namespace SevenUpdate.Helper
                 {
                     Process.GetProcessesByName("SevenUpdate.Admin")[0].Kill();
                 }
-                catch
+                catch (Exception)
                 {
                 }
 
@@ -87,7 +83,7 @@ namespace SevenUpdate.Helper
                 {
                     File.Delete(appStore + "reboot.lock");
                 }
-                catch
+                catch (Exception)
                 {
                 }
 
@@ -106,11 +102,11 @@ namespace SevenUpdate.Helper
                             {
                                 File.Delete(t.FullName);
                             }
-                            catch
+                            catch (Exception)
                             {
                             }
                         }
-                        catch
+                        catch (Exception)
                         {
                             MoveFileEX(t.FullName, AppDir + t.Name, MoveOnReboot);
 
@@ -139,7 +135,7 @@ namespace SevenUpdate.Helper
                         MoveFileEX(appStore + "reboot.lock", null, MoveOnReboot);
                     }
                 }
-                catch
+                catch (Exception)
                 {
                 }
 

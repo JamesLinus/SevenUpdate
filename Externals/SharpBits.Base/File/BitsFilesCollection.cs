@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.File
 {
     using System;
@@ -15,23 +12,25 @@ namespace SharpBits.Base.File
 
     using SharpBits.Base.Job;
 
-    /// <summary>Collection of <see cref="BitsFile"/></summary>
+    /// <summary>
+    /// Collection of <see cref="BitsFile"/>
+    /// </summary>
     public class BitsFilesCollection : List<BitsFile>, IDisposable
     {
         #region Constants and Fields
 
         /// <summary>
-        /// The current job in the collection
+        ///   The current job in the collection
         /// </summary>
         private readonly BitsJob job;
 
         /// <summary>
-        /// Indicates of the files has been disposed
+        ///   Indicates of the files has been disposed
         /// </summary>
         private bool disposed;
 
         /// <summary>
-        /// Gets a list of the <see cref="BitsFile"/>
+        ///   Gets a list of the <see cref = "BitsFile" />
         /// </summary>
         private IEnumBackgroundCopyFiles fileList;
 
@@ -42,8 +41,12 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsFilesCollection"/> class.
         /// </summary>
-        /// <param name="job">The current job</param>
-        /// <param name="fileList">The file list.</param>
+        /// <param name="job">
+        /// The current job
+        /// </param>
+        /// <param name="fileList">
+        /// The file list.
+        /// </param>
         internal BitsFilesCollection(BitsJob job, IEnumBackgroundCopyFiles fileList)
         {
             this.fileList = fileList;
@@ -96,7 +99,9 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

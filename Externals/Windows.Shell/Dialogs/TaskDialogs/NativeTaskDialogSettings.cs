@@ -1,16 +1,12 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
-    using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
@@ -25,50 +21,50 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
 
         /// <summary>
         /// </summary>
-        private TaskDialogNativeMethods.TaskDialogButton[] buttons;
+        private TaskDialogNativeMethods.TaskDialogButtonData[] buttons;
 
         /// <summary>
         /// </summary>
-        private TaskDialogNativeMethods.TaskDialogButton[] radioButtons;
+        private TaskDialogNativeMethods.TaskDialogButtonData[] radioButtons;
 
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NativeTaskDialogSettings"/> class.
+        ///   Initializes a new instance of the <see cref = "NativeTaskDialogSettings" /> class.
         /// </summary>
         internal NativeTaskDialogSettings()
         {
             this.NativeConfiguration = new TaskDialogNativeMethods.TaskDialogConfig();
 
             // Apply standard settings.
-            this.NativeConfiguration.cbSize = (uint)Marshal.SizeOf(this.NativeConfiguration);
-            this.NativeConfiguration.hwndParent = IntPtr.Zero;
-            this.NativeConfiguration.hInstance = IntPtr.Zero;
-            this.NativeConfiguration.dwFlags = TaskDialogNativeMethods.TaskDialogFlags.AllowDialogCancellation;
-            this.NativeConfiguration.dwCommonButtons = TaskDialogNativeMethods.TaskDialogCommonButtonFlags.OkButton;
+            this.NativeConfiguration.Size = (uint)Marshal.SizeOf(this.NativeConfiguration);
+            this.NativeConfiguration.handleParent = IntPtr.Zero;
+            this.NativeConfiguration.Instance = IntPtr.Zero;
+            this.NativeConfiguration.flags = TaskDialogNativeMethods.TaskDialogFlags.AllowDialogCancellation;
+            this.NativeConfiguration.CommonButtons = TaskDialogNativeMethods.TaskDialogCommonButtonFlags.OkButton;
             this.NativeConfiguration.MainIcon = new TaskDialogNativeMethods.TaskDialogConfigIconUnion(0);
             this.NativeConfiguration.FooterIcon = new TaskDialogNativeMethods.TaskDialogConfigIconUnion(0);
-            this.NativeConfiguration.cxWidth = TaskDialogDefaults.IdealWidth;
+            this.NativeConfiguration.Width = TaskDialogDefaults.IdealWidth;
 
             // Zero out all the custom button fields.
-            this.NativeConfiguration.cButtons = 0;
-            this.NativeConfiguration.cRadioButtons = 0;
-            this.NativeConfiguration.pButtons = IntPtr.Zero;
-            this.NativeConfiguration.pRadioButtons = IntPtr.Zero;
-            this.NativeConfiguration.nDefaultButton = 0;
-            this.NativeConfiguration.nDefaultRadioButton = 0;
+            this.NativeConfiguration.ButtonLength = 0;
+            this.NativeConfiguration.RadioButtonsLength = 0;
+            this.NativeConfiguration.ButtonCollection = IntPtr.Zero;
+            this.NativeConfiguration.RadioButtonCollection = IntPtr.Zero;
+            this.NativeConfiguration.DefaultButton = 0;
+            this.NativeConfiguration.DefaultRadioButton = 0;
 
             // Various text defaults.
-            this.NativeConfiguration.pszWindowTitle = TaskDialogDefaults.Caption;
-            this.NativeConfiguration.pszMainInstruction = TaskDialogDefaults.MainInstruction;
-            this.NativeConfiguration.pszContent = TaskDialogDefaults.Content;
-            this.NativeConfiguration.pszVerificationText = null;
-            this.NativeConfiguration.pszExpandedInformation = null;
-            this.NativeConfiguration.pszExpandedControlText = null;
-            this.NativeConfiguration.pszCollapsedControlText = null;
-            this.NativeConfiguration.pszFooter = null;
+            this.NativeConfiguration.WindowTitle = TaskDialogDefaults.Caption;
+            this.NativeConfiguration.MainInstruction = TaskDialogDefaults.MainInstruction;
+            this.NativeConfiguration.Content = TaskDialogDefaults.Content;
+            this.NativeConfiguration.VerificationText = null;
+            this.NativeConfiguration.ExpandedInformation = null;
+            this.NativeConfiguration.ExpandedControlText = null;
+            this.NativeConfiguration.CollapsedControlText = null;
+            this.NativeConfiguration.Footer = null;
         }
 
         #endregion
@@ -112,7 +108,7 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// </summary>
         /// <returns>
         /// </returns>
-        public TaskDialogNativeMethods.TaskDialogButton[] GetButtons()
+        public TaskDialogNativeMethods.TaskDialogButtonData[] GetButtons()
         {
             return this.buttons;
         }
@@ -121,25 +117,25 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// </summary>
         /// <returns>
         /// </returns>
-        public TaskDialogNativeMethods.TaskDialogButton[] GetRadioButtons()
+        public TaskDialogNativeMethods.TaskDialogButtonData[] GetRadioButtons()
         {
             return this.radioButtons;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="value">
-        /// </param>
-        public void SetButtons(TaskDialogNativeMethods.TaskDialogButton[] value)
+        /// <parameter name="value">
+        /// </parameter>
+        public void SetButtons(TaskDialogNativeMethods.TaskDialogButtonData[] value)
         {
             this.buttons = value;
         }
 
         /// <summary>
         /// </summary>
-        /// <param name="value">
-        /// </param>
-        public void SetRadioButtons(TaskDialogNativeMethods.TaskDialogButton[] value)
+        /// <parameter name="value">
+        /// </parameter>
+        public void SetRadioButtons(TaskDialogNativeMethods.TaskDialogButtonData[] value)
         {
             this.radioButtons = value;
         }

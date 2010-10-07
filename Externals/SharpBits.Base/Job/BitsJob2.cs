@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Job
 {
     using System;
@@ -24,12 +21,12 @@ namespace SharpBits.Base.Job
         #region Constants and Fields
 
         /// <summary>
-        /// The current job
+        ///   The current job
         /// </summary>
         private readonly IBackgroundCopyJob2 job2;
 
         /// <summary>
-        /// The current reply progress
+        ///   The current reply progress
         /// </summary>
         private JobReplyProgress replyProgress;
 
@@ -38,12 +35,12 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
-        /// Gets or sets the notify command line parameters.
+        ///   Gets or sets the notify command line parameters.
         /// </summary>
         /// <value>The notify command line parameters.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public string NotifyCommandLineParameters
         {
@@ -96,12 +93,12 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Gets or sets the notify command line program.
+        ///   Gets or sets the notify command line program.
         /// </summary>
         /// <value>The notify command line program.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public string NotifyCommandLineProgram
         {
@@ -158,12 +155,12 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Gets or sets the reply file name
+        ///   Gets or sets the reply file name
         /// </summary>
         /// <value>The reply filename</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public string ReplyFileName
         {
@@ -209,10 +206,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Gets the reply progress.
+        ///   Gets the reply progress.
         /// </summary>
         /// <value>The reply progress.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public JobReplyProgress ReplyProgress
         {
@@ -248,7 +245,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Adds the credentials.
         /// </summary>
-        /// <param name="credentials">The credentials.</param>
+        /// <param name="credentials">
+        /// The credentials.
+        /// </param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void AddCredentials(BitsCredentials credentials)
@@ -280,7 +279,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Gets the reply data.
         /// </summary>
-        /// <returns>The byte array containing the reply data</returns>
+        /// <returns>
+        /// The byte array containing the reply data
+        /// </returns>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public byte[] GetReplyData()
@@ -309,7 +310,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Removes the credentials.
         /// </summary>
-        /// <param name="credentials">The credentials.</param>
+        /// <param name="credentials">
+        /// The credentials.
+        /// </param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void RemoveCredentials(BitsCredentials credentials)
@@ -335,8 +338,12 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Removes the credentials.
         /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="scheme">The scheme.</param>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="scheme">
+        /// The scheme.
+        /// </param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void RemoveCredentials(AuthenticationTarget target, AuthenticationScheme scheme)

@@ -94,6 +94,12 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Properties\Seven Software.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="protobuf-net, Version=1.0.0.282, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -217,6 +223,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Properties\Seven Software.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\wicon.ico" />
@@ -225,9 +232,9 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
+    <ProjectReference Include="..\..\Externals\Windows.Shell\System.Windows.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
-      <Name>Windows.Shell</Name>
+      <Name>System.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Externals\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>

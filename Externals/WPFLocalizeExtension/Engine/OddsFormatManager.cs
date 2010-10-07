@@ -1,9 +1,10 @@
-﻿//////// Register this namespace under admirals one with prefix
-////[assembly: XmlnsDefinition("http://schemas.root-project.org/xaml/presentation", "WPFLocalizeExtension.Engine")]
-////[assembly: XmlnsDefinition("http://schemas.root-project.org/xaml/presentation", "WPFLocalizeExtension.Extensions")]
-//////// Assign a default namespace prefix for the schema
-////[assembly: XmlnsPrefix("http://schemas.root-project.org/xaml/presentation", "lex")]
-
+﻿// ***********************************************************************
+// Assembly         : WPFLocalizeExtension
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -81,7 +82,7 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>
         ///   Gets the <see cref = "OddsFormatManager" /> singleton.
-        ///   If the underlying instance is <see langword="null"/>, a instance will be created.
+        ///   If the underlying instance is <see langword = "null" />, a instance will be created.
         /// </summary>
         public static OddsFormatManager Instance
         {
@@ -90,9 +91,10 @@ namespace WPFLocalizeExtension.Engine
                 // check if the underlying instance is null
                 if (instance == null)
                 {
-                    // if it is null, lock the syncroot.
+                    // if it is null, lock the sync root.
+
                     // if another thread is accessing this too, 
-                    // it have to wait until the syncroot is released
+                    // it have to wait until the sync root is released
                     lock (SyncRoot)
                     {
                         // check again, if the underlying instance is null
@@ -127,7 +129,7 @@ namespace WPFLocalizeExtension.Engine
 
             set
             {
-                // the suplied value has to be defined, otherwise an exception will be raised
+                // the supplied value has to be defined, otherwise an exception will be raised
                 if (!Enum.IsDefined(typeof(OddsFormatType), value))
                 {
                     throw new ArgumentNullException("value");

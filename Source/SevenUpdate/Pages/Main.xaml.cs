@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
@@ -113,7 +109,7 @@ namespace SevenUpdate.Pages
         /// </param>
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (Base.RebootNeeded)
+            if (Utilities.RebootNeeded)
             {
                 Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
             }
@@ -131,9 +127,9 @@ namespace SevenUpdate.Pages
                 this.timer.Elapsed += this.timer_Elapsed;
                 AdminClient.Connect();
             }
-            else if (File.Exists(Base.AllUserStore + @"updates.sui"))
+            else if (File.Exists(Utilities.AllUserStore + @"updates.sui"))
             {
-                var lastCheck = File.GetLastWriteTime(Base.AllUserStore + @"updates.sui");
+                var lastCheck = File.GetLastWriteTime(Utilities.AllUserStore + @"updates.sui");
 
                 var today = DateTime.Now;
 
@@ -143,16 +139,16 @@ namespace SevenUpdate.Pages
                         lastCheck.Day + 4 == today.Day || lastCheck.Day + 5 == today.Day)
                     {
                         AdminClient.Disconnect();
-                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Base.Deserialize<Collection<Sui>>(Base.AllUserStore + @"updates.sui")));
+                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(Utilities.AllUserStore + @"updates.sui")));
                     }
                 }
                 else
                 {
                     try
                     {
-                        File.Delete(Base.AllUserStore + @"updates.sui");
+                        File.Delete(Utilities.AllUserStore + @"updates.sui");
                     }
-                    catch
+                    catch (Exception)
                     {
                     }
 
@@ -173,7 +169,7 @@ namespace SevenUpdate.Pages
                         Core.Instance.UpdateAction = UpdateAction.CheckForUpdates;
                     }
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }

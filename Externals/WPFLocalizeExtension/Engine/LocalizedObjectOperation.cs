@@ -1,11 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
@@ -38,7 +36,7 @@ namespace WPFLocalizeExtension.Engine
                     Localize.Instance.GetLocalizedObject<object>(
                         Localize.Instance.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResError", "ERR_" + errorNo, Localize.Instance.Culture);
             }
-            catch
+            catch (Exception)
             {
                 return "No localized ErrorMessage founded for Error: " + errorNo;
             }
@@ -86,7 +84,7 @@ namespace WPFLocalizeExtension.Engine
             {
                 return (string)Localize.Instance.GetLocalizedObject<object>(Localize.Instance.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResGui", key, language);
             }
-            catch
+            catch (Exception)
             {
                 return "No localized GuiMessage founded for key '" + key + "'";
             }
@@ -120,7 +118,7 @@ namespace WPFLocalizeExtension.Engine
                     Localize.Instance.GetLocalizedObject<object>(
                         Localize.Instance.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResHelp", key, Localize.Instance.Culture);
             }
-            catch
+            catch (Exception)
             {
                 return "No localized HelpMessage founded for key '" + key + "'";
             }
@@ -154,7 +152,7 @@ namespace WPFLocalizeExtension.Engine
                     Localize.Instance.GetLocalizedObject<object>(
                         Localize.Instance.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResMaintenance", key, Localize.Instance.Culture);
             }
-            catch
+            catch (Exception)
             {
                 return "No localized MaintenanceMessage founded for key '" + key + "'";
             }
@@ -188,7 +186,7 @@ namespace WPFLocalizeExtension.Engine
                     Localize.Instance.GetLocalizedObject<object>(
                         Localize.Instance.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResUpdateAgent", key, Localize.Instance.Culture);
             }
-            catch
+            catch (Exception)
             {
                 return "No localized UpdateAgentMessage founded for key '" + key + "'";
             }

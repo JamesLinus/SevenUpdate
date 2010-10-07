@@ -1,168 +1,203 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
+
+    using SharpBits.Base.Job;
 
     /// <summary>
+    /// Specifies the owner of the current <see cref="BitsJob"/>
     /// </summary>
     public enum JobOwner
     {
         /// <summary>
+        ///   The current logged in user
         /// </summary>
         CurrentUser = 0, 
 
         /// <summary>
+        ///   The administrators group or system
         /// </summary>
         AllUsers = 1, 
     }
 
     /// <summary>
+    /// The <see cref="BitsJob"/> priority
     /// </summary>
     public enum JobPriority
     {
         /// <summary>
+        ///   Downloads without bandwidth restriction
         /// </summary>
         ForeGround = 0, 
 
         /// <summary>
+        ///   Downloads with a 80% bandwidth use
         /// </summary>
         High = 1, 
 
         /// <summary>
+        ///   Downloads using bandwidth available
         /// </summary>
         Normal = 2, 
 
         /// <summary>
+        ///   Download slow, giving other net use priority
         /// </summary>
         Low = 3, 
     }
 
     /// <summary>
+    /// The current status of the <see cref="BitsJob"/>
     /// </summary>
     public enum JobState
     {
         /// <summary>
+        ///   The job is queued to be ran
         /// </summary>
         Queued = 0, 
 
         /// <summary>
+        ///   Connecting to the remote server
         /// </summary>
         Connecting = 1, 
 
         /// <summary>
+        ///   Transferring the files
         /// </summary>
         Transferring = 2, 
 
         /// <summary>
+        ///   Transfer is paused
         /// </summary>
         Suspended = 3, 
 
         /// <summary>
+        ///   An fatal error occurred
         /// </summary>
         Error = 4, 
 
         /// <summary>
+        ///   A non-fatal error occurred
         /// </summary>
         TransientError = 5, 
 
         /// <summary>
+        ///   The job has completed
         /// </summary>
         Transferred = 6, 
 
         /// <summary>
+        ///   Ready to run the job
         /// </summary>
         Acknowledged = 7, 
 
         /// <summary>
+        ///   The job was canceled
         /// </summary>
-        Cancelled = 8, 
+        Canceled = 8, 
     }
 
     /// <summary>
+    /// The type of <see cref="BitsJob"/>
     /// </summary>
     public enum JobType
     {
         /// <summary>
+        ///   Downloads a file
         /// </summary>
         Download, 
 
         /// <summary>
+        ///   Uploads a file without progress
         /// </summary>
         Upload, 
 
         /// <summary>
+        ///   Uploads a file and reply's with progress
         /// </summary>
         UploadReply, 
 
         /// <summary>
+        ///   Unknown job
         /// </summary>
-        Unknown, // not available in BITS API     
+        Unknown, 
     }
 
     /// <summary>
+    /// The proxy use
     /// </summary>
     public enum ProxyUsage
     {
         /// <summary>
+        ///   Use the current configuration
         /// </summary>
-        Preconfig, 
+        PreConfig, 
 
         /// <summary>
+        ///   Don't use a proxy
         /// </summary>
         NoProxy, 
 
         /// <summary>
+        ///   Override proxy settings
         /// </summary>
         Override, 
 
         /// <summary>
+        ///   Auto detect proxy settings
         /// </summary>
         AutoDetect, 
     }
 
     /// <summary>
+    /// Specifies the error
     /// </summary>
     public enum ErrorContext
     {
         /// <summary>
+        ///   No error occurred
         /// </summary>
         None = 0, 
 
         /// <summary>
+        ///   Unknown error
         /// </summary>
         UnknownError = 1, 
 
         /// <summary>
+        ///   The general queue manager error
         /// </summary>
         GeneralQueueManagerError = 2, 
 
         /// <summary>
+        ///   The general notification error
         /// </summary>
         QueueManagerNotificationError = 3, 
 
         /// <summary>
+        ///   A local file error
         /// </summary>
         LocalFileError = 4, 
 
         /// <summary>
+        ///   An error with the download file
         /// </summary>
         RemoteFileError = 5, 
 
         /// <summary>
+        ///   An error while the file is transferring
         /// </summary>
         GeneralTransportError = 6, 
 
         /// <summary>
+        ///   A remote program/server error
         /// </summary>
         RemoteApplicationError = 7, 
     }
@@ -170,7 +205,6 @@ namespace SharpBits.Base
     /// <summary>
     /// The AuthenticationTarget enumeration defines the constant values that specify whether the credentials are used for proxy or server user authentication requests.
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
     public enum AuthenticationTarget
     {
         /// <summary>
@@ -187,7 +221,6 @@ namespace SharpBits.Base
     /// <summary>
     /// The AuthenticationScheme enumeration defines the constant values that specify the authentication scheme to use when a proxy or server requests user authentication.
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
     public enum AuthenticationScheme
     {
         /// <summary>
@@ -204,10 +237,10 @@ namespace SharpBits.Base
         ///   Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the 
         ///   user for authentication in a Windows network environment.
         /// </summary>
-        Ntlm, 
+        NTLM, 
 
         /// <summary>
-        ///   Simple and Protected Negotiation protocol (Snego) is a challenge-response scheme that negotiates 
+        ///   Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates 
         ///   with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol and NTLM
         /// </summary>
         Negotiate, 
@@ -219,6 +252,7 @@ namespace SharpBits.Base
     }
 
     /// <summary>
+    /// Provides method of job notification
     /// </summary>
     [Flags]
     public enum NotificationFlags
@@ -231,7 +265,7 @@ namespace SharpBits.Base
         /// <summary>
         ///   An error has occurred
         /// </summary>
-        JobErrorOccured = 2, 
+        JobErrorOccurred = 2, 
 
         /// <summary>
         ///   Event notification is disabled. BITS ignores the other flags.
@@ -266,13 +300,13 @@ namespace SharpBits.Base
         ///   Otherwise, BITS copies the inheritable ACEs from the destination parent folder. If the parent folder does not 
         ///   contain inheritable ACEs, BITS uses the default DACL from the account.
         /// </summary>
-        CopyFileDacl = 4, 
+        CopyDestinationFileAcl = 4, 
 
         /// <summary>
         ///   If set, BITS copies the explicit ACEs from the source file and inheritable ACEs from the destination parent folder. 
         ///   Otherwise, BITS copies the inheritable ACEs from the destination parent folder.
         /// </summary>
-        CopyFileSacl = 8, 
+        CopySourceFileAcl = 8, 
 
         /// <summary>
         ///   If set, BITS copies the owner and ACL information. This is the same as setting all the flags individually

@@ -1,14 +1,14 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk" xmlns:Common="clr-namespace:Microsoft.Windows.Common;assembly=Windows.Shell" xmlns:Internal="clr-namespace:Microsoft.Windows.Internal;assembly=Windows.Shell">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Sdk="clr-namespace:SevenUpdate.Sdk">
 	<Sdk:StringToLocaleStringConverter x:Key="stringToLocaleString" />
 	<BooleanToVisibilityConverter x:Key="boolToVisibility" />
 	<Sdk:BoolToLabelConverter x:Key="boolToLabel" />
-	<Common:StringToBoolConverter x:Key="stringToBool" />
-	<Common:StringToVisibilityConverter x:Key="stringToVisibility" />
-	<Common:IntToVisibilityConverter x:Key="intToVisibility" />
-	<Common:IntToBoolConverter x:Key="intToBool" />
+	<StringToBoolConverter x:Key="stringToBool" />
+	<StringToVisibilityConverter x:Key="stringToVisibility" />
+	<IntToVisibilityConverter x:Key="intToVisibility" />
+	<IntToBoolConverter x:Key="intToBool" />
 	<Sdk:DateConverter x:Key="dateConverter" />
-	<Common:EnumToBool x:Key="enumToBool" />
-	<Common:InverseEnumToBool x:Key="inverseEnumToBool" />
+	<EnumToBool x:Key="enumToBool" />
+	<InverseEnumToBool x:Key="inverseEnumToBool" />
 
 	<Style TargetType="ListBoxItem">
 		<Style.Triggers>
@@ -81,7 +81,7 @@
 
 	<Style TargetType="TextBlock" x:Key="glassText">
 		<Style.Triggers>
-			<DataTrigger Binding="{Binding Source={x:Static Internal:CoreHelpers.RunningOnXP}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="False">
+			<DataTrigger Binding="{Binding Source={x:Static CommandLink.RunningOnXP}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="False">
 				<Setter Property="Effect">
 					<Setter.Value>
 						<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />

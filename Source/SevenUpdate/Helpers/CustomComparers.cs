@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -14,8 +10,7 @@ namespace SevenUpdate
     using System;
     using System.ComponentModel;
     using System.Globalization;
-
-    using Microsoft.Windows.Controls;
+    using System.Windows.Controls;
 
     /// <summary>
     /// </summary>
@@ -103,10 +98,10 @@ namespace SevenUpdate
         {
             try
             {
-                var xc = (Sua)x;
-                var yc = (Sua)y;
+                var first = (Sua)x;
+                var second = (Sua)y;
 
-                string valx = String.Empty, valy = String.Empty;
+                string valueX = String.Empty, valueY = String.Empty;
                 var result = 0;
 
                 foreach (var sort in this.GetSortColumnList())
@@ -115,28 +110,28 @@ namespace SevenUpdate
                     {
                         case "Name":
 
-                            valx = Base.GetLocaleString(xc.Name);
-                            valy = Base.GetLocaleString(yc.Name);
+                            valueX = Utilities.GetLocaleString(first.Name);
+                            valueY = Utilities.GetLocaleString(second.Name);
                             break;
 
                         case "Publisher":
-                            valx = Base.GetLocaleString(xc.Publisher);
-                            valy = Base.GetLocaleString(yc.Publisher);
+                            valueX = Utilities.GetLocaleString(first.Publisher);
+                            valueY = Utilities.GetLocaleString(second.Publisher);
                             break;
                         case "Is64Bit":
-                            valx = xc.Is64Bit.ToString(CultureInfo.CurrentCulture);
-                            valy = yc.Is64Bit.ToString(CultureInfo.CurrentCulture);
+                            valueX = first.Is64Bit.ToString(CultureInfo.CurrentCulture);
+                            valueY = second.Is64Bit.ToString(CultureInfo.CurrentCulture);
 
                             break;
                     }
 
                     if (this.SortColumns[sort] == ListSortDirection.Ascending)
                     {
-                        result = String.Compare(valx, valy, StringComparison.CurrentCulture);
+                        result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
                     }
                     else
                     {
-                        result = (-1) * String.Compare(valx, valy, StringComparison.CurrentCulture);
+                        result = (-1) * String.Compare(valueX, valueY, StringComparison.CurrentCulture);
                     }
 
                     if (result != 0)
@@ -149,7 +144,7 @@ namespace SevenUpdate
 
                 return result;
             }
-            catch
+            catch (Exception)
             {
                 return 0;
             }
@@ -182,10 +177,10 @@ namespace SevenUpdate
         {
             try
             {
-                var xc = (Suh)x;
-                var yc = (Suh)y;
+                var first = (Suh)x;
+                var second = (Suh)y;
 
-                string valx = String.Empty, valy = String.Empty;
+                string valueX = String.Empty, valueY = String.Empty;
                 var result = 0;
 
                 foreach (var sortColumn in this.GetSortColumnList())
@@ -193,26 +188,26 @@ namespace SevenUpdate
                     switch (sortColumn)
                     {
                         case "Name":
-                            valx = Base.GetLocaleString(xc.Name);
-                            valy = Base.GetLocaleString(yc.Name);
+                            valueX = Utilities.GetLocaleString(first.Name);
+                            valueY = Utilities.GetLocaleString(second.Name);
                             break;
                         case "DateInstalled":
-                            valx = xc.InstallDate;
-                            valy = yc.InstallDate;
+                            valueX = first.InstallDate;
+                            valueY = second.InstallDate;
                             break;
                     }
 
                     switch (sortColumn)
                     {
                         case "Importance":
-                            result = ImportanceSorter.CompareImportance(xc.Importance, yc.Importance);
+                            result = ImportanceSorter.CompareImportance(first.Importance, second.Importance);
                             break;
                         case "Status":
-                            if (xc.Status == yc.Status)
+                            if (first.Status == second.Status)
                             {
                                 result = 0;
                             }
-                            else if (xc.Status == UpdateStatus.Successful)
+                            else if (first.Status == UpdateStatus.Successful)
                             {
                                 result = 1;
                             }
@@ -223,11 +218,11 @@ namespace SevenUpdate
 
                             break;
                         case "Size":
-                            if (xc.UpdateSize > yc.UpdateSize)
+                            if (first.UpdateSize > second.UpdateSize)
                             {
                                 result = 1;
                             }
-                            else if (xc.UpdateSize == yc.UpdateSize)
+                            else if (first.UpdateSize == second.UpdateSize)
                             {
                                 result = 0;
                             }
@@ -238,7 +233,7 @@ namespace SevenUpdate
 
                             break;
                         default:
-                            result = String.Compare(valx, valy, StringComparison.CurrentCulture);
+                            result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
                             break;
                     }
 
@@ -257,7 +252,7 @@ namespace SevenUpdate
 
                 return result;
             }
-            catch
+            catch (Exception)
             {
                 return 0;
             }
@@ -290,10 +285,10 @@ namespace SevenUpdate
         {
             try
             {
-                var xc = (Update)x;
-                var yc = (Update)y;
+                var first = (Update)x;
+                var second = (Update)y;
 
-                string valx = String.Empty, valy = String.Empty;
+                string valueX = String.Empty, valueY = String.Empty;
                 var result = 0;
 
                 foreach (var sortColumn in this.GetSortColumnList())
@@ -302,22 +297,22 @@ namespace SevenUpdate
                     {
                         case "Name":
 
-                            valx = Base.GetLocaleString(xc.Name);
-                            valy = Base.GetLocaleString(yc.Name);
+                            valueX = Utilities.GetLocaleString(first.Name);
+                            valueY = Utilities.GetLocaleString(second.Name);
                             break;
                     }
 
                     switch (sortColumn)
                     {
                         case "Importance":
-                            result = ImportanceSorter.CompareImportance(xc.Importance, yc.Importance);
+                            result = ImportanceSorter.CompareImportance(first.Importance, second.Importance);
                             break;
                         case "Size":
-                            if (xc.Size > yc.Size)
+                            if (first.Size > second.Size)
                             {
                                 result = 1;
                             }
-                            else if (xc.Size == yc.Size)
+                            else if (first.Size == second.Size)
                             {
                                 result = 0;
                             }
@@ -328,7 +323,7 @@ namespace SevenUpdate
 
                             break;
                         default:
-                            result = String.Compare(valx, valy, StringComparison.CurrentCulture);
+                            result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
                             break;
                     }
 
@@ -347,7 +342,7 @@ namespace SevenUpdate
 
                 return result;
             }
-            catch
+            catch (Exception)
             {
                 return 0;
             }

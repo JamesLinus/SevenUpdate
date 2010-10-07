@@ -1,4 +1,11 @@
-﻿namespace SharpBits.Base
+﻿// ***********************************************************************
+// Assembly         : SharpBits.Base
+// Author           : xidar solutions
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-05-2010
+// Copyright        : (c) xidar solutions. All rights reserved.
+// ***********************************************************************
+namespace SharpBits.Base
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
@@ -118,7 +125,7 @@
         ///   Specifies that you called the IBackgroundCopyJob::Cancel method to 
         ///   cancel the job (remove the job from the transfer queue)
         /// </summary>
-        Cancelled = 8, 
+        Canceled = 8, 
 
         /// <summary>
         ///   This is custom state not provided by BITS
@@ -157,7 +164,7 @@
     /// Used for the SetNotifyFlags method.
     /// </summary>
     [Flags]
-    internal enum BGJobNotificationTypes : uint
+    internal enum BGJobNotificationTypes
     {
         /// <summary>
         ///   All of the files in the job have been transferred.
@@ -190,7 +197,7 @@
         ///   Use the proxy and proxy bypass list settings defined by each 
         ///   user to transfer files
         /// </summary>
-        Preconfig = 0, 
+        PreConfig = 0, 
 
         /// <summary>
         ///   Do not use a proxy to transfer files
@@ -206,7 +213,7 @@
         ///   Automatically detect proxy settings. 
         ///   BITS detects proxy settings for each file in the job
         /// </summary>
-        Autodetect = 3, 
+        AutoDetect = 3, 
     }
 
     /// <summary>
@@ -304,34 +311,17 @@
         /// <summary>
         ///   Delete all ACL lists
         /// </summary>
-        BGCopyFileDacl = 0x0004, 
+        BGCopyDestinationFileAcl = 0x0004, 
 
         /// <summary>
         ///   Give special permissions
         /// </summary>
-        BGCopyFileSacl = 0x0008, 
+        BGCopySourceFileAcl = 0x0008, 
 
         /// <summary>
         ///   Inherit all lists
         /// </summary>
         BGCopyFileAll = 0x0015, 
-    }
-
-    /// <summary>
-    /// Flags that determine if the files of the job can be cached and served to peers and if the job can download content from peers
-    /// </summary>
-    [Flags]
-    internal enum PeerCachingFlagss : uint
-    {
-        /// <summary>
-        ///   The job can download content from peers.
-        /// </summary>
-        BGJobEnablePeercachingClient = 0x0001, 
-
-        /// <summary>
-        ///   The files of the job can be cached and served to peers
-        /// </summary>
-        BGJobEnablePeercachingServer = 0x0002, 
     }
 
     /// <summary>

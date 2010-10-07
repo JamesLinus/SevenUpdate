@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -183,7 +179,7 @@ namespace SevenUpdate
             var abort = false;
             try
             {
-                abort = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
+                abort = Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
                 if (abort && wcfClient != null)
                 {
                     if (wcfClient.State == CommunicationState.Opened)
@@ -194,7 +190,7 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
-                Base.ReportError(e, Base.UserStore);
+                Utilities.ReportError(e, Utilities.UserStore);
             }
 
             return abort;
@@ -223,7 +219,7 @@ namespace SevenUpdate
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
-            Base.ReportError(e, Base.UserStore);
+            Utilities.ReportError(e, Utilities.UserStore);
             if (ServiceError != null)
             {
                 ServiceError(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
@@ -236,7 +232,7 @@ namespace SevenUpdate
                 {
                     t.Kill();
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }
@@ -268,7 +264,7 @@ namespace SevenUpdate
                 {
                     wcfClient.UnSubscribe();
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }
@@ -281,8 +277,7 @@ namespace SevenUpdate
         /// the update to hide
         /// </param>
         /// <returns>
-        /// <c>true</c> if the admin process was executed, otherwise<c>false</c>
-
+        /// <see langword="true"/> if the admin process was executed
         /// </returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
@@ -387,7 +382,7 @@ namespace SevenUpdate
         {
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
-                var success = Base.StartProcess(Base.AppDir + "SevenUpdate.Admin.exe");
+                var success = Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Admin.exe");
                 if (!success)
                 {
                     return false;

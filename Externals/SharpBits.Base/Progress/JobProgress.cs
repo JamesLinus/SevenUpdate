@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Progress
 {
     using SharpBits.Base.Job;
@@ -20,7 +17,7 @@ namespace SharpBits.Base.Progress
         #region Constants and Fields
 
         /// <summary>
-        /// The current progress
+        ///   The current progress
         /// </summary>
         private BGJobProgress jobProgress;
 
@@ -31,7 +28,9 @@ namespace SharpBits.Base.Progress
         /// <summary>
         /// Initializes a new instance of the <see cref="JobProgress"/> class.
         /// </summary>
-        /// <param name="jobProgress">The job progress.</param>
+        /// <param name="jobProgress">
+        /// The job progress.
+        /// </param>
         internal JobProgress(BGJobProgress jobProgress)
         {
             this.jobProgress = jobProgress;
@@ -42,7 +41,7 @@ namespace SharpBits.Base.Progress
         #region Properties
 
         /// <summary>
-        /// Gets the total number bytes downloaded
+        ///   Gets the total number bytes downloaded
         /// </summary>
         /// <value>The bytes total.</value>
         public ulong BytesTotal
@@ -54,7 +53,7 @@ namespace SharpBits.Base.Progress
         }
 
         /// <summary>
-        /// Gets the total number of bytes transferred.
+        ///   Gets the total number of bytes transferred.
         /// </summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
@@ -66,7 +65,7 @@ namespace SharpBits.Base.Progress
         }
 
         /// <summary>
-        /// Gets the total number of files
+        ///   Gets the total number of files
         /// </summary>
         /// <value>The files total.</value>
         public uint FilesTotal
@@ -78,7 +77,7 @@ namespace SharpBits.Base.Progress
         }
 
         /// <summary>
-        /// Gets the number of files transferred.
+        ///   Gets the number of files transferred.
         /// </summary>
         /// <value>The files transferred.</value>
         public uint FilesTransferred

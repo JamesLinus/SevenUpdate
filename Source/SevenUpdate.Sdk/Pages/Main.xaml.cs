@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
@@ -18,11 +14,9 @@ namespace SevenUpdate.Sdk.Pages
     using System.IO;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dwm;
     using System.Windows.Input;
     using System.Windows.Media;
-
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Windows;
 
@@ -140,18 +134,18 @@ namespace SevenUpdate.Sdk.Pages
                 File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sui");
                 File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sua");
                 Core.Projects.RemoveAt(index);
-                Base.Serialize(Core.Projects, Core.ProjectsFile);
+                Utilities.Serialize(Core.Projects, Core.ProjectsFile);
             }
             else
             {
                 var index = item.Tag as int[];
                 if (index != null)
                 {
-                    var updates = Base.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
+                    var updates = Utilities.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
-                    Base.Serialize(Core.Projects, Core.ProjectsFile);
+                    Utilities.Serialize(Core.Projects, Core.ProjectsFile);
                     updates.RemoveAt(index[1]);
-                    Base.Serialize(updates, Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
+                    Utilities.Serialize(updates, Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
                 }
             }
 
@@ -272,7 +266,7 @@ namespace SevenUpdate.Sdk.Pages
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sua");
+            var fileName = Core.SaveFileDialog(null, appName, "sua");
 
             if (fileName == null)
             {
@@ -295,7 +289,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
 
-            var fileName = Core.SaveFileDialog(null, Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, "sui");
+            var fileName = Core.SaveFileDialog(null, appName, "sui");
 
             if (fileName == null)
             {
@@ -365,7 +359,7 @@ namespace SevenUpdate.Sdk.Pages
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {

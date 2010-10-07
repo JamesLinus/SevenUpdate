@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Job
 {
     using System;
@@ -19,17 +16,18 @@ namespace SharpBits.Base.Job
     /// <summary>
     /// The collection of <see cref="BitsJob"/>'s
     /// </summary>
+    [Serializable]
     public class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
         #region Constants and Fields
 
         /// <summary>
-        /// The current BITS manager
+        ///   The current BITS manager
         /// </summary>
         private readonly BitsManager manager;
 
         /// <summary>
-        /// Indicates if the job collection as been disposed
+        ///   Indicates if the job collection as been disposed
         /// </summary>
         private bool disposed;
 
@@ -38,7 +36,7 @@ namespace SharpBits.Base.Job
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
+        ///   Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.
         /// </summary>
         public BitsJobsDictionary()
         {
@@ -49,7 +47,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
         /// </summary>
-        /// <param name="manager">The manager.</param>
+        /// <param name="manager">
+        /// The manager.
+        /// </param>
         internal BitsJobsDictionary(BitsManager manager)
         {
             this.manager = manager;
@@ -58,8 +58,12 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
         /// </summary>
-        /// <param name="manager">The manager.</param>
-        /// <param name="jobList">The job list.</param>
+        /// <param name="manager">
+        /// The manager.
+        /// </param>
+        /// <param name="jobList">
+        /// The job list.
+        /// </param>
         internal BitsJobsDictionary(BitsManager manager, IEnumBackgroundCopyJobs jobList)
         {
             this.manager = manager;
@@ -70,8 +74,12 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
         /// </summary>
-        /// <param name="info">The serialization info</param>
-        /// <param name="context">The context.</param>
+        /// <param name="info">
+        /// The serialization info
+        /// </param>
+        /// <param name="context">
+        /// The context.
+        /// </param>
         protected BitsJobsDictionary(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -83,7 +91,7 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
-        /// Gets the jobs.
+        ///   Gets the jobs.
         /// </summary>
         /// <value>The jobs of the current collection</value>
         internal IEnumBackgroundCopyJobs Jobs { get; private set; }
@@ -95,8 +103,12 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Gets the object data.
         /// </summary>
-        /// <param name="info">The serialization info</param>
-        /// <param name="context">The context.</param>
+        /// <param name="info">
+        /// The serialization info
+        /// </param>
+        /// <param name="context">
+        /// The context.
+        /// </param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -128,7 +140,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Updates the specified job list.
         /// </summary>
-        /// <param name="jobList">The job list.</param>
+        /// <param name="jobList">
+        /// The job list.
+        /// </param>
         internal void Update(IEnumBackgroundCopyJobs jobList)
         {
             lock (this)
@@ -142,7 +156,9 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

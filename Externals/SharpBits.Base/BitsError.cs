@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base
 {
     using System;
@@ -17,18 +14,20 @@ namespace SharpBits.Base
     using SharpBits.Base.File;
     using SharpBits.Base.Job;
 
-    /// <summary>Bits error</summary>
+    /// <summary>
+    /// Bits error
+    /// </summary>
     public class BitsError
     {
         #region Constants and Fields
 
         /// <summary>
-        /// The error that occurred
+        ///   The error that occurred
         /// </summary>
         private readonly IBackgroundCopyError error;
 
         /// <summary>
-        /// The job the error occurred on
+        ///   The job the error occurred on
         /// </summary>
         private readonly BitsJob job;
 
@@ -39,8 +38,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsError"/> class.
         /// </summary>
-        /// <param name="job">The job the error occurred on</param>
-        /// <param name="error">The error that occurred</param>
+        /// <param name="job">
+        /// The job the error occurred on
+        /// </param>
+        /// <param name="error">
+        /// The error that occurred
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
@@ -151,7 +154,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        /// Gets the file.
+        ///   Gets the file.
         /// </summary>
         /// <value>The file that occurred the error</value>
         public BitsFile File
@@ -174,7 +177,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        /// Gets the protocol.
+        ///   Gets the protocol.
         /// </summary>
         /// <value>The protocol.</value>
         public string Protocol

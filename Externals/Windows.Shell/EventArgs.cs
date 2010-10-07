@@ -1,22 +1,21 @@
-﻿// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-namespace Microsoft.Windows
+﻿// ***********************************************************************
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
+namespace System.Windows
 {
-    using System;
-
     /// <summary>
-    /// Represents the method that handles the <see cref="Microsoft.Windows.InstanceAwareApplication.StartupNextInstance"/> event.
+    /// Represents the method that handles the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
     /// </summary>
-    /// <param name="sender">
+    /// <parameter name="sender">
     /// The object that raised the event.
-    /// </param>
-    /// <param name="e">
+    /// </parameter>
+    /// <parameter name="e">
     /// The event data.
-    /// </param>
+    /// </parameter>
     public delegate void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e);
 
     /// <summary>
@@ -54,9 +53,9 @@ namespace Microsoft.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.
         /// </summary>
-        /// <param name="args">
+        /// <parameter name="args">
         /// The arguments passed to the program
-        /// </param>
+        /// </parameter>
         public StartupNextInstanceEventArgs(string[] args)
             : this(args, true)
         {
@@ -65,12 +64,12 @@ namespace Microsoft.Windows
         /// <summary>
         /// Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.
         /// </summary>
-        /// <param name="args">
+        /// <parameter name="args">
         /// The arguments passed to the program
-        /// </param>
-        /// <param name="bringToFront">
+        /// </parameter>
+        /// <parameter name="bringToFront">
         /// If set to <c>true</c> the application main window will be brought to front.
-        /// </param>
+        /// </parameter>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront)
         {
             if (args == null)
@@ -101,7 +100,9 @@ namespace Microsoft.Windows
         /// <summary>
         /// Gets the arguments passed to the other application.
         /// </summary>
-        /// <returns>Returns the arguments passed to the application</returns>
+        /// <returns>
+        /// Returns the arguments passed to the application
+        /// </returns>
         /// <value>
         /// The arguments passed to the other application.
         /// </value>

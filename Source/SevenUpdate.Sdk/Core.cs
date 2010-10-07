@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk
@@ -19,20 +15,19 @@ namespace SevenUpdate.Sdk
     using System.Reflection;
     using System.Text.RegularExpressions;
     using System.Windows;
+    using System.Windows.Dialogs.TaskDialogs;
     using System.Windows.Forms;
     using System.Windows.Input;
+    using System.Windows.Interop;
+    using System.Windows.Media;
     using System.Windows.Shell;
-
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Internal;
 
     using SevenUpdate.Sdk.Properties;
     using SevenUpdate.Sdk.Windows;
 
     using Application = System.Windows.Application;
+    using IWin32Window = System.Windows.Forms.IWin32Window;
     using MessageBox = System.Windows.MessageBox;
-    using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
     using Shortcut = SevenUpdate.Shortcut;
 
     /// <summary>
@@ -65,7 +60,7 @@ namespace SevenUpdate.Sdk
         /// <summary>
         ///   Gets or sets the application information of the project
         /// </summary>
-        /// <value>The app info.</value>
+        /// <value>The application info.</value>
         public static Sua AppInfo { get; set; }
 
         /// <summary>
@@ -95,7 +90,7 @@ namespace SevenUpdate.Sdk
         {
             get
             {
-                return Base.Deserialize<Collection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
+                return Utilities.Deserialize<Collection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
             }
         }
 
@@ -135,7 +130,7 @@ namespace SevenUpdate.Sdk
         /// </returns>
         public static bool IsValidFilePath(string path, bool is64Bit)
         {
-            path = Base.ConvertPath(path, true, is64Bit);
+            path = Utilities.ConvertPath(path, true, is64Bit);
             const string pattern = @"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$";
             var reg = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             return reg.IsMatch(path);
@@ -163,7 +158,7 @@ namespace SevenUpdate.Sdk
                 request.Timeout = 15000;
                 request.GetResponse();
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }
@@ -177,14 +172,14 @@ namespace SevenUpdate.Sdk
         internal static void EditItem()
         {
             IsNewProject = false;
-            AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
+            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
             if (UpdateIndex < 0)
             {
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
             }
             else
             {
-                UpdateInfo = Base.Deserialize<Collection<Update>>(UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
+                UpdateInfo = Utilities.Deserialize<Collection<Update>>(UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
                 if (UpdateInfo.Files == null)
                 {
                     UpdateInfo.Files = new ObservableCollection<UpdateFile>();
@@ -219,6 +214,22 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
+        /// Gets the IWin32 window.
+        /// </summary>
+        /// <param name="visual">
+        /// The visual object
+        /// </param>
+        /// <returns>
+        /// The Win32 Window
+        /// </returns>
+        internal static IWin32Window GetIWin32Window(this Visual visual)
+        {
+            var source = PresentationSource.FromVisual(visual) as HwndSource;
+            IWin32Window win = new OldWindow(source.Handle);
+            return win;
+        }
+
+        /// <summary>
         /// Creates a new project
         /// </summary>
         internal static void NewProject()
@@ -246,13 +257,13 @@ namespace SevenUpdate.Sdk
         internal static void NewUpdate()
         {
             IsNewProject = false;
-            AppInfo = Base.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
+            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
             UpdateInfo = new Update
                 {
-                    Files = new ObservableCollection<UpdateFile>(),
-                    RegistryItems = new ObservableCollection<RegistryItem>(),
-                    Shortcuts = new ObservableCollection<Shortcut>(),
-                    Description = new ObservableCollection<LocaleString>(),
+                    Files = new ObservableCollection<UpdateFile>(), 
+                    RegistryItems = new ObservableCollection<RegistryItem>(), 
+                    Shortcuts = new ObservableCollection<Shortcut>(), 
+                    Description = new ObservableCollection<LocaleString>(), 
                     Name = new ObservableCollection<LocaleString>()
                 };
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
@@ -267,12 +278,6 @@ namespace SevenUpdate.Sdk
         /// <param name="multiSelect">
         /// Gets or sets a value that determines whether the user can select more than one file
         /// </param>
-        /// <param name="defaultDirectory">
-        /// Sets the folder or path used as a default if there is not a recently used folder value available
-        /// </param>
-        /// <param name="defaultFileName">
-        /// Sets the default file name
-        /// </param>
         /// <param name="defaultExtension">
         /// Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names
         /// </param>
@@ -282,16 +287,16 @@ namespace SevenUpdate.Sdk
         /// <returns>
         /// A collection of the selected files
         /// </returns>
-        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultDirectory = null, string defaultFileName = null, string defaultExtension = null, bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
         {
             var openFileDialog = new OpenFileDialog
                 {
-                    AutoUpgradeEnabled = true,
-                    Multiselect = multiSelect,
-                    InitialDirectory = initialDirectory,
-                    DereferenceLinks = navigateToShortcut,
-                    CheckFileExists = true,
-                    DefaultExt = defaultExtension,
+                    AutoUpgradeEnabled = true, 
+                    Multiselect = multiSelect, 
+                    InitialDirectory = initialDirectory, 
+                    DereferenceLinks = navigateToShortcut, 
+                    CheckFileExists = true, 
+                    DefaultExt = defaultExtension, 
                     ValidateNames = true
                 };
             switch (defaultExtension)
@@ -318,68 +323,29 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        /// Gets the IWin32 window.
-        /// </summary>
-        /// <param name="visual">The visual object</param>
-        /// <returns>The Win32 Window</returns>
-        internal static IWin32Window GetIWin32Window(this System.Windows.Media.Visual visual)
-        {
-            var source = PresentationSource.FromVisual(visual) as System.Windows.Interop.HwndSource;
-            IWin32Window win = new OldWindow(source.Handle);
-            return win;
-        }
-
-        /// <summary>
-        /// The old window
-        /// </summary>
-        private sealed class OldWindow : IWin32Window
-        {
-            /// <summary>
-            /// The pointer to the window
-            /// </summary>
-            private readonly IntPtr windowHandle;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="OldWindow"/> class.
-            /// </summary>
-            /// <param name="handle">The handle.</param>
-            public OldWindow(IntPtr handle)
-            {
-                this.windowHandle = handle;
-            }
-
-            #region IWin32Window Members
-
-            /// <summary>
-            /// Gets the handle to the window represented by the implementer.
-            /// </summary>
-            /// <value></value>
-            /// <returns>A handle to the window represented by the implementer.</returns>
-            IntPtr System.Windows.Forms.IWin32Window.Handle
-            {
-                get { return this.windowHandle; }
-            }
-
-            #endregion
-        }
-
-        /// <summary>
         /// Opens a SaveFileDialog
         /// </summary>
-        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
-        /// <param name="defaultDirectory">Sets the folder or path used as a default if there is not a recently used folder value available</param>
-        /// <param name="defaultFileName">Sets the default file name</param>
-        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
-        /// <returns>Gets the selected filename</returns>
-        internal static string SaveFileDialog(string initialDirectory, string defaultDirectory, string defaultFileName, string defaultExtension = null)
+        /// <param name="initialDirectory">
+        /// Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory
+        /// </param>
+        /// <param name="defaultFileName">
+        /// Sets the default file name
+        /// </param>
+        /// <param name="defaultExtension">
+        /// Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names
+        /// </param>
+        /// <returns>
+        /// Gets the selected filename
+        /// </returns>
+        internal static string SaveFileDialog(string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
-            var saveFileDialog = new System.Windows.Forms.SaveFileDialog
+            var saveFileDialog = new SaveFileDialog
                 {
-                    FileName = defaultFileName,
-                    CheckFileExists = false,
-                    DefaultExt = defaultExtension,
-                    AddExtension = true,
-                    InitialDirectory = initialDirectory,
+                    FileName = defaultFileName, 
+                    CheckFileExists = false, 
+                    DefaultExt = defaultExtension, 
+                    AddExtension = true, 
+                    InitialDirectory = initialDirectory, 
                     ValidateNames = true
                 };
 
@@ -439,23 +405,23 @@ namespace SevenUpdate.Sdk
             {
                 jumpTask = new JumpTask
                     {
-                        ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
-                        IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
-                        IconResourceIndex = 7,
-                        Title = Resources.CreateUpdate,
-                        CustomCategory = Projects[x].ApplicationName,
-                        Arguments = @"-newupdate " + x,
+                        ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
+                        IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
+                        IconResourceIndex = 7, 
+                        Title = Resources.CreateUpdate, 
+                        CustomCategory = Projects[x].ApplicationName, 
+                        Arguments = @"-newupdate " + x, 
                     };
                 jumpList.JumpItems.Add(jumpTask);
                 for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
                 {
                     jumpTask = new JumpTask
                         {
-                            ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
-                            IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
-                            IconResourceIndex = 8,
-                            Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]),
-                            CustomCategory = Projects[x].ApplicationName,
+                            ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
+                            IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
+                            IconResourceIndex = 8, 
+                            Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]), 
+                            CustomCategory = Projects[x].ApplicationName, 
                             Arguments = @"-edit " + x + " " + y
                         };
 
@@ -466,11 +432,11 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.Sdk.exe",
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll",
-                    IconResourceIndex = 6,
-                    Title = Resources.CreateProject,
-                    CustomCategory = Resources.Tasks,
+                    ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
+                    IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
+                    IconResourceIndex = 6, 
+                    Title = Resources.CreateProject, 
+                    CustomCategory = Resources.Tasks, 
                     Arguments = @"-newproject"
                 };
             jumpList.JumpItems.Add(jumpTask);
@@ -566,25 +532,25 @@ namespace SevenUpdate.Sdk
         /// Returns the result of the message
         /// </returns>
         internal static TaskDialogResult ShowMessage(
-            string instructionText,
-            TaskDialogStandardIcon icon,
-            TaskDialogStandardButtons standardButtons,
-            string description = null,
-            string footerText = null,
-            string defaultButtonText = null,
+            string instructionText, 
+            TaskDialogStandardIcon icon, 
+            TaskDialogStandardButtons standardButtons, 
+            string description = null, 
+            string footerText = null, 
+            string defaultButtonText = null, 
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
                 var td = new TaskDialog
                     {
-                        Caption = Resources.SevenUpdateSDK,
-                        InstructionText = instructionText,
-                        Text = description,
-                        Icon = icon,
-                        FooterText = footerText,
-                        FooterIcon = TaskDialogStandardIcon.Information,
-                        Cancelable = true,
+                        Caption = Resources.SevenUpdateSDK, 
+                        InstructionText = instructionText, 
+                        Text = description, 
+                        Icon = icon, 
+                        FooterText = footerText, 
+                        FooterIcon = TaskDialogStandardIcon.Information, 
+                        CanCancel = true, 
                     };
                 if (defaultButtonText != null)
                 {
@@ -670,5 +636,111 @@ namespace SevenUpdate.Sdk
         }
 
         #endregion
+
+        /// <summary>
+        /// The old window
+        /// </summary>
+        private sealed class OldWindow : IWin32Window, IDisposable
+        {
+            #region Constants and Fields
+
+            /// <summary>
+            ///   The pointer to the window
+            /// </summary>
+            private readonly IntPtr windowHandle;
+
+            /// <summary>
+            /// </summary>
+            private bool disposed /* = false*/;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="OldWindow"/> class.
+            /// </summary>
+            /// <param name="handle">
+            /// The handle.
+            /// </param>
+            public OldWindow(IntPtr handle)
+            {
+                this.windowHandle = handle;
+            }
+
+            /// <summary>
+            /// </summary>
+            ~OldWindow()
+            {
+                this.Dispose(false);
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            ///   Gets the handle to the window represented by the implementer.
+            /// </summary>
+            /// <value></value>
+            /// <returns>A handle to the window represented by the implementer.</returns>
+            IntPtr IWin32Window.Handle
+            {
+                get
+                {
+                    return this.windowHandle;
+                }
+            }
+
+            #endregion
+
+            #region Public Methods
+
+            /// <summary>
+            /// </summary>
+            /// <param name="disposing">
+            /// </param>
+            public void Dispose(bool disposing)
+            {
+                lock (this)
+                {
+                    // Do nothing if the object has already been disposed of.
+                    if (this.disposed)
+                    {
+                        return;
+                    }
+
+                    if (disposing)
+                    {
+                        // Release disposable objects used by this instance here.
+                    }
+
+                    // Release unmanaged resources here. Don't access reference type fields.
+
+                    // Remember that the object has been disposed of.
+                    this.disposed = true;
+                }
+            }
+
+            #endregion
+
+            #region Implemented Interfaces
+
+            #region IDisposable
+
+            /// <summary>
+            /// </summary>
+            public void Dispose()
+            {
+                this.Dispose(false);
+
+                // Unregister object for finalization.
+                GC.SuppressFinalize(this);
+            }
+
+            #endregion
+
+            #endregion
+        }
     }
 }

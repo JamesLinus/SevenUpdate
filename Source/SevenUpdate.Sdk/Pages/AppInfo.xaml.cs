@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
@@ -16,13 +12,11 @@ namespace SevenUpdate.Sdk.Pages
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dwm;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
-
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Helpers;
     using SevenUpdate.Sdk.Windows;
@@ -91,7 +85,7 @@ namespace SevenUpdate.Sdk.Pages
 
             if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
             {
-                this.tbxAppLocation.Text = Base.ConvertPath(folderBrowserDialog.SelectedPath, false, Core.AppInfo.Is64Bit);
+                this.tbxAppLocation.Text = Utilities.ConvertPath(folderBrowserDialog.SelectedPath, false, Core.AppInfo.Is64Bit);
             }
         }
 
@@ -161,7 +155,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (this.rbtnFileSystem.IsChecked.GetValueOrDefault())
             {
-                this.tbxAppLocation.Text = Base.ConvertPath(this.tbxAppLocation.Text, false, Core.AppInfo.Is64Bit);
+                this.tbxAppLocation.Text = Utilities.ConvertPath(this.tbxAppLocation.Text, false, Core.AppInfo.Is64Bit);
             }
         }
 
@@ -210,17 +204,17 @@ namespace SevenUpdate.Sdk.Pages
 
             // ReSharper restore PossibleNullReferenceException
             // Load Values
-            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxAppName.Text = t.Value;
             }
 
-            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxAppDescription.Text = t.Value;
             }
 
-            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxPublisher.Text = t.Value;
             }
@@ -242,12 +236,12 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            Base.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
+            Utilities.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
 
             // Load Values
-            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxAppDescription.Text = t.Value;
                 found = true;
@@ -261,7 +255,7 @@ namespace SevenUpdate.Sdk.Pages
             found = false;
 
             // Load Values
-            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxAppName.Text = t.Value;
                 found = true;
@@ -275,7 +269,7 @@ namespace SevenUpdate.Sdk.Pages
             found = false;
 
             // Load Values
-            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Base.Locale))
+            foreach (var t in Core.AppInfo.Publisher.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxPublisher.Text = t.Value;
                 found = true;
@@ -327,7 +321,7 @@ namespace SevenUpdate.Sdk.Pages
                 }
                 else
                 {
-                    var appName = Base.GetLocaleString(Core.AppInfo.Name);
+                    var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
                     if (Core.AppInfo.Is64Bit)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -345,13 +339,13 @@ namespace SevenUpdate.Sdk.Pages
                     }
 
                     // Save the SUA file
-                    Base.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+                    Utilities.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
 
                     // Save project file
                     var project = new Project { ApplicationName = appName, UpdateNames = updateNames };
 
                     Core.Projects.Add(project);
-                    Base.Serialize(Core.Projects, Core.ProjectsFile);
+                    Utilities.Serialize(Core.Projects, Core.ProjectsFile);
                     MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
                 }
             }
@@ -368,7 +362,7 @@ namespace SevenUpdate.Sdk.Pages
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {

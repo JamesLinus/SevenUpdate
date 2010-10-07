@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base
 {
     using System;
@@ -15,8 +12,6 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     using SharpBits.Base.Job;
-
-    #region Notification Event Arguments
 
     /// <summary>
     /// The event data for the JobNotification event
@@ -36,7 +31,9 @@ namespace SharpBits.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="NotificationEventArgs"/> class.
         /// </summary>
-        /// <param name="job">The job the event occurred for</param>
+        /// <param name="job">
+        /// The job the event occurred for
+        /// </param>
         internal NotificationEventArgs(BitsJob job)
         {
             this.Job = job;
@@ -47,9 +44,9 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>
-        /// Gets the job.
+        ///   Gets the job.
         /// </summary>
-        /// <value>The <see cref="BitsJob"/> the notification occurred for</value>
+        /// <value>The <see cref = "BitsJob" /> the notification occurred for</value>
         public BitsJob Job { get; private set; }
 
         #endregion
@@ -65,8 +62,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorNotificationEventArgs"/> class.
         /// </summary>
-        /// <param name="job">The job the notification is for</param>
-        /// <param name="error">The error that occurred</param>
+        /// <param name="job">
+        /// The job the notification is for
+        /// </param>
+        /// <param name="error">
+        /// The error that occurred
+        /// </param>
         internal ErrorNotificationEventArgs(BitsJob job, BitsError error)
             : base(job)
         {
@@ -78,7 +79,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>
-        /// Gets the error.
+        ///   Gets the error.
         /// </summary>
         /// <value>The error that occurred</value>
         public BitsError Error { get; private set; }
@@ -94,7 +95,7 @@ namespace SharpBits.Base
         #region Constants and Fields
 
         /// <summary>
-        /// The Com exception
+        ///   The Com exception
         /// </summary>
         private readonly COMException exception;
 
@@ -105,9 +106,15 @@ namespace SharpBits.Base
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs"/> class.
         /// </summary>
-        /// <param name="job">The job the notification is for</param>
-        /// <param name="exception">The exception.</param>
-        /// <param name="description">The description.</param>
+        /// <param name="job">
+        /// The job the notification is for
+        /// </param>
+        /// <param name="exception">
+        /// The exception.
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// </param>
         internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description)
             : base(job)
         {
@@ -120,7 +127,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>
-        /// Gets the description.
+        ///   Gets the description.
         /// </summary>
         /// <value>The description.</value>
         public string Description { get; private set; }
@@ -152,8 +159,6 @@ namespace SharpBits.Base
         #endregion
     }
 
-    #endregion
-
     /// <summary>
     /// The notification class for the bits manager
     /// </summary>
@@ -162,24 +167,24 @@ namespace SharpBits.Base
         #region Constants and Fields
 
         /// <summary>
-        /// The BITS manager
+        ///   The BITS manager
         /// </summary>
         private readonly BitsManager manager;
 
         /// <summary>
-        /// Occurs when a <see cref="BitsJob"/> error occurs
+        ///   Occurs when a <see cref = "BitsJob" /> error occurs
         /// </summary>
-        private EventHandler<ErrorNotificationEventArgs> onJobErrored;
+        private EventHandler<ErrorNotificationEventArgs> errorOccurred;
 
         /// <summary>
-        /// Occurs when a <see cref="BitsJob"/> is modified
+        ///   Occurs when a <see cref = "BitsJob" /> is modified
         /// </summary>
         private EventHandler<NotificationEventArgs> onJobModified;
 
         /// <summary>
-        /// Occurs when a <see cref="BitsJob"/> is transfered
+        ///   Occurs when a <see cref = "BitsJob" /> is transfered
         /// </summary>
-        private EventHandler<NotificationEventArgs> onjobTransferred;
+        private EventHandler<NotificationEventArgs> onJobTransfered;
 
         #endregion
 
@@ -207,12 +212,12 @@ namespace SharpBits.Base
         {
             add
             {
-                this.onJobErrored += value;
+                this.errorOccurred += value;
             }
 
             remove
             {
-                this.onJobErrored -= value;
+                this.errorOccurred -= value;
             }
         }
 
@@ -239,12 +244,12 @@ namespace SharpBits.Base
         {
             add
             {
-                this.onjobTransferred += value;
+                this.onJobTransfered += value;
             }
 
             remove
             {
-                this.onjobTransferred -= value;
+                this.onJobTransfered -= value;
             }
         }
 
@@ -257,8 +262,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Called when an error occurs.
         /// </summary>
-        /// <param name="copyJob">Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.</param>
-        /// <param name="error">Contains error information, such as the file being processed at the time the fatal error occurred and a description of the error. Do not release pError; BITS releases the interface when the JobError method returns.</param>
+        /// <param name="copyJob">
+        /// Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.
+        /// </param>
+        /// <param name="error">
+        /// Contains error information, such as the file being processed at the time the fatal error occurred and a description of the error. Do not release pError; BITS releases the interface when the JobError method returns.
+        /// </param>
         public void JobError(IBackgroundCopyJob copyJob, IBackgroundCopyError error)
         {
             if (this.manager == null)
@@ -267,7 +276,7 @@ namespace SharpBits.Base
             }
 
             BitsJob job;
-            if (null == this.onJobErrored)
+            if (null == this.errorOccurred)
             {
                 return;
             }
@@ -280,7 +289,7 @@ namespace SharpBits.Base
             }
             else
             {
-                // Update Joblist to check whether the job still exists. If not, just return
+                // Update Job list to check whether the job still exists. If not, just return
                 this.manager.EnumJobs(this.manager.CurrentOwner);
                 if (this.manager.Jobs.ContainsKey(guid))
                 {
@@ -292,7 +301,7 @@ namespace SharpBits.Base
                 }
             }
 
-            this.onJobErrored(this, new ErrorNotificationEventArgs(job, new BitsError(job, error)));
+            this.errorOccurred(this, new ErrorNotificationEventArgs(job, new BitsError(job, error)));
 
             // forward event
             if (job.NotificationTarget != null)
@@ -304,8 +313,12 @@ namespace SharpBits.Base
         /// <summary>
         /// Called when a job is modified.
         /// </summary>
-        /// <param name="copyJob">Contains the methods for accessing property, progress, and state information of the job. Do not release pJob; BITS releases the interface when the JobModification method returns.</param>
-        /// <param name="reserved">Reserved for future use.</param>
+        /// <param name="copyJob">
+        /// Contains the methods for accessing property, progress, and state information of the job. Do not release pJob; BITS releases the interface when the JobModification method returns.
+        /// </param>
+        /// <param name="reserved">
+        /// Reserved for future use.
+        /// </param>
         public void JobModification(IBackgroundCopyJob copyJob, uint reserved)
         {
             if (this.manager == null)
@@ -327,7 +340,7 @@ namespace SharpBits.Base
             }
             else
             {
-                // Update Joblist to check whether the job still exists. If not, just return
+                // Update Job list to check whether the job still exists. If not, just return
                 this.manager.EnumJobs(this.manager.CurrentOwner);
                 if (this.manager.Jobs.ContainsKey(guid))
                 {
@@ -351,7 +364,9 @@ namespace SharpBits.Base
         /// <summary>
         /// Called when all of the files in the job have successfully transferred.
         /// </summary>
-        /// <param name="copyJob">Contains job-related information, such as the time the job completed, the number of bytes transferred, and the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.</param>
+        /// <param name="copyJob">
+        /// Contains job-related information, such as the time the job completed, the number of bytes transferred, and the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.
+        /// </param>
         public void JobTransferred(IBackgroundCopyJob copyJob)
         {
             if (this.manager == null)
@@ -360,7 +375,7 @@ namespace SharpBits.Base
             }
 
             BitsJob job;
-            if (null == this.onjobTransferred)
+            if (null == this.onJobTransfered)
             {
                 return;
             }
@@ -373,7 +388,7 @@ namespace SharpBits.Base
             }
             else
             {
-                // Update Joblist to check whether the job still exists. If not, just return
+                // Update Job list to check whether the job still exists. If not, just return
                 this.manager.EnumJobs(this.manager.CurrentOwner);
                 if (this.manager.Jobs.ContainsKey(guid))
                 {
@@ -385,7 +400,7 @@ namespace SharpBits.Base
                 }
             }
 
-            this.onjobTransferred(this, new NotificationEventArgs(job));
+            this.onJobTransfered(this, new NotificationEventArgs(job));
 
             // forward event
             if (job.NotificationTarget != null)

@@ -188,14 +188,14 @@
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit {0}</value>
-    <comment>Controls:CommandLink.Note</comment>
+    <comment>CommandLink.Note</comment>
   </data>
   <data name="Test" xml:space="preserve">
     <value>Test {0}</value>
   </data>
   <data name="AddUpdate" xml:space="preserve">
     <value>Adds a new update to {0}</value>
-    <comment>Controls:CommandLink.Note</comment>
+    <comment>CommandLink.Note</comment>
   </data>
   <data name="CreateProject" xml:space="preserve">
     <value>Create new project</value>
@@ -215,11 +215,11 @@
   </data>
   <data name="CreateNewProject" xml:space="preserve">
     <value>Create a new project</value>
-    <comment>Controls:CommandLink.Content</comment>
+    <comment>CommandLink.Content</comment>
   </data>
   <data name="CreateNewUpdate" xml:space="preserve">
     <value>Create a new update</value>
-    <comment>Controls:CommandLink.Content</comment>
+    <comment>CommandLink.Content</comment>
   </data>
   <data name="WelcomeTitle" xml:space="preserve">
     <value>Welcome to the Seven Update SDK</value>
@@ -643,11 +643,11 @@
   </data>
   <data name="SaveProject" xml:space="preserve">
     <value>Save project</value>
-    <comment>Controls:CommandLink.Content</comment>
+    <comment>CommandLink.Content</comment>
   </data>
   <data name="SaveProjectRelease" xml:space="preserve">
     <value>Save project and release updates</value>
-    <comment>Controls:CommandLink.Content</comment>
+    <comment>CommandLink.Content</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
     <value>Shortcuts</value>
@@ -747,23 +747,23 @@
   </data>
   <data name="ApplicationNameNote" xml:space="preserve">
     <value>Seven Update SDK (max 100 characters)</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="RegistryValueNote" xml:space="preserve">
     <value>Install Location</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="ApplicationDescriptionNote" xml:space="preserve">
     <value>Write a summary about the application here, but make it no longer than 300 characters</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="CreateProjectNote" xml:space="preserve">
     <value>Enable Seven Update to update your software</value>
-    <comment>Controls:CommandLink.Note</comment>
+    <comment>CommandLink.Note</comment>
   </data>
   <data name="TestProjectNote" xml:space="preserve">
     <value>Simulate updating to detect problems</value>
-    <comment>Controls:CommandLink.Note</comment>
+    <comment>CommandLink.Note</comment>
   </data>
   <data name="AllFiles" xml:space="preserve">
     <value>All files</value>
@@ -771,50 +771,50 @@
   </data>
   <data name="DownloadLocationNote" xml:space="preserve">
     <value>(Optional) An absolute url that will download the file (file must have public read access)</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="InstallLocationNote" xml:space="preserve">
     <value>An absolute Uri pointing to the installed location of the file on a system</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="ArgumentNote" xml:space="preserve">
     <value>(Optional) Enter command line arguments to be passed when file is executed during update</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="UpdateNameNote" xml:space="preserve">
     <value>Performance update for MyAppName (max 100 characters)</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="UpdateDetailsNote" xml:space="preserve">
     <value>Write a summary about the update here, it can be simple as a changelog, but make it no longer than 300 characters</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="UpdateDetailsUrlNote" xml:space="preserve">
     <value>(Optional) http://sevenupdate.com/SDK-Update</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="LicenseUrlNote" xml:space="preserve">
     <value>(Optional) http://www.gnu.org/licenses/gpl-3.0.txt (Must point to readable file)</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="ExportProjectNote" xml:space="preserve">
     <value>Exports the files needed to release your update(s)</value>
-    <comment>Controls:CommandLink.Note</comment>
+    <comment>CommandLink.Note</comment>
   </data>
   <data name="MyShortcut" xml:space="preserve">
     <value>My Shortcut</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="TestValue" xml:space="preserve">
     <value>TestValue</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="ShortcutDescriptionNote" xml:space="preserve">
     <value>(Optional) Displays a description of the shortcut on mouse hover</value>
   </data>
   <data name="ValueNameNote" xml:space="preserve">
     <value>My Value Name</value>
-    <comment>Controls:InfoTextBox.Note</comment>
+    <comment>InfoTextBox.Note</comment>
   </data>
   <data name="AboutSevenUpdateSDK" xml:space="preserve">
     <value>About Seven Update SDK</value>

@@ -1,11 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.BaseExtensions
 {
@@ -24,9 +22,11 @@ namespace WPFLocalizeExtension.BaseExtensions
 
     /// <summary>
     /// Implements the BaseLocalizeExtension.
-    /// Represents a LocalizationExtension which provides a localized object of a .resx dictionary.
+    ///   Represents a LocalizationExtension which provides a localized object of a .resx dictionary.
     /// </summary>
-    /// <typeparam name="TValue">The type of the provided value.</typeparam>
+    /// <typeparam name="TValue">
+    /// The type of the provided value.
+    /// </typeparam>
     /// <remarks>
     /// If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled properties
     /// </remarks>
@@ -53,7 +53,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Holds the Name of the .resx dictionary.
-        ///   If it's <see langword="null"/>, "Resources" will get returned
+        ///   If it's <see langword = "null" />, "Resources" will get returned
         /// </summary>
         private string dict;
 
@@ -110,7 +110,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Gets or sets the name of the Assembly where the .resx is located.
-        ///   If it's <see langword="null"/>, the executing assembly (where this LocalizeEngine is located at) will get returned
+        ///   If it's <see langword = "null" />, the executing assembly (where this LocalizeEngine is located at) will get returned
         /// </summary>
         public string Assembly
         {
@@ -153,7 +153,7 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.
-        ///   If it's <see langword="null"/>, "Resources" will get returned
+        ///   If it's <see langword = "null" />, "Resources" will get returned
         /// </summary>
         public string Dict
         {
@@ -306,10 +306,10 @@ namespace WPFLocalizeExtension.BaseExtensions
                     Localize.Instance.AddEventListener(this);
                 }
 
-                // add the target as an dependency object as weakreference to the dependency object list
+                // add the target as an dependency object as weak reference to the dependency object list
                 this.targetObjects.Add(new WeakReference(service.TargetObject), service.TargetProperty);
 
-                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the targetobject
+                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the target object
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(service.TargetObject), this);
             }
 
@@ -375,7 +375,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 return true;
             }
 
-            // return false: resulve was not successfully.
+            // return false: resolve was not successfully.
             return false;
         }
 
@@ -418,10 +418,10 @@ namespace WPFLocalizeExtension.BaseExtensions
                     Localize.Instance.AddEventListener(this);
                 }
 
-                // add the target as an dependency object as weakreference to the dependency object list
+                // add the target as an dependency object as weak reference to the dependency object list
                 this.targetObjects.Add(new WeakReference(targetObject), targetProperty);
 
-                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the targetobject
+                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the target object
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(targetObject), this);
 
                 // get the initial value of the dependency property
@@ -458,9 +458,15 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// <summary>
         /// Receives events from the centralized event manager.
         /// </summary>
-        /// <param name="managerType">The type of the <see cref="T:System.Windows.WeakEventManager"/> calling this method.</param>
-        /// <param name="sender">Object that originated the event.</param>
-        /// <param name="e">Event data.</param>
+        /// <param name="managerType">
+        /// The type of the <see cref="T:System.Windows.WeakEventManager"/> calling this method.
+        /// </param>
+        /// <param name="sender">
+        /// Object that originated the event.
+        /// </param>
+        /// <param name="e">
+        /// Event data.
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>
@@ -565,7 +571,7 @@ namespace WPFLocalizeExtension.BaseExtensions
             // check if the forced culture is not null or empty
             if (!string.IsNullOrEmpty(this.ForceCulture))
             {
-                // try to create a valid cultureinfo, if defined
+                // try to create a valid culture info, if defined
                 try
                 {
                     // try to create a specific culture from the forced one
@@ -573,7 +579,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 }
                 catch (ArgumentException ex)
                 {
-                    // on error, check if designmode is on
+                    // on error, check if design mode is on
                     if (Localize.Instance.GetIsInDesignMode())
                     {
                         // cultureInfo will be set to the current specific culture
@@ -581,7 +587,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                     }
                     else
                     {
-                        // tell the customer, that the forced culture cannot be converted propperly
+                        // tell the customer, that the forced culture cannot be converted properly
                         throw new ArgumentException("Cannot create a CultureInfo with '" + this.ForceCulture + "'", ex);
                     }
                 }
@@ -607,11 +613,17 @@ namespace WPFLocalizeExtension.BaseExtensions
 
         /// <summary>
         /// This method will be called through the interface, passed to the
-        /// LocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed
+        ///   LocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed
         /// </summary>
-        /// <param name="managerType">The manager Type.</param>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The event argument.</param>
+        /// <param name="managerType">
+        /// The manager Type.
+        /// </param>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The event argument.
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>

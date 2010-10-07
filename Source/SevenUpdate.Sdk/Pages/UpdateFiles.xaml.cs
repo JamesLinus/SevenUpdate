@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
@@ -17,13 +13,11 @@ namespace SevenUpdate.Sdk.Pages
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dwm;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
-
-    using Microsoft.Windows.Controls;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Dwm;
 
     using SevenUpdate.Sdk.Helpers;
     using SevenUpdate.Sdk.Windows;
@@ -94,8 +88,8 @@ namespace SevenUpdate.Sdk.Pages
                 () =>
                     {
                         updateFile.FileSize =
-                            Base.GetFileSize(
-                                Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                            Utilities.GetFileSize(
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
                     });
         }
 
@@ -107,11 +101,11 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void AddFile(string fullName)
         {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
             var installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
@@ -157,9 +151,9 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
-            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = directory };
 
             if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
@@ -179,9 +173,9 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
-            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var files = Core.OpenFileDialog(directory, true);
             if (files == null)
@@ -211,8 +205,10 @@ namespace SevenUpdate.Sdk.Pages
                 () =>
                     {
                         updateFile.Hash =
-                            Base.GetHash(Base.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
-                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
+                            Utilities.GetHash(
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                    }).
+                ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
         /// <summary>
@@ -290,17 +286,17 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
             var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
+            source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
         /// <summary>
@@ -427,13 +423,13 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
-            var files = Core.OpenFileDialog(installDirectory, false, null, Path.GetFileName(Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination));
+            var files = Core.OpenFileDialog(installDirectory, false);
             if (files == null)
             {
                 return;
@@ -455,10 +451,10 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
-            var directory = !Base.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Base.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var files = Core.OpenFileDialog(directory, false, null, Path.GetFileName(Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination));
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var files = Core.OpenFileDialog(directory, false);
 
             if (files == null)
             {
@@ -477,7 +473,7 @@ namespace SevenUpdate.Sdk.Pages
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {

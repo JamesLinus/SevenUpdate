@@ -1,11 +1,9 @@
 // ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
@@ -50,7 +48,9 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Provides the Value for the first Binding as <see cref="System.String"/>
         /// </summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <param name="serviceProvider">
+        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
+        /// </param>
         /// <returns>
         /// The founded item from the .resx directory or <see langword="null"/> if not founded
         /// </returns>
@@ -76,7 +76,7 @@ namespace WPFLocalizeExtension.Extensions
 
             if (obj.GetType().Equals(typeof(string)))
             {
-                // dont call GetLocalizedText at this point, otherwise you will get prefix and suffix twice appended
+                // don't call GetLocalizedText at this point, otherwise you will get prefix and suffix twice appended
                 return obj;
             }
 
@@ -90,9 +90,11 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>
         /// This method formats the localized text.
-        /// If the passed target text is <see langword="null"/>, string.empty will be returned.
+        ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
         /// </summary>
-        /// <param name="target">The text to format.</param>
+        /// <param name="target">
+        /// The text to format.
+        /// </param>
         /// <returns>
         /// Returns the formated text or string.empty, if the target text was <see langword="null"/>.
         /// </returns>

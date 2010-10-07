@@ -1,23 +1,13 @@
-﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
-// ***********************************************************************
-
-namespace Microsoft.Windows.ApplicationServices
+﻿namespace System.Windows.ApplicationServices
 {
     /// <summary>
     /// The <see cref="System.Delegate"/> that represents the callback method invoked
     ///   by the system when an application has registered for 
     ///   application recovery.
     /// </summary>
-    /// <param name="state">
+    /// <parameter name="state">
     /// An application-defined state object that is passed to the callback method.
-    /// </param>
+    /// </parameter>
     /// <remarks>
     /// The callback method will be invoked
     ///   prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
@@ -38,8 +28,12 @@ namespace Microsoft.Windows.ApplicationServices
         /// <summary>
         /// Initializes a new instance of the <see cref="RecoveryData"/> class.
         /// </summary>
-        /// <param name="callback">The callback delegate.</param>
-        /// <param name="state">The current state of the application.</param>
+        /// <parameter name="callback">
+        /// The callback delegate.
+        /// </parameter>
+        /// <parameter name="state">
+        /// The current state of the application.
+        /// </parameter>
         protected RecoveryData(RecoveryCallback callback, object state)
         {
             this.Callback = callback;

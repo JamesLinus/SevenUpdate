@@ -1,13 +1,3 @@
-// ***********************************************************************
-// Assembly         : SharpBits.Base
-// Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) xidar solutions. All rights reserved.
-// ***********************************************************************
-
 namespace SharpBits.Base.File
 {
     /// <summary>
@@ -20,7 +10,9 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsFileInfo"/> class.
         /// </summary>
-        /// <param name="fileInfo">The file info.</param>
+        /// <param name="fileInfo">
+        /// The file info.
+        /// </param>
         internal BitsFileInfo(BGFileInfo fileInfo)
         {
             this.BGFileInfo = fileInfo;
@@ -29,8 +21,12 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsFileInfo"/> class.
         /// </summary>
-        /// <param name="remoteName">Name of the remote.</param>
-        /// <param name="localName">Name of the local.</param>
+        /// <param name="remoteName">
+        /// Name of the remote.
+        /// </param>
+        /// <param name="localName">
+        /// Name of the local.
+        /// </param>
         protected BitsFileInfo(string remoteName, string localName)
         {
             this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };
@@ -41,7 +37,7 @@ namespace SharpBits.Base.File
         #region Properties
 
         /// <summary>
-        /// Gets the local file name
+        ///   Gets the local file name
         /// </summary>
         /// <value>The name of the local.</value>
         public string LocalName
@@ -53,7 +49,7 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
-        /// Gets the remote file name
+        ///   Gets the remote file name
         /// </summary>
         public string RemoteName
         {
@@ -64,7 +60,7 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
-        /// Gets the BG file info.
+        ///   Gets the BG file info.
         /// </summary>
         /// <value>The BG file info.</value>
         internal BGFileInfo BGFileInfo { get; private set; }

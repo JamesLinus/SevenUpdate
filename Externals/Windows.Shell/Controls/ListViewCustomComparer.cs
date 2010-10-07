@@ -1,19 +1,11 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : sevenalive (Robert Baker)
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-namespace Microsoft.Windows.Controls
+namespace System.Windows.Controls
 {
     using System.Collections;
     using System.Collections.Generic;
@@ -38,12 +30,12 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Adds a column to the <see cref="SortColumns"/>
         /// </summary>
-        /// <param name="sortColumn">
+        /// <parameter name="sortColumn">
         /// a string representing a column to be sorted
-        /// </param>
-        /// <param name="direction">
+        /// </parameter>
+        /// <parameter name="direction">
         /// the direction to sort
-        /// </param>
+        /// </parameter>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
             this.ClearSort();
@@ -64,17 +56,17 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        /// <param name="x">
+        /// <parameter name="x">
         /// The first object to compare.
-        /// </param>
-        /// <param name="y">
+        /// </parameter>
+        /// <parameter name="y">
         /// The second object to compare.
-        /// </param>
+        /// </parameter>
         /// <returns>
-        /// A signed integer that indicates the relative values of <paramref name="x"/> and <paramref name="y"/>, as shown in the following table.Value Meaning Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>. Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.
+        /// A signed integer that indicates the relative values of <parameterref name="x"/> and <parameterref name="y"/>, as shown in the following table.Value Meaning Less than zero <parameterref name="x"/> is less than <parameterref name="y"/>. Zero <parameterref name="x"/> equals <parameterref name="y"/>. Greater than zero <parameterref name="x"/> is greater than <parameterref name="y"/>.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
-        /// Neither <paramref name="x"/> nor <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface.-or- <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
+        /// Neither <parameterref name="x"/> nor <parameterref name="y"/> implements the <see cref="T:System.IComparable"/> interface.-or- <parameterref name="x"/> and <parameterref name="y"/> are of different types and neither one can handle comparisons with the other. 
         /// </exception>
         public abstract int Compare(object x, object y);
 

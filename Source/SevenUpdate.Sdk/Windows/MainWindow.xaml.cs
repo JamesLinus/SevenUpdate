@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Windows
@@ -15,13 +11,12 @@ namespace SevenUpdate.Sdk.Windows
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dwm;
     using System.Windows.Input;
+    using System.Windows.Internal;
     using System.Windows.Markup;
     using System.Windows.Media;
     using System.Windows.Navigation;
-
-    using Microsoft.Windows.Dwm;
-    using Microsoft.Windows.Internal;
 
     using SevenUpdate.Sdk.Properties;
 
@@ -70,7 +65,7 @@ namespace SevenUpdate.Sdk.Windows
         {
             base.OnSourceInitialized(e);
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.Margins(0, 32, 0, 44), this);
+            AeroGlass.ResetAeroGlass(new NativeMethods.Margins(0, 32, 0, 44), this);
             this.Background = AeroGlass.IsEnabled ? Brushes.Transparent : Brushes.White;
         }
 
@@ -93,7 +88,7 @@ namespace SevenUpdate.Sdk.Windows
             }
 
             AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new CoreNativeMethods.Margins(0, 32, 0, 44), this);
+            AeroGlass.ResetAeroGlass(new NativeMethods.Margins(0, 32, 0, 44), this);
         }
 
         /// <summary>

@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
@@ -19,8 +15,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
-
-    using Microsoft.Windows.Controls;
 
     using SevenUpdate.Windows;
 
@@ -83,7 +77,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHiddenUpdates()
         {
-            this.hiddenUpdates = Base.Deserialize<ObservableCollection<Suh>>(Base.HiddenFile);
+            this.hiddenUpdates = Utilities.Deserialize<ObservableCollection<Suh>>(Utilities.HiddenFile);
             if (this.hiddenUpdates == null)
             {
                 return;

@@ -1,16 +1,12 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs
+namespace System.Windows.Dialogs
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -18,14 +14,16 @@ namespace Microsoft.Windows.Dialogs
     /// <summary>
     /// Strongly typed collection for dialog controls.
     /// </summary>
-    /// <typeparam name="T">The <see cref="DialogControl"/></typeparam>
+    /// <typeparameter name="T">
+    /// The <see cref="DialogControl"/>
+    /// </typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T>
         where T : DialogControl
     {
         #region Constants and Fields
 
         /// <summary>
-        /// The host dialog
+        ///   The host dialog
         /// </summary>
         private readonly IDialogControlHost hostingDialog;
 
@@ -36,7 +34,9 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogControlCollection&lt;T&gt;"/> class.
         /// </summary>
-        /// <param name="host">The host.</param>
+        /// <parameter name="host">
+        /// The host.
+        /// </parameter>
         internal DialogControlCollection(IDialogControlHost host)
         {
             this.hostingDialog = host;
@@ -47,17 +47,17 @@ namespace Microsoft.Windows.Dialogs
         #region Indexers
 
         /// <summary>
-        ///  Defines the indexer that supports accessing controls by name.
+        ///   Defines the indexer that supports accessing controls by name.
         /// </summary>
         /// <remarks>
-        ///  <para>Control names are case sensitive.</para>
-        ///  <para>This indexer is useful when the dialog is created in XAML
-        ///    rather than constructed in code.</para>
+        ///   <para>Control names are case sensitive.</para>
+        ///   <para>This indexer is useful when the dialog is created in XAML
+        ///     rather than constructed in code.</para>
         /// </remarks>
         /// <exception cref = "System.ArgumentException">
-        ///  The name cannot be <see langword="null"/> or a zero-length string.</exception>
+        ///   The name cannot be <see langword = "null" /> or a zero-length string.</exception>
         /// <remarks>
-        ///  If there is more than one control with the same name, only the <B>first control</B> will be returned.
+        ///   If there is more than one control with the same name, only the <B>first control</B> will be returned.
         /// </remarks>
         public T this[string name]
         {
@@ -78,38 +78,40 @@ namespace Microsoft.Windows.Dialogs
 
         /// <summary>
         /// Recursively searches for the control who's id matches the value
-        /// passed in the <paramref name="id"/> parameter.
+        ///   passed in the <parameterref name="id"/> parameter.
         /// </summary>
-        /// <param name="id">An integer containing the identifier of the
-        /// control being searched for.</param>
+        /// <parameter name="id">
+        /// An integer containing the identifier of the
+        ///   control being searched for.
+        /// </parameter>
         /// <returns>
         /// A <see cref="DialogControl"/> who's id matches the value of the
-        /// <paramref name="id"/> parameter.
+        ///   <parameterref name="id"/> parameter.
         /// </returns>
-        internal DialogControl GetControlbyId(int id)
+        internal DialogControl GetControlById(int id)
         {
-            // return ( Items.Count == 0 ? null :  
-            // GetSubControlbyId(Items as IEnumerable<T>,
-            // id) 
-            // );
-            return this.GetSubControlbyId(this.Items, id);
+            return this.GetSubControlById(this.Items, id);
         }
 
         /// <summary>
         /// Recursively searches for a given control id in the
-        /// collection passed via the <paramref name="ctrlColl"/> parameter.
+        ///   collection passed via the <parameterref name="subControl"/> parameter.
         /// </summary>
-        /// <param name="ctrlColl">A Collection&lt;CommonFileDialogControl&gt;</param>
-        /// <param name="id">An int containing the identifier of the control
-        /// being searched for.</param>
+        /// <parameter name="subControl">
+        /// A Collection of CommonFileDialogControls
+        /// </parameter>
+        /// <parameter name="id">
+        /// An int containing the identifier of the control
+        ///   being searched for.
+        /// </parameter>
         /// <returns>
         /// A <see cref="DialogControl"/> who's Id matches the value of the
-        /// <paramref name="id"/> parameter.
+        ///   <parameterref name="id"/> parameter.
         /// </returns>
-        internal DialogControl GetSubControlbyId(IEnumerable<T> ctrlColl, int id)
+        internal DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
         {
-            // if ctrlColl is null, it will throw in the foreach.
-            return ctrlColl == null ? null : ctrlColl.Cast<DialogControl>().FirstOrDefault(control => control.Id == id);
+            // if subControl is null, it will throw in the foreach.
+            return subControl == null ? null : subControl.Cast<DialogControl>().FirstOrDefault(control => control.Id == id);
 
             // Control id not found - likely an error, but the calling 
             // function should ultimately decide.
@@ -118,12 +120,12 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         /// Inserts an dialog control at the specified index.
         /// </summary>
-        /// <param name="index">
+        /// <parameter name="index">
         /// The location to insert the control.
-        /// </param>
-        /// <param name="control">
+        /// </parameter>
+        /// <parameter name="control">
         /// The item to insert.
-        /// </param>
+        /// </parameter>
         /// <permission cref="System.InvalidOperationException">
         /// A control with 
         ///   the same name already exists in this collection -or- 
@@ -160,9 +162,9 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         /// Removes the control at the specified index.
         /// </summary>
-        /// <param name="index">
+        /// <parameter name="index">
         /// The location of the control to remove.
-        /// </param>
+        /// </parameter>
         /// <permission cref="System.InvalidOperationException">
         /// The associated dialog is 
         ///   showing and cannot be modified.

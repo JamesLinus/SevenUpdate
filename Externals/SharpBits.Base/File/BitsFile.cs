@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.File
 {
     using System;
@@ -24,22 +21,22 @@ namespace SharpBits.Base.File
         #region Constants and Fields
 
         /// <summary>
-        /// The current job
+        ///   The current job
         /// </summary>
         private readonly BitsJob job;
 
         /// <summary>
-        /// Indicates if the file has been disposed
+        ///   Indicates if the file has been disposed
         /// </summary>
         private bool disposed;
 
         /// <summary>
-        /// The current <see cref="BitsFile"/>
+        ///   The current <see cref = "BitsFile" />
         /// </summary>
         private IBackgroundCopyFile file;
 
         /// <summary>
-        /// The current <see cref="BitsFile"/> progress
+        ///   The current <see cref = "BitsFile" /> progress
         /// </summary>
         private FileProgress progress;
 
@@ -50,8 +47,12 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Initializes a new instance of the <see cref="BitsFile"/> class.
         /// </summary>
-        /// <param name="job">The current job</param>
-        /// <param name="file">The current file within the job</param>
+        /// <param name="job">
+        /// The current job
+        /// </param>
+        /// <param name="file">
+        /// The current file within the job
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// </exception>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
@@ -71,7 +72,7 @@ namespace SharpBits.Base.File
         #region Properties
 
         /// <summary>
-        /// Gets the local name of the file
+        ///   Gets the local name of the file
         /// </summary>
         /// <value>The filename of the local file</value>
         public string LocalName
@@ -93,7 +94,7 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
-        /// Gets the progress.
+        ///   Gets the progress.
         /// </summary>
         /// <value>The progress.</value>
         public FileProgress Progress
@@ -119,10 +120,10 @@ namespace SharpBits.Base.File
         }
 
         /// <summary>
-        /// Gets or sets the remote name of the file
+        ///   Gets or sets the remote name of the file
         /// </summary>
         /// <value>The remote name of the file</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public string RemoteName
         {
@@ -186,7 +187,9 @@ namespace SharpBits.Base.File
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing">
+        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)

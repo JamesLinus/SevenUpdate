@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Base
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -80,8 +76,8 @@ namespace SevenUpdate
             try
             {
                 // Check if machine is connected to the internet
-                var clnt = new TcpClient(@"sevenupdate.com", 80);
-                clnt.Close();
+                var client = new TcpClient(@"sevenupdate.com", 80);
+                client.Close();
             }
             catch (Exception e)
             {
@@ -104,14 +100,14 @@ namespace SevenUpdate
                 name.Add(ls);
 
                 // Download the Seven Update SUI and load it.
-                var app = Base.Deserialize<Sui>(Base.DownloadFile(SevenUpdateSui), SevenUpdateSui);
+                var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(SevenUpdateSui), SevenUpdateSui);
 
                 if (app != null)
                 {
                     app.AppInfo = new Sua
                         {
                             AppUrl = "http://sevenupdate.com/", 
-                            Directory = Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
+                            Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
                             Publisher = publisher, 
                             Name = name, 
                             HelpUrl = "http://sevenupdate.com/support/", 
@@ -139,7 +135,7 @@ namespace SevenUpdate
             catch (Exception e)
             {
                 // If this happens i am the only one to blame lol.
-                Base.ReportError(e, Base.AllUserStore);
+                Utilities.ReportError(e, Utilities.AllUserStore);
 
                 // Notify that there was an error that occurred.
                 if (ErrorOccurred != null)
@@ -160,7 +156,7 @@ namespace SevenUpdate
             }
 
             // Gets the hidden updates from settings
-            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile);
+            var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
             foreach (var t in apps)
@@ -173,7 +169,7 @@ namespace SevenUpdate
                     try
                     {
                         // Loads a SUI that was downloaded
-                        var app = Base.Deserialize<Sui>(Base.DownloadFile(t.SuiUrl), t.SuiUrl);
+                        var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl), t.SuiUrl);
                         if (app != null)
                         {
                             app.AppInfo = t;
@@ -181,7 +177,6 @@ namespace SevenUpdate
                             // Check to see if any updates are available and exclude hidden updates
 
                             // If there is an update available, add it.
-
                             if (CheckForUpdates(ref app, hidden))
                             {
                                 applications.Add(app);
@@ -190,7 +185,7 @@ namespace SevenUpdate
                     }
                     catch (WebException e)
                     {
-                        Base.ReportError("Error downloading file: " + t.SuiUrl, Base.AllUserStore);
+                        Utilities.ReportError("Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
 
                         // Notify that there was an error that occurred.
                         if (ErrorOccurred != null)
@@ -200,7 +195,7 @@ namespace SevenUpdate
                     }
                     catch (Exception e)
                     {
-                        Base.ReportError(e, Base.AllUserStore);
+                        Utilities.ReportError(e, Utilities.AllUserStore);
 
                         // Notify that there was an error that occurred.
                         if (ErrorOccurred != null)
@@ -281,9 +276,9 @@ namespace SevenUpdate
         /// </returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
-            app.AppInfo.Directory = Base.IsRegistryKey(app.AppInfo.Directory)
-                                        ? Base.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit)
-                                        : Base.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
+            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
+                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit)
+                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {
@@ -323,7 +318,7 @@ namespace SevenUpdate
                 ulong size = 0;
                 for (var z = 0; z < app.Updates[y].Files.Count; z++)
                 {
-                    app.Updates[y].Files[z].Destination = Base.ConvertPath(
+                    app.Updates[y].Files[z].Destination = Utilities.ConvertPath(
                         app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
 
                     // Checks to see if the file needs updated, if it doesn't it removes it from the list.
@@ -336,7 +331,7 @@ namespace SevenUpdate
                             case FileAction.UpdateThenRegister:
                             case FileAction.UpdateIfExist:
                             case FileAction.CompareOnly:
-                                if (Base.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
+                                if (Utilities.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
@@ -347,8 +342,8 @@ namespace SevenUpdate
                                     z--;
                                 }
                                 else if (
-                                    Base.GetHash(
-                                        Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
+                                    Utilities.GetHash(
+                                        Utilities.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
                                         Path.GetFileName(app.Updates[y].Files[z].Destination)) != app.Updates[y].Files[z].Hash)
                                 {
                                     if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
@@ -390,7 +385,7 @@ namespace SevenUpdate
                             case FileAction.Update:
                             case FileAction.UpdateThenExecute:
                             case FileAction.UpdateThenRegister:
-                                if (Base.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
+                                if (Utilities.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
                                 {
                                     app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
                                     if (app.Updates[y].Files.Count == 0)
@@ -401,8 +396,8 @@ namespace SevenUpdate
                                     z--;
                                 }
                                 else if (
-                                    Base.GetHash(
-                                        Base.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
+                                    Utilities.GetHash(
+                                        Utilities.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
                                         Path.GetFileName(app.Updates[y].Files[z].Destination)) != app.Updates[y].Files[z].Hash)
                                 {
                                     size += app.Updates[y].Files[z].FileSize;

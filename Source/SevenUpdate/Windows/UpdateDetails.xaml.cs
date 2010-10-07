@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Windows
@@ -59,7 +55,7 @@ namespace SevenUpdate.Windows
             this.helpUrl = updateInfo.HelpUrl;
             this.infoUrl = updateInfo.InfoUrl;
             this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                     ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Base.ConvertFileSize(updateInfo.UpdateSize))
+                                     ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
                                      : String.Format(
                                          CultureInfo.CurrentCulture, 
                                          Properties.Resources.InstallationStatus, 

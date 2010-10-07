@@ -1,18 +1,10 @@
 ﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-
-//// Register this namespace under admirals one with prefix
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
-[assembly: System.Windows.Markup.XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
-//// Assign a default namespace prefix for the schema
-
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -113,7 +105,7 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>
         ///   Gets the LocalizeDictionary singleton.
-        ///   If the underlying instance is <see langword="null"/>, a instance will be created.
+        ///   If the underlying instance is <see langword = "null" />, a instance will be created.
         /// </summary>
         public static Localize Instance
         {
@@ -122,9 +114,10 @@ namespace WPFLocalizeExtension.Engine
                 // check if the underlying instance is null
                 if (instance == null)
                 {
-                    // if it is null, lock the syncroot.
+                    // if it is null, lock the sync root.
+
                     // if another thread is accessing this too, 
-                    // it have to wait until the syncroot is released
+                    // it have to wait until the sync root is released
                     lock (SyncRoot)
                     {
                         // check again, if the underlying instance is null
@@ -149,7 +142,7 @@ namespace WPFLocalizeExtension.Engine
         ///   You have to set LocalizeDictionary.Culture first or 
         ///   wait until System.Windows.Application.Current.MainWindow is created.
         ///   Otherwise you will get an Exception.</exception>
-        /// <exception cref = "System.ArgumentNullException">thrown if Culture will be set to <see langword="null"/></exception>
+        /// <exception cref = "System.ArgumentNullException">thrown if Culture will be set to <see langword = "null" /></exception>
         public CultureInfo Culture
         {
             get
@@ -159,7 +152,7 @@ namespace WPFLocalizeExtension.Engine
 
             set
             {
-                // the cultureinfo cannot contains a null reference
+                // the culture info cannot contains a null reference
                 if (value == null)
                 {
                     throw new ArgumentNullException("value");
@@ -261,7 +254,7 @@ namespace WPFLocalizeExtension.Engine
 
                 // key
                 // assembly = ExecutingAssembly
-                // dict = standard resourcedictionary
+                // dict = standard resource dictionary
                 if (split.Length == 1)
                 {
                     outKey = split[0];
@@ -427,14 +420,15 @@ namespace WPFLocalizeExtension.Engine
             // declaring local ResourceManager
             ResourceManager resManager;
 
-            // try to get the resouce manager
+            // try to get the resource manager
+
             try
             {
                 resManager = this.GetResourceManager(resourceAssembly, resourceDictionary, resourceKey);
             }
             catch
             {
-                // if an error occour, throw exception, if in runtime
+                // if an error occur, throw exception, if in runtime
                 if (this.GetIsInDesignMode())
                 {
                     return null;
@@ -443,7 +437,7 @@ namespace WPFLocalizeExtension.Engine
                 throw;
             }
 
-            // gets the resourceobject with the choosen localization
+            // gets the resource object with the chosen localization
             object retVal = resManager.GetObject(resourceKey, cultureToUse) as TType;
 
             // if the retVal is null, throw exception, if in runtime
@@ -663,7 +657,7 @@ namespace WPFLocalizeExtension.Engine
                                                         where assemblyName.Name == resourceAssembly
                                                         select assemblyInAppDomain)
                     {
-                        // assigne the assembly
+                        // assigned the assembly
                         assembly = assemblyInAppDomain;
 
                         // stop the search here
@@ -679,14 +673,15 @@ namespace WPFLocalizeExtension.Engine
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception(string.Format(CultureInfo.CurrentCulture, "The Assembly '{0}' cannot be loaded.", resourceAssembly), ex);
+                    throw new Exception();
                 }
 
-                // get all available resourcenames
+                // get all available resource names
+
                 // availableResources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
                 availableResources = assembly.GetManifestResourceNames();
 
-                // search for the best fitting resourcefile. pattern: ".{NAME}.resources"
+                // search for the best fitting resource file. pattern: ".{NAME}.resources"
                 foreach (var t in availableResources.Where(t => t.StartsWith(resourceAssembly + ".") && t.EndsWith(resManagerNameToSearch)))
                 {
                     // take the first occurrence and break
@@ -714,16 +709,16 @@ namespace WPFLocalizeExtension.Engine
 
                 try
                 {
-                    // get the propertyinfo from resManager over the type from foundedResource
+                    // get the property info from resManager over the type from foundedResource
                     propInfo = assembly.GetType(foundedResource).GetProperty(ResourceManagerName, ResourceBindingFlags);
 
-                    // get the GET-method from the methodinfo
+                    // get the GET-method from the method info
                     methodInfo = propInfo.GetGetMethod(true);
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
 
-                    // cast it to a ResourceManager for better working with
+                    // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }
                 catch (Exception ex)
@@ -732,7 +727,7 @@ namespace WPFLocalizeExtension.Engine
                     throw new InvalidOperationException("Cannot resolve the ResourceManager!", ex);
                 }
 
-                // Add the ResourceManager to the cachelist
+                // Add the ResourceManager to the cache list
                 this.ResourceManagerList.Add(resourceAssembly + resManagerNameToSearch, resManager);
             }
 

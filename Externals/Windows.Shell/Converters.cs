@@ -1,15 +1,14 @@
-﻿// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-namespace Microsoft.Windows.Common
+﻿// ***********************************************************************
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
+// ***********************************************************************
+namespace System.Windows
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-    using System.Windows;
     using System.Windows.Data;
 
     /// <summary>
@@ -25,18 +24,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -61,18 +60,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>
@@ -100,18 +99,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -136,18 +135,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>
@@ -174,18 +173,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -210,18 +209,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>
@@ -248,18 +247,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -284,18 +283,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>
@@ -322,18 +321,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -353,18 +352,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>
@@ -391,18 +390,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
@@ -414,18 +413,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
@@ -452,18 +451,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
@@ -475,18 +474,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a value.
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.
         /// </returns>
@@ -513,18 +512,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a object into another object
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value produced by the binding source.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type of the binding target property.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// the converted object
         /// </returns>
@@ -536,18 +535,18 @@ namespace Microsoft.Windows.Common
         /// <summary>
         /// Converts a converted object back into it's original form
         /// </summary>
-        /// <param name="value">
+        /// <parameter name="value">
         /// The value that is produced by the binding target.
-        /// </param>
-        /// <param name="targetType">
+        /// </parameter>
+        /// <parameter name="targetType">
         /// The type to convert to.
-        /// </param>
-        /// <param name="parameter">
+        /// </parameter>
+        /// <parameter name="parameter">
         /// The converter parameter to use.
-        /// </param>
-        /// <param name="culture">
+        /// </parameter>
+        /// <parameter name="culture">
         /// The culture to use in the converter.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// The original object
         /// </returns>

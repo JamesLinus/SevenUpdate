@@ -1,17 +1,12 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
-    using System;
-
     /// <summary>
     /// Defines event data associated with a HyperlinkClick event.
     /// </summary>
@@ -22,7 +17,9 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogHyperlinkClickedEventArgs"/> class.
         /// </summary>
-        /// <param name="link">The text of the hyperlink that was clicked.</param>
+        /// <parameter name="link">
+        /// The text of the hyperlink that was clicked.
+        /// </parameter>
         public TaskDialogHyperlinkClickedEventArgs(string link)
         {
             this.LinkText = link;

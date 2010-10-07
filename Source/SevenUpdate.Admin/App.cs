@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Admin
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Admin
@@ -118,7 +114,7 @@ namespace SevenUpdate.Admin
         {
             get
             {
-                var t = Base.Deserialize<Config>(Base.ConfigFile);
+                var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
@@ -140,14 +136,14 @@ namespace SevenUpdate.Admin
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
             {
-                if (Service.DownloadCompleted != null && IsClientConnected)
+                if (WcfService.DownloadCompleted != null && IsClientConnected)
                 {
-                    Service.DownloadCompleted(false);
+                    WcfService.DownloadCompleted(false);
                 }
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 isInstalling = true;
-                File.Delete(Base.AllUserStore + "updates.sui");
+                File.Delete(Utilities.AllUserStore + "updates.sui");
                 Install.InstallUpdates(apps);
             }
             else
@@ -169,9 +165,9 @@ namespace SevenUpdate.Admin
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             isInstalling = true;
-            if (Service.DownloadProgressChanged != null && IsClientConnected)
+            if (WcfService.DownloadProgressChanged != null && IsClientConnected)
             {
-                Service.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
+                WcfService.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
             }
 
             Application.Current.Dispatcher.BeginInvoke(
@@ -193,7 +189,7 @@ namespace SevenUpdate.Admin
             }
             catch (Exception e)
             {
-                Base.ReportError(e, Base.AllUserStore);
+                Utilities.ReportError(e, Utilities.AllUserStore);
             }
         }
 
@@ -226,17 +222,17 @@ namespace SevenUpdate.Admin
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
-            Base.ReportError("Host Fault", Base.AllUserStore);
-            if (Service.ErrorOccurred != null)
+            Utilities.ReportError("Host Fault", Utilities.AllUserStore);
+            if (WcfService.ErrorOccurred != null)
             {
-                Service.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
+                WcfService.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
             }
 
             try
             {
                 host.Abort();
             }
-            catch
+            catch (Exception)
             {
             }
 
@@ -254,7 +250,7 @@ namespace SevenUpdate.Admin
         /// </param>
         private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
-            Base.ReportError(e.Message.ToString(), Base.AllUserStore);
+            Utilities.ReportError(e.Message.ToString(), Utilities.AllUserStore);
         }
 
         /// <summary>
@@ -269,12 +265,12 @@ namespace SevenUpdate.Admin
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             isInstalling = false;
-            if (Service.InstallCompleted != null && IsClientConnected)
+            if (WcfService.InstallCompleted != null && IsClientConnected)
             {
-                Service.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
+                WcfService.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
             }
 
-            File.Delete(Base.AllUserStore + "updates.sui");
+            File.Delete(Utilities.AllUserStore + "updates.sui");
             ShutdownApp();
         }
 
@@ -289,9 +285,9 @@ namespace SevenUpdate.Admin
         /// </param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
-            if (Service.InstallProgressChanged != null && IsClientConnected)
+            if (WcfService.InstallProgressChanged != null && IsClientConnected)
             {
-                Service.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
+                WcfService.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
             }
 
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
@@ -317,12 +313,12 @@ namespace SevenUpdate.Admin
                 {
                     if (createdNew)
                     {
-                        host = new ServiceHost(typeof(Service));
+                        host = new ServiceHost(typeof(WcfService));
                         host.Faulted += HostFaulted;
                         host.UnknownMessageReceived += HostUnknownMessageReceived;
-                        Service.ClientConnected += ServiceClientConnected;
-                        Service.ClientDisconnected += ServiceClientDisconnected;
-                        Service.DownloadUpdates += DownloadUpdates;
+                        WcfService.ClientConnected += ServiceClientConnected;
+                        WcfService.ClientDisconnected += ServiceClientDisconnected;
+                        WcfService.DownloadUpdates += DownloadUpdates;
                         SystemEvents.SessionEnding += PreventClose;
                         Search.SearchCompleted += SearchCompleted;
                         Search.ErrorOccurred += ErrorOccurred;
@@ -331,18 +327,18 @@ namespace SevenUpdate.Admin
                         Install.InstallCompleted += InstallCompleted;
                         Install.InstallProgressChanged += InstallProgressChanged;
                         host.Open();
-                        if (!Directory.Exists(Base.AllUserStore))
+                        if (!Directory.Exists(Utilities.AllUserStore))
                         {
-                            Directory.CreateDirectory(Base.AllUserStore);
+                            Directory.CreateDirectory(Utilities.AllUserStore);
                         }
                     }
                 }
                 catch (FaultException e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
-                    if (Service.ErrorOccurred != null)
+                    Utilities.ReportError(e, Utilities.AllUserStore);
+                    if (WcfService.ErrorOccurred != null)
                     {
-                        Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
                     }
 
                     SystemEvents.SessionEnding -= PreventClose;
@@ -350,10 +346,10 @@ namespace SevenUpdate.Admin
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
-                    if (Service.ErrorOccurred != null)
+                    Utilities.ReportError(e, Utilities.AllUserStore);
+                    if (WcfService.ErrorOccurred != null)
                     {
-                        Service.ErrorOccurred(e.Message, ErrorType.FatalError);
+                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
                     }
 
                     SystemEvents.SessionEnding -= PreventClose;
@@ -370,7 +366,7 @@ namespace SevenUpdate.Admin
                 {
                     if (args[0] == "Abort")
                     {
-                        using (var fs = File.Create(Base.AllUserStore + "abort.lock"))
+                        using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
                         {
                             fs.WriteByte(0);
                             fs.Close();
@@ -380,9 +376,9 @@ namespace SevenUpdate.Admin
 
                     if (args[0] == "Auto")
                     {
-                        if (File.Exists(Base.AllUserStore + "abort.lock"))
+                        if (File.Exists(Utilities.AllUserStore + "abort.lock"))
                         {
-                            File.Delete(Base.AllUserStore + "abort.lock");
+                            File.Delete(Utilities.AllUserStore + "abort.lock");
                         }
 
                         isAutoInstall = true;
@@ -391,7 +387,7 @@ namespace SevenUpdate.Admin
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
                         Search.ErrorOccurred += ErrorOccurred;
-                        Search.SearchForUpdates(Base.Deserialize<Collection<Sua>>(Base.AppsFile));
+                        Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.AppsFile));
                     }
                     else
                     {
@@ -401,7 +397,7 @@ namespace SevenUpdate.Admin
             }
             catch (Exception e)
             {
-                Base.ReportError(e, Base.AllUserStore);
+                Utilities.ReportError(e, Utilities.AllUserStore);
             }
 
             app.Run();
@@ -415,7 +411,7 @@ namespace SevenUpdate.Admin
                     notifyIcon = null;
                 }
             }
-            catch
+            catch (Exception)
             {
             }
         }
@@ -439,12 +435,12 @@ namespace SevenUpdate.Admin
                     notifyIcon.Dispose();
                     notifyIcon = null;
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }
 
-            using (var fs = File.Create(Base.AllUserStore + "abort.lock"))
+            using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
                 fs.Close();
@@ -469,16 +465,16 @@ namespace SevenUpdate.Admin
                 if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
                     notifyIcon.Text == Resources.CheckingForUpdates)
                 {
-                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Auto");
+                    Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.exe", @"Auto");
                 }
                 else
                 {
-                    Base.StartProcess(Base.AppDir + @"SevenUpdate.exe", @"Reconnect");
+                    Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.exe", @"Reconnect");
                 }
             }
             else
             {
-                Base.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
+                Utilities.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
             }
 
             if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
@@ -503,7 +499,7 @@ namespace SevenUpdate.Admin
             apps = e.Applications as Collection<Sui>;
             if (apps.Count > 0)
             {
-                Base.Serialize(apps, Base.AllUserStore + "updates.sui");
+                Utilities.Serialize(apps, Utilities.AllUserStore + "updates.sui");
 
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                 {
@@ -556,7 +552,7 @@ namespace SevenUpdate.Admin
                     notifyIcon.Dispose();
                     notifyIcon = null;
                 }
-                catch
+                catch (Exception)
                 {
                 }
             }

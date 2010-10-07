@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Converters
@@ -181,13 +177,12 @@ namespace SevenUpdate.Converters
             // Loops through the collection of LocaleStrings
             if (localeStrings != null)
             {
-                foreach (var t in localeStrings.Where(t => t.Lang == Base.Locale))
+                foreach (var t in localeStrings.Where(t => t.Lang == Utilities.Locale))
                 {
                     return t.Value;
                 }
 
                 // Returns an english string if the specified locale is not available
-
                 return localeStrings[0].Value;
             }
 
@@ -249,14 +244,14 @@ namespace SevenUpdate.Converters
                 var files = value as Collection<UpdateFile>;
 
                 // Gets the full size of the update then converts it into a string format
-                return Base.ConvertFileSize(Core.GetUpdateSize(files));
+                return Utilities.ConvertFileSize(Core.GetUpdateSize(files));
             }
             catch (Exception)
             {
                 var size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
 
                 // Converts the ulong into a readable file size string
-                return Base.ConvertFileSize(size);
+                return Utilities.ConvertFileSize(size);
             }
         }
 

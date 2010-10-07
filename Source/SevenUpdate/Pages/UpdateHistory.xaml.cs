@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
@@ -29,7 +25,7 @@ namespace SevenUpdate.Pages
         /// <summary>
         ///   The location of the update history file
         /// </summary>
-        private static readonly string HistoryFile = Base.AllUserStore + @"History.suh";
+        private static readonly string HistoryFile = Utilities.AllUserStore + @"History.suh";
 
         /// <summary>
         ///   Gets or Sets a collection of SUH items
@@ -57,7 +53,7 @@ namespace SevenUpdate.Pages
         /// </summary>
         private void GetHistory()
         {
-            this.updateHistory = Base.Deserialize<ObservableCollection<Suh>>(HistoryFile);
+            this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(HistoryFile);
             if (this.updateHistory == null)
             {
                 return;

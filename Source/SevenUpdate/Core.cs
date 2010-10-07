@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -17,12 +13,9 @@ namespace SevenUpdate
     using System.ComponentModel;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Dialogs.TaskDialogs;
     using System.Windows.Navigation;
     using System.Windows.Shell;
-
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Internal;
 
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;
@@ -38,10 +31,12 @@ namespace SevenUpdate
         internal static NavigationService NavService;
 
         /// <summary>
+        ///   Access methods to control the task bar
         /// </summary>
         internal static TaskbarItemInfo TaskBar;
 
         /// <summary>
+        ///   The static instance of the Core class
         /// </summary>
         private static Core instance;
 
@@ -77,7 +72,7 @@ namespace SevenUpdate
         {
             get
             {
-                var t = Base.Deserialize<Config>(Base.ConfigFile);
+                var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
@@ -89,7 +84,7 @@ namespace SevenUpdate
         {
             get
             {
-                return CoreNativeMethods.IsUserAnAdmin() || isAdmin;
+                return System.Windows.Internal.NativeMethods.IsUserAnAdmin() || isAdmin;
             }
 
             set
@@ -151,7 +146,7 @@ namespace SevenUpdate
         {
             get
             {
-                return Base.Deserialize<Collection<Sua>>(Base.AppsFile);
+                return Utilities.Deserialize<Collection<Sua>>(Utilities.AppsFile);
             }
         }
 
@@ -169,7 +164,7 @@ namespace SevenUpdate
         {
             if (auto)
             {
-                if (!IsInstallInProgress && !Base.RebootNeeded)
+                if (!IsInstallInProgress && !Utilities.RebootNeeded)
                 {
                     CheckForUpdates();
                 }
@@ -187,7 +182,7 @@ namespace SevenUpdate
         {
             if (!IsInstallInProgress)
             {
-                if (Base.RebootNeeded == false)
+                if (Utilities.RebootNeeded == false)
                 {
                     Instance.UpdateAction = UpdateAction.CheckingForUpdates;
                     Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
@@ -206,7 +201,7 @@ namespace SevenUpdate
                             null, 
                             Resources.RestartNow) != TaskDialogResult.Cancel)
                     {
-                        Base.StartProcess("shutdown.exe", "-r -t 00");
+                        Utilities.StartProcess("shutdown.exe", "-r -t 00");
                     }
                 }
             }
@@ -238,8 +233,8 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
+                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
                     IconResourceIndex = 2, 
                     Title = Resources.CheckForUpdates, 
                     CustomCategory = Resources.Tasks, 
@@ -249,8 +244,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
+                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
                     IconResourceIndex = 5, 
                     Title = Resources.RestoreHiddenUpdates, 
                     CustomCategory = Resources.Tasks, 
@@ -260,8 +255,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.eye", 
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.eye", 
+                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
                     IconResourceIndex = 4, 
                     Title = Resources.ViewUpdateHistory, 
                     CustomCategory = Resources.Tasks, 
@@ -271,8 +266,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Base.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Base.AppDir + @"SevenUpdate.Base.dll", 
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
+                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
                     IconResourceIndex = 3, 
                     Title = Resources.ChangeSettings, 
                     CustomCategory = Resources.Tasks, 
@@ -349,7 +344,7 @@ namespace SevenUpdate
                         Icon = icon, 
                         FooterText = footerText, 
                         FooterIcon = TaskDialogStandardIcon.Information, 
-                        Cancelable = true, 
+                        CanCancel = true, 
                         StandardButtons = standardButtons
                     };
                 if (defaultButtonText != null)

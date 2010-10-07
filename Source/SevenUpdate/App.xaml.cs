@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -17,10 +13,7 @@ namespace SevenUpdate
     using System.IO;
     using System.Linq;
     using System.Windows;
-
-    using Microsoft.Windows;
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dialogs.TaskDialogs;
 
     using SevenUpdate.Properties;
 
@@ -39,15 +32,15 @@ namespace SevenUpdate
         /// </param>
         internal static void Init(string[] args)
         {
-            Base.Locale = Settings.Default.locale;
+            Utilities.Locale = Settings.Default.locale;
             foreach (var t in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)))
             {
                 var suaLoc = t;
                 try
                 {
                     suaLoc = suaLoc.Replace(@"sevenupdate://", null);
-                    var sua = Base.Deserialize<Sua>(Base.DownloadFile(suaLoc), suaLoc);
-                    var appName = Base.GetLocaleString(sua.Name);
+                    var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(suaLoc), suaLoc);
+                    var appName = Utilities.GetLocaleString(sua.Name);
                     if (
                         Core.ShowMessage(
                             String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
@@ -61,16 +54,16 @@ namespace SevenUpdate
                         AdminClient.AddSua(sua);
                     }
                 }
-                catch
+                catch (Exception)
                 {
                 }
 
                 Environment.Exit(0);
             }
 
-            Directory.CreateDirectory(Base.UserStore);
+            Directory.CreateDirectory(Utilities.UserStore);
 
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Base.AllUserStore + "updates.sui"))
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Utilities.AllUserStore + "updates.sui"))
             {
                 return;
             }
@@ -102,7 +95,7 @@ namespace SevenUpdate
         /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
         /// </summary>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.
+        /// The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.
         /// </param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {

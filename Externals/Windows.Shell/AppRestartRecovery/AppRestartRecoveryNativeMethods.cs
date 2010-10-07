@@ -1,26 +1,19 @@
 ﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.ApplicationServices
+namespace System.Windows.ApplicationServices
 {
-    using System;
     using System.Runtime.InteropServices;
-
-    using Microsoft.Windows.Internal;
+    using System.Windows.Internal;
 
     /// <summary>
     /// </summary>
     internal static class AppRestartRecoveryNativeMethods
     {
-        #region Application Restart and Recovery Definitions
-
         /// <summary>
         /// </summary>
         internal static InternalRecoveryCallback internalCallback;
@@ -34,14 +27,14 @@ namespace Microsoft.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <param name="parameter">
-        /// </param>
+        /// <parameter name="parameter">
+        /// </parameter>
         /// <returns>
         /// </returns>
         private static uint InternalRecoveryHandler(IntPtr parameter)
         {
-            bool cancelled;
-            ApplicationRecoveryInProgress(out cancelled);
+            bool canceled;
+            ApplicationRecoveryInProgress(out canceled);
 
             var handle = GCHandle.FromIntPtr(parameter);
             var data = handle.Target as RecoveryData;
@@ -53,85 +46,85 @@ namespace Microsoft.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <param name="success">
-        /// </param>
+        /// <parameter name="success">
+        /// </parameter>
         [DllImport("kernel32.dll")]
         internal static extern void ApplicationRecoveryFinished([MarshalAs(UnmanagedType.Bool)] bool success);
 
         /// <summary>
         /// </summary>
-        /// <param name="canceled">
-        /// </param>
+        /// <parameter name="canceled">
+        /// </parameter>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern HRESULT ApplicationRecoveryInProgress([Out] [MarshalAs(UnmanagedType.Bool)] out bool canceled);
+        internal static extern Result ApplicationRecoveryInProgress([Out] [MarshalAs(UnmanagedType.Bool)] out bool canceled);
 
         /// <summary>
         /// </summary>
-        /// <param name="processHandle">
-        /// </param>
-        /// <param name="recoveryCallback">
-        /// </param>
-        /// <param name="state">
-        /// </param>
-        /// <param name="pingInterval">
-        /// </param>
-        /// <param name="flags">
-        /// </param>
+        /// <parameter name="processHandle">
+        /// </parameter>
+        /// <parameter name="recoveryCallback">
+        /// </parameter>
+        /// <parameter name="state">
+        /// </parameter>
+        /// <parameter name="pingInterval">
+        /// </parameter>
+        /// <parameter name="flags">
+        /// </parameter>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern HRESULT GetApplicationRecoveryCallback(
+        internal static extern Result GetApplicationRecoveryCallback(
             IntPtr processHandle, out RecoveryCallback recoveryCallback, out object state, out uint pingInterval, out uint flags);
 
         /// <summary>
         /// </summary>
-        /// <param name="callback">
-        /// </param>
-        /// <param name="param">
-        /// </param>
-        /// <param name="pingInterval">
-        /// </param>
-        /// <param name="flags">
-        /// </param>
+        /// <parameter name="callback">
+        /// </parameter>
+        /// <parameter name="parameter">
+        /// </parameter>
+        /// <parameter name="pingInterval">
+        /// </parameter>
+        /// <parameter name="flags">
+        /// </parameter>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         [PreserveSig]
-        internal static extern HRESULT RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, IntPtr param, uint pingInterval, uint flags);
+        internal static extern Result RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
 
         // Unused.
 
         /// <summary>
         /// </summary>
-        /// <param name="commandLineArgs">
-        /// </param>
-        /// <param name="flags">
-        /// </param>
+        /// <parameter name="commandLineArgs">
+        /// </parameter>
+        /// <parameter name="flags">
+        /// </parameter>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern HRESULT RegisterApplicationRestart([MarshalAs(UnmanagedType.BStr)] string commandLineArgs, RestartRestrictions flags);
+        internal static extern Result RegisterApplicationRestart([MarshalAs(UnmanagedType.BStr)] string commandLineArgs, RestartRestrictions flags);
 
         /// <summary>
         /// </summary>
-        /// <param name="process">
-        /// </param>
-        /// <param name="commandLine">
-        /// </param>
-        /// <param name="size">
-        /// </param>
-        /// <param name="flags">
-        /// </param>
+        /// <parameter name="process">
+        /// </parameter>
+        /// <parameter name="commandLine">
+        /// </parameter>
+        /// <parameter name="size">
+        /// </parameter>
+        /// <parameter name="flags">
+        /// </parameter>
         /// <returns>
         /// </returns>
         [DllImport("KERNEL32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [PreserveSig]
-        internal static extern HRESULT GetApplicationRestartSettings(IntPtr process, IntPtr commandLine, ref uint size, out RestartRestrictions flags);
+        internal static extern Result GetApplicationRestartSettings(IntPtr process, IntPtr commandLine, ref uint size, out RestartRestrictions flags);
 
         /// <summary>
         /// </summary>
@@ -139,7 +132,7 @@ namespace Microsoft.Windows.ApplicationServices
         /// </returns>
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern HRESULT UnregisterApplicationRecoveryCallback();
+        internal static extern Result UnregisterApplicationRecoveryCallback();
 
         /// <summary>
         /// </summary>
@@ -147,14 +140,12 @@ namespace Microsoft.Windows.ApplicationServices
         /// </returns>
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern HRESULT UnregisterApplicationRestart();
+        internal static extern Result UnregisterApplicationRestart();
 
         /// <summary>
         /// </summary>
-        /// <param name="state">
-        /// </param>
+        /// <parameter name="state">
+        /// </parameter>
         internal delegate UInt32 InternalRecoveryCallback(IntPtr state);
-
-        #endregion
     }
 }

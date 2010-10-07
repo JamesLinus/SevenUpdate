@@ -19,6 +19,9 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -31,11 +34,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <Utf8Output>true</Utf8Output>
-    <ExpressionBlendVersion>4.0.20901.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,6 +69,12 @@
     <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Properties\Seven Software.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -214,6 +220,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\WCF\Service.wsdl" />
+    <None Include="Properties\Seven Software.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -252,9 +259,9 @@
     <Resource Include="Images\wicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\Windows.Shell\Windows.Shell.csproj">
+    <ProjectReference Include="..\..\Externals\Windows.Shell\System.Windows.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
-      <Name>Windows.Shell</Name>
+      <Name>System.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Externals\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>

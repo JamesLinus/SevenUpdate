@@ -1,28 +1,16 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : sevenalive (Robert Baker)
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-// Copyright 2007-2010 Robert Baker, Seven Software.
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-// Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
-
-namespace Microsoft.Windows.Controls
+namespace System.Windows.Controls
 {
-    using System;
     using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
+    using System.Windows.Internal;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-
-    using Microsoft.Windows.Internal;
 
     /// <summary>
     /// Provides a WPF button that displays a UAC Shield icon when required
@@ -52,13 +40,13 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         ///   The UAC shield
         /// </summary>
-        private static readonly BitmapImage Shield = new BitmapImage(new Uri(@"pack://application:,,,/Windows.Shell;component/Images/Shield.png", UriKind.Absolute));
+        private static readonly BitmapImage Shield = new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/Shield.png", UriKind.Absolute));
 
         /// <summary>
         ///   The disabled shield image
         /// </summary>
         private static readonly BitmapImage ShieldDisabled =
-            new BitmapImage(new Uri(@"pack://application:,,,/Windows.Shell;component/Images/ShieldDisabled.png", UriKind.Absolute));
+            new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/ShieldDisabled.png", UriKind.Absolute));
 
         /// <summary>
         ///   Dependency Property - The shield icon to display
@@ -80,7 +68,7 @@ namespace Microsoft.Windows.Controls
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes static members of the <see cref="UacButton"/> class.
+        ///   Initializes static members of the <see cref = "UacButton" /> class.
         /// </summary>
         static UacButton()
         {
@@ -99,12 +87,12 @@ namespace Microsoft.Windows.Controls
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 // Vista or higher
-                ShieldNeeded = !CoreNativeMethods.IsUserAnAdmin(); // If already an admin don't bother
+                ShieldNeeded = !NativeMethods.IsUserAnAdmin(); // If already an admin don't bother
             }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UacButton"/> class.
+        ///   Initializes a new instance of the <see cref = "UacButton" /> class.
         /// </summary>
         public UacButton()
         {
@@ -125,7 +113,7 @@ namespace Microsoft.Windows.Controls
         #region Events
 
         /// <summary>
-        /// Occurs when a property has changed
+        ///   Occurs when a property has changed
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -221,8 +209,12 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="ButtonText"/> property
         /// </summary>
-        /// <param name="obj">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <parameter name="obj">
+        /// The dependency object
+        /// </parameter>
+        /// <parameter name="e">
+        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
+        /// </parameter>
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -243,8 +235,12 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="IsShieldNeeded"/> property
         /// </summary>
-        /// <param name="obj">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <parameter name="obj">
+        /// The dependency object
+        /// </parameter>
+        /// <parameter name="e">
+        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
+        /// </parameter>
         /// <remarks>
         /// Adds or removes the UACShieldAdorner as appropriate
         /// </remarks>
@@ -266,8 +262,12 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="ShieldIcon"/> property
         /// </summary>
-        /// <param name="obj">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <parameter name="obj">
+        /// The dependency object
+        /// </parameter>
+        /// <parameter name="e">
+        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
+        /// </parameter>
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -285,7 +285,9 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Changes the UAC icon
         /// </summary>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <parameter name="e">
+        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
+        /// </parameter>
         private void ChangeUacIcon(DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsShieldDisplayed)
@@ -308,9 +310,9 @@ namespace Microsoft.Windows.Controls
         /// </summary>
         /// <returns>
         /// If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,
-        /// <see cref="Button.ToolTip"/> is returned.
-        /// Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
-        /// based on <see cref="IsShieldNeeded"/>
+        ///   <see cref="Button.ToolTip"/> is returned.
+        ///   Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
+        ///   based on <see cref="IsShieldNeeded"/>
         /// </returns>
         /// <remarks>
         /// </remarks>
@@ -327,8 +329,12 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// Called when the control is loaded
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <parameter name="sender">
+        /// The sender.
+        /// </parameter>
+        /// <parameter name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </parameter>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.ToolTip = this.GetToolTip();
@@ -337,7 +343,9 @@ namespace Microsoft.Windows.Controls
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="name">The property name that has changed</param>
+        /// <parameter name="name">
+        /// The property name that has changed
+        /// </parameter>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

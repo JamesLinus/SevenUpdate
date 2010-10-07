@@ -1,11 +1,9 @@
 // ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
@@ -51,7 +49,9 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// Provides the Value for the first Binding as Thickness
         /// </summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <param name="serviceProvider">
+        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
+        /// </param>
         /// <returns>
         /// The founded item from the .resx directory or <see langword="null"/> if not founded
         /// </returns>
@@ -91,8 +91,12 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>
         /// This method is used to modify the passed object into the target format
         /// </summary>
-        /// <param name="input">The object that will be modified</param>
-        /// <returns>Returns the modified object</returns>
+        /// <param name="input">
+        /// The object that will be modified
+        /// </param>
+        /// <returns>
+        /// Returns the modified object
+        /// </returns>
         protected override object FormatOutput(object input)
         {
             var method = typeof(ThicknessConverter).GetMethod("FromString", BindingFlags.Static | BindingFlags.NonPublic);

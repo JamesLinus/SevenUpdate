@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Job
 {
     using System;
@@ -21,7 +18,7 @@ namespace SharpBits.Base.Job
         #region Constants and Fields
 
         /// <summary>
-        /// The current job
+        ///   The current job
         /// </summary>
         private readonly IBackgroundCopyJob4 job4;
 
@@ -30,12 +27,66 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
-        /// Gets or sets the maximum download time.
+        ///   Gets or sets the peer caching flags.
+        /// </summary>
+        /// <value>The peer caching flags.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public PeerCachingFlags CachingFlags
+        {
+            get
+            {
+                PeerCachingFlags peerCaching = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetPeerCachingFlags(out peerCaching);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return peerCaching;
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.SetPeerCachingFlags(value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the maximum download time.
         /// </summary>
         /// <value>The maximum download time.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public ulong MaximumDownloadTime
         {
@@ -84,12 +135,12 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Gets a value indicating whether the owner is elevated
+        ///   Gets a value indicating whether the owner is elevated
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the owner is elevated; otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if the owner is elevated; otherwise, <see langword = "false" />.
         /// </value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public bool OwnerElevationState
         {
@@ -118,10 +169,10 @@ namespace SharpBits.Base.Job
         }
 
         /// <summary>
-        /// Gets the owner integrity level.
+        ///   Gets the owner integrity level.
         /// </summary>
         /// <value>The owner integrity level.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public ulong OwnerIntegrityLevel
         {
@@ -146,60 +197,6 @@ namespace SharpBits.Base.Job
                 }
 
                 return integrityLevel;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the peer caching flags.
-        /// </summary>
-        /// <value>The peer caching flags.</value>
-        /// <exception cref="NotSupportedException">
-        /// </exception>
-        /// <exception cref="NotSupportedException">
-        /// </exception>
-        public PeerCachingFlags PeerCachingFlags
-        {
-            get
-            {
-                PeerCachingFlagss peerCaching = 0;
-                try
-                {
-                    if (this.job4 != null)
-                    {
-                        // only supported from IBackgroundCopyJob4 and above
-                        this.job4.GetPeerCachingFlags(out peerCaching);
-                    }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
-                }
-                catch (COMException exception)
-                {
-                    this.manager.PublishException(this, exception);
-                }
-
-                return (PeerCachingFlags)peerCaching;
-            }
-
-            set
-            {
-                try
-                {
-                    if (this.job4 != null)
-                    {
-                        // only supported from IBackgroundCopyJob4 and above
-                        this.job4.SetPeerCachingFlags((PeerCachingFlagss)value);
-                    }
-                    else
-                    {
-                        throw new NotSupportedException("IBackgroundCopyJob4");
-                    }
-                }
-                catch (COMException exception)
-                {
-                    this.manager.PublishException(this, exception);
-                }
             }
         }
 

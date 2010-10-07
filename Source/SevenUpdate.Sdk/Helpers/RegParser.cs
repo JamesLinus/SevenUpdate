@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk
@@ -281,7 +277,7 @@ namespace SevenUpdate.Sdk
                 return methodResult;
             }
 
-            // Set the value name (blank if default, else valuename)
+            // Set the value name (blank if default, else value name)
             var valueName = criteriaMatch.Groups["Value"].Value;
 
             // Apply fixes to value name data regardless of value data
@@ -487,9 +483,9 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // RegEx match all pairs of bytes
-                    var readinTwos = Regex.Matches(
+                    var readInTwos = Regex.Matches(
                         valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
-                    foreach (Match found in readinTwos)
+                    foreach (Match found in readInTwos)
                     {
                         if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
                         {
@@ -658,30 +654,30 @@ namespace SevenUpdate.Sdk
         /// <summary>
         /// Method for converting the hex byte string to a byte value
         /// </summary>
-        /// <param name="String">
+        /// <param name="value">
         /// The byte string.
         /// </param>
         /// <returns>
         /// The byte from the parsed string
         /// </returns>
-        private static byte String2Byte(string String)
+        private static byte String2Byte(string value)
         {
-            return byte.Parse(String, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
+            return byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
         }
 
         /// <summary>
         /// Method for converting the hex byte string to a byte value + a check
         ///   that converts all above ASCII bytes to ?.
         /// </summary>
-        /// <param name="String">
+        /// <param name="value">
         /// The byte string.
         /// </param>
         /// <returns>
         /// The byte from the parsed ascii string
         /// </returns>
-        private static byte String2ByteForAscii(string String)
+        private static byte String2ByteForAscii(string value)
         {
-            var b = byte.Parse(String, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
+            var b = byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
             if (b < 32 || b > 127)
             {
                 return 63;
@@ -694,15 +690,15 @@ namespace SevenUpdate.Sdk
         /// Method for converting the hex byte string to a byte value + a check
         ///   that converts all above ASCII bytes to ? but allows CRLF characters.
         /// </summary>
-        /// <param name="String">
+        /// <param name="value">
         /// The byte string.
         /// </param>
         /// <returns>
         /// The byte from the parsed ascii string with crlf line endings
         /// </returns>
-        private static byte String2ByteForAsciiAllowCrlf(string String)
+        private static byte String2ByteForAsciiAllowCrlf(string value)
         {
-            var b = byte.Parse(String, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
+            var b = byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
             if (b == 13 || b == 10)
             {
                 return b;

@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Job
 {
     using System;
@@ -47,7 +44,7 @@ namespace SharpBits.Base.Job
         /// <summary>
         ///   Occurs when a job has has an error occur
         /// </summary>
-        private EventHandler<JobErrorNotificationEventArgs> jobErrored;
+        private EventHandler<JobErrorNotificationEventArgs> jobError;
 
         /// <summary>
         ///   Occurs when a job has been modified
@@ -116,12 +113,12 @@ namespace SharpBits.Base.Job
         {
             add
             {
-                this.jobErrored += value;
+                this.jobError += value;
             }
 
             remove
             {
-                this.jobErrored -= value;
+                this.jobError -= value;
             }
         }
 
@@ -490,7 +487,7 @@ namespace SharpBits.Base.Job
             {
                 try
                 {
-                    return Utils.GetName(this.Owner);
+                    return Utilities.GetName(this.Owner);
                 }
                 catch (COMException exception)
                 {
@@ -848,9 +845,9 @@ namespace SharpBits.Base.Job
         /// </param>
         internal void JobError(object sender, ErrorNotificationEventArgs e)
         {
-            if (null != this.jobErrored)
+            if (null != this.jobError)
             {
-                this.jobErrored(sender, new JobErrorNotificationEventArgs(e.Error));
+                this.jobError(sender, new JobErrorNotificationEventArgs(e.Error));
             }
         }
 

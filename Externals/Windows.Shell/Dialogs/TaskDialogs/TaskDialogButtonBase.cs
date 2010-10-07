@@ -1,33 +1,34 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
-    using System;
-
     /// <summary>
     /// Defines the abstract base class for task dialog buttons.
-    /// Classes that inherit from this class will inherit
-    /// the Text property defined in this class.
+    ///   Classes that inherit from this class will inherit
+    ///   the Text property defined in this class.
     /// </summary>
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
         #region Constants and Fields
 
-        /// <summary> Default control </summary>
+        /// <summary>
+        ///   Default control
+        /// </summary>
         private bool defaultControl;
 
-        /// <summary> <see langword="true"/> to enable, <see langword="false"/> to disable </summary>
+        /// <summary>
+        ///   <see langword = "true" /> to enable, <see langword = "false" /> to disable
+        /// </summary>
         private bool enabled = true;
 
-        /// <summary> The text for the button</summary>
+        /// <summary>
+        ///   The text for the button
+        /// </summary>
         private string text;
 
         #endregion
@@ -35,7 +36,7 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.
+        ///   Initializes a new instance of the <see cref = "TaskDialogButtonBase" /> class.
         /// </summary>
         protected TaskDialogButtonBase()
         {
@@ -44,8 +45,12 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.
         /// </summary>
-        /// <param name="name">The name for this button.</param>
-        /// <param name="text">The label for this button.</param>
+        /// <parameter name="name">
+        /// The name for this button.
+        /// </parameter>
+        /// <parameter name="text">
+        /// The label for this button.
+        /// </parameter>
         protected TaskDialogButtonBase(string name, string text)
             : base(name)
         {
@@ -72,10 +77,10 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         #region Properties
 
         /// <summary>
-        /// Gets or sets a value indicating whether this button is the default button.
+        ///   Gets or sets a value indicating whether this button is the default button.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if default; otherwise, <see langword="false"/>.
+        ///   <see langword = "true" /> if default; otherwise, <see langword = "false" />.
         /// </value>
         public bool Default
         {

@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Base
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -20,8 +16,6 @@ namespace SevenUpdate
     using Microsoft.Win32;
 
     using ProtoBuf;
-
-    #region Enums
 
     /// <summary>
     /// Automatic Update option Seven Update can use
@@ -155,7 +149,7 @@ namespace SevenUpdate
         ExecuteThenDelete = 7, 
 
         /// <summary>
-        ///   Unregisters a dll, then deletes it
+        ///   Unregisters a dll, then deletes it
         /// </summary>
         [ProtoEnum]
         [EnumMember]
@@ -266,10 +260,6 @@ namespace SevenUpdate
         DeleteValue = 2
     }
 
-    #endregion
-
-    #region Application Settings
-
     /// <summary>
     /// Configuration options
     /// </summary>
@@ -371,10 +361,6 @@ namespace SevenUpdate
         #endregion
     }
 
-    #endregion
-
-    #region Locale Classes
-
     /// <summary>
     /// Contains a string indicating the language and a value
     /// </summary>
@@ -474,10 +460,6 @@ namespace SevenUpdate
 
         #endregion
     }
-
-    #endregion
-
-    #region SUA File
 
     /// <summary>
     /// Seven Update Application information
@@ -798,12 +780,6 @@ namespace SevenUpdate
 
         #endregion
     }
-
-    #endregion
-
-    #region SUI File
-
-    #region Classes
 
     /// <summary>
     /// The collection of updates and the application info.
@@ -1934,12 +1910,6 @@ namespace SevenUpdate
         #endregion
     }
 
-    #endregion
-
-    #endregion
-
-    #region History and Hidden Updates Files
-
     /// <summary>
     /// Information about an update, used by History and Hidden Updates. Not used by the SDK
     /// </summary>
@@ -2284,6 +2254,4 @@ namespace SevenUpdate
 
         #endregion
     }
-
-    #endregion
 }

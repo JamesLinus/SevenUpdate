@@ -1,14 +1,11 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs
+namespace System.Windows.Dialogs
 {
     /// <summary>
     /// Indicates that the implementing class is a dialog that can host
@@ -27,12 +24,12 @@ namespace Microsoft.Windows.Dialogs
         /// Called when a control currently in the collection 
         ///   has a property changed.
         /// </summary>
-        /// <param name="propertyName">
+        /// <parameter name="propertyName">
         /// The name of the property changed.
-        /// </param>
-        /// <param name="control">
+        /// </parameter>
+        /// <parameter name="control">
         /// The control whose property has changed.
-        /// </param>
+        /// </parameter>
         void ApplyControlPropertyChange(string propertyName, DialogControl control);
 
         /// <summary>
@@ -56,12 +53,12 @@ namespace Microsoft.Windows.Dialogs
         ///   PostProcess should pass on changes to native control, 
         ///   if appropriate.
         /// </summary>
-        /// <param name="propertyName">
+        /// <parameter name="propertyName">
         /// The name of the property.
-        /// </param>
-        /// <param name="control">
-        /// The control <paramref name="propertyName"/> applies to.
-        /// </param>
+        /// </parameter>
+        /// <parameter name="control">
+        /// The control <parameterref name="propertyName"/> applies to.
+        /// </parameter>
         /// <returns>
         /// <see langword="true"/> if the property change is allowed.
         /// </returns>

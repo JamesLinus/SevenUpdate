@@ -1,16 +1,13 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.IO;
@@ -21,8 +18,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Navigation;
-
-    using Microsoft.Windows.Controls;
 
     /// <summary>
     /// Interaction logic for Options.xaml
@@ -70,7 +65,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                this.LoadSul(Base.Deserialize<ObservableCollection<Sua>>(Base.DownloadFile(SulLocation), SulLocation));
+                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(SulLocation), SulLocation));
             }
             catch (WebException)
             {
@@ -90,7 +85,7 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(e.Uri.AbsoluteUri);
             }
-            catch
+            catch (Exception)
             {
             }
 
@@ -104,7 +99,7 @@ namespace SevenUpdate.Pages
         /// </param>
         private void LoadSul(ObservableCollection<Sua> officialAppList = null)
         {
-            machineAppList = Base.Deserialize<ObservableCollection<Sua>>(Base.AppsFile);
+            machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.AppsFile);
 
             if (machineAppList != null)
             {
@@ -112,9 +107,9 @@ namespace SevenUpdate.Pages
                 {
                     if (
                         Directory.Exists(
-                            Base.IsRegistryKey(machineAppList[x].Directory)
-                                ? Base.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
-                                : Base.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
+                            Utilities.IsRegistryKey(machineAppList[x].Directory)
+                                ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
+                                : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                     {
                         continue;
                     }
@@ -131,9 +126,9 @@ namespace SevenUpdate.Pages
                 {
                     if (
                         !Directory.Exists(
-                            Base.IsRegistryKey(officialAppList[x].Directory)
-                                ? Base.GetRegistryValue(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit)
-                                : Base.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
+                            Utilities.IsRegistryKey(officialAppList[x].Directory)
+                                ? Utilities.GetRegistryValue(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit)
+                                : Utilities.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
                     {
                         // Remove the application from the list if it is not installed
                         officialAppList.RemoveAt(x);

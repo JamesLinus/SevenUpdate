@@ -1,16 +1,12 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs
+namespace System.Windows.Dialogs
 {
-    using System;
     using System.Diagnostics;
 
     /// <summary>
@@ -21,17 +17,17 @@ namespace Microsoft.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>
-        /// The next ID
+        ///   The next ID
         /// </summary>
         private static int nextId = DialogsDefaults.MinimumDialogControlId;
 
         /// <summary>
-        /// The hosting dialog
+        ///   The hosting dialog
         /// </summary>
         private IDialogControlHost hostingDialog;
 
         /// <summary>
-        /// The control name
+        ///   The control name
         /// </summary>
         private string name;
 
@@ -40,7 +36,7 @@ namespace Microsoft.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DialogControl"/> class.
+        ///   Initializes a new instance of the <see cref = "DialogControl" /> class.
         /// </summary>
         protected DialogControl()
         {
@@ -60,7 +56,9 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogControl"/> class.
         /// </summary>
-        /// <param name="name">The name for this dialog.</param>
+        /// <parameter name="name">
+        /// The name for this dialog.
+        /// </parameter>
         protected DialogControl(string name)
             : this()
         {
@@ -72,8 +70,8 @@ namespace Microsoft.Windows.Dialogs
         #region Properties
 
         /// <summary>
-        /// Gets or sets the native dialog that is hosting this control. This property is <see langword="null"/> is
-        /// there is not associated dialog
+        ///   Gets or sets the native dialog that is hosting this control. This property is <see langword = "null" /> is
+        ///   there is not associated dialog
         /// </summary>
         /// <value>The hosting dialog.</value>
         public IDialogControlHost HostingDialog
@@ -102,7 +100,7 @@ namespace Microsoft.Windows.Dialogs
         /// <remarks>
         ///   The name of the control should not be modified once set
         /// </remarks>
-        /// <exception cref = "System.ArgumentException">The name cannot be <see langword="null"/> or a zero-length string.</exception>
+        /// <exception cref = "System.ArgumentException">The name cannot be <see langword = "null" /> or a zero-length string.</exception>
         /// <exception cref = "System.InvalidOperationException">The name has already been set.</exception>
         public string Name
         {
@@ -140,9 +138,9 @@ namespace Microsoft.Windows.Dialogs
         /// <summary>
         /// Compares two objects to determine whether they are equal
         /// </summary>
-        /// <param name="obj">
+        /// <parameter name="obj">
         /// The object to compare against.
-        /// </param>
+        /// </parameter>
         /// <returns>
         /// A <see cref="System.Boolean"/> value.
         /// </returns>
@@ -181,9 +179,9 @@ namespace Microsoft.Windows.Dialogs
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">
+        /// <parameter name="propName">
         /// The name of the property that is changing.
-        /// </param>
+        /// </parameter>
         protected void ApplyPropertyChange(string propName)
         {
             Debug.Assert(!String.IsNullOrEmpty(propName), "Property changed was not specified");
@@ -201,9 +199,9 @@ namespace Microsoft.Windows.Dialogs
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">
+        /// <parameter name="propName">
         /// The name of the property that is changing
-        /// </param>
+        /// </parameter>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!String.IsNullOrEmpty(propName), "Property to change was not specified");

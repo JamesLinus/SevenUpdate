@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
@@ -322,7 +318,7 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
             }
-            catch
+            catch (Exception)
             {
             }
         }
@@ -340,15 +336,13 @@ namespace SevenUpdate.Pages
             {
                 Process.Start(((Update)this.lvUpdates.SelectedItem).InfoUrl);
             }
-            catch
+            catch (Exception)
             {
             }
         }
 
         #endregion
     }
-
-    #region EventArgs
 
     /// <summary>
     /// Provides event data for the UpdateSelection event
@@ -409,6 +403,4 @@ namespace SevenUpdate.Pages
 
         #endregion
     }
-
-    #endregion
 }

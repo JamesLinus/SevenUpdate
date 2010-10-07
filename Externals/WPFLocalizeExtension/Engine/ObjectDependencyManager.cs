@@ -1,11 +1,9 @@
 ﻿// ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {
@@ -67,7 +65,7 @@ namespace WPFLocalizeExtension.Engine
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static bool AddObjectDependency(WeakReference weakRef, object objToHold)
         {
-            // run the clean up to ensure that only objects are watched they are realy still alive
+            // run the clean up to ensure that only objects are watched they are really still alive
             CleanUp();
 
             // if the objToHold is null, we cannot handle this afterwards.
@@ -76,13 +74,13 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("objToHold", "The objToHold cannot be null");
             }
 
-            // if the objToHold is a weakreference, we cannot handle this type afterwards.
+            // if the objToHold is a weak reference, we cannot handle this type afterwards.
             if (objToHold.GetType() == typeof(WeakReference))
             {
                 throw new ArgumentException("objToHold cannot be type of WeakReference", "objToHold");
             }
 
-            // if the target of the weakreference is the objToHold, this would be a cycling play.
+            // if the target of the weak reference is the objToHold, this would be a cycling play.
             if (weakRef.Target == objToHold)
             {
                 throw new InvalidOperationException("The WeakReference.Target cannot be the same as objToHold");
@@ -103,7 +101,7 @@ namespace WPFLocalizeExtension.Engine
             }
             else
             {
-                // otherweise, check if the weakRefDp exists and add it if necessary
+                // otherwise, check if the weakRefDp exists and add it if necessary
                 var lst = InternalList[objToHold];
                 if (!lst.Contains(weakRef))
                 {
@@ -138,7 +136,7 @@ namespace WPFLocalizeExtension.Engine
             // if a particular object is passed, remove it.
             if (objToRemove != null)
             {
-                // if the key wasnt found, throw an exception.
+                // if the key wasn't found, throw an exception.
                 if (!InternalList.Remove(objToRemove))
                 {
                     throw new Exception("Key was not found!");
@@ -153,7 +151,8 @@ namespace WPFLocalizeExtension.Engine
             // this list will hold all keys they has to be removed
             var keysToRemove = new List<object>();
 
-            // step through all object dependenies
+            // step through all object dependencies
+
             foreach (var kvp in InternalList)
             {
                 // step recursive through all weak references
@@ -166,7 +165,7 @@ namespace WPFLocalizeExtension.Engine
                     }
                 }
 
-                // if the list of weak references is empty, temove the whole entry
+                // if the list of weak references is empty, remove the whole entry
                 if (kvp.Value.Count == 0)
                 {
                     keysToRemove.Add(kvp.Key);

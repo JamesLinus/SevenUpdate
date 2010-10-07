@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
@@ -15,17 +11,12 @@ namespace SevenUpdate.Sdk.Pages
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dwm;
     using System.Windows.Input;
     using System.Windows.Media;
-
-    using Microsoft.Windows.Controls;
-    using Microsoft.Windows.Dialogs;
-    using Microsoft.Windows.Dialogs.TaskDialogs;
-    using Microsoft.Windows.Dwm;
-    using Microsoft.Windows.Shell;
 
     using SevenUpdate.Sdk.Windows;
 
@@ -82,21 +73,18 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void AddShortcut(object sender, RoutedEventArgs e)
         {
-            var allUserStartMenu = new StringBuilder(260);
-            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, NativeMethods.CommonPrograms, false);
-
-            var file = Core.SaveFileDialog(allUserStartMenu.ToString(), null, Core.AppInfo.Name[0].Value, "lnk");
+            var file = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), Core.AppInfo.Name[0].Value, "lnk");
 
             if (file == null)
             {
                 return;
             }
 
-            var path = Base.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
+            var path = Utilities.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
             var shortcut = new Shortcut { Location = path, Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>(), };
-            var ls = new LocaleString { Lang = Base.Locale, Value = Path.GetFileNameWithoutExtension(file) };
+            var ls = new LocaleString { Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(file) };
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
@@ -118,17 +106,17 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Base.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
             var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            source.Text = Base.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
+            source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
         /// <summary>
@@ -207,21 +195,19 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
-            var allUserStartMenu = new StringBuilder(260);
-            NativeMethods.SHGetSpecialFolderPath(IntPtr.Zero, allUserStartMenu, NativeMethods.CommonPrograms, false);
-            var file = Core.OpenFileDialog(allUserStartMenu.ToString(), false, null, Core.AppInfo.Name[0].Value, "lnk", true);
+            var file = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), false, "lnk", true);
 
             if (file == null)
             {
                 return;
             }
 
-            var importedShortcut = ShortcutInterop.ResolveShortcut(file[0]);
+            var importedShortcut = System.Windows.Shortcut.GetShortcutData(file[0]);
 
-            var path = Base.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
+            var path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
-            var icon = Base.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit);
+            var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit);
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
@@ -229,14 +215,14 @@ namespace SevenUpdate.Sdk.Pages
                     Icon = icon, 
                     Location = path, 
                     Action = ShortcutAction.Update, 
-                    Target = Base.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit), 
+                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit), 
                     Name = new ObservableCollection<LocaleString>(), 
                     Description = new ObservableCollection<LocaleString>()
                 };
 
-            var ls = new LocaleString { Lang = Base.Locale, Value = importedShortcut.Name };
+            var ls = new LocaleString { Lang = Utilities.Locale, Value = importedShortcut.Name };
             shortcut.Name.Add(ls);
-            ls = new LocaleString { Lang = Base.Locale, Value = importedShortcut.Description };
+            ls = new LocaleString { Lang = Utilities.Locale, Value = importedShortcut.Description };
             shortcut.Description.Add(ls);
 
             Core.UpdateInfo.Shortcuts.Add(shortcut);
@@ -259,13 +245,13 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            Base.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
+            Utilities.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
             var shortcutDescriptions = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Description ?? new ObservableCollection<LocaleString>();
 
             // Load Values
-            foreach (var t in shortcutDescriptions.Where(t => t.Lang == Base.Locale))
+            foreach (var t in shortcutDescriptions.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxDescription.Text = t.Value;
                 found = true;
@@ -280,7 +266,7 @@ namespace SevenUpdate.Sdk.Pages
             var shortcutNames = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Name ?? new ObservableCollection<LocaleString>();
 
             // Load Values
-            foreach (var t in shortcutNames.Where(t => t.Lang == Base.Locale))
+            foreach (var t in shortcutNames.Where(t => t.Lang == Utilities.Locale))
             {
                 this.tbxName.Text = t.Value;
                 found = true;
@@ -303,11 +289,11 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
             var shortcut = Core.OpenFileDialog(installDirectory);
 
@@ -332,12 +318,12 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-            var shortcut = Core.OpenFileDialog(installDirectory, false, null, null, "lnk", true);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            var shortcut = Core.OpenFileDialog(installDirectory, false, "lnk", true);
 
             if (shortcut == null)
             {
@@ -362,11 +348,11 @@ namespace SevenUpdate.Sdk.Pages
         /// </param>
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Base.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Base.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Base.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
             var files = Core.OpenFileDialog(installDirectory);
             var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
@@ -443,7 +429,7 @@ namespace SevenUpdate.Sdk.Pages
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.Dwm.AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {

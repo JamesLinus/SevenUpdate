@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Service
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Service
@@ -24,7 +20,7 @@ namespace SevenUpdate.Service
     /// Class containing events and delegates for the EventService
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
-    public sealed class Service : IService
+    public sealed class WcfService : IService
     {
         #region Constants and Fields
 
@@ -172,7 +168,7 @@ namespace SevenUpdate.Service
         /// </param>
         public void AddApp(Sua app)
         {
-            var sul = Base.Deserialize<Collection<Sua>>(Base.AppsFile);
+            var sul = Utilities.Deserialize<Collection<Sua>>(Utilities.AppsFile);
             var exists = false;
 
             foreach (var t in sul.Where(t => t.Directory == app.Directory && t.Is64Bit == app.Is64Bit))
@@ -187,7 +183,7 @@ namespace SevenUpdate.Service
 
             sul.Add(app);
 
-            Base.Serialize(sul, Base.AppsFile);
+            Utilities.Serialize(sul, Utilities.AppsFile);
         }
 
         /// <summary>
@@ -215,7 +211,7 @@ namespace SevenUpdate.Service
                 }
                 else
                 {
-                    Base.StartProcess(@"schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
+                    Utilities.StartProcess(@"schtasks.exe", "/Change /Disable /TN \"SevenUpdate.Admin\"");
                 }
             }
             else
@@ -223,16 +219,18 @@ namespace SevenUpdate.Service
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     Registry.SetValue(
-                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Base.AppDir + @"SevenUpdate.Helper.exe ");
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
+                        "Seven Update Automatic Checking", 
+                        Utilities.AppDir + @"SevenUpdate.Helper.exe ");
                 }
                 else
                 {
-                    Base.StartProcess(@"schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
+                    Utilities.StartProcess(@"schtasks.exe", "/Change /Enable /TN \"SevenUpdate.Admin\"");
                 }
             }
 
-            Base.Serialize(apps, Base.AppsFile);
-            Base.Serialize(options, Base.ConfigFile);
+            Utilities.Serialize(apps, Utilities.AppsFile);
+            Utilities.Serialize(options, Utilities.ConfigFile);
         }
 
         /// <summary>
@@ -243,10 +241,10 @@ namespace SevenUpdate.Service
         /// </param>
         public void HideUpdate(Suh hiddenUpdate)
         {
-            var hidden = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
+            var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
             hidden.Add(hiddenUpdate);
 
-            Base.Serialize(hidden, Base.HiddenFile);
+            Utilities.Serialize(hidden, Utilities.HiddenFile);
         }
 
         /// <summary>
@@ -257,7 +255,7 @@ namespace SevenUpdate.Service
         /// </param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            Base.Serialize(hiddenUpdates, Base.HiddenFile);
+            Utilities.Serialize(hiddenUpdates, Utilities.HiddenFile);
         }
 
         /// <summary>
@@ -270,14 +268,14 @@ namespace SevenUpdate.Service
         {
             try
             {
-                if (File.Exists(Base.AllUserStore + "abort.lock"))
+                if (File.Exists(Utilities.AllUserStore + "abort.lock"))
                 {
-                    File.Delete(Base.AllUserStore + "abort.lock");
+                    File.Delete(Utilities.AllUserStore + "abort.lock");
                 }
             }
             catch (Exception f)
             {
-                Base.ReportError(f, Base.AllUserStore);
+                Utilities.ReportError(f, Utilities.AllUserStore);
             }
 
             if (DownloadUpdates != null)
@@ -294,16 +292,16 @@ namespace SevenUpdate.Service
         /// </param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
-            var show = Base.Deserialize<Collection<Suh>>(Base.HiddenFile) ?? new Collection<Suh>();
+            var show = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
 
             if (show.Count == 0)
             {
-                File.Delete(Base.HiddenFile);
+                File.Delete(Utilities.HiddenFile);
             }
             else
             {
                 show.Remove(hiddenUpdate);
-                Base.Serialize(show, Base.HiddenFile);
+                Utilities.Serialize(show, Utilities.HiddenFile);
             }
         }
 
@@ -333,7 +331,6 @@ namespace SevenUpdate.Service
 
         /// <summary>
         /// Un subscribes from the wcf service
-
         /// </summary>
         public void UNSubscribe()
         {

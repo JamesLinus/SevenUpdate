@@ -1,19 +1,15 @@
 ﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
-    using System;
     using System.Runtime.InteropServices;
-
-    using Microsoft.Windows.Internal;
+    using System.Windows.Controls;
+    using System.Windows.Internal;
 
     /// <summary>
     /// Internal class containing most native interop declarations used
@@ -23,66 +19,421 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
     internal static class TaskDialogNativeMethods
     {
         /// <summary>
+        /// Indicates the progress bar status
         /// </summary>
-        internal const int TaskDialogIdealWidth = 0;
-
-        /// <summary>
-        /// </summary>
-        internal const int TaskDialogButtonShieldIcon = 1;
-
-        /// <summary>
-        /// </summary>
-        internal const int NoDefaultButtonSpecified = 0;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="pTaskConfig">
-        /// </param>
-        /// <param name="pnButton">
-        /// </param>
-        /// <param name="pnRadioButton">
-        /// </param>
-        /// <param name="pVerificationFlagChecked">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport(CommonDllNames.ComCtl32, CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern HRESULT TaskDialogIndirect(
-            [In] TaskDialogConfig pTaskConfig, 
-            [Out] out int pnButton, 
-            [Out] out int pnRadioButton, 
-            [MarshalAs(UnmanagedType.Bool)] [Out] out bool pVerificationFlagChecked);
-
-        /// <summary>
-        /// </summary>
-        internal enum Pbst
+        internal enum ProgressBarStatus
         {
             /// <summary>
+            ///   Normal status
             /// </summary>
             Normal = 0x0001, 
 
             /// <summary>
+            ///   Red progress
             /// </summary>
             Error = 0x0002, 
 
             /// <summary>
+            ///   Yellow progress
             /// </summary>
             Paused = 0x0003
         }
 
         /// <summary>
+        /// The Common button flags
         /// </summary>
-        /// <param name="hwnd">
-        /// </param>
-        /// <param name="msg">
-        /// </param>
-        /// <param name="wParam">
-        /// </param>
-        /// <param name="lParam">
-        /// </param>
-        /// <param name="lpRefData">
-        /// </param>
-        internal delegate int TaskDialogCallBack(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, IntPtr lpRefData);
+        [Flags]
+        internal enum TaskDialogCommonButtonFlags
+        {
+            /// <summary>
+            ///   The OK button was pressed
+            /// </summary>
+            OkButton = 0x0001, 
+
+            /// <summary>
+            ///   The yes button was pressed
+            /// </summary>
+            YesButton = 0x0002, 
+
+            /// <summary>
+            ///   The no button was pressed
+            /// </summary>
+            NoButton = 0x0004, 
+
+            /// <summary>
+            ///   The cancel button was pressed
+            /// </summary>
+            CancelButton = 0x0008, 
+
+            /// <summary>
+            ///   The retry button was pressed
+            /// </summary>
+            RetryButton = 0x0010, 
+
+            /// <summary>
+            ///   The close button was pressed
+            /// </summary>
+            CloseButton = 0x0020
+        }
+
+        /// <summary>
+        /// The button return ids
+        /// </summary>
+        internal enum TaskDialogCommonButtonReturnID
+        {
+            /// <summary>
+            ///   The button returned OK
+            /// </summary>
+            OK = 1, 
+
+            /// <summary>
+            ///   The button returned cancel
+            /// </summary>
+            Cancel = 2, 
+
+            /// <summary>
+            ///   The button return abort
+            /// </summary>
+            Abort = 3, 
+
+            /// <summary>
+            ///   The button returned retry
+            /// </summary>
+            Retry = 4, 
+
+            /// <summary>
+            ///   The button was ignored
+            /// </summary>
+            Ignore = 5, 
+
+            /// <summary>
+            ///   The button returned yes
+            /// </summary>
+            Yes = 6, 
+
+            /// <summary>
+            ///   The button returned no
+            /// </summary>
+            No = 7, 
+
+            /// <summary>
+            ///   The button returned close
+            /// </summary>
+            Close = 8
+        }
+
+        /// <summary>
+        /// The task dialog elements
+        /// </summary>
+        internal enum TaskDialogElement
+        {
+            /// <summary>
+            ///   The main portion of the dialog
+            /// </summary>
+            Content, 
+
+            /// <summary>
+            ///   Content in the expander
+            /// </summary>
+            ExpandedInformation, 
+
+            /// <summary>
+            ///   The footer of the dialog
+            /// </summary>
+            Footer, 
+
+            /// <summary>
+            ///   The main instructions for the dialog
+            /// </summary>
+            MainInstruction
+        }
+
+        /// <summary>
+        /// Task dialog flags
+        /// </summary>
+        [Flags]
+        internal enum TaskDialogFlags
+        {
+            /// <summary>
+            ///   Empty dialog
+            /// </summary>
+            None = 0, 
+
+            /// <summary>
+            ///   Hyperlinks enabled
+            /// </summary>
+            EnableHyperlinks = 0x0001, 
+
+            /// <summary>
+            ///   Use a main icon
+            /// </summary>
+            UseIconMain = 0x0002, 
+
+            /// <summary>
+            ///   Use a footer icon
+            /// </summary>
+            UseIconFooter = 0x0004, 
+
+            /// <summary>
+            ///   Allow the dialog to be canceled
+            /// </summary>
+            AllowDialogCancellation = 0x0008, 
+
+            /// <summary>
+            ///   Use command links
+            /// </summary>
+            UseCommandLinks = 0x0010, 
+
+            /// <summary>
+            ///   Use command links with no icons
+            /// </summary>
+            UseCommandLinksNoIcon = 0x0020, 
+
+            /// <summary>
+            ///   Expands the footer area
+            /// </summary>
+            ExpandFooterArea = 0x0040, 
+
+            /// <summary>
+            ///   Expands the footer by default
+            /// </summary>
+            ExpandedByDefault = 0x0080, 
+
+            /// <summary>
+            ///   Verification enabled
+            /// </summary>
+            VerificationFlagChecked = 0x0100, 
+
+            /// <summary>
+            ///   Shows a progress bar
+            /// </summary>
+            ShowProgressBar = 0x0200, 
+
+            /// <summary>
+            ///   Shows the progress bar as a marquee
+            /// </summary>
+            ShowMarqueeProgressBar = 0x0400, 
+
+            /// <summary>
+            ///   The callback timer
+            /// </summary>
+            CallbackTimer = 0x0800, 
+
+            /// <summary>
+            ///   The dialog position relative to the window
+            /// </summary>
+            PositionRelativeToWindow = 0x1000, 
+
+            /// <summary>
+            ///   Use right to left layout
+            /// </summary>
+            RtlLayout = 0x2000, 
+
+            /// <summary>
+            ///   No default radio button selected
+            /// </summary>
+            NoDefaultRadioButton = 0x4000
+        }
+
+        /// <summary>
+        /// The icon elements for the dialog
+        /// </summary>
+        internal enum TaskDialogIconElement
+        {
+            /// <summary>
+            ///   The main icon
+            /// </summary>
+            IconMain, 
+
+            /// <summary>
+            ///   The footer icon
+            /// </summary>
+            IconFooter
+        }
+
+        /// <summary>
+        /// Dialog messages
+        /// </summary>
+        internal enum TaskDialogMessage
+        {
+            /// <summary>
+            ///   Navigates the page
+            /// </summary>
+            NavigatePage = NativeMethods.WMUser + 101, 
+
+            /// <summary>
+            ///   parameter = Button ID
+            /// </summary>
+            ClickButton = NativeMethods.WMUser + 102, 
+
+            /// <summary>
+            ///   parameter = 0 (nonMarque) parameter != 0 (Marquee)
+            /// </summary>
+            SetMarqueeProgressBar = NativeMethods.WMUser + 103, 
+
+            /// <summary>
+            ///   parameter = new progress state
+            /// </summary>
+            SetProgressBarState = NativeMethods.WMUser + 104, 
+
+            /// <summary>
+            ///   parameterLength = MAKELPARAM(nMinRange, nMaxRange)
+            /// </summary>
+            SetProgressBarRange = NativeMethods.WMUser + 105, 
+
+            /// <summary>
+            ///   parameter = new position
+            /// </summary>
+            SetProgressBarPos = NativeMethods.WMUser + 106, 
+
+            /// <summary>
+            ///   Sets the progress bar state to a marquee
+            /// </summary>
+            SetProgressBarMarquee = NativeMethods.WMUser + 107, 
+
+            /// <summary>
+            ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
+            /// </summary>
+            SetElementText = NativeMethods.WMUser + 108, 
+
+            /// <summary>
+            ///   parameter = Radio Button ID
+            /// </summary>
+            ClickRadioButton = NativeMethods.WMUser + 110, 
+
+            /// <summary>
+            ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Button ID
+            /// </summary>
+            EnableButton = NativeMethods.WMUser + 111, 
+
+            /// <summary>
+            ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Radio Button ID
+            /// </summary>
+            EnableRadioButton = NativeMethods.WMUser + 112, 
+
+            /// <summary>
+            ///   parameter = 0 (unchecked), 1 (checked), parameterLength = 1 (set key focus)
+            /// </summary>
+            ClickVerification = NativeMethods.WMUser + 113, 
+
+            /// <summary>
+            ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
+            /// </summary>
+            UpdateElementText = NativeMethods.WMUser + 114, 
+
+            /// <summary>
+            ///   Button ID, parameterLength = 0 (elevation not required), parameterLength != 0 (elevation required)
+            /// </summary>
+            SetButtonElevationRequiredState = NativeMethods.WMUser + 115, 
+
+            /// <summary>
+            ///   Updates the icon
+            /// </summary>
+            UpdateIcon = NativeMethods.WMUser + 116
+        }
+
+        /// <summary>
+        /// The notification ids
+        /// </summary>
+        internal enum TaskDialogNotification
+        {
+            /// <summary>
+            ///   Task Dialog created
+            /// </summary>
+            Created = 0, 
+
+            /// <summary>
+            ///   Hyperlink navigated
+            /// </summary>
+            Navigated = 1, 
+
+            /// <summary>
+            ///   A button was clicked
+            /// </summary>
+            ButtonClicked = 2, 
+
+            /// <summary>
+            ///   Hyperlink clicked
+            /// </summary>
+            HyperlinkClicked = 3, 
+
+            /// <summary>
+            ///   A dialog timer
+            /// </summary>
+            Timer = 4, 
+
+            /// <summary>
+            ///   TaskDialog destroyed
+            /// </summary>
+            Destroyed = 5, 
+
+            /// <summary>
+            ///   Radio button clicked
+            /// </summary>
+            RadioButtonClicked = 6, 
+
+            /// <summary>
+            ///   Dialog created
+            /// </summary>
+            DialogConstructed = 7, 
+
+            /// <summary>
+            ///   Verification was clicked
+            /// </summary>
+            VerificationClicked = 8, 
+
+            /// <summary>
+            ///   Help link clicked
+            /// </summary>
+            Help = 9, 
+
+            /// <summary>
+            ///   Expand button clicked
+            /// </summary>
+            ExpandButtonClicked = 10
+        }
+
+        /// <summary>
+        /// The task dialog main icons
+        /// </summary>
+        internal enum TaskDialogIcon
+        {
+            /// <summary>
+            ///   Displays a warning icon
+            /// </summary>
+            WarningIcon = 65535, 
+
+            /// <summary>
+            ///   Displays a red x icon
+            /// </summary>
+            ErrorIcon = 65534, 
+
+            /// <summary>
+            ///   Displays a blue ! icon
+            /// </summary>
+            InformationIcon = 65533, 
+
+            /// <summary>
+            ///   Displays the UAC shield
+            /// </summary>
+            ShieldIcon = 65532
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <parameter name="taskConfig">
+        /// </parameter>
+        /// <parameter name="button">
+        /// </parameter>
+        /// <parameter name="radioButton">
+        /// </parameter>
+        /// <parameter name="verificationFlagChecked">
+        /// </parameter>
+        /// <returns>
+        /// </returns>
+        [DllImport(@"comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern Result TaskDialogIndirect(
+            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
 
         /// <summary>
         /// </summary>
@@ -90,119 +441,163 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         internal class TaskDialogConfig : IDisposable
         {
             /// <summary>
+            ///   The size of the dialog
             /// </summary>
-            internal uint cbSize;
+            internal uint Size;
 
             /// <summary>
+            ///   The parent for the dialog
             /// </summary>
-            internal IntPtr hwndParent;
+            internal IntPtr handleParent;
 
             /// <summary>
+            ///   The instance of the dialog
             /// </summary>
-            internal IntPtr hInstance;
+            internal IntPtr Instance;
 
             /// <summary>
+            ///   The flags for this instance
             /// </summary>
-            internal TaskDialogFlags dwFlags;
+            internal TaskDialogFlags flags;
 
             /// <summary>
+            ///   The task dialog buttons
             /// </summary>
-            internal TaskDialogCommonButtonFlags dwCommonButtons;
+            internal TaskDialogCommonButtonFlags CommonButtons;
 
             /// <summary>
-            /// </summary>
-            [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszWindowTitle;
-
-            /// <summary>
-            /// </summary>
-            internal TaskDialogConfigIconUnion MainIcon; // NOTE: 32-bit union field, holds pszMainIcon as well
-
-            /// <summary>
+            ///   The text to display on the window
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszMainInstruction;
+            internal string WindowTitle;
 
             /// <summary>
+            ///   The main icon for the dialog
+            /// </summary>
+            internal TaskDialogConfigIconUnion MainIcon; // NOTE: 32-bit union field, holds MainIcon as well
+
+            /// <summary>
+            ///   The main text for the dialog
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszContent;
+            internal string MainInstruction;
 
             /// <summary>
-            /// </summary>
-            internal uint cButtons;
-
-            /// <summary>
-            /// </summary>
-            internal IntPtr pButtons; // Ptr to TASKDIALOG_BUTTON structs
-
-            /// <summary>
-            /// </summary>
-            internal int nDefaultButton;
-
-            /// <summary>
-            /// </summary>
-            internal uint cRadioButtons;
-
-            /// <summary>
-            /// </summary>
-            internal IntPtr pRadioButtons; // Ptr to TASKDIALOG_BUTTON structs
-
-            /// <summary>
-            /// </summary>
-            internal int nDefaultRadioButton;
-
-            /// <summary>
+            ///   The sub text for the dialog
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszVerificationText;
+            internal string Content;
 
             /// <summary>
+            ///   The length for the buttons
+            /// </summary>
+            internal uint ButtonLength;
+
+            /// <summary>
+            ///   The collection of buttons to display
+            /// </summary>
+            internal IntPtr ButtonCollection; // Ptr to TASKDIALOG_BUTTON structs
+
+            /// <summary>
+            ///   The id for the default button
+            /// </summary>
+            internal int DefaultButton;
+
+            /// <summary>
+            ///   The collection of <see cref = "RadioButton" />
+            /// </summary>
+            internal uint RadioButtonsLength;
+
+            /// <summary>
+            ///   The radio button collection
+            /// </summary>
+            internal IntPtr RadioButtonCollection; // Ptr to TASKDIALOG_BUTTON structs
+
+            /// <summary>
+            ///   The id for the default radio button
+            /// </summary>
+            internal int DefaultRadioButton;
+
+            /// <summary>
+            ///   The verification text
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszExpandedInformation;
+            internal string VerificationText;
 
             /// <summary>
+            ///   The expanded information text
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszExpandedControlText;
+            internal string ExpandedInformation;
 
             /// <summary>
+            ///   The text to display on the expander
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszCollapsedControlText;
+            internal string ExpandedControlText;
 
             /// <summary>
-            /// </summary>
-            internal TaskDialogConfigIconUnion FooterIcon; // NOTE: 32-bit union field, holds pszFooterIcon as well
-
-            /// <summary>
+            ///   The collapsed control text
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszFooter;
+            internal string CollapsedControlText;
 
             /// <summary>
+            ///   The footer icon
             /// </summary>
-            internal TaskDialogCallBack pfCallback;
+            internal TaskDialogConfigIconUnion FooterIcon; // NOTE: 32-bit union field, holds FooterIcon as well
 
             /// <summary>
+            ///   The footer text
             /// </summary>
-            internal IntPtr lpCallbackData;
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string Footer;
 
             /// <summary>
+            ///   The dialog callback
             /// </summary>
-            internal uint cxWidth;
+            internal TaskDialogCallBack Callback;
 
             /// <summary>
+            ///   The dialog data
+            /// </summary>
+            internal IntPtr CallbackData;
+
+            /// <summary>
+            ///   The dialog width
+            /// </summary>
+            internal uint Width;
+
+            /// <summary>
+            ///   Indicates if the dialog is disposed
             /// </summary>
             protected bool disposed;
 
             /// <summary>
             /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
             /// </summary>
-            /// <param name="disposing">
+            ~TaskDialogConfig()
+            {
+                this.Dispose(false);
+            }
+
+            /// <summary>
+            /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
+            /// </summary>
+            public virtual void Dispose()
+            {
+                this.Dispose(false);
+
+                // Unregister object for finalization.
+                GC.SuppressFinalize(this);
+            }
+
+            /// <summary>
+            /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
+            /// </summary>
+            /// <parameter name="disposing">
             /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-            /// </param>
+            /// </parameter>
             protected virtual void Dispose(bool disposing)
             {
                 lock (this)
@@ -224,28 +619,7 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
                     this.disposed = true;
                 }
             }
-
-            /// <summary>
-            /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
-            /// </summary>
-            public virtual void Dispose()
-            {
-                this.Dispose(false);
-
-                // Unregister object for finalization.
-                GC.SuppressFinalize(this);
-            }
-
-            /// <summary>
-            /// </summary>
-            ~TaskDialogConfig()
-            {
-                this.Dispose(false);
-            }
         }
-
-        // NOTE: We include a "spacer" so that the struct size varies on 
-        // 64-bit architectures.
 
         /// <summary>
         /// </summary>
@@ -254,12 +628,12 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         {
             /// <summary>
             /// </summary>
-            /// <param name="i">
-            /// </param>
+            /// <parameter name="i">
+            /// </parameter>
             internal TaskDialogConfigIconUnion(int i)
             {
-                this.spacer = IntPtr.Zero;
-                this.pszIcon = 0;
+                this.Spacer = IntPtr.Zero;
+                this.Icon = 0;
                 this.hMainIcon = i;
             }
 
@@ -271,352 +645,72 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
             /// <summary>
             /// </summary>
             [FieldOffset(0)]
-            internal int pszIcon;
+            internal int Icon;
 
             /// <summary>
             /// </summary>
             [FieldOffset(0)]
-            internal IntPtr spacer;
+            internal IntPtr Spacer;
         }
 
-        // NOTE: Packing must be set to 4 to make this work on 64-bit platforms.
-
         /// <summary>
+        /// Contains data for the TaskDialogButton
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal struct TaskDialogButton
+        internal struct TaskDialogButtonData
         {
             /// <summary>
+            /// Initializes a new instance of the <see cref="TaskDialogButtonData"/> struct.
             /// </summary>
-            /// <param name="n">
-            /// </param>
-            /// <param name="txt">
-            /// </param>
-            public TaskDialogButton(int n, string txt)
+            /// <parameter name="buttonID">
+            /// The button ID.
+            /// </parameter>
+            /// <parameter name="buttonText">
+            /// The button text.
+            /// </parameter>
+            public TaskDialogButtonData(int buttonID, string buttonText)
             {
-                this.nButtonID = n;
-                this.pszButtonText = txt;
+                this.ButtonID = buttonID;
+                this.ButtonText = buttonText;
             }
 
             /// <summary>
+            ///   The button id
             /// </summary>
-            internal int nButtonID;
+            internal int ButtonID;
 
             /// <summary>
+            ///   The text to display on the button
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string pszButtonText;
-        }
-
-        // Task Dialog - identifies common buttons.
-
-        /// <summary>
-        /// </summary>
-        [Flags]
-        internal enum TaskDialogCommonButtonFlags
-        {
-            /// <summary>
-            /// </summary>
-            OkButton = 0x0001, // selected control return value IDOK
-            /// <summary>
-            /// </summary>
-            YesButton = 0x0002, // selected control return value IDYES
-            /// <summary>
-            /// </summary>
-            NoButton = 0x0004, // selected control return value IDNO
-            /// <summary>
-            /// </summary>
-            CancelButton = 0x0008, // selected control return value IDCANCEL
-            /// <summary>
-            /// </summary>
-            RetryButton = 0x0010, // selected control return value IDRETRY
-            /// <summary>
-            /// </summary>
-            CloseButton = 0x0020 // selected control return value IDCLOSE
-        }
-
-        // Identify button *return values* - note that, unfortunately, these are different
-        // from the inbound button values.
-
-        /// <summary>
-        /// </summary>
-        internal enum TaskDialogCommonButtonReturnID
-        {
-            /// <summary>
-            /// </summary>
-            OK = 1, 
-
-            /// <summary>
-            /// </summary>
-            Cancel = 2, 
-
-            /// <summary>
-            /// </summary>
-            Abort = 3, 
-
-            /// <summary>
-            /// </summary>
-            Retry = 4, 
-
-            /// <summary>
-            /// </summary>
-            Ignore = 5, 
-
-            /// <summary>
-            /// </summary>
-            Yes = 6, 
-
-            /// <summary>
-            /// </summary>
-            No = 7, 
-
-            /// <summary>
-            /// </summary>
-            Close = 8
+            internal string ButtonText;
         }
 
         /// <summary>
         /// </summary>
-        internal enum TaskDialogElement
-        {
-            /// <summary>
-            /// </summary>
-            Content, 
-
-            /// <summary>
-            /// </summary>
-            ExpandedInformation, 
-
-            /// <summary>
-            /// </summary>
-            Footer, 
-
-            /// <summary>
-            /// </summary>
-            MainInstruction
-        }
-
-        // Task Dialog - flags
-
-        /// <summary>
-        /// </summary>
-        [Flags]
-        internal enum TaskDialogFlags
-        {
-            /// <summary>
-            /// </summary>
-            None = 0, 
-
-            /// <summary>
-            /// </summary>
-            EnableHyperlinks = 0x0001, 
-
-            /// <summary>
-            /// </summary>
-            UseHiconMain = 0x0002, 
-
-            /// <summary>
-            /// </summary>
-            UseHiconFooter = 0x0004, 
-
-            /// <summary>
-            /// </summary>
-            AllowDialogCancellation = 0x0008, 
-
-            /// <summary>
-            /// </summary>
-            UseCommandLinks = 0x0010, 
-
-            /// <summary>
-            /// </summary>
-            UseCommandLinksNoIcon = 0x0020, 
-
-            /// <summary>
-            /// </summary>
-            ExpandFooterArea = 0x0040, 
-
-            /// <summary>
-            /// </summary>
-            ExpandedByDefault = 0x0080, 
-
-            /// <summary>
-            /// </summary>
-            VerificationFlagChecked = 0x0100, 
-
-            /// <summary>
-            /// </summary>
-            ShowProgressBar = 0x0200, 
-
-            /// <summary>
-            /// </summary>
-            ShowMarqueeProgressBar = 0x0400, 
-
-            /// <summary>
-            /// </summary>
-            CallbackTimer = 0x0800, 
-
-            /// <summary>
-            /// </summary>
-            PositionRelativeToWindow = 0x1000, 
-
-            /// <summary>
-            /// </summary>
-            RtlLayout = 0x2000, 
-
-            /// <summary>
-            /// </summary>
-            NoDefaultRadioButton = 0x4000
-        }
-
-        /// <summary>
-        /// </summary>
-        internal enum TaskDialogIconElement
-        {
-            /// <summary>
-            /// </summary>
-            IconMain, 
-
-            /// <summary>
-            /// </summary>
-            IconFooter
-        }
-
-        /// <summary>
-        /// </summary>
-        internal enum TaskDialogMessage
-        {
-            /// <summary>
-            /// </summary>
-            NavigatePage = CoreNativeMethods.WMUser + 101, 
-
-            /// <summary>
-            /// </summary>
-            ClickButton = CoreNativeMethods.WMUser + 102, // wParam = Button ID
-            /// <summary>
-            /// </summary>
-            SetMarqueeProgressBar = CoreNativeMethods.WMUser + 103, // wParam = 0 (nonMarque) wParam != 0 (Marquee)
-            /// <summary>
-            /// </summary>
-            SetProgressBarState = CoreNativeMethods.WMUser + 104, // wParam = new progress state
-            /// <summary>
-            /// </summary>
-            SetProgressBarRange = CoreNativeMethods.WMUser + 105, // lParam = MAKELPARAM(nMinRange, nMaxRange)
-            /// <summary>
-            /// </summary>
-            SetProgressBarPos = CoreNativeMethods.WMUser + 106, // wParam = new position
-            /// <summary>
-            /// </summary>
-            SetProgressBarMarquee = CoreNativeMethods.WMUser + 107, 
-
-            // wParam = 0 (stop marquee), wParam != 0 (start marquee), lparam = speed (milliseconds between repaints)
-            /// <summary>
-            /// </summary>
-            SetElementText = CoreNativeMethods.WMUser + 108, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
-            /// <summary>
-            /// </summary>
-            ClickRadioButton = CoreNativeMethods.WMUser + 110, // wParam = Radio Button ID
-            /// <summary>
-            /// </summary>
-            EnableButton = CoreNativeMethods.WMUser + 111, // lParam = 0 (disable), lParam != 0 (enable), wParam = Button ID
-            /// <summary>
-            /// </summary>
-            EnableRadioButton = CoreNativeMethods.WMUser + 112, // lParam = 0 (disable), lParam != 0 (enable), wParam = Radio Button ID
-            /// <summary>
-            /// </summary>
-            ClickVerification = CoreNativeMethods.WMUser + 113, // wParam = 0 (unchecked), 1 (checked), lParam = 1 (set key focus)
-            /// <summary>
-            /// </summary>
-            UpdateElementText = CoreNativeMethods.WMUser + 114, // wParam = element (TASKDIALOG_ELEMENTS), lParam = new element text (LPCWSTR)
-            /// <summary>
-            /// </summary>
-            SetButtonElevationRequiredState = CoreNativeMethods.WMUser + 115, 
-
-            /// <summary>
-            ///   Button ID, lParam = 0 (elevation not required), lParam != 0 (elevation required)
-            /// </summary>
-            UpdateIcon = CoreNativeMethods.WMUser + 116
-
-            // wParam = icon element (TASKDIALOG_ICON_ELEMENTS), lParam = new icon (hIcon if TDF_USE_HICON_* was set, PCWSTR otherwise)
-        }
-
-        /// <summary>
-        /// </summary>
-        internal enum TaskDialogNotification
-        {
-            /// <summary>
-            /// </summary>
-            Created = 0, 
-
-            /// <summary>
-            /// </summary>
-            Navigated = 1, 
-
-            /// <summary>
-            /// </summary>
-            ButtonClicked = 2, // wParam = Button ID
-            /// <summary>
-            /// </summary>
-            HyperlinkClicked = 3, // lParam = (LPCWSTR)pszHREF
-            /// <summary>
-            /// </summary>
-            Timer = 4, // wParam = Milliseconds since dialog created or timer reset
-            /// <summary>
-            /// </summary>
-            Destroyed = 5, 
-
-            /// <summary>
-            /// </summary>
-            RadioButtonClicked = 6, // wParam = Radio Button ID
-            /// <summary>
-            /// </summary>
-            DialogConstructed = 7, 
-
-            /// <summary>
-            /// </summary>
-            VerificationClicked = 8, // wParam = 1 if checkbox checked, 0 if not, lParam is unused and always 0
-            /// <summary>
-            /// </summary>
-            Help = 9, 
-
-            /// <summary>
-            /// </summary>
-            ExpandoButtonClicked = 10 // wParam = 0 (dialog is now collapsed), wParam != 0 (dialog is now expanded)
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="pTaskConfig">
-        /// </param>
-        /// <param name="pnButton">
-        /// </param>
-        /// <param name="pnRadioButton">
-        /// </param>
-        /// <param name="pVerificationFlagChecked">
-        /// </param>
-        internal delegate HRESULT TdiDelegate(
+        /// <parameter name="pTaskConfig">
+        /// </parameter>
+        /// <parameter name="pnButton">
+        /// </parameter>
+        /// <parameter name="pnRadioButton">
+        /// </parameter>
+        /// <parameter name="pVerificationFlagChecked">
+        /// </parameter>
+        internal delegate Result TdiDelegate(
             [In] TaskDialogConfig pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton, [Out] out bool pVerificationFlagChecked);
 
-        // Used in the various SET_DEFAULT* TaskDialog messages
-
         /// <summary>
         /// </summary>
-        internal enum TDIcon
-        {
-            /// <summary>
-            /// </summary>
-            WarningIcon = 65535, 
-
-            /// <summary>
-            /// </summary>
-            ErrorIcon = 65534, 
-
-            /// <summary>
-            /// </summary>
-            InformationIcon = 65533, 
-
-            /// <summary>
-            /// </summary>
-            ShieldIcon = 65532
-        }
+        /// <parameter name="handle">
+        /// </parameter>
+        /// <parameter name="msg">
+        /// </parameter>
+        /// <parameter name="parameter">
+        /// </parameter>
+        /// <parameter name="parameterLength">
+        /// </parameter>
+        /// <parameter name="data">
+        /// </parameter>
+        internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
     }
 }

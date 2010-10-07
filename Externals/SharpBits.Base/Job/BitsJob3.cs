@@ -1,13 +1,10 @@
 // ***********************************************************************
 // Assembly         : SharpBits.Base
 // Author           : xidar solutions
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) xidar solutions. All rights reserved.
 // ***********************************************************************
-
 namespace SharpBits.Base.Job
 {
     using System;
@@ -24,7 +21,7 @@ namespace SharpBits.Base.Job
         #region Constants and Fields
 
         /// <summary>
-        /// The current job
+        ///   The current job
         /// </summary>
         private readonly IBackgroundCopyJob3 job3;
 
@@ -33,12 +30,12 @@ namespace SharpBits.Base.Job
         #region Properties
 
         /// <summary>
-        /// Gets or sets the file acl flags.
+        ///   Gets or sets the file acl flags.
         /// </summary>
         /// <value>The file acl flags.</value>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
-        /// <exception cref="NotSupportedException">
+        /// <exception cref = "NotSupportedException">
         /// </exception>
         public FileAclFlags FileAclFlags
         {
@@ -93,9 +90,15 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Adds the file with ranges.
         /// </summary>
-        /// <param name="remoteName">Name of the remote.</param>
-        /// <param name="localName">Name of the local.</param>
-        /// <param name="fileRanges">The file ranges.</param>
+        /// <param name="remoteName">
+        /// Name of the remote.
+        /// </param>
+        /// <param name="localName">
+        /// Name of the local.
+        /// </param>
+        /// <param name="fileRanges">
+        /// The file ranges.
+        /// </param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void AddFileWithRanges(string remoteName, string localName, Collection<FileRange> fileRanges)
@@ -127,8 +130,12 @@ namespace SharpBits.Base.Job
         /// <summary>
         /// Replaces the remote prefix.
         /// </summary>
-        /// <param name="oldPrefix">The old prefix.</param>
-        /// <param name="newPrefix">The new prefix.</param>
+        /// <param name="oldPrefix">
+        /// The old prefix.
+        /// </param>
+        /// <param name="newPrefix">
+        /// The new prefix.
+        /// </param>
         /// <exception cref="NotSupportedException">
         /// </exception>
         public void ReplaceRemotePrefix(string oldPrefix, string newPrefix)

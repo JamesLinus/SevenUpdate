@@ -1,16 +1,12 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
@@ -21,17 +17,17 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         #region Constants and Fields
 
         /// <summary>
-        /// The maximum value
+        ///   The maximum value
         /// </summary>
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
         /// <summary>
-        /// The minimum value
+        ///   The minimum value
         /// </summary>
         private int minimum = TaskDialogDefaults.ProgressBarMinimumValue;
 
         /// <summary>
-        /// The value
+        ///   The value
         /// </summary>
         private int value = TaskDialogDefaults.ProgressBarMinimumValue;
 
@@ -50,9 +46,9 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// Creates a new instance of this class with the specified name.
         ///   And using the default values: Min = 0, Max = 100, Current = 0
         /// </summary>
-        /// <param name="name">
+        /// <parameter name="name">
         /// The name of the control.
-        /// </param>
+        /// </parameter>
         protected TaskDialogProgressBar(string name)
             : base(name)
         {
@@ -62,15 +58,15 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// Creates a new instance of this class with the specified 
         ///   minimum, maximum and current values.
         /// </summary>
-        /// <param name="minimum">
+        /// <parameter name="minimum">
         /// The minimum value for this control.
-        /// </param>
-        /// <param name="maximum">
+        /// </parameter>
+        /// <parameter name="maximum">
         /// The maximum value for this control.
-        /// </param>
-        /// <param name="value">
+        /// </parameter>
+        /// <parameter name="value">
         /// The current value for this control.
-        /// </param>
+        /// </parameter>
         protected TaskDialogProgressBar(int minimum, int maximum, int value)
         {
             this.Minimum = minimum;

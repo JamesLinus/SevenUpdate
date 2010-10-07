@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk
@@ -51,7 +47,7 @@ namespace SevenUpdate.Sdk
             var localeStrings = value as Collection<LocaleString>;
 
             // Loops through the collection of LocaleStrings
-            return localeStrings != null ? localeStrings.Where(t => t.Lang == Base.Locale).Select(t => t.Value).FirstOrDefault() : null;
+            return localeStrings != null ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault() : null;
         }
 
         /// <summary>
@@ -108,7 +104,7 @@ namespace SevenUpdate.Sdk
                 {
                     var found = false;
 
-                    foreach (var t in localeStrings.Where(t => t.Lang == Base.Locale))
+                    foreach (var t in localeStrings.Where(t => t.Lang == Utilities.Locale))
                     {
                         t.Value = valueString;
                         found = true;
@@ -116,7 +112,7 @@ namespace SevenUpdate.Sdk
 
                     if (!found)
                     {
-                        var ls = new LocaleString { Lang = Base.Locale, Value = valueString };
+                        var ls = new LocaleString { Lang = Utilities.Locale, Value = valueString };
                         localeStrings.Add(ls);
                     }
                 }
@@ -124,7 +120,7 @@ namespace SevenUpdate.Sdk
                 {
                     for (var x = 0; x < localeStrings.Count; x++)
                     {
-                        if (localeStrings[x].Lang == Base.Locale)
+                        if (localeStrings[x].Lang == Utilities.Locale)
                         {
                             localeStrings.RemoveAt(x);
                         }
@@ -136,7 +132,7 @@ namespace SevenUpdate.Sdk
                 if (!String.IsNullOrWhiteSpace(valueString))
                 {
                     localeStrings = new ObservableCollection<LocaleString>();
-                    var ls = new LocaleString { Lang = Base.Locale, Value = valueString };
+                    var ls = new LocaleString { Lang = Utilities.Locale, Value = valueString };
                     localeStrings.Add(ls);
                 }
             }

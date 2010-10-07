@@ -1,190 +1,47 @@
 ﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Shell
+namespace System.Windows
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Text;
 
     /// <summary>
-    /// Shortcut Interop
+    /// Reads and writes a shortcut
     /// </summary>
-    public static class ShortcutInterop
+    public static class Shortcut
     {
         #region Constants and Fields
 
         /// <summary>
+        /// The max feature length
         /// </summary>
         private const int MaxFeatureLength = 38;
 
         /// <summary>
+        /// The max Guid length
         /// </summary>
         private const int MaxGuidLength = 38;
 
         /// <summary>
+        /// The max path
         /// </summary>
         private const int MaxPath = 260;
 
         /// <summary>
+        /// The path path length
         /// </summary>
         private const int MaxPathLength = 1024;
 
         /// <summary>
+        /// The read constant
         /// </summary>
-        private const uint StgmRead = 0;
-
-        #endregion
-
-        #region Enums
-
-        /// <summary>
-        /// </summary>
-        private enum InstallState
-        {
-            /// <summary>
-            /// </summary>
-            NotUsed = -7, 
-
-            /// <summary>
-            /// </summary>
-            BadConfig = -6, 
-
-            /// <summary>
-            /// </summary>
-            Incomplete = -5, 
-
-            /// <summary>
-            /// </summary>
-            SourceAbsent = -4, 
-
-            /// <summary>
-            /// </summary>
-            MoreData = -3, 
-
-            /// <summary>
-            /// </summary>
-            InvalidArg = -2, 
-
-            /// <summary>
-            /// </summary>
-            Unknown = -1, 
-
-            /// <summary>
-            /// </summary>
-            Broken = 0, 
-
-            /// <summary>
-            /// </summary>
-            Advertised = 1, 
-
-            /// <summary>
-            /// </summary>
-            Removed = 1, 
-
-            /// <summary>
-            /// </summary>
-            Absent = 2, 
-
-            /// <summary>
-            /// </summary>
-            Local = 3, 
-
-            /// <summary>
-            /// </summary>
-            Source = 4, 
-
-            /// <summary>
-            /// </summary>
-            Default = 5
-        }
-
-        /// <summary>
-        /// </summary>
-        [Flags]
-        private enum SlgpFlags
-        {
-            /// <summary>
-            ///   Retrieves the standard short (8.3 format) file name
-            /// </summary>
-            SlgpShortPath = 0x1, 
-
-            /// <summary>
-            ///   Retrieves the Universal Naming Convention (UNC) path name of the file
-            /// </summary>
-            SlgpUncPriority = 0x2, 
-
-            /// <summary>
-            ///   Retrieves the raw path name. A raw path is something that might not exist and may include environment variables that need to be expanded
-            /// </summary>
-            SlgpRawPath = 0x4
-        }
-
-        /// <summary>
-        /// </summary>
-        [Flags]
-        private enum SlrFlags
-        {
-            /// <summary>
-            ///   Do not display a dialog box if the link cannot be resolved. When SLR_NO_UI is set,
-            ///   the high-order word of fFlags can be set to a time-out value that specifies the
-            ///   maximum amount of time to be spent resolving the link. The function returns if the
-            ///   link cannot be resolved within the time-out duration. If the high-order word is set
-            ///   to zero, the time-out duration will be set to the default value of 3,000 milliseconds
-            ///   (3 seconds). To specify a value, set the high word of fFlags to the desired time-out
-            ///   duration, in milliseconds.
-            /// </summary>
-            SlrNoUI = 0x1, 
-
-            /// <summary>
-            ///   Obsolete and no longer used
-            /// </summary>
-            SlrAnyMatch = 0x2, 
-
-            /// <summary>
-            ///   If the link object has changed, update its path and list of identifiers.
-            ///   If SLR_UPDATE is set, you do not need to call IPersistFile::IsDirty to determine
-            ///   whether or not the link object has changed.
-            /// </summary>
-            SlrUpdate = 0x4, 
-
-            /// <summary>
-            ///   Do not update the link information
-            /// </summary>
-            SlrNoUpdate = 0x8, 
-
-            /// <summary>
-            ///   Do not execute the search heuristics
-            /// </summary>
-            SlrNoSearch = 0x10, 
-
-            /// <summary>
-            ///   Do not use distributed link tracking
-            /// </summary>
-            SlrNoTrack = 0x20, 
-
-            /// <summary>
-            ///   Disable distributed link tracking. By default, distributed link tracking tracks
-            ///   removable media across multiple devices based on the volume name. It also uses the
-            ///   Universal Naming Convention (UNC) path to track remote file systems whose drive letter
-            ///   has changed. Setting SLR_NOLINKINFO disables both types of tracking.
-            /// </summary>
-            SlrNoLinkInfo = 0x40, 
-
-            /// <summary>
-            ///   Call the Microsoft Windows Installer
-            /// </summary>
-            SlrInvokeMsi = 0x80
-        }
+        private const uint Read = 0;
 
         #endregion
 
@@ -199,14 +56,14 @@ namespace Microsoft.Windows.Shell
         {
             /// <summary>
             /// </summary>
-            /// <param name="pClassID">
-            /// </param>
+            /// <parameter name="classID">
+            /// </parameter>
             [PreserveSig]
-            void GetClassID(out Guid pClassID);
+            void GetClassID(out Guid classID);
         }
 
         /// <summary>
-        /// 
+        /// The persistent file for win32
         /// </summary>
         [ComImport]
         [Guid("0000010b-0000-0000-C000-000000000046")]
@@ -215,9 +72,9 @@ namespace Microsoft.Windows.Shell
         {
             /// <summary>
             /// </summary>
-            /// <param name="pClassID">
-            /// </param>
-            new void GetClassID(out Guid pClassID);
+            /// <parameter name="cassID">
+            /// </parameter>
+            new void GetClassID(out Guid classID);
 
             /// <summary>
             /// </summary>
@@ -228,35 +85,35 @@ namespace Microsoft.Windows.Shell
 
             /// <summary>
             /// </summary>
-            /// <param name="pszFileName">
-            /// </param>
-            /// <param name="dwMode">
-            /// </param>
+            /// <parameter name="fileName">
+            /// </parameter>
+            /// <parameter name="mode">
+            /// </parameter>
             [PreserveSig]
-            void Load([In] [MarshalAs(UnmanagedType.LPWStr)] string pszFileName, uint dwMode);
+            void Load([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>
             /// </summary>
-            /// <param name="pszFileName">
-            /// </param>
-            /// <param name="fRemember">
-            /// </param>
+            /// <parameter name="fileName">
+            /// </parameter>
+            /// <parameter name="remember">
+            /// </parameter>
             [PreserveSig]
-            void Save([In] [MarshalAs(UnmanagedType.LPWStr)] string pszFileName, [In] [MarshalAs(UnmanagedType.Bool)] bool fRemember);
+            void Save([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, [In] [MarshalAs(UnmanagedType.Bool)] bool remember);
 
             /// <summary>
             /// </summary>
-            /// <param name="pszFileName">
-            /// </param>
+            /// <parameter name="FileName">
+            /// </parameter>
             [PreserveSig]
-            void SaveCompleted([In] [MarshalAs(UnmanagedType.LPWStr)] string pszFileName);
+            void SaveCompleted([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
             /// <summary>
             /// </summary>
-            /// <param name="ppszFileName">
-            /// </param>
+            /// <parameter name="fileName">
+            /// </parameter>
             [PreserveSig]
-            void GetCurFile([In] [MarshalAs(UnmanagedType.LPWStr)] string ppszFileName);
+            void GetCurFile([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
         }
 
         /// <summary>
@@ -265,154 +122,153 @@ namespace Microsoft.Windows.Shell
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("000214F9-0000-0000-C000-000000000046")]
-        private interface IShellLinkW
+        private interface IShellLink
         {
             /// <summary>
             /// Retrieves the path and file name of a Shell link object
             /// </summary>
-            /// <param name="pszFile">
-            /// </param>
-            /// <param name="cchMaxPath">
-            /// </param>
-            /// <param name="pfd">
-            /// </param>
-            /// <param name="fFlags">
-            /// </param>
-            void GetPath([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out WIN32FindDataw pfd, SlgpFlags fFlags);
+            /// <parameter name="file">
+            /// </parameter>
+            /// <parameter name="maxPath">
+            /// </parameter>
+            /// <parameter name="data">
+            /// </parameter>
+            /// <parameter name="flags">
+            /// </parameter>
+            void GetPath([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, out Win32FindData data, int flags);
 
             /// <summary>
             /// Retrieves the list of item identifiers for a Shell link object
             /// </summary>
-            /// <param name="ppidl">
-            /// </param>
-            void GetIDList(out IntPtr ppidl);
+            /// <parameter name="indentifer">
+            /// </parameter>
+            void GetIDList(out IntPtr indentifer);
 
             /// <summary>
             /// Sets the pointer to an item identifier list (PIDL) for a Shell link object.
             /// </summary>
-            /// <param name="pidl">The pidl.</param>
-            void SetIDList(IntPtr pidl);
+            /// <parameter name="indentifer">
+            /// The indentifer.
+            /// </parameter>
+            void SetIDList(IntPtr indentifer);
 
             /// <summary>
             /// Retrieves the description string for a Shell link object
             /// </summary>
-            /// <param name="pszName">
-            /// </param>
-            /// <param name="cchMaxName">
-            /// </param>
-            void GetDescription([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
+            /// <parameter name="name">
+            /// The name.
+            /// </parameter>
+            /// <parameter name="maxName">
+            /// Name of the max.
+            /// </parameter>
+            void GetDescription([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder name, int maxName);
 
             /// <summary>
             /// Sets the description for a Shell link object. The description can be any application-defined string
             /// </summary>
-            /// <param name="pszName">
-            /// </param>
-            void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+            /// <parameter name="name">
+            /// The name.
+            /// </parameter>
+            void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string name);
 
             /// <summary>
             /// Retrieves the name of the working directory for a Shell link object
             /// </summary>
-            /// <param name="pszDir">
-            /// </param>
-            /// <param name="cchMaxPath">
-            /// </param>
-            void GetWorkingDirectory([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
+            /// <parameter name="dir">
+            /// The dir.
+            /// </parameter>
+            /// <parameter name="maxPath">
+            /// The max path.
+            /// </parameter>
+            void GetWorkingDirectory([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dir, int maxPath);
 
             /// <summary>
             /// Sets the name of the working directory for a Shell link object
             /// </summary>
-            /// <param name="pszDir">
-            /// </param>
-            void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+            /// <parameter name="dir">
+            /// The dir.
+            /// </parameter>
+            void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string dir);
 
             /// <summary>
             /// Retrieves the command-line arguments associated with a Shell link object
             /// </summary>
-            /// <param name="pszArgs">
-            /// </param>
-            /// <param name="cchMaxPath">
-            /// </param>
-            void GetArguments([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
+            /// <parameter name="args">
+            /// </parameter>
+            /// <parameter name="maxPath">
+            /// </parameter>
+            void GetArguments([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder args, int maxPath);
 
             /// <summary>
             /// Sets the command-line arguments for a Shell link object
             /// </summary>
-            /// <param name="pszArgs">
-            /// </param>
-            void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+            /// <parameter name="args">
+            /// </parameter>
+            void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string args);
 
             /// <summary>
             /// Retrieves the hot key for a Shell link object
             /// </summary>
-            /// <param name="pwHotkey">
-            /// </param>
-            void GetHotkey(out short pwHotkey);
+            /// <parameter name="hotkey">
+            /// </parameter>
+            void GetHotkey(out short hotkey);
 
             /// <summary>
             /// Sets a hot key for a Shell link object
             /// </summary>
-            /// <param name="wHotkey">
-            /// </param>
-            void SetHotkey(short wHotkey);
+            /// <parameter name="hotkey">
+            /// </parameter>
+            void SetHotkey(short hotkey);
 
             /// <summary>
             /// Retrieves the show command for a Shell link object
             /// </summary>
-            /// <param name="piShowCmd">
-            /// </param>
-            void GetShowCmd(out int piShowCmd);
+            /// <parameter name="showCmd">
+            /// </parameter>
+            void GetShowCmd(out int showCmd);
 
             /// <summary>
             /// Sets the show command for a Shell link object. The show command sets the initial show state of the window.
             /// </summary>
-            /// <param name="iShowCmd">
-            /// </param>
-            void SetShowCmd(int iShowCmd);
+            /// <parameter name="showCmd">
+            /// </parameter>
+            void SetShowCmd(int showCmd);
 
             /// <summary>
             /// Retrieves the location (path and index) of the icon for a Shell link object
             /// </summary>
-            /// <param name="pszIconPath">
-            /// </param>
-            /// <param name="cchIconPath">
-            /// </param>
-            /// <param name="piIcon">
-            /// </param>
-            void GetIconLocation([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
+            /// <parameter name="iconPath">
+            /// </parameter>
+            /// <parameter name="iconPathLength">
+            /// </parameter>
+            /// <parameter name="iconIndex">
+            /// </parameter>
+            void GetIconLocation([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder iconPath, int iconPathLength, out int iconIndex);
 
             /// <summary>
             /// Sets the location (path and index) of the icon for a Shell link object
             /// </summary>
-            /// <param name="pszIconPath">
-            /// </param>
-            /// <param name="iIcon">
-            /// </param>
-            void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
+            /// <parameter name="iconPath">
+            /// </parameter>
+            /// <parameter name="iconIndex">
+            /// </parameter>
+            void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string iconPath, int iconIndex);
 
             /// <summary>
             /// Sets the relative path to the Shell link object
             /// </summary>
-            /// <param name="pszPathRel">
-            /// </param>
-            /// <param name="dwReserved">
-            /// </param>
-            void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
-
-            /// <summary>
-            /// Attempts to find the target of a Shell link, even if it has been moved or renamed
-            /// </summary>
-            /// <param name="hwnd">
-            /// </param>
-            /// <param name="fFlags">
-            /// </param>
-            void Resolve(IntPtr hwnd, SlrFlags fFlags);
+            /// <parameter name="relativePath">
+            /// </parameter>
+            /// <parameter name="reserved">
+            /// </parameter>
+            void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string relativePath, int reserved);
 
             /// <summary>
             /// Sets the path and file name of a Shell link object
             /// </summary>
-            /// <param name="pszFile">
-            /// </param>
-            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
+            /// <parameter name="file">
+            /// </parameter>
+            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string file);
         }
 
         #endregion
@@ -420,66 +276,48 @@ namespace Microsoft.Windows.Shell
         #region Public Methods
 
         /// <summary>
-        /// Resolves the msi shortcut.
+        /// Gets data associated with a shortcut
         /// </summary>
-        /// <param name="file">The file.</param>
-        /// <returns></returns>
-        public static string ResolveMsiShortcut(string file)
-        {
-            var product = new StringBuilder(MaxGuidLength + 1);
-            var feature = new StringBuilder(MaxFeatureLength + 1);
-            var component = new StringBuilder(MaxGuidLength + 1);
-
-            MsiGetShortcutTarget(file, product, feature, component);
-
-            var pathLength = MaxPathLength;
-            var path = new StringBuilder(pathLength);
-
-            var installState = MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
-            return installState == InstallState.Local ? path.ToString() : null;
-        }
-
-        /// <summary>
-        /// Resolves the shortcut.
-        /// </summary>
-        /// <param name="filename">The filename.</param>
-        /// <returns></returns>
-        public static Shortcut ResolveShortcut(string filename)
+        /// <parameter name="shortcutName">
+        /// The full path to the shortcut lnk file
+        /// </parameter>
+        /// <returns>
+        /// The data for the shortcut
+        /// </returns>
+        public static ShellLink GetShortcutData(string shortcutName)
         {
             var link = new ShellLink();
-            ((IPersistFile)link).Load(filename, StgmRead);
+            ((IPersistFile)link).Load(shortcutName, Read);
 
-            // TODO: if I can get hold of the hwnd call resolve first. This handles moved and renamed files.  
-            // ((IShellLinkW)link).Resolve(hwnd, 0) 
             var sb = new StringBuilder(MaxPath);
-            var shortcut = new Shortcut { Target = ResolveMsiShortcut(filename), Name = Path.GetFileNameWithoutExtension(filename) };
+            var shortcut = new ShellLink { Target = GetMsiTargetPath(shortcutName), Name = Path.GetFileNameWithoutExtension(shortcutName) };
 
             if (shortcut.Target == null)
             {
-                WIN32FindDataw data;
-                ((IShellLinkW)link).GetPath(sb, sb.Capacity, out data, 0);
+                Win32FindData data;
+                ((IShellLink)link).GetPath(sb, sb.Capacity, out data, 0);
                 shortcut.Target = sb.ToString();
             }
 
-            ((IShellLinkW)link).GetArguments(sb, sb.Capacity);
+            ((IShellLink)link).GetArguments(sb, sb.Capacity);
             shortcut.Arguments = sb.ToString();
 
-            ((IShellLinkW)link).GetDescription(sb, sb.Capacity);
+            ((IShellLink)link).GetDescription(sb, sb.Capacity);
             shortcut.Description = sb.ToString();
 
-            int piIcon;
-            ((IShellLinkW)link).GetIconLocation(sb, sb.Capacity, out piIcon);
+            int iconIndex;
+            ((IShellLink)link).GetIconLocation(sb, sb.Capacity, out iconIndex);
             var icon = sb.ToString();
             if (String.IsNullOrWhiteSpace(icon))
             {
-                shortcut.Icon = shortcut.Target + @"," + piIcon;
+                shortcut.Icon = shortcut.Target + @"," + iconIndex;
             }
             else
             {
                 shortcut.Icon = sb.ToString();
             }
 
-            shortcut.Location = filename;
+            shortcut.Location = shortcutName;
 
             return shortcut;
         }
@@ -489,132 +327,135 @@ namespace Microsoft.Windows.Shell
         #region Methods
 
         /// <summary>
-        /// Gets the folder path from a system variable
         /// </summary>
-        /// <param name="hwndOwner">The HWND owner.</param>
-        /// <param name="nFolder">The n folder.</param>
-        /// <param name="hToken">The h token.</param>
-        /// <param name="dwFlags">The dw flags.</param>
-        /// <param name="lpszPath">The LPSZ path.</param>
-        /// <returns></returns>
-        [DllImport("shfolder.dll", CharSet = CharSet.Auto)]
-        internal static extern int SHGetFolderPath(IntPtr hwndOwner, int nFolder, IntPtr hToken, int dwFlags, StringBuilder lpszPath);
+        /// <parameter name="owner">
+        /// </parameter>
+        /// <parameter name="folder">
+        /// </parameter>
+        /// <parameter name="token">
+        /// </parameter>
+        /// <parameter name="flags">
+        /// </parameter>
+        /// <parameter name="path">
+        /// </parameter>
+        /// <returns>
+        /// </returns>
+        [DllImport(@"shfolder.dll", CharSet = CharSet.Auto)]
+        internal static extern int SHGetFolderPath(IntPtr owner, int folder, IntPtr token, int flags, StringBuilder path);
 
         /// <summary>
-        /// Gets the MSI Component path
+        /// Gets the target path from a Msi shortcut
         /// </summary>
-        /// <param name="productCode">The product code.</param>
-        /// <param name="componentCode">The component code.</param>
-        /// <param name="componentPath">The component path.</param>
-        /// <param name="componentPathBufferSize">Size of the component path buffer.</param>
-        /// <returns></returns>
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        private static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+        /// <parameter name="shortcutPath">
+        /// The path to the shortcut lnk file
+        /// </parameter>
+        /// <returns>
+        /// The resolved path to the shortcut
+        /// </returns>
+        private static string GetMsiTargetPath(string shortcutPath)
+        {
+            var product = new StringBuilder(MaxGuidLength + 1);
+            var feature = new StringBuilder(MaxFeatureLength + 1);
+            var component = new StringBuilder(MaxGuidLength + 1);
+
+            MsiGetShortcutTarget(shortcutPath, product, feature, component);
+
+            var pathLength = MaxPathLength;
+            var path = new StringBuilder(pathLength);
+
+            var installState = MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
+            return installState == 4 ? path.ToString() : null;
+        }
 
         /// <summary>
-        /// Gets the MSI shortcut target
         /// </summary>
-        /// <param name="targetFile">The target file.</param>
-        /// <param name="productCode">The product code.</param>
-        /// <param name="featureID">The feature ID.</param>
-        /// <param name="componentCode">The component code.</param>
-        /// <returns></returns>
-        [DllImport("msi.dll", CharSet = CharSet.Auto)]
+        /// <parameter name="productCode">
+        /// </parameter>
+        /// <parameter name="componentCode">
+        /// </parameter>
+        /// <parameter name="componentPath">
+        /// </parameter>
+        /// <parameter name="componentPathBufferSize">
+        /// </parameter>
+        /// <returns>
+        /// </returns>
+        [DllImport(@"msi.dll", CharSet = CharSet.Auto)]
+        private static extern int MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+
+        /// <summary>
+        /// </summary>
+        /// <parameter name="targetFile">
+        /// </parameter>
+        /// <parameter name="productCode">
+        /// </parameter>
+        /// <parameter name="featureID">
+        /// </parameter>
+        /// <parameter name="componentCode">
+        /// </parameter>
+        /// <returns>
+        /// </returns>
+        [DllImport(@"msi.dll", CharSet = CharSet.Auto)]
         private static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
 
         #endregion
 
         /// <summary>
+        /// The Win32 file data
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct WIN32FindDataw
+        private struct Win32FindData
         {
             /// <summary>
+            ///   The file attributes
             /// </summary>
-            public readonly uint FileAttributes;
+            private readonly uint FileAttributes;
 
             /// <summary>
+            ///   The time the file was created
             /// </summary>
-            public readonly long CreationTime;
+            private readonly long CreationTime;
 
             /// <summary>
+            ///   The time the file was last accessed
             /// </summary>
-            public readonly long LastAccessTime;
+            private readonly long LastAccessTime;
 
             /// <summary>
+            ///   The time the file was last written to
             /// </summary>
-            public readonly long LastWriteTime;
+            private readonly long LastWriteTime;
 
             /// <summary>
+            ///   The file size
             /// </summary>
-            public readonly uint FileSizeHigh;
+            private readonly uint FileSizeHigh;
 
             /// <summary>
+            ///   The file size
             /// </summary>
-            public readonly uint FileSizeLow;
+            private readonly uint FileSizeLow;
 
             /// <summary>
+            ///   Reserved data
             /// </summary>
-            public readonly uint Reserved0;
+            private readonly uint Reserved0;
 
             /// <summary>
+            ///   Reserved data
             /// </summary>
-            public readonly uint Reserved1;
+            private readonly uint Reserved1;
 
             /// <summary>
+            ///   The name of the file
             /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-            public readonly string FileName;
+            private readonly string FileName;
 
             /// <summary>
+            ///   The alternate name of the file
             /// </summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-            public readonly string AlternateFileName;
+            private readonly string AlternateFileName;
         }
-
-        // CLSID_ShellLink from ShlGuid.h 
-
-        /// <summary>
-        /// The Shell link class
-        /// </summary>
-        [ComImport]
-        [Guid("00021401-0000-0000-C000-000000000046")]
-        private class ShellLink
-        {
-        }
-    }
-
-    /// <summary>
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "SubClass")]
-    public class Shortcut
-    {
-        #region Properties
-
-        /// <summary>
-        /// </summary>
-        public string Arguments { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public string Icon { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public string Location { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// </summary>
-        public string Target { get; set; }
-
-        #endregion
     }
 }

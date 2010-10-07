@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Base
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -88,7 +84,7 @@ namespace SevenUpdate
                 manager.EnumJobs(JobOwner.CurrentUser);
                 manager.EnumJobs(JobOwner.AllUsers);
             }
-            catch
+            catch (Exception)
             {
             }
 
@@ -99,7 +95,7 @@ namespace SevenUpdate
                 {
                     job.EnumerateFiles();
                 }
-                catch
+                catch (Exception)
                 {
                 }
 
@@ -109,7 +105,7 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch
+                    catch (Exception)
                     {
                     }
                 }
@@ -120,13 +116,13 @@ namespace SevenUpdate
                         job.Resume();
                         return;
                     }
-                    catch
+                    catch (Exception)
                     {
                         try
                         {
                             job.Cancel();
                         }
-                        catch
+                        catch (Exception)
                         {
                         }
                     }
@@ -139,7 +135,7 @@ namespace SevenUpdate
                 bitsJob.Priority = JobPriority.ForeGround;
             }
 
-            bitsJob.NotificationFlags = NotificationFlags.JobErrorOccured | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
+            bitsJob.NotificationFlags = NotificationFlags.JobErrorOccurred | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
             for (var x = 0; x < appUpdates.Count; x++)
@@ -147,14 +143,13 @@ namespace SevenUpdate
                 for (var y = 0; y < appUpdates[x].Updates.Count; y++)
                 {
                     // Create download directory consisting of application name and update title
-
-                    var downloadDir = Base.AllUserStore + @"downloads\" + appUpdates[x].Updates[y].Name[0].Value;
+                    var downloadDir = Utilities.AllUserStore + @"downloads\" + appUpdates[x].Updates[y].Name[0].Value;
 
                     Directory.CreateDirectory(downloadDir);
 
                     for (var z = 0; z < appUpdates[x].Updates[y].Files.Count; z++)
                     {
-                        appUpdates[x].Updates[y].Files[z].Destination = Base.ConvertPath(
+                        appUpdates[x].Updates[y].Files[z].Destination = Utilities.ConvertPath(
                             appUpdates[x].Updates[y].Files[z].Destination, appUpdates[x].AppInfo.Directory, appUpdates[x].AppInfo.ValueName, appUpdates[x].AppInfo.Is64Bit);
 
                         if (appUpdates[x].Updates[y].Files[z].Action == FileAction.Delete || appUpdates[x].Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
@@ -163,7 +158,8 @@ namespace SevenUpdate
                             continue;
                         }
 
-                        if (Base.GetHash(downloadDir + @"\" + Path.GetFileName(appUpdates[x].Updates[y].Files[z].Destination)) == appUpdates[x].Updates[y].Files[z].Hash)
+                        if (Utilities.GetHash(downloadDir + @"\" + Path.GetFileName(appUpdates[x].Updates[y].Files[z].Destination)) ==
+                            appUpdates[x].Updates[y].Files[z].Hash)
                         {
                             continue;
                         }
@@ -174,19 +170,20 @@ namespace SevenUpdate
                             {
                                 File.Delete(downloadDir + @"\" + Path.GetFileName(appUpdates[x].Updates[y].Files[z].Destination));
                             }
-                            catch
+                            catch (Exception)
                             {
                             }
 
                             var url =
                                 new Uri(
-                                    Base.ConvertPath(appUpdates[x].Updates[y].Files[z].Source, appUpdates[x].Updates[y].DownloadUrl, null, appUpdates[x].AppInfo.Is64Bit));
+                                    Utilities.ConvertPath(
+                                        appUpdates[x].Updates[y].Files[z].Source, appUpdates[x].Updates[y].DownloadUrl, null, appUpdates[x].AppInfo.Is64Bit));
 
                             bitsJob.AddFile(url.AbsoluteUri, downloadDir + @"\" + Path.GetFileName(appUpdates[x].Updates[y].Files[z].Destination));
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
+                            Utilities.ReportError(e, Utilities.AllUserStore);
                         }
                     }
                 }
@@ -196,7 +193,7 @@ namespace SevenUpdate
             {
                 bitsJob.EnumerateFiles();
             }
-            catch
+            catch (Exception)
             {
             }
 
@@ -208,7 +205,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
+                    Utilities.ReportError(e, Utilities.AllUserStore);
                     return;
                 }
             }
@@ -238,9 +235,9 @@ namespace SevenUpdate
         /// </param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Base.AllUserStore + "abort.lock"))
+            if (File.Exists(Utilities.AllUserStore + "abort.lock"))
             {
-                File.Delete(Base.AllUserStore + "abort.lock");
+                File.Delete(Utilities.AllUserStore + "abort.lock");
                 return;
             }
 
@@ -273,7 +270,7 @@ namespace SevenUpdate
                 manager.Dispose();
                 manager = null;
             }
-            catch
+            catch (Exception)
             {
             }
         }
@@ -308,11 +305,11 @@ namespace SevenUpdate
 
             if (e.Job.Error.File != null)
             {
-                Base.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Base.AllUserStore);
+                Utilities.ReportError(e.Job.Error.File.RemoteName + " - " + e.Job.Error.Description, Utilities.AllUserStore);
             }
             else
             {
-                Base.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Base.AllUserStore);
+                Utilities.ReportError(e.Job.Error.ContextDescription + " - " + e.Job.Error.Description, Utilities.AllUserStore);
             }
 
             try
@@ -321,7 +318,7 @@ namespace SevenUpdate
                 manager.Dispose();
                 manager = null;
             }
-            catch
+            catch (Exception)
             {
             }
 
@@ -339,9 +336,9 @@ namespace SevenUpdate
         /// </param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Base.AllUserStore + "abort.lock"))
+            if (File.Exists(Utilities.AllUserStore + "abort.lock"))
             {
-                File.Delete(Base.AllUserStore + "abort.lock");
+                File.Delete(Utilities.AllUserStore + "abort.lock");
                 return;
             }
 

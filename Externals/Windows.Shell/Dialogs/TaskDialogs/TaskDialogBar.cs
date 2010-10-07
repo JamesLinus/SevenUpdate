@@ -1,14 +1,11 @@
 // ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
+// Assembly         : System.Windows
+// Author           : Microsoft Corporation
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Microsoft Corporation. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs.TaskDialogs
 {
     using System.Windows.Controls;
 
@@ -20,7 +17,7 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         #region Constants and Fields
 
         /// <summary>
-        /// The <see cref="ProgressBar"/> State
+        ///   The <see cref = "ProgressBar" /> State
         /// </summary>
         private TaskDialogProgressBarState state;
 
@@ -29,7 +26,7 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TaskDialogBar"/> class.
+        ///   Initializes a new instance of the <see cref = "TaskDialogBar" /> class.
         /// </summary>
         public TaskDialogBar()
         {
@@ -38,7 +35,9 @@ namespace Microsoft.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogBar"/> class.
         /// </summary>
-        /// <param name="name">The name for this control.</param>
+        /// <parameter name="name">
+        /// The name for this control.
+        /// </parameter>
         protected TaskDialogBar(string name)
             : base(name)
         {

@@ -1,11 +1,9 @@
 // ***********************************************************************
 // Assembly         : WPFLocalizeExtension
-// Author           : Bernhard Millauer
-// Created          : 09-19-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Bernhard Millauer. All rights reserved.
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
@@ -105,18 +103,13 @@ namespace WPFLocalizeExtension.Extensions
                 {
                     return double.Parse((string)this.DesignValue, new CultureInfo("en-US"));
                 }
-                catch
+                catch (Exception)
                 {
                     return null;
                 }
             }
 
             return double.Parse((string)input, new CultureInfo("en-US"));
-
-            ////System.Reflection.MethodInfo method = typeof(System.ComponentModel.DoubleConverter).GetMethod("FromString", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic);
-            ////object result = method.Invoke(null, new object[] { source, new System.Globalization.CultureInfo("en-US") });
-
-            ////return (double)result;
         }
 
         /// <summary>

@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Base
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate
@@ -104,20 +100,20 @@ namespace SevenUpdate
                 for (var y = 0; y < apps[x].Updates.Count; y++)
                 {
                     errorOccurred = false;
-                    if (File.Exists(Base.AllUserStore + @"abort.lock"))
+                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
                     {
-                        File.Delete(Base.AllUserStore + @"abort.lock");
+                        File.Delete(Utilities.AllUserStore + @"abort.lock");
                         return;
                     }
 
-                    currentUpdateName = Base.GetLocaleString(apps[x].Updates[y].Name);
-                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, apps[x].AppInfo.Is64Bit))
+                    currentUpdateName = Utilities.GetLocaleString(apps[x].Updates[y].Name);
+                    if (apps[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, apps[x].AppInfo.Is64Bit))
                     {
                         try
                         {
                             Process.GetProcessesByName(@"SevenUpdate.Helper")[0].Kill();
                         }
-                        catch
+                        catch (Exception)
                         {
                         }
                     }
@@ -128,7 +124,7 @@ namespace SevenUpdate
 
                     ReportProgress(25);
 
-                    UpdateFiles(apps[x].Updates[y].Files, Base.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(apps[x].Updates[y].Files, Utilities.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     ReportProgress(75);
 
@@ -147,7 +143,7 @@ namespace SevenUpdate
                         AddHistory(apps[x], apps[x].Updates[y]);
                     }
 
-                    if (apps[x].AppInfo.Directory == Base.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Base.RebootNeeded)
+                    if (apps[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Utilities.RebootNeeded)
                     {
                         foreach (var t in apps[x].Updates[y].Files)
                         {
@@ -159,7 +155,7 @@ namespace SevenUpdate
                                     {
                                         File.Delete(t.Destination);
                                     }
-                                    catch
+                                    catch (Exception)
                                     {
                                         MoveFileEX(t.Destination, null, MoveOnReboot);
                                     }
@@ -170,7 +166,7 @@ namespace SevenUpdate
                             }
                         }
 
-                        Base.StartProcess(Base.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
+                        Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
 
                         return;
                     }
@@ -183,13 +179,13 @@ namespace SevenUpdate
 
             ReportProgress(100);
 
-            if (Base.RebootNeeded)
+            if (Utilities.RebootNeeded)
             {
-                MoveFileEX(Base.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                MoveFileEX(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
-                if (Directory.Exists(Base.AllUserStore + "downloads"))
+                if (Directory.Exists(Utilities.AllUserStore + "downloads"))
                 {
-                    MoveFileEX(Base.AllUserStore + "downloads", null, MoveOnReboot);
+                    MoveFileEX(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
                 }
             }
             else
@@ -197,13 +193,13 @@ namespace SevenUpdate
                 // Delete the downloads directory if no errors were found and no reboot is needed
                 if (!errorOccurred)
                 {
-                    if (Directory.Exists(Base.AllUserStore + "downloads"))
+                    if (Directory.Exists(Utilities.AllUserStore + "downloads"))
                     {
                         try
                         {
-                            Directory.Delete(Base.AllUserStore + "downloads", true);
+                            Directory.Delete(Utilities.AllUserStore + "downloads", true);
                         }
-                        catch
+                        catch (Exception)
                         {
                         }
                     }
@@ -236,7 +232,7 @@ namespace SevenUpdate
         /// </param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var history = Base.Deserialize<Collection<Suh>>(Base.HistoryFile) ?? new Collection<Suh>();
+            var history = Utilities.Deserialize<Collection<Suh>>(Utilities.HistoryFile) ?? new Collection<Suh>();
             var hist = new Suh
                 {
                     HelpUrl = appInfo.AppInfo.HelpUrl, 
@@ -253,7 +249,7 @@ namespace SevenUpdate
 
             history.Add(hist);
 
-            Base.Serialize(history, Base.HistoryFile);
+            Utilities.Serialize(history, Utilities.HistoryFile);
         }
 
         /// <summary>
@@ -307,7 +303,7 @@ namespace SevenUpdate
 
             for (var x = 0; x < regItems.Count; x++)
             {
-                var keyPath = Base.GetRegistryKey(regItems[x].Key, is64Bit);
+                var keyPath = Utilities.GetRegistryKey(regItems[x].Key, is64Bit);
                 switch (keyPath)
                 {
                     case "HKEY_CLASSES_ROOT":
@@ -336,7 +332,7 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
+                            Utilities.ReportError(e, Utilities.AllUserStore);
                             errorOccurred = true;
                         }
 
@@ -354,7 +350,7 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
+                            Utilities.ReportError(e, Utilities.AllUserStore);
                         }
 
                         break;
@@ -368,7 +364,7 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e, Base.AllUserStore);
+                            Utilities.ReportError(e, Utilities.AllUserStore);
                         }
 
                         break;
@@ -407,8 +403,8 @@ namespace SevenUpdate
             {
                 try
                 {
-                    shortcuts[x].Location = Base.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
-                    var linkName = Base.GetLocaleString(shortcuts[x].Name);
+                    shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                    var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                     if (!shortcuts[x].Location.EndsWith(@"\", StringComparison.CurrentCulture))
                     {
@@ -430,13 +426,13 @@ namespace SevenUpdate
                         var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
 
                         // Where the shortcut should point to
-                        shortcut.TargetPath = Base.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                        shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
                         // Description for the shortcut
-                        shortcut.Description = Base.GetLocaleString(shortcuts[x].Description);
+                        shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
 
                         // Location for the shortcut's icon
-                        shortcut.IconLocation = Base.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                        shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
                         // The arguments to be used for the shortcut
                         shortcut.Arguments = shortcuts[x].Arguments;
@@ -455,7 +451,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
+                    Utilities.ReportError(e, Utilities.AllUserStore);
                 }
 
                 var installProgress = (x * 100) / shortcuts.Count;
@@ -485,20 +481,20 @@ namespace SevenUpdate
                     {
                         if (File.Exists(file.Source))
                         {
-                            Base.StartProcess(file.Source, file.Args, true);
+                            Utilities.StartProcess(file.Source, file.Args, true);
                         }
                     }
 
                     if (file.Action == FileAction.UnregisterThenDelete)
                     {
-                        Base.StartProcess("regsvr32", "/u /s" + file.Destination);
+                        Utilities.StartProcess("regsvr32", "/u /s" + file.Destination);
                     }
 
                     try
                     {
                         File.Delete(file.Destination);
                     }
-                    catch
+                    catch (Exception)
                     {
                         MoveFileEX(file.Destination, null, MoveOnReboot);
                     }
@@ -508,11 +504,11 @@ namespace SevenUpdate
                 case FileAction.Execute:
                     try
                     {
-                        Base.StartProcess(file.Destination, file.Args);
+                        Utilities.StartProcess(file.Destination, file.Args);
                     }
                     catch (Exception e)
                     {
-                        Base.ReportError(e + file.Source, Base.AllUserStore);
+                        Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -539,11 +535,11 @@ namespace SevenUpdate
                                 File.Delete(file.Destination + @".bak");
                             }
                         }
-                        catch
+                        catch (Exception)
                         {
-                            if (!File.Exists(Base.AllUserStore + @"reboot.lock"))
+                            if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
                             {
-                                File.Create(Base.AllUserStore + @"reboot.lock").WriteByte(0);
+                                File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
                             }
 
                             MoveFileEX(file.Source, file.Destination, MoveOnReboot);
@@ -552,7 +548,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        Base.ReportError(@"FileNotFound: " + file.Source, Base.AllUserStore);
+                        Utilities.ReportError(@"FileNotFound: " + file.Source, Utilities.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -560,18 +556,18 @@ namespace SevenUpdate
                     {
                         try
                         {
-                            Base.StartProcess(file.Destination, file.Args);
+                            Utilities.StartProcess(file.Destination, file.Args);
                         }
                         catch (Exception e)
                         {
-                            Base.ReportError(e + file.Source, Base.AllUserStore);
+                            Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
                             errorOccurred = true;
                         }
                     }
 
                     if (file.Action == FileAction.UpdateThenRegister)
                     {
-                        Base.StartProcess(@"regsvr32", @"/s" + file.Destination);
+                        Utilities.StartProcess(@"regsvr32", @"/s" + file.Destination);
                     }
 
                     break;
@@ -601,7 +597,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    Base.ReportError(e, Base.AllUserStore);
+                    Utilities.ReportError(e, Utilities.AllUserStore);
                     errorOccurred = true;
                 }
 

@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate.Service
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Service
@@ -98,7 +94,7 @@ namespace SevenUpdate.Service
         void Subscribe();
 
         /// <summary>
-        /// Un subscribes from the wcf service
+        /// Un subscribes from the wcf service
         /// </summary>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]

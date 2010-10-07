@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Helpers
@@ -105,7 +101,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (var x = 0; x < Core.AppInfo.Name.Count; x++)
                     {
-                        if (Core.AppInfo.Name[x].Lang != Base.Locale)
+                        if (Core.AppInfo.Name[x].Lang != Utilities.Locale)
                         {
                             continue;
                         }
@@ -124,7 +120,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (var x = 0; x < Core.AppInfo.Publisher.Count; x++)
                     {
-                        if (Core.AppInfo.Publisher[x].Lang != Base.Locale)
+                        if (Core.AppInfo.Publisher[x].Lang != Utilities.Locale)
                         {
                             continue;
                         }
@@ -143,7 +139,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (var x = 0; x < Core.AppInfo.Description.Count; x++)
                     {
-                        if (Core.AppInfo.Description[x].Lang != Base.Locale)
+                        if (Core.AppInfo.Description[x].Lang != Utilities.Locale)
                         {
                             continue;
                         }
@@ -162,7 +158,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (var x = 0; x < Core.UpdateInfo.Description.Count; x++)
                     {
-                        if (Core.UpdateInfo.Description[x].Lang != Base.Locale)
+                        if (Core.UpdateInfo.Description[x].Lang != Utilities.Locale)
                         {
                             continue;
                         }
@@ -181,7 +177,7 @@ namespace SevenUpdate.Sdk.Helpers
 
                     for (var x = 0; x < Core.UpdateInfo.Name.Count; x++)
                     {
-                        if (Core.UpdateInfo.Name[x].Lang != Base.Locale)
+                        if (Core.UpdateInfo.Name[x].Lang != Utilities.Locale)
                         {
                             continue;
                         }
@@ -231,7 +227,7 @@ namespace SevenUpdate.Sdk.Helpers
             {
                 new Uri(input);
             }
-            catch
+            catch (Exception)
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
@@ -302,11 +298,11 @@ namespace SevenUpdate.Sdk.Helpers
             try
             {
                 input = Core.AppInfo.Directory == null
-                            ? Base.ConvertPath(input, true, Core.AppInfo.Is64Bit)
-                            : Base.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                            ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit)
+                            : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
                 new Uri(input);
             }
-            catch
+            catch (Exception)
             {
                 return Regex.IsMatch(input, pattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }

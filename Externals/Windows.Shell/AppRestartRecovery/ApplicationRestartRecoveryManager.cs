@@ -1,19 +1,14 @@
 ﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.ApplicationServices
+namespace System.Windows.ApplicationServices
 {
-    using System;
     using System.Runtime.InteropServices;
-
-    using Microsoft.Windows.Internal;
+    using System.Windows.Internal;
 
     /// <summary>
     /// Provides access to the Application Restart and Recovery
@@ -34,14 +29,17 @@ namespace Microsoft.Windows.ApplicationServices
         ///   Windows Error Reporting will terminate the application
         ///   after this method is invoked.
         /// </remarks>
-        /// <param name="success">
+        /// <parameter name="success">
         /// <see langword="true"/> to indicate the the program was able to complete its recovery
         ///   work before terminating; otherwise <see langword="false"/>.
-        /// </param>
+        /// </parameter>
         public static void ApplicationRecoveryFinished(bool success)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             AppRestartRecoveryNativeMethods.ApplicationRecoveryFinished(success);
         }
@@ -60,13 +58,16 @@ namespace Microsoft.Windows.ApplicationServices
         public static bool ApplicationRecoveryInProgress()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             bool canceled;
 
             var hr = AppRestartRecoveryNativeMethods.ApplicationRecoveryInProgress(out canceled);
 
-            if (hr == HRESULT.Fail)
+            if (hr == Result.Fail)
             {
                 throw new InvalidOperationException("This method must be called from the registered callback method.");
             }
@@ -77,11 +78,11 @@ namespace Microsoft.Windows.ApplicationServices
         /// <summary>
         /// Registers an application for recovery by Application Restart and Recovery.
         /// </summary>
-        /// <param name="settings">
+        /// <parameter name="settings">
         /// An object that specifies
         ///   the callback method, an optional parameter to pass to the callback
         ///   method and a time interval.
-        /// </param>
+        /// </parameter>
         /// <exception cref="System.ArgumentException">
         /// The registration failed due to an invalid parameter.
         /// </exception>
@@ -97,7 +98,10 @@ namespace Microsoft.Windows.ApplicationServices
         public static void RegisterForApplicationRecovery(RecoverySettings settings)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             if (settings == null)
             {
@@ -109,11 +113,9 @@ namespace Microsoft.Windows.ApplicationServices
             var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(
                 AppRestartRecoveryNativeMethods.internalCallback, (IntPtr)handle, settings.PingInterval, 0);
 
-            if (!CoreErrorHelper.Succeeded((int)hr))
+            if (!ErrorHelper.Succeeded((int)hr))
             {
-                throw hr == HRESULT.InvalidArg
-                          ? (Exception)new ArgumentException("Application was not registered for recovery due to bad parameters.")
-                          : new ExternalException("Application failed to register for recovery.");
+                throw new Exception();
             }
         }
 
@@ -122,13 +124,13 @@ namespace Microsoft.Windows.ApplicationServices
         ///   the application 
         ///   is terminated by Windows Error Reporting.
         /// </summary>
-        /// <param name="settings">
+        /// <parameter name="settings">
         /// An object that specifies
         ///   the command line arguments used to restart the 
         ///   application, and 
         ///   the conditions under which the application should not be 
         ///   restarted.
-        /// </param>
+        /// </parameter>
         /// <exception cref="System.ArgumentException">
         /// Registration failed due to an invalid parameter.
         /// </exception>
@@ -141,16 +143,19 @@ namespace Microsoft.Windows.ApplicationServices
         public static void RegisterForApplicationRestart(RestartSettings settings)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, settings.Restrictions);
 
-            if (hr == HRESULT.Fail)
+            if (hr == Result.Fail)
             {
                 throw new InvalidOperationException("Application failed to registered for restart.");
             }
 
-            if (hr == HRESULT.InvalidArg)
+            if (hr == Result.InvalidArg)
             {
                 throw new ArgumentException("Failed to register application for restart due to bad parameters.");
             }
@@ -165,13 +170,16 @@ namespace Microsoft.Windows.ApplicationServices
         public static void UnregisterApplicationRecovery()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRecoveryCallback();
 
-            if (hr == HRESULT.Fail)
+            if (hr == Result.Fail)
             {
-                throw new ExternalException("Unregister for recovery failed.");
+                throw new Exception();
             }
         }
 
@@ -184,13 +192,16 @@ namespace Microsoft.Windows.ApplicationServices
         public static void UnregisterApplicationRestart()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
-            CoreHelpers.ThrowIfNotVista();
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
+            }
 
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRestart();
 
-            if (hr == HRESULT.Fail)
+            if (hr == Result.Fail)
             {
-                throw new ExternalException("Unregister for restart failed.");
+                throw new Exception();
             }
         }
 

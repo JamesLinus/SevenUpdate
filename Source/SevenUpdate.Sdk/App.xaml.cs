@@ -1,12 +1,8 @@
 ﻿// ***********************************************************************
 // Assembly         : SevenUpdate.Sdk
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Sdk
@@ -15,8 +11,6 @@ namespace SevenUpdate.Sdk
     using System.Globalization;
     using System.IO;
     using System.Windows;
-
-    using Microsoft.Windows;
 
     using SevenUpdate.Sdk.Properties;
 
@@ -38,8 +32,8 @@ namespace SevenUpdate.Sdk
         /// </param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            Base.SerializationError += Core.SerializationError;
-            Base.Locale = Settings.Default.locale;
+            Utilities.SerializationError += Core.SerializationError;
+            Utilities.Locale = Settings.Default.locale;
             base.OnStartup(e, isFirstInstance);
 
             if (!isFirstInstance)
@@ -55,7 +49,7 @@ namespace SevenUpdate.Sdk
         /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
         /// </summary>
         /// <param name="e">
-        /// The <see cref="Microsoft.Windows.StartupNextInstanceEventArgs"/> instance containing the event data.
+        /// The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.
         /// </param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {

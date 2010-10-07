@@ -1,5 +1,5 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Controls="clr-namespace:Microsoft.Windows.Controls;assembly=Windows.Shell" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="Page_Loaded">
 	<!-- Grid-->
 	<Grid>
 		<Grid.RowDefinitions>
@@ -9,7 +9,7 @@
 		</Grid.RowDefinitions>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" VerticalAlignment="Top" Margin="24,12,0,5" />
-		<ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0" MouseDoubleClick="ListView_MouseDoubleClick" Controls:ListViewSorter.CustomSorter="SevenUpdate.SuhSorter,SevenUpdate" TabIndex="0">
+		<ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0" MouseDoubleClick="ListView_MouseDoubleClick" ListViewSorter.CustomSorter="SevenUpdate.SuhSorter,SevenUpdate" TabIndex="0">
 			<ListView.Resources>
 				<ContextMenu x:Key="ItemContextMenu">
 					<MenuItem Header="{LocText SevenUpdate:Resources:ViewDetails}" Click="MenuItem_MouseClick" />
@@ -33,15 +33,15 @@
 			<ListView.View>
 				<GridView>
 					<GridViewColumn CellTemplate="{StaticResource FirstCell}" Width="25" />
-					<GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Name}" Width="400" Controls:ListViewSorter.PropertyName="Name" />
-					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceToString}}" Header="{LocText SevenUpdate:Resources:Importance}" Width="125" Controls:ListViewSorter.PropertyName="Importance" />
-					<GridViewColumn Header="{LocText SevenUpdate:Resources:Size}" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100" Controls:ListViewSorter.PropertyName="Size" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Name, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Name}" Width="400" ListViewSorter.PropertyName="Name" />
+					<GridViewColumn DisplayMemberBinding="{Binding Path=Importance, Mode=OneWay, Converter={StaticResource importanceToString}}" Header="{LocText SevenUpdate:Resources:Importance}" Width="125" ListViewSorter.PropertyName="Importance" />
+					<GridViewColumn Header="{LocText SevenUpdate:Resources:Size}" DisplayMemberBinding="{Binding Path=UpdateSize, Mode=OneWay, Converter={StaticResource fileSizeConverter}}" Width="100" ListViewSorter.PropertyName="Size" />
 				</GridView>
 			</ListView.View>
 		</ListView>
 		<Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
 		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
-			<Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="Restore_Click" Padding="5,1" ButtonText="{LocText SevenUpdate:Resources:Restore}" IsEnabled="False" Name="btnRestore" TabIndex="1" />
+			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="Restore_Click" Padding="5,1" ButtonText="{LocText SevenUpdate:Resources:Restore}" IsEnabled="False" Name="btnRestore" TabIndex="1" />
 			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Command="NavigationCommands.BrowseBack" TabIndex="2" />
 		</StackPanel>
 		<TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:TotalSelectedUpdates, FormatSegment1=0}" VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />

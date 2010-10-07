@@ -1,12 +1,8 @@
 // ***********************************************************************
 // Assembly         : SevenUpdate
-// Author           : sevenalive
-// Created          : 09-17-2010
-//
-// Last Modified By : sevenalive
-// Last Modified On : 10-05-2010
-// Description      : 
-//
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
 // Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
 namespace SevenUpdate.Pages
@@ -21,8 +17,6 @@ namespace SevenUpdate.Pages
 
     using SevenUpdate.Properties;
     using SevenUpdate.Windows;
-
-    #region Enums
 
     /// <summary>
     /// The layout for the Info Panel
@@ -90,8 +84,6 @@ namespace SevenUpdate.Pages
         UpdatesFound, 
     }
 
-    #endregion
-
     /// <summary>
     /// Interaction logic for InfoBar.xaml
     /// </summary>
@@ -155,9 +147,9 @@ namespace SevenUpdate.Pages
             {
                 try
                 {
-                    Base.Serialize(Core.Applications, Base.AllUserStore + @"updates.sui");
+                    Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
                 }
-                catch
+                catch (Exception)
                 {
                 }
 
@@ -289,9 +281,9 @@ namespace SevenUpdate.Pages
                 {
                     try
                     {
-                        File.Delete(Base.AllUserStore + "updates.sui");
+                        File.Delete(Utilities.AllUserStore + "updates.sui");
                     }
-                    catch
+                    catch (Exception)
                     {
                     }
 
@@ -337,7 +329,7 @@ namespace SevenUpdate.Pages
                 this.tbStatus.Text = String.Format(
                     CultureInfo.CurrentCulture, 
                     Properties.Resources.DownloadPercentProgress, 
-                    Base.ConvertFileSize(e.BytesTotal), 
+                    Utilities.ConvertFileSize(e.BytesTotal), 
                     progress.ToString("F0", CultureInfo.CurrentCulture));
             }
             else
@@ -444,7 +436,7 @@ namespace SevenUpdate.Pages
             Core.Instance.IsAdmin = false;
 
             // if a reboot is needed lets say it
-            if (Base.RebootNeeded)
+            if (Utilities.RebootNeeded)
             {
                 Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
                 return;
@@ -766,7 +758,7 @@ namespace SevenUpdate.Pages
                     Core.CheckForUpdates();
                     break;
                 case UpdateAction.RebootNeeded:
-                    Base.StartProcess("shutdown.exe", "-r -t 00");
+                    Utilities.StartProcess("shutdown.exe", "-r -t 00");
                     break;
             }
         }
@@ -807,7 +799,7 @@ namespace SevenUpdate.Pages
 
                 if (e.ImportantDownloadSize > 0)
                 {
-                    this.tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.ImportantDownloadSize);
+                    this.tbSelectedUpdates.Text += ", " + Utilities.ConvertFileSize(e.ImportantDownloadSize);
                 }
             }
 
@@ -835,7 +827,7 @@ namespace SevenUpdate.Pages
 
                 if (e.OptionalDownloadSize > 0)
                 {
-                    this.tbSelectedUpdates.Text += ", " + Base.ConvertFileSize(e.OptionalDownloadSize);
+                    this.tbSelectedUpdates.Text += ", " + Utilities.ConvertFileSize(e.OptionalDownloadSize);
                 }
             }
 

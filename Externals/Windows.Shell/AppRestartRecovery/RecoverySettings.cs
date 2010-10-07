@@ -1,16 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : Windows.Shell
-// Author           : Microsoft
-// Created          : 09-17-2010
-// Last Modified By : sevenalive (Robert Baker)
-// Last Modified On : 10-05-2010
-// Description      : 
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// Assembly         : System.Windows
+// Author           : Robert Baker (sevenalive)
+// Last Modified By : Robert Baker (sevenalive)
+// Last Modified On : 10-06-2010
+// Copyright        : (c) Seven Software. All rights reserved.
 // ***********************************************************************
-
-namespace Microsoft.Windows.ApplicationServices
+namespace System.Windows.ApplicationServices
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 
@@ -30,11 +26,15 @@ namespace Microsoft.Windows.ApplicationServices
         /// <summary>
         /// Initializes a new instance of the <see cref="RecoverySettings"/> class.
         /// </summary>
-        /// <param name="data">A recovery data object that contains the callback method (invoked by the system
-        /// before Windows Error Reporting terminates the application) and an optional state object.</param>
-        /// <param name="interval">The time interval within which the
-        /// callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to
-        /// prevent WER from terminating the application.</param>
+        /// <parameter name="data">
+        /// A recovery data object that contains the callback method (invoked by the system
+        ///   before Windows Error Reporting terminates the application) and an optional state object.
+        /// </parameter>
+        /// <parameter name="interval">
+        /// The time interval within which the
+        ///   callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to
+        ///   prevent WER from terminating the application.
+        /// </parameter>
         /// <seealso cref="ApplicationRestartRecoveryManager"/>
         protected RecoverySettings(RecoveryData data, uint interval)
         {
