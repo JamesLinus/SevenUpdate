@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Sdk.Pages.UpdateRegistry" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850" Loaded="LoadUI">
+<Page x:Class="SevenUpdate.Sdk.Pages.UpdateRegistry" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.ValidationRules" mc:Ignorable="d" MinWidth="850" MinHeight="512" KeepAlive="True" d:DesignHeight="512" d:DesignWidth="850" Loaded="LoadUI">
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>

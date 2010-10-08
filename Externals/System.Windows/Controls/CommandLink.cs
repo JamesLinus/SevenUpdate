@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="CommandLink.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -120,12 +123,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="Note"/> property
         /// </summary>
-        /// <parameter name="obj">
+        /// <param name="obj">
         /// The dependency object
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -136,12 +139,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Handles a change to the <see cref="UseShield"/> property
         /// </summary>
-        /// <parameter name="obj">
+        /// <param name="obj">
         /// The dependency object
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -152,9 +155,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <parameter name="name">
+        /// <param name="name">
         /// The name of the property that has changed
-        /// </parameter>
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

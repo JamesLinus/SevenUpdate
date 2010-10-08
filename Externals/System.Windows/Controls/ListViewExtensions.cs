@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="ListViewExtensions.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -19,9 +22,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Limits resizing of a <see cref="GridViewColumn"/>
         /// </summary>
-        /// <parameter name="e">
+        /// <param name="e">
         /// The Thumb object of the <see cref="GridViewColumn"/> to limit it's size
-        /// </parameter>
+        /// </param>
         public static void LimitColumnSize(Thumb e)
         {
             var senderAsThumb = e;

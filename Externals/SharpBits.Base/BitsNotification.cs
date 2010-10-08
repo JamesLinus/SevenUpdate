@@ -1,163 +1,18 @@
 // ***********************************************************************
-// Assembly         : SharpBits.Base
-// Author           : xidar solutions
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) xidar solutions. All rights reserved.
+// <copyright file="BitsNotification.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Runtime.InteropServices;
 
     using SharpBits.Base.Job;
-
-    /// <summary>
-    /// The event data for the JobNotification event
-    /// </summary>
-    public class JobNotificationEventArgs : EventArgs
-    {
-    }
-
-    /// <summary>
-    /// The event data for the Notification event
-    /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "EventArgs")]
-    public class NotificationEventArgs : JobNotificationEventArgs
-    {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NotificationEventArgs"/> class.
-        /// </summary>
-        /// <param name="job">
-        /// The job the event occurred for
-        /// </param>
-        internal NotificationEventArgs(BitsJob job)
-        {
-            this.Job = job;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Gets the job.
-        /// </summary>
-        /// <value>The <see cref = "BitsJob" /> the notification occurred for</value>
-        public BitsJob Job { get; private set; }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// The event data for the ErrorNotification event
-    /// </summary>
-    public class ErrorNotificationEventArgs : NotificationEventArgs
-    {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ErrorNotificationEventArgs"/> class.
-        /// </summary>
-        /// <param name="job">
-        /// The job the notification is for
-        /// </param>
-        /// <param name="error">
-        /// The error that occurred
-        /// </param>
-        internal ErrorNotificationEventArgs(BitsJob job, BitsError error)
-            : base(job)
-        {
-            this.Error = error;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Gets the error.
-        /// </summary>
-        /// <value>The error that occurred</value>
-        public BitsError Error { get; private set; }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// The event data for the interface notification event
-    /// </summary>
-    public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
-    {
-        #region Constants and Fields
-
-        /// <summary>
-        ///   The Com exception
-        /// </summary>
-        private readonly COMException exception;
-
-        #endregion
-
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs"/> class.
-        /// </summary>
-        /// <param name="job">
-        /// The job the notification is for
-        /// </param>
-        /// <param name="exception">
-        /// The exception.
-        /// </param>
-        /// <param name="description">
-        /// The description.
-        /// </param>
-        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description)
-            : base(job)
-        {
-            this.Description = description;
-            this.exception = exception;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Gets the description.
-        /// </summary>
-        /// <value>The description.</value>
-        public string Description { get; private set; }
-
-        /// <summary>
-        ///   Gets the H result.
-        /// </summary>
-        /// <value>The H result.</value>
-        public int HResult
-        {
-            get
-            {
-                return this.exception.ErrorCode;
-            }
-        }
-
-        /// <summary>
-        ///   Gets the message.
-        /// </summary>
-        /// <value>The message.</value>
-        public string Message
-        {
-            get
-            {
-                return this.exception.Message;
-            }
-        }
-
-        #endregion
-    }
 
     /// <summary>
     /// The notification class for the bits manager

@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// <copyright file="NativeMethods.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Internal
 {
@@ -24,48 +27,119 @@ namespace System.Windows.Internal
         ///   the window procedure for the specified window and does not return until the window
         ///   procedure has processed the message.
         /// </summary>
-        /// <parameter name="pointer">
+        /// <param name="pointer">
+        /// The pointer.
+        /// </param>
+        /// <param name="msg">
+        /// The MSG.
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter.
+        /// </param>
+        /// <param name="parameterLength">
+        /// Length of the parameter.
+        /// </param>
+        /// <returns>
+        /// A return code specific to the message being sent.
+        /// </returns>
+        /// <param name="pointer">
         /// Handle to the window whose window procedure will receive the message.
         ///   If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,
         ///   including disabled or invisible unowned windows, overlapped windows, and pop-up windows;
         ///   but the message is not sent to child windows.
-        /// </parameter>
-        /// <parameter name="msg">
+        /// </param>
+        /// <param name="msg">
         /// Specifies the message to be sent.
-        /// </parameter>
-        /// <parameter name="parameter">
+        /// </param>
+        /// <param name="parameter">
         /// Specifies additional message-specific information.
-        /// </parameter>
-        /// <parameter name="parameterLength">
+        /// </param>
+        /// <param name="parameterLength">
         /// Specifies additional message-specific information.
-        /// </parameter>
-        /// <returns>
-        /// A return code specific to the message being sent.
-        /// </returns>
+        /// </param>
         [SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible", 
             Justification = "This is used from another assembly, also it's in an internal namespace")]
         [DllImport(@"user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength);
 
-        [DllImport("shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern bool IsUserAnAdmin();
+        /// <summary>
+        /// Gets a value indicating whether if the current logged in user is an admin
+        /// </summary>
+        public static bool IsUserAdmin
+        {
+            get
+            {
+                return IsUserAnAdmin();
+            }
+        }
 
+        /// <summary>
+        /// Checks if a user is an admin
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the user is an admin; otherwise, <see langword="false"/>.
+        /// </returns>
+        [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern bool IsUserAnAdmin();
+
+        /// <summary>
+        /// </summary>
+        /// <param name="handle">
+        /// </param>
+        /// <param name="bb">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport(@"DwmApi.dll")]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
 
+        /// <summary>
+        /// </summary>
+        /// <param name="handle">
+        /// </param>
+        /// <param name="m">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport(@"DwmApi.dll")]
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins m);
 
+        /// <summary>
+        /// </summary>
+        /// <returns>
+        /// </returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
         internal static extern bool DwmIsCompositionEnabled();
 
+        /// <summary>
+        /// </summary>
+        /// <param name="compositionAction">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport(@"DwmApi.dll")]
         internal static extern int DwmEnableComposition(CompositionEnable compositionAction);
 
+        /// <summary>
+        /// </summary>
+        /// <param name="handle">
+        /// </param>
+        /// <param name="rect">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport("useDr32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
 
+        /// <summary>
+        /// </summary>
+        /// <param name="handle">
+        /// </param>
+        /// <param name="rect">
+        /// </param>
+        /// <returns>
+        /// </returns>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);
@@ -111,7 +185,7 @@ namespace System.Windows.Internal
         internal const int DwmBBEnable = 0x00000001;
 
         /// <summary>
-        /// The blur region has been specified
+        ///   The blur region has been specified
         /// </summary>
         internal const int DwmBlurRegion = 0x00000002;
 
@@ -219,9 +293,9 @@ namespace System.Windows.Internal
             /// <summary>
             /// Initializes a new instance of the <see cref="Margins"/> struct.
             /// </summary>
-            /// <parameter name="fullWindow">
+            /// <param name="fullWindow">
             /// if set to <see langword="true"/> [full window].
-            /// </parameter>
+            /// </param>
             public Margins(bool fullWindow)
             {
                 this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
@@ -230,18 +304,18 @@ namespace System.Windows.Internal
             /// <summary>
             /// Initializes a new instance of the <see cref="Margins"/> struct.
             /// </summary>
-            /// <parameter name="left">
+            /// <param name="left">
             /// The left margin
-            /// </parameter>
-            /// <parameter name="top">
+            /// </param>
+            /// <param name="top">
             /// The top margin
-            /// </parameter>
-            /// <parameter name="right">
+            /// </param>
+            /// <param name="right">
             /// The right margin
-            /// </parameter>
-            /// <parameter name="bottom">
+            /// </param>
+            /// <param name="bottom">
             /// The bottom margin
-            /// </parameter>
+            /// </param>
             public Margins(int left, int top, int right, int bottom)
             {
                 this.LeftWidth = left;

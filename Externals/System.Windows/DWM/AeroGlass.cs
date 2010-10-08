@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="AeroGlass.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dwm
 {
@@ -15,7 +18,7 @@ namespace System.Windows.Dwm
     /// WPF Glass Window
     ///   Inherit from this window class to enable glass on a WPF window
     /// </summary>
-    public class AeroGlass
+    public static class AeroGlass
     {
         #region Events
 
@@ -68,12 +71,12 @@ namespace System.Windows.Dwm
         /// <summary>
         /// Enables Blur on Aero Glass for a WPF window
         /// </summary>
-        /// <parameter name="window">
+        /// <param name="window">
         /// The window object to add blur to
-        /// </parameter>
-        /// <parameter name="region">
+        /// </param>
+        /// <param name="region">
         /// The area to add the blur to
-        /// </parameter>
+        /// </param>
         public static void EnableBlur(Window window, IntPtr region)
         {
             EnableBlur(new WindowInteropHelper(window).Handle, region);
@@ -82,12 +85,12 @@ namespace System.Windows.Dwm
         /// <summary>
         /// Enables Blur on Aero Glass
         /// </summary>
-        /// <parameter name="windowHandle">
+        /// <param name="windowHandle">
         /// The windows handle to add the blur to
-        /// </parameter>
-        /// <parameter name="region">
+        /// </param>
+        /// <param name="region">
         /// The area to add the blur to
-        /// </parameter>
+        /// </param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
             var blur = new NativeMethods.DwmBlurBehind { RegionBlur = region, Flags = NativeMethods.DwmBlurBehindDWFlag.DwmBBBlurRegion };
@@ -98,12 +101,12 @@ namespace System.Windows.Dwm
         /// <summary>
         /// Enables Aero Glass on a WPF window
         /// </summary>
-        /// <parameter name="window">
+        /// <param name="window">
         /// The window to enable glass
-        /// </parameter>
-        /// <parameter name="margins">
+        /// </param>
+        /// <param name="margins">
         /// The region to add glass
-        /// </parameter>
+        /// </param>
         public static void EnableGlass(Window window, NativeMethods.Margins margins = new NativeMethods.Margins())
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -132,55 +135,22 @@ namespace System.Windows.Dwm
         }
 
         /// <summary>
-        /// Resets the Aero Glass exclusion area.
-        /// </summary>
-        /// <parameter name="margins">
-        /// The margins.
-        /// </parameter>
-        /// <parameter name="window">
-        /// The window.
-        /// </parameter>
-        public static void ResetAeroGlass(NativeMethods.Margins margins, Window window)
-        {
-            ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
-        }
-
-        /// <summary>
-        /// Resets the Aero Glass exclusion area.
-        /// </summary>
-        /// <parameter name="margins">
-        /// The margins.
-        /// </parameter>
-        /// <parameter name="windowHandle">
-        /// The window handle.
-        /// </parameter>
-        public static void ResetAeroGlass(NativeMethods.Margins margins, IntPtr windowHandle)
-        {
-            if (Environment.OSVersion.Version.Major < 6)
-            {
-                return;
-            }
-
-            NativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins);
-        }
-
-        /// <summary>
         /// Excludes a UI element from the Aero Glass frame.
         /// </summary>
-        /// <parameter name="element">
+        /// <param name="element">
         /// The element to exclude.
-        /// </parameter>
-        /// <parameter name="window">
+        /// </param>
+        /// <param name="window">
         /// The window the element resides in
-        /// </parameter>
+        /// </param>
         /// <remarks>
         /// c
         ///   Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
         ///   render properly on top of an Aero Glass frame.
         /// </remarks>
-        public void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
+        public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
-            var hWnd = new WindowInteropHelper(window).Handle;
+            var handle = new WindowInteropHelper(window).Handle;
 
             if (!IsEnabled)
             {
@@ -212,7 +182,40 @@ namespace System.Windows.Dwm
                 };
 
             // Extend the Frame into client area
-            NativeMethods.DwmExtendFrameIntoClientArea(hWnd, ref margins);
+            NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins);
+        }
+
+        /// <summary>
+        /// Resets the Aero Glass exclusion area.
+        /// </summary>
+        /// <param name="margins">
+        /// The margins.
+        /// </param>
+        /// <param name="window">
+        /// The window.
+        /// </param>
+        public static void ResetAeroGlass(NativeMethods.Margins margins, Window window)
+        {
+            ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
+        }
+
+        /// <summary>
+        /// Resets the Aero Glass exclusion area.
+        /// </summary>
+        /// <param name="margins">
+        /// The margins.
+        /// </param>
+        /// <param name="windowHandle">
+        /// The window handle.
+        /// </param>
+        public static void ResetAeroGlass(NativeMethods.Margins margins, IntPtr windowHandle)
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            NativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins);
         }
 
         #endregion
@@ -221,16 +224,16 @@ namespace System.Windows.Dwm
 
         /// <summary>
         /// </summary>
-        /// <parameter name="handle">
-        /// </parameter>
-        /// <parameter name="msg">
-        /// </parameter>
-        /// <parameter name="parameter">
-        /// </parameter>
-        /// <parameter name="parameterLength">
-        /// </parameter>
-        /// <parameter name="handled">
-        /// </parameter>
+        /// <param name="handle">
+        /// </param>
+        /// <param name="msg">
+        /// </param>
+        /// <param name="parameter">
+        /// </param>
+        /// <param name="parameterLength">
+        /// </param>
+        /// <param name="handled">
+        /// </param>
         /// <returns>
         /// </returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameterLength, ref bool handled)
@@ -260,9 +263,9 @@ namespace System.Windows.Dwm
             /// <summary>
             /// Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.
             /// </summary>
-            /// <parameter name="isGlassEnabled">
+            /// <param name="isGlassEnabled">
             /// if set to <see langword="true"/> aero glass is enabled
-            /// </parameter>
+            /// </param>
             internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
             {
                 this.IsGlassEnabled = isGlassEnabled;

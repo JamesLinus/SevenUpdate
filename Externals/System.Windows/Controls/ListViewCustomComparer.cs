@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="ListViewCustomComparer.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -30,12 +33,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Adds a column to the <see cref="SortColumns"/>
         /// </summary>
-        /// <parameter name="sortColumn">
+        /// <param name="sortColumn">
         /// a string representing a column to be sorted
-        /// </parameter>
-        /// <parameter name="direction">
+        /// </param>
+        /// <param name="direction">
         /// the direction to sort
-        /// </parameter>
+        /// </param>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
             this.ClearSort();
@@ -56,17 +59,17 @@ namespace System.Windows.Controls
         /// <summary>
         /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
         /// </summary>
-        /// <parameter name="x">
+        /// <param name="x">
         /// The first object to compare.
-        /// </parameter>
-        /// <parameter name="y">
+        /// </param>
+        /// <param name="y">
         /// The second object to compare.
-        /// </parameter>
+        /// </param>
         /// <returns>
-        /// A signed integer that indicates the relative values of <parameterref name="x"/> and <parameterref name="y"/>, as shown in the following table.Value Meaning Less than zero <parameterref name="x"/> is less than <parameterref name="y"/>. Zero <parameterref name="x"/> equals <parameterref name="y"/>. Greater than zero <parameterref name="x"/> is greater than <parameterref name="y"/>.
+        /// A signed integer that indicates the relative values of <paramref name="x"/> and <paramref name="y"/>, as shown in the following table.Value Meaning Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>. Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.
         /// </returns>
         /// <exception cref="T:System.ArgumentException">
-        /// Neither <parameterref name="x"/> nor <parameterref name="y"/> implements the <see cref="T:System.IComparable"/> interface.-or- <parameterref name="x"/> and <parameterref name="y"/> are of different types and neither one can handle comparisons with the other. 
+        /// Neither <paramref name="x"/> nor <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface.-or- <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. 
         /// </exception>
         public abstract int Compare(object x, object y);
 

@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SharpBits.Base
-// Author           : xidar solutions
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-05-2010
-// Copyright        : (c) xidar solutions. All rights reserved.
+// <copyright file="BGEnums.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
@@ -14,7 +17,6 @@ namespace SharpBits.Base
     /// <summary>
     /// Authentication scheme used for the background job
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Interop")]
     internal enum BGAuthScheme
     {
         /// <summary>

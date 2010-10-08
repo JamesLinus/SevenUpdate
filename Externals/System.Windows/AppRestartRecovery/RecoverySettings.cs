@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="RecoverySettings.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
@@ -26,15 +29,15 @@ namespace System.Windows.ApplicationServices
         /// <summary>
         /// Initializes a new instance of the <see cref="RecoverySettings"/> class.
         /// </summary>
-        /// <parameter name="data">
+        /// <param name="data">
         /// A recovery data object that contains the callback method (invoked by the system
         ///   before Windows Error Reporting terminates the application) and an optional state object.
-        /// </parameter>
-        /// <parameter name="interval">
+        /// </param>
+        /// <param name="interval">
         /// The time interval within which the
         ///   callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to
         ///   prevent WER from terminating the application.
-        /// </parameter>
+        /// </param>
         /// <seealso cref="ApplicationRestartRecoveryManager"/>
         protected RecoverySettings(RecoveryData data, uint interval)
         {

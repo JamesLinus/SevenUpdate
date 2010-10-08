@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// <copyright file="NativeTaskDialog.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
@@ -100,12 +103,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="NativeTaskDialog"/> class.
         /// </summary>
-        /// <parameter name="settings">
+        /// <param name="settings">
         /// The settings.
-        /// </parameter>
-        /// <parameter name="outerDialog">
+        /// </param>
+        /// <param name="outerDialog">
         /// The outer dialog.
-        /// </parameter>
+        /// </param>
         internal NativeTaskDialog(NativeTaskDialogSettings settings, TaskDialog outerDialog)
         {
             this.nativeDialogConfig = settings.NativeConfiguration;
@@ -210,9 +213,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   abstracting out to say that the <see cref="TaskDialog"/> consumer can
         ///   simply call "Close" and we'll "click" the cancel button.
         /// </summary>
-        /// <parameter name="result">
+        /// <param name="result">
         /// The result to give when closing the dialog
-        /// </parameter>
+        /// </param>
         internal void NativeClose(TaskDialogResult result)
         {
             this.showState = DialogShowState.Closing;
@@ -310,12 +313,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the button enabled.
         /// </summary>
-        /// <parameter name="buttonID">
+        /// <param name="buttonID">
         /// The button ID.
-        /// </parameter>
-        /// <parameter name="enabled">
+        /// </param>
+        /// <param name="enabled">
         /// if set to <see langword="true"/> [enabled].
-        /// </parameter>
+        /// </param>
         internal void UpdateButtonEnabled(int buttonID, bool enabled)
         {
             this.AssertCurrentlyShowing();
@@ -325,9 +328,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the check box checked.
         /// </summary>
-        /// <parameter name="isChecked">
+        /// <param name="isChecked">
         /// if set to <see langword="true"/> the checkbox is checked.
-        /// </parameter>
+        /// </param>
         internal void UpdateCheckBoxChecked(bool isChecked)
         {
             this.AssertCurrentlyShowing();
@@ -337,12 +340,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the elevation icon.
         /// </summary>
-        /// <parameter name="buttonId">
+        /// <param name="buttonId">
         /// The button id.
-        /// </parameter>
-        /// <parameter name="showIcon">
+        /// </param>
+        /// <param name="showIcon">
         /// if set to <see langword="true"/> [show icon].
-        /// </parameter>
+        /// </param>
         internal void UpdateElevationIcon(int buttonId, bool showIcon)
         {
             this.AssertCurrentlyShowing();
@@ -352,9 +355,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the expanded text.
         /// </summary>
-        /// <parameter name="expandedText">
+        /// <param name="expandedText">
         /// The expanded text.
-        /// </parameter>
+        /// </param>
         internal void UpdateExpandedText(string expandedText)
         {
             this.UpdateTextCore(expandedText, TaskDialogNativeMethods.TaskDialogElement.ExpandedInformation);
@@ -363,9 +366,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the footer icon.
         /// </summary>
-        /// <parameter name="footerIcon">
+        /// <param name="footerIcon">
         /// The footer icon.
-        /// </parameter>
+        /// </param>
         internal void UpdateFooterIcon(TaskDialogStandardIcon footerIcon)
         {
             this.UpdateIconCore(footerIcon, TaskDialogNativeMethods.TaskDialogIconElement.IconFooter);
@@ -374,9 +377,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the footer text.
         /// </summary>
-        /// <parameter name="footerText">
+        /// <param name="footerText">
         /// The footer text.
-        /// </parameter>
+        /// </param>
         internal void UpdateFooterText(string footerText)
         {
             this.UpdateTextCore(footerText, TaskDialogNativeMethods.TaskDialogElement.Footer);
@@ -385,9 +388,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the instruction.
         /// </summary>
-        /// <parameter name="instruction">
+        /// <param name="instruction">
         /// The instruction.
-        /// </parameter>
+        /// </param>
         internal void UpdateInstruction(string instruction)
         {
             this.UpdateTextCore(instruction, TaskDialogNativeMethods.TaskDialogElement.MainInstruction);
@@ -396,9 +399,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the main icon.
         /// </summary>
-        /// <parameter name="mainIcon">
+        /// <param name="mainIcon">
         /// The main icon.
-        /// </parameter>
+        /// </param>
         internal void UpdateMainIcon(TaskDialogStandardIcon mainIcon)
         {
             this.UpdateIconCore(mainIcon, TaskDialogNativeMethods.TaskDialogIconElement.IconMain);
@@ -420,9 +423,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the state of the progress bar.
         /// </summary>
-        /// <parameter name="state">
+        /// <param name="state">
         /// The progress bar state
-        /// </parameter>
+        /// </param>
         internal void UpdateProgressBarState(TaskDialogProgressBarState state)
         {
             this.AssertCurrentlyShowing();
@@ -432,9 +435,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the progress bar value.
         /// </summary>
-        /// <parameter name="i">
+        /// <param name="i">
         /// The progress value
-        /// </parameter>
+        /// </param>
         internal void UpdateProgressBarValue(int i)
         {
             this.AssertCurrentlyShowing();
@@ -444,12 +447,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Update the radio button when enabled has changed
         /// </summary>
-        /// <parameter name="buttonID">
+        /// <param name="buttonID">
         /// The button ID.
-        /// </parameter>
-        /// <parameter name="enabled">
+        /// </param>
+        /// <param name="enabled">
         /// if set to <see langword="true"/> the radio button is enabled.
-        /// </parameter>
+        /// </param>
         internal void UpdateRadioButtonEnabled(int buttonID, bool enabled)
         {
             this.AssertCurrentlyShowing();
@@ -459,9 +462,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the content text
         /// </summary>
-        /// <parameter name="text">
+        /// <param name="text">
         /// The text to update
-        /// </parameter>
+        /// </param>
         internal void UpdateText(string text)
         {
             this.UpdateTextCore(text, TaskDialogNativeMethods.TaskDialogElement.Content);
@@ -470,9 +473,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Releases unmanaged and - optionally - managed resources
         /// </summary>
-        /// <parameter name="disposing">
+        /// <param name="disposing">
         /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-        /// </parameter>
+        /// </param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -542,9 +545,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Allocates and marshals buttons.
         /// </summary>
-        /// <parameter name="buttons">
+        /// <param name="buttons">
         /// The collection of buttons
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -565,12 +568,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Makes a Long parameter
         /// </summary>
-        /// <parameter name="a">
+        /// <param name="a">
         /// The first parameter
-        /// </parameter>
-        /// <parameter name="b">
+        /// </param>
+        /// <param name="b">
         /// The second parameter
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The parameter as a long
         /// </returns>
@@ -582,21 +585,21 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Processes dialog messages
         /// </summary>
-        /// <parameter name="pointer">
+        /// <param name="pointer">
         /// The handle for the dialog
-        /// </parameter>
-        /// <parameter name="msg">
+        /// </param>
+        /// <param name="msg">
         /// The message code to process
-        /// </parameter>
-        /// <parameter name="parameter">
+        /// </param>
+        /// <param name="parameter">
         /// The button id
-        /// </parameter>
-        /// <parameter name="parameterLength">
+        /// </param>
+        /// <param name="parameterLength">
         /// The hyperlink id.
-        /// </parameter>
-        /// <parameter name="data">
+        /// </param>
+        /// <param name="data">
         /// The data to process
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result for the dialog
         /// </returns>
@@ -635,9 +638,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Frees the old string.
         /// </summary>
-        /// <parameter name="element">
+        /// <param name="element">
         /// The element.
-        /// </parameter>
+        /// </param>
         private void FreeOldString(TaskDialogNativeMethods.TaskDialogElement element)
         {
             var elementIndex = (int)element;
@@ -656,9 +659,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Handles the button click.
         /// </summary>
-        /// <parameter name="id">
+        /// <param name="id">
         /// The id button id
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -695,9 +698,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Handles the hyperlink click.
         /// </summary>
-        /// <parameter name="reference">
+        /// <param name="reference">
         /// The hyperlink reference
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -712,9 +715,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Handles the radio button click.
         /// </summary>
-        /// <parameter name="id">
+        /// <param name="id">
         /// The id of the radio button
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -741,9 +744,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Handles timer ticks
         /// </summary>
-        /// <parameter name="ticks">
+        /// <param name="ticks">
         /// The number of ticks
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -756,9 +759,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Determines whether [is option set] [the specified flag].
         /// </summary>
-        /// <parameter name="flag">
+        /// <param name="flag">
         /// The option flags
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if [is option set] [the specified flag]; otherwise, <see langword="false"/>.
         /// </returns>
@@ -773,12 +776,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Makes a new string.
         /// </summary>
-        /// <parameter name="s">
+        /// <param name="s">
         /// The string to create
-        /// </parameter>
-        /// <parameter name="element">
+        /// </param>
+        /// <param name="element">
         /// The element.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The pointer for the new string
         /// </returns>
@@ -887,15 +890,15 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Sends a message to the dialog
         /// </summary>
-        /// <parameter name="msg">
+        /// <param name="msg">
         /// The message to send
-        /// </parameter>
-        /// <parameter name="parameter">
+        /// </param>
+        /// <param name="parameter">
         /// The button id to send
-        /// </parameter>
-        /// <parameter name="parameterLength">
+        /// </param>
+        /// <param name="parameterLength">
         /// The hyperlink
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The result
         /// </returns>
@@ -911,12 +914,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the icon
         /// </summary>
-        /// <parameter name="icon">
+        /// <param name="icon">
         /// The icon to display
-        /// </parameter>
-        /// <parameter name="element">
+        /// </param>
+        /// <param name="element">
         /// The element where the icon is displayed
-        /// </parameter>
+        /// </param>
         private void UpdateIconCore(TaskDialogStandardIcon icon, TaskDialogNativeMethods.TaskDialogIconElement element)
         {
             this.AssertCurrentlyShowing();
@@ -926,12 +929,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Updates the text
         /// </summary>
-        /// <parameter name="text">
+        /// <param name="text">
         /// The text to display
-        /// </parameter>
-        /// <parameter name="element">
+        /// </param>
+        /// <param name="element">
         /// The element where the text is displayed on
-        /// </parameter>
+        /// </param>
         private void UpdateTextCore(string text, TaskDialogNativeMethods.TaskDialogElement element)
         {
             this.AssertCurrentlyShowing();

@@ -98,7 +98,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\Seven Software.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="protobuf-net, Version=1.0.0.282, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
@@ -120,6 +120,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\StringToLocaleStringConverter.cs" />
     <Compile Include="Project.cs" />
     <Page Include="Pages\AppInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -164,9 +166,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Converters.cs" />
-    <Compile Include="Helpers\RegParser.cs" />
-    <Compile Include="Helpers\ValidationRules.cs" />
+    <Compile Include="Converters\BooleanToLabelConverter.cs" />
+    <Compile Include="RegParser.cs" />
+    <Compile Include="ValidationRules\LocaleStringRule.cs" />
+    <Compile Include="ValidationRules\RegistryPathRule.cs" />
+    <Compile Include="ValidationRules\SuiLocationRule.cs" />
+    <Compile Include="ValidationRules\AppDirectoryRule.cs" />
     <Compile Include="Pages\AppInfo.xaml.cs">
       <DependentUpon>AppInfo.xaml</DependentUpon>
     </Compile>
@@ -223,7 +228,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Properties\Seven Software.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\wicon.ico" />
@@ -232,7 +236,7 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\Windows.Shell\System.Windows.csproj">
+    <ProjectReference Include="..\..\Externals\System.Windows\System.Windows.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
       <Name>System.Windows</Name>
     </ProjectReference>

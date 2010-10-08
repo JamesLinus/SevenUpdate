@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="ProgressIndicator.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -226,12 +229,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Stops or starts the progress indicator based on the <see cref="IsRunning"/> property
         /// </summary>
-        /// <parameter name="d">
+        /// <param name="d">
         /// The dependency object
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var progressIndicator = (ProgressIndicator)d;
@@ -249,12 +252,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Animates the progress wheel
         /// </summary>
-        /// <parameter name="sender">
+        /// <param name="sender">
         /// The source of the event.
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.EventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private void Animate(object sender, EventArgs e)
         {
             if (this.canvasElements == null || this.ElementStoryboard == null)
@@ -283,9 +286,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Starts the storyboard.
         /// </summary>
-        /// <parameter name="element">
+        /// <param name="element">
         /// The element.
-        /// </parameter>
+        /// </param>
         private void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());

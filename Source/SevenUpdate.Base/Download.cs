@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SevenUpdate.Base
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Download.cs"
+//            project="SevenUpdate.Base"
+//            assembly="SevenUpdate.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {

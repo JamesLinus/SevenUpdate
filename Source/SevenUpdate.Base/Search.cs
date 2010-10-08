@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Base
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Search.cs"
+//            project="SevenUpdate.Base"
+//            assembly="SevenUpdate.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {
@@ -64,15 +67,15 @@ namespace SevenUpdate
         /// <summary>
         /// Searches for updates while blocking the calling thread
         /// </summary>
-        /// <param name="apps">
+        /// <param name="applications">
         /// The collection of applications to check for updates
         /// </param>
-        public static void SearchForUpdates(IEnumerable<Sua> apps)
+        public static void SearchForUpdates(IEnumerable<Sua> applications)
         {
             importantCount = 0;
             optionalCount = 0;
             recommendedCount = 0;
-            var applications = new Collection<Sui>();
+            var applicationsFound = new Collection<Sui>();
             try
             {
                 // Check if machine is connected to the internet
@@ -120,12 +123,12 @@ namespace SevenUpdate
                     if (CheckForUpdates(ref app, null))
                     {
                         // If there are updates add it to the collection
-                        applications.Add(app);
+                        applicationsFound.Add(app);
 
                         // Search is complete!
                         if (SearchCompleted != null)
                         {
-                            SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                            SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
                         }
 
                         return;
@@ -144,12 +147,12 @@ namespace SevenUpdate
                 }
             }
 
-            if (apps == null)
+            if (applications == null)
             {
                 // Search is complete!
                 if (SearchCompleted != null)
                 {
-                    SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                    SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
                 }
 
                 return;
@@ -159,7 +162,7 @@ namespace SevenUpdate
             var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
-            foreach (var t in apps)
+            foreach (var t in applications)
             {
                 if (!t.IsEnabled)
                 {
@@ -179,7 +182,7 @@ namespace SevenUpdate
                             // If there is an update available, add it.
                             if (CheckForUpdates(ref app, hidden))
                             {
-                                applications.Add(app);
+                                applicationsFound.Add(app);
                             }
                         }
                     }
@@ -209,19 +212,19 @@ namespace SevenUpdate
             // Search is complete!
             if (SearchCompleted != null)
             {
-                SearchCompleted(null, new SearchCompletedEventArgs(applications, importantCount, recommendedCount, optionalCount));
+                SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
             }
         }
 
         /// <summary>
         /// Searches for files without blocking the calling thread
         /// </summary>
-        /// <param name="apps">
+        /// <param name="applications">
         /// The collection of applications to check for updates
         /// </param>
-        public static void SearchForUpdatesAsync(IEnumerable<Sua> apps)
+        public static void SearchForUpdatesAsync(IEnumerable<Sua> applications)
         {
-            Task.Factory.StartNew(() => SearchForUpdates(apps));
+            Task.Factory.StartNew(() => SearchForUpdates(applications));
         }
 
         /// <summary>
@@ -230,7 +233,7 @@ namespace SevenUpdate
         /// <param name="updates">
         /// The updates to set as found
         /// </param>
-        public static void SetUpdatesFound(Collection<Sui> updates)
+        public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
             importantCount = 0;
             recommendedCount = 0;
@@ -413,10 +416,16 @@ namespace SevenUpdate
                 // Checks to see if the update only contains execute and delete actions
                 if (app.Updates[y].Files.Count > 0)
                 {
-                    foreach (var t in app.Updates[y].Files.Where(t => t.Action != FileAction.ExecuteThenDelete))
+                    // ReSharper disable ForCanBeConvertedToForeach
+                    for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        remove = false;
+                        if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
+                        {
+                            remove = false;
+                        }
                     }
+
+                    // ReSharper restore ForCanBeConvertedToForeach
                 }
 
                 // If the update does not have any files or if the update only contains execute and delete, then let's remove the update.

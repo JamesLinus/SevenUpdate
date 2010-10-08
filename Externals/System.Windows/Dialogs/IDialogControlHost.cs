@@ -1,10 +1,3 @@
-// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
-// ***********************************************************************
 namespace System.Windows.Dialogs
 {
     /// <summary>
@@ -24,12 +17,12 @@ namespace System.Windows.Dialogs
         /// Called when a control currently in the collection 
         ///   has a property changed.
         /// </summary>
-        /// <parameter name="propertyName">
+        /// <param name="propertyName">
         /// The name of the property changed.
-        /// </parameter>
-        /// <parameter name="control">
+        /// </param>
+        /// <param name="control">
         /// The control whose property has changed.
-        /// </parameter>
+        /// </param>
         void ApplyControlPropertyChange(string propertyName, DialogControl control);
 
         /// <summary>
@@ -53,12 +46,12 @@ namespace System.Windows.Dialogs
         ///   PostProcess should pass on changes to native control, 
         ///   if appropriate.
         /// </summary>
-        /// <parameter name="propertyName">
+        /// <param name="propertyName">
         /// The name of the property.
-        /// </parameter>
-        /// <parameter name="control">
-        /// The control <parameterref name="propertyName"/> applies to.
-        /// </parameter>
+        /// </param>
+        /// <param name="control">
+        /// The control <paramref name="propertyName"/> applies to.
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if the property change is allowed.
         /// </returns>

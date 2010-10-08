@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 
-<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Service" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WcfService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsp:Policy wsu:Id="NetNamedPipeBinding_IService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
@@ -38,20 +38,11 @@
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Win32" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IService_Subscribe_InputMessage">
-    <wsdl:part name="parameters" element="tns:Subscribe" />
-  </wsdl:message>
-  <wsdl:message name="IService_UnSubscribe_InputMessage">
-    <wsdl:part name="parameters" element="tns:UnSubscribe" />
-  </wsdl:message>
   <wsdl:message name="IService_AddApp_InputMessage">
     <wsdl:part name="parameters" element="tns:AddApp" />
   </wsdl:message>
-  <wsdl:message name="IService_InstallUpdates_InputMessage">
-    <wsdl:part name="parameters" element="tns:InstallUpdates" />
-  </wsdl:message>
-  <wsdl:message name="IService_ShowUpdate_InputMessage">
-    <wsdl:part name="parameters" element="tns:ShowUpdate" />
+  <wsdl:message name="IService_ChangeSettings_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeSettings" />
   </wsdl:message>
   <wsdl:message name="IService_HideUpdate_InputMessage">
     <wsdl:part name="parameters" element="tns:HideUpdate" />
@@ -59,39 +50,39 @@
   <wsdl:message name="IService_HideUpdates_InputMessage">
     <wsdl:part name="parameters" element="tns:HideUpdates" />
   </wsdl:message>
-  <wsdl:message name="IService_ChangeSettings_InputMessage">
-    <wsdl:part name="parameters" element="tns:ChangeSettings" />
+  <wsdl:message name="IService_InstallUpdates_InputMessage">
+    <wsdl:part name="parameters" element="tns:InstallUpdates" />
+  </wsdl:message>
+  <wsdl:message name="IService_ShowUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:ShowUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IService_Subscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Subscribe" />
+  </wsdl:message>
+  <wsdl:message name="IService_Unsubscribe_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unsubscribe" />
   </wsdl:message>
   <wsdl:message name="IService_OnDownloadCompleted_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnDownloadCompleted" />
   </wsdl:message>
-  <wsdl:message name="IService_OnInstallCompleted_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnInstallCompleted" />
+  <wsdl:message name="IService_OnDownloadProgressChanged_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnDownloadProgressChanged" />
   </wsdl:message>
   <wsdl:message name="IService_OnErrorOccurred_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnErrorOccurred" />
   </wsdl:message>
-  <wsdl:message name="IService_OnDownloadProgressChanged_OutputCallbackMessage">
-    <wsdl:part name="parameters" element="tns:OnDownloadProgressChanged" />
+  <wsdl:message name="IService_OnInstallCompleted_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:OnInstallCompleted" />
   </wsdl:message>
   <wsdl:message name="IService_OnInstallProgressChanged_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:OnInstallProgressChanged" />
   </wsdl:message>
   <wsdl:portType msc:usingSession="true" name="IService">
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Subscribe">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/Subscribe" message="tns:IService_Subscribe_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="UnSubscribe">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/UnSubscribe" message="tns:IService_UnSubscribe_InputMessage" />
-    </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="AddApp">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/AddApp" message="tns:IService_AddApp_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InstallUpdates">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/InstallUpdates" message="tns:IService_InstallUpdates_InputMessage" />
-    </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowUpdate">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/ShowUpdate" message="tns:IService_ShowUpdate_InputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ChangeSettings">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ChangeSettings" message="tns:IService_ChangeSettings_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="HideUpdate">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/HideUpdate" message="tns:IService_HideUpdate_InputMessage" />
@@ -99,20 +90,29 @@
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="HideUpdates">
       <wsdl:input wsaw:Action="http://tempuri.org/IService/HideUpdates" message="tns:IService_HideUpdates_InputMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ChangeSettings">
-      <wsdl:input wsaw:Action="http://tempuri.org/IService/ChangeSettings" message="tns:IService_ChangeSettings_InputMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="InstallUpdates">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/InstallUpdates" message="tns:IService_InstallUpdates_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="ShowUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/ShowUpdate" message="tns:IService_ShowUpdate_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Subscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Subscribe" message="tns:IService_Subscribe_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Unsubscribe">
+      <wsdl:input wsaw:Action="http://tempuri.org/IService/Unsubscribe" message="tns:IService_Unsubscribe_InputMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadCompleted">
       <wsdl:output wsaw:Action="http://tempuri.org/IService/OnDownloadCompleted" message="tns:IService_OnDownloadCompleted_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnInstallCompleted">
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/OnInstallCompleted" message="tns:IService_OnInstallCompleted_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadProgressChanged">
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/OnDownloadProgressChanged" message="tns:IService_OnDownloadProgressChanged_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnErrorOccurred">
       <wsdl:output wsaw:Action="http://tempuri.org/IService/OnErrorOccurred" message="tns:IService_OnErrorOccurred_OutputCallbackMessage" />
     </wsdl:operation>
-    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnDownloadProgressChanged">
-      <wsdl:output wsaw:Action="http://tempuri.org/IService/OnDownloadProgressChanged" message="tns:IService_OnDownloadProgressChanged_OutputCallbackMessage" />
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnInstallCompleted">
+      <wsdl:output wsaw:Action="http://tempuri.org/IService/OnInstallCompleted" message="tns:IService_OnInstallCompleted_OutputCallbackMessage" />
     </wsdl:operation>
     <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="OnInstallProgressChanged">
       <wsdl:output wsaw:Action="http://tempuri.org/IService/OnInstallProgressChanged" message="tns:IService_OnInstallProgressChanged_OutputCallbackMessage" />
@@ -121,32 +121,14 @@
   <wsdl:binding name="NetNamedPipeBinding_IService" type="tns:IService">
     <wsp:PolicyReference URI="#NetNamedPipeBinding_IService_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/named-pipe" />
-    <wsdl:operation name="Subscribe">
-      <soap12:operation soapAction="http://tempuri.org/IService/Subscribe" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="UnSubscribe">
-      <soap12:operation soapAction="http://tempuri.org/IService/UnSubscribe" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
     <wsdl:operation name="AddApp">
       <soap12:operation soapAction="http://tempuri.org/IService/AddApp" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="InstallUpdates">
-      <soap12:operation soapAction="http://tempuri.org/IService/InstallUpdates" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="ShowUpdate">
-      <soap12:operation soapAction="http://tempuri.org/IService/ShowUpdate" style="document" />
+    <wsdl:operation name="ChangeSettings">
+      <soap12:operation soapAction="http://tempuri.org/IService/ChangeSettings" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -163,8 +145,26 @@
         <soap12:body use="literal" />
       </wsdl:input>
     </wsdl:operation>
-    <wsdl:operation name="ChangeSettings">
-      <soap12:operation soapAction="http://tempuri.org/IService/ChangeSettings" style="document" />
+    <wsdl:operation name="InstallUpdates">
+      <soap12:operation soapAction="http://tempuri.org/IService/InstallUpdates" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ShowUpdate">
+      <soap12:operation soapAction="http://tempuri.org/IService/ShowUpdate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Subscribe">
+      <soap12:operation soapAction="http://tempuri.org/IService/Subscribe" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="Unsubscribe">
+      <soap12:operation soapAction="http://tempuri.org/IService/Unsubscribe" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -175,8 +175,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnInstallCompleted">
-      <soap12:operation soapAction="http://tempuri.org/IService/OnInstallCompleted" style="document" />
+    <wsdl:operation name="OnDownloadProgressChanged">
+      <soap12:operation soapAction="http://tempuri.org/IService/OnDownloadProgressChanged" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -187,8 +187,8 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="OnDownloadProgressChanged">
-      <soap12:operation soapAction="http://tempuri.org/IService/OnDownloadProgressChanged" style="document" />
+    <wsdl:operation name="OnInstallCompleted">
+      <soap12:operation soapAction="http://tempuri.org/IService/OnInstallCompleted" style="document" />
       <wsdl:output>
         <soap12:body use="literal" />
       </wsdl:output>
@@ -200,7 +200,7 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="Service">
+  <wsdl:service name="WcfService">
     <wsdl:port name="NetNamedPipeBinding_IService" binding="tns:NetNamedPipeBinding_IService">
       <soap12:address location="net.pipe://localhost/SevenUpdate/" />
       <wsa10:EndpointReference>
@@ -208,9 +208,7 @@
           net.pipe://localhost/SevenUpdate/
         </wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Upn>
-            SERVER-7\sevenalive
-          </Upn>
+          <Upn>SERVER-7\sevenalive</Upn>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>

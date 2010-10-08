@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 
@@ -15,6 +16,7 @@ using System.Windows.Markup;
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.1")]
 [assembly: AssemblyFileVersion("10.9.30")]
+[assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: Guid("59ffa091-2f23-45bc-8212-125250bf213d")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]

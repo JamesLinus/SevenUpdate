@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// <copyright file="DialogControlCollection.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
@@ -14,8 +17,10 @@ namespace System.Windows.Dialogs
     /// <summary>
     /// Strongly typed collection for dialog controls.
     /// </summary>
+    /// <typeparam name="T">
+    /// </typeparam>
     /// <typeparameter name="T">
-    /// The <see cref="DialogControl"/>
+    ///   The <see cref="DialogControl"/>
     /// </typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T>
         where T : DialogControl
@@ -34,9 +39,9 @@ namespace System.Windows.Dialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogControlCollection&lt;T&gt;"/> class.
         /// </summary>
-        /// <parameter name="host">
+        /// <param name="host">
         /// The host.
-        /// </parameter>
+        /// </param>
         internal DialogControlCollection(IDialogControlHost host)
         {
             this.hostingDialog = host;
@@ -78,15 +83,15 @@ namespace System.Windows.Dialogs
 
         /// <summary>
         /// Recursively searches for the control who's id matches the value
-        ///   passed in the <parameterref name="id"/> parameter.
+        ///   passed in the <paramref name="id"/> parameter.
         /// </summary>
-        /// <parameter name="id">
+        /// <param name="id">
         /// An integer containing the identifier of the
         ///   control being searched for.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// A <see cref="DialogControl"/> who's id matches the value of the
-        ///   <parameterref name="id"/> parameter.
+        ///   <paramref name="id"/> parameter.
         /// </returns>
         internal DialogControl GetControlById(int id)
         {
@@ -95,18 +100,18 @@ namespace System.Windows.Dialogs
 
         /// <summary>
         /// Recursively searches for a given control id in the
-        ///   collection passed via the <parameterref name="subControl"/> parameter.
+        ///   collection passed via the <paramref name="subControl"/> parameter.
         /// </summary>
-        /// <parameter name="subControl">
+        /// <param name="subControl">
         /// A Collection of CommonFileDialogControls
-        /// </parameter>
-        /// <parameter name="id">
+        /// </param>
+        /// <param name="id">
         /// An int containing the identifier of the control
         ///   being searched for.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// A <see cref="DialogControl"/> who's Id matches the value of the
-        ///   <parameterref name="id"/> parameter.
+        ///   <paramref name="id"/> parameter.
         /// </returns>
         internal DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
         {
@@ -120,12 +125,12 @@ namespace System.Windows.Dialogs
         /// <summary>
         /// Inserts an dialog control at the specified index.
         /// </summary>
-        /// <parameter name="index">
+        /// <param name="index">
         /// The location to insert the control.
-        /// </parameter>
-        /// <parameter name="control">
+        /// </param>
+        /// <param name="control">
         /// The item to insert.
-        /// </parameter>
+        /// </param>
         /// <permission cref="System.InvalidOperationException">
         /// A control with 
         ///   the same name already exists in this collection -or- 
@@ -162,9 +167,9 @@ namespace System.Windows.Dialogs
         /// <summary>
         /// Removes the control at the specified index.
         /// </summary>
-        /// <parameter name="index">
+        /// <param name="index">
         /// The location of the control to remove.
-        /// </parameter>
+        /// </param>
         /// <permission cref="System.InvalidOperationException">
         /// The associated dialog is 
         ///   showing and cannot be modified.

@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="AdornerExtensions.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -19,15 +22,17 @@ namespace System.Windows.Controls
         /// <summary>
         /// Determines whether the adorner layer contains an element
         /// </summary>
+        /// <typeparam name="T">
+        /// </typeparam>
         /// <typeparameter name="T">
-        /// The type of element
+        ///   The type of element
         /// </typeparameter>
-        /// <parameter name="adr">
+        /// <param name="adr">
         /// The adorner.
-        /// </parameter>
-        /// <parameter name="elem">
+        /// </param>
+        /// <param name="elem">
         /// The element
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// <see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.
         /// </returns>
@@ -59,15 +64,17 @@ namespace System.Windows.Controls
         /// <summary>
         /// Removes the adorners
         /// </summary>
+        /// <typeparam name="T">
+        /// </typeparam>
         /// <typeparameter name="T">
-        /// The type of element
+        ///   The type of element
         /// </typeparameter>
-        /// <parameter name="adr">
+        /// <param name="adr">
         /// The adorner
-        /// </parameter>
-        /// <parameter name="elem">
+        /// </param>
+        /// <param name="elem">
         /// The element
-        /// </parameter>
+        /// </param>
         public static void RemoveAdorners<T>(this AdornerLayer adr, UIElement elem)
         {
             var adorners = adr.GetAdorners(elem);
@@ -89,12 +96,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Removes all.
         /// </summary>
-        /// <parameter name="adr">
+        /// <param name="adr">
         /// The adorner layer
-        /// </parameter>
-        /// <parameter name="elem">
+        /// </param>
+        /// <param name="elem">
         /// The element
-        /// </parameter>
+        /// </param>
         public static void RemoveAll(this AdornerLayer adr, UIElement elem)
         {
             try
@@ -119,12 +126,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Removes all recursive.
         /// </summary>
-        /// <parameter name="adr">
+        /// <param name="adr">
         /// The adorner layer
-        /// </parameter>
-        /// <parameter name="element">
+        /// </param>
+        /// <param name="element">
         /// The element.
-        /// </parameter>
+        /// </param>
         public static void RemoveAllRecursive(this AdornerLayer adr, UIElement element)
         {
             try

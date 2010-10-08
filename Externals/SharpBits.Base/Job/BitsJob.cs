@@ -1,14 +1,18 @@
 // ***********************************************************************
-// Assembly         : SharpBits.Base
-// Author           : xidar solutions
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) xidar solutions. All rights reserved.
+// <copyright file="BitsJob.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SharpBits.Base.Job
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Globalization;
     using System.Runtime.InteropServices;
 
     using SharpBits.Base.File;
@@ -927,6 +931,705 @@ namespace SharpBits.Base.Job
             }
 
             this.disposed = true;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Contains data about the files to download or upload using BITS
+    /// </summary>
+    public partial class BitsJob
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        ///   The current job
+        /// </summary>
+        private readonly IBackgroundCopyJob2 job2;
+
+        /// <summary>
+        ///   The current reply progress
+        /// </summary>
+        private JobReplyProgress replyProgress;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///   Gets or sets the notify command line parameters.
+        /// </summary>
+        /// <value>The notify command line parameters.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public string NotifyCommandLineParameters
+        {
+            get
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        string program, parameters;
+                        this.job2.GetNotifyCmdLine(out program, out parameters);
+                        return parameters;
+                    }
+
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                    return string.Empty;
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        string program, parameters;
+                        this.job2.GetNotifyCmdLine(out program, out parameters);
+                        if (value != null)
+                        {
+                            // the command line program should be passed as first parameter, enclosed by quotes
+                            value = string.Format(CultureInfo.CurrentCulture, "\"{0}\" {1}", program, value);
+                        }
+
+                        this.job2.SetNotifyCmdLine(program, value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob2");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the notify command line program.
+        /// </summary>
+        /// <value>The notify command line program.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public string NotifyCommandLineProgram
+        {
+            get
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        string program, parameters;
+                        this.job2.GetNotifyCmdLine(out program, out parameters);
+                        return program;
+                    }
+
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                    return string.Empty;
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        if (null == value)
+                        {
+                            // removing command line, thus re-enabling the notification interface
+                            this.job2.SetNotifyCmdLine(null, null);
+                            this.NotificationInterface = this.manager.NotificationHandler;
+                        }
+                        else
+                        {
+                            this.NotificationInterface = null;
+                            string program, parameters;
+                            this.job2.GetNotifyCmdLine(out program, out parameters);
+                            this.job2.SetNotifyCmdLine(value, parameters);
+                        }
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob2");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the reply file name
+        /// </summary>
+        /// <value>The reply filename</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public string ReplyFileName
+        {
+            get
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        string replyFileName;
+                        this.job2.GetReplyFileName(out replyFileName);
+                        return replyFileName;
+                    }
+
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                    return string.Empty;
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        // only supported from IBackgroundCopyJob2 and above
+                        this.job2.SetReplyFileName(value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob2");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets the reply progress.
+        /// </summary>
+        /// <value>The reply progress.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public JobReplyProgress ReplyProgress
+        {
+            get
+            {
+                try
+                {
+                    if (this.job2 != null)
+                    {
+                        BGJobReplyProgress replyJobProgress;
+                        this.job2.GetReplyProgress(out replyJobProgress);
+                        this.replyProgress = new JobReplyProgress(replyJobProgress);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob2");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                    return null;
+                }
+
+                return this.replyProgress;
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Adds the credentials.
+        /// </summary>
+        /// <param name="credentials">
+        /// The credentials.
+        /// </param>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public void AddCredentials(BitsCredentials credentials)
+        {
+            try
+            {
+                if (this.job2 != null && credentials != null)
+                {
+                    // only supported from IBackgroundCopyJob2 and above
+                    var bgCredentials = new BGAuthCredentials
+                    {
+                        Scheme = (BGAuthScheme)credentials.AuthenticationScheme,
+                        Target = (BGAuthTarget)credentials.AuthenticationTarget
+                    };
+                    bgCredentials.Credentials.Basic.Password = credentials.Password;
+                    bgCredentials.Credentials.Basic.UserName = credentials.UserName;
+                    this.job2.SetCredentials(ref bgCredentials);
+                }
+                else
+                {
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// Gets the reply data.
+        /// </summary>
+        /// <returns>
+        /// The byte array containing the reply data
+        /// </returns>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public byte[] GetReplyData()
+        {
+            try
+            {
+                if (this.job2 != null)
+                {
+                    ulong length;
+                    var bufferPtr = new IntPtr();
+                    this.job2.GetReplyData(bufferPtr, out length);
+                    var buffer = new byte[length];
+                    Marshal.Copy(bufferPtr, buffer, 0, (int)length); // truncating length to int may be ok as the buffer could be 1MB maximum
+                    return buffer;
+                }
+
+                throw new NotSupportedException("IBackgroundCopyJob2");
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Removes the credentials.
+        /// </summary>
+        /// <param name="credentials">
+        /// The credentials.
+        /// </param>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public void RemoveCredentials(BitsCredentials credentials)
+        {
+            try
+            {
+                if (this.job2 != null && credentials != null)
+                {
+                    // only supported from IBackgroundCopyJob2 and above
+                    this.job2.RemoveCredentials((BGAuthTarget)credentials.AuthenticationTarget, (BGAuthScheme)credentials.AuthenticationScheme);
+                }
+                else
+                {
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// Removes the credentials.
+        /// </summary>
+        /// <param name="target">
+        /// The target.
+        /// </param>
+        /// <param name="scheme">
+        /// The scheme.
+        /// </param>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public void RemoveCredentials(AuthenticationTarget target, AuthenticationScheme scheme)
+        {
+            try
+            {
+                if (this.job2 != null)
+                {
+                    // only supported from IBackgroundCopyJob2 and above
+                    this.job2.RemoveCredentials((BGAuthTarget)target, (BGAuthScheme)scheme);
+                }
+                else
+                {
+                    throw new NotSupportedException("IBackgroundCopyJob2");
+                }
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        #endregion
+    }
+
+
+    /// <summary>
+    /// Contains data about the files to download or upload using BITS
+    /// </summary>
+    public partial class BitsJob : IDisposable
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        ///   The current job
+        /// </summary>
+        private readonly IBackgroundCopyJob3 job3;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///   Gets or sets the file acl flags.
+        /// </summary>
+        /// <value>The file acl flags.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public FileAclFlags FileAclFlags
+        {
+            get
+            {
+                BGFileAclFlags flags = 0;
+                try
+                {
+                    if (this.job3 != null)
+                    {
+                        // only supported from IBackgroundCopyJob3 and above
+                        this.job3.GetFileAclFlags(out flags);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob3");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return (FileAclFlags)flags;
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job3 != null)
+                    {
+                        // only supported from IBackgroundCopyJob3 and above
+                        this.job3.SetFileAclFlags((BGFileAclFlags)value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob3");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Adds the file with ranges.
+        /// </summary>
+        /// <param name="remoteName">
+        /// Name of the remote.
+        /// </param>
+        /// <param name="localName">
+        /// Name of the local.
+        /// </param>
+        /// <param name="fileRanges">
+        /// The file ranges.
+        /// </param>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public void AddFileWithRanges(string remoteName, string localName, Collection<FileRange> fileRanges)
+        {
+            try
+            {
+                if (this.job3 != null && fileRanges != null)
+                {
+                    // only supported from IBackgroundCopyJob3 and above
+                    var ranges = new BGFileRange[fileRanges.Count];
+                    for (var i = 0; i < fileRanges.Count; i++)
+                    {
+                        ranges[i] = fileRanges[i].BGFileRange;
+                    }
+
+                    this.job3.AddFileWithRanges(remoteName, localName, (uint)fileRanges.Count, ranges);
+                }
+                else
+                {
+                    throw new NotSupportedException("IBackgroundCopyJob3");
+                }
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        /// <summary>
+        /// Replaces the remote prefix.
+        /// </summary>
+        /// <param name="oldPrefix">
+        /// The old prefix.
+        /// </param>
+        /// <param name="newPrefix">
+        /// The new prefix.
+        /// </param>
+        /// <exception cref="NotSupportedException">
+        /// </exception>
+        public void ReplaceRemotePrefix(string oldPrefix, string newPrefix)
+        {
+            try
+            {
+                if (this.job3 != null)
+                {
+                    // only supported from IBackgroundCopyJob3 and above
+                    this.job3.ReplaceRemotePrefix(oldPrefix, newPrefix);
+                }
+                else
+                {
+                    throw new NotSupportedException("IBackgroundCopyJob3");
+                }
+            }
+            catch (COMException exception)
+            {
+                this.manager.PublishException(this, exception);
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Contains data about the files to download or upload using BITS
+    /// </summary>
+    public partial class BitsJob
+    {
+        #region Constants and Fields
+
+        /// <summary>
+        ///   The current job
+        /// </summary>
+        private readonly IBackgroundCopyJob4 job4;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///   Gets or sets the peer caching flags.
+        /// </summary>
+        /// <value>The peer caching flags.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public PeerCachingFlags CachingFlags
+        {
+            get
+            {
+                PeerCachingFlags peerCaching = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetPeerCachingFlags(out peerCaching);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return peerCaching;
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.SetPeerCachingFlags(value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the maximum download time.
+        /// </summary>
+        /// <value>The maximum download time.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public ulong MaximumDownloadTime
+        {
+            get
+            {
+                ulong maxTime = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetMaximumDownloadTime(out maxTime);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return maxTime;
+            }
+
+            set
+            {
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.SetMaximumDownloadTime(value);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+            }
+        }
+
+        /// <summary>
+        ///   Gets a value indicating whether the owner is elevated
+        /// </summary>
+        /// <value>
+        ///   <see langword = "true" /> if the owner is elevated; otherwise, <see langword = "false" />.
+        /// </value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public bool OwnerElevationState
+        {
+            get
+            {
+                var elevated = false;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetOwnerElevationState(out elevated);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return elevated;
+            }
+        }
+
+        /// <summary>
+        ///   Gets the owner integrity level.
+        /// </summary>
+        /// <value>The owner integrity level.</value>
+        /// <exception cref = "NotSupportedException">
+        /// </exception>
+        public ulong OwnerIntegrityLevel
+        {
+            get
+            {
+                ulong integrityLevel = 0;
+                try
+                {
+                    if (this.job4 != null)
+                    {
+                        // only supported from IBackgroundCopyJob4 and above
+                        this.job4.GetOwnerIntegrityLevel(out integrityLevel);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException("IBackgroundCopyJob4");
+                    }
+                }
+                catch (COMException exception)
+                {
+                    this.manager.PublishException(this, exception);
+                }
+
+                return integrityLevel;
+            }
         }
 
         #endregion

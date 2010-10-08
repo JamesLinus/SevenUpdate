@@ -1,10 +1,3 @@
-// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
-// ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
@@ -45,12 +38,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.
         /// </summary>
-        /// <parameter name="name">
+        /// <param name="name">
         /// The name for this button.
-        /// </parameter>
-        /// <parameter name="text">
+        /// </param>
+        /// <param name="text">
         /// The label for this button.
-        /// </parameter>
+        /// </param>
         protected TaskDialogButtonBase(string name, string text)
             : base(name)
         {

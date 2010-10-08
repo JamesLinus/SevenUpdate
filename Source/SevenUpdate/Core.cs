@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SevenUpdate
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Core.cs"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {
@@ -14,6 +17,7 @@ namespace SevenUpdate
     using System.Linq;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Internal;
     using System.Windows.Navigation;
     using System.Windows.Shell;
 
@@ -84,7 +88,7 @@ namespace SevenUpdate
         {
             get
             {
-                return System.Windows.Internal.NativeMethods.IsUserAnAdmin() || isAdmin;
+                return NativeMethods.IsUserAdmin || isAdmin;
             }
 
             set
@@ -146,7 +150,7 @@ namespace SevenUpdate
         {
             get
             {
-                return Utilities.Deserialize<Collection<Sua>>(Utilities.AppsFile);
+                return Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile);
             }
         }
 

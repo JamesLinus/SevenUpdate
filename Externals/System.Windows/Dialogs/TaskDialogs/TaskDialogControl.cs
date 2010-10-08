@@ -1,10 +1,3 @@
-// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
-// ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
@@ -24,9 +17,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogControl"/> class.
         /// </summary>
-        /// <parameter name="name">
+        /// <param name="name">
         /// The name for this control.
-        /// </parameter>
+        /// </param>
         protected TaskDialogControl(string name)
             : base(name)
         {

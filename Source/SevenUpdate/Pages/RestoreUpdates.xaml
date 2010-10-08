@@ -9,7 +9,7 @@
 		</Grid.RowDefinitions>
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" VerticalAlignment="Top" Margin="24,12,0,5" />
-		<ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0" MouseDoubleClick="ListView_MouseDoubleClick" ListViewSorter.CustomSorter="SevenUpdate.SuhSorter,SevenUpdate" TabIndex="0">
+		<ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="Thumb_DragDelta" Foreground="Black" BorderThickness="0" MouseDoubleClick="ListView_MouseDoubleClick" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuhSorter,SevenUpdate" TabIndex="0">
 			<ListView.Resources>
 				<ContextMenu x:Key="ItemContextMenu">
 					<MenuItem Header="{LocText SevenUpdate:Resources:ViewDetails}" Click="MenuItem_MouseClick" />

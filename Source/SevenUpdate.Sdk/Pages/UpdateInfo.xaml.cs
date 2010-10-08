@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Sdk
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="UpdateInfo.xaml.cs"
+//            project="SevenUpdate.Sdk"
+//            assembly="SevenUpdate.Sdk"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {

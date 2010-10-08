@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SevenUpdate
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Reference.cs"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.WCF
 {
@@ -74,8 +77,8 @@ namespace SevenUpdate.WCF
 
         /// <summary>
         /// </summary>
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/UnSubscribe")]
-        void UnSubscribe();
+        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/Unsubscribe")]
+        void Unsubscribe();
 
         #endregion
     }
@@ -288,9 +291,9 @@ namespace SevenUpdate.WCF
 
         /// <summary>
         /// </summary>
-        public void UnSubscribe()
+        public void Unsubscribe()
         {
-            base.Channel.UnSubscribe();
+            base.Channel.Unsubscribe();
         }
 
         #endregion

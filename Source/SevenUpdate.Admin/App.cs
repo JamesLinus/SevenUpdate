@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SevenUpdate.Admin
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="App.cs"
+//            project="SevenUpdate.Admin"
+//            assembly="SevenUpdate.Admin"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.Admin
 {
@@ -130,7 +133,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.
+        /// The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.
         /// </param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
@@ -160,7 +163,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.
         /// </param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -200,7 +203,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.
+        /// The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.
         /// </param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
@@ -260,7 +263,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.InstallCompletedEventArgs"/> instance containing the event data.
+        /// The <see cref="InstallCompletedEventArgs"/> instance containing the event data.
         /// </param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
@@ -281,7 +284,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.InstallProgressChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.
         /// </param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
@@ -387,7 +390,7 @@ namespace SevenUpdate.Admin
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
                         Search.ErrorOccurred += ErrorOccurred;
-                        Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.AppsFile));
+                        Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile));
                     }
                     else
                     {
@@ -491,7 +494,7 @@ namespace SevenUpdate.Admin
         /// The source of the event.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.SearchCompletedEventArgs"/> instance containing the event data.
+        /// The <see cref="SearchCompletedEventArgs"/> instance containing the event data.
         /// </param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {

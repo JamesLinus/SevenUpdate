@@ -1,17 +1,17 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:converters="clr-namespace:SevenUpdate.Converters">
-	<converters:FileSizeConverter x:Key="fileSizeConverter" />
-	<converters:LocaleStringToStringConverter x:Key="localeStringToString" />
-	<converters:Is64BitToStringConverter x:Key="is64BitToString" />
-	<converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
-	<converters:ImportanceToString x:Key="importanceToString" />
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Converters="clr-namespace:SevenUpdate.Converters">
+	<Converters:FileSizeConverter x:Key="fileSizeConverter" />
+	<Converters:LocaleStringToStringConverter x:Key="localeStringToString" />
+	<Converters:Is64BitToStringConverter x:Key="is64BitToString" />
+	<Converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
+	<Converters:ImportanceToStringConverter x:Key="importanceToString" />
 	<StringToVisibilityConverter x:Key="stringToVisibility" />
-	<StringToBoolConverter x:Key="stringToBool" />
+	<StringToBooleanConverter x:Key="stringToBool" />
 	<IntToVisibilityConverter x:Key="intToVisibility" />
-	<IntToBoolConverter x:Key="intToBool" />
+	<IntToBooleanConverter x:Key="intToBool" />
 	<IndexToVisibilityConverter x:Key="indexToVisibility" />
-	<converters:DateConverter x:Key="dateConverter" />
-	<InverseBoolConverter x:Key="inverseBool" />
-	<converters:UpdateStatusToString x:Key="statusToString" />
+	<Converters:DateConverter x:Key="dateConverter" />
+	<InverseBooleanConverter x:Key="inverseBool" />
+	<Converters:UpdateStatusToStringConverter x:Key="statusToString" />
 
 	<Style TargetType="{x:Type GridViewColumnHeader}">
 		<Setter Property="HorizontalContentAlignment" Value="Left" />

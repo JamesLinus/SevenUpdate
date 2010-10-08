@@ -33,7 +33,7 @@
 				</LinearGradientBrush>
 			</Rectangle.Fill>
 		</Rectangle>
-		<ListView ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" AlternationCount="2" Grid.Row="2" Grid.RowSpan="8" Name="lvUpdates" BorderThickness="0" ListViewSorter.CustomSorter="SevenUpdate.UpdateSorter,SevenUpdate" TabIndex="0">
+		<ListView ItemContainerStyle="{StaticResource alternatingListViewItemStyle}" AlternationCount="2" Grid.Row="2" Grid.RowSpan="8" Name="lvUpdates" BorderThickness="0" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.UpdateSorter,SevenUpdate" TabIndex="0">
 			<ListView.ContextMenu>
 				<ContextMenu>
 					<MenuItem Click="MenuItem_MouseClick" Name="miUpdate">

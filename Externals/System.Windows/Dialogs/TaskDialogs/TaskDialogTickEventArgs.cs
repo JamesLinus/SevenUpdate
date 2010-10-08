@@ -1,10 +1,3 @@
-// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
-// ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
     /// <summary>
@@ -17,9 +10,9 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogTickEventArgs"/> class.
         /// </summary>
-        /// <parameter name="totalTicks">
+        /// <param name="totalTicks">
         /// The total number of ticks since the control was activated.
-        /// </parameter>
+        /// </param>
         public TaskDialogTickEventArgs(int totalTicks)
         {
             this.Ticks = totalTicks;

@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Base
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Utilities.cs"
+//            project="SevenUpdate.Base"
+//            assembly="SevenUpdate.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {
@@ -45,7 +48,7 @@ namespace SevenUpdate
         /// <summary>
         ///   The location of the list of applications Seven Update can update
         /// </summary>
-        public static readonly string AppsFile = AllUserStore + @"Apps.sul";
+        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
 
         /// <summary>
         ///   The location of the application settings file
@@ -70,21 +73,16 @@ namespace SevenUpdate
         /// <summary>
         ///   ALLUSERS%\Start Menu\Programs
         /// </summary>
-        internal const int CommonPrograms = 0x0017;
+        private const int CommonPrograms = 0x0017;
 
         /// <summary>
         ///   %ALLUSERS%\Start Menu
         /// </summary>
-        internal const int CommonStartMenu = 0x0016;
+        private const int CommonStartMenu = 0x0016;
 
         #endregion
 
         #region Events
-
-        /// <summary>
-        ///   Occurs when a process has exited
-        /// </summary>
-        public static event EventHandler<ProcessEventArgs> ProcessExited;
 
         /// <summary>
         ///   Occurs when an error occurs while serializing or deserializing a object/file
@@ -118,26 +116,6 @@ namespace SevenUpdate
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Determines if a string contains another string
-        /// </summary>
-        /// <param name="original">
-        /// The original string to check
-        /// </param>
-        /// <param name="value">
-        /// The value to check the string for
-        /// </param>
-        /// <param name="comparisonType">
-        /// Type of the comparison.
-        /// </param>
-        /// <returns>
-        /// <see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.
-        /// </returns>
-        public static bool Contains(this string original, string value, StringComparison comparisonType)
-        {
-            return original.IndexOf(value, comparisonType) >= 0;
-        }
 
         /// <summary>
         /// Converts bytes into the proper increments depending on size
@@ -634,73 +612,6 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Replaces a string within a string
-        /// </summary>
-        /// <param name="sb">
-        /// The <see cref="StringBuilder"/> object
-        /// </param>
-        /// <param name="find">
-        /// a string to find in the complete string
-        /// </param>
-        /// <param name="replaceValue">
-        /// a string to use to replace the find string in the complete string
-        /// </param>
-        /// <param name="ignoreCase">
-        /// if set to <see langword="true"/> case is ignored
-        /// </param>
-        /// <returns>
-        /// The <see cref="StringBuilder"/> with replacements
-        /// </returns>
-        public static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
-        {
-            if (sb == null || find == null)
-            {
-                return sb;
-            }
-
-            var str = sb.ToString();
-
-            // Get input string length
-            var expressionLength = str.Length;
-
-            var findLength = find.Length;
-
-            // Check inputs
-            if (0 == expressionLength || 0 == findLength || findLength > expressionLength)
-            {
-                return sb;
-            }
-
-            var sb2 = new StringBuilder(expressionLength);
-
-            var pos = 0;
-
-            while (pos + findLength <= expressionLength)
-            {
-                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
-                {
-                    // Add the replaced string
-                    sb2.Append(replaceValue);
-
-                    pos += findLength;
-
-                    continue;
-                }
-
-                // Advance one character
-                sb2.Append(str, pos++, 1);
-            }
-
-            // Append remaining characters
-            sb2.Append(str, pos, expressionLength - pos);
-
-            sb = sb2;
-
-            // Return string
-            return sb;
-        }
-
-        /// <summary>
         /// Reports the error that occurred to a log file
         /// </summary>
         /// <param name="message">
@@ -822,7 +733,7 @@ namespace SevenUpdate
                 process.Start();
                 if (wait)
                 {
-                    WaitForExit(process);
+                    process.WaitForExit();
                 }
 
                 return true;
@@ -842,6 +753,26 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Determines if a string contains another string
+        /// </summary>
+        /// <param name="original">
+        /// The original string to check
+        /// </param>
+        /// <param name="value">
+        /// The value to check the string for
+        /// </param>
+        /// <param name="comparisonType">
+        /// Type of the comparison.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.
+        /// </returns>
+        private static bool Contains(this string original, string value, StringComparison comparisonType)
+        {
+            return original.IndexOf(value, comparisonType) >= 0;
+        }
 
         /// <summary>
         /// DeSerializes an object
@@ -915,6 +846,73 @@ namespace SevenUpdate
         }
 
         /// <summary>
+        /// Replaces a string within a string
+        /// </summary>
+        /// <param name="sb">
+        /// The <see cref="StringBuilder"/> object
+        /// </param>
+        /// <param name="find">
+        /// a string to find in the complete string
+        /// </param>
+        /// <param name="replaceValue">
+        /// a string to use to replace the find string in the complete string
+        /// </param>
+        /// <param name="ignoreCase">
+        /// if set to <see langword="true"/> case is ignored
+        /// </param>
+        /// <returns>
+        /// The <see cref="StringBuilder"/> with replacements
+        /// </returns>
+        private static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
+        {
+            if (sb == null || find == null)
+            {
+                return sb;
+            }
+
+            var str = sb.ToString();
+
+            // Get input string length
+            var expressionLength = str.Length;
+
+            var findLength = find.Length;
+
+            // Check inputs
+            if (0 == expressionLength || 0 == findLength || findLength > expressionLength)
+            {
+                return sb;
+            }
+
+            var sb2 = new StringBuilder(expressionLength);
+
+            var pos = 0;
+
+            while (pos + findLength <= expressionLength)
+            {
+                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
+                {
+                    // Add the replaced string
+                    sb2.Append(replaceValue);
+
+                    pos += findLength;
+
+                    continue;
+                }
+
+                // Advance one character
+                sb2.Append(str, pos++, 1);
+            }
+
+            // Append remaining characters
+            sb2.Append(str, pos, expressionLength - pos);
+
+            sb = sb2;
+
+            // Return string
+            return sb;
+        }
+
+        /// <summary>
         /// Gets the system folder(s) of a path
         /// </summary>
         /// <param name="owner">
@@ -932,7 +930,7 @@ namespace SevenUpdate
         /// <returns>
         /// a string of the path with expanded system variables
         /// </returns>
-        [DllImport("shell32.dll")] // ReSharper disable InconsistentNaming
+        [DllImport(@"shell32.dll")] // ReSharper disable InconsistentNaming
         private static extern bool SHGetSpecialFolderPath(IntPtr owner, [Out] StringBuilder path, int folder, bool create);
 
         /// <summary>
@@ -976,35 +974,6 @@ namespace SevenUpdate
                     SerializationError(null, new SerializationErrorEventArgs(e, fileName));
                 }
             }
-        }
-
-        /// <summary>
-        /// Waits for the process to exit then triggers an event
-        /// </summary>
-        /// <param name="process">
-        /// The process.
-        /// </param>
-        private static void WaitForExit(Process process)
-        {
-            Task.Factory.StartNew(
-                () =>
-                    {
-                        try
-                        {
-                            process.WaitForExit();
-                            if (ProcessExited != null)
-                            {
-                                ProcessExited(null, new ProcessEventArgs(process));
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            if (ProcessExited != null)
-                            {
-                                ProcessExited(null, new ProcessEventArgs(null));
-                            }
-                        }
-                    });
         }
 
         #endregion

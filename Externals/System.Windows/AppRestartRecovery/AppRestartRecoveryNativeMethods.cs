@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="AppRestartRecoveryNativeMethods.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
@@ -27,8 +30,8 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="parameter">
-        /// </parameter>
+        /// <param name="parameter">
+        /// </param>
         /// <returns>
         /// </returns>
         private static uint InternalRecoveryHandler(IntPtr parameter)
@@ -46,15 +49,15 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="success">
-        /// </parameter>
+        /// <param name="success">
+        /// </param>
         [DllImport("kernel32.dll")]
         internal static extern void ApplicationRecoveryFinished([MarshalAs(UnmanagedType.Bool)] bool success);
 
         /// <summary>
         /// </summary>
-        /// <parameter name="canceled">
-        /// </parameter>
+        /// <param name="canceled">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
@@ -63,16 +66,16 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="processHandle">
-        /// </parameter>
-        /// <parameter name="recoveryCallback">
-        /// </parameter>
-        /// <parameter name="state">
-        /// </parameter>
-        /// <parameter name="pingInterval">
-        /// </parameter>
-        /// <parameter name="flags">
-        /// </parameter>
+        /// <param name="processHandle">
+        /// </param>
+        /// <param name="recoveryCallback">
+        /// </param>
+        /// <param name="state">
+        /// </param>
+        /// <param name="pingInterval">
+        /// </param>
+        /// <param name="flags">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
@@ -82,14 +85,14 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="callback">
-        /// </parameter>
-        /// <parameter name="parameter">
-        /// </parameter>
-        /// <parameter name="pingInterval">
-        /// </parameter>
-        /// <parameter name="flags">
-        /// </parameter>
+        /// <param name="callback">
+        /// </param>
+        /// <param name="parameter">
+        /// </param>
+        /// <param name="pingInterval">
+        /// </param>
+        /// <param name="flags">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
@@ -100,10 +103,10 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="commandLineArgs">
-        /// </parameter>
-        /// <parameter name="flags">
-        /// </parameter>
+        /// <param name="commandLineArgs">
+        /// </param>
+        /// <param name="flags">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport("kernel32.dll")]
@@ -112,14 +115,14 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="process">
-        /// </parameter>
-        /// <parameter name="commandLine">
-        /// </parameter>
-        /// <parameter name="size">
-        /// </parameter>
-        /// <parameter name="flags">
-        /// </parameter>
+        /// <param name="process">
+        /// </param>
+        /// <param name="commandLine">
+        /// </param>
+        /// <param name="size">
+        /// </param>
+        /// <param name="flags">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport("KERNEL32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -144,8 +147,6 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>
         /// </summary>
-        /// <parameter name="state">
-        /// </parameter>
-        internal delegate UInt32 InternalRecoveryCallback(IntPtr state);
+        internal delegate uint InternalRecoveryCallback(IntPtr state);
     }
 }

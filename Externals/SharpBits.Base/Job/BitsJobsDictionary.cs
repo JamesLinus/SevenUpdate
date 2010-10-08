@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SharpBits.Base
-// Author           : xidar solutions
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) xidar solutions. All rights reserved.
+// <copyright file="BitsJobsDictionary.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SharpBits.Base.Job
 {

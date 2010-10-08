@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// <copyright file="TaskDialogNativeMethods.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
@@ -421,14 +424,14 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         /// <summary>
         /// </summary>
-        /// <parameter name="taskConfig">
-        /// </parameter>
-        /// <parameter name="button">
-        /// </parameter>
-        /// <parameter name="radioButton">
-        /// </parameter>
-        /// <parameter name="verificationFlagChecked">
-        /// </parameter>
+        /// <param name="taskConfig">
+        /// </param>
+        /// <param name="button">
+        /// </param>
+        /// <param name="radioButton">
+        /// </param>
+        /// <param name="verificationFlagChecked">
+        /// </param>
         /// <returns>
         /// </returns>
         [DllImport(@"comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -595,9 +598,9 @@ namespace System.Windows.Dialogs.TaskDialogs
             /// <summary>
             /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
             /// </summary>
-            /// <parameter name="disposing">
+            /// <param name="disposing">
             /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-            /// </parameter>
+            /// </param>
             protected virtual void Dispose(bool disposing)
             {
                 lock (this)
@@ -628,8 +631,8 @@ namespace System.Windows.Dialogs.TaskDialogs
         {
             /// <summary>
             /// </summary>
-            /// <parameter name="i">
-            /// </parameter>
+            /// <param name="i">
+            /// </param>
             internal TaskDialogConfigIconUnion(int i)
             {
                 this.Spacer = IntPtr.Zero;
@@ -662,12 +665,12 @@ namespace System.Windows.Dialogs.TaskDialogs
             /// <summary>
             /// Initializes a new instance of the <see cref="TaskDialogButtonData"/> struct.
             /// </summary>
-            /// <parameter name="buttonID">
+            /// <param name="buttonID">
             /// The button ID.
-            /// </parameter>
-            /// <parameter name="buttonText">
+            /// </param>
+            /// <param name="buttonText">
             /// The button text.
-            /// </parameter>
+            /// </param>
             public TaskDialogButtonData(int buttonID, string buttonText)
             {
                 this.ButtonID = buttonID;
@@ -688,29 +691,11 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         /// <summary>
         /// </summary>
-        /// <parameter name="pTaskConfig">
-        /// </parameter>
-        /// <parameter name="pnButton">
-        /// </parameter>
-        /// <parameter name="pnRadioButton">
-        /// </parameter>
-        /// <parameter name="pVerificationFlagChecked">
-        /// </parameter>
         internal delegate Result TdiDelegate(
             [In] TaskDialogConfig pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton, [Out] out bool pVerificationFlagChecked);
 
         /// <summary>
         /// </summary>
-        /// <parameter name="handle">
-        /// </parameter>
-        /// <parameter name="msg">
-        /// </parameter>
-        /// <parameter name="parameter">
-        /// </parameter>
-        /// <parameter name="parameterLength">
-        /// </parameter>
-        /// <parameter name="data">
-        /// </parameter>
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
     }
 }

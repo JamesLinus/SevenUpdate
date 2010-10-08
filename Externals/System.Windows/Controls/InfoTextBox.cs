@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="InfoTextBox.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -157,9 +160,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Invoked whenever an unhandled System.Windows.DragDrop.DragEnter attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
-        /// <parameter name="e">
+        /// <param name="e">
         /// Provides data about the event.
-        /// </parameter>
+        /// </param>
         protected override void OnDragEnter(DragEventArgs e)
         {
             this.myAdornerLayer.RemoveAdorners<AdornerLabel>(this);
@@ -170,9 +173,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Invoked whenever an unhandled System.Windows.DragDrop.DragLeave attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
-        /// <parameter name="e">
+        /// <param name="e">
         /// Provides data about the event.
-        /// </parameter>
+        /// </param>
         protected override void OnDragLeave(DragEventArgs e)
         {
             this.UpdateAdorner(this);
@@ -183,9 +186,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Is called when content in this editing control changes.
         /// </summary>
-        /// <parameter name="e">
+        /// <param name="e">
         /// The arguments that are associated with the <see cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged"/> event.
-        /// </parameter>
+        /// </param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             this.HasText = !(this.Text != null && String.IsNullOrEmpty(this.Text));
@@ -196,12 +199,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Determines whether the <see cref="InfoTextBox"/> is Visible
         /// </summary>
-        /// <parameter name="sender">
+        /// <param name="sender">
         /// The sender.
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.EventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private new static void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
@@ -216,12 +219,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Updates the adorner when the label changes
         /// </summary>
-        /// <parameter name="d">
+        /// <param name="d">
         /// The dependency object
-        /// </parameter>
-        /// <parameter name="e">
+        /// </param>
+        /// <param name="e">
         /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </parameter>
+        /// </param>
         private static void LabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var infoTextBox = d as InfoTextBox;
@@ -238,12 +241,12 @@ namespace System.Windows.Controls
         /// <summary>
         /// Updates the adorner.
         /// </summary>
-        /// <parameter name="elem">
+        /// <param name="elem">
         /// The element
-        /// </parameter>
-        /// <parameter name="hide">
+        /// </param>
+        /// <param name="hide">
         /// if set to <see langword="true"/> hide the adorner
-        /// </parameter>
+        /// </param>
         private void UpdateAdorner(FrameworkElement elem, bool hide = false)
         {
             if (elem == null || this.myAdornerLayer == null)

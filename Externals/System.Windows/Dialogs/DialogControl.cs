@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Microsoft Corporation
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Microsoft Corporation. All rights reserved.
+// <copyright file="DialogControl.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
@@ -56,9 +59,9 @@ namespace System.Windows.Dialogs
         /// <summary>
         /// Initializes a new instance of the <see cref="DialogControl"/> class.
         /// </summary>
-        /// <parameter name="name">
+        /// <param name="name">
         /// The name for this dialog.
-        /// </parameter>
+        /// </param>
         protected DialogControl(string name)
             : this()
         {
@@ -138,9 +141,9 @@ namespace System.Windows.Dialogs
         /// <summary>
         /// Compares two objects to determine whether they are equal
         /// </summary>
-        /// <parameter name="obj">
+        /// <param name="obj">
         /// The object to compare against.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// A <see cref="System.Boolean"/> value.
         /// </returns>
@@ -179,9 +182,9 @@ namespace System.Windows.Dialogs
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
         /// </summary>
-        /// <parameter name="propName">
+        /// <param name="propName">
         /// The name of the property that is changing.
-        /// </parameter>
+        /// </param>
         protected void ApplyPropertyChange(string propName)
         {
             Debug.Assert(!String.IsNullOrEmpty(propName), "Property changed was not specified");
@@ -199,9 +202,9 @@ namespace System.Windows.Dialogs
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
         /// </summary>
-        /// <parameter name="propName">
+        /// <param name="propName">
         /// The name of the property that is changing
-        /// </parameter>
+        /// </param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!String.IsNullOrEmpty(propName), "Property to change was not specified");

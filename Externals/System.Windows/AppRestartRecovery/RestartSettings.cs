@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="RestartSettings.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
@@ -27,15 +30,15 @@ namespace System.Windows.ApplicationServices
         /// <summary>
         /// Initializes a new instance of the <see cref="RestartSettings"/> class.
         /// </summary>
-        /// <parameter name="commandLine">
+        /// <param name="commandLine">
         /// The command line arguments
         ///   used to restart the application.
-        /// </parameter>
-        /// <parameter name="restrict">
+        /// </param>
+        /// <param name="restrict">
         /// A bitwise combination of the <see cref="RestartRestrictions"/>
         ///   values that specify
         ///   when the application should not be restarted.
-        /// </parameter>
+        /// </param>
         protected RestartSettings(string commandLine, RestartRestrictions restrict)
         {
             this.Command = commandLine;

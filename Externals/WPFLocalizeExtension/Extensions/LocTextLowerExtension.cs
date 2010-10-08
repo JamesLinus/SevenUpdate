@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : WPFLocalizeExtension
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="LocTextLowerExtension.cs"
+//            project="WPFLocalizeExtension"
+//            assembly="WPFLocalizeExtension"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {

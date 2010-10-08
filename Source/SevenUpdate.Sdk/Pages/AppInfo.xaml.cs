@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Sdk
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="AppInfo.xaml.cs"
+//            project="SevenUpdate.Sdk"
+//            assembly="SevenUpdate.Sdk"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
@@ -18,7 +21,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
-    using SevenUpdate.Sdk.Helpers;
+    using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;
 
     using Application = System.Windows.Application;

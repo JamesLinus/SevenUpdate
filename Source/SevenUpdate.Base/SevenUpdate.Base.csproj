@@ -94,7 +94,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\Seven Software.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -109,17 +109,30 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
+    <Compile Include="DownloadCompletedEventArgs.cs" />
+    <Compile Include="DownloadProgressChangedEventArgs.cs" />
+    <Compile Include="ErrorOccurredEventArgs.cs" />
+    <Compile Include="InstallCompletedEventArgs.cs" />
+    <Compile Include="InstallProgressChangedEventArgs.cs" />
+    <Compile Include="LocaleString.cs" />
+    <Compile Include="RegistryItem.cs" />
+    <Compile Include="SearchCompletedEventArgs.cs" />
+    <Compile Include="SerializationErrorEventArgs.cs" />
+    <Compile Include="Shortcut.cs" />
+    <Compile Include="Sua.cs" />
+    <Compile Include="Suh.cs" />
+    <Compile Include="Sui.cs" />
+    <Compile Include="Update.cs" />
+    <Compile Include="UpdateFile.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Download.cs" />
-    <Compile Include="EventArgs.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="Install.cs" />
     <Compile Include="DispatcherObjectDelegates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Search.cs" />
-    <Compile Include="SerializationClasses.cs" />
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\SevenUpdate.Base.rc" />
-    <None Include="Properties\Seven Software.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

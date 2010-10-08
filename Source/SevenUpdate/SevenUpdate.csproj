@@ -74,7 +74,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>Properties\Seven Software.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -86,18 +86,28 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Admin.cs" />
+    <Compile Include="ServiceCallBack.cs" />
+    <Compile Include="AdminClient.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DateConverter.cs" />
+    <Compile Include="Converters\ImportanceToStringConverter.cs" />
+    <Compile Include="Converters\Is64BitToStringConverter.cs" />
+    <Compile Include="Converters\LocaleStringToStringConverter.cs" />
+    <Compile Include="Converters\UpdateStatusToBoolConverter.cs" />
+    <Compile Include="Converters\UpdateStatusToStringConverter.cs" />
     <Compile Include="Core.cs" />
-    <Compile Include="Helpers\Converters.cs" />
-    <Compile Include="Helpers\CustomComparers.cs" />
+    <Compile Include="Converters\FileSizeConverter.cs" />
+    <Compile Include="CustomComparer\UpdateSorter.cs" />
+    <Compile Include="CustomComparer\ImportanceSorter.cs" />
     <Compile Include="Pages\InfoBar.xaml.cs">
       <DependentUpon>InfoBar.xaml</DependentUpon>
     </Compile>
@@ -112,6 +122,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="CustomComparer\SuaSorter.cs" />
+    <Compile Include="CustomComparer\SuhSorter.cs" />
     <Compile Include="Windows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -220,7 +232,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\WCF\Service.wsdl" />
-    <None Include="Properties\Seven Software.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -259,7 +270,7 @@
     <Resource Include="Images\wicon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\Windows.Shell\System.Windows.csproj">
+    <ProjectReference Include="..\..\Externals\System.Windows\System.Windows.csproj">
       <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
       <Name>System.Windows</Name>
     </ProjectReference>
@@ -294,6 +305,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

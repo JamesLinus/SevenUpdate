@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Base
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="Install.cs"
+//            project="SevenUpdate.Base"
+//            assembly="SevenUpdate.Base"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {
@@ -75,29 +78,29 @@ namespace SevenUpdate
         /// <summary>
         /// Installs updates
         /// </summary>
-        /// <param name="apps">
+        /// <param name="applications">
         /// The collection of applications to install updates
         /// </param>
-        public static void InstallUpdates(Collection<Sui> apps)
+        public static void InstallUpdates(Collection<Sui> applications)
         {
-            if (apps == null)
+            if (applications == null)
             {
                 return;
             }
 
-            if (apps.Count < 1)
+            if (applications.Count < 1)
             {
                 return;
             }
 
-            updateCount = apps.Sum(t => t.Updates.Count);
+            updateCount = applications.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
 
             ReportProgress(0);
 
-            for (var x = 0; x < apps.Count; x++)
+            for (var x = 0; x < applications.Count; x++)
             {
-                for (var y = 0; y < apps[x].Updates.Count; y++)
+                for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
                     errorOccurred = false;
                     if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
@@ -106,8 +109,8 @@ namespace SevenUpdate
                         return;
                     }
 
-                    currentUpdateName = Utilities.GetLocaleString(apps[x].Updates[y].Name);
-                    if (apps[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, apps[x].AppInfo.Is64Bit))
+                    currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Is64Bit))
                     {
                         try
                         {
@@ -120,32 +123,32 @@ namespace SevenUpdate
 
                     ReportProgress(5);
 
-                    SetRegistryItems(apps[x].Updates[y].RegistryItems, apps[x].AppInfo.Is64Bit);
+                    SetRegistryItems(applications[x].Updates[y].RegistryItems, applications[x].AppInfo.Is64Bit);
 
                     ReportProgress(25);
 
-                    UpdateFiles(apps[x].Updates[y].Files, Utilities.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(applications[x].Updates[y].Files, Utilities.AllUserStore + @"downloads\" + currentUpdateName + @"\");
 
                     ReportProgress(75);
 
-                    SetShortcuts(apps[x].Updates[y].Shortcuts, apps[x].AppInfo);
+                    SetShortcuts(applications[x].Updates[y].Shortcuts, applications[x].AppInfo);
 
                     ReportProgress(95);
 
                     if (errorOccurred)
                     {
                         failedUpdates++;
-                        AddHistory(apps[x], apps[x].Updates[y]);
+                        AddHistory(applications[x], applications[x].Updates[y]);
                     }
                     else
                     {
                         completedUpdates++;
-                        AddHistory(apps[x], apps[x].Updates[y]);
+                        AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (apps[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Utilities.RebootNeeded)
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Utilities.RebootNeeded)
                     {
-                        foreach (var t in apps[x].Updates[y].Files)
+                        foreach (var t in applications[x].Updates[y].Files)
                         {
                             switch (t.Action)
                             {
@@ -267,7 +270,7 @@ namespace SevenUpdate
         /// <returns>
         /// <see langword="true"/> if the operation was successful
         /// </returns>
-        [DllImport("kernel32.dll")]
+        [DllImport(@"kernel32.dll")]
         private static extern bool MoveFileEX(string sourceFileName, string newFileName, int flags);
 
         /// <summary>

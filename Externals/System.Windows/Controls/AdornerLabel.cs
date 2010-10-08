@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="AdornerLabel.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Controls
 {
@@ -29,15 +32,15 @@ namespace System.Windows.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="AdornerLabel"/> class.
         /// </summary>
-        /// <parameter name="adornedElement">
+        /// <param name="adornedElement">
         /// The adorned element.
-        /// </parameter>
-        /// <parameter name="label">
+        /// </param>
+        /// <param name="label">
         /// The label.
-        /// </parameter>
-        /// <parameter name="labelStyle">
+        /// </param>
+        /// <param name="labelStyle">
         /// The label style.
-        /// </parameter>
+        /// </param>
         public AdornerLabel(UIElement adornedElement, string label, Style labelStyle)
             : base(adornedElement)
         {
@@ -68,9 +71,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// When overridden in a derived class, positions child elements and determines a size for a <see cref="T:System.Windows.FrameworkElement"/> derived class.
         /// </summary>
-        /// <parameter name="finalSize">
+        /// <param name="finalSize">
         /// The final area within the parent that this element should use to arrange itself and its children.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The actual size used.
         /// </returns>
@@ -83,9 +86,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Overrides <see cref="M:System.Windows.Media.Visual.GetVisualChild(System.Int32)"/>, and returns a child at the specified index from a collection of child elements.
         /// </summary>
-        /// <parameter name="index">
+        /// <param name="index">
         /// The zero-based index of the requested child element in the collection.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// The requested child element. This should not return <see langword="null"/>; if the provided index is out of range, an exception is thrown.
         /// </returns>
@@ -97,9 +100,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Implements any custom measuring behavior for the adorner.
         /// </summary>
-        /// <parameter name="constraint">
+        /// <param name="constraint">
         /// A size to constrain the adorner to.
-        /// </parameter>
+        /// </param>
         /// <returns>
         /// A <see cref="T:System.Windows.Size"/> object representing the amount of layout space needed by the adorner.
         /// </returns>

@@ -1,7 +1,7 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 
 
-<Page x:Class="SevenUpdate.Sdk.Pages.AppInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.Helpers" mc:Ignorable="d" MinWidth="850" MinHeight="512" d:DesignHeight="515" d:DesignWidth="1039" KeepAlive="True" Loaded="LoadAppInfo">
+<Page x:Class="SevenUpdate.Sdk.Pages.AppInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Helpers="clr-namespace:SevenUpdate.Sdk.ValidationRules" xmlns:ValidationRules="clr-namespace:System.Windows.ValidationRules;assembly=System.Windows" mc:Ignorable="d" MinWidth="850" MinHeight="512" d:DesignHeight="515" d:DesignWidth="1039" KeepAlive="True" Loaded="LoadAppInfo">
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
@@ -99,7 +99,7 @@
 			<TextBox.Text>
 				<Binding Path="ValueName" UpdateSourceTrigger="PropertyChanged">
 					<Binding.ValidationRules>
-						<RequiredInputRule />
+						<ValidationRules:RequiredInputRule />
 					</Binding.ValidationRules>
 				</Binding>
 			</TextBox.Text>
@@ -145,7 +145,7 @@
 						<InfoTextBox.Text>
 							<Binding Path="AppUrl" UpdateSourceTrigger="PropertyChanged">
 								<Binding.ValidationRules>
-									<UrlInputRule IsRequired="True" />
+									<ValidationRules:UrlInputRule IsRequired="True" />
 								</Binding.ValidationRules>
 							</Binding>
 						</InfoTextBox.Text>
@@ -154,7 +154,7 @@
 					<InfoTextBox Note="http://sevenupdate.com/support" Name="tbxHelpUrl" TabIndex="9" Grid.Row="5" Grid.Column="1" Margin="0,0,40,10">
 						<Binding Path="HelpUrl" UpdateSourceTrigger="PropertyChanged">
 							<Binding.ValidationRules>
-								<UrlInputRule IsRequired="True" />
+								<ValidationRules:UrlInputRule IsRequired="True" />
 							</Binding.ValidationRules>
 						</Binding>
 					</InfoTextBox>

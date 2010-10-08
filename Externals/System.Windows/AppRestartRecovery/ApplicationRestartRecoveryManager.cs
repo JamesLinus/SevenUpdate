@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : System.Windows
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="ApplicationRestartRecoveryManager.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
@@ -29,10 +32,10 @@ namespace System.Windows.ApplicationServices
         ///   Windows Error Reporting will terminate the application
         ///   after this method is invoked.
         /// </remarks>
-        /// <parameter name="success">
+        /// <param name="success">
         /// <see langword="true"/> to indicate the the program was able to complete its recovery
         ///   work before terminating; otherwise <see langword="false"/>.
-        /// </parameter>
+        /// </param>
         public static void ApplicationRecoveryFinished(bool success)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -78,11 +81,11 @@ namespace System.Windows.ApplicationServices
         /// <summary>
         /// Registers an application for recovery by Application Restart and Recovery.
         /// </summary>
-        /// <parameter name="settings">
+        /// <param name="settings">
         /// An object that specifies
         ///   the callback method, an optional parameter to pass to the callback
         ///   method and a time interval.
-        /// </parameter>
+        /// </param>
         /// <exception cref="System.ArgumentException">
         /// The registration failed due to an invalid parameter.
         /// </exception>
@@ -124,13 +127,13 @@ namespace System.Windows.ApplicationServices
         ///   the application 
         ///   is terminated by Windows Error Reporting.
         /// </summary>
-        /// <parameter name="settings">
+        /// <param name="settings">
         /// An object that specifies
         ///   the command line arguments used to restart the 
         ///   application, and 
         ///   the conditions under which the application should not be 
         ///   restarted.
-        /// </parameter>
+        /// </param>
         /// <exception cref="System.ArgumentException">
         /// Registration failed due to an invalid parameter.
         /// </exception>

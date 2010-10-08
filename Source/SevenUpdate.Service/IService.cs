@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate.Service
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="IService.cs"
+//            project="SevenUpdate.Service"
+//            assembly="SevenUpdate.Service"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.Service
 {
@@ -11,97 +14,6 @@ namespace SevenUpdate.Service
     using System.ServiceModel;
 
     using ProtoBuf.ServiceModel;
-
-    /// <summary>
-    /// Methods for the Event Service
-    /// </summary>
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallBack))]
-    public interface IService
-    {
-        #region Public Methods
-
-        /// <summary>
-        /// Adds an application to Seven Update, so it can manage updates for it.
-        /// </summary>
-        /// <param name="app">
-        /// The application to add to Seven Update
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void AddApp(Sua app);
-
-        /// <summary>
-        /// Changes the program settings
-        /// </summary>
-        /// <param name="apps">
-        /// The applications Seven Update will check and manage updates for
-        /// </param>
-        /// <param name="options">
-        /// The Seven Update settings
-        /// </param>
-        /// <param name="autoCheck">
-        /// if set to <see langword="true"/> automatic updates will be enabled
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck);
-
-        /// <summary>
-        /// Hides a single update
-        /// </summary>
-        /// <param name="hiddenUpdate">
-        /// The update to hide
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void HideUpdate(Suh hiddenUpdate);
-
-        /// <summary>
-        /// Hides a collection of <see cref="Suh"/> to hide
-        /// </summary>
-        /// <param name="hiddenUpdates">
-        /// The collection of updates to hide
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void HideUpdates(Collection<Suh> hiddenUpdates);
-
-        /// <summary>
-        /// Gets a collection of <see cref="Sui"/>
-        /// </summary>
-        /// <param name="appUpdates">
-        /// The collection of applications and updates to install
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void InstallUpdates(Collection<Sui> appUpdates);
-
-        /// <summary>
-        /// The update to show and remove from hidden updates
-        /// </summary>
-        /// <param name="hiddenUpdate">
-        /// The hidden update to show
-        /// </param>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void ShowUpdate(Suh hiddenUpdate);
-
-        /// <summary>
-        /// Subscribes to the WCF service
-        /// </summary>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void Subscribe();
-
-        /// <summary>
-        /// Un subscribes from the wcf service
-        /// </summary>
-        [OperationContract(IsOneWay = true)]
-        [ProtoBehavior]
-        void UNSubscribe();
-
-        #endregion
-    }
 
     /// <summary>
     /// Callback methods for the WCF Service
@@ -183,6 +95,97 @@ namespace SevenUpdate.Service
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
         void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Methods for the Event Service
+    /// </summary>
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallBack))]
+    internal interface IService
+    {
+        #region Public Methods
+
+        /// <summary>
+        /// Adds an application to Seven Update, so it can manage updates for it.
+        /// </summary>
+        /// <param name="app">
+        /// The application to add to Seven Update
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void AddApp(Sua app);
+
+        /// <summary>
+        /// Changes the program settings
+        /// </summary>
+        /// <param name="apps">
+        /// The applications Seven Update will check and manage updates for
+        /// </param>
+        /// <param name="options">
+        /// The Seven Update settings
+        /// </param>
+        /// <param name="autoCheck">
+        /// if set to <see langword="true"/> automatic updates will be enabled
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck);
+
+        /// <summary>
+        /// Hides a single update
+        /// </summary>
+        /// <param name="hiddenUpdate">
+        /// The update to hide
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void HideUpdate(Suh hiddenUpdate);
+
+        /// <summary>
+        /// Hides a collection of <see cref="Suh"/> to hide
+        /// </summary>
+        /// <param name="hiddenUpdates">
+        /// The collection of updates to hide
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void HideUpdates(Collection<Suh> hiddenUpdates);
+
+        /// <summary>
+        /// Gets a collection of <see cref="Sui"/>
+        /// </summary>
+        /// <param name="appUpdates">
+        /// The collection of applications and updates to install
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void InstallUpdates(Collection<Sui> appUpdates);
+
+        /// <summary>
+        /// The update to show and remove from hidden updates
+        /// </summary>
+        /// <param name="hiddenUpdate">
+        /// The hidden update to show
+        /// </param>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void ShowUpdate(Suh hiddenUpdate);
+
+        /// <summary>
+        /// Subscribes to the WCF service
+        /// </summary>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void Subscribe();
+
+        /// <summary>
+        /// Un subscribes from the WCF service
+        /// </summary>
+        [OperationContract(IsOneWay = true)]
+        [ProtoBehavior]
+        void Unsubscribe();
 
         #endregion
     }

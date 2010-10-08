@@ -5,9 +5,9 @@
     ///   by the system when an application has registered for 
     ///   application recovery.
     /// </summary>
-    /// <parameter name="state">
+    /// <param name="state">
     /// An application-defined state object that is passed to the callback method.
-    /// </parameter>
+    /// </param>
     /// <remarks>
     /// The callback method will be invoked
     ///   prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
@@ -28,12 +28,12 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="RecoveryData"/> class.
         /// </summary>
-        /// <parameter name="callback">
+        /// <param name="callback">
         /// The callback delegate.
-        /// </parameter>
-        /// <parameter name="state">
+        /// </param>
+        /// <param name="state">
         /// The current state of the application.
-        /// </parameter>
+        /// </param>
         protected RecoveryData(RecoveryCallback callback, object state)
         {
             this.Callback = callback;

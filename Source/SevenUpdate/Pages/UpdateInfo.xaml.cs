@@ -1,9 +1,12 @@
 // ***********************************************************************
-// Assembly         : SevenUpdate
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="UpdateInfo.xaml.cs"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
@@ -115,7 +118,7 @@ namespace SevenUpdate.Pages
 
             this.lvUpdates.ItemsSource = selectedUpdates;
             var myView = (CollectionView)CollectionViewSource.GetDefaultView(this.lvUpdates.ItemsSource);
-            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceToString());
+            var groupDescription = new PropertyGroupDescription("Importance", new ImportanceToStringConverter());
             if (myView.GroupDescriptions != null)
             {
                 myView.GroupDescriptions.Add(groupDescription);

@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : SevenUpdate
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="App.xaml.cs"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace SevenUpdate
 {
@@ -63,7 +66,7 @@ namespace SevenUpdate
 
             Directory.CreateDirectory(Utilities.UserStore);
 
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Utilities.AllUserStore + "updates.sui"))
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Utilities.AllUserStore + @"updates.sui"))
             {
                 return;
             }

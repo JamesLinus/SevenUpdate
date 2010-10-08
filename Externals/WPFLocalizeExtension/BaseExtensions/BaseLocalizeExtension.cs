@@ -1,9 +1,12 @@
 ﻿// ***********************************************************************
-// Assembly         : WPFLocalizeExtension
-// Author           : Robert Baker (sevenalive)
-// Last Modified By : Robert Baker (sevenalive)
-// Last Modified On : 10-06-2010
-// Copyright        : (c) Seven Software. All rights reserved.
+// <copyright file="BaseLocalizeExtension.cs"
+//            project="WPFLocalizeExtension"
+//            assembly="WPFLocalizeExtension"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace WPFLocalizeExtension.BaseExtensions
 {
@@ -14,7 +17,6 @@ namespace WPFLocalizeExtension.BaseExtensions
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Markup;
 
