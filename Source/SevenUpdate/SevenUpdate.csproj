@@ -93,6 +93,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UpdateSelectionChangedEventArgs.xaml.cs" />
     <Compile Include="ServiceCallBack.cs" />
     <Compile Include="AdminClient.cs" />
     <Compile Include="App.xaml.cs">

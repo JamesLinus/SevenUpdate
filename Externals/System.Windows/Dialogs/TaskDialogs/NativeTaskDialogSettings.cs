@@ -1,12 +1,11 @@
 // ***********************************************************************
-// <copyright file="NativeTaskDialogSettings.cs"
+// <copyright file=NativeTaskDialogSettings.cs"
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
@@ -18,7 +17,7 @@ namespace System.Windows.Dialogs.TaskDialogs
     /// Encapsulates additional configuration needed by NativeTaskDialog
     ///   that it can't get from the TASKDIALOGCONFIG struct.
     /// </summary>
-    internal class NativeTaskDialogSettings
+    internal sealed class NativeTaskDialogSettings
     {
         #region Constants and Fields
 

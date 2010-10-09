@@ -18,26 +18,16 @@ namespace SevenUpdate
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
     using System.Windows.Internal;
-    using System.Windows.Navigation;
-    using System.Windows.Shell;
 
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;
 
     /// <summary>
+    /// Contains properties and methods that are essential
     /// </summary>
     internal sealed class Core : INotifyPropertyChanged
     {
         #region Constants and Fields
-
-        /// <summary>
-        /// </summary>
-        internal static NavigationService NavService;
-
-        /// <summary>
-        ///   Access methods to control the task bar
-        /// </summary>
-        internal static TaskbarItemInfo TaskBar;
 
         /// <summary>
         ///   The static instance of the Core class
@@ -45,10 +35,12 @@ namespace SevenUpdate
         private static Core instance;
 
         /// <summary>
+        ///   Indicates if the current user logged in is an admin
         /// </summary>
         private static bool isAdmin;
 
         /// <summary>
+        ///   The current action Seven Update is performing
         /// </summary>
         private static UpdateAction updateAction;
 
@@ -57,6 +49,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
+        ///   Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -82,8 +75,11 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or Sets a value indicating if the current user enabled admin access
+        ///   Gets or sets a value indicating whether the current user enabled admin access
         /// </summary>
+        /// <value>
+        ///   <see langword = "true" /> if this instance is admin; otherwise, <see langword = "false" />.
+        /// </value>
         public bool IsAdmin
         {
             get
@@ -99,6 +95,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
+        ///   Gets or sets the current action relating to updates
         /// </summary>
         public UpdateAction UpdateAction
         {
@@ -119,11 +116,13 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or Sets a collection of applications to update
+        ///   Gets or sets a collection of applications to update
         /// </summary>
+        /// <value>The collection of Sui</value>
         internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>
+        ///   Gets the static instance of Core
         /// </summary>
         internal static Core Instance
         {
@@ -134,12 +133,12 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or Sets a value indicating if an install is currently in progress
+        ///   Gets or sets a value indicating whether if an install is currently in progress
         /// </summary>
         internal static bool IsInstallInProgress { private get; set; }
 
         /// <summary>
-        ///   Gets or Sets a value indicating if an install is currently in progress and Seven Update was started after an auto check
+        ///   Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check
         /// </summary>
         internal static bool IsReconnect { get; set; }
 
@@ -205,7 +204,7 @@ namespace SevenUpdate
                             null, 
                             Resources.RestartNow) != TaskDialogResult.Cancel)
                     {
-                        Utilities.StartProcess("shutdown.exe", "-r -t 00");
+                        Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
                 }
             }
@@ -230,86 +229,13 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// </summary>
-        internal static void SetJumpList()
-        {
-            var jumpList = new JumpList();
-
-            var jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 2, 
-                    Title = Resources.CheckForUpdates, 
-                    CustomCategory = Resources.Tasks, 
-                    Arguments = "-check", 
-                };
-            jumpList.JumpItems.Add(jumpTask);
-
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 5, 
-                    Title = Resources.RestoreHiddenUpdates, 
-                    CustomCategory = Resources.Tasks, 
-                    Arguments = "-hidden", 
-                };
-            jumpList.JumpItems.Add(jumpTask);
-
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.eye", 
-                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 4, 
-                    Title = Resources.ViewUpdateHistory, 
-                    CustomCategory = Resources.Tasks, 
-                    Arguments = "-history", 
-                };
-            jumpList.JumpItems.Add(jumpTask);
-
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
-                    IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 3, 
-                    Title = Resources.ChangeSettings, 
-                    CustomCategory = Resources.Tasks, 
-                    Arguments = "-settings", 
-                };
-
-            jumpList.JumpItems.Add(jumpTask);
-
-            JumpList.SetJumpList(Application.Current, jumpList);
-        }
-
-        /// <summary>
         /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
         /// </param>
         /// <param name="icon">
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
-        {
-            return ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
-        }
-
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="icon">
-        /// The icon to use
+        /// The icon to display
         /// </param>
         /// <param name="standardButtons">
         /// The standard buttons to use (with or without the custom default button text)
@@ -353,7 +279,7 @@ namespace SevenUpdate
                     };
                 if (defaultButtonText != null)
                 {
-                    var button = new TaskDialogButton("btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
                     td.Controls.Add(button);
                 }
 
@@ -411,9 +337,27 @@ namespace SevenUpdate
         }
 
         /// <summary>
+        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
+        /// </summary>
+        /// <param name="instructionText">
+        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
+        /// </param>
+        /// <param name="icon">
+        /// The icon to display
+        /// </param>
+        /// <param name="description">
+        /// A description of the message, supplements the instruction text
+        /// </param>
+        private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
+        {
+            ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
+        }
+
+        /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
         /// <param name="name">
+        /// The name of the property that changed
         /// </param>
         private void OnPropertyChanged(string name)
         {

@@ -11,6 +11,7 @@
 namespace SevenUpdate.CustomComparer
 {
     /// <summary>
+    /// Sorts Importance
     /// </summary>
     internal static class ImportanceSorter
     {
@@ -31,42 +32,42 @@ namespace SevenUpdate.CustomComparer
         /// </returns>
         internal static int CompareImportance(Importance x, Importance y)
         {
-            var xRank = 0;
+            var firstRank = 0;
 
             switch (x)
             {
                 case Importance.Important:
-                    xRank = 0;
+                    firstRank = 0;
                     break;
                 case Importance.Recommended:
-                    xRank = 1;
+                    firstRank = 1;
                     break;
                 case Importance.Optional:
-                    xRank = 2;
+                    firstRank = 2;
                     break;
                 case Importance.Locale:
-                    xRank = 3;
+                    firstRank = 3;
                     break;
             }
 
-            var yRank = 0;
+            var secondRank = 0;
             switch (y)
             {
                 case Importance.Important:
-                    yRank = 0;
+                    secondRank = 0;
                     break;
                 case Importance.Recommended:
-                    yRank = 1;
+                    secondRank = 1;
                     break;
                 case Importance.Optional:
-                    yRank = 2;
+                    secondRank = 2;
                     break;
                 case Importance.Locale:
-                    yRank = 3;
+                    secondRank = 3;
                     break;
             }
 
-            return xRank > yRank ? 1 : (xRank == yRank ? 0 : -1);
+            return firstRank > secondRank ? 1 : (firstRank == secondRank ? 0 : -1);
         }
 
         #endregion

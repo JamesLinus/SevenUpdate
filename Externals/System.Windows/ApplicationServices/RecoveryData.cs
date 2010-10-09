@@ -1,4 +1,13 @@
-﻿namespace System.Windows.ApplicationServices
+﻿// ***********************************************************************
+// <copyright file="RecoveryData.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
+// </copyright>
+// ***********************************************************************
+namespace System.Windows.ApplicationServices
 {
     /// <summary>
     /// The <see cref="System.Delegate"/> that represents the callback method invoked

@@ -3,10 +3,10 @@
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Xidar Solutions">
+//     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
+// <author username="xidar">xidar/author>
 // ***********************************************************************
 namespace SharpBits.Base
 {

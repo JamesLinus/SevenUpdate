@@ -3,10 +3,10 @@
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Xidar Solutions">
+//     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
+// <author username="xidar">xidar/author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
@@ -55,14 +55,16 @@ namespace SharpBits.Base
                     }
 
                     int block1 = Marshal.ReadInt16(subBlock);
-                    int block2 = Marshal.ReadInt16((IntPtr)((int)subBlock + 2));
-                    var spv = string.Format(CultureInfo.CurrentCulture, @"\StringFileInfo\{0:X4}{1:X4}\ProductVersion", block1, block2);
+                    int block2 = Marshal.ReadInt16(subBlock, 2);
+                    var spv = string.Format(@"\StringFileInfo\{0:X4}{1:X4}\ProductVersion", block1, block2);
 
-                    string versionInfo;
-                    if (!NativeMethods.VerQueryValue(buffer, spv, out versionInfo, out len))
+                    IntPtr versionInfoPtr;
+                    if (!NativeMethods.VerQueryValue(buffer, spv, out versionInfoPtr, out len))
                     {
                         return BitsVersion.BitsUndefined;
                     }
+
+                    var versionInfo = Marshal.PtrToStringAuto(versionInfoPtr);
 
                     var versionNumbers = versionInfo.Split('.');
 

@@ -19,7 +19,7 @@ namespace SevenUpdate.Pages
     using SevenUpdate.Windows;
 
     /// <summary>
-    /// Interaction logic for Update_History.xaml
+    /// Interaction logic for UpdateHistory.xaml
     /// </summary>
     public partial class UpdateHistory
     {
@@ -31,7 +31,7 @@ namespace SevenUpdate.Pages
         private static readonly string HistoryFile = Utilities.AllUserStore + @"History.suh";
 
         /// <summary>
-        ///   Gets or Sets a collection of SUH items
+        ///   Gets or sets a collection of SUH items
         /// </summary>
         private ObservableCollection<Suh> updateHistory;
 
@@ -40,7 +40,7 @@ namespace SevenUpdate.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        ///   The constructor for the Update History page
+        ///   Initializes a new instance of the <see cref = "UpdateHistory" /> class.
         /// </summary>
         public UpdateHistory()
         {
@@ -54,7 +54,13 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Gets the update history and loads it to the listView
         /// </summary>
-        private void GetHistory()
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void GetHistory(object sender, RoutedEventArgs e)
         {
             this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(HistoryFile);
             if (this.updateHistory == null)
@@ -63,17 +69,19 @@ namespace SevenUpdate.Pages
             }
 
             this.lvUpdateHistory.ItemsSource = this.updateHistory;
-            this.updateHistory.CollectionChanged += this.History_CollectionChanged;
+            this.updateHistory.CollectionChanged += this.RefreshDataView;
         }
 
         /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the <c>updateHistory</c> collection changes
+        /// Updates the <see cref="CollectionView"/> when the collection changes
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.
         /// </param>
-        private void History_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
@@ -89,10 +97,12 @@ namespace SevenUpdate.Pages
         /// Shows the selected update details
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
             {
@@ -107,25 +117,15 @@ namespace SevenUpdate.Pages
         /// Shows the selected update details
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
+        private void ShowDetails(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
-        }
-
-        /// <summary>
-        /// Loads the update history when the page is loaded
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.GetHistory();
         }
 
         #endregion

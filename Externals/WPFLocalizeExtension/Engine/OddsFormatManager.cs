@@ -3,10 +3,10 @@
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Bernhard Millauer">
+//     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
+// <author username="SeriousM">Bernhard Millauer</author>
 // ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {

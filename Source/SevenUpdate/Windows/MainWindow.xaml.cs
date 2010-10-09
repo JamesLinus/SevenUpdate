@@ -28,12 +28,13 @@ namespace SevenUpdate.Windows
         #region Constructors and Destructors
 
         /// <summary>
+        ///   Initializes a new instance of the <see cref = "MainWindow" /> class.
         /// </summary>
         public MainWindow()
         {
             this.InitializeComponent();
-            Core.TaskBar = this.taskBar;
-            Core.NavService = this.NavigationService;
+            App.TaskBar = this.taskBar;
+            App.NavService = this.NavigationService;
         }
 
         #endregion
@@ -41,32 +42,36 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>
+        /// Sets the Height and Width of the window from the settings
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void LoadWindowSize(object sender, RoutedEventArgs e)
+        {
+            this.Height = Settings.Default.windowHeight;
+            this.Width = Settings.Default.windowWidth;
+        }
+
+        /// <summary>
         /// When Seven Update is closing, save the Window Width and Height in the settings
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.
         /// </param>
-        private void NavigationWindow_Closing(object sender, CancelEventArgs e)
+        private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = this.Height;
             Settings.Default.windowWidth = this.Width;
             Settings.Default.Save();
             AdminClient.Disconnect();
             Environment.Exit(0);
-        }
-
-        /// <summary>
-        /// Sets the Height and Width of the window from the settings
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void NavigationWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.Height = Settings.Default.windowHeight;
-            this.Width = Settings.Default.windowWidth;
         }
 
         #endregion

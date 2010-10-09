@@ -46,7 +46,7 @@ namespace SevenUpdate.Windows
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructor for the License Agreement page
+        ///   Initializes a new instance of the <see cref = "LicenseAgreement" /> class.
         /// </summary>
         public LicenseAgreement()
         {
@@ -61,6 +61,7 @@ namespace SevenUpdate.Windows
         /// Loads the <see cref="licenseInformation"/> and shows the form
         /// </summary>
         /// <returns>
+        /// Returns the dialog result
         /// </returns>
         internal bool? LoadLicenses()
         {
@@ -80,107 +81,106 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Sets the IsEnabled property of btnAction depending if Accept is selected
+        /// Closes the window, declining all software licenses
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Accept_Checked(object sender, RoutedEventArgs e)
-        {
-            this.btnAction.IsEnabled = true;
-        }
-
-        /// <summary>
-        /// Displays the next license agreement or returns
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Action_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.rbDecline.IsChecked == true)
-            {
-                Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.RemoveAt(this.licenseInformation[this.index].UpdateIndex);
-                if (Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.Count == 0)
-                {
-                    Core.Applications.RemoveAt(this.licenseInformation[this.index].AppIndex);
-                }
-            }
-
-            this.index++;
-
-            if (this.btnAction.ButtonText == Properties.Resources.Next)
-            {
-                this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
-                var mcFlowDoc = new FlowDocument();
-                var para = new Paragraph();
-                var r = new Run(this.licenseText[this.index]);
-                para.Inlines.Add(r);
-                mcFlowDoc.Blocks.Add(para);
-                this.rtbSLA.Document = mcFlowDoc;
-                this.rbAccept.IsChecked = false;
-                this.rbDecline.IsChecked = false;
-            }
-
-            if (this.btnAction.ButtonText == Properties.Resources.Finish)
-            {
-                this.DialogResult = Core.Applications.Count > 0;
-                this.Close();
-            }
-
-            if (this.index != this.licenseInformation.Count - 1)
-            {
-                return;
-            }
-
-            this.btnAction.ButtonText = Properties.Resources.Finish;
-            if (Core.Applications.Count > 0)
-            {
-                this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
-            }
-        }
-
-        /// <summary>
-        /// Closes the window, declining all EULA's
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
         }
 
         /// <summary>
-        /// Sets the IsEnabled property of btnAction depending if Decline selected
+        /// Updates the UI with the licenses and displays the first license
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Decline_Checked(object sender, RoutedEventArgs e)
+        private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
-            this.btnAction.IsEnabled = Core.Applications.Count != 1;
+            this.rtbSLA.Cursor = Cursors.IBeam;
+            var flowDoc = new FlowDocument();
+            var para = new Paragraph();
+            var r = new Run(this.licenseText[0]);
+            para.Inlines.Add(r);
+            flowDoc.Blocks.Add(para);
+            this.rtbSLA.Document = flowDoc;
+
+            if (Core.Instance.IsAdmin)
+            {
+                this.btnAction.IsShieldNeeded = false;
+            }
+            else
+            {
+                this.btnAction.IsShieldNeeded = this.licenseInformation.Count == 1;
+            }
+
+            this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
+            this.rbtnAccept.IsEnabled = true;
+            this.rbtnDecline.IsEnabled = true;
+            this.rtbSLA.Cursor = Cursors.IBeam;
+            this.Cursor = Cursors.Arrow;
         }
 
         /// <summary>
         /// Downloads the <see cref="licenseInformation"/>
         /// </summary>
-        private void DownloadLicenseInformation()
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
 
-            worker.DoWork += this.WorkerDoWork;
+            worker.DoWork += this.DownloadLicenses;
 
             this.Cursor = Cursors.Wait;
 
-            worker.RunWorkerCompleted += this.WorkerRunWorkerCompleted;
+            worker.RunWorkerCompleted += this.DisplayLicense;
 
             worker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Downloads the license agreements of the updates
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.
+        /// </param>
+        private void DownloadLicenses(object sender, DoWorkEventArgs e)
+        {
+            this.licenseText = new string[this.licenseInformation.Count];
+
+            var wc = new WebClient();
+
+            for (var x = 0; x < this.licenseInformation.Count; x++)
+            {
+                try
+                {
+                    this.licenseText[x] = wc.DownloadString(this.licenseInformation[x].LicenseUrl);
+                }
+                catch (Exception f)
+                {
+                    Utilities.ReportError(f.Message, Utilities.UserStore);
+                    this.licenseText[x] = Properties.Resources.LicenseDownloadError;
+                }
+            }
+
+            wc.Dispose();
         }
 
         /// <summary>
@@ -223,77 +223,56 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        /// Downloads the EULA's when the window is loaded
+        /// Displays the next license agreement or returns the collection of updates.
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void PerformAction(object sender, RoutedEventArgs e)
         {
-            this.DownloadLicenseInformation();
-        }
-
-        /// <summary>
-        /// Downloads the license agreements of the updates
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void WorkerDoWork(object sender, DoWorkEventArgs e)
-        {
-            this.licenseText = new string[this.licenseInformation.Count];
-
-            var wc = new WebClient();
-
-            for (var x = 0; x < this.licenseInformation.Count; x++)
+            if (this.rbtnDecline.IsChecked == true)
             {
-                try
+                Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.RemoveAt(this.licenseInformation[this.index].UpdateIndex);
+                if (Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.Count == 0)
                 {
-                    this.licenseText[x] = wc.DownloadString(this.licenseInformation[x].LicenseUrl);
-                }
-                catch (Exception f)
-                {
-                    Utilities.ReportError(f.Message, Utilities.UserStore);
-                    this.licenseText[x] = Properties.Resources.LicenseDownloadError;
+                    Core.Applications.RemoveAt(this.licenseInformation[this.index].AppIndex);
                 }
             }
 
-            wc.Dispose();
-        }
+            this.index++;
 
-        /// <summary>
-        /// Updates the UI when the downloading the license agreements has completed
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void WorkerRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.rtbSLA.Cursor = Cursors.IBeam;
-            var mcFlowDoc = new FlowDocument();
-            var para = new Paragraph();
-            var r = new Run(this.licenseText[0]);
-            para.Inlines.Add(r);
-            mcFlowDoc.Blocks.Add(para);
-            this.rtbSLA.Document = mcFlowDoc;
-
-            if (Core.Instance.IsAdmin)
+            if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
-                this.btnAction.IsShieldNeeded = false;
-            }
-            else
-            {
-                this.btnAction.IsShieldNeeded = this.licenseInformation.Count == 1;
+                this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
+                var flowDoc = new FlowDocument();
+                var para = new Paragraph();
+                var r = new Run(this.licenseText[this.index]);
+                para.Inlines.Add(r);
+                flowDoc.Blocks.Add(para);
+                this.rtbSLA.Document = flowDoc;
+                this.rbtnAccept.IsChecked = false;
+                this.rbtnDecline.IsChecked = false;
             }
 
-            this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
-            this.rbAccept.IsEnabled = true;
-            this.rbDecline.IsEnabled = true;
-            this.rtbSLA.Cursor = Cursors.IBeam;
-            this.Cursor = Cursors.Arrow;
+            if (this.btnAction.ButtonText == Properties.Resources.Finish)
+            {
+                this.DialogResult = Core.Applications.Count > 0;
+                this.Close();
+            }
+
+            if (this.index != this.licenseInformation.Count - 1)
+            {
+                return;
+            }
+
+            this.btnAction.ButtonText = Properties.Resources.Finish;
+            if (Core.Applications.Count > 0)
+            {
+                this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
+            }
         }
 
         #endregion
@@ -306,78 +285,24 @@ namespace SevenUpdate.Windows
             #region Properties
 
             /// <summary>
-            ///   The index of the application of the update
+            ///   Gets or sets the index of the application of the update
             /// </summary>
             internal int AppIndex { get; set; }
 
             /// <summary>
-            ///   The <see cref = "Uri" /> for the license agreement
+            ///   Gets or sets the <see cref = "Uri" /> for the license agreement
             /// </summary>
             internal string LicenseUrl { get; set; }
 
             /// <summary>
-            ///   The update title
+            ///   Gets or sets the update title
             /// </summary>
             internal string Title { get; set; }
 
             /// <summary>
-            ///   The index of the update
+            ///   Gets or sets the index of the update
             /// </summary>
             internal int UpdateIndex { get; set; }
-
-            #endregion
-
-            #region Operators
-
-            /// <summary>
-            /// </summary>
-            /// <returns>
-            /// </returns>
-            /// <exception cref="NotImplementedException">
-            /// </exception>
-            public static bool operator ==(Eula x, Eula y)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <returns>
-            /// </returns>
-            /// <exception cref="NotImplementedException">
-            /// </exception>
-            public static bool operator !=(Eula x, Eula y)
-            {
-                throw new NotImplementedException();
-            }
-
-            #endregion
-
-            #region Public Methods
-
-            /// <summary>
-            /// </summary>
-            /// <param name="obj">
-            /// </param>
-            /// <returns>
-            /// </returns>
-            /// <exception cref="NotImplementedException">
-            /// </exception>
-            public override bool Equals(object obj)
-            {
-                throw new NotImplementedException();
-            }
-
-            /// <summary>
-            /// </summary>
-            /// <returns>
-            /// </returns>
-            /// <exception cref="NotImplementedException">
-            /// </exception>
-            public override int GetHashCode()
-            {
-                throw new NotImplementedException();
-            }
 
             #endregion
         }

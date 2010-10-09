@@ -14,19 +14,19 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="47*" />
 		</Grid.RowDefinitions>
-		<Button Content="{LocText SevenUpdate:Resources:Close}" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="2" Click="Close_Click" Margin="12" HorizontalAlignment="Right" />
+		<Button Content="{LocText SevenUpdate:Resources:Close}" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="5" Grid.Column="2" Click="Close" Margin="12" HorizontalAlignment="Right" />
 		<TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:Version}" VerticalAlignment="Top" Grid.Column="1" />
 		<TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:Support}" Grid.Row="1" Grid.Column="1" Height="20" />
 		<TextBlock Name="tbVersion" Padding="2" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" />
 		<TextBlock Grid.Row="1" Padding="2" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left" Foreground="#FF0066CC">
-			<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://sevenupdate.com/support/">
+			<Hyperlink RequestNavigate="NavigateToUri" NavigateUri="http://sevenupdate.com/support/">
 				http://sevenupdate.com/support
 			</Hyperlink>
 		</TextBlock>
 		<Separator Grid.ColumnSpan="3" Grid.Row="3" VerticalAlignment="Top" Margin="0,2,0,0" />
 		<Separator Grid.ColumnSpan="3" Grid.Row="5" VerticalAlignment="Top" />
 		<TextBlock Foreground="#FF0066CC" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
-			<Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://www.gnu.org/licenses/gpl-3.0.txt">
+			<Hyperlink RequestNavigate="NavigateToUri" NavigateUri="http://www.gnu.org/licenses/gpl-3.0.txt">
 				<Run Text="{LocText SevenUpdate:Resources:SevenUpdateLicense}" />
 			</Hyperlink>
 		</TextBlock>
@@ -39,25 +39,25 @@
 			<Run Text="{LocText SevenUpdate:Resources:PortionsOfCode}" />
 			<LineBreak />
 			<Run Text="{LocText SevenUpdate:Resources:SharpBitsLicense}" />
-			<Hyperlink NavigateUri="http://sharpbits.codeplex.com/license" RequestNavigate="Hyperlink_RequestNavigate">
+			<Hyperlink NavigateUri="http://sharpbits.codeplex.com/license" RequestNavigate="NavigateToUri">
 				<Run Text="{LocText SevenUpdate:Resources:BSDLicense}" />
 			</Hyperlink>
 			<Run Text="© 2007, 2008" />
 			<LineBreak />
 			<Run Text="{LocText SevenUpdate:Resources:protobufLicense}" />
-			<Hyperlink NavigateUri="http://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">
+			<Hyperlink NavigateUri="http://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="NavigateToUri">
 				<Run Text="{LocText SevenUpdate:Resources:ApacheLicense}" />
 			</Hyperlink>
 			<Run Text="© 2008" />
 			<LineBreak />
 			<Run Text="{LocText SevenUpdate:Resources:WPFLocalizeExtensionLicense}" />
-			<Hyperlink NavigateUri="http://wpflocalizeextension.codeplex.com/license" RequestNavigate="Hyperlink_RequestNavigate">
+			<Hyperlink NavigateUri="http://wpflocalizeextension.codeplex.com/license" RequestNavigate="NavigateToUri">
 				<Run Text="{LocText SevenUpdate:Resources:MicrosoftPublicLicense}" />
 			</Hyperlink>
 			<Run Text="© 2008" />
 			<LineBreak />
 			<Run Text="{LocText SevenUpdate:Resources:ApiCodePackLicense}" />
-			<Hyperlink NavigateUri="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" RequestNavigate="Hyperlink_RequestNavigate">
+			<Hyperlink NavigateUri="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" RequestNavigate="NavigateToUri">
 				<Run Text="{LocText SevenUpdate:Resources:MicrosoftLicense}" />
 			</Hyperlink>
 			<Run Text="© 2009, 2010" />

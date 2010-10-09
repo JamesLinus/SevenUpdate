@@ -23,10 +23,12 @@ namespace SevenUpdate.Windows
         #region Constants and Fields
 
         /// <summary>
+        ///   The help and support url for the update
         /// </summary>
         private string helpUrl;
 
         /// <summary>
+        ///   The more update information url for the update
         /// </summary>
         private string infoUrl;
 
@@ -35,7 +37,7 @@ namespace SevenUpdate.Windows
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructor for the Update Details window
+        ///   Initializes a new instance of the <see cref = "UpdateDetails" /> class.
         /// </summary>
         public UpdateDetails()
         {
@@ -57,15 +59,12 @@ namespace SevenUpdate.Windows
             this.DataContext = updateInfo;
             this.helpUrl = updateInfo.HelpUrl;
             this.infoUrl = updateInfo.InfoUrl;
+            var updateStatus = updateInfo.Status == UpdateStatus.Failed
+                                   ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
+                                   : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
             this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
                                      ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
-                                     : String.Format(
-                                         CultureInfo.CurrentCulture, 
-                                         Properties.Resources.InstallationStatus, 
-                                         updateInfo.Status == UpdateStatus.Failed
-                                             ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
-                                             : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture), 
-                                         updateInfo.InstallDate);
+                                     : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
 
             this.ShowDialog();
             return;
@@ -75,10 +74,12 @@ namespace SevenUpdate.Windows
         /// Launches the Help <see cref="Uri"/>
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void HelpUrl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Process.Start(this.helpUrl);
         }
@@ -87,10 +88,12 @@ namespace SevenUpdate.Windows
         /// Launches the More Information <see cref="Uri"/>
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void MoreInfoUrl_MouseDown(object sender, MouseButtonEventArgs e)
+        private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Process.Start(this.infoUrl);
         }

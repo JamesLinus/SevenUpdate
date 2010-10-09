@@ -31,7 +31,7 @@ namespace SevenUpdate.Pages
         #region Constants and Fields
 
         /// <summary>
-        ///   Gets or Sets a list of indices relating to the current Update Collection
+        ///   Gets or sets a list of indices relating to the current Update Collection
         /// </summary>
         private List<int> appIndices;
 
@@ -40,7 +40,7 @@ namespace SevenUpdate.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Constructor for the Update Info Page
+        ///   Initializes a new instance of the <see cref = "UpdateInfo" /> class.
         /// </summary>
         public UpdateInfo()
         {
@@ -62,8 +62,11 @@ namespace SevenUpdate.Pages
         #region Properties
 
         /// <summary>
-        ///   Gets or Sets a value indicating to expand the Optional Updates Group by default.
+        ///   Gets or sets a value indicating whether to expand the Optional Updates Group by default.
         /// </summary>
+        /// <value>
+        ///   <see langword = "true" /> to expand the optional updates; otherwise, <see langword = "false" />.
+        /// </value>
         internal static bool DisplayOptionalUpdates { private get; set; }
 
         #endregion
@@ -102,7 +105,13 @@ namespace SevenUpdate.Pages
         /// <summary>
         /// Adds the updates to the list
         /// </summary>
-        private void AddUpdates()
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void AddUpdates(object sender, RoutedEventArgs e)
         {
             var selectedUpdates = new ObservableCollection<Update>();
             this.appIndices = new List<int>();
@@ -123,90 +132,61 @@ namespace SevenUpdate.Pages
             {
                 myView.GroupDescriptions.Add(groupDescription);
             }
+
+            this.lvUpdates.SelectedIndex = 0;
         }
 
         /// <summary>
         /// Navigates back to the Main page
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private void Cancel(object sender, RoutedEventArgs e)
         {
-            Core.NavService.GoBack();
+            App.NavService.GoBack();
         }
 
         /// <summary>
-        /// Expands the group expander based on the which link was clicked from the main page
+        /// Launches the Help <c>Url</c> of the update
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void Expander_Loaded(object sender, RoutedEventArgs e)
+        private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
-            var expander = e.Source as Expander;
-            if (expander == null)
+            try
             {
-                return;
+                Process.Start(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
             }
-
-            if (DisplayOptionalUpdates)
+            catch (Exception)
             {
-                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Optional;
-            }
-            else
-            {
-                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Important;
             }
         }
 
         /// <summary>
-        /// Shows the selected update details
+        /// Launches the More Information <c>Url</c> of the update
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void MenuItem_MouseClick(object sender, RoutedEventArgs e)
+        private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
-            var appIndex = this.appIndices[this.lvUpdates.SelectedIndex];
-
-            var update = this.lvUpdates.SelectedItem as Update;
-            if (update == null)
+            try
             {
-                return;
+                Process.Start(((Update)this.lvUpdates.SelectedItem).InfoUrl);
             }
-
-            var hnh = new Suh
-                {
-                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl, 
-                    InfoUrl = update.InfoUrl, 
-                    Publisher = Core.Applications[appIndex].AppInfo.Publisher, 
-                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl, 
-                    ReleaseDate = update.ReleaseDate, 
-                    Status = UpdateStatus.Hidden, 
-                    UpdateSize = Core.GetUpdateSize(update.Files), 
-                    Importance = update.Importance, 
-                    Description = update.Description, 
-                    Name = update.Name
-                };
-
-            if (!update.Hidden)
+            catch (Exception)
             {
-                if (AdminClient.HideUpdate(hnh))
-                {
-                    update.Hidden = true;
-                    update.Selected = false;
-                }
-            }
-            else
-            {
-                if (AdminClient.ShowUpdate(hnh))
-                {
-                    update.Hidden = false;
-                }
             }
         }
 
@@ -214,34 +194,14 @@ namespace SevenUpdate.Pages
         /// Saves the selection of updates and navigates back to the Main page
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Ok_Click(object sender, RoutedEventArgs e)
+        private void SaveUpdateSelection(object sender, RoutedEventArgs e)
         {
             IterateVisualChild(this.lvUpdates);
-            this.SaveUpdateSelection();
-            Core.NavService.GoBack();
-        }
-
-        /// <summary>
-        /// Loads the updates found into the UI
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.AddUpdates();
-            this.lvUpdates.SelectedIndex = 0;
-        }
-
-        /// <summary>
-        /// Saves the update selection
-        /// </summary>
-        private void SaveUpdateSelection()
-        {
             var count = new int[2];
             var downloadSize = new ulong[2];
             var updIndex = -1;
@@ -306,103 +266,86 @@ namespace SevenUpdate.Pages
             {
                 UpdateSelectionChanged(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
             }
+
+            App.NavService.GoBack();
         }
 
         /// <summary>
-        /// Launches the Help <c>Url</c> of the update
+        /// Expands the group expander based on the which link was clicked from the main page
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void UrlHelp_MouseDown(object sender, MouseButtonEventArgs e)
+        private void SetExpanded(object sender, RoutedEventArgs e)
         {
-            try
+            var expander = e.Source as Expander;
+            if (expander == null)
             {
-                Process.Start(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
+                return;
             }
-            catch (Exception)
+
+            if (DisplayOptionalUpdates)
             {
+                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Optional;
+            }
+            else
+            {
+                expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Important;
             }
         }
 
         /// <summary>
-        /// Launches the More Information <c>Url</c> of the update
+        /// Shows or Hides the selected update
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void UrlInfo_MouseDown(object sender, MouseButtonEventArgs e)
+        private void ShowOrHideUpdate(object sender, RoutedEventArgs e)
         {
-            try
+            var appIndex = this.appIndices[this.lvUpdates.SelectedIndex];
+
+            var update = this.lvUpdates.SelectedItem as Update;
+            if (update == null)
             {
-                Process.Start(((Update)this.lvUpdates.SelectedItem).InfoUrl);
+                return;
             }
-            catch (Exception)
+
+            var hnh = new Suh
+                {
+                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl, 
+                    InfoUrl = update.InfoUrl, 
+                    Publisher = Core.Applications[appIndex].AppInfo.Publisher, 
+                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl, 
+                    ReleaseDate = update.ReleaseDate, 
+                    Status = UpdateStatus.Hidden, 
+                    UpdateSize = Core.GetUpdateSize(update.Files), 
+                    Importance = update.Importance, 
+                    Description = update.Description, 
+                    Name = update.Name
+                };
+
+            if (!update.Hidden)
             {
+                if (AdminClient.HideUpdate(hnh))
+                {
+                    update.Hidden = true;
+                    update.Selected = false;
+                }
+            }
+            else
+            {
+                if (AdminClient.ShowUpdate(hnh))
+                {
+                    update.Hidden = false;
+                }
             }
         }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// Provides event data for the UpdateSelection event
-    /// </summary>
-    internal sealed class UpdateSelectionChangedEventArgs : EventArgs
-    {
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Contains event data associated with this event
-        /// </summary>
-        /// <param name="importantUpdates">
-        /// The number of Important updates selected
-        /// </param>
-        /// <param name="optionalUpdates">
-        /// The number of Optional updates selected
-        /// </param>
-        /// <param name="importantDownloadSize">
-        /// A value indicating the download size of the Important updates
-        /// </param>
-        /// <param name="optionalDownloadSize">
-        /// A value indicating the download size of the Optional updates
-        /// </param>
-        public UpdateSelectionChangedEventArgs(int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
-        {
-            this.ImportantUpdates = importantUpdates;
-
-            this.OptionalUpdates = optionalUpdates;
-
-            this.ImportantDownloadSize = importantDownloadSize;
-
-            this.OptionalDownloadSize = optionalDownloadSize;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///   Gets the total download size in bytes of the important updates
-        /// </summary>
-        internal ulong ImportantDownloadSize { get; private set; }
-
-        /// <summary>
-        ///   Gets the number of Important Updates selected
-        /// </summary>
-        internal int ImportantUpdates { get; private set; }
-
-        /// <summary>
-        ///   Gets the total download size in bytes of the optional updates
-        /// </summary>
-        internal ulong OptionalDownloadSize { get; private set; }
-
-        /// <summary>
-        ///   Gets the number of Optional Updates selected
-        /// </summary>
-        internal int OptionalUpdates { get; private set; }
 
         #endregion
     }

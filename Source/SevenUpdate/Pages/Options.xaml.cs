@@ -35,11 +35,12 @@ namespace SevenUpdate.Pages
         private const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
 
         /// <summary>
-        ///   A collection of SUA's that Seven Update can update
+        ///   A collection of <see cref = "Sua" /> that Seven Update can update
         /// </summary>
         private static ObservableCollection<Sua> machineAppList;
 
         /// <summary>
+        ///   The program configuration
         /// </summary>
         private Config config;
 
@@ -48,12 +49,12 @@ namespace SevenUpdate.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        ///   The constructor for the Options Page
+        ///   Initializes a new instance of the <see cref = "Options" /> class.
         /// </summary>
         public Options()
         {
             this.InitializeComponent();
-            this.lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.Thumb_DragDelta), true);
+            this.lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnSave.IsShieldNeeded = !Core.Instance.IsAdmin;
         }
 
@@ -77,30 +78,30 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
+        /// Loads the settings and <see cref="Sua"/> list when the page is loaded
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        private void Init(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                Process.Start(e.Uri.AbsoluteUri);
-            }
-            catch (Exception)
-            {
-            }
+            this.lvApps.Cursor = Cursors.Wait;
+            this.config = Core.Settings;
+            this.DataContext = this.config;
 
-            e.Handled = true;
+            Task.Factory.StartNew(this.DownloadSul);
         }
 
         /// <summary>
         /// Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system
         /// </summary>
-        /// <param name="officialAppList">
+        /// <param name="officialApplicationList">
+        /// The official application list from the server.
         /// </param>
-        private void LoadSul(ObservableCollection<Sua> officialAppList = null)
+        private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.ApplicationsFile);
 
@@ -123,18 +124,19 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            if (officialAppList != null)
+            if (officialApplicationList != null)
             {
-                for (var x = 0; x < officialAppList.Count; x++)
+                for (var x = 0; x < officialApplicationList.Count; x++)
                 {
                     if (
                         !Directory.Exists(
-                            Utilities.IsRegistryKey(officialAppList[x].Directory)
-                                ? Utilities.GetRegistryValue(officialAppList[x].Directory, officialAppList[x].ValueName, officialAppList[x].Is64Bit)
-                                : Utilities.ConvertPath(officialAppList[x].Directory, true, officialAppList[x].Is64Bit)))
+                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                                ? Utilities.GetRegistryValue(
+                                    officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
+                                : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
                     {
                         // Remove the application from the list if it is not installed
-                        officialAppList.RemoveAt(x);
+                        officialApplicationList.RemoveAt(x);
                         x--;
                     }
                     else
@@ -147,11 +149,11 @@ namespace SevenUpdate.Pages
                         for (var y = 0; y < machineAppList.Count; y++)
                         {
                             // Check if the app in both lists are the same
-                            if (officialAppList[x].Directory == machineAppList[y].Directory && officialAppList[x].Is64Bit == machineAppList[y].Is64Bit)
+                            if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Is64Bit == machineAppList[y].Is64Bit)
                             {
                                 // if (officialAppList[x].Source != machineAppList[y].Source)
                                 // continue;
-                                officialAppList[x].IsEnabled = machineAppList[y].IsEnabled;
+                                officialApplicationList[x].IsEnabled = machineAppList[y].IsEnabled;
                                 machineAppList.RemoveAt(y);
                                 y--;
                             }
@@ -165,57 +167,67 @@ namespace SevenUpdate.Pages
                 {
                     foreach (var t in machineAppList)
                     {
-                        officialAppList.Add(t);
+                        officialApplicationList.Add(t);
                     }
                 }
             }
 
-            if (officialAppList != null)
+            if (officialApplicationList != null)
             {
-                machineAppList = officialAppList;
+                machineAppList = officialApplicationList;
             }
 
             this.Dispatcher.BeginInvoke(this.UpdateList);
         }
 
         /// <summary>
-        /// Loads the settings and SUA list when the page is loaded
+        /// Navigates to a Uri
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.
         /// </param>
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
-            this.lvApps.Cursor = Cursors.Wait;
-            this.config = Core.Settings;
-            this.DataContext = this.config;
+            try
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
+            catch (Exception)
+            {
+            }
 
-            Task.Factory.StartNew(this.DownloadSul);
-        }
-
-        /// <summary>
-        /// Saves the settings and goes back to the Main page
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
-            AdminClient.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList);
+            e.Handled = true;
         }
 
         /// <summary>
         /// Limit the size of the <see cref="GridViewColumn"/> when it's being resized
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.
         /// </param>
-        private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
+        }
+
+        /// <summary>
+        /// Saves the settings and goes back to the Main page
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SaveSettings(object sender, RoutedEventArgs e)
+        {
+            AdminClient.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList);
         }
 
         /// <summary>

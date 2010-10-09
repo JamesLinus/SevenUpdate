@@ -166,15 +166,15 @@ namespace SevenUpdate.Service
         /// <summary>
         /// Adds an application to Seven Update, so it can manage updates for it.
         /// </summary>
-        /// <param name="app">
+        /// <param name="application">
         /// The application to add to Seven Update
         /// </param>
-        public void AddApp(Sua app)
+        public void AddApp(Sua application)
         {
             var sul = Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile);
             var exists = false;
 
-            foreach (var t in sul.Where(t => t.Directory == app.Directory && t.Is64Bit == app.Is64Bit))
+            foreach (var t in sul.Where(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
             {
                 exists = true;
             }
@@ -184,7 +184,7 @@ namespace SevenUpdate.Service
                 return;
             }
 
-            sul.Add(app);
+            sul.Add(application);
 
             Utilities.Serialize(sul, Utilities.ApplicationsFile);
         }

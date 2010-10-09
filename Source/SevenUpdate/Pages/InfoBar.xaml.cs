@@ -95,6 +95,7 @@ namespace SevenUpdate.Pages
         #region Constants and Fields
 
         /// <summary>
+        ///   Indicates if Seven Update will only install updates
         /// </summary>
         private bool isInstallOnly;
 
@@ -103,7 +104,7 @@ namespace SevenUpdate.Pages
         #region Constructors and Destructors
 
         /// <summary>
-        ///   A Control that displays update progress and information
+        ///   Initializes a new instance of the <see cref = "InfoBar" /> class.
         /// </summary>
         public InfoBar()
         {
@@ -111,8 +112,8 @@ namespace SevenUpdate.Pages
             Search.ErrorOccurred += this.ErrorOccurred;
             AdminClient.ServiceError += this.ErrorOccurred;
             Search.SearchCompleted += this.SearchCompleted;
-            UpdateInfo.UpdateSelectionChanged += this.UpdateInfo_UpdateSelectionChanged;
-            Core.UpdateActionChanged += this.UpdateAction_Changed;
+            UpdateInfo.UpdateSelectionChanged += this.UpdateSelectionChanged;
+            Core.UpdateActionChanged += this.SetUI;
             ServiceCallBack.DownloadProgressChanged += this.DownloadProgressChanged;
             ServiceCallBack.DownloadDone += this.DownloadCompleted;
             ServiceCallBack.InstallProgressChanged += this.InstallProgressChanged;
@@ -125,12 +126,366 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
+        /// Updates the UI when the downloading of updates completes
+        /// </summary>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private static void DownloadCompleted(DownloadCompletedEventArgs e)
+        {
+            Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
+        }
+
+        /// <summary>
+        /// Updates the UI when the downloading of updates has completed
+        /// </summary>
+        /// <param name="sender">
+        /// The sender
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(DownloadCompleted, e);
+            }
+            else
+            {
+                DownloadCompleted(e);
+            }
+        }
+
+        /// <summary>
+        /// Downloads updates
+        /// </summary>
+        private void DownloadInstallUpdates()
+        {
+            for (var x = 0; x < Core.Applications.Count; x++)
+            {
+                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                {
+                    if (Core.Applications[x].Updates[y].Selected)
+                    {
+                        continue;
+                    }
+
+                    Core.Applications[x].Updates.RemoveAt(y);
+                    y--;
+                }
+
+                if (Core.Applications[x].Updates.Count != 0)
+                {
+                    continue;
+                }
+
+                Core.Applications.RemoveAt(x);
+                x--;
+            }
+
+            if (Core.Applications.Count > 0)
+            {
+                var sla = new LicenseAgreement();
+                if (sla.LoadLicenses() == false)
+                {
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+                    return;
+                }
+
+                if (AdminClient.Install())
+                {
+                    try
+                    {
+                        File.Delete(Utilities.AllUserStore + @"updates.sui");
+                    }
+                    catch (Exception)
+                    {
+                    }
+
+                    Core.Instance.UpdateAction = this.isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
+                    Core.IsInstallInProgress = true;
+                    Settings.Default.lastInstall = DateTime.Now;
+                }
+                else
+                {
+                    Core.Instance.UpdateAction = UpdateAction.Canceled;
+                }
+            }
+            else
+            {
+                Core.Instance.UpdateAction = UpdateAction.Canceled;
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI when the download progress has changed
+        /// </summary>
+        /// <param name="e">
+        /// The DownloadProgress data
+        /// </param>
+        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.Downloading;
+                Core.IsReconnect = false;
+            }
+
+            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
+            {
+                if (e.BytesTotal == e.BytesTransferred)
+                {
+                    return;
+                }
+
+                var progress = e.BytesTransferred * 100 / e.BytesTotal;
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
+                App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
+                this.tbStatus.Text = String.Format(
+                    CultureInfo.CurrentCulture, 
+                    Properties.Resources.DownloadPercentProgress, 
+                    Utilities.ConvertFileSize(e.BytesTotal), 
+                    progress.ToString("F0", CultureInfo.CurrentCulture));
+            }
+            else
+            {
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI when the download progress has changed
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.DownloadProgressChanged, e);
+            }
+            else
+            {
+                this.DownloadProgressChanged(e);
+            }
+        }
+
+        /// <summary>
+        /// Sets the UI when an error occurs
+        /// </summary>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.
+        /// </param>
+        private void ErrorOccurred(ErrorOccurredEventArgs e)
+        {
+            Core.IsInstallInProgress = false;
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
+            switch (e.Type)
+            {
+                case ErrorType.FatalNetworkError:
+                    this.tbStatus.Text = Properties.Resources.CheckConnection;
+                    break;
+                case ErrorType.InstallationError:
+                case ErrorType.SearchError:
+                case ErrorType.DownloadError:
+                case ErrorType.GeneralErrorNonFatal:
+                case ErrorType.FatalError:
+                    this.tbStatus.Text = e.Exception;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Sets the UI when an error has occurred
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.
+        /// </param>
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.ErrorOccurred, e);
+            }
+            else
+            {
+                this.ErrorOccurred(e);
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI when the installation has completed
+        /// </summary>
+        /// <param name="e">
+        /// The InstallCompleted data
+        /// </param>
+        private void InstallCompleted(InstallCompletedEventArgs e)
+        {
+            Settings.Default.lastInstall = DateTime.Now;
+            Core.Instance.IsAdmin = false;
+
+            // if a reboot is needed lets say it
+            if (Utilities.RebootNeeded)
+            {
+                Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
+                return;
+            }
+
+            Core.Instance.UpdateAction = UpdateAction.InstallationCompleted;
+
+            if (e.UpdatesFailed <= 0)
+            {
+                this.tbStatus.Text = e.UpdatesInstalled == 1
+                                         ? Properties.Resources.UpdateInstalled
+                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
+                return;
+            }
+
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
+
+            if (e.UpdatesInstalled == 0)
+            {
+                this.tbStatus.Text = e.UpdatesFailed == 1
+                                         ? Properties.Resources.UpdateFailed
+                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesFailed, e.UpdatesFailed);
+            }
+            else
+            {
+                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalledFailed, e.UpdatesInstalled, e.UpdatesFailed);
+            }
+        }
+
+        /// <summary>
+        /// Sets the UI when the installation of updates has completed
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.InstallCompletedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void InstallCompleted(object sender, InstallCompletedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.InstallCompleted, e);
+            }
+            else
+            {
+                this.InstallCompleted(e);
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI when the installation progress has changed
+        /// </summary>
+        /// <param name="e">
+        /// The InstallProgress data
+        /// </param>
+        private void InstallProgressChanged(InstallProgressChangedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.Installing;
+                Core.IsReconnect = false;
+            }
+
+            if (e.CurrentProgress == -1)
+            {
+                this.tbStatus.Text = Properties.Resources.PreparingInstall;
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+            }
+            else
+            {
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
+                App.TaskBar.ProgressValue = e.CurrentProgress;
+                this.tbStatus.Text = e.TotalUpdates > 1
+                                         ? String.Format(
+                                             CultureInfo.CurrentCulture, 
+                                             Properties.Resources.InstallExtendedProgress, 
+                                             e.UpdateName, 
+                                             e.UpdatesComplete, 
+                                             e.TotalUpdates, 
+                                             e.CurrentProgress)
+                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
+            }
+        }
+
+        /// <summary>
+        /// Sets the UI when the install progress has changed
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="SevenUpdate.InstallProgressChangedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.InstallProgressChanged, e);
+            }
+            else
+            {
+                this.InstallProgressChanged(e);
+            }
+        }
+
+        /// <summary>
+        /// Performs an action based on the <see cref="UpdateAction"/>
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void PerformAction(object sender, RoutedEventArgs e)
+        {
+            switch (Core.Instance.UpdateAction)
+            {
+                case UpdateAction.DownloadCompleted:
+                case UpdateAction.UpdatesFound:
+                    this.DownloadInstallUpdates();
+                    break;
+                case UpdateAction.Downloading:
+                case UpdateAction.Installing:
+                    if (AdminClient.AbortInstall())
+                    {
+                        Core.Instance.UpdateAction = UpdateAction.Canceled;
+                    }
+
+                    break;
+
+                case UpdateAction.CheckForUpdates:
+                case UpdateAction.Canceled:
+                case UpdateAction.ErrorOccurred:
+                    Core.Instance.UpdateAction = UpdateAction.CheckingForUpdates;
+                    Core.CheckForUpdates();
+                    break;
+                case UpdateAction.RebootNeeded:
+                    Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Updates the UI the search for updates has completed
         /// </summary>
         /// <param name="e">
         /// The SearchComplete data
         /// </param>
-        internal void SearchCompleted(SearchCompletedEventArgs e)
+        private void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (Core.Instance.UpdateAction == UpdateAction.ErrorOccurred)
             {
@@ -217,349 +572,13 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// </summary>
-        /// <param name="e">
-        /// </param>
-        private static void DownloadCompleted(DownloadCompletedEventArgs e)
-        {
-            Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
-        }
-
-        /// <summary>
-        /// Sets the UI when the downloading of updates has completed
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(DownloadCompleted, e);
-            }
-            else
-            {
-                DownloadCompleted(e);
-            }
-        }
-
-        /// <summary>
-        /// Downloads updates
-        /// </summary>
-        private void DownloadInstallUpdates()
-        {
-            for (var x = 0; x < Core.Applications.Count; x++)
-            {
-                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
-                {
-                    if (Core.Applications[x].Updates[y].Selected)
-                    {
-                        continue;
-                    }
-
-                    Core.Applications[x].Updates.RemoveAt(y);
-                    y--;
-                }
-
-                if (Core.Applications[x].Updates.Count != 0)
-                {
-                    continue;
-                }
-
-                Core.Applications.RemoveAt(x);
-                x--;
-            }
-
-            if (Core.Applications.Count > 0)
-            {
-                var sla = new LicenseAgreement();
-                if (sla.LoadLicenses() == false)
-                {
-                    Core.Instance.UpdateAction = UpdateAction.Canceled;
-                    return;
-                }
-
-                if (AdminClient.Install())
-                {
-                    try
-                    {
-                        File.Delete(Utilities.AllUserStore + "updates.sui");
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    Core.Instance.UpdateAction = this.isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
-                    Core.IsInstallInProgress = true;
-                    Settings.Default.lastInstall = DateTime.Now;
-                }
-                else
-                {
-                    Core.Instance.UpdateAction = UpdateAction.Canceled;
-                }
-            }
-            else
-            {
-                Core.Instance.UpdateAction = UpdateAction.Canceled;
-            }
-        }
-
-        /// <summary>
-        /// Updates the UI when the download progress has changed
-        /// </summary>
-        /// <param name="e">
-        /// The DownloadProgress data
-        /// </param>
-        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
-        {
-            if (Core.IsReconnect)
-            {
-                Core.Instance.UpdateAction = UpdateAction.Downloading;
-                Core.IsReconnect = false;
-            }
-
-            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-            {
-                if (e.BytesTotal == e.BytesTransferred)
-                {
-                    return;
-                }
-
-                var progress = e.BytesTransferred * 100 / e.BytesTotal;
-                Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
-                Core.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
-                this.tbStatus.Text = String.Format(
-                    CultureInfo.CurrentCulture, 
-                    Properties.Resources.DownloadPercentProgress, 
-                    Utilities.ConvertFileSize(e.BytesTotal), 
-                    progress.ToString("F0", CultureInfo.CurrentCulture));
-            }
-            else
-            {
-                Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
-                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
-            }
-        }
-
-        /// <summary>
-        /// Sets the UI when the download progress has changed
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.DownloadProgressChanged, e);
-            }
-            else
-            {
-                this.DownloadProgressChanged(e);
-            }
-        }
-
-        /// <summary>
-        /// Sets the UI when an error occurs
-        /// </summary>
-        /// <param name="e">
-        /// </param>
-        private void ErrorOccurred(ErrorOccurredEventArgs e)
-        {
-            Core.IsInstallInProgress = false;
-            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            switch (e.Type)
-            {
-                case ErrorType.FatalNetworkError:
-                    this.tbStatus.Text = Properties.Resources.CheckConnection;
-                    break;
-                case ErrorType.InstallationError:
-                case ErrorType.SearchError:
-                case ErrorType.DownloadError:
-                case ErrorType.GeneralErrorNonFatal:
-                case ErrorType.FatalError:
-                    this.tbStatus.Text = e.Exception;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Sets the UI when an error has occurred
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.ErrorOccurred, e);
-            }
-            else
-            {
-                this.ErrorOccurred(e);
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void ImportantUpdates_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            UpdateInfo.DisplayOptionalUpdates = false;
-            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void Infobar_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.DataContext = Core.Instance;
-        }
-
-        /// <summary>
-        /// Updates the UI when the installation has completed
-        /// </summary>
-        /// <param name="e">
-        /// The InstallCompleted data
-        /// </param>
-        private void InstallCompleted(InstallCompletedEventArgs e)
-        {
-            Settings.Default.lastInstall = DateTime.Now;
-            Core.Instance.IsAdmin = false;
-
-            // if a reboot is needed lets say it
-            if (Utilities.RebootNeeded)
-            {
-                Core.Instance.UpdateAction = UpdateAction.RebootNeeded;
-                return;
-            }
-
-            Core.Instance.UpdateAction = UpdateAction.InstallationCompleted;
-
-            if (e.UpdatesFailed <= 0)
-            {
-                this.tbStatus.Text = e.UpdatesInstalled == 1
-                                         ? Properties.Resources.UpdateInstalled
-                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
-                return;
-            }
-
-            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-
-            if (e.UpdatesInstalled == 0)
-            {
-                this.tbStatus.Text = e.UpdatesFailed == 1
-                                         ? Properties.Resources.UpdateFailed
-                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesFailed, e.UpdatesFailed);
-            }
-            else
-            {
-                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalledFailed, e.UpdatesInstalled, e.UpdatesFailed);
-            }
-        }
-
-        /// <summary>
-        /// Sets the UI when the installation of updates has completed
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void InstallCompleted(object sender, InstallCompletedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.InstallCompleted, e);
-            }
-            else
-            {
-                this.InstallCompleted(e);
-            }
-        }
-
-        /// <summary>
-        /// Updates the UI when the installation progress has changed
-        /// </summary>
-        /// <param name="e">
-        /// The InstallProgress data
-        /// </param>
-        private void InstallProgressChanged(InstallProgressChangedEventArgs e)
-        {
-            if (Core.IsReconnect)
-            {
-                Core.Instance.UpdateAction = UpdateAction.Installing;
-                Core.IsReconnect = false;
-            }
-
-            if (e.CurrentProgress == -1)
-            {
-                this.tbStatus.Text = Properties.Resources.PreparingInstall;
-                Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
-            }
-            else
-            {
-                Core.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
-                Core.TaskBar.ProgressValue = e.CurrentProgress;
-                this.tbStatus.Text = e.TotalUpdates > 1
-                                         ? String.Format(
-                                             CultureInfo.CurrentCulture, 
-                                             Properties.Resources.InstallExtendedProgress, 
-                                             e.UpdateName, 
-                                             e.UpdatesComplete, 
-                                             e.TotalUpdates, 
-                                             e.CurrentProgress)
-                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
-            }
-        }
-
-        /// <summary>
-        /// Sets the UI when the install progress has changed
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.InstallProgressChanged, e);
-            }
-            else
-            {
-                this.InstallProgressChanged(e);
-            }
-        }
-
-        /// <summary>
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void OptionalUpdates_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            UpdateInfo.DisplayOptionalUpdates = true;
-            Core.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
         /// Sets the UI when the search for updates has completed
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="SevenUpdate.SearchCompletedEventArgs"/> instance containing the event data.
         /// </param>
         private void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
@@ -574,8 +593,54 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
+        /// Handles the MouseDown event of the ImportantUpdates control.
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SelectImportantUpdates(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = false;
+            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Selects optional updates and navigates to the <see cref="UpdateInfo"/> page
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SelectOptionalUpdates(object sender, MouseButtonEventArgs e)
+        {
+            UpdateInfo.DisplayOptionalUpdates = true;
+            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// Sets the data context for the page
+        /// </summary>
+        /// <param name="sender">
+        /// The source of the event.
+        /// </param>
+        /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
+        /// </param>
+        private void SetDataContext(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = Core.Instance;
+        }
+
+        /// <summary>
+        /// Sets the UI based on the <see cref="UpdateAction"/>
         /// </summary>
         /// <param name="action">
+        /// The action.
         /// </param>
         private void SetUI(UpdateAction action)
         {
@@ -588,7 +653,7 @@ namespace SevenUpdate.Pages
             this.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
             this.tbViewImportantUpdates.Visibility = Visibility.Collapsed;
             this.line.Visibility = Visibility.Collapsed;
-            Core.TaskBar.ProgressState = TaskbarItemProgressState.None;
+            App.TaskBar.ProgressState = TaskbarItemProgressState.None;
 
             switch (action)
             {
@@ -620,7 +685,7 @@ namespace SevenUpdate.Pages
                     this.tbHeading.Visibility = Visibility.Visible;
                     this.line.Y1 = 25;
 
-                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                    App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
 
                     break;
 
@@ -657,7 +722,7 @@ namespace SevenUpdate.Pages
 
                     Core.IsInstallInProgress = true;
 
-                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                    App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
                 case UpdateAction.ErrorOccurred:
@@ -670,7 +735,7 @@ namespace SevenUpdate.Pages
                     this.btnAction.Visibility = Visibility.Visible;
 
                     Core.IsInstallInProgress = false;
-                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Error;
+                    App.TaskBar.ProgressState = TaskbarItemProgressState.Error;
                     break;
 
                 case UpdateAction.InstallationCompleted:
@@ -694,7 +759,7 @@ namespace SevenUpdate.Pages
 
                     this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
                     Core.IsInstallInProgress = true;
-                    Core.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                    App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
                 case UpdateAction.NoUpdates:
@@ -732,48 +797,15 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        /// </summary>
-        /// <param name="sender">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        private void UacButton_Click(object sender, RoutedEventArgs e)
-        {
-            switch (Core.Instance.UpdateAction)
-            {
-                case UpdateAction.DownloadCompleted:
-                case UpdateAction.UpdatesFound:
-                    this.DownloadInstallUpdates();
-                    break;
-                case UpdateAction.Downloading:
-                case UpdateAction.Installing:
-                    if (AdminClient.AbortInstall())
-                    {
-                        Core.Instance.UpdateAction = UpdateAction.Canceled;
-                    }
-
-                    break;
-
-                case UpdateAction.CheckForUpdates:
-                case UpdateAction.Canceled:
-                case UpdateAction.ErrorOccurred:
-                    Core.Instance.UpdateAction = UpdateAction.CheckingForUpdates;
-                    Core.CheckForUpdates();
-                    break;
-                case UpdateAction.RebootNeeded:
-                    Utilities.StartProcess("shutdown.exe", "-r -t 00");
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Sets the UI when the update action is changed
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.EventArgs"/> instance containing the event data.
         /// </param>
-        private void UpdateAction_Changed(object sender, EventArgs e)
+        private void SetUI(object sender, EventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -786,12 +818,15 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
+        /// Updates the UI when the update selection changes
         /// </summary>
         /// <param name="sender">
+        /// The sender.
         /// </param>
         /// <param name="e">
+        /// The <see cref="SevenUpdate.Pages.UpdateSelectionChangedEventArgs"/> instance containing the event data.
         /// </param>
-        private void UpdateInfo_UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
+        private void UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {
             if (e.ImportantUpdates > 0)
             {

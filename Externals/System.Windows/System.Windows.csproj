@@ -61,11 +61,10 @@
     <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AppRestartRecovery\ApplicationRestartRecoveryManager.cs" />
-    <Compile Include="AppRestartRecovery\RecoveryData.cs" />
-    <Compile Include="AppRestartRecovery\RecoverySettings.cs" />
-    <Compile Include="AppRestartRecovery\RestartRestrictions.cs" />
-    <Compile Include="AppRestartRecovery\RestartSettings.cs" />
+    <Compile Include="ApplicationServices\ApplicationRestartRecoveryManager.cs" />
+    <Compile Include="ApplicationServices\RecoveryData.cs" />
+    <Compile Include="ApplicationServices\RecoverySettings.cs" />
+    <Compile Include="ApplicationServices\RestartSettings.cs" />
     <Compile Include="Controls\AdornerExtensions.cs" />
     <Compile Include="Controls\AdornerLabel.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
@@ -74,9 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dialogs\DialogControlCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\DialogsDefaults.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dialogs\IDialogControlHost.cs">
@@ -105,17 +101,12 @@
     <Compile Include="Dialogs\TaskDialogs\TaskDialogCommandLink.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogControl.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogDefaults.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogExpandedDetailsLocation.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogHyperlinkClickedEventArgs.cs" />
+    <Compile Include="Dialogs\TaskDialogs\HyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBar.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBarState.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogRadioButton.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogResult.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardButtons.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogStandardIcon.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogStartupLocation.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogEnums.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
-    <Compile Include="AppRestartRecovery\AppRestartRecoveryNativeMethods.cs">
+    <Compile Include="ApplicationServices\AppRestartRecoveryNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\IntToBooleanConverter.cs" />
@@ -129,9 +120,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Internal\NativeMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\DialogShowState.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dialogs\TaskDialogs\NativeTaskDialog.cs">

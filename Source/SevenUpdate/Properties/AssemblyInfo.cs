@@ -1,3 +1,13 @@
+// ***********************************************************************
+// <copyright file="AssemblyInfo.cs"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
+//            solution="SevenUpdate"
+//            company="Seven Software">
+//     Copyright (c) Seven Software. All rights reserved.
+// </copyright>
+// <author username="sevenalive">Robert Baker</author>
+// ***********************************************************************
 using System;
 using System.Reflection;
 using System.Resources;

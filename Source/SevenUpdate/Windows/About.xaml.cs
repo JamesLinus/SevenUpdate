@@ -23,7 +23,7 @@ namespace SevenUpdate.Windows
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Displays About Information
+        ///   Initializes a new instance of the <see cref = "About" /> class.
         /// </summary>
         public About()
         {
@@ -42,21 +42,26 @@ namespace SevenUpdate.Windows
         /// Closes the About window
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void Close_Click(object sender, RoutedEventArgs e)
+        private void Close(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
         /// <summary>
+        /// Opens a browser and navigates to the Uri
         /// </summary>
         /// <param name="sender">
+        /// The source of the event.
         /// </param>
         /// <param name="e">
+        /// The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.
         /// </param>
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(e.Uri.AbsoluteUri);
             e.Handled = true;

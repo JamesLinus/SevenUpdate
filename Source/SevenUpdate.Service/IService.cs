@@ -110,18 +110,18 @@ namespace SevenUpdate.Service
         /// <summary>
         /// Adds an application to Seven Update, so it can manage updates for it.
         /// </summary>
-        /// <param name="app">
-        /// The application to add to Seven Update
+        /// <param name="application">
+        /// The application to add
         /// </param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void AddApp(Sua app);
+        void AddApp(Sua application);
 
         /// <summary>
         /// Changes the program settings
         /// </summary>
-        /// <param name="apps">
-        /// The applications Seven Update will check and manage updates for
+        /// <param name="applications">
+        /// The applications to enable update checking
         /// </param>
         /// <param name="options">
         /// The Seven Update settings
@@ -131,7 +131,7 @@ namespace SevenUpdate.Service
         /// </param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void ChangeSettings(Collection<Sua> apps, Config options, bool autoCheck);
+        void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck);
 
         /// <summary>
         /// Hides a single update

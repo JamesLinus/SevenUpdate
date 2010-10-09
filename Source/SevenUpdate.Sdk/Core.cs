@@ -14,9 +14,7 @@ namespace SevenUpdate.Sdk
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
-    using System.Net;
     using System.Reflection;
-    using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
     using System.Windows.Forms;
@@ -41,11 +39,6 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>
-        ///   The application directory of Seven Update
-        /// </summary>
-        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
-
-        /// <summary>
         ///   The location of the file that contains the collection of Projects for the SDK
         /// </summary>
         public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
@@ -56,26 +49,26 @@ namespace SevenUpdate.Sdk
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
 
+        /// <summary>
+        ///   The application directory of Seven Update
+        /// </summary>
+        private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        ///   Gets or sets the application information of the project
+        ///   Gets the application information of the project
         /// </summary>
         /// <value>The application info.</value>
-        public static Sua AppInfo { get; set; }
+        public static Sua AppInfo { get; private set; }
 
         /// <summary>
         ///   Gets or sets the index for the selected project
         /// </summary>
-        /// <value>The index of the app.</value>
+        /// <value>The index of the application</value>
         internal static int AppIndex { get; set; }
-
-        /// <summary>
-        ///   Gets or sets a value indicating whether aero glass is enabled
-        /// </summary>
-        internal static bool IsGlassEnabled { get; set; }
 
         /// <summary>
         ///   Gets or sets a value indicating whether the current project being edited is new
@@ -110,63 +103,14 @@ namespace SevenUpdate.Sdk
         internal static int UpdateIndex { get; set; }
 
         /// <summary>
-        ///   Gets or sets the current update being edited
+        ///   Gets the current update being edited
         /// </summary>
         /// <value>The update info.</value>
-        internal static Update UpdateInfo { get; set; }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Checks if a file or UNC is valid
-        /// </summary>
-        /// <param name="path">
-        /// The path we want to check
-        /// </param>
-        /// <param name="is64Bit">
-        /// if set to <see langword="true"/> the application is 64 bit
-        /// </param>
-        /// <returns>
-        /// The is valid file path.
-        /// </returns>
-        public static bool IsValidFilePath(string path, bool is64Bit)
-        {
-            path = Utilities.ConvertPath(path, true, is64Bit);
-            var reg = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            return reg.IsMatch(path);
-        }
+        internal static Update UpdateInfo { get; private set; }
 
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Checks to see if a <see cref="Uri"/> is valid and on the internet
-        /// </summary>
-        /// <param name="url">
-        /// A <see cref="Uri"/> to check
-        /// </param>
-        /// <returns>
-        /// True if <see cref="Uri"/> is valid, otherwise <see langword="false"/>
-        /// </returns>
-        internal static bool CheckUrl(string url)
-        {
-            try
-            {
-                new Uri(url);
-                var request = WebRequest.Create(url);
-                request.Timeout = 15000;
-                request.GetResponse();
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-
-            return true;
-        }
 
         /// <summary>
         /// Edit the selected project or update
@@ -227,8 +171,13 @@ namespace SevenUpdate.Sdk
         internal static IWin32Window GetIWin32Window(this Visual visual)
         {
             var source = PresentationSource.FromVisual(visual) as HwndSource;
-            IWin32Window win = new OldWindow(source.Handle);
-            return win;
+            if (source != null)
+            {
+                IWin32Window win = new OldWindow(source.Handle);
+                return win;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -259,7 +208,7 @@ namespace SevenUpdate.Sdk
         internal static void NewUpdate()
         {
             IsNewProject = false;
-            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + ".sua");
+            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
             UpdateInfo = new Update
                 {
                     Files = new ObservableCollection<UpdateFile>(), 
@@ -303,10 +252,10 @@ namespace SevenUpdate.Sdk
                 };
             switch (defaultExtension)
             {
-                case "sua":
+                case @"sua":
                     openFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
                     break;
-                case "sui":
+                case @"sui":
                     openFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
                     break;
                 case "reg":
@@ -451,23 +400,6 @@ namespace SevenUpdate.Sdk
         /// <param name="instructionText">
         /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
         /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, string description)
-        {
-            return ShowMessage(instructionText, TaskDialogStandardIcon.None, TaskDialogStandardButtons.Ok, description);
-        }
-
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
         /// <param name="icon">
         /// The <see cref="TaskDialogStandardIcon"/> to display
         /// </param>
@@ -480,30 +412,6 @@ namespace SevenUpdate.Sdk
         internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             return ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
-        }
-
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <param name="defaultButtonText">
-        /// Text to display on the button
-        /// </param>
-        /// <param name="displayShieldOnButton">
-        /// Indicates if a UAC shield is to be displayed on the defaultButton
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, string description, string defaultButtonText, bool displayShieldOnButton)
-        {
-            return ShowMessage(
-                instructionText, TaskDialogStandardIcon.None, TaskDialogStandardButtons.Cancel, description, null, defaultButtonText, displayShieldOnButton);
         }
 
         /// <summary>
@@ -533,7 +441,7 @@ namespace SevenUpdate.Sdk
         /// <returns>
         /// Returns the result of the message
         /// </returns>
-        internal static TaskDialogResult ShowMessage(
+        private static TaskDialogResult ShowMessage(
             string instructionText, 
             TaskDialogStandardIcon icon, 
             TaskDialogStandardButtons standardButtons, 
@@ -652,8 +560,9 @@ namespace SevenUpdate.Sdk
             private readonly IntPtr windowHandle;
 
             /// <summary>
+            ///   <see langword = "true" /> if the window is disposed
             /// </summary>
-            private bool disposed /* = false*/;
+            private bool disposed;
 
             #endregion
 
@@ -671,6 +580,7 @@ namespace SevenUpdate.Sdk
             }
 
             /// <summary>
+            /// Finalizes an instance of the <see cref="OldWindow"/> class.
             /// </summary>
             ~OldWindow()
             {
@@ -696,13 +606,34 @@ namespace SevenUpdate.Sdk
 
             #endregion
 
-            #region Public Methods
+            #region Implemented Interfaces
+
+            #region IDisposable
 
             /// <summary>
+            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            /// </summary>
+            public void Dispose()
+            {
+                this.Dispose(false);
+
+                // Unregister object for finalization.
+                GC.SuppressFinalize(this);
+            }
+
+            #endregion
+
+            #endregion
+
+            #region Methods
+
+            /// <summary>
+            /// Releases unmanaged and - optionally - managed resources
             /// </summary>
             /// <param name="disposing">
+            /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
             /// </param>
-            public void Dispose(bool disposing)
+            private void Dispose(bool disposing)
             {
                 lock (this)
                 {
@@ -723,24 +654,6 @@ namespace SevenUpdate.Sdk
                     this.disposed = true;
                 }
             }
-
-            #endregion
-
-            #region Implemented Interfaces
-
-            #region IDisposable
-
-            /// <summary>
-            /// </summary>
-            public void Dispose()
-            {
-                this.Dispose(false);
-
-                // Unregister object for finalization.
-                GC.SuppressFinalize(this);
-            }
-
-            #endregion
 
             #endregion
         }

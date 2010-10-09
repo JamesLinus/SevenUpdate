@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="Converters.cs"
+// <copyright file="InverseBooleanConverter.cs"
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"

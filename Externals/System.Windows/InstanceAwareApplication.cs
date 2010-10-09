@@ -244,8 +244,6 @@ namespace System.Windows
 
         #region Methods
 
-
-
         /// <summary>
         /// Raises the <see cref="E:System.Windows.Application.Exit"/> event.
         /// </summary>

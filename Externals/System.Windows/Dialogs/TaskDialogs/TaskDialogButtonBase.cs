@@ -1,3 +1,12 @@
+// ***********************************************************************
+// <copyright file="TaskDialogButtonBase.cs"
+//            project="System.Windows"
+//            assembly="System.Windows"
+//            solution="SevenUpdate"
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
+// </copyright>
+// ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
     /// <summary>

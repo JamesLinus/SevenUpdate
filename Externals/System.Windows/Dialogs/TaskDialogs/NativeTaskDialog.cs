@@ -3,10 +3,9 @@
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
@@ -25,7 +24,7 @@ namespace System.Windows.Dialogs.TaskDialogs
     /// <remarks>
     /// A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialogs"/> do not remain constant across calls to TaskDialogIndirect.
     /// </remarks>
-    internal class NativeTaskDialog : IDisposable
+    internal sealed class NativeTaskDialog : IDisposable
     {
         #region Constants and Fields
 
@@ -228,7 +227,7 @@ namespace System.Windows.Dialogs.TaskDialogs
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close;
                     break;
                 case TaskDialogResult.CustomButtonClicked:
-                    id = DialogsDefaults.MinimumDialogControlId; // custom buttons
+                    id = 9; // custom buttons
                     break;
                 case TaskDialogResult.No:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.No;
@@ -471,78 +470,6 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing">
-        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-        /// </param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            this.disposed = true;
-
-            // Single biggest resource - make sure the dialog 
-            // itself has been instructed to close.
-            if (this.showState == DialogShowState.Showing)
-            {
-                this.NativeClose(TaskDialogResult.Cancel);
-            }
-
-            // Clean up custom allocated strings that were updated
-            // while the dialog was showing. Note that the strings
-            // passed in the initial TaskDialogIndirect call will
-            // be cleaned up automatically by the default 
-
-            // marshalling logic.
-            if (this.updatedStrings != null)
-            {
-                for (var i = 0; i < this.updatedStrings.Length; i++)
-                {
-                    if (this.updatedStrings[i] == IntPtr.Zero)
-                    {
-                        continue;
-                    }
-
-                    Marshal.FreeHGlobal(this.updatedStrings[i]);
-                    this.updatedStrings[i] = IntPtr.Zero;
-                }
-            }
-
-            // Clean up the button and radio button arrays, if any.
-            if (this.buttonArray != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(this.buttonArray);
-                this.buttonArray = IntPtr.Zero;
-            }
-
-            if (this.radioButtonArray != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(this.radioButtonArray);
-                this.radioButtonArray = IntPtr.Zero;
-            }
-
-            if (!disposing)
-            {
-                return;
-            }
-
-            // Clean up managed resources - currently there are none that are interesting.
-            if (this.outerDialog != null)
-            {
-                this.outerDialog.Dispose();
-            }
-
-            if (this.nativeDialogConfig != null)
-            {
-                this.nativeDialogConfig.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Allocates and marshals buttons.
         /// </summary>
         /// <param name="buttons">
@@ -633,6 +560,78 @@ namespace System.Windows.Dialogs.TaskDialogs
             }
 
             return (int)Result.OK;
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources
+        /// </summary>
+        /// <param name="disposing">
+        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
+        /// </param>
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            this.disposed = true;
+
+            // Single biggest resource - make sure the dialog 
+            // itself has been instructed to close.
+            if (this.showState == DialogShowState.Showing)
+            {
+                this.NativeClose(TaskDialogResult.Cancel);
+            }
+
+            // Clean up custom allocated strings that were updated
+            // while the dialog was showing. Note that the strings
+            // passed in the initial TaskDialogIndirect call will
+            // be cleaned up automatically by the default 
+
+            // marshalling logic.
+            if (this.updatedStrings != null)
+            {
+                for (var i = 0; i < this.updatedStrings.Length; i++)
+                {
+                    if (this.updatedStrings[i] == IntPtr.Zero)
+                    {
+                        continue;
+                    }
+
+                    Marshal.FreeHGlobal(this.updatedStrings[i]);
+                    this.updatedStrings[i] = IntPtr.Zero;
+                }
+            }
+
+            // Clean up the button and radio button arrays, if any.
+            if (this.buttonArray != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(this.buttonArray);
+                this.buttonArray = IntPtr.Zero;
+            }
+
+            if (this.radioButtonArray != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(this.radioButtonArray);
+                this.radioButtonArray = IntPtr.Zero;
+            }
+
+            if (!disposing)
+            {
+                return;
+            }
+
+            // Clean up managed resources - currently there are none that are interesting.
+            if (this.outerDialog != null)
+            {
+                this.outerDialog.Dispose();
+            }
+
+            if (this.nativeDialogConfig != null)
+            {
+                this.nativeDialogConfig.Dispose();
+            }
         }
 
         /// <summary>

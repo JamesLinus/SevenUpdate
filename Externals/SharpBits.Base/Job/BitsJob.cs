@@ -3,10 +3,10 @@
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Xidar Solutions">
+//     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
+// <author username="xidar">xidar/author>
 // ***********************************************************************
 namespace SharpBits.Base.Job
 {
@@ -1181,10 +1181,9 @@ namespace SharpBits.Base.Job
                 {
                     // only supported from IBackgroundCopyJob2 and above
                     var bgCredentials = new BGAuthCredentials
-                    {
-                        Scheme = (BGAuthScheme)credentials.AuthenticationScheme,
-                        Target = (BGAuthTarget)credentials.AuthenticationTarget
-                    };
+                        {
+                           Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget 
+                        };
                     bgCredentials.Credentials.Basic.Password = credentials.Password;
                     bgCredentials.Credentials.Basic.UserName = credentials.UserName;
                     this.job2.SetCredentials(ref bgCredentials);
@@ -1292,7 +1291,6 @@ namespace SharpBits.Base.Job
 
         #endregion
     }
-
 
     /// <summary>
     /// Contains data about the files to download or upload using BITS

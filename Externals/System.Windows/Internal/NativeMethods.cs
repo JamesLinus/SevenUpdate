@@ -63,7 +63,7 @@ namespace System.Windows.Internal
         public static extern IntPtr SendMessage(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength);
 
         /// <summary>
-        /// Gets a value indicating whether if the current logged in user is an admin
+        ///   Gets a value indicating whether if the current logged in user is an admin
         /// </summary>
         public static bool IsUserAdmin
         {

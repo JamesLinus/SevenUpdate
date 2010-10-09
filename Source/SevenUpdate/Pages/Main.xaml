@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" MinWidth="850" MinHeight="467" Title="{LocText SevenUpdate:Resources:SevenUpdate}" KeepAlive="True" Loaded="Page_Loaded">
+<Page x:Class="SevenUpdate.Pages.Main" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:ib="clr-namespace:SevenUpdate.Pages" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" MinWidth="850" MinHeight="467" Title="{LocText SevenUpdate:Resources:SevenUpdate}" KeepAlive="True" Loaded="Init">
 	<!-- Grid-->
 	<Grid ShowGridLines="False">
 		<Grid.RowDefinitions>
@@ -25,13 +25,13 @@
 			</Rectangle.Fill>
 		</Rectangle>
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates_MouseDown" Focusable="True" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ChangeSettings_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NaviateToOptions" Focusable="True" />
 
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="ViewUpdateHistory_MouseDown" Focusable="True" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="RestoreHiddenUpdates_MouseDown" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToUpdateHistory" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToRestoreUpdates" Focusable="True" />
 		</StackPanel>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,9" VerticalAlignment="Bottom" Cursor="Hand" Padding="2" MouseDown="About_MouseDown" Grid.Row="4" Focusable="True" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}" Foreground="White" HorizontalAlignment="Left" Margin="20,0,0,9" VerticalAlignment="Bottom" Cursor="Hand" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="4" Focusable="True" />
 		<TextBlock FontSize="16" Foreground="#FF003399" Padding="2" Text="{LocText SevenUpdate:Resources:SevenUpdate}" Grid.Column="2" Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" />
 		<ib:InfoBar x:Name="infoBar" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,30" Grid.ColumnSpan="2" />
 		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RecentCheck}" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />

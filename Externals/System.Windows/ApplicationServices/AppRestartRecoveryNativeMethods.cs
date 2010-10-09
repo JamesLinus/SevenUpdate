@@ -3,10 +3,9 @@
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
@@ -14,6 +13,7 @@ namespace System.Windows.ApplicationServices
     using System.Windows.Internal;
 
     /// <summary>
+    /// Provides native Win32 Methods to assist with Application recovery
     /// </summary>
     internal static class AppRestartRecoveryNativeMethods
     {

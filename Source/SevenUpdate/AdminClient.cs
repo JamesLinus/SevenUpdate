@@ -17,6 +17,7 @@ namespace SevenUpdate
     using System.Threading;
     using System.Threading.Tasks;
 
+    using SevenUpdate.Service;
     using SevenUpdate.WCF;
 
     /// <summary>
@@ -36,7 +37,7 @@ namespace SevenUpdate
         #region Events
 
         /// <summary>
-        ///   Occurs when the SevenUpdate.Admin service faults or encounters a serious error
+        ///   Occurs when the <see cref = "SevenUpdate" />.Admin service faults or encounters a serious error
         /// </summary>
         public static event EventHandler<ErrorOccurredEventArgs> ServiceError;
 
@@ -60,7 +61,7 @@ namespace SevenUpdate
             var abort = false;
             try
             {
-                abort = Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Admin.exe", "Abort", true);
+                abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort", true);
                 if (abort && wcfClient != null)
                 {
                     if (wcfClient.State == CommunicationState.Opened)
@@ -80,22 +81,24 @@ namespace SevenUpdate
         /// <summary>
         /// Adds an application to Seven Update
         /// </summary>
-        /// <param name="app">
+        /// <param name="application">
         /// the application to add to Seven Update
         /// </param>
-        internal static void AddSua(Sua app)
+        internal static void AddSua(Sua application)
         {
             if (!Connect())
             {
                 return;
             }
 
-            wcfClient.AddApp(app);
+            wcfClient.AddApp(application);
         }
 
         /// <summary>
+        /// Reports an error with the admin process
         /// </summary>
         /// <param name="e">
+        /// The exception data that caused the error
         /// </param>
         internal static void AdminError(Exception e)
         {
@@ -123,6 +126,7 @@ namespace SevenUpdate
         /// Connects to the <see cref="SevenUpdate"/>.Admin sub program
         /// </summary>
         /// <returns>
+        /// <see langword="true"/> if the connection to <see cref="WcfService"/> was successful
         /// </returns>
         internal static bool Connect()
         {
@@ -236,10 +240,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        /// Unhides an update
+        /// Removes an update from the hidden list
         /// </summary>
         /// <param name="hiddenUpdate">
-        /// the hidden update to unhide
+        /// the hidden update to show
         /// </param>
         /// <returns>
         /// <c>true</c> if the admin process was executed, otherwise <c>false</c>
@@ -256,14 +260,16 @@ namespace SevenUpdate
         }
 
         /// <summary>
+        /// Waits for the admin process
         /// </summary>
         /// <returns>
+        /// <see langword="true"/> if the admin process was successfully started
         /// </returns>
         private static bool WaitForAdmin()
         {
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
-                var success = Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Admin.exe");
+                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
                 if (!success)
                 {
                     return false;

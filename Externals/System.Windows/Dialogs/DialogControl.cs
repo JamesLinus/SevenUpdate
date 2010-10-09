@@ -3,14 +3,39 @@
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
-//            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//            company="Microsoft Corporation">
+//     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
-// <author username="sevenalive">Robert Baker</author>
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
     using System.Diagnostics;
+
+    /// <summary>
+    /// Dialog Show State
+    /// </summary>
+    internal enum DialogShowState
+    {
+        /// <summary>
+        ///   The dialog is about to be shown
+        /// </summary>
+        PreShow, 
+
+        /// <summary>
+        ///   Currently Showing
+        /// </summary>
+        Showing, 
+
+        /// <summary>
+        ///   Currently Closing
+        /// </summary>
+        Closing, 
+
+        /// <summary>
+        ///   Closed
+        /// </summary>
+        Closed
+    }
 
     /// <summary>
     /// Abstract base class for all dialog controls
@@ -22,7 +47,7 @@ namespace System.Windows.Dialogs
         /// <summary>
         ///   The next ID
         /// </summary>
-        private static int nextId = DialogsDefaults.MinimumDialogControlId;
+        private static int nextId = 9;
 
         /// <summary>
         ///   The hosting dialog
@@ -48,7 +73,7 @@ namespace System.Windows.Dialogs
             // Support wrapping of control IDs in case you create a lot of custom controls
             if (nextId == Int32.MaxValue)
             {
-                nextId = DialogsDefaults.MinimumDialogControlId;
+                nextId = 9;
             }
             else
             {
