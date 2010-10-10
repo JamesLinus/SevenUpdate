@@ -188,7 +188,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut to import
+        /// Opens a dialog to browse for the shortcut to import
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -282,7 +282,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut icon
+        /// Opens a dialog to browse for the shortcut icon
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -311,7 +311,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut location
+        /// Opens a dialog to browse for the shortcut location
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -341,7 +341,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the shortcut target
+        /// Opens a dialog to browse for the shortcut target
         /// </summary>
         /// <param name="sender">
         /// The source of the event.

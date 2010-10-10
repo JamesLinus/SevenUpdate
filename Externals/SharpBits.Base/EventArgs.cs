@@ -6,7 +6,7 @@
 //            company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="xidar">xidar/author>
+// <author username="xidar">xidar</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
@@ -62,7 +62,6 @@ namespace SharpBits.Base
     /// <summary>
     /// The event data for the interface notification event
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "EventArgs")]
     public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
     {
         #region Constants and Fields

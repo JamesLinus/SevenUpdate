@@ -23,10 +23,8 @@ namespace System.Windows.Controls
         /// Determines whether the adorner layer contains an element
         /// </summary>
         /// <typeparam name="T">
+        /// The type of element to check
         /// </typeparam>
-        /// <typeparameter name="T">
-        ///   The type of element
-        /// </typeparameter>
         /// <param name="adr">
         /// The adorner.
         /// </param>
@@ -65,16 +63,17 @@ namespace System.Windows.Controls
         /// Removes the adorners
         /// </summary>
         /// <typeparam name="T">
+        /// The adorner control to remove
         /// </typeparam>
-        /// <typeparameter name="T">
-        ///   The type of element
-        /// </typeparameter>
         /// <param name="adr">
         /// The adorner
         /// </param>
         /// <param name="elem">
         /// The element
         /// </param>
+        /// <typeparameter name="T">
+        ///   The type of element
+        /// </typeparameter>
         public static void RemoveAdorners<T>(this AdornerLayer adr, UIElement elem)
         {
             var adorners = adr.GetAdorners(elem);

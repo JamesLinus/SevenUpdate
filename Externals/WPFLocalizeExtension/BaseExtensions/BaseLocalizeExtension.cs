@@ -17,6 +17,7 @@ namespace WPFLocalizeExtension.BaseExtensions
     using System.Linq;
     using System.Reflection;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Markup;
 
@@ -83,8 +84,8 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// <param name="key">
         /// Three types are supported:
         ///   Direct: passed key = key;
-        ///   Dict/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
-        ///   Assembly/Dict/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
+        ///   Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
+        ///   Assembly/Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey"/>
         /// </param>
         /// <remarks>
         /// This constructor register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
@@ -111,23 +112,6 @@ namespace WPFLocalizeExtension.BaseExtensions
         #region Properties
 
         /// <summary>
-        ///   Gets or sets the name of the Assembly where the .resx is located.
-        ///   If it's <see langword = "null" />, the executing assembly (where this LocalizeEngine is located at) will get returned
-        /// </summary>
-        public string Assembly
-        {
-            get
-            {
-                return this.assembly ?? Localize.Instance.GetAssemblyName(System.Reflection.Assembly.GetExecutingAssembly());
-            }
-
-            set
-            {
-                this.assembly = !string.IsNullOrEmpty(value) ? value : null;
-            }
-        }
-
-        /// <summary>
         ///   Gets the current value.
         ///   This property has only a value, if the <c>BaseLocalizeExtension</c> is binded to a target.
         /// </summary>
@@ -147,30 +131,6 @@ namespace WPFLocalizeExtension.BaseExtensions
         }
 
         /// <summary>
-        ///   Gets or sets the design value.
-        /// </summary>
-        /// <value>The design value.</value>
-        [DesignOnly(true)]
-        public object DesignValue { get; set; }
-
-        /// <summary>
-        ///   Gets or sets the Name of the .resx dictionary.
-        ///   If it's <see langword = "null" />, "Resources" will get returned
-        /// </summary>
-        public string Dict
-        {
-            get
-            {
-                return this.dict ?? Localize.ResourcesName;
-            }
-
-            set
-            {
-                this.dict = !string.IsNullOrEmpty(value) ? value : null;
-            }
-        }
-
-        /// <summary>
         ///   Gets or sets the culture to force a fixed localized object
         /// </summary>
         public string ForceCulture { get; set; }
@@ -185,22 +145,6 @@ namespace WPFLocalizeExtension.BaseExtensions
         public string InitializeValue { get; set; }
 
         /// <summary>
-        ///   Gets or sets the Key to a .resx object
-        /// </summary>
-        public string Key
-        {
-            get
-            {
-                return this.key;
-            }
-
-            set
-            {
-                this.key = value;
-            }
-        }
-
-        /// <summary>
         ///   Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -208,7 +152,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         {
             get
             {
-                return string.Format(CultureInfo.CurrentCulture, "{0}:{1}:{2}", this.Assembly, this.Dict, this.Key ?? "(null)");
+                return string.Format(CultureInfo.CurrentCulture, "{0}:{1}:{2}", this.Assembly, this.Dictionary, this.Key ?? "(null)");
             }
 
             set
@@ -225,6 +169,63 @@ namespace WPFLocalizeExtension.BaseExtensions
             get
             {
                 return this.targetObjects;
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the name of the Assembly where the .resx is located.
+        ///   If it's <see langword = "null" />, the executing assembly (where this LocalizeEngine is located at) will get returned
+        /// </summary>
+        protected string Assembly
+        {
+            get
+            {
+                return this.assembly ?? Localize.GetAssemblyName(System.Reflection.Assembly.GetExecutingAssembly());
+            }
+
+            set
+            {
+                this.assembly = !string.IsNullOrEmpty(value) ? value : null;
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the design value.
+        /// </summary>
+        /// <value>The design value.</value>
+        [DesignOnly(true)]
+        protected object DesignValue { get; set; }
+
+        /// <summary>
+        ///   Gets or sets the Name of the .resx dictionary.
+        ///   If it's <see langword = "null" />, "Resources" will get returned
+        /// </summary>
+        protected string Dictionary
+        {
+            get
+            {
+                return this.dict ?? Localize.ResourcesName;
+            }
+
+            set
+            {
+                this.dict = !string.IsNullOrEmpty(value) ? value : null;
+            }
+        }
+
+        /// <summary>
+        ///   Gets or sets the Key to a .resx object
+        /// </summary>
+        protected string Key
+        {
+            get
+            {
+                return this.key;
+            }
+
+            set
+            {
+                this.key = value;
             }
         }
 
@@ -305,7 +306,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 if (this.targetObjects.Count == 0)
                 {
                     // add this localize extension to the WeakEventManager on LocalizeDictionary
-                    Localize.Instance.AddEventListener(this);
+                    Localize.AddEventListener(this);
                 }
 
                 // add the target as an dependency object as weak reference to the dependency object list
@@ -316,11 +317,11 @@ namespace WPFLocalizeExtension.BaseExtensions
             }
 
             // return the new value for the DependencyProperty
-            return Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault());
+            return Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
         }
 
         /// <summary>
-        /// Resolves the localized value of the current Assembly, Dict, Key pair.
+        /// Resolves the localized value of the current Assembly, Dictionary, Key pair.
         /// </summary>
         /// <param name="resolvedValue">
         /// The resolved value.
@@ -329,7 +330,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// True if the resolve was success, otherwise <see langword="false"/>.
         /// </returns>
         /// <exception>
-        /// If the Assembly, Dict, Key pair was not found.
+        /// If the Assembly, Dictionary, Key pair was not found.
         /// </exception>
         public bool ResolveLocalizedValue(out TValue resolvedValue)
         {
@@ -338,7 +339,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         }
 
         /// <summary>
-        /// Resolves the localized value of the current Assembly, Dict, Key pair.
+        /// Resolves the localized value of the current Assembly, Dictionary, Key pair.
         /// </summary>
         /// <param name="resolvedValue">
         /// The resolved value.
@@ -350,7 +351,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// True if the resolve was success, otherwise <see langword="false"/>.
         /// </returns>
         /// <exception>
-        /// If the Assembly, Dict, Key pair was not found.
+        /// If the Assembly, Dictionary, Key pair was not found.
         /// </exception>
         public bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)
         {
@@ -358,7 +359,7 @@ namespace WPFLocalizeExtension.BaseExtensions
             resolvedValue = default(TValue);
 
             // get the localized object from the dictionary
-            var localizedObject = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, targetCulture);
+            var localizedObject = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, targetCulture);
 
             // check if the found localized object is type of TValue
             if (localizedObject is TValue)
@@ -417,7 +418,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 if (this.targetObjects.Count == 0)
                 {
                     // add this localize extension to the WeakEventManager on LocalizeDictionary
-                    Localize.Instance.AddEventListener(this);
+                    Localize.AddEventListener(this);
                 }
 
                 // add the target as an dependency object as weak reference to the dependency object list
@@ -427,7 +428,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(targetObject), this);
 
                 // get the initial value of the dependency property
-                var output = this.FormatOutput(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault()));
+                var output = this.FormatOutput(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault()));
 
                 // set the value to the dependency object
                 SetTargetValue(targetObject, targetProperty, output);
@@ -610,7 +611,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         protected virtual void HandleNewValue()
         {
             // gets the new value and set it to the dependency property on the dependency object
-            this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault()));
+            this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault()));
         }
 
         /// <summary>

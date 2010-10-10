@@ -196,6 +196,42 @@ namespace WPFLocalizeExtension.Engine
         #region Public Methods
 
         /// <summary>
+        /// Attach an WeakEventListener to the LocalizeDictionary
+        /// </summary>
+        /// <param name="listener">
+        /// The listener to attach
+        /// </param>
+        public static void AddEventListener(IWeakEventListener listener)
+        {
+            // calls AddListener from the inline WeakCultureChangedEventManager
+            WeakCultureChangedEventManager.AddListener(listener);
+        }
+
+        /// <summary>
+        /// Returns the <see cref="AssemblyName"/> of the passed assembly instance
+        /// </summary>
+        /// <param name="assembly">
+        /// The Assembly where to get the name from
+        /// </param>
+        /// <returns>
+        /// The Assembly name
+        /// </returns>
+        public static string GetAssemblyName(Assembly assembly)
+        {
+            if (assembly == null)
+            {
+                throw new ArgumentNullException("assembly");
+            }
+
+            if (assembly.FullName == null)
+            {
+                throw new NullReferenceException("assembly.FullName is null");
+            }
+
+            return assembly.FullName.Split(',')[0];
+        }
+
+        /// <summary>
         /// Getter of <see cref="DependencyProperty"/> Culture.
         ///   Only supported at DesignTime.
         ///   If its in Runtime, LocalizeDictionary.Culture will be returned.
@@ -221,17 +257,17 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="outAssembly">
         /// The found or default assembly.
         /// </param>
-        /// <param name="outDict">
+        /// <param name="outDictionary">
         /// The found or default dictionary.
         /// </param>
         /// <param name="outKey">
         /// The found or default key.
         /// </param>
-        public static void ParseKey(string inKey, out string outAssembly, out string outDict, out string outKey)
+        public static void ParseKey(string inKey, out string outAssembly, out string outDictionary, out string outKey)
         {
             // reset the vars to null
             outAssembly = null;
-            outDict = null;
+            outDictionary = null;
             outKey = null;
 
             // its a assembly/dict/key pair
@@ -243,7 +279,7 @@ namespace WPFLocalizeExtension.Engine
                 if (split.Length == 3)
                 {
                     outAssembly = !string.IsNullOrEmpty(split[0]) ? split[0] : null;
-                    outDict = !string.IsNullOrEmpty(split[1]) ? split[1] : null;
+                    outDictionary = !string.IsNullOrEmpty(split[1]) ? split[1] : null;
                     outKey = split[2];
                 }
 
@@ -251,7 +287,7 @@ namespace WPFLocalizeExtension.Engine
                 // assembly = ExecutingAssembly
                 if (split.Length == 2)
                 {
-                    outDict = !string.IsNullOrEmpty(split[0]) ? split[0] : null;
+                    outDictionary = !string.IsNullOrEmpty(split[0]) ? split[0] : null;
                     outKey = split[1];
                 }
 
@@ -290,42 +326,6 @@ namespace WPFLocalizeExtension.Engine
             {
                 obj.SetValue(DesignCultureProperty, value);
             }
-        }
-
-        /// <summary>
-        /// Attach an WeakEventListener to the LocalizeDictionary
-        /// </summary>
-        /// <param name="listener">
-        /// The listener to attach
-        /// </param>
-        public void AddEventListener(IWeakEventListener listener)
-        {
-            // calls AddListener from the inline WeakCultureChangedEventManager
-            WeakCultureChangedEventManager.AddListener(listener);
-        }
-
-        /// <summary>
-        /// Returns the <see cref="AssemblyName"/> of the passed assembly instance
-        /// </summary>
-        /// <param name="assembly">
-        /// The Assembly where to get the name from
-        /// </param>
-        /// <returns>
-        /// The Assembly name
-        /// </returns>
-        public string GetAssemblyName(Assembly assembly)
-        {
-            if (assembly == null)
-            {
-                throw new ArgumentNullException("assembly");
-            }
-
-            if (assembly.FullName == null)
-            {
-                throw new NullReferenceException("assembly.FullName is null");
-            }
-
-            return assembly.FullName.Split(',')[0];
         }
 
         /// <summary>
@@ -424,7 +424,6 @@ namespace WPFLocalizeExtension.Engine
             ResourceManager resManager;
 
             // try to get the resource manager
-
             try
             {
                 resManager = this.GetResourceManager(resourceAssembly, resourceDictionary, resourceKey);
@@ -623,7 +622,7 @@ namespace WPFLocalizeExtension.Engine
         {
             if (resourceAssembly == null)
             {
-                resourceAssembly = this.GetAssemblyName(Assembly.GetExecutingAssembly());
+                resourceAssembly = GetAssemblyName(Assembly.GetExecutingAssembly());
             }
 
             if (resourceDictionary == null)
@@ -720,6 +719,7 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
+
                     // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }

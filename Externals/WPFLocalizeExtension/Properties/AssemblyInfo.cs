@@ -1,4 +1,14 @@
-﻿using System;
+﻿// ***********************************************************************
+// <copyright file="AssemblyInfo.cs"
+//            project="WPFLocalizeExtension"
+//            assembly="WPFLocalizeExtension"
+//            solution="SevenUpdate"
+//            company="Bernhard Millauer">
+//     Copyright (c) Bernhard Millauer. All rights reserved.
+// </copyright>
+// <author username="SeriousM">Bernhard Millauer</author>
+// ***********************************************************************
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;

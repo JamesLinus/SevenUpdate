@@ -97,15 +97,12 @@
     <Compile Include="Dialogs\TaskDialogs\TaskDialogBar.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogButton.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogButtonBase.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogClosingEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogCommandLink.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogControl.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogDefaults.cs" />
-    <Compile Include="Dialogs\TaskDialogs\HyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogProgressBar.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogRadioButton.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogEnums.cs" />
-    <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
     <Compile Include="ApplicationServices\AppRestartRecoveryNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -146,7 +143,6 @@
     </Compile>
     <Compile Include="Converters\StringToBooleanConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
-    <Compile Include="StartupNextInstanceEventArgs.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

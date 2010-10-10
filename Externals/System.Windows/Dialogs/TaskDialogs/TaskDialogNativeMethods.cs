@@ -21,6 +21,49 @@ namespace System.Windows.Dialogs.TaskDialogs
     internal static class TaskDialogNativeMethods
     {
         /// <summary>
+        /// The <see cref="TaskDialog"/> config delegate
+        /// </summary>
+        /// <param name="taskConfig">
+        /// The configuration for the dialog
+        /// </param>
+        /// <param name="button">
+        /// The button id
+        /// </param>
+        /// <param name="radioButton">
+        /// The radio button id
+        /// </param>
+        /// <param name="verificationFlagChecked">
+        /// <see langword="true"/> if verification should be used
+        /// </param>
+        /// <returns>
+        /// The result for applying the config
+        /// </returns>
+        internal delegate Result TdiDelegate([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [Out] out bool verificationFlagChecked);
+
+        /// <summary>
+        /// The <see cref="TaskDialog"/> callback
+        /// </summary>
+        /// <param name="handle">
+        /// The handle for the dialog
+        /// </param>
+        /// <param name="msg">
+        /// The message id
+        /// </param>
+        /// <param name="parameter">
+        /// The parameter
+        /// </param>
+        /// <param name="parameterLength">
+        /// The length of the parameter
+        /// </param>
+        /// <param name="data">
+        /// The data for the callback
+        /// </param>
+        /// <returns>
+        /// The result of the <see cref="TaskDialog"/>
+        /// </returns>
+        internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
+
+        /// <summary>
         /// Indicates the progress bar status
         /// </summary>
         internal enum ProgressBarStatus
@@ -261,77 +304,77 @@ namespace System.Windows.Dialogs.TaskDialogs
             /// <summary>
             ///   Navigates the page
             /// </summary>
-            NavigatePage = NativeMethods.WMUser + 101, 
+            NavigatePage = NativeMethods.WmUser + 101, 
 
             /// <summary>
             ///   parameter = Button ID
             /// </summary>
-            ClickButton = NativeMethods.WMUser + 102, 
+            ClickButton = NativeMethods.WmUser + 102, 
 
             /// <summary>
             ///   parameter = 0 (nonMarque) parameter != 0 (Marquee)
             /// </summary>
-            SetMarqueeProgressBar = NativeMethods.WMUser + 103, 
+            SetMarqueeProgressBar = NativeMethods.WmUser + 103, 
 
             /// <summary>
             ///   parameter = new progress state
             /// </summary>
-            SetProgressBarState = NativeMethods.WMUser + 104, 
+            SetProgressBarState = NativeMethods.WmUser + 104, 
 
             /// <summary>
             ///   parameterLength = MAKELPARAM(nMinRange, nMaxRange)
             /// </summary>
-            SetProgressBarRange = NativeMethods.WMUser + 105, 
+            SetProgressBarRange = NativeMethods.WmUser + 105, 
 
             /// <summary>
             ///   parameter = new position
             /// </summary>
-            SetProgressBarPos = NativeMethods.WMUser + 106, 
+            SetProgressBarPos = NativeMethods.WmUser + 106, 
 
             /// <summary>
             ///   Sets the progress bar state to a marquee
             /// </summary>
-            SetProgressBarMarquee = NativeMethods.WMUser + 107, 
+            SetProgressBarMarquee = NativeMethods.WmUser + 107, 
 
             /// <summary>
             ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
             /// </summary>
-            SetElementText = NativeMethods.WMUser + 108, 
+            SetElementText = NativeMethods.WmUser + 108, 
 
             /// <summary>
             ///   parameter = Radio Button ID
             /// </summary>
-            ClickRadioButton = NativeMethods.WMUser + 110, 
+            ClickRadioButton = NativeMethods.WmUser + 110, 
 
             /// <summary>
             ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Button ID
             /// </summary>
-            EnableButton = NativeMethods.WMUser + 111, 
+            EnableButton = NativeMethods.WmUser + 111, 
 
             /// <summary>
             ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Radio Button ID
             /// </summary>
-            EnableRadioButton = NativeMethods.WMUser + 112, 
+            EnableRadioButton = NativeMethods.WmUser + 112, 
 
             /// <summary>
             ///   parameter = 0 (unchecked), 1 (checked), parameterLength = 1 (set key focus)
             /// </summary>
-            ClickVerification = NativeMethods.WMUser + 113, 
+            ClickVerification = NativeMethods.WmUser + 113, 
 
             /// <summary>
             ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
             /// </summary>
-            UpdateElementText = NativeMethods.WMUser + 114, 
+            UpdateElementText = NativeMethods.WmUser + 114, 
 
             /// <summary>
             ///   Button ID, parameterLength = 0 (elevation not required), parameterLength != 0 (elevation required)
             /// </summary>
-            SetButtonElevationRequiredState = NativeMethods.WMUser + 115, 
+            SetButtonElevationRequiredState = NativeMethods.WmUser + 115, 
 
             /// <summary>
             ///   Updates the icon
             /// </summary>
-            UpdateIcon = NativeMethods.WMUser + 116
+            UpdateIcon = NativeMethods.WmUser + 116
         }
 
         /// <summary>
@@ -422,22 +465,90 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
+        /// Accesses the task dialog indirectly
         /// </summary>
-        /// <param name="taskConfig">
-        /// </param>
-        /// <param name="button">
-        /// </param>
-        /// <param name="radioButton">
-        /// </param>
-        /// <param name="verificationFlagChecked">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="taskConfig">The task config.</param>
+        /// <param name="button">The button id</param>
+        /// <param name="radioButton">The radio button id</param>
+        /// <param name="verificationFlagChecked">if set to <see langword="true"/> verification is used</param>
+        /// <returns>The result</returns>
         [DllImport(@"comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern Result TaskDialogIndirect(
             [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
 
         /// <summary>
+        /// Contains the data for the dialog config and icon
+        /// </summary>
+        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
+        internal struct TaskDialogConfigIconUnion
+        {
+            /// <summary>
+            ///   The main icon identifier
+            /// </summary>
+            [FieldOffset(0)]
+            internal int MainIcon;
+
+            /// <summary>
+            ///   The icon identifier
+            /// </summary>
+            [FieldOffset(0)]
+            internal int Icon;
+
+            /// <summary>
+            ///   The pointer to the space
+            /// </summary>
+            [FieldOffset(0)]
+            internal IntPtr Spacer;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TaskDialogConfigIconUnion"/> struct.
+            /// </summary>
+            /// <param name="i">
+            /// The icon identifier
+            /// </param>
+            internal TaskDialogConfigIconUnion(int i)
+            {
+                this.Spacer = IntPtr.Zero;
+                this.Icon = 0;
+                this.MainIcon = i;
+            }
+        }
+
+        /// <summary>
+        /// Contains the data for a <see cref="TaskDialogButton"/>
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
+        internal struct TaskDialogButtonData
+        {
+            /// <summary>
+            ///   The button id
+            /// </summary>
+            internal int ButtonID;
+
+            /// <summary>
+            ///   The text to display on the button
+            /// </summary>
+            [MarshalAs(UnmanagedType.LPWStr)]
+            internal string ButtonText;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TaskDialogButtonData"/> struct.
+            /// </summary>
+            /// <param name="buttonID">
+            /// The button ID.
+            /// </param>
+            /// <param name="buttonText">
+            /// The button text.
+            /// </param>
+            public TaskDialogButtonData(int buttonID, string buttonText)
+            {
+                this.ButtonID = buttonID;
+                this.ButtonText = buttonText;
+            }
+        }
+
+        /// <summary>
+        /// Contains data for the dialog configuration
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal class TaskDialogConfig : IDisposable
@@ -622,79 +733,5 @@ namespace System.Windows.Dialogs.TaskDialogs
                 }
             }
         }
-
-        /// <summary>
-        /// </summary>
-        [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
-        internal struct TaskDialogConfigIconUnion
-        {
-            /// <summary>
-            /// </summary>
-            /// <param name="i">
-            /// </param>
-            internal TaskDialogConfigIconUnion(int i)
-            {
-                this.Spacer = IntPtr.Zero;
-                this.Icon = 0;
-                this.hMainIcon = i;
-            }
-
-            /// <summary>
-            /// </summary>
-            [FieldOffset(0)]
-            internal int hMainIcon;
-
-            /// <summary>
-            /// </summary>
-            [FieldOffset(0)]
-            internal int Icon;
-
-            /// <summary>
-            /// </summary>
-            [FieldOffset(0)]
-            internal IntPtr Spacer;
-        }
-
-        /// <summary>
-        /// Contains data for the TaskDialogButton
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal struct TaskDialogButtonData
-        {
-            /// <summary>
-            /// Initializes a new instance of the <see cref="TaskDialogButtonData"/> struct.
-            /// </summary>
-            /// <param name="buttonID">
-            /// The button ID.
-            /// </param>
-            /// <param name="buttonText">
-            /// The button text.
-            /// </param>
-            public TaskDialogButtonData(int buttonID, string buttonText)
-            {
-                this.ButtonID = buttonID;
-                this.ButtonText = buttonText;
-            }
-
-            /// <summary>
-            ///   The button id
-            /// </summary>
-            internal int ButtonID;
-
-            /// <summary>
-            ///   The text to display on the button
-            /// </summary>
-            [MarshalAs(UnmanagedType.LPWStr)]
-            internal string ButtonText;
-        }
-
-        /// <summary>
-        /// </summary>
-        internal delegate Result TdiDelegate(
-            [In] TaskDialogConfig pTaskConfig, [Out] out int pnButton, [Out] out int pnRadioButton, [Out] out bool pVerificationFlagChecked);
-
-        /// <summary>
-        /// </summary>
-        internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
     }
 }

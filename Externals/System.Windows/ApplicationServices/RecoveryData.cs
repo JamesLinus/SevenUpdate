@@ -17,6 +17,9 @@ namespace System.Windows.ApplicationServices
     /// <param name="state">
     /// An application-defined state object that is passed to the callback method.
     /// </param>
+    /// <returns>
+    /// The result code
+    /// </returns>
     /// <remarks>
     /// The callback method will be invoked
     ///   prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 

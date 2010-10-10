@@ -824,7 +824,7 @@ namespace SevenUpdate.Pages
         /// The sender.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SevenUpdate.Pages.UpdateSelectionChangedEventArgs"/> instance containing the event data.
+        /// The <see cref="UpdateSelectionChangedEventArgs"/> instance containing the event data.
         /// </param>
         private void UpdateSelectionChanged(object sender, UpdateSelectionChangedEventArgs e)
         {

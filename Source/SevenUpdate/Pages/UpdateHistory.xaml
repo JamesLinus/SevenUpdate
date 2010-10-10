@@ -11,7 +11,7 @@
 		<ListView AlternationCount="2" Grid.Row="1" Name="lvUpdateHistory" Foreground="Black" BorderThickness="0" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuhSorter,SevenUpdate" TabIndex="0">
 			<ListView.Resources>
 				<ContextMenu x:Key="ItemContextMenu">
-					<MenuItem Header="{LocText SevenUpdate:Resources:ViewDetails}" Click="ShowDetails" />
+					<MenuItem Header="{LocText SevenUpdate:Resources:ViewDetails}" Click="ShowDetailsDialog" />
 				</ContextMenu>
 			</ListView.Resources>
 			<ListView.ItemContainerStyle>

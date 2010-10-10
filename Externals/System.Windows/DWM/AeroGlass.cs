@@ -55,8 +55,7 @@ namespace System.Windows.Dwm
             {
                 try
                 {
-                    NativeMethods.DwmEnableComposition(
-                        value ? NativeMethods.CompositionEnable.DwmECEnableComposition : NativeMethods.CompositionEnable.DwmECDisableComposition);
+                    NativeMethods.DwmEnableComposition(value ? NativeMethods.CompositionEnable.EnableComposition : NativeMethods.CompositionEnable.DisableComposition);
                 }
                 catch
                 {
@@ -93,7 +92,7 @@ namespace System.Windows.Dwm
         /// </param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new NativeMethods.DwmBlurBehind { RegionBlur = region, Flags = NativeMethods.DwmBlurBehindDWFlag.DwmBBBlurRegion };
+            var blur = new NativeMethods.DwmBlurBehind { RegionBlur = region, Flags = NativeMethods.DwmBlurBehindFlag.DwmBlurBehindRegion };
 
             NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
         }
@@ -223,18 +222,25 @@ namespace System.Windows.Dwm
         #region Methods
 
         /// <summary>
+        /// Sends a Win32 process message to a window
         /// </summary>
         /// <param name="handle">
+        /// The handle to the window
         /// </param>
         /// <param name="msg">
+        /// The message to send
         /// </param>
         /// <param name="parameter">
+        /// The parameter.
         /// </param>
         /// <param name="parameterLength">
+        /// Length of the parameter.
         /// </param>
         /// <param name="handled">
+        /// if set to <see langword="true"/> the event was handled
         /// </param>
         /// <returns>
+        /// Returns a <see langword="null"/> pointer
         /// </returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameterLength, ref bool handled)
         {

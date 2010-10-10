@@ -199,6 +199,7 @@ namespace System.Windows.Controls
         /// Gets the ancestor.
         /// </summary>
         /// <typeparam name="T">
+        /// The type of the ancestor to get
         /// </typeparam>
         /// <typeparameter name="T">
         ///   The Ancestor class

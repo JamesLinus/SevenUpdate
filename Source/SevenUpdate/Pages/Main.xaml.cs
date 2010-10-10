@@ -195,7 +195,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">
         /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
         /// </param>
-        private void NaviateToOptions(object sender, MouseButtonEventArgs e)
+        private void NavigateToOptions(object sender, MouseButtonEventArgs e)
         {
             App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
         }

@@ -6,7 +6,7 @@
 //            company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="xidar">xidar/author>
+// <author username="xidar">xidar</author>
 // ***********************************************************************
 namespace SharpBits.Base.Job
 {
@@ -862,7 +862,7 @@ namespace SharpBits.Base.Job
         /// The sender.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// The <see cref="NotificationEventArgs"/> instance containing the event data.
         /// </param>
         internal void JobModified(object sender, NotificationEventArgs e)
         {
@@ -879,7 +879,7 @@ namespace SharpBits.Base.Job
         /// The sender.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// The <see cref="NotificationEventArgs"/> instance containing the event data.
         /// </param>
         internal void JobTransferred(object sender, NotificationEventArgs e)
         {
@@ -1180,13 +1180,13 @@ namespace SharpBits.Base.Job
                 if (this.job2 != null && credentials != null)
                 {
                     // only supported from IBackgroundCopyJob2 and above
-                    var bgCredentials = new BGAuthCredentials
+                    var authCredentials = new BGAuthCredentials
                         {
                            Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget 
                         };
-                    bgCredentials.Credentials.Basic.Password = credentials.Password;
-                    bgCredentials.Credentials.Basic.UserName = credentials.UserName;
-                    this.job2.SetCredentials(ref bgCredentials);
+                    authCredentials.Credentials.Basic.Password = credentials.Password;
+                    authCredentials.Credentials.Basic.UserName = credentials.UserName;
+                    this.job2.SetCredentials(ref authCredentials);
                 }
                 else
                 {

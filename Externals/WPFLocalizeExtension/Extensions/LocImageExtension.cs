@@ -127,7 +127,7 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault());
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
             this.SetNewValue(this.FormatOutput(obj));
         }
 
@@ -140,7 +140,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>
         /// 0 if the removing was success, otherwise another number.
         /// </returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(@"gdi32.dll")]
         private static extern int DeleteObject(IntPtr o);
 
         #endregion

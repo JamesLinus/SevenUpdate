@@ -38,15 +38,14 @@ namespace System.Windows.Dialogs.TaskDialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Creates a new instance of this class.
+        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class.
         /// </summary>
         protected TaskDialogProgressBar()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified name.
-        ///   And using the default values: Min = 0, Max = 100, Current = 0
+        /// Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.
         /// </summary>
         /// <param name="name">
         /// The name of the control.
@@ -57,8 +56,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
-        /// Creates a new instance of this class with the specified 
-        ///   minimum, maximum and current values.
+        /// Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.
         /// </summary>
         /// <param name="minimum">
         /// The minimum value for this control.
@@ -84,7 +82,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the maximum value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progressbar's current value property")]
+            Justification = "Value is standard for progress bar's current value property")]
         public int Maximum
         {
             get
@@ -99,7 +97,7 @@ namespace System.Windows.Dialogs.TaskDialogs
                 // Check if min / max differ
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException("Maximum value provided must be greater than the minimum value", "value");
+                    throw new ArgumentException(@"Maximum value provided must be greater than the minimum value", "value");
                 }
 
                 this.maximum = value;
@@ -111,7 +109,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the minimum value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progressbar's current value property")]
+            Justification = "Value is standard for progress bar's current value property")]
         public int Minimum
         {
             get
@@ -126,13 +124,13 @@ namespace System.Windows.Dialogs.TaskDialogs
                 // Check for positive numbers
                 if (value < 0)
                 {
-                    throw new ArgumentException("Minimum value provided must be a positive number", "value");
+                    throw new ArgumentException(@"Minimum value provided must be a positive number", "value");
                 }
 
                 // Check if min / max differ
                 if (value >= this.Maximum)
                 {
-                    throw new ArgumentException("Minimum value provided must less than the maximum value", "value");
+                    throw new ArgumentException(@"Minimum value provided must less than the maximum value", "value");
                 }
 
                 this.minimum = value;
@@ -144,7 +142,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the current value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progressbar's current value property")]
+            Justification = "Value is standard for progress bar's current value property")]
         public int Value
         {
             get
@@ -159,12 +157,12 @@ namespace System.Windows.Dialogs.TaskDialogs
                 // Check for positive numbers
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException("Value provided must be greater than or equal to minimum value", "value");
+                    throw new ArgumentException(@"Value provided must be greater than or equal to minimum value", "value");
                 }
 
                 if (value > this.Maximum)
                 {
-                    throw new ArgumentException("Value provided must be less than or equal to the maximum value", "value");
+                    throw new ArgumentException(@"Value provided must be less than or equal to the maximum value", "value");
                 }
 
                 this.value = value;
@@ -173,7 +171,11 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
+        ///   Gets a value indicating whether this instance has valid values.
         /// </summary>
+        /// <value>
+        ///   <see langword = "true" /> if this instance has valid values; otherwise, <see langword = "false" />.
+        /// </value>
         internal bool HasValidValues
         {
             get

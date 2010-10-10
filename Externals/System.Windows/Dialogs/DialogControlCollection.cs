@@ -17,6 +17,7 @@ namespace System.Windows.Dialogs
     /// Strongly typed collection for dialog controls.
     /// </summary>
     /// <typeparam name="T">
+    /// The control
     /// </typeparam>
     /// <typeparameter name="T">
     ///   The <see cref="DialogControl"/>
@@ -39,41 +40,11 @@ namespace System.Windows.Dialogs
         /// Initializes a new instance of the <see cref="DialogControlCollection&lt;T&gt;"/> class.
         /// </summary>
         /// <param name="host">
-        /// The host.
+        /// The dialog control host.
         /// </param>
         internal DialogControlCollection(IDialogControlHost host)
         {
             this.hostingDialog = host;
-        }
-
-        #endregion
-
-        #region Indexers
-
-        /// <summary>
-        ///   Defines the indexer that supports accessing controls by name.
-        /// </summary>
-        /// <remarks>
-        ///   <para>Control names are case sensitive.</para>
-        ///   <para>This indexer is useful when the dialog is created in XAML
-        ///     rather than constructed in code.</para>
-        /// </remarks>
-        /// <exception cref = "System.ArgumentException">
-        ///   The name cannot be <see langword = "null" /> or a zero-length string.</exception>
-        /// <remarks>
-        ///   If there is more than one control with the same name, only the <B>first control</B> will be returned.
-        /// </remarks>
-        public T this[string name]
-        {
-            get
-            {
-                if (String.IsNullOrEmpty(name))
-                {
-                    throw new ArgumentException("Control name must not be null or zero length.");
-                }
-
-                return this.Items.FirstOrDefault(control => control.Name == name);
-            }
         }
 
         #endregion

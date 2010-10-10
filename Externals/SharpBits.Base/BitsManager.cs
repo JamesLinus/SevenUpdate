@@ -6,7 +6,7 @@
 //            company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="xidar">xidar/author>
+// <author username="xidar">xidar</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
@@ -433,7 +433,7 @@ namespace SharpBits.Base
         /// The sender.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// The <see cref="NotificationEventArgs"/> instance containing the event data.
         /// </param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
@@ -458,7 +458,7 @@ namespace SharpBits.Base
         /// The sender.
         /// </param>
         /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
+        /// The <see cref="NotificationEventArgs"/> instance containing the event data.
         /// </param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {

@@ -6,7 +6,7 @@
 //            company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="xidar">xidar/author>
+// <author username="xidar">xidar</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {

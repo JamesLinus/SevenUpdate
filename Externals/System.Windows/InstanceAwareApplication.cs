@@ -169,10 +169,25 @@ namespace System.Windows
 
         #endregion
 
+        #region Delegates
+
+        /// <summary>
+        /// Represents the method that handles the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
+        /// </summary>
+        /// <param name="sender">
+        /// The object that raised the event.
+        /// </param>
+        /// <param name="e">
+        /// The event data.
+        /// </param>
+        public delegate void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e);
+
+        #endregion
+
         #region Events
 
         /// <summary>
-        ///   Occurs when the <see cref = "M:System.Windows.Application.Run" /> method of the next <see cref = "InstanceAwareApplication" /> having the same <see cref = "InstanceAwareApplication.ApplicationKey" /> is called.
+        ///   Occurs when the Application.Run method of the next <see cref = "InstanceAwareApplication" /> having the same ApplicationKey is called.
         /// </summary>
         public event StartupNextInstanceEventHandler StartupNextInstance;
 
@@ -349,9 +364,6 @@ namespace System.Windows
         /// <param name="identity">
         /// The identity used to handle the synchronization object.
         /// </param>
-        /// <exception cref="UnexpectedInstanceAwareApplicationException">
-        /// A proper identity could not be determined.
-        /// </exception>
         private static void ExtractParameters(ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
             new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
@@ -378,6 +390,20 @@ namespace System.Windows
         }
 
         /// <summary>
+        /// Gets the application unique identifier.
+        /// </summary>
+        /// <returns>
+        /// The application unique identifier.
+        /// </returns>
+        private static string GetApplicationId()
+        {
+            // By default, the application is marked using the entry assembly Guid!
+            var assembly = Assembly.GetEntryAssembly();
+            var guidAttribute = assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute)) as GuidAttribute;
+            return guidAttribute.Value;
+        }
+
+        /// <summary>
         /// Gets the <see cref="Uri"/> of the pipe used for inter-process communication.
         /// </summary>
         /// <param name="applicationPath">
@@ -398,20 +424,6 @@ namespace System.Windows
         {
             // Try to dispose the synchronization objects, just in case the application did not exit...
             this.TryDisposeSynchronizationObjects();
-        }
-
-        /// <summary>
-        /// Gets the application unique identifier.
-        /// </summary>
-        /// <returns>
-        /// The application unique identifier.
-        /// </returns>
-        private string GetApplicationId()
-        {
-            // By default, the application is marked using the entry assembly Guid!
-            var assembly = Assembly.GetEntryAssembly();
-            var guidAttribute = assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute)) as GuidAttribute;
-            return guidAttribute.Value;
         }
 
         /// <summary>
@@ -454,7 +466,7 @@ namespace System.Windows
         /// </returns>
         private bool InitializeInstance(StartupEventArgs e)
         {
-            var id = this.GetApplicationId();
+            var id = GetApplicationId();
 
             string prefix;
             IdentityReference identity;
@@ -531,12 +543,7 @@ namespace System.Windows
             }
 
             // If the first application does not notify back that the signal has been received, just return false...
-            if (!this.signaledToFirstInstanceSemaphore.WaitOne(TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false))
-            {
-                return false;
-            }
-
-            return true;
+            return this.signaledToFirstInstanceSemaphore.WaitOne(TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false);
         }
 
         /// <summary>
@@ -581,17 +588,19 @@ namespace System.Windows
             var e = new StartupNextInstanceEventArgs(args, true);
             this.OnStartupNextInstance(e);
 
-            if (e.BringToForeground && (this.MainWindow != null))
+            if (!e.BringToForeground || (this.MainWindow == null))
             {
-                (new UIPermission(UIPermissionWindow.AllWindows)).Assert();
-                if (this.MainWindow.WindowState == WindowState.Minimized)
-                {
-                    this.MainWindow.WindowState = WindowState.Normal;
-                }
-
-                this.MainWindow.Activate();
-                CodeAccessPermission.RevertAssert();
+                return;
             }
+
+            (new UIPermission(UIPermissionWindow.AllWindows)).Assert();
+            if (this.MainWindow.WindowState == WindowState.Minimized)
+            {
+                this.MainWindow.WindowState = WindowState.Normal;
+            }
+
+            this.MainWindow.Activate();
+            CodeAccessPermission.RevertAssert();
         }
 
         /// <summary>
@@ -599,59 +608,141 @@ namespace System.Windows
         /// </summary>
         private void TryDisposeSynchronizationObjects()
         {
-            if (!this.disposed)
+            if (this.disposed)
             {
-                this.disposed = true;
+                return;
+            }
 
-                if (this.IsFirstInstance)
+            this.disposed = true;
+
+            if (this.IsFirstInstance)
+            {
+                // Signal other applications that the service is not ready anymore (it is, but since the application is going to shutdown, it is the same...)
+                this.serviceReadySemaphore.Reset();
+
+                // Stop the service...
+                this.serviceInitializationMutex.WaitOne();
+
+                try
                 {
-                    // Signal other applications that the service is not ready anymore (it is, but since the application is going to shutdown, it is the same...)
-                    this.serviceReadySemaphore.Reset();
-
-                    // Stop the service...
-                    this.serviceInitializationMutex.WaitOne();
-
-                    try
+                    if (this.serviceHost.State == CommunicationState.Opened)
                     {
-                        if (this.serviceHost.State == CommunicationState.Opened)
-                        {
-                            this.serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + exc, this.GetType().ToString());
-                    }
-                    finally
-                    {
-                        this.serviceHost = null;
-                    }
-
-                    this.serviceInitializationMutex.ReleaseMutex();
-                    try
-                    {
-                        // Release the first application mutex!
-                        this.firstInstanceMutex.ReleaseMutex();
-                    }
-                    catch (Exception)
-                    {
+                        this.serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
                     }
                 }
+                catch (Exception exc)
+                {
+                    Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + exc, this.GetType().ToString());
+                }
+                finally
+                {
+                    this.serviceHost = null;
+                }
 
-                this.firstInstanceMutex.Close();
-                this.firstInstanceMutex = null;
-
-                this.serviceInitializationMutex.Close();
-                this.serviceInitializationMutex = null;
-
-                this.serviceReadySemaphore.Close();
-                this.serviceReadySemaphore = null;
-
-                this.signaledToFirstInstanceSemaphore.Close();
-                this.signaledToFirstInstanceSemaphore = null;
+                this.serviceInitializationMutex.ReleaseMutex();
+                try
+                {
+                    // Release the first application mutex!
+                    this.firstInstanceMutex.ReleaseMutex();
+                }
+                catch (Exception)
+                {
+                }
             }
+
+            this.firstInstanceMutex.Close();
+            this.firstInstanceMutex = null;
+
+            this.serviceInitializationMutex.Close();
+            this.serviceInitializationMutex = null;
+
+            this.serviceReadySemaphore.Close();
+            this.serviceReadySemaphore = null;
+
+            this.signaledToFirstInstanceSemaphore.Close();
+            this.signaledToFirstInstanceSemaphore = null;
         }
 
         #endregion
+
+        /// <summary>
+        /// Class used to define the arguments of another application instance startup.
+        /// </summary>
+        public class StartupNextInstanceEventArgs : EventArgs
+        {
+            #region Constants and Fields
+
+            /// <summary>
+            ///   The application arguments.
+            /// </summary>
+            private readonly string[] args;
+
+            #endregion
+
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.
+            /// </summary>
+            /// <param name="args">
+            /// The arguments passed to the program
+            /// </param>
+            public StartupNextInstanceEventArgs(string[] args)
+                : this(args, true)
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.
+            /// </summary>
+            /// <param name="args">
+            /// The arguments passed to the program
+            /// </param>
+            /// <param name="bringToFront">
+            /// If set to <c>true</c> the application main window will be brought to front.
+            /// </param>
+            public StartupNextInstanceEventArgs(string[] args, bool bringToFront)
+            {
+                if (args == null)
+                {
+                    args = new string[0];
+                }
+
+                this.args = args;
+                this.BringToForeground = bringToFront;
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            ///   Gets a value indicating whether the application main window has to be brought to foreground.
+            /// </summary>
+            /// <value>
+            ///   <see langword = "true" /> if the application window has to be brought to foreground, otherwise <see langword = "false" />
+            /// </value>
+            public bool BringToForeground { get; private set; }
+
+            #endregion
+
+            #region Public Methods
+
+            /// <summary>
+            /// Gets the arguments passed to the other application.
+            /// </summary>
+            /// <returns>
+            /// Returns the arguments passed to the application
+            /// </returns>
+            /// <value>
+            /// The arguments passed to the other application.
+            /// </value>
+            public string[] GetArgs()
+            {
+                return this.args;
+            }
+
+            #endregion
+        }
     }
 }

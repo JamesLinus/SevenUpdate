@@ -416,7 +416,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> to browse for the selected file in the <see cref="UpdateFile"/> collection
+        /// Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -432,7 +432,7 @@ namespace SevenUpdate.Sdk.Pages
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
-            var files = Core.OpenFileDialog(installDirectory, false);
+            var files = Core.OpenFileDialog(installDirectory);
             if (files == null)
             {
                 return;
@@ -457,7 +457,7 @@ namespace SevenUpdate.Sdk.Pages
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                 : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var files = Core.OpenFileDialog(directory, false);
+            var files = Core.OpenFileDialog(directory);
 
             if (files == null)
             {

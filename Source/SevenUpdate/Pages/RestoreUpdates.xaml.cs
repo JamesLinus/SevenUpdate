@@ -156,7 +156,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">
         /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
         /// </param>
-        private void ShowDetails(object sender, RoutedEventArgs e)
+        private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.hiddenUpdates[this.lvHiddenUpdates.SelectedIndex]);

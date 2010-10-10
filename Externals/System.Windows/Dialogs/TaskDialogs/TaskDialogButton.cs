@@ -26,13 +26,6 @@ namespace System.Windows.Dialogs.TaskDialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogButton" /> class.
-        /// </summary>
-        public TaskDialogButton()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TaskDialogButton"/> class.
         /// </summary>
         /// <param name="name">
@@ -43,6 +36,13 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// </param>
         public TaskDialogButton(string name, string text)
             : base(name, text)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogButton" /> class.
+        /// </summary>
+        protected TaskDialogButton()
         {
         }
 

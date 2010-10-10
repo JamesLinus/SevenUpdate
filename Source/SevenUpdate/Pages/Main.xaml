@@ -26,7 +26,7 @@
 		</Rectangle>
 		<StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,30,0,0">
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates" Focusable="True" />
-			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NaviateToOptions" Focusable="True" />
+			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToOptions" Focusable="True" />
 
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToUpdateHistory" Focusable="True" />
 			<TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToRestoreUpdates" Focusable="True" />

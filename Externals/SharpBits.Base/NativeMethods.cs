@@ -6,7 +6,7 @@
 //            company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
-// <author username="xidar">xidar/author>
+// <author username="xidar">xidar</author>
 // ***********************************************************************
 namespace SharpBits.Base
 {
@@ -18,7 +18,6 @@ namespace SharpBits.Base
     /// <summary>
     /// The authentication level.
     /// </summary>
-    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue", Justification = "Interop")]
     [Flags]
     public enum RpcAuthLevels
     {
@@ -92,8 +91,6 @@ namespace SharpBits.Base
     /// <summary>
     /// Defines authentication.
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase", Justification = "Interop")]
-    [SuppressMessage("Microsoft.Design", "CA1027:MarkEnumsWithFlags", Justification = "Interop")]
     public enum EoAuthCap
     {
         /// <summary>
@@ -223,6 +220,51 @@ namespace SharpBits.Base
     internal static class NativeMethods
     {
         /// <summary>
+        /// COs the initialize security.
+        /// </summary>
+        /// <param name="handle">
+        /// The handle.
+        /// </param>
+        /// <param name="authServiceLength">
+        /// Length of the authentication service.
+        /// </param>
+        /// <param name="authService">
+        /// The authentication service.
+        /// </param>
+        /// <param name="reserved1">
+        /// The reserved1.
+        /// </param>
+        /// <param name="level">
+        /// The level.
+        /// </param>
+        /// <param name="impersonationLevel">
+        /// The impersonation level.
+        /// </param>
+        /// <param name="authList">
+        /// The authentication list.
+        /// </param>
+        /// <param name="capabilities">
+        /// The capabilities.
+        /// </param>
+        /// <param name="reserved3">
+        /// The reserved3.
+        /// </param>
+        /// <returns>
+        /// The result
+        /// </returns>
+        [DllImport(@"ole32.dll", CharSet = CharSet.Auto)]
+        public static extern int COInitializeSecurity(
+            IntPtr handle, 
+            int authServiceLength, 
+            IntPtr authService, 
+            IntPtr reserved1, 
+            RpcAuthLevels level, 
+            RpcImpLevel impersonationLevel, 
+            IntPtr authList, 
+            EoAuthCap capabilities, 
+            IntPtr reserved3);
+
+        /// <summary>
         /// Converts the string SID to a the class
         /// </summary>
         /// <param name="sid">
@@ -234,7 +276,7 @@ namespace SharpBits.Base
         /// <returns>
         /// <see langword="true"/> if SID was converted
         /// </returns>
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
 
@@ -265,52 +307,10 @@ namespace SharpBits.Base
         /// <returns>
         /// <see langword="true"/> if the lookup was successful
         /// </returns>
-        [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(
             string systemName, IntPtr sid, StringBuilder name, ref long refName, StringBuilder domainName, ref long refDomainName, ref int use);
-
-        /// <summary>
-        /// COs the initialize security.
-        /// </summary>
-        /// <param name="handle">
-        /// </param>
-        /// <param name="authServiceLength">
-        /// </param>
-        /// <param name="authService">
-        /// </param>
-        /// <param name="reserved1">
-        /// The reserved1.
-        /// </param>
-        /// <param name="level">
-        /// The level.
-        /// </param>
-        /// <param name="impersonationLevel">
-        /// The impersonation level.
-        /// </param>
-        /// <param name="authList">
-        /// The auth list.
-        /// </param>
-        /// <param name="capabilities">
-        /// The capabilities.
-        /// </param>
-        /// <param name="reserved3">
-        /// The reserved3.
-        /// </param>
-        /// <returns>
-        /// The result
-        /// </returns>
-        [DllImport("ole32.dll", CharSet = CharSet.Auto)]
-        public static extern int COInitializeSecurity(
-            IntPtr handle, 
-            int authServiceLength, 
-            IntPtr authService, 
-            IntPtr reserved1, 
-            RpcAuthLevels level, 
-            RpcImpLevel impersonationLevel, 
-            IntPtr authList, 
-            EoAuthCap capabilities, 
-            IntPtr reserved3);
 
         /// <summary>
         /// Gets the file version info.
@@ -330,7 +330,7 @@ namespace SharpBits.Base
         /// <returns>
         /// <see langword="true"/> if the version was retrieved
         /// </returns>
-        [DllImport("version.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
         internal static extern bool GetFileVersionInfo(string fileName, int handle, int size, byte[] infoBuffer);
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace SharpBits.Base
         /// <returns>
         /// an integer
         /// </returns>
-        [DllImport("version.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
         internal static extern int GetFileVersionInfoSize(string fileName, out int handle);
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace SharpBits.Base
         /// <returns>
         /// <see langword="true"/> if the value exists
         /// </returns>
-        [DllImport("version.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
         internal static extern bool VerQueryValue(byte[] block, string subBlock, out string value, out uint length);
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace SharpBits.Base
         /// <returns>
         /// <see langword="true"/> if the value exists
         /// </returns>
-        [DllImport("version.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
         internal static extern bool VerQueryValue(byte[] bock, string subBlock, out IntPtr value, out uint length);
     }
 }

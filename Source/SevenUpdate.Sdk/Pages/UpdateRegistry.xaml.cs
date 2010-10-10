@@ -118,7 +118,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonOpenFileDialog"/> and imports the selected .reg file
+        /// Opens a dialog and imports the selected .reg file
         /// </summary>
         /// <param name="sender">
         /// The source of the event.

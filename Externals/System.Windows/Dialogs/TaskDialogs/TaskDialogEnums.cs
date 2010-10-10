@@ -9,7 +9,6 @@
 // ***********************************************************************
 namespace System.Windows.Dialogs.TaskDialogs
 {
-
     #region TaskDialogExpandedDetailsLocation
 
     /// <summary>

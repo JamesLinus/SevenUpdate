@@ -124,7 +124,7 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault());
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
             this.SetNewValue(this.FormatOutput(obj));
         }
 

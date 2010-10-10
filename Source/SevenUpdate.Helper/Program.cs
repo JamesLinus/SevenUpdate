@@ -127,7 +127,7 @@ namespace SevenUpdate.Helper
 
                 try
                 {
-                    if (!File.Exists(appStore + "reboot.lock"))
+                    if (!File.Exists(appStore + @"reboot.lock"))
                     {
                         Directory.Delete(appStore + downloadDir, true);
 
@@ -135,7 +135,7 @@ namespace SevenUpdate.Helper
                     }
                     else
                     {
-                        MoveFileEX(appStore + "reboot.lock", null, MoveOnReboot);
+                        MoveFileEX(appStore + @"reboot.lock", null, MoveOnReboot);
                     }
                 }
                 catch (Exception)
@@ -144,7 +144,7 @@ namespace SevenUpdate.Helper
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Process.Start(AppDir + "SevenUpdate.exe", "Auto");
+                    Process.Start(AppDir + @"SevenUpdate.exe", "Auto");
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace SevenUpdate.Helper
                         {
                             StartInfo =
                                 {
-                                   FileName = "schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\"" 
+                                   FileName = @"schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\"" 
                                 }
                         };
                     p.Start();
@@ -193,7 +193,7 @@ namespace SevenUpdate.Helper
         /// <returns>
         /// <see langword="true"/> if the operation was successful
         /// </returns>
-        [DllImport("kernel32.dll")]
+        [DllImport(@"kernel32.dll")]
         private static extern bool MoveFileEX(string sourceFileName, string newFileName, int flags);
 
         /// <summary>

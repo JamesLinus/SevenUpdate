@@ -52,7 +52,7 @@ namespace SevenUpdate.Sdk
         /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
         /// </summary>
         /// <param name="e">
-        /// The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.
+        /// The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.
         /// </param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {

@@ -64,7 +64,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///   The text for the button
         /// </summary>
-        private static readonly string buttonText = string.Empty;
+        private static readonly string Text = string.Empty;
 
         #endregion
 
@@ -82,10 +82,7 @@ namespace System.Windows.Controls
                 new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
             ButtonTextProperty = DependencyProperty.Register(
-                "ButtonText", 
-                typeof(string), 
-                typeof(Button), 
-                new FrameworkPropertyMetadata(buttonText, FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
+                "ButtonText", typeof(string), typeof(Button), new FrameworkPropertyMetadata(Text, FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
 
             if (Environment.OSVersion.Version.Major >= 6)
             {
@@ -106,7 +103,7 @@ namespace System.Windows.Controls
             var imgShield = new Image { Source = this.IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
             stackPanel.Children.Add(imgShield);
 
-            var textBlock = new TextBlock { Text = buttonText, VerticalAlignment = VerticalAlignment.Center };
+            var textBlock = new TextBlock { Text = Text, VerticalAlignment = VerticalAlignment.Center };
             stackPanel.Children.Add(textBlock);
             this.Content = stackPanel;
         }

@@ -169,7 +169,7 @@ namespace SevenUpdate
                             }
                         }
 
-                        Utilities.StartProcess(Utilities.AppDir + "SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
+                        Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
 
                         return;
                     }
@@ -546,7 +546,7 @@ namespace SevenUpdate
                             }
 
                             MoveFileEX(file.Source, file.Destination, MoveOnReboot);
-                            File.Delete(file.Destination + ".bak");
+                            File.Delete(file.Destination + @".bak");
                         }
                     }
                     else

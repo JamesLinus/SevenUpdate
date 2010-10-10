@@ -32,7 +32,7 @@ namespace System.Windows.Dialogs
         Closing, 
 
         /// <summary>
-        ///   Closed
+        ///   Closed dialog
         /// </summary>
         Closed
     }

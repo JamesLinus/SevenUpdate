@@ -30,7 +30,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <summary>
         ///   Initializes a new instance of the <see cref = "TaskDialogBar" /> class.
         /// </summary>
-        public TaskDialogBar()
+        protected TaskDialogBar()
         {
         }
 

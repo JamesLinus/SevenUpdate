@@ -11,6 +11,7 @@
 namespace SevenUpdate
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
@@ -68,7 +69,7 @@ namespace SevenUpdate
         /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
         /// </summary>
         /// <param name="e">
-        /// The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.
+        /// The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.
         /// </param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
@@ -103,7 +104,7 @@ namespace SevenUpdate
         /// <param name="args">
         /// The command line arguments passed to the application
         /// </param>
-        private static void Init(string[] args)
+        private static void Init(IList<string> args)
         {
             Utilities.Locale = Settings.Default.locale;
             foreach (var t in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)))

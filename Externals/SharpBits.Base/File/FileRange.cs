@@ -1,3 +1,13 @@
+// ***********************************************************************
+// <copyright file="FileRange.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Xidar Solutions">
+//     Copyright (c) xidar solutions. All rights reserved.
+// </copyright>
+// <author username="xidar">xidar</author>
+// ***********************************************************************
 namespace SharpBits.Base.File
 {
     /// <summary>

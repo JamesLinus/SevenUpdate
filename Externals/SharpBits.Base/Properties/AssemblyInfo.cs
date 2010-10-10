@@ -1,4 +1,14 @@
-﻿using System;
+﻿// ***********************************************************************
+// <copyright file="AssemblyInfo.cs"
+//            project="SharpBits.Base"
+//            assembly="SharpBits.Base"
+//            solution="SevenUpdate"
+//            company="Xidar Solutions">
+//     Copyright (c) xidar solutions. All rights reserved.
+// </copyright>
+// <author username="xidar">xidar</author>
+// ***********************************************************************
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 

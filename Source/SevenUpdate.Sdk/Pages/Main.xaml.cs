@@ -134,8 +134,8 @@ namespace SevenUpdate.Sdk.Pages
             if (item.HasItems)
             {
                 var index = item.Tag is int ? (int)item.Tag : 0;
-                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sui");
-                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + ".sua");
+                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + @".sui");
+                File.Delete(Core.UserStore + Core.Projects[index].ApplicationName + @".sua");
                 Core.Projects.RemoveAt(index);
                 Utilities.Serialize(Core.Projects, Core.ProjectsFile);
             }
@@ -144,11 +144,11 @@ namespace SevenUpdate.Sdk.Pages
                 var index = item.Tag as int[];
                 if (index != null)
                 {
-                    var updates = Utilities.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
+                    var updates = Utilities.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
                     Utilities.Serialize(Core.Projects, Core.ProjectsFile);
                     updates.RemoveAt(index[1]);
-                    Utilities.Serialize(updates, Core.UserStore + Core.Projects[index[0]].ApplicationName + ".sui");
+                    Utilities.Serialize(updates, Core.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
                 }
             }
 
@@ -258,7 +258,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonSaveFileDialog"/> and saves the Sua for the selected project
+        /// Opens a dialog and saves the <see cref="Sua"/> for the selected project
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -269,18 +269,18 @@ namespace SevenUpdate.Sdk.Pages
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            var fileName = Core.SaveFileDialog(null, appName, "sua");
+            var fileName = Core.SaveFileDialog(null, appName, @"sua");
 
             if (fileName == null)
             {
                 return;
             }
 
-            File.Copy(Core.UserStore + appName + ".sua", fileName, true);
+            File.Copy(Core.UserStore + appName + @".sua", fileName, true);
         }
 
         /// <summary>
-        /// Opens a <see cref="CommonSaveFileDialog"/> and saves the Sui for the selected project
+        /// Opens a dialog and saves the Sui for the selected project
         /// </summary>
         /// <param name="sender">
         /// The source of the event.
@@ -292,14 +292,14 @@ namespace SevenUpdate.Sdk.Pages
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
 
-            var fileName = Core.SaveFileDialog(null, appName, "sui");
+            var fileName = Core.SaveFileDialog(null, appName, @"sui");
 
             if (fileName == null)
             {
                 return;
             }
 
-            File.Copy(Core.UserStore + appName + ".sui", fileName, true);
+            File.Copy(Core.UserStore + appName + @".sui", fileName, true);
         }
 
         /// <summary>

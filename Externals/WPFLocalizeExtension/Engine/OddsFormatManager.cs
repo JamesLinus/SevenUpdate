@@ -154,6 +154,18 @@ namespace WPFLocalizeExtension.Engine
         #region Public Methods
 
         /// <summary>
+        /// Attach an WeakEventListener to the <see cref="OddsFormatManager"/>
+        /// </summary>
+        /// <param name="listener">
+        /// The listener to attach
+        /// </param>
+        public static void AddEventListener(IWeakEventListener listener)
+        {
+            // calls AddListener from the inline WeakOddsFormatChangedEventManager
+            WeakOddsFormatChangedEventManager.AddListener(listener);
+        }
+
+        /// <summary>
         /// Getter of <see cref="DependencyProperty"/> DesignOddsFormat.
         ///   Only supported at DesignTime.
         ///   If its in Runtime, the current <see cref="OddsFormatType"/> will be returned.
@@ -187,18 +199,6 @@ namespace WPFLocalizeExtension.Engine
             {
                 obj.SetValue(DesignOddsFormatProperty, value);
             }
-        }
-
-        /// <summary>
-        /// Attach an WeakEventListener to the <see cref="OddsFormatManager"/>
-        /// </summary>
-        /// <param name="listener">
-        /// The listener to attach
-        /// </param>
-        public void AddEventListener(IWeakEventListener listener)
-        {
-            // calls AddListener from the inline WeakOddsFormatChangedEventManager
-            WeakOddsFormatChangedEventManager.AddListener(listener);
         }
 
         /// <summary>

@@ -155,7 +155,6 @@ namespace WPFLocalizeExtension.Engine
             var keysToRemove = new List<object>();
 
             // step through all object dependencies
-
             foreach (var kvp in InternalList)
             {
                 // step recursive through all weak references

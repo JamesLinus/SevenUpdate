@@ -10,6 +10,7 @@
 namespace System.Windows.Dialogs.TaskDialogs
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Security.Permissions;
@@ -1709,5 +1710,85 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         #endregion
+
+        /// <summary>
+        /// Defines event data associated with a <see cref="HyperlinkClick"/> event.
+        /// </summary>
+        public class HyperlinkClickedEventArgs : EventArgs
+        {
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="HyperlinkClickedEventArgs"/> class.
+            /// </summary>
+            /// <param name="link">
+            /// The text of the hyperlink that was clicked.
+            /// </param>
+            public HyperlinkClickedEventArgs(string link)
+            {
+                this.LinkText = link;
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            ///   Gets or sets the text of the hyperlink that was clicked.
+            /// </summary>
+            public string LinkText { get; set; }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// Data associated with <see cref="TaskDialog.Closing"/> event.
+        /// </summary>
+        public class TaskDialogClosingEventArgs : CancelEventArgs
+        {
+            #region Properties
+
+            /// <summary>
+            ///   Gets or sets the text of the custom button that was clicked.
+            /// </summary>
+            public string CustomButton { get; set; }
+
+            /// <summary>
+            ///   Gets or sets the standard button that was clicked.
+            /// </summary>
+            public TaskDialogResult TaskDialogResult { get; set; }
+
+            #endregion
+        }
+
+        /// <summary>
+        /// The event data for a TaskDialogTick event.
+        /// </summary>
+        public class TaskDialogTickEventArgs : EventArgs
+        {
+            #region Constructors and Destructors
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TaskDialogTickEventArgs"/> class.
+            /// </summary>
+            /// <param name="totalTicks">
+            /// The total number of ticks since the control was activated.
+            /// </param>
+            public TaskDialogTickEventArgs(int totalTicks)
+            {
+                this.Ticks = totalTicks;
+            }
+
+            #endregion
+
+            #region Properties
+
+            /// <summary>
+            ///   Gets  a value indicating whether the current number of ticks.
+            /// </summary>
+            public int Ticks { get; private set; }
+
+            #endregion
+        }
     }
 }

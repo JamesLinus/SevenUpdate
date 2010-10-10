@@ -10,11 +10,7 @@
 // ***********************************************************************
 namespace System.Windows.Internal
 {
-    // using System.Diagnostics.CodeAnalysis;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
-
-    // using System.Text;
 
     /// <summary>
     /// Wrappers for Native Methods and Structs.
@@ -22,132 +18,12 @@ namespace System.Windows.Internal
     /// </summary>
     public static class NativeMethods
     {
-        /// <summary>
-        /// Sends the specified message to a window or windows. The SendMessage function calls
-        ///   the window procedure for the specified window and does not return until the window
-        ///   procedure has processed the message.
-        /// </summary>
-        /// <param name="pointer">
-        /// The pointer.
-        /// </param>
-        /// <param name="msg">
-        /// The MSG.
-        /// </param>
-        /// <param name="parameter">
-        /// The parameter.
-        /// </param>
-        /// <param name="parameterLength">
-        /// Length of the parameter.
-        /// </param>
-        /// <returns>
-        /// A return code specific to the message being sent.
-        /// </returns>
-        /// <param name="pointer">
-        /// Handle to the window whose window procedure will receive the message.
-        ///   If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,
-        ///   including disabled or invisible unowned windows, overlapped windows, and pop-up windows;
-        ///   but the message is not sent to child windows.
-        /// </param>
-        /// <param name="msg">
-        /// Specifies the message to be sent.
-        /// </param>
-        /// <param name="parameter">
-        /// Specifies additional message-specific information.
-        /// </param>
-        /// <param name="parameterLength">
-        /// Specifies additional message-specific information.
-        /// </param>
-        [SuppressMessage("Microsoft.Interoperability", "CA1401:PInvokesShouldNotBeVisible", 
-            Justification = "This is used from another assembly, also it's in an internal namespace")]
-        [DllImport(@"user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength);
-
-        /// <summary>
-        ///   Gets a value indicating whether if the current logged in user is an admin
-        /// </summary>
-        public static bool IsUserAdmin
-        {
-            get
-            {
-                return IsUserAnAdmin();
-            }
-        }
-
-        /// <summary>
-        /// Checks if a user is an admin
-        /// </summary>
-        /// <returns>
-        /// <see langword="true"/> if the user is an admin; otherwise, <see langword="false"/>.
-        /// </returns>
-        [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
-        private static extern bool IsUserAnAdmin();
-
-        /// <summary>
-        /// </summary>
-        /// <param name="handle">
-        /// </param>
-        /// <param name="bb">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport(@"DwmApi.dll")]
-        internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
-
-        /// <summary>
-        /// </summary>
-        /// <param name="handle">
-        /// </param>
-        /// <param name="m">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport(@"DwmApi.dll")]
-        internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins m);
-
-        /// <summary>
-        /// </summary>
-        /// <returns>
-        /// </returns>
-        [DllImport(@"DwmApi.dll", PreserveSig = false)]
-        internal static extern bool DwmIsCompositionEnabled();
-
-        /// <summary>
-        /// </summary>
-        /// <param name="compositionAction">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport(@"DwmApi.dll")]
-        internal static extern int DwmEnableComposition(CompositionEnable compositionAction);
-
-        /// <summary>
-        /// </summary>
-        /// <param name="handle">
-        /// </param>
-        /// <param name="rect">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport("useDr32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
-
-        /// <summary>
-        /// </summary>
-        /// <param name="handle">
-        /// </param>
-        /// <param name="rect">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);
+        #region Constants
 
         /// <summary>
         ///   Various important window messages
         /// </summary>
-        internal const int WMUser = 0x0400;
+        internal const int WmUser = 0x0400;
 
         /// <summary>
         ///   Enable/disable non-client rendering based on window style.
@@ -165,14 +41,14 @@ namespace System.Windows.Internal
         internal const int DwmNcrEnabled = 2;
 
         /// <summary>
-        ///   Enable/disable non-client rendering Use DWMNCRP_* values.
+        ///   Enable/disable non-client rendering Use DWMNCRP_* values.If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
         /// </summary>
-        internal const int DwmNCRenderingEnabled = 1;
+        internal const int DwmNcRenderingEnabled = 1;
 
         /// <summary>
         ///   Non-client rendering policy.
         /// </summary>
-        internal const int DwmNCRenderingPolicy = 2;
+        internal const int DwmNcRenderingPolicy = 2;
 
         /// <summary>
         ///   Potentially enable/forcibly disable transitions 0 or 1.
@@ -180,9 +56,9 @@ namespace System.Windows.Internal
         internal const int DwmTransitionsForceDisabled = 3;
 
         /// <summary>
-        ///   fEnable has been specified
+        ///   Enable blur behind
         /// </summary>
-        internal const int DwmBBEnable = 0x00000001;
+        internal const int DwmBlurBehindEnable = 0x00000001;
 
         /// <summary>
         ///   The blur region has been specified
@@ -190,9 +66,13 @@ namespace System.Windows.Internal
         internal const int DwmBlurRegion = 0x00000002;
 
         /// <summary>
-        ///   fTransitionOnMaximized has been specified
+        ///   TransitionOnMaximized has been specified
         /// </summary>
         internal const int DwmTransitionOnMaximized = 0x00000004;
+
+        #endregion
+
+        #region Enums
 
         /// <summary>
         /// Dwm composition enable
@@ -200,68 +80,193 @@ namespace System.Windows.Internal
         internal enum CompositionEnable : uint
         {
             /// <summary>
+            ///   Enable Aero effects
             /// </summary>
-            DwmECDisableComposition = 0, 
+            DisableComposition = 0, 
 
             /// <summary>
+            ///   Disable Aero effects
             /// </summary>
-            DwmECEnableComposition = 1
+            EnableComposition = 1
         }
 
         /// <summary>
+        /// The blur behind flags/options
+        /// </summary>
+        internal enum DwmBlurBehindFlag : uint
+        {
+            /// <summary>
+            ///   Enables blur behind
+            /// </summary>
+            DwmBlurBehindEnable = 0x00000001, 
+
+            /// <summary>
+            ///   The blur behind region
+            /// </summary>
+            DwmBlurBehindRegion = 0x00000002, 
+
+            /// <summary>
+            ///   True to show effects with maximizing
+            /// </summary>
+            DwmTransitionOnMaximized = 0x00000004
+        }
+
+        #endregion
+
+        /// <summary>
+        ///   Gets a value indicating whether if the current logged in user is an admin
+        /// </summary>
+        public static bool IsUserAdmin
+        {
+            get
+            {
+                return IsUserAnAdmin();
+            }
+        }
+
+        /// <summary>
+        /// Sends the specified message to a window or windows. The SendMessage function calls
+        ///   the window procedure for the specified window and does not return until the window
+        ///   procedure has processed the message.
+        /// </summary>
+        /// <param name="pointer">
+        /// Handle to the window whose window procedure will receive the message.
+        ///   If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,
+        ///   including disabled or invisible unowned windows, overlapped windows, and pop-up windows;
+        ///   but the message is not sent to child windows.
+        /// </param>
+        /// <param name="msg">
+        /// Specifies the message to be sent.
+        /// </param>
+        /// <param name="parameter">
+        /// Specifies additional message-specific information.
+        /// </param>
+        /// <param name="parameterLength">
+        /// Specifies the length of the additional message-specific information.
+        /// </param>
+        /// <returns>
+        /// A return code specific to the message being sent.
+        /// </returns>
+        [DllImport(@"user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        internal static extern IntPtr SendMessage(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength);
+
+        /// <summary>
+        /// Enables blur behind the window
+        /// </summary>
+        /// <param name="handle">
+        /// The handle to the window on which the blur behind data is applied.
+        /// </param>
+        /// <param name="bb">
+        /// A pointer to a <see cref="DwmBlurBehind"/> structure that provides blur behind data.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, it returns S_OK. Otherwise, it returns an Result error code.
+        /// </returns>
+        [DllImport(@"DwmApi.dll")]
+        internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
+
+        /// <summary>
+        /// Extends glass into the client area
+        /// </summary>
+        /// <param name="handle">
+        /// The handle to the window for which the frame is extended into the client area.
+        /// </param>
+        /// <param name="margins">
+        /// A pointer to a MARGINS structure that describes the margins to use when extending the frame into the client area.
+        /// </param>
+        /// <returns>
+        /// If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+        /// </returns>
+        [DllImport(@"DwmApi.dll")]
+        internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
+
+        /// <summary>
+        /// Gets a value indicating if composition is enabled
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if successful
+        /// </returns>
+        [DllImport(@"DwmApi.dll", PreserveSig = false)]
+        internal static extern bool DwmIsCompositionEnabled();
+
+        /// <summary>
+        /// Enables composition
+        /// </summary>
+        /// <param name="compositionAction">
+        /// The composition action.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if successful
+        /// </returns>
+        [DllImport(@"DwmApi.dll")]
+        internal static extern int DwmEnableComposition(CompositionEnable compositionAction);
+
+        /// <summary>
+        /// Gets a region on a window
+        /// </summary>
+        /// <param name="handle">
+        /// A handle to the window whose coordinates are to be retrieved.
+        /// </param>
+        /// <param name="rect">
+        /// The region to get
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if successful
+        /// </returns>
+        [DllImport(@"user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
+
+        /// <summary>
+        /// Gets the client rectangle region
+        /// </summary>
+        /// <param name="handle">
+        /// A handle to the window whose client coordinates are to be retrieved.
+        /// </param>
+        /// <param name="rect">
+        /// A pointer to a <see cref="Rect"/> structure that receives the client coordinates. The left and top members are zero. The right and bottom members contain the width and height of the window.
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if successful
+        /// </returns>
+        [DllImport(@"user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);
+
+        /// <summary>
+        /// Checks if a user is an admin
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the user is an admin; otherwise, <see langword="false"/>.
+        /// </returns>
+        [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern bool IsUserAnAdmin();
+
+        /// <summary>
+        /// A Wrapper for a RECT struct
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        internal struct DwmBlurBehind
+        public struct Rect
         {
             /// <summary>
+            ///   Position of left edge
             /// </summary>
-            public DwmBlurBehindDWFlag Flags;
+            public int Left;
 
             /// <summary>
+            ///   Position of top edge
             /// </summary>
-            public bool Enable;
+            public int Top;
 
             /// <summary>
+            ///   Position of right edge
             /// </summary>
-            public IntPtr RegionBlur;
+            public int Right;
 
             /// <summary>
+            ///   Position of bottom edge
             /// </summary>
-            public bool TransitionOnMaximized;
-        }
-
-        /// <summary>
-        /// </summary>
-        internal enum DwmBlurBehindDWFlag : uint
-        {
-            /// <summary>
-            /// </summary>
-            DwmBBEnable = 0x00000001, 
-
-            /// <summary>
-            /// </summary>
-            DwmBBBlurRegion = 0x00000002, 
-
-            /// <summary>
-            /// </summary>
-            DwmBBTransitionOnMaximized = 0x00000004
-        }
-
-        /// <summary>
-        /// </summary>
-        internal static class DwmMessages
-        {
-            #region Constants and Fields
-
-            /// <summary>
-            /// </summary>
-            internal const int DwmCompositionChanged = 0x031E;
-
-            /// <summary>
-            /// </summary>
-            internal const int DwmRenderingChanged = 0x031F;
-
-            #endregion
+            public int Bottom;
         }
 
         /// <summary>
@@ -326,36 +331,50 @@ namespace System.Windows.Internal
         }
 
         /// <summary>
-        /// A Wrapper for a RECT struct
+        /// Contains data to blur an error with glass
         /// </summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "RECT")]
-        [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
         [StructLayout(LayoutKind.Sequential)]
-        public struct Rect
+        internal struct DwmBlurBehind
         {
             /// <summary>
-            ///   Position of left edge
+            ///   A bitwise combination of DWM Blur Behind Constants values indicating which members are set.
             /// </summary>
-            [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-            public int Left;
+            public DwmBlurBehindFlag Flags;
 
             /// <summary>
-            ///   Position of top edge
+            ///   <see langword = "true" /> to register the window handle to DWM blur behind; <see langword = "false" /> to unregister the window handle from DWM blur behind.
             /// </summary>
-            [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-            public int Top;
+            public bool Enable;
 
             /// <summary>
-            ///   Position of right edge
+            ///   The region within the client area to apply the blur behind. A NULL value will apply the blur behind the entire client area.
             /// </summary>
-            [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-            public int Right;
+            public IntPtr RegionBlur;
 
             /// <summary>
-            ///   Position of bottom edge
+            ///   <see langword = "true" /> if the window's colorization should transition to match the maximized windows; otherwise, <see langword = "false" />.
             /// </summary>
-            [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-            public int Bottom;
+            public bool TransitionOnMaximized;
+        }
+
+        /// <summary>
+        /// The dwm messages
+        /// </summary>
+        internal static class DwmMessages
+        {
+            #region Constants and Fields
+
+            /// <summary>
+            ///   Dwm has been enabled or Disabled
+            /// </summary>
+            internal const int DwmCompositionChanged = 0x031E;
+
+            /// <summary>
+            ///   Dwn rendering has changed
+            /// </summary>
+            internal const int DwmRenderingChanged = 0x031F;
+
+            #endregion
         }
     }
 }

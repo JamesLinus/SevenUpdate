@@ -45,14 +45,6 @@ namespace WPFLocalizeExtension.Extensions
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "LocTextExtension" /> class.
-        /// </summary>
-        public LocTextExtension()
-        {
-            this.InitializeLocText();
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LocTextExtension"/> class.
         /// </summary>
         /// <param name="key">
@@ -60,6 +52,14 @@ namespace WPFLocalizeExtension.Extensions
         /// </param>
         public LocTextExtension(string key)
             : base(key)
+        {
+            this.InitializeLocText();
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "LocTextExtension" /> class.
+        /// </summary>
+        protected LocTextExtension()
         {
             this.InitializeLocText();
         }
@@ -291,7 +291,7 @@ namespace WPFLocalizeExtension.Extensions
             else
             {
                 // load a fresh localized text, if the passed string is null
-                input = input ?? Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dict, this.Key, this.GetForcedCultureOrDefault());
+                input = input ?? Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
             }
 
             // get the main text as string xor string.empty

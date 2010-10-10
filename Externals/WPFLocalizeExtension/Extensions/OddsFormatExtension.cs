@@ -17,6 +17,7 @@ namespace WPFLocalizeExtension.Extensions
     using System.Globalization;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Markup;
 
@@ -319,7 +320,7 @@ namespace WPFLocalizeExtension.Extensions
                 if (this.targetObjects.Count == 0)
                 {
                     // add this localize extension to the WeakEventManager on LocalizeDictionary
-                    OddsFormatManager.Instance.AddEventListener(this);
+                    OddsFormatManager.AddEventListener(this);
                 }
 
                 // add the target as an dependency object as weak reference to the dependency object list
@@ -371,7 +372,7 @@ namespace WPFLocalizeExtension.Extensions
                 if (this.targetObjects.Count == 0)
                 {
                     // add this localize extension to the WeakEventManager on LocalizeDictionary
-                    OddsFormatManager.Instance.AddEventListener(this);
+                    OddsFormatManager.AddEventListener(this);
                 }
 
                 // add the target as an dependency object as weak reference to the dependency object list
@@ -457,7 +458,8 @@ namespace WPFLocalizeExtension.Extensions
         /// </returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dict = new Dictionary<decimal, string> {
+            var dictionary = new Dictionary<decimal, string> 
+            {
                     { 11.00m, "10/1" }, 
                     { 10.00m, "9/1" }, 
                     { 9.50m, "17/2" }, 
@@ -531,7 +533,7 @@ namespace WPFLocalizeExtension.Extensions
                     { 1.2m, "1/5" }
                 };
 
-            return dict;
+            return dictionary;
         }
 
         /// <summary>

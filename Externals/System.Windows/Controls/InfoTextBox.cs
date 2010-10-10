@@ -158,7 +158,7 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>
-        /// Invoked whenever an unhandled System.Windows.DragDrop.DragEnter attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
+        /// Invoked whenever an unhandled <see cref="DragDrop"/>.DragEnter attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
         /// <param name="e">
         /// Provides data about the event.
@@ -171,7 +171,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Invoked whenever an unhandled System.Windows.DragDrop.DragLeave attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
+        /// Invoked whenever an unhandled <see cref="DragDrop"/>.DragLeave attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
         /// <param name="e">
         /// Provides data about the event.
@@ -205,7 +205,7 @@ namespace System.Windows.Controls
         /// <param name="e">
         /// The <see cref="System.EventArgs"/> instance containing the event data.
         /// </param>
-        private new static void IsVisibleChanged(object sender, EventArgs e)
+        private static new void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
             if (infoTextBox == null)

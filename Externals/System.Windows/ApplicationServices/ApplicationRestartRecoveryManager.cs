@@ -149,7 +149,7 @@ namespace System.Windows.ApplicationServices
             var handle = GCHandle.Alloc(settings.RecoveryData);
 
             var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(
-                AppRestartRecoveryNativeMethods.internalCallback, (IntPtr)handle, settings.PingInterval, 0);
+                AppRestartRecoveryNativeMethods.InternalCallback, (IntPtr)handle, settings.PingInterval, 0);
 
             if (!ErrorHelper.Succeeded((int)hr))
             {
