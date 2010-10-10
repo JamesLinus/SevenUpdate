@@ -579,12 +579,12 @@ namespace SevenUpdate.Admin
                 return;
             }
 
-            if (Process.GetProcessesByName("SevenUpdate").Length > 0 && waiting)
+            if ((Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0) && waiting)
             {
                 ShutdownApp();
             }
 
-            if (Process.GetProcessesByName("SevenUpdate").Length < 1 && !waiting)
+            if ((Process.GetProcessesByName(@"SevenUpdate").Length < 1 && Process.GetProcessesByName(@"SevenUpdate.vshost").Length < 1) && !waiting)
             {
                 ShutdownApp();
             }

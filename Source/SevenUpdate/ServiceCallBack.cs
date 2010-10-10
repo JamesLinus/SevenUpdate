@@ -12,7 +12,7 @@ namespace SevenUpdate
 {
     using System;
 
-    using SevenUpdate.WCF;
+    using SevenUpdate.Service;
 
     /// <summary>
     /// Contains callback methods for WCF

@@ -93,7 +93,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UpdateSelectionChangedEventArgs.xaml.cs" />
+    <Compile Include="Service References\Service\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="ServiceCallBack.cs" />
     <Compile Include="AdminClient.cs" />
     <Compile Include="App.xaml.cs">
@@ -117,11 +121,6 @@
     </Compile>
     <Compile Include="Pages\UpdateInfo.xaml.cs">
       <DependentUpon>UpdateInfo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\WCF\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="CustomComparer\SuaSorter.cs" />
     <Compile Include="CustomComparer\SuhSorter.cs" />
@@ -220,19 +219,19 @@
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\WCF\Mex.xsd">
+    <None Include="Service References\Service\Mex.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WCF\Mex1.xsd">
+    <None Include="Service References\Service\Mex1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WCF\Mex2.xsd">
+    <None Include="Service References\Service\Mex2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WCF\Mex3.xsd">
+    <None Include="Service References\Service\Mex3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\WCF\Service.wsdl" />
+    <None Include="Service References\Service\WcfService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -292,21 +291,20 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\WCF\" />
+    <WCFMetadataStorage Include="Service References\Service\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WCF\configuration91.svcinfo" />
+    <None Include="Service References\Service\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WCF\configuration.svcinfo" />
+    <None Include="Service References\Service\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\WCF\Reference.svcmap">
+    <None Include="Service References\Service\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

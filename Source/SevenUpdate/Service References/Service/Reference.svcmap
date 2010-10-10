@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="01d6f08c-9a17-48dc-bd15-39b11ff78a84" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="734db859-403f-499e-8200-c95750223c00" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,11 +23,11 @@
     <MetadataSource Address="http://localhost/SevenUpdate/Mex" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Service.wsdl" MetadataType="Wsdl" ID="03ba6a61-ad4e-4226-b39c-d07fbc41cbcd" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex" />
-    <MetadataFile FileName="Mex.xsd" MetadataType="Schema" ID="900e0044-5f75-45a7-92f7-7287300b6ebe" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd1" />
-    <MetadataFile FileName="Mex1.xsd" MetadataType="Schema" ID="dd22c9b5-109d-4efb-bd38-7714342cd5f0" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd0" />
-    <MetadataFile FileName="Mex2.xsd" MetadataType="Schema" ID="8411c6eb-e03f-41cf-974d-85ba264d8599" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd3" />
-    <MetadataFile FileName="Mex3.xsd" MetadataType="Schema" ID="04606479-5814-47c9-9e32-bff564d64a28" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd2" />
+    <MetadataFile FileName="WcfService.wsdl" MetadataType="Wsdl" ID="e67158b0-7c70-46a2-a99b-986455a5d9f8" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex" />
+    <MetadataFile FileName="Mex.xsd" MetadataType="Schema" ID="69fd3a39-89aa-44c2-8972-92bfa17f4449" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd1" />
+    <MetadataFile FileName="Mex1.xsd" MetadataType="Schema" ID="0a00d20e-6870-4f8a-94f7-4214b6ec0333" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd0" />
+    <MetadataFile FileName="Mex2.xsd" MetadataType="Schema" ID="287aeb5c-13a6-48fe-966b-2b70f008042f" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd3" />
+    <MetadataFile FileName="Mex3.xsd" MetadataType="Schema" ID="060d9719-8df8-4904-844e-d0a365cb8d29" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

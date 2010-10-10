@@ -18,7 +18,6 @@ namespace SevenUpdate
     using System.Threading.Tasks;
 
     using SevenUpdate.Service;
-    using SevenUpdate.WCF;
 
     /// <summary>
     /// Provides static methods that control <see cref="SevenUpdate"/>.Admin for operations that require administrator access
