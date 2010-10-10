@@ -133,11 +133,6 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether if an install is currently in progress
-        /// </summary>
-        internal static bool IsInstallInProgress { private get; set; }
-
-        /// <summary>
         ///   Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check
         /// </summary>
         internal static bool IsReconnect { get; set; }
@@ -167,7 +162,7 @@ namespace SevenUpdate
         {
             if (auto)
             {
-                if (!IsInstallInProgress && !Utilities.RebootNeeded)
+                if (!Install.IsInstalling && !Download.IsDownloading && !Search.IsSearching && !Utilities.RebootNeeded)
                 {
                     CheckForUpdates();
                 }
@@ -183,13 +178,12 @@ namespace SevenUpdate
         /// </summary>
         internal static void CheckForUpdates()
         {
-            if (!IsInstallInProgress)
+            if (!Install.IsInstalling && !Download.IsDownloading && !Search.IsSearching && !IsReconnect)
             {
                 if (Utilities.RebootNeeded == false)
                 {
                     Instance.UpdateAction = UpdateAction.CheckingForUpdates;
                     Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
-                    IsInstallInProgress = true;
                     Search.SearchForUpdatesAsync(AppsToUpdate);
                 }
                 else

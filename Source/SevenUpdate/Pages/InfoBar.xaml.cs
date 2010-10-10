@@ -204,7 +204,6 @@ namespace SevenUpdate.Pages
                     }
 
                     Core.Instance.UpdateAction = this.isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
-                    Core.IsInstallInProgress = true;
                     Settings.Default.lastInstall = DateTime.Now;
                 }
                 else
@@ -284,7 +283,6 @@ namespace SevenUpdate.Pages
         /// </param>
         private void ErrorOccurred(ErrorOccurredEventArgs e)
         {
-            Core.IsInstallInProgress = false;
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
             switch (e.Type)
             {
@@ -492,8 +490,6 @@ namespace SevenUpdate.Pages
                 return;
             }
 
-            Core.IsInstallInProgress = false;
-
             Core.Applications = e.Applications as Collection<Sui>;
             if (Core.Applications == null)
             {
@@ -666,7 +662,6 @@ namespace SevenUpdate.Pages
                     this.tbStatus.Visibility = Visibility.Visible;
                     this.btnAction.Visibility = Visibility.Visible;
 
-                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.CheckForUpdates:
@@ -706,7 +701,6 @@ namespace SevenUpdate.Pages
                     this.line.Y1 = 25;
                     this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
 
-                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.Downloading:
@@ -720,8 +714,6 @@ namespace SevenUpdate.Pages
 
                     this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
 
-                    Core.IsInstallInProgress = true;
-
                     App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
@@ -734,7 +726,6 @@ namespace SevenUpdate.Pages
                     this.tbStatus.Visibility = Visibility.Visible;
                     this.btnAction.Visibility = Visibility.Visible;
 
-                    Core.IsInstallInProgress = false;
                     App.TaskBar.ProgressState = TaskbarItemProgressState.Error;
                     break;
 
@@ -743,8 +734,6 @@ namespace SevenUpdate.Pages
 
                     this.tbHeading.Visibility = Visibility.Visible;
                     this.tbStatus.Visibility = Visibility.Visible;
-
-                    Core.IsInstallInProgress = false;
 
                     break;
 
@@ -758,7 +747,6 @@ namespace SevenUpdate.Pages
                     this.btnAction.Visibility = Visibility.Visible;
 
                     this.btnAction.IsShieldNeeded = !Core.Instance.IsAdmin;
-                    Core.IsInstallInProgress = true;
                     App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                     break;
 
@@ -769,7 +757,6 @@ namespace SevenUpdate.Pages
                     this.tbHeading.Visibility = Visibility.Visible;
                     this.tbStatus.Visibility = Visibility.Visible;
 
-                    Core.IsInstallInProgress = false;
                     break;
 
                 case UpdateAction.RebootNeeded:

@@ -62,6 +62,15 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Gets a value indicating whether Seven update is currently searching for updates
+        /// </summary>
+        public static bool IsSearching { get; private set; }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -72,6 +81,7 @@ namespace SevenUpdate
         /// </param>
         public static void SearchForUpdates(IEnumerable<Sua> applications)
         {
+            IsSearching = true;
             importantCount = 0;
             optionalCount = 0;
             recommendedCount = 0;
@@ -95,11 +105,19 @@ namespace SevenUpdate
             try
             {
                 var publisher = new ObservableCollection<LocaleString>();
-                var ls = new LocaleString { Value = "Seven Software", Lang = "en" };
+                var ls = new LocaleString
+                    {
+                        Value = "Seven Software", 
+                        Lang = "en"
+                    };
                 publisher.Add(ls);
 
                 var name = new ObservableCollection<LocaleString>();
-                ls = new LocaleString { Value = "Seven Update", Lang = "en" };
+                ls = new LocaleString
+                    {
+                        Value = "Seven Update", 
+                        Lang = "en"
+                    };
                 name.Add(ls);
 
                 // Download the Seven Update SUI and load it.
@@ -126,6 +144,8 @@ namespace SevenUpdate
                         applicationsFound.Add(app);
 
                         // Search is complete!
+                        IsSearching = false;
+
                         if (SearchCompleted != null)
                         {
                             SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
@@ -150,6 +170,8 @@ namespace SevenUpdate
             if (applications == null)
             {
                 // Search is complete!
+                IsSearching = false;
+
                 if (SearchCompleted != null)
                 {
                     SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
@@ -210,6 +232,8 @@ namespace SevenUpdate
             }
 
             // Search is complete!
+            IsSearching = false;
+
             if (SearchCompleted != null)
             {
                 SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));

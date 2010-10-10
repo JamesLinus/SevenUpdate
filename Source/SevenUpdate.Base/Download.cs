@@ -50,6 +50,15 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Gets a value indicating whether Seven update is currently downloading updates
+        /// </summary>
+        public static bool IsDownloading { get; private set; }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -72,6 +81,8 @@ namespace SevenUpdate
             {
                 return;
             }
+
+            IsDownloading = true;
 
             // It's a new manager class
             manager = new BitsManager();
@@ -216,6 +227,7 @@ namespace SevenUpdate
             {
                 manager.Dispose();
                 manager = null;
+                IsDownloading = false;
                 if (DownloadCompleted != null)
                 {
                     DownloadCompleted(null, new DownloadCompletedEventArgs(false));
@@ -259,7 +271,9 @@ namespace SevenUpdate
                 return;
             }
 
+            IsDownloading = false;
             e.Job.Complete();
+
             if (DownloadCompleted != null)
             {
                 DownloadCompleted(null, new DownloadCompletedEventArgs(errorOccurred));

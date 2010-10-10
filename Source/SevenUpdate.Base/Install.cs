@@ -73,6 +73,15 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        ///   Gets a value indicating whether Seven Update is installing updates
+        /// </summary>
+        public static bool IsInstalling { get; private set; }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>
@@ -93,6 +102,7 @@ namespace SevenUpdate
                 return;
             }
 
+            IsInstalling = true;
             updateCount = applications.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
 
@@ -170,7 +180,7 @@ namespace SevenUpdate
                         }
 
                         Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
-
+                        IsInstalling = false;
                         return;
                     }
 
@@ -209,6 +219,7 @@ namespace SevenUpdate
                 }
             }
 
+            IsInstalling = false;
             if (InstallCompleted != null)
             {
                 InstallCompleted(null, new InstallCompletedEventArgs(completedUpdates, failedUpdates));
