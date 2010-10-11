@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="Core.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
@@ -64,6 +64,14 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
+        /// <summary>
+        /// Initializes static members of the <see cref="Core"/> class.
+        /// </summary>
+        static Core()
+        {
+            Projects = Utilities.Deserialize<Collection<Project>>(ProjectsFile);
+        }
+
         #region Properties
 
         /// <summary>Gets the application information of the project</summary>
@@ -78,15 +86,9 @@ namespace SevenUpdate.Sdk
         /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
         internal static bool IsNewProject { get; set; }
 
-        /// <summary>Gets the collection of Project</summary>
+        /// <summary>Gets a collection of Projects</summary>
         /// <value>The projects.</value>
-        internal static Collection<Project> Projects
-        {
-            get
-            {
-                return Utilities.Deserialize<Collection<Project>>(ProjectsFile) ?? new ObservableCollection<Project>();
-            }
-        }
+        internal static Collection<Project> Projects { get; private set; }
 
         /// <summary>Gets or sets the index for the current shortcut being edited</summary>
         /// <value>The selected shortcut.</value>

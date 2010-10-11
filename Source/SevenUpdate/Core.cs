@@ -203,18 +203,6 @@ namespace SevenUpdate
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
-        internal static bool HaveComctl6()
-        {
-            var verInfo = GetLoadedModuleVersion(@"comctl32.dll");
-            return verInfo != null && verInfo.FileMajorPart >= 6;
-        }
-
-        internal static FileVersionInfo GetLoadedModuleVersion(string name)
-        {
-            var process = Process.GetCurrentProcess();
-            return (from ProcessModule module in process.Modules where module.ModuleName.ToLower() == name select module.FileVersionInfo).FirstOrDefault();
-        }
-
         /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
         /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name="icon">The icon to display</param>
@@ -257,7 +245,6 @@ namespace SevenUpdate
                             };
                         td.Controls.Add(button);
                     }
-
 
                     return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
                 }

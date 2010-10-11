@@ -29,13 +29,13 @@ namespace System.Windows.Dialogs.TaskDialogs
         private TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
 
         /// <summary>The outer dialog</summary>
-        private readonly TaskDialog outerDialog;
+        private TaskDialog outerDialog;
 
         /// <summary>The dialog settings</summary>
-        private readonly NativeTaskDialogSettings settings;
+        private NativeTaskDialogSettings settings;
 
         /// <summary>The strings for the dialog</summary>
-        private readonly IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
+        private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
 
         /// <summary>The collection of buttons</summary>
         private IntPtr buttonArray;
