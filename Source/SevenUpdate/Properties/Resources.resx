@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -604,20 +604,8 @@
     <value>Apache License 2.0</value>
     <comment>Run.Text</comment>
   </data>
-  <data name="ApiCodePackLicense" xml:space="preserve">
-    <value>Microsoft® Windows® API Code Pack is licensed under the</value>
-    <comment>Run.Text</comment>
-  </data>
-  <data name="MicrosoftLicense" xml:space="preserve">
-    <value>Microsoft Software License</value>
-    <comment>Run.Text</comment>
-  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
-  </data>
-  <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
-    <value>WPFLocalizeExtension is licensed under the</value>
-    <comment>Run.Text</comment>
   </data>
   <data name="MicrosoftPublicLicense" xml:space="preserve">
     <value>Microsoft Public License</value>
@@ -653,5 +641,9 @@
   <data name="UpdateType" xml:space="preserve">
     <value>Update type:</value>
     <comment>TextBlock.Text</comment>
+  </data>
+  <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
+    <value>WPFLocalizeExtension is licensed under the</value>
+    <comment>Run.Text</comment>
   </data>
 </root>

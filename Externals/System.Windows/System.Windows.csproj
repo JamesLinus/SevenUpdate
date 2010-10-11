@@ -88,6 +88,7 @@
     <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Controls\UacButton.cs" />
+    <Compile Include="Internal\EnableThemingInScope.cs" />
     <Compile Include="ValidationRules\FileNameInputRule.cs" />
     <Compile Include="ValidationRules\RequiredInputRule.cs" />
     <Compile Include="ValidationRules\UrlInputRule.cs" />

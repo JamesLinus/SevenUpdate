@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="App.xaml.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
@@ -170,7 +170,7 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.eye", 
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", 
                     IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", 
                     IconResourceIndex = 4, 
                     Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, 

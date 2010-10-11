@@ -26,7 +26,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         #region Constants and Fields
 
         /// <summary>The native dialog configuration</summary>
-        private readonly TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
+        private TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
 
         /// <summary>The outer dialog</summary>
         private readonly TaskDialog outerDialog;
@@ -220,8 +220,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
                 // Here is the way we use "vanilla" P/Invoke to call 
                 // TaskDialogIndirect().  
-                var result = TaskDialogNativeMethods.TaskDialogIndirect(
-                    this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
+                var result = TaskDialogNativeMethods.TaskDialogIndirect(this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
 
                 if (ErrorHelper.Failed(result))
                 {
@@ -481,11 +480,6 @@ namespace System.Windows.Dialogs.TaskDialogs
             if (this.outerDialog != null)
             {
                 this.outerDialog.Dispose();
-            }
-
-            if (this.nativeDialogConfig != null)
-            {
-                this.nativeDialogConfig.Dispose();
             }
         }
 

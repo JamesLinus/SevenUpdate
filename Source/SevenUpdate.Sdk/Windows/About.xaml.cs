@@ -61,7 +61,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Opens a web browser and navigates to the specified url</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-        private void GoToUrl(object sender, RequestNavigateEventArgs e)
+        private void NavigateToUrl(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(e.Uri.AbsoluteUri);
             e.Handled = true;

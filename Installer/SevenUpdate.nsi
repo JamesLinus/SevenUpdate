@@ -190,7 +190,6 @@ Section "Main Section" SEC01
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe.config" "$INSTDIR\SevenUpdate.Admin.exe.config"
- 
 	  
   ${If} ${AtMostWinXP}
 	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe'

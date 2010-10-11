@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="Core.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
@@ -30,6 +30,7 @@ namespace SevenUpdate
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
@@ -202,6 +203,18 @@ namespace SevenUpdate
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
+        internal static bool HaveComctl6()
+        {
+            var verInfo = GetLoadedModuleVersion(@"comctl32.dll");
+            return verInfo != null && verInfo.FileMajorPart >= 6;
+        }
+
+        internal static FileVersionInfo GetLoadedModuleVersion(string name)
+        {
+            var process = Process.GetCurrentProcess();
+            return (from ProcessModule module in process.Modules where module.ModuleName.ToLower() == name select module.FileVersionInfo).FirstOrDefault();
+        }
+
         /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
         /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name="icon">The icon to display</param>
@@ -219,31 +232,35 @@ namespace SevenUpdate
             string footerText = null, 
             string defaultButtonText = null, 
             bool displayShieldOnButton = false)
-        {
+        {   
             if (TaskDialog.IsPlatformSupported)
             {
-                var td = new TaskDialog
-                    {
-                        Caption = Resources.SevenUpdate, 
-                        InstructionText = instructionText, 
-                        Text = description, 
-                        Icon = icon, 
-                        FooterText = footerText, 
-                        FooterIcon = TaskDialogStandardIcon.Information, 
-                        CanCancel = true, 
-                        StandardButtons = standardButtons
-                    };
-                if (defaultButtonText != null)
+                using (new EnableThemingInScope(true))
                 {
-                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                    var td = new TaskDialog
                         {
-                            Default = true, 
-                            ShowElevationIcon = displayShieldOnButton
+                            Caption = Resources.SevenUpdate,
+                            InstructionText = instructionText,
+                            Text = description,
+                            Icon = icon,
+                            FooterText = footerText,
+                            FooterIcon = TaskDialogStandardIcon.Information,
+                            CanCancel = true,
+                            StandardButtons = standardButtons
                         };
-                    td.Controls.Add(button);
-                }
+                    if (defaultButtonText != null)
+                    {
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                            {
+                                Default = true,
+                                ShowElevationIcon = displayShieldOnButton
+                            };
+                        td.Controls.Add(button);
+                    }
 
-                return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+
+                    return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                }
             }
 
             var message = instructionText;

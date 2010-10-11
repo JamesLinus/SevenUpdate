@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="TaskDialogNativeMethods.cs"
 //            project="System.Windows"
 //            assembly="System.Windows"
@@ -29,6 +29,8 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="data">The data for the callback</param>
         /// <returns>The result of the <see cref="TaskDialog"/></returns>
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
+
+        #region Enums
 
         /// <summary>Indicates the progress bar status</summary>
         internal enum ProgressBarStatus
@@ -275,15 +277,31 @@ namespace System.Windows.Dialogs.TaskDialogs
             ShieldIcon = 65532
         }
 
+        #endregion
+
+        /// <summary>
+        /// Creates, displays, and operates a task dialog. The task dialog contains application-defined message text and title, icons, and any combination of predefined push buttons. 
+        /// This function does not support the registration of a callback function to receive notifications.
+        /// </summary>
+        /// <param name="parent">Handle to the owner window of the task dialog to be created. If this parameter is <see langword="null"/>, the task dialog has no owner window.</param>
+        /// <param name="instance">Handle to the module that contains the icon resource identified by the Icon member, and the string resources identified by the title and <paramref name="mainInstruction"/> members. If this parameter is <see langword="null"/>, Icon must not be <see langword="null"/>, but must point to a <see langword="null"/>-terminated, Unicode string that contains a system resource identifier.</param>
+        /// <param name="title">Pointer to the string to be used for the task dialog title. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. If this parameter is <see langword="null"/>, the filename of the executable program is used.</param>
+        /// <param name="mainInstruction">Pointer to the string to be used for the main instruction. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. If this parameter is <see langword="null"/>, the filename of the executable program is used.</param>
+        /// <param name="content">Pointer to a string used for additional text that appears below the main instruction, in a smaller font. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. Can be <see langword="null"/> if no additional text is wanted.</param>
+        /// <param name="buttons">Specifies the push buttons displayed in the dialog box.</param>
+        /// <param name="icon">Pointer to a string that identifies the icon to display in the task dialog. This parameter must be an integer resource identifier passed to the MAKEINTRESOURCE macro or one of the following predefined values. If this parameter is NULL, no icon will be displayed.</param>
+        /// <returns>The result</returns>
+        [DllImport(@"comctl32.dll", PreserveSig = false, CharSet = CharSet.Unicode)]
+        public static extern TaskDialogResult TaskDialog(IntPtr parent, IntPtr instance, string title, string mainInstruction, string content, TaskDialogCommonButtonFlags buttons, TaskDialogIcon icon);
+
         /// <summary>The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains application-defined icons, messages, title, verification check box, command links, push buttons, and radio buttons. This function can register a callback function to receive notification messages.</summary>
         /// <param name="taskConfig">A pointer to a <see cref="TaskDialogConfig"/> structure that contains information used to display the task dialog.</param>
         /// <param name="button">Address of a variable that receives one of the button IDs specified in the <paramref name="button"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
-        /// <param name="radioButtons">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButtons"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
+        /// <param name="radioButton">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
         /// <param name="verificationFlagChecked"><see langword="true"/> if the verification <see cref="CheckBox"/> was checked when the dialog was dismissed; otherwise, false</param>
-        /// <returns>The <see cref="Result"/></returns>
-        [DllImport(@"comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern Result TaskDialogIndirect(
-            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButtons, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
+        /// <returns>The result</returns>
+        [DllImport(@"comctl32.dll", CharSet = CharSet.Auto, PreserveSig = false)]
+        internal static extern Result TaskDialogIndirect([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
         /// <summary>Contains the data for a <see cref="TaskDialogIcon"/></summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
@@ -334,7 +352,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         /// <summary>Contains information used to display a task dialog</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal class TaskDialogConfig : IDisposable
+        internal class TaskDialogConfig
         {
             /// <summary>Specifies the structure size, in bytes.</summary>
             internal uint Size;
@@ -415,48 +433,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             /// <summary>The width of the task dialog's client area. If 0, the task dialog manager will calculate the ideal width.</summary>
             internal uint Width;
-
-            /// <summary>Indicates if the dialog is disposed</summary>
-            private bool disposed;
-
-            /// <summary>Finalizes an instance of the <see cref="TaskDialogConfig"/> class.</summary>
-            ~TaskDialogConfig()
-            {
-                this.Dispose(false);
-            }
-
-            /// <summary>Finalizes an instance of the <see cref="TaskDialogConfig"/> class.</summary>
-            public virtual void Dispose()
-            {
-                this.Dispose(false);
-
-                // Unregister object for finalization.
-                GC.SuppressFinalize(this);
-            }
-
-            /// <summary>Finalizes an instance of the <see cref="TaskDialogConfig"/> class.</summary>
-            /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
-            protected virtual void Dispose(bool disposing)
-            {
-                lock (this)
-                {
-                    // Do nothing if the object has already been disposed of.
-                    if (this.disposed)
-                    {
-                        return;
-                    }
-
-                    if (disposing)
-                    {
-                        // Release diposable objects used by this instance here.
-                    }
-
-                    // Release unmanaged resources here. Don't access reference type fields.
-
-                    // Remember that the object has been disposed of.
-                    this.disposed = true;
-                }
-            }
         }
     }
 }
