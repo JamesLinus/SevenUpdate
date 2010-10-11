@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="App.cs"
 //            project="SevenUpdate.Admin"
 //            assembly="SevenUpdate.Admin"
@@ -248,7 +248,7 @@ namespace SevenUpdate.Admin
             bool createdNew;
             var timer = new Timer(10000);
             timer.Elapsed += ShutdownApp;
-            timer.Start();
+           // timer.Start();
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {

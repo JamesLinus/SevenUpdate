@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="AdminClient.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
@@ -224,11 +224,11 @@ namespace SevenUpdate
         {
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
-                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
-                if (!success)
-                {
-                    return false;
-                }
+                //var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
+                //if (!success)
+                //{
+                //    return false;
+                //}
 
                 Thread.Sleep(1000);
                 wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
