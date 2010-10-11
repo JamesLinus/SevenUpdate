@@ -57,7 +57,7 @@ namespace SharpBits.Base
         {
             // Set threading apartment
             Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
-            NativeMethods.COInitializeSecurity(
+            NativeMethods.CoInitializeSecurity(
                 IntPtr.Zero, 
                 -1, 
                 IntPtr.Zero, 
@@ -278,7 +278,7 @@ namespace SharpBits.Base
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            this.Dispose(this.disposed);
             GC.SuppressFinalize(this);
         }
 

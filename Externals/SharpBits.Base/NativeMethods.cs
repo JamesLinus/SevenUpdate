@@ -133,7 +133,7 @@ namespace SharpBits.Base
         /// <param name="reserved3">The reserved3.</param>
         /// <returns>The result</returns>
         [DllImport(@"ole32.dll", CharSet = CharSet.Auto)]
-        internal static extern int COInitializeSecurity(
+        internal static extern int CoInitializeSecurity(
             IntPtr securityDescriptor, 
             int authServiceLength, 
             IntPtr authServices, 
@@ -145,7 +145,7 @@ namespace SharpBits.Base
             IntPtr reserved3);
 
         /// <summary>Converts a string-format security identifier (SID) into a valid, functional SID. You can use this function to retrieve a SID that the ConvertSidToStringSid function converted to string format.</summary>
-        /// <param name="sid">A pointer to a <see langword="null"/>-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-S… format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
+        /// <param name="sid">A pointer to a <see langword="null"/>-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-Sï¿½ format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>
         /// <returns><see langword="true"/> if function succecced</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]

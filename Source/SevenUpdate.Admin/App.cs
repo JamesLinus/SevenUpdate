@@ -246,9 +246,11 @@ namespace SevenUpdate.Admin
         private static void Main(string[] args)
         {
             bool createdNew;
+            #if !DEBUG
             var timer = new Timer(10000);
             timer.Elapsed += ShutdownApp;
-           // timer.Start();
+            timer.Start();
+            #endif
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
@@ -494,12 +496,12 @@ namespace SevenUpdate.Admin
                 return;
             }
 
-            if ((Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0) && waiting)
+            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 && waiting)
             {
                 ShutdownApp();
             }
 
-            if ((Process.GetProcessesByName(@"SevenUpdate").Length < 1 && Process.GetProcessesByName(@"SevenUpdate.vshost").Length < 1) && !waiting)
+            if (Process.GetProcessesByName(@"SevenUpdate").Length < 1 && !waiting)
             {
                 ShutdownApp();
             }
