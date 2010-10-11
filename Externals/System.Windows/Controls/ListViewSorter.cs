@@ -4,10 +4,26 @@
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
 //            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//     Copyright (c) Thomas Levesque. All rights reserved.
 // </copyright>
+// <author>Thomas Levesque</author>
 // <author username="sevenalive">Robert Baker</author>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
 // ***********************************************************************
+//  This file is part of Seven Update.
+//
+//    Seven Update is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Seven Update is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 namespace System.Windows.Controls
 {
     using System.Collections;
@@ -74,7 +90,86 @@ namespace System.Windows.Controls
 
         #endregion
 
+        // Using a DependencyProperty as the backing store for SortGlyphAscending.  This enables animation, styling, binding, etc...
         #region Public Methods
+
+        /// <summary>
+        /// Sets the auto sort.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <param name="value">
+        /// if set to <see langword="true"/> [value].
+        /// </param>
+        public static void SetAutoSort(DependencyObject obj, bool value)
+        {
+            obj.SetValue(AutoSortProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the <see cref="GridViewColumn"/> sorter
+        /// </summary>
+        /// <param name="obj">
+        /// The <see cref="DependencyObject"/> to set the sorter to
+        /// </param>
+        /// <param name="value">
+        /// the <see cref="IComparer"/> to set as the sorter
+        /// </param>
+        public static void SetCustomSorter(DependencyObject obj, string value)
+        {
+            obj.SetValue(CustomSorterProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the name of the property.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        public static void SetPropertyName(DependencyObject obj, string value)
+        {
+            obj.SetValue(PropertyNameProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the sorted column header.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <param name="value">
+        /// The column header
+        /// </param>
+        public static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader value)
+        {
+            obj.SetValue(SortedColumnHeaderProperty, value);
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Adds the sort glyph.
+        /// </summary>
+        /// <param name="columnHeader">
+        /// The column header.
+        /// </param>
+        /// <param name="direction">
+        /// The direction.
+        /// </param>
+        /// <param name="sortGlyph">
+        /// The sort glyph.
+        /// </param>
+        private static void AddSortGlyph(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
+        {
+            var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
+            adornerLayer.Add(new SortGlyphAdorner(columnHeader, direction, sortGlyph));
+        }
 
         /// <summary>
         /// Applies the custom sort.
@@ -91,7 +186,7 @@ namespace System.Windows.Controls
         /// <param name="sortedColumnHeader">
         /// The sorted column header.
         /// </param>
-        public static void ApplyCustomSort(ListCollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(ListCollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
         {
             if (view.SortDescriptions.Count > 0)
             {
@@ -160,7 +255,7 @@ namespace System.Windows.Controls
         /// <param name="sortedColumnHeader">
         /// The sorted column header.
         /// </param>
-        public static void ApplySort(ICollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplySort(ICollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
         {
             var direction = ListSortDirection.Ascending;
 
@@ -193,219 +288,6 @@ namespace System.Windows.Controls
             }
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
-        }
-
-        /// <summary>
-        /// Gets the ancestor.
-        /// </summary>
-        /// <typeparam name="T">
-        /// The type of the ancestor to get
-        /// </typeparam>
-        /// <typeparameter name="T">
-        ///   The Ancestor class
-        /// </typeparameter>
-        /// <param name="reference">
-        /// The reference.
-        /// </param>
-        /// <returns>
-        /// Returns the ancestor class
-        /// </returns>
-        public static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
-        {
-            var parent = VisualTreeHelper.GetParent(reference);
-            while (!(parent is T))
-            {
-                parent = VisualTreeHelper.GetParent(parent);
-            }
-
-            return (T)parent;
-        }
-
-        // Using a DependencyProperty as the backing store for Command.  This enables animation, styling, binding, etc...
-
-        /// <summary>
-        /// Gets the auto sort.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <returns>
-        /// <see langword="true"/> if the sorting is done automatic; otherwise, <see langword="false"/>
-        /// </returns>
-        public static bool GetAutoSort(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(AutoSortProperty);
-        }
-
-        // Using a DependencyProperty as the backing store for AutoSort.  This enables animation, styling, binding, etc...
-
-        /// <summary>
-        /// Gets the name of the property.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <returns>
-        /// The property name
-        /// </returns>
-        public static string GetPropertyName(DependencyObject obj)
-        {
-            return (string)obj.GetValue(PropertyNameProperty);
-        }
-
-        // Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...
-
-        /// <summary>
-        /// Gets the show sort glyph.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <returns>
-        /// <see langword="true"/> if the sort glyph is shown; otherwise, <see langword="false"/>
-        /// </returns>
-        public static bool GetShowSortGlyph(DependencyObject obj)
-        {
-            return (bool)obj.GetValue(ShowSortGlyphProperty);
-        }
-
-        // Using a DependencyProperty as the backing store for ShowSortGlyph.  This enables animation, styling, binding, etc...
-
-        /// <summary>
-        /// Gets the sort glyph ascending.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <returns>
-        /// The <see cref="ImageSource"/> for the sort glyph
-        /// </returns>
-        public static ImageSource GetSortGlyphAscending(DependencyObject obj)
-        {
-            return (ImageSource)obj.GetValue(SortGlyphAscendingProperty);
-        }
-
-        // Using a DependencyProperty as the backing store for SortGlyphAscending.  This enables animation, styling, binding, etc...
-
-        /// <summary>
-        /// Gets the sort glyph descending.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <returns>
-        /// The <see cref="ImageSource"/> for the sort glyph
-        /// </returns>
-        public static ImageSource GetSortGlyphDescending(DependencyObject obj)
-        {
-            return (ImageSource)obj.GetValue(SortGlyphDescendingProperty);
-        }
-
-        /// <summary>
-        /// Sets the auto sort.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="value">
-        /// if set to <see langword="true"/> [value].
-        /// </param>
-        public static void SetAutoSort(DependencyObject obj, bool value)
-        {
-            obj.SetValue(AutoSortProperty, value);
-        }
-
-        /// <summary>
-        /// Sets the <see cref="GridViewColumn"/> sorter
-        /// </summary>
-        /// <param name="obj">
-        /// The <see cref="DependencyObject"/> to set the sorter to
-        /// </param>
-        /// <param name="value">
-        /// the <see cref="IComparer"/> to set as the sorter
-        /// </param>
-        public static void SetCustomSorter(DependencyObject obj, string value)
-        {
-            obj.SetValue(CustomSorterProperty, value);
-        }
-
-        /// <summary>
-        /// Sets the name of the property.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        public static void SetPropertyName(DependencyObject obj, string value)
-        {
-            obj.SetValue(PropertyNameProperty, value);
-        }
-
-        /// <summary>
-        /// Sets the show sort glyph.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="value">
-        /// if set to <see langword="true"/> [value].
-        /// </param>
-        public static void SetShowSortGlyph(DependencyObject obj, bool value)
-        {
-            obj.SetValue(ShowSortGlyphProperty, value);
-        }
-
-        /// <summary>
-        /// Sets the sort glyph ascending.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
-        {
-            obj.SetValue(SortGlyphAscendingProperty, value);
-        }
-
-        /// <summary>
-        /// Sets the sort glyph descending.
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
-        {
-            obj.SetValue(SortGlyphDescendingProperty, value);
-        }
-
-        #endregion
-
-        // Using a DependencyProperty as the backing store for SortGlyphDescending.  This enables animation, styling, binding, etc...
-        #region Methods
-
-        /// <summary>
-        /// Adds the sort glyph.
-        /// </summary>
-        /// <param name="columnHeader">
-        /// The column header.
-        /// </param>
-        /// <param name="direction">
-        /// The direction.
-        /// </param>
-        /// <param name="sortGlyph">
-        /// The sort glyph.
-        /// </param>
-        private static void AddSortGlyph(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
-        {
-            var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
-            adornerLayer.Add(new SortGlyphAdorner(columnHeader, direction, sortGlyph));
         }
 
         /// <summary>
@@ -482,6 +364,46 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
+        /// Gets the ancestor.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type of the ancestor to get
+        /// </typeparam>
+        /// <typeparameter name="T">
+        ///   The Ancestor class
+        /// </typeparameter>
+        /// <param name="reference">
+        /// The reference.
+        /// </param>
+        /// <returns>
+        /// Returns the ancestor class
+        /// </returns>
+        private static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
+        {
+            var parent = VisualTreeHelper.GetParent(reference);
+            while (!(parent is T))
+            {
+                parent = VisualTreeHelper.GetParent(parent);
+            }
+
+            return (T)parent;
+        }
+
+        /// <summary>
+        /// Gets the auto sort.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the sorting is done automatic; otherwise, <see langword="false"/>
+        /// </returns>
+        private static bool GetAutoSort(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(AutoSortProperty);
+        }
+
+        /// <summary>
         /// Gets the <see cref="GridViewColumn"/> sorter
         /// </summary>
         /// <param name="obj">
@@ -493,6 +415,66 @@ namespace System.Windows.Controls
         private static string GetCustomSorter(DependencyObject obj)
         {
             return (string)obj.GetValue(CustomSorterProperty);
+        }
+
+        /// <summary>
+        /// Gets the name of the property.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <returns>
+        /// The property name
+        /// </returns>
+        private static string GetPropertyName(DependencyObject obj)
+        {
+            return (string)obj.GetValue(PropertyNameProperty);
+        }
+
+        // Using a DependencyProperty as the backing store for PropertyName.  This enables animation, styling, binding, etc...
+
+        /// <summary>
+        /// Gets the show sort glyph.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <returns>
+        /// <see langword="true"/> if the sort glyph is shown; otherwise, <see langword="false"/>
+        /// </returns>
+        private static bool GetShowSortGlyph(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(ShowSortGlyphProperty);
+        }
+
+        // Using a DependencyProperty as the backing store for ShowSortGlyph.  This enables animation, styling, binding, etc...
+
+        /// <summary>
+        /// Gets the sort glyph ascending.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <returns>
+        /// The <see cref="ImageSource"/> for the sort glyph
+        /// </returns>
+        private static ImageSource GetSortGlyphAscending(DependencyObject obj)
+        {
+            return (ImageSource)obj.GetValue(SortGlyphAscendingProperty);
+        }
+
+        /// <summary>
+        /// Gets the sort glyph descending.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <returns>
+        /// The <see cref="ImageSource"/> for the sort glyph
+        /// </returns>
+        private static ImageSource GetSortGlyphDescending(DependencyObject obj)
+        {
+            return (ImageSource)obj.GetValue(SortGlyphDescendingProperty);
         }
 
         /// <summary>
@@ -531,17 +513,45 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        /// Sets the sorted column header.
+        /// Sets the show sort glyph.
         /// </summary>
         /// <param name="obj">
         /// The dependency object
         /// </param>
         /// <param name="value">
-        /// The column header
+        /// if set to <see langword="true"/> [value].
         /// </param>
-        private static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader value)
+        private static void SetShowSortGlyph(DependencyObject obj, bool value)
         {
-            obj.SetValue(SortedColumnHeaderProperty, value);
+            obj.SetValue(ShowSortGlyphProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the sort glyph ascending.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        private static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphAscendingProperty, value);
+        }
+
+        /// <summary>
+        /// Sets the sort glyph descending.
+        /// </summary>
+        /// <param name="obj">
+        /// The dependency object
+        /// </param>
+        /// <param name="value">
+        /// The value.
+        /// </param>
+        private static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphDescendingProperty, value);
         }
 
         /// <summary>

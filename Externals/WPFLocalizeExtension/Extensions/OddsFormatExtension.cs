@@ -7,6 +7,7 @@
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
+// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
@@ -421,7 +422,7 @@ namespace WPFLocalizeExtension.Extensions
         /// </param>
         /// <returns>
         /// <see langword="true"/> if the listener handled the event. It is considered an error by the
-        ///   <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a
+        ///   <see cref="T:System.Windows.WeakEventManager"/> handling in WPFï¿½to register a
         ///   listener for an event that the listener does not handle. Regardless,
         ///   the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.
         /// </returns>

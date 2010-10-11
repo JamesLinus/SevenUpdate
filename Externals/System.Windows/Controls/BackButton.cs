@@ -7,6 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
 // ***********************************************************************
 namespace System.Windows.Controls
 {

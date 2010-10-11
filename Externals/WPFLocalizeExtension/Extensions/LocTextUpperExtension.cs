@@ -7,6 +7,7 @@
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
+// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
 namespace WPFLocalizeExtension.Extensions
 {
@@ -102,7 +103,7 @@ namespace WPFLocalizeExtension.Extensions
         /// </returns>
         protected override string FormatText(string target)
         {
-            return target == null ? string.Empty : target.ToUpper(this.GetForcedCultureOrDefault()).Replace("ß", "SS");
+            return target == null ? string.Empty : target.ToUpper(this.GetForcedCultureOrDefault()).Replace("ï¿½", "SS");
         }
 
         /// <summary>

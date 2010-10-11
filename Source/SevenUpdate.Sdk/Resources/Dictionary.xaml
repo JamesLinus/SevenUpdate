@@ -7,7 +7,7 @@
 	<IntToVisibilityConverter x:Key="intToVisibility" />
 	<IntToBooleanConverter x:Key="intToBool" />
 	<Converters:DateConverter x:Key="dateConverter" />
-	<EnumToBoolean x:Key="enumToBool" />
+	<EnumToBooleanConverter x:Key="enumToBool" />
 	<InverseEnumToBooleanConverter x:Key="inverseEnumToBool" />
 
 	<Style TargetType="ListBoxItem">

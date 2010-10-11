@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="LocalizedObjectOperation.cs"
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"
@@ -7,6 +7,7 @@
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
+// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
 namespace WPFLocalizeExtension.Engine
 {

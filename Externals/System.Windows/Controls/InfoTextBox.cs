@@ -4,20 +4,34 @@
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
 //            company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
+//     Copyright (c) Ben Dewey. All rights reserved.
 // </copyright>
+// <author>Ben Dewey</author>
 // <author username="sevenalive">Robert Baker</author>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
 // ***********************************************************************
+//  This file is part of Seven Update.
+//
+//    Seven Update is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Seven Update is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 namespace System.Windows.Controls
 {
     using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
     using System.Windows.Documents;
 
     /// <summary>
     /// A <see cref="TextBox"/> that included help text
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Control")]
     public sealed class InfoTextBox : TextBox
     {
         #region Constants and Fields
