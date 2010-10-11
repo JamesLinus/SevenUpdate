@@ -63,7 +63,7 @@ namespace SharpBits.Base.File
         {
             if (null == file)
             {
-                throw new ArgumentNullException(@"IBackgroundCopyFile");
+                throw new ArgumentNullException(@"file");
             }
 
             this.file = file;

@@ -99,10 +99,16 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary
+                {
+                    Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
+                };
 
             this.Resources.MergedDictionaries.Add(resourceDictionary);
-            this.dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, this.Dispatcher) { Interval = new TimeSpan(0, 0, 0, 0, 300) };
+            this.dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, this.Dispatcher)
+                {
+                    Interval = new TimeSpan(0, 0, 0, 0, 300)
+                };
         }
 
         #endregion
@@ -212,7 +218,10 @@ namespace System.Windows.Controls
 
             foreach (UIElement element in this.canvasElements)
             {
-                var contentControl = new ContentControl { Content = element };
+                var contentControl = new ContentControl
+                    {
+                        Content = element
+                    };
 
                 var rotateTransform = new RotateTransform(angle, centerX, centerY);
                 contentControl.RenderTransform = rotateTransform;

@@ -111,7 +111,7 @@ namespace SevenUpdate.Helper
                         }
                         catch (Exception)
                         {
-                            MoveFileEX(t.FullName, AppDir + t.Name, MoveOnReboot);
+                            MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
 
                             if (!File.Exists(appStore + "reboot.lock"))
                             {
@@ -135,7 +135,7 @@ namespace SevenUpdate.Helper
                     }
                     else
                     {
-                        MoveFileEX(appStore + @"reboot.lock", null, MoveOnReboot);
+                        MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
                     }
                 }
                 catch (Exception)
@@ -152,7 +152,10 @@ namespace SevenUpdate.Helper
                         {
                             StartInfo =
                                 {
-                                   FileName = @"schtasks.exe", CreateNoWindow = true, WindowStyle = ProcessWindowStyle.Hidden, Arguments = "/Run /TN \"SevenUpdate\"" 
+                                    FileName = @"schtasks.exe", 
+                                    CreateNoWindow = true, 
+                                    WindowStyle = ProcessWindowStyle.Hidden, 
+                                    Arguments = "/Run /TN \"SevenUpdate\""
                                 }
                         };
                     p.Start();
@@ -182,19 +185,19 @@ namespace SevenUpdate.Helper
         /// Moves the file using the windows command
         /// </summary>
         /// <param name="sourceFileName">
-        /// The source file name
+        /// The current name of the file or directory on the local computer.
         /// </param>
         /// <param name="newFileName">
-        /// The new file name
+        /// The new name of the file or directory on the local computer.
         /// </param>
         /// <param name="flags">
         /// The flags that determine how to move the file
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if the operation was successful
+        /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.
         /// </returns>
         [DllImport(@"kernel32.dll")]
-        private static extern bool MoveFileEX(string sourceFileName, string newFileName, int flags);
+        private static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
 
         /// <summary>
         /// Run Seven Update and auto check for updates

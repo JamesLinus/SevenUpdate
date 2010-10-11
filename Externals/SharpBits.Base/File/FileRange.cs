@@ -28,7 +28,11 @@ namespace SharpBits.Base.File
         /// </param>
         public FileRange(ulong initialOffset, ulong length)
         {
-            this.BGFileRange = new BGFileRange { InitialOffset = initialOffset, Length = length };
+            this.BGFileRange = new BGFileRange
+                {
+                    InitialOffset = initialOffset, 
+                    Length = length
+                };
         }
 
         /// <summary>

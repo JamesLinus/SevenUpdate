@@ -132,7 +132,11 @@ namespace SevenUpdate.Pages
             if (Core.IsReconnect)
             {
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
-                this.timer = new Timer { Enabled = true, Interval = 30000 };
+                this.timer = new Timer
+                    {
+                        Enabled = true, 
+                        Interval = 30000
+                    };
                 this.timer.Elapsed += this.CheckIfConnecting;
                 AdminClient.Connect();
             }

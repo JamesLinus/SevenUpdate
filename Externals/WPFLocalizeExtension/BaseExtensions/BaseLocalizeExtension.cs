@@ -91,8 +91,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         /// This constructor register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
         ///   to get an acknowledge of changing the culture
         /// </remarks>
-        protected BaseLocalizeExtension(string key)
-            : this()
+        protected BaseLocalizeExtension(string key) : this()
         {
             // parse the key value and split it up if necessary
             Localize.ParseKey(key, out this.assembly, out this.dict, out this.key);
@@ -140,15 +139,12 @@ namespace WPFLocalizeExtension.BaseExtensions
         ///   This is ONLY used to support the localize extension in blend!
         /// </summary>
         /// <value>The initialize value.</value>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ConstructorArgument("key")]
-        public string InitializeValue { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)] [ConstructorArgument("key")] public string InitializeValue { get; set; }
 
         /// <summary>
         ///   Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ResourceIdentifierKey
+        [EditorBrowsable(EditorBrowsableState.Never)] public string ResourceIdentifierKey
         {
             get
             {
@@ -193,8 +189,7 @@ namespace WPFLocalizeExtension.BaseExtensions
         ///   Gets or sets the design value.
         /// </summary>
         /// <value>The design value.</value>
-        [DesignOnly(true)]
-        protected object DesignValue { get; set; }
+        [DesignOnly(true)] protected object DesignValue { get; set; }
 
         /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.

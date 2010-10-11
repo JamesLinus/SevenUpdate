@@ -53,7 +53,7 @@ namespace SharpBits.Base
         {
             if (null == error)
             {
-                throw new ArgumentNullException(@"IBackgroundCopyError");
+                throw new ArgumentNullException(@"error");
             }
 
             this.error = error;

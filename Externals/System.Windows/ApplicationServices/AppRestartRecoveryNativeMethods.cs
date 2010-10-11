@@ -42,88 +42,60 @@ namespace System.Windows.ApplicationServices
         internal delegate uint InternalRecoveryCallback(IntPtr state);
 
         /// <summary>
-        /// Indicates if the recovery has finished
+        /// Indicates that the calling application has completed its data recovery.
         /// </summary>
         /// <param name="success">
-        /// if set to <see langword="true"/> recovery was finished
+        /// if set to <see langword="true"/> the data was successfully recovered; otherwise, <see langword="false"/>.
         /// </param>
         [DllImport(@"kernel32.dll")]
         internal static extern void ApplicationRecoveryFinished([MarshalAs(UnmanagedType.Bool)] bool success);
 
         /// <summary>
-        /// Indicates if the recovery is still in progress
+        /// Indicates that the calling application is continuing to recover data.
         /// </summary>
         /// <param name="canceled">
-        /// if set to <see langword="true"/> recovery is in progress
+        /// Indicates whether the user has canceled the recovery process. Set by WER if the user clicks the Cancel button.
         /// </param>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll")]
         [PreserveSig]
         internal static extern Result ApplicationRecoveryInProgress([Out] [MarshalAs(UnmanagedType.Bool)] out bool canceled);
 
         /// <summary>
-        /// Gets the application recovery callback.
-        /// </summary>
-        /// <param name="processHandle">
-        /// The process handle.
-        /// </param>
-        /// <param name="recoveryCallback">
-        /// The recovery callback.
-        /// </param>
-        /// <param name="state">
-        /// The state.
-        /// </param>
-        /// <param name="pingInterval">
-        /// The ping interval.
-        /// </param>
-        /// <param name="flags">
-        /// The flags.
-        /// </param>
-        /// <returns>
-        /// The error result
-        /// </returns>
-        [DllImport(@"kernel32.dll")]
-        [PreserveSig]
-        internal static extern Result GetApplicationRecoveryCallback(
-            IntPtr processHandle, out RecoveryCallback recoveryCallback, out object state, out uint pingInterval, out uint flags);
-
-        /// <summary>
-        /// Registers the application recovery callback.
+        /// Retrieves a pointer to the callback routine registered for the specified process. The address returned is in the virtual address space of the process.
         /// </summary>
         /// <param name="callback">
-        /// The callback.
+        /// A pointer to the recovery callback function.
         /// </param>
         /// <param name="parameter">
-        /// The parameter.
+        /// A pointer to the callback parameter.
         /// </param>
         /// <param name="pingInterval">
-        /// The ping interval.
+        /// The recovery ping interval, in 100-nanosecond intervals.
         /// </param>
         /// <param name="flags">
-        /// The flags.
+        /// Reserved for future use.
         /// </param>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode)]
         [PreserveSig]
         internal static extern Result RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
 
-        // Unused.
-
         /// <summary>
-        /// Registers the application restart event
+        /// Registers the active instance of an application for restart.
         /// </summary>
         /// <param name="commandLineArgs">
-        /// The command line args.
+        /// A pointer to a Unicode string that specifies the command-line arguments for the application when it is restarted.
         /// </param>
         /// <param name="flags">
         /// The flags.
         /// </param>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll")]
         [PreserveSig]
@@ -142,30 +114,30 @@ namespace System.Windows.ApplicationServices
         /// The size of the settings
         /// </param>
         /// <param name="flags">
-        /// The flags.
+        /// The options that indicate what to do with the application restarts
         /// </param>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [PreserveSig]
         internal static extern Result GetApplicationRestartSettings(IntPtr process, IntPtr commandLine, ref uint size, out RestartRestrictions flags);
 
         /// <summary>
-        /// Unregisters the application recovery callback.
+        /// Removes the active instance of an application from the recovery list.
         /// </summary>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll")]
         [PreserveSig]
         internal static extern Result UnregisterApplicationRecoveryCallback();
 
         /// <summary>
-        /// Unregisters the application restart method
+        /// Removes the active instance of an application from the restart list.
         /// </summary>
         /// <returns>
-        /// The error result
+        /// S_OK if function succeeded, otherwise the error result
         /// </returns>
         [DllImport(@"kernel32.dll")]
         [PreserveSig]

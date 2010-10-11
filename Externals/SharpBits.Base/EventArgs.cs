@@ -40,8 +40,7 @@ namespace SharpBits.Base
         /// <param name="error">
         /// The error that occurred
         /// </param>
-        internal ErrorNotificationEventArgs(BitsJob job, BitsError error)
-            : base(job)
+        internal ErrorNotificationEventArgs(BitsJob job, BitsError error) : base(job)
         {
             this.Error = error;
         }
@@ -87,8 +86,7 @@ namespace SharpBits.Base
         /// <param name="description">
         /// The description.
         /// </param>
-        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description)
-            : base(job)
+        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description) : base(job)
         {
             this.Description = description;
             this.exception = exception;

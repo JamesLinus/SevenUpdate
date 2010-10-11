@@ -40,8 +40,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocThicknessExtension(string key)
-            : base(key)
+        public LocThicknessExtension(string key) : base(key)
         {
         }
 
@@ -103,12 +102,18 @@ namespace WPFLocalizeExtension.Extensions
         protected override object FormatOutput(object input)
         {
             var method = typeof(ThicknessConverter).GetMethod("FromString", BindingFlags.Static | BindingFlags.NonPublic);
-
+            object[] args;
+            
             if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
             {
                 try
                 {
-                    return (Thickness)method.Invoke(null, new[] { this.DesignValue, new CultureInfo("en-US") });
+                    args = new[]
+                        {
+                            this.DesignValue, new CultureInfo("en-US")
+                        };
+
+                    return (Thickness)method.Invoke(null, args);
                 }
                 catch
                 {
@@ -116,7 +121,12 @@ namespace WPFLocalizeExtension.Extensions
                 }
             }
 
-            return (Thickness)method.Invoke(null, new[] { input, new CultureInfo("en-US") });
+            args = new[]
+                {
+                    input, new CultureInfo("en-US")
+                };
+
+            return (Thickness)method.Invoke(null, args);
         }
 
         /// <summary>

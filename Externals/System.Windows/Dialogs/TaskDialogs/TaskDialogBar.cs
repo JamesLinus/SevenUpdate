@@ -40,8 +40,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="name">
         /// The name for this control.
         /// </param>
-        protected TaskDialogBar(string name)
-            : base(name)
+        protected TaskDialogBar(string name) : base(name)
         {
         }
 

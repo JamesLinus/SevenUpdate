@@ -70,7 +70,11 @@ namespace SevenUpdate
             get
             {
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
-                return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return t ?? new Config
+                    {
+                        AutoOption = AutoUpdateOption.Notify, 
+                        IncludeRecommended = false
+                    };
             }
         }
 
@@ -273,7 +277,11 @@ namespace SevenUpdate
                     };
                 if (defaultButtonText != null)
                 {
-                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                        {
+                            Default = true, 
+                            ShowElevationIcon = displayShieldOnButton
+                        };
                     td.Controls.Add(button);
                 }
 

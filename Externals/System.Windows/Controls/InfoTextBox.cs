@@ -64,7 +64,10 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary
+                {
+                    Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
+                };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

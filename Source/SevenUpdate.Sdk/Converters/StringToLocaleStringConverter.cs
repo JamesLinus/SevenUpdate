@@ -114,7 +114,11 @@ namespace SevenUpdate.Sdk.Converters
 
                     if (!found)
                     {
-                        var ls = new LocaleString { Lang = Utilities.Locale, Value = valueString };
+                        var ls = new LocaleString
+                            {
+                                Lang = Utilities.Locale, 
+                                Value = valueString
+                            };
                         localeStrings.Add(ls);
                     }
                 }
@@ -134,7 +138,11 @@ namespace SevenUpdate.Sdk.Converters
                 if (!String.IsNullOrWhiteSpace(valueString))
                 {
                     localeStrings = new ObservableCollection<LocaleString>();
-                    var ls = new LocaleString { Lang = Utilities.Locale, Value = valueString };
+                    var ls = new LocaleString
+                        {
+                            Lang = Utilities.Locale, 
+                            Value = valueString
+                        };
                     localeStrings.Add(ls);
                 }
             }

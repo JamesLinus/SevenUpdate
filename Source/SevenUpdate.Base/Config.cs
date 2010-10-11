@@ -88,9 +88,7 @@ namespace SevenUpdate
         ///   Gets or sets which automatic update option Seven Update should use
         /// </summary>
         /// <value>The automatic update option</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public AutoUpdateOption AutoOption
+        [ProtoMember(1)] [DataMember] public AutoUpdateOption AutoOption
         {
             get
             {
@@ -112,9 +110,7 @@ namespace SevenUpdate
         /// <value>
         ///   <see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.
         /// </value>
-        [ProtoMember(2)]
-        [DataMember]
-        public bool IncludeRecommended
+        [ProtoMember(2)] [DataMember] public bool IncludeRecommended
         {
             get
             {

@@ -364,7 +364,11 @@ namespace SevenUpdate.Sdk
                 // reverse needed as in hex(4) they are already revered and in the correct format for INF
                 if (Regex.IsMatch(valueData, @"^([0-9A-Fa-f]{1,2},)+[0-9A-Fa-f]{1,2}$", RegexOptions.ExplicitCapture))
                 {
-                    valueData = valueData.TrimEnd(new[] { ',' });
+                    valueData = valueData.TrimEnd(
+                        new[]
+                            {
+                                ','
+                            });
                 }
                 else
                 {
@@ -419,7 +423,13 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var temporaryArray = new List<string>(
+                        valueData.Split(
+                            new[]
+                                {
+                                    ','
+                                }, 
+                            StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as DBCS (Double byte characters)
                     var byteArray = temporaryArray.ConvertAll(String2Byte);
@@ -433,7 +443,13 @@ namespace SevenUpdate.Sdk
                     valueData = Regex.Replace(valueData, @"00,?", String.Empty);
 
                     // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var temporaryArray = new List<string>(
+                        valueData.Split(
+                            new[]
+                                {
+                                    ','
+                                }, 
+                            StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as SBCS (Single byte characters)
                     var byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
@@ -492,7 +508,12 @@ namespace SevenUpdate.Sdk
                     {
                         if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
                         {
-                            var z = new List<string>(found.Value.Split(new[] { ',' }));
+                            var z = new List<string>(
+                                found.Value.Split(
+                                    new[]
+                                        {
+                                            ','
+                                        }));
                             var y = z.ConvertAll(String2Byte);
                             valueDataBuilder.Append(Encoding.Unicode.GetString(y.ToArray()));
                         }
@@ -509,7 +530,13 @@ namespace SevenUpdate.Sdk
                     valueData = Regex.Replace(valueData, @"00", @"0d,0a", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
                     // Convert to byte and back to characters using ASCIIEncoding
-                    var z = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var z = new List<string>(
+                        valueData.Split(
+                            new[]
+                                {
+                                    ','
+                                }, 
+                            StringSplitOptions.RemoveEmptyEntries));
                     var y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
                     valueDataBuilder.Append(Encoding.Default.GetString(y.ToArray()));
                 }
@@ -572,7 +599,13 @@ namespace SevenUpdate.Sdk
 
                 // Get the string with UnicodeEncoding
                 // Create an array to hold the hex values
-                var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                var temporaryArray = new List<string>(
+                    valueData.Split(
+                        new[]
+                            {
+                                ','
+                            }, 
+                        StringSplitOptions.RemoveEmptyEntries));
 
                 // Treat as DBCS (Double byte characters)
                 var byteArray = temporaryArray.ConvertAll(String2Byte);
@@ -649,9 +682,11 @@ namespace SevenUpdate.Sdk
         /// </returns>
         private static string PutOnOneLineAndTrim(string valueData)
         {
-            return
-                Regex.Replace(valueData, @",\\\r\n\s*", @",", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture).Trim(
-                    new[] { '\r', '\n', '\x20', '\t', ',' });
+            return Regex.Replace(valueData, @",\\\r\n\s*", @",", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture).Trim(
+                new[]
+                    {
+                        '\r', '\n', '\x20', '\t', ','
+                    });
         }
 
         /// <summary>
@@ -784,7 +819,11 @@ namespace SevenUpdate.Sdk
             if (Regex.IsMatch(regBlock, @"^\[-HK", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture))
             {
                 // Then return data to DelReg instead of AddReg property of INFConversionResult instance
-                var regBlockResult = new RegistryItem { Key = infRootKey + infSubKeyValue, Action = RegistryAction.DeleteKey };
+                var regBlockResult = new RegistryItem
+                    {
+                        Key = infRootKey + infSubKeyValue, 
+                        Action = RegistryAction.DeleteKey
+                    };
                 this.regItem.Add(regBlockResult);
                 return;
             }

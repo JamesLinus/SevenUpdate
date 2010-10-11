@@ -199,11 +199,23 @@ namespace SevenUpdate.Sdk.Pages
 
             for (var x = 0; x < Core.Projects.Count; x++)
             {
-                var app = new TreeViewItem { Header = Core.Projects[x].ApplicationName, Tag = x };
+                var app = new TreeViewItem
+                    {
+                        Header = Core.Projects[x].ApplicationName, 
+                        Tag = x
+                    };
                 for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                 {
-                    var index = new[] { x, y };
-                    app.Items.Add(new TreeViewItem { Header = Core.Projects[x].UpdateNames[y], Tag = index });
+                    var index = new[]
+                        {
+                            x, y
+                        };
+                    app.Items.Add(
+                        new TreeViewItem
+                            {
+                                Header = Core.Projects[x].UpdateNames[y], 
+                                Tag = index
+                            });
                 }
 
                 if (x == 0)

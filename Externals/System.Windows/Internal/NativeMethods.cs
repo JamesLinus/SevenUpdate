@@ -75,22 +75,6 @@ namespace System.Windows.Internal
         #region Enums
 
         /// <summary>
-        /// Dwm composition enable
-        /// </summary>
-        internal enum CompositionEnable : uint
-        {
-            /// <summary>
-            ///   Enable Aero effects
-            /// </summary>
-            DisableComposition = 0, 
-
-            /// <summary>
-            ///   Disable Aero effects
-            /// </summary>
-            EnableComposition = 1
-        }
-
-        /// <summary>
         /// The blur behind flags/options
         /// </summary>
         internal enum DwmBlurBehindFlag : uint
@@ -151,7 +135,7 @@ namespace System.Windows.Internal
         internal static extern IntPtr SendMessage(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength);
 
         /// <summary>
-        /// Enables blur behind the window
+        /// Enables the blur effect on a specified window.
         /// </summary>
         /// <param name="handle">
         /// The handle to the window on which the blur behind data is applied.
@@ -160,7 +144,7 @@ namespace System.Windows.Internal
         /// A pointer to a <see cref="DwmBlurBehind"/> structure that provides blur behind data.
         /// </param>
         /// <returns>
-        /// If the function succeeds, it returns S_OK. Otherwise, it returns an Result error code.
+        /// If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.
         /// </returns>
         [DllImport(@"DwmApi.dll")]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
@@ -172,43 +156,43 @@ namespace System.Windows.Internal
         /// The handle to the window for which the frame is extended into the client area.
         /// </param>
         /// <param name="margins">
-        /// A pointer to a MARGINS structure that describes the margins to use when extending the frame into the client area.
+        /// A pointer to a Margins structure that describes the margins to use when extending the frame into the client area.
         /// </param>
         /// <returns>
-        /// If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
+        /// If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code..
         /// </returns>
         [DllImport(@"DwmApi.dll")]
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
 
         /// <summary>
-        /// Gets a value indicating if composition is enabled
+        /// Gets a value that indicates whether Desktop Window Manager (DWM) composition is enabled. Applications can listen for composition state changes by handling the WM_DWMCOMPOSITIONCHANGED notification.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if successful
+        /// <see langword="true"/> if composition is enabled; otherwise, <see langword="false"/>
         /// </returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
         internal static extern bool DwmIsCompositionEnabled();
 
         /// <summary>
-        /// Enables composition
+        /// Enables or disables Desktop Window Manager (DWM) composition.
         /// </summary>
-        /// <param name="compositionAction">
-        /// The composition action.
+        /// <param name="enable">
+        /// if set to <see langword="true"/> DWM will be enabled
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if successful
+        /// If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.
         /// </returns>
-        [DllImport(@"DwmApi.dll")]
-        internal static extern int DwmEnableComposition(CompositionEnable compositionAction);
+        [DllImport(@"DwmApi.dll", PreserveSig = false)]
+        internal static extern int DwmEnableComposition(bool enable);
 
         /// <summary>
-        /// Gets a region on a window
+        /// Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.
         /// </summary>
         /// <param name="handle">
-        /// A handle to the window whose coordinates are to be retrieved.
+        /// A handle to the window.
         /// </param>
         /// <param name="rect">
-        /// The region to get
+        /// A pointer to a <see cref="Rect"/> structure that receives the screen coordinates of the upper-left and lower-right corners of the window.
         /// </param>
         /// <returns>
         /// <see langword="true"/> if successful
@@ -218,7 +202,7 @@ namespace System.Windows.Internal
         internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
 
         /// <summary>
-        /// Gets the client rectangle region
+        /// Retrieves the coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0).
         /// </summary>
         /// <param name="handle">
         /// A handle to the window whose client coordinates are to be retrieved.
@@ -234,64 +218,37 @@ namespace System.Windows.Internal
         internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);
 
         /// <summary>
-        /// Checks if a user is an admin
+        /// Gets a value indicating whether the current user is a member of the Administrator's group.
         /// </summary>
         /// <returns>
-        /// <see langword="true"/> if the user is an admin; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if the user is a member of the Administrator's group; otherwise, <see langword="false"/>.
         /// </returns>
         [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern bool IsUserAnAdmin();
 
         /// <summary>
-        /// A Wrapper for a RECT struct
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Rect
-        {
-            /// <summary>
-            ///   Position of left edge
-            /// </summary>
-            public int Left;
-
-            /// <summary>
-            ///   Position of top edge
-            /// </summary>
-            public int Top;
-
-            /// <summary>
-            ///   Position of right edge
-            /// </summary>
-            public int Right;
-
-            /// <summary>
-            ///   Position of bottom edge
-            /// </summary>
-            public int Bottom;
-        }
-
-        /// <summary>
-        /// The margins that specify top, left, right, down
+        /// Defines the margins of windows that have visual styles applied.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         public struct Margins
         {
             /// <summary>
-            ///   width of left border that retains its size
+            ///   Width of the left border that retains its size.
             /// </summary>
             public int LeftWidth;
 
             /// <summary>
-            ///   width of right border that retains its size
+            ///   Width of the right border that retains its size.
             /// </summary>
             public int RightWidth;
 
             /// <summary>
-            ///   height of top border that retains its size
+            ///   Height of the top border that retains its size.
             /// </summary>
             public int TopHeight;
 
             /// <summary>
-            ///   height of bottom border that retains its size
+            ///   Height of the bottom border that retains its size.
             /// </summary>
             public int BottomHeight;
 
@@ -299,7 +256,7 @@ namespace System.Windows.Internal
             /// Initializes a new instance of the <see cref="Margins"/> struct.
             /// </summary>
             /// <param name="fullWindow">
-            /// if set to <see langword="true"/> [full window].
+            /// if set to <see langword="true"/> the margin is set to the full window.
             /// </param>
             public Margins(bool fullWindow)
             {
@@ -310,16 +267,16 @@ namespace System.Windows.Internal
             /// Initializes a new instance of the <see cref="Margins"/> struct.
             /// </summary>
             /// <param name="left">
-            /// The left margin
+            /// Width of the left border that retains its size.
             /// </param>
             /// <param name="top">
-            /// The top margin
+            /// Height of the top border that retains its size.
             /// </param>
             /// <param name="right">
-            /// The right margin
+            /// Width of the right border that retains its size.
             /// </param>
             /// <param name="bottom">
-            /// The bottom margin
+            /// Height of the bottom border that retains its size.
             /// </param>
             public Margins(int left, int top, int right, int bottom)
             {
@@ -331,7 +288,34 @@ namespace System.Windows.Internal
         }
 
         /// <summary>
-        /// Contains data to blur an error with glass
+        /// Defines the coordinates of the upper-left and lower-right corners of a rectangle.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Rect
+        {
+            /// <summary>
+            ///   The x-coordinate of the upper-left corner of the rectangle.
+            /// </summary>
+            public int Left;
+
+            /// <summary>
+            ///   The y-coordinate of the upper-left corner of the rectangle.
+            /// </summary>
+            public int Top;
+
+            /// <summary>
+            ///   The x-coordinate of the lower-right corner of the rectangle.
+            /// </summary>
+            public int Right;
+
+            /// <summary>
+            ///   The y-coordinate of the lower-right corner of the rectangle.
+            /// </summary>
+            public int Bottom;
+        }
+
+        /// <summary>
+        /// Specifies Desktop Window Manager (DWM) blur behind properties.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct DwmBlurBehind
@@ -347,7 +331,7 @@ namespace System.Windows.Internal
             public bool Enable;
 
             /// <summary>
-            ///   The region within the client area to apply the blur behind. A NULL value will apply the blur behind the entire client area.
+            ///   The region within the client area to apply the blur behind. A <see langword = "null" /> value will apply the blur behind the entire client area.
             /// </summary>
             public IntPtr RegionBlur;
 
@@ -358,7 +342,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>
-        /// The dwm messages
+        /// The DWM messages
         /// </summary>
         internal static class DwmMessages
         {

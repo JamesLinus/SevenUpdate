@@ -53,8 +53,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="text">
         /// The label for this button.
         /// </param>
-        protected TaskDialogButtonBase(string name, string text)
-            : base(name)
+        protected TaskDialogButtonBase(string name, string text) : base(name)
         {
             this.text = text;
         }

@@ -116,7 +116,13 @@ namespace SevenUpdate.Sdk.Pages
             var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
             downloadUrl = downloadUrl.Replace(@"\\", @"\");
 
-            var file = new UpdateFile { Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl };
+            var file = new UpdateFile
+                {
+                    Action = FileAction.Update, 
+                    Destination = installUrl, 
+                    Hash = Properties.Resources.CalculatingHash, 
+                    Source = downloadUrl
+                };
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -157,7 +163,10 @@ namespace SevenUpdate.Sdk.Pages
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                 : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var folderBrowserDialog = new FolderBrowserDialog { SelectedPath = directory };
+            var folderBrowserDialog = new FolderBrowserDialog
+                {
+                    SelectedPath = directory
+                };
 
             if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
             {

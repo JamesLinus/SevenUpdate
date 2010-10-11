@@ -101,9 +101,7 @@ namespace SevenUpdate
         ///   Gets or sets the action to perform on the <see cref = "RegistryItem" />
         /// </summary>
         /// <value>The action.</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public RegistryAction Action
+        [ProtoMember(1)] [DataMember] public RegistryAction Action
         {
             get
             {
@@ -123,9 +121,7 @@ namespace SevenUpdate
         ///   Gets or sets the data for the key value
         /// </summary>
         /// <value>The data for the registry value</value>
-        [ProtoMember(6, IsRequired = false)]
-        [DataMember]
-        public string Data
+        [ProtoMember(6, IsRequired = false)] [DataMember] public string Data
         {
             get
             {
@@ -145,9 +141,7 @@ namespace SevenUpdate
         ///   Gets or sets the registry key and hive
         /// </summary>
         /// <value>The registry key path</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public string Key
+        [ProtoMember(3)] [DataMember] public string Key
         {
             get
             {
@@ -167,9 +161,7 @@ namespace SevenUpdate
         ///   Gets or sets the value for the registry key
         /// </summary>
         /// <value>The value of the key</value>
-        [ProtoMember(4, IsRequired = false)]
-        [DataMember]
-        public string KeyValue
+        [ProtoMember(4, IsRequired = false)] [DataMember] public string KeyValue
         {
             get
             {
@@ -189,9 +181,7 @@ namespace SevenUpdate
         ///   Gets or sets the type of the value
         /// </summary>
         /// <value>The kind of the value</value>
-        [ProtoMember(5, IsRequired = false)]
-        [DataMember]
-        public RegistryValueKind ValueKind
+        [ProtoMember(5, IsRequired = false)] [DataMember] public RegistryValueKind ValueKind
         {
             get
             {

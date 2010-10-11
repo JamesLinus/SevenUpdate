@@ -50,8 +50,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocTextExtension(string key)
-            : base(key)
+        public LocTextExtension(string key) : base(key)
         {
             this.InitializeLocText();
         }

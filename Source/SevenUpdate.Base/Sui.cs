@@ -53,9 +53,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets or sets the  software information for the application updates.
         /// </summary>
-        [ProtoMember(2)]
-        [DataMember]
-        public Sua AppInfo
+        [ProtoMember(2)] [DataMember] public Sua AppInfo
         {
             get
             {
@@ -74,9 +72,7 @@ namespace SevenUpdate
         /// <summary>
         ///   Gets or sets the collection of updates for the application
         /// </summary>
-        [ProtoMember(1)]
-        [DataMember]
-        public ObservableCollection<Update> Updates
+        [ProtoMember(1)] [DataMember] public ObservableCollection<Update> Updates
         {
             get
             {

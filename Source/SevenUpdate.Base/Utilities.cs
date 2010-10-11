@@ -18,7 +18,6 @@ namespace SevenUpdate
     using System.Linq;
     using System.Net;
     using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -69,16 +68,6 @@ namespace SevenUpdate
         ///   The location of the user application data location
         /// </summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
-
-        /// <summary>
-        ///   ALLUSERS%\Start Menu\Programs
-        /// </summary>
-        private const int CommonPrograms = 0x0017;
-
-        /// <summary>
-        ///   %ALLUSERS%\Start Menu
-        /// </summary>
-        private const int CommonStartMenu = 0x0016;
 
         #endregion
 
@@ -205,11 +194,7 @@ namespace SevenUpdate
 
             if (expand == false)
             {
-                var path2 = new StringBuilder(260);
-                SHGetSpecialFolderPath(IntPtr.Zero, path2, CommonPrograms, false);
-                stringBuilder = stringBuilder.Replace(path2.ToString(), "%ALLUSERSSTARTMENUPROGRAMS%", true);
-                SHGetSpecialFolderPath(IntPtr.Zero, path2, CommonStartMenu, false);
-                stringBuilder = stringBuilder.Replace(path2.ToString(), "%ALLUSERSSTARTMENU%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "%ALLUSERSSTARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "%STARTMENUPROGRAMS%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), "%STARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "%DOCUMENTS%", true);
@@ -262,15 +247,7 @@ namespace SevenUpdate
             }
             else
             {
-                var path2 = new StringBuilder(260);
-
-                SHGetSpecialFolderPath(IntPtr.Zero, path2, CommonPrograms, false);
-
-                stringBuilder = stringBuilder.Replace("%ALLUSERSSTARTMENUPROGRAMS%", path2.ToString(), true);
-
-                SHGetSpecialFolderPath(IntPtr.Zero, path2, CommonStartMenu, false);
-
-                stringBuilder = stringBuilder.Replace("%ALLUSERSSTARTMENU%", path2.ToString(), true);
+                stringBuilder = stringBuilder.Replace("%ALLUSERSSTARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENUPROGRAMS%", Environment.GetFolderPath(Environment.SpecialFolder.Programs), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), true);
                 stringBuilder = stringBuilder.Replace("%DOCUMENTS%", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), true);
@@ -715,7 +692,14 @@ namespace SevenUpdate
         /// </returns>
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
-            var process = new Process { StartInfo = { FileName = fileName, UseShellExecute = true } };
+            var process = new Process
+                {
+                    StartInfo =
+                        {
+                            FileName = fileName, 
+                            UseShellExecute = true
+                        }
+                };
 
             if (arguments != null)
             {
@@ -911,27 +895,6 @@ namespace SevenUpdate
             // Return string
             return sb;
         }
-
-        /// <summary>
-        /// Gets the system folder(s) of a path
-        /// </summary>
-        /// <param name="owner">
-        /// The HWND owner.
-        /// </param>
-        /// <param name="path">
-        /// The path to output the expanded system variable
-        /// </param>
-        /// <param name="folder">
-        /// The n folder.
-        /// </param>
-        /// <param name="create">
-        /// if set to <see langword="true"/> the path will be created
-        /// </param>
-        /// <returns>
-        /// a string of the path with expanded system variables
-        /// </returns>
-        [DllImport(@"shell32.dll")] // ReSharper disable InconsistentNaming
-        private static extern bool SHGetSpecialFolderPath(IntPtr owner, [Out] StringBuilder path, int folder, bool create);
 
         /// <summary>
         /// Serializes an object into a file

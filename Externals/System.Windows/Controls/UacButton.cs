@@ -98,12 +98,24 @@ namespace System.Windows.Controls
         {
             this.Loaded += this.OnLoaded;
             this.IsEnabledChanged += (o, args) => this.ChangeUacIcon(args);
-            var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            var stackPanel = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal
+                };
 
-            var imgShield = new Image { Source = this.IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
+            var imgShield = new Image
+                {
+                    Source = this.IsEnabled ? Shield : ShieldDisabled, 
+                    Stretch = Stretch.None, 
+                    Margin = new Thickness(0, 0, 5, 0)
+                };
             stackPanel.Children.Add(imgShield);
 
-            var textBlock = new TextBlock { Text = Text, VerticalAlignment = VerticalAlignment.Center };
+            var textBlock = new TextBlock
+                {
+                    Text = Text, 
+                    VerticalAlignment = VerticalAlignment.Center
+                };
             stackPanel.Children.Add(textBlock);
             this.Content = stackPanel;
         }

@@ -87,8 +87,7 @@ namespace System.Windows.Dialogs
         /// <param name="name">
         /// The name for this dialog.
         /// </param>
-        protected DialogControl(string name)
-            : this()
+        protected DialogControl(string name) : this()
         {
             this.Name = name;
         }

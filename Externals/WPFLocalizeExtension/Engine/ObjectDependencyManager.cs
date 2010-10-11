@@ -96,7 +96,10 @@ namespace WPFLocalizeExtension.Engine
             if (!InternalList.ContainsKey(objToHold))
             {
                 // add the objToHold to the internal list.
-                var lst = new List<WeakReference> { weakRef };
+                var lst = new List<WeakReference>
+                    {
+                        weakRef
+                    };
 
                 InternalList.Add(objToHold, lst);
 

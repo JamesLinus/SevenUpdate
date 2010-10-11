@@ -154,8 +154,7 @@ namespace System.Windows
         ///   Initializes a new instance of the <see cref = "InstanceAwareApplication" /> class.
         /// </summary>
         /// <exception cref = "T:System.InvalidOperationException">More than one instance of the <see cref = "T:System.Windows.Application" /> class is created per <see cref = "T:System.AppDomain" />.</exception>
-        protected InstanceAwareApplication()
-            : this(ApplicationInstanceAwareness.Host)
+        protected InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
         {
         }
 
@@ -687,8 +686,7 @@ namespace System.Windows
             /// <param name="args">
             /// The arguments passed to the program
             /// </param>
-            public StartupNextInstanceEventArgs(string[] args)
-                : this(args, true)
+            public StartupNextInstanceEventArgs(string[] args) : this(args, true)
             {
             }
 

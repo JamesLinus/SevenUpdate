@@ -39,8 +39,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocTextUpperExtension(string key)
-            : base(key)
+        public LocTextUpperExtension(string key) : base(key)
         {
         }
 

@@ -50,8 +50,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="name">
         /// The name of the control.
         /// </param>
-        protected TaskDialogProgressBar(string name)
-            : base(name)
+        protected TaskDialogProgressBar(string name) : base(name)
         {
         }
 
@@ -82,8 +81,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the maximum value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progress bar's current value property")]
-        public int Maximum
+            Justification = "Value is standard for progress bar's current value property")] public int Maximum
         {
             get
             {
@@ -109,8 +107,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the minimum value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progress bar's current value property")]
-        public int Minimum
+            Justification = "Value is standard for progress bar's current value property")] public int Minimum
         {
             get
             {
@@ -142,8 +139,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         ///   Gets or sets the current value for the control.
         /// </summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
-            Justification = "Value is standard for progress bar's current value property")]
-        public int Value
+            Justification = "Value is standard for progress bar's current value property")] public int Value
         {
             get
             {

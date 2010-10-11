@@ -1182,7 +1182,8 @@ namespace SharpBits.Base.Job
                     // only supported from IBackgroundCopyJob2 and above
                     var authCredentials = new BGAuthCredentials
                         {
-                           Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget 
+                            Scheme = (BGAuthScheme)credentials.AuthenticationScheme, 
+                            Target = (BGAuthTarget)credentials.AuthenticationTarget
                         };
                     authCredentials.Credentials.Basic.Password = credentials.Password;
                     authCredentials.Credentials.Basic.UserName = credentials.UserName;

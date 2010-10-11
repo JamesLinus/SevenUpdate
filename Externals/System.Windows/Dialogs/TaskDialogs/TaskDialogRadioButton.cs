@@ -34,8 +34,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// The value for this controls
         ///   <see cref="TaskDialogButtonBase.Text"/> property.
         /// </param>
-        protected TaskDialogRadioButton(string name, string text)
-            : base(name, text)
+        protected TaskDialogRadioButton(string name, string text) : base(name, text)
         {
         }
 

@@ -41,8 +41,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="text">
         /// The label for this button.
         /// </param>
-        protected TaskDialogCommandLink(string name, string text)
-            : base(name, text)
+        protected TaskDialogCommandLink(string name, string text) : base(name, text)
         {
         }
 
@@ -58,8 +57,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="instruction">
         /// The instruction for this command link.
         /// </param>
-        protected TaskDialogCommandLink(string name, string text, string instruction)
-            : base(name, text)
+        protected TaskDialogCommandLink(string name, string text, string instruction) : base(name, text)
         {
             this.instruction = instruction;
         }

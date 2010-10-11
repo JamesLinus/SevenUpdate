@@ -170,7 +170,7 @@ namespace SevenUpdate
                                     }
                                     catch (Exception)
                                     {
-                                        MoveFileEX(t.Destination, null, MoveOnReboot);
+                                        MoveFileExW(t.Destination, null, MoveOnReboot);
                                     }
 
                                     break;
@@ -194,11 +194,11 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                MoveFileEX(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                MoveFileExW(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
                 if (Directory.Exists(Utilities.AllUserStore + "downloads"))
                 {
-                    MoveFileEX(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
+                    MoveFileExW(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
                 }
             }
             else
@@ -270,19 +270,19 @@ namespace SevenUpdate
         /// Moves the file using the windows command
         /// </summary>
         /// <param name="sourceFileName">
-        /// The source file name
+        /// The current name of the file or directory on the local computer.
         /// </param>
         /// <param name="newFileName">
-        /// The new file name
+        /// The new name of the file or directory on the local computer.
         /// </param>
         /// <param name="flags">
         /// The flags that determine how to move the file
         /// </param>
         /// <returns>
-        /// <see langword="true"/> if the operation was successful
+        /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.
         /// </returns>
         [DllImport(@"kernel32.dll")]
-        private static extern bool MoveFileEX(string sourceFileName, string newFileName, int flags);
+        private static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
 
         /// <summary>
         /// Reports the installation progress
@@ -510,7 +510,7 @@ namespace SevenUpdate
                     }
                     catch (Exception)
                     {
-                        MoveFileEX(file.Destination, null, MoveOnReboot);
+                        MoveFileExW(file.Destination, null, MoveOnReboot);
                     }
 
                     break;
@@ -556,7 +556,7 @@ namespace SevenUpdate
                                 File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
                             }
 
-                            MoveFileEX(file.Source, file.Destination, MoveOnReboot);
+                            MoveFileExW(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
                         }
                     }

@@ -109,7 +109,10 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             this.tbxAppLocation.Text = null;
-            var rule = new AppDirectoryRule { IsRegistryPath = false };
+            var rule = new AppDirectoryRule
+                {
+                    IsRegistryPath = false
+                };
 
             // ReSharper disable PossibleNullReferenceException
             this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
@@ -136,7 +139,10 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             this.tbxAppLocation.Text = null;
-            var rule = new AppDirectoryRule { IsRegistryPath = true };
+            var rule = new AppDirectoryRule
+                {
+                    IsRegistryPath = true
+                };
 
             // ReSharper disable PossibleNullReferenceException
             this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
@@ -345,7 +351,11 @@ namespace SevenUpdate.Sdk.Pages
                     Utilities.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
 
                     // Save project file
-                    var project = new Project { ApplicationName = appName, UpdateNames = updateNames };
+                    var project = new Project
+                        {
+                            ApplicationName = appName, 
+                            UpdateNames = updateNames
+                        };
 
                     Core.Projects.Add(project);
                     Utilities.Serialize(Core.Projects, Core.ProjectsFile);

@@ -149,9 +149,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized update descriptions
         /// </summary>
         /// <value>The localized description for the update</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Description
+        [ProtoMember(2)] [DataMember] public ObservableCollection<LocaleString> Description
         {
             get
             {
@@ -171,9 +169,7 @@ namespace SevenUpdate
         ///   Gets or sets the source main location to download files for the update
         /// </summary>
         /// <value>The url to download the update files.</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public string DownloadUrl
+        [ProtoMember(3)] [DataMember] public string DownloadUrl
         {
             get
             {
@@ -193,9 +189,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of files to perform actions on in the update
         /// </summary>
         /// <value>The files.</value>
-        [ProtoMember(8, IsRequired = false)]
-        [DataMember]
-        public ObservableCollection<UpdateFile> Files
+        [ProtoMember(8, IsRequired = false)] [DataMember] public ObservableCollection<UpdateFile> Files
         {
             get
             {
@@ -217,9 +211,7 @@ namespace SevenUpdate
         /// <value>
         ///   <see langword = "true" /> if hidden; otherwise, <see langword = "false" />.
         /// </value>
-        [ProtoIgnore]
-        [IgnoreDataMember]
-        public bool Hidden
+        [ProtoIgnore] [IgnoreDataMember] public bool Hidden
         {
             get
             {
@@ -239,9 +231,7 @@ namespace SevenUpdate
         ///   Gets or sets the importance of the update
         /// </summary>
         /// <value>The importance</value>
-        [ProtoMember(4)]
-        [DataMember]
-        public Importance Importance
+        [ProtoMember(4)] [DataMember] public Importance Importance
         {
             get
             {
@@ -261,9 +251,7 @@ namespace SevenUpdate
         ///   Gets or sets the url pointing to a resource to find more information about the update
         /// </summary>
         /// <value>The info URL.</value>
-        [ProtoMember(6, IsRequired = false)]
-        [DataMember]
-        public string InfoUrl
+        [ProtoMember(6, IsRequired = false)] [DataMember] public string InfoUrl
         {
             get
             {
@@ -283,9 +271,7 @@ namespace SevenUpdate
         ///   Gets or sets the url pointing to the software license for the application/update
         /// </summary>
         /// <value>The url pointing to the software license</value>
-        [ProtoMember(7, IsRequired = false)]
-        [DataMember]
-        public string LicenseUrl
+        [ProtoMember(7, IsRequired = false)] [DataMember] public string LicenseUrl
         {
             get
             {
@@ -305,9 +291,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized update names
         /// </summary>
         /// <value>The localized update names</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Name
+        [ProtoMember(1)] [DataMember] public ObservableCollection<LocaleString> Name
         {
             get
             {
@@ -327,9 +311,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of registry keys and values to perform actions on in the update
         /// </summary>
         /// <value>The registry items</value>
-        [ProtoMember(9, IsRequired = false)]
-        [DataMember]
-        public ObservableCollection<RegistryItem> RegistryItems
+        [ProtoMember(9, IsRequired = false)] [DataMember] public ObservableCollection<RegistryItem> RegistryItems
         {
             get
             {
@@ -349,9 +331,7 @@ namespace SevenUpdate
         ///   Gets or sets the formatted date string depicting the release date of the update
         /// </summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
-        [ProtoMember(5)]
-        [DataMember]
-        public string ReleaseDate
+        [ProtoMember(5)] [DataMember] public string ReleaseDate
         {
             get
             {
@@ -373,9 +353,7 @@ namespace SevenUpdate
         /// <value>
         ///   <see langword = "true" /> if selected; otherwise, <see langword = "false" />.
         /// </value>
-        [ProtoIgnore]
-        [IgnoreDataMember]
-        public bool Selected
+        [ProtoIgnore] [IgnoreDataMember] public bool Selected
         {
             get
             {
@@ -395,9 +373,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of shortcuts to perform actions on in the update
         /// </summary>
         /// <value>The shortcuts.</value>
-        [ProtoMember(10, IsRequired = false)]
-        [DataMember]
-        public ObservableCollection<Shortcut> Shortcuts
+        [ProtoMember(10, IsRequired = false)] [DataMember] public ObservableCollection<Shortcut> Shortcuts
         {
             get
             {
@@ -417,9 +393,7 @@ namespace SevenUpdate
         ///   Gets the total download size in bytes of the update
         /// </summary>
         /// <value>The total download size of the update</value>
-        [ProtoMember(11, IsRequired = false)]
-        [DataMember]
-        public ulong Size
+        [ProtoMember(11, IsRequired = false)] [DataMember] public ulong Size
         {
             get
             {

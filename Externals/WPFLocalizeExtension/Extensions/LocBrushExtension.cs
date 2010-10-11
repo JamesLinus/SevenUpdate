@@ -40,8 +40,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocBrushExtension(string key)
-            : base(key)
+        public LocBrushExtension(string key) : base(key)
         {
         }
 

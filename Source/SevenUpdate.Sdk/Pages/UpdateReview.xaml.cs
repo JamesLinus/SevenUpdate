@@ -90,7 +90,11 @@ namespace SevenUpdate.Sdk.Pages
             Utilities.Serialize(appUpdates, Core.UserStore + appName + ".sui");
 
             // Save project file
-            var project = new Project { ApplicationName = appName, UpdateNames = updateNames };
+            var project = new Project
+                {
+                    ApplicationName = appName, 
+                    UpdateNames = updateNames
+                };
             Core.Projects.Add(project);
             Utilities.Serialize(Core.Projects, Core.ProjectsFile);
 

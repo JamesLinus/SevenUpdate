@@ -51,9 +51,7 @@ namespace SevenUpdate
         ///   Gets or sets an ISO language code
         /// </summary>
         /// <value>The iso code</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public string Lang
+        [ProtoMember(1)] [DataMember] public string Lang
         {
             get
             {
@@ -73,9 +71,7 @@ namespace SevenUpdate
         ///   Gets or sets the value of the string
         /// </summary>
         /// <value>The value.</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public string Value
+        [ProtoMember(2)] [DataMember] public string Value
         {
             get
             {

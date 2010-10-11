@@ -1,38 +1,38 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:SoftwareLicenseAgreement}" MinWidth="640" MinHeight="390" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" SizeToContent="Manual" Width="640" Height="390" Loaded="DownloadLicenseInformation" WindowStartupLocation="CenterOwner" Icon="/Images/wicon.ico">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="243*" />
-            <RowDefinition Height="65*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="12" />
-            <ColumnDefinition Width="596*" />
-            <ColumnDefinition Width="10" />
-        </Grid.ColumnDefinitions>
-        <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">
-            <RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7" MinHeight="17" IsEnabled="False" />
-            <RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False" />
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
-            <UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" IsEnabled="False" ButtonText="{LocText SevenUpdate:Resources:Finish}">
-                <UacButton.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <Trigger Property="UacButton.ButtonText" Value="{LocText SevenUpdate:Resources:Finish}">
-                                <Setter Property="UacButton.IsEnabled" Value="False" />
-                            </Trigger>
-                            <DataTrigger  Binding="{Binding ElementName=rbtnAccept, Path=IsChecked}" Value="True">
-                                <Setter Property="UacButton.IsEnabled" Value="True" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </UacButton.Style>
-            </UacButton>
-            <Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel" />
-        </StackPanel>
-        <RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
-    </Grid>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="243*" />
+			<RowDefinition Height="65*" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="12" />
+			<ColumnDefinition Width="596*" />
+			<ColumnDefinition Width="10" />
+		</Grid.ColumnDefinitions>
+		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
+		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">
+			<RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7" MinHeight="17" IsEnabled="False" />
+			<RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False" />
+		</StackPanel>
+		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
+			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" IsEnabled="False" ButtonText="{LocText SevenUpdate:Resources:Finish}">
+				<UacButton.Style>
+					<Style>
+						<Style.Triggers>
+							<Trigger Property="UacButton.ButtonText" Value="{LocText SevenUpdate:Resources:Finish}">
+								<Setter Property="UacButton.IsEnabled" Value="False" />
+							</Trigger>
+							<DataTrigger Binding="{Binding ElementName=rbtnAccept, Path=IsChecked}" Value="True">
+								<Setter Property="UacButton.IsEnabled" Value="True" />
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</UacButton.Style>
+			</UacButton>
+			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel" />
+		</StackPanel>
+		<RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
+	</Grid>
 </Window>

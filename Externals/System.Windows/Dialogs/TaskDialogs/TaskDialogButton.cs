@@ -34,8 +34,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="text">
         /// The button label.
         /// </param>
-        public TaskDialogButton(string name, string text)
-            : base(name, text)
+        public TaskDialogButton(string name, string text) : base(name, text)
         {
         }
 

@@ -118,7 +118,11 @@ namespace SevenUpdate.Admin
             get
             {
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
-                return t ?? new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return t ?? new Config
+                    {
+                        AutoOption = AutoUpdateOption.Notify, 
+                        IncludeRecommended = false
+                    };
             }
         }
 
@@ -386,7 +390,12 @@ namespace SevenUpdate.Admin
 
                         isAutoInstall = true;
                         isInstalling = true;
-                        notifyIcon = new NotifyIcon { Icon = Resources.trayIcon, Text = Resources.CheckingForUpdates, Visible = true };
+                        notifyIcon = new NotifyIcon
+                            {
+                                Icon = Resources.trayIcon, 
+                                Text = Resources.CheckingForUpdates, 
+                                Visible = true
+                            };
                         notifyIcon.BalloonTipClicked += RunSevenUpdate;
                         notifyIcon.Click += RunSevenUpdate;
                         Search.ErrorOccurred += ErrorOccurred;

@@ -39,7 +39,11 @@ namespace SharpBits.Base.File
         /// </param>
         protected BitsFileInfo(string remoteName, string localName)
         {
-            this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };
+            this.BGFileInfo = new BGFileInfo
+                {
+                    RemoteName = remoteName, 
+                    LocalName = localName
+                };
         }
 
         #endregion

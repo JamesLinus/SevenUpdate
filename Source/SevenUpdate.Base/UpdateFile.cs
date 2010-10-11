@@ -144,9 +144,7 @@ namespace SevenUpdate
         ///   Gets or sets the action to perform on the <see cref = "UpdateFile" />
         /// </summary>
         /// <value>The action.</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public FileAction Action
+        [ProtoMember(1)] [DataMember] public FileAction Action
         {
             get
             {
@@ -166,9 +164,7 @@ namespace SevenUpdate
         ///   Gets or sets the command line arguments to execute with the file
         /// </summary>
         /// <value>The arguments</value>
-        [ProtoMember(6, IsRequired = false)]
-        [DataMember]
-        public string Args
+        [ProtoMember(6, IsRequired = false)] [DataMember] public string Args
         {
             get
             {
@@ -188,9 +184,7 @@ namespace SevenUpdate
         ///   Gets or sets the location where the file will be installed
         /// </summary>
         /// <value>The destination.</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public string Destination
+        [ProtoMember(3)] [DataMember] public string Destination
         {
             get
             {
@@ -210,9 +204,7 @@ namespace SevenUpdate
         ///   Gets or sets the size of the file in bytes
         /// </summary>
         /// <value>The size of the file.</value>
-        [ProtoMember(5)]
-        [DataMember]
-        public ulong FileSize
+        [ProtoMember(5)] [DataMember] public ulong FileSize
         {
             get
             {
@@ -232,9 +224,7 @@ namespace SevenUpdate
         ///   Gets or sets the SHA-2 hash of the file
         /// </summary>
         /// <value>The SHA-2 hash of the file.</value>
-        [ProtoMember(4)]
-        [DataMember]
-        public string Hash
+        [ProtoMember(4)] [DataMember] public string Hash
         {
             get
             {
@@ -254,9 +244,7 @@ namespace SevenUpdate
         ///   Gets or sets the download location for the file
         /// </summary>
         /// <value>The download location of the file</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public string Source
+        [ProtoMember(2)] [DataMember] public string Source
         {
             get
             {

@@ -464,25 +464,41 @@ namespace SevenUpdate.Sdk
                     };
                 if (defaultButtonText != null)
                 {
-                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                        {
+                            Default = true, 
+                            ShowElevationIcon = displayShieldOnButton
+                        };
                     td.Controls.Add(button);
 
                     switch (standardButtons)
                     {
                         case TaskDialogStandardButtons.Ok:
-                            button = new TaskDialogButton(@"btnOK", "OK") { Default = false };
+                            button = new TaskDialogButton(@"btnOK", "OK")
+                                {
+                                    Default = false
+                                };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Cancel:
-                            button = new TaskDialogButton(@"btnCancel", "Cancel") { Default = false };
+                            button = new TaskDialogButton(@"btnCancel", "Cancel")
+                                {
+                                    Default = false
+                                };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Retry:
-                            button = new TaskDialogButton(@"btnRetry", "Retry") { Default = false };
+                            button = new TaskDialogButton(@"btnRetry", "Retry")
+                                {
+                                    Default = false
+                                };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Close:
-                            button = new TaskDialogButton(@"btnClose", "Close") { Default = false };
+                            button = new TaskDialogButton(@"btnClose", "Close")
+                                {
+                                    Default = false
+                                };
                             td.Controls.Add(button);
                             break;
                     }

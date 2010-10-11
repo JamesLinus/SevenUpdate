@@ -43,8 +43,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocImageExtension(string key)
-            : base(key)
+        public LocImageExtension(string key) : base(key)
         {
         }
 

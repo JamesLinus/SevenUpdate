@@ -83,8 +83,7 @@ namespace SharpBits.Base.Job
         /// <param name="context">
         /// The context.
         /// </param>
-        protected BitsJobsDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        protected BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             this.disposed = (bool)info.GetValue("disposed", typeof(bool));
         }

@@ -108,9 +108,7 @@ namespace SevenUpdate
         ///   Gets or sets the action to perform on the <see cref = "Shortcut" />
         /// </summary>
         /// <value>The action.</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public ShortcutAction Action
+        [ProtoMember(3)] [DataMember] public ShortcutAction Action
         {
             get
             {
@@ -130,9 +128,7 @@ namespace SevenUpdate
         ///   Gets or sets the command line arguments for the shortcut
         /// </summary>
         /// <value>The arguments of the shortcut</value>
-        [ProtoMember(4, IsRequired = false)]
-        [DataMember]
-        public string Arguments
+        [ProtoMember(4, IsRequired = false)] [DataMember] public string Arguments
         {
             get
             {
@@ -152,9 +148,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized shortcut descriptions
         /// </summary>
         /// <value>The localized descriptions for the shortcut</value>
-        [ProtoMember(5, IsRequired = false)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Description
+        [ProtoMember(5, IsRequired = false)] [DataMember] public ObservableCollection<LocaleString> Description
         {
             get
             {
@@ -174,9 +168,7 @@ namespace SevenUpdate
         ///   Gets or sets the icon resource for the shortcut
         /// </summary>
         /// <value>The icon for the shortcut</value>
-        [ProtoMember(6, IsRequired = false)]
-        [DataMember]
-        public string Icon
+        [ProtoMember(6, IsRequired = false)] [DataMember] public string Icon
         {
             get
             {
@@ -196,9 +188,7 @@ namespace SevenUpdate
         ///   Gets or sets the physical location of the shortcut lnk file
         /// </summary>
         /// <value>The shortcut location</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public string Location
+        [ProtoMember(2)] [DataMember] public string Location
         {
             get
             {
@@ -218,9 +208,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized shortcut names
         /// </summary>
         /// <value>The localized names for the shortcut</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Name
+        [ProtoMember(1)] [DataMember] public ObservableCollection<LocaleString> Name
         {
             get
             {
@@ -240,9 +228,7 @@ namespace SevenUpdate
         ///   Gets or sets the file or folder that is executed by the shortcut
         /// </summary>
         /// <value>The target for the shortcut</value>
-        [ProtoMember(7, IsRequired = false)]
-        [DataMember]
-        public string Target
+        [ProtoMember(7, IsRequired = false)] [DataMember] public string Target
         {
             get
             {

@@ -629,8 +629,7 @@ namespace System.Windows.Controls
             /// <param name="sortGlyph">
             /// The sort glyph.
             /// </param>
-            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
-                : base(columnHeader)
+            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph) : base(columnHeader)
             {
                 this.columnHeader = columnHeader;
                 this.direction = direction;
@@ -660,7 +659,13 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    drawingContext.DrawGeometry(new SolidColorBrush(Colors.LightGray) { Opacity = 0.5 }, new Pen(Brushes.Gray, 0.5), this.GetDefaultGlyph());
+                    drawingContext.DrawGeometry(
+                        new SolidColorBrush(Colors.LightGray)
+                            {
+                                Opacity = 0.5
+                            }, 
+                        new Pen(Brushes.Gray, 0.5), 
+                        this.GetDefaultGlyph());
                 }
             }
 
@@ -685,11 +690,18 @@ namespace System.Windows.Controls
                     y2 = tmp;
                 }
 
-                var pathSegmentCollection = new PathSegmentCollection { new LineSegment(new Point(x2, y1), true), new LineSegment(new Point(x3, y2), true) };
+                var pathSegmentCollection = new PathSegmentCollection
+                    {
+                        new LineSegment(new Point(x2, y1), true), 
+                        new LineSegment(new Point(x3, y2), true)
+                    };
 
                 var pathFigure = new PathFigure(new Point(x1, y1), pathSegmentCollection, true);
 
-                var pathFigureCollection = new PathFigureCollection { pathFigure };
+                var pathFigureCollection = new PathFigureCollection
+                    {
+                        pathFigure
+                    };
 
                 var pathGeometry = new PathGeometry(pathFigureCollection);
                 return pathGeometry;

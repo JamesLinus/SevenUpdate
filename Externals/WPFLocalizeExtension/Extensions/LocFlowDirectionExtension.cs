@@ -39,8 +39,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="key">
         /// The resource identifier.
         /// </param>
-        public LocFlowDirectionExtension(string key)
-            : base(key)
+        public LocFlowDirectionExtension(string key) : base(key)
         {
         }
 

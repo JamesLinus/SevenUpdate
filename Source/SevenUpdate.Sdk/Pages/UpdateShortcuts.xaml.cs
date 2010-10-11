@@ -86,8 +86,17 @@ namespace SevenUpdate.Sdk.Pages
             var path = Utilities.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
-            var shortcut = new Shortcut { Location = path, Action = ShortcutAction.Add, Name = new ObservableCollection<LocaleString>(), };
-            var ls = new LocaleString { Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(file) };
+            var shortcut = new Shortcut
+                {
+                    Location = path, 
+                    Action = ShortcutAction.Add, 
+                    Name = new ObservableCollection<LocaleString>(), 
+                };
+            var ls = new LocaleString
+                {
+                    Lang = Utilities.Locale, 
+                    Value = Path.GetFileNameWithoutExtension(file)
+                };
             shortcut.Name.Add(ls);
             Core.UpdateInfo.Shortcuts.Add(shortcut);
         }
@@ -223,9 +232,17 @@ namespace SevenUpdate.Sdk.Pages
                     Description = new ObservableCollection<LocaleString>()
                 };
 
-            var ls = new LocaleString { Lang = Utilities.Locale, Value = importedShortcut.Name };
+            var ls = new LocaleString
+                {
+                    Lang = Utilities.Locale, 
+                    Value = importedShortcut.Name
+                };
             shortcut.Name.Add(ls);
-            ls = new LocaleString { Lang = Utilities.Locale, Value = importedShortcut.Description };
+            ls = new LocaleString
+                {
+                    Lang = Utilities.Locale, 
+                    Value = importedShortcut.Description
+                };
             shortcut.Description.Add(ls);
 
             Core.UpdateInfo.Shortcuts.Add(shortcut);

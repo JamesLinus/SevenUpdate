@@ -54,9 +54,7 @@ namespace SevenUpdate.Sdk
         ///   Gets or sets the localized application name
         /// </summary>
         /// <value>The name of the application.</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public string ApplicationName
+        [ProtoMember(1)] [DataMember] public string ApplicationName
         {
             get
             {
@@ -74,9 +72,7 @@ namespace SevenUpdate.Sdk
         ///   Gets or sets the update names.
         /// </summary>
         /// <value>The update names.</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public ObservableCollection<string> UpdateNames
+        [ProtoMember(2)] [DataMember] public ObservableCollection<string> UpdateNames
         {
             get
             {

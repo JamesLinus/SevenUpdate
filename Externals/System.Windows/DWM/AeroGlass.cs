@@ -55,7 +55,7 @@ namespace System.Windows.Dwm
             {
                 try
                 {
-                    NativeMethods.DwmEnableComposition(value ? NativeMethods.CompositionEnable.EnableComposition : NativeMethods.CompositionEnable.DisableComposition);
+                    NativeMethods.DwmEnableComposition(value);
                 }
                 catch
                 {
@@ -92,7 +92,11 @@ namespace System.Windows.Dwm
         /// </param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new NativeMethods.DwmBlurBehind { RegionBlur = region, Flags = NativeMethods.DwmBlurBehindFlag.DwmBlurBehindRegion };
+            var blur = new NativeMethods.DwmBlurBehind
+                {
+                    RegionBlur = region, 
+                    Flags = NativeMethods.DwmBlurBehindFlag.DwmBlurBehindRegion
+                };
 
             NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
         }
@@ -222,27 +226,27 @@ namespace System.Windows.Dwm
         #region Methods
 
         /// <summary>
-        /// Sends a Win32 process message to a window
+        /// An application-defined function that processes messages sent to a window.
         /// </summary>
         /// <param name="handle">
-        /// The handle to the window
+        /// A handle to the window.
         /// </param>
         /// <param name="msg">
         /// The message to send
         /// </param>
         /// <param name="parameter">
-        /// The parameter.
+        /// Additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.
         /// </param>
-        /// <param name="parameterLength">
-        /// Length of the parameter.
+        /// <param name="parameter2">
+        /// Another additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.
         /// </param>
         /// <param name="handled">
         /// if set to <see langword="true"/> the event was handled
         /// </param>
         /// <returns>
-        /// Returns a <see langword="null"/> pointer
+        /// The return value is the result of the message processing and depends on the message sent.
         /// </returns>
-        private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameterLength, ref bool handled)
+        private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
             if (msg == NativeMethods.DwmMessages.DwmCompositionChanged || msg == NativeMethods.DwmMessages.DwmRenderingChanged)
             {

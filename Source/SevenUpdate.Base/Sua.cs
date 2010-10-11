@@ -94,9 +94,7 @@ namespace SevenUpdate
         ///   Gets or sets the <see cref = "Uri" /> for the application's website
         /// </summary>
         /// <value>The application website</value>
-        [ProtoMember(8, IsRequired = false)]
-        [DataMember]
-        public string AppUrl
+        [ProtoMember(8, IsRequired = false)] [DataMember] public string AppUrl
         {
             get
             {
@@ -116,9 +114,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized descriptions for the application
         /// </summary>
         /// <value>The application description</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Description
+        [ProtoMember(2)] [DataMember] public ObservableCollection<LocaleString> Description
         {
             get
             {
@@ -138,9 +134,7 @@ namespace SevenUpdate
         ///   Gets or sets the directory where the application is installed
         /// </summary>
         /// <value>The install directory</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public string Directory
+        [ProtoMember(3)] [DataMember] public string Directory
         {
             get
             {
@@ -160,9 +154,7 @@ namespace SevenUpdate
         ///   Gets or sets the help website <see cref = "Uri" /> of the application
         /// </summary>
         /// <value>The help and support website for the application</value>
-        [ProtoMember(9, IsRequired = false)]
-        [DataMember]
-        public string HelpUrl
+        [ProtoMember(9, IsRequired = false)] [DataMember] public string HelpUrl
         {
             get
             {
@@ -184,9 +176,7 @@ namespace SevenUpdate
         /// <value>
         ///   <see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.
         /// </value>
-        [ProtoMember(4)]
-        [DataMember]
-        public bool Is64Bit
+        [ProtoMember(4)] [DataMember] public bool Is64Bit
         {
             get
             {
@@ -208,9 +198,7 @@ namespace SevenUpdate
         /// <value>
         ///   <see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.
         /// </value>
-        [ProtoMember(5)]
-        [DataMember]
-        public bool IsEnabled
+        [ProtoMember(5)] [DataMember] public bool IsEnabled
         {
             get
             {
@@ -230,9 +218,7 @@ namespace SevenUpdate
         ///   Gets or sets a collection of localized application names
         /// </summary>
         /// <value>The name of the application localized</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Name
+        [ProtoMember(1)] [DataMember] public ObservableCollection<LocaleString> Name
         {
             get
             {
@@ -252,9 +238,7 @@ namespace SevenUpdate
         ///   Gets or sets the collection of localized publisher names
         /// </summary>
         /// <value>The publisher.</value>
-        [ProtoMember(6)]
-        [DataMember]
-        public ObservableCollection<LocaleString> Publisher
+        [ProtoMember(6)] [DataMember] public ObservableCollection<LocaleString> Publisher
         {
             get
             {
@@ -274,9 +258,7 @@ namespace SevenUpdate
         ///   Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates
         /// </summary>
         /// <value>The url pointing to the sui file</value>
-        [ProtoMember(7)]
-        [DataMember]
-        public string SuiUrl
+        [ProtoMember(7)] [DataMember] public string SuiUrl
         {
             get
             {
@@ -296,9 +278,7 @@ namespace SevenUpdate
         ///   Gets or sets the name of the value to the registry key that contains the application directory location
         /// </summary>
         /// <value>The name of the value.</value>
-        [ProtoMember(10, IsRequired = false)]
-        [DataMember]
-        public string ValueName
+        [ProtoMember(10, IsRequired = false)] [DataMember] public string ValueName
         {
             get
             {

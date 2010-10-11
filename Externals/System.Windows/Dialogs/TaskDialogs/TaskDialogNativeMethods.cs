@@ -21,26 +21,6 @@ namespace System.Windows.Dialogs.TaskDialogs
     internal static class TaskDialogNativeMethods
     {
         /// <summary>
-        /// The <see cref="TaskDialog"/> config delegate
-        /// </summary>
-        /// <param name="taskConfig">
-        /// The configuration for the dialog
-        /// </param>
-        /// <param name="button">
-        /// The button id
-        /// </param>
-        /// <param name="radioButton">
-        /// The radio button id
-        /// </param>
-        /// <param name="verificationFlagChecked">
-        /// <see langword="true"/> if verification should be used
-        /// </param>
-        /// <returns>
-        /// The result for applying the config
-        /// </returns>
-        internal delegate Result TdiDelegate([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [Out] out bool verificationFlagChecked);
-
-        /// <summary>
         /// The <see cref="TaskDialog"/> callback
         /// </summary>
         /// <param name="handle">
@@ -85,38 +65,38 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
-        /// The Common button flags
+        /// Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the Buttons and Buttons members, the task dialog will contain the OK button by default.
         /// </summary>
         [Flags]
         internal enum TaskDialogCommonButtonFlags
         {
             /// <summary>
-            ///   The OK button was pressed
+            ///   The task dialog contains the push button: OK.
             /// </summary>
             OkButton = 0x0001, 
 
             /// <summary>
-            ///   The yes button was pressed
+            ///   The task dialog contains the push button: Yes.
             /// </summary>
             YesButton = 0x0002, 
 
             /// <summary>
-            ///   The no button was pressed
+            ///   The task dialog contains the push button: No.
             /// </summary>
             NoButton = 0x0004, 
 
             /// <summary>
-            ///   The cancel button was pressed
+            ///   The task dialog contains the push button: Cancel. If this button is specified, the task dialog will respond to typical cancel actions (Alt-F4 and Escape).
             /// </summary>
             CancelButton = 0x0008, 
 
             /// <summary>
-            ///   The retry button was pressed
+            ///   The task dialog contains the push button: Retry.
             /// </summary>
             RetryButton = 0x0010, 
 
             /// <summary>
-            ///   The close button was pressed
+            ///   The task dialog contains the push button: Close.
             /// </summary>
             CloseButton = 0x0020
         }
@@ -194,7 +174,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
-        /// Task dialog flags
+        /// Specifies the behavior of the task dialog.
         /// </summary>
         [Flags]
         internal enum TaskDialogFlags
@@ -205,77 +185,77 @@ namespace System.Windows.Dialogs.TaskDialogs
             None = 0, 
 
             /// <summary>
-            ///   Hyperlinks enabled
+            ///   Enables hyperlink processing for the strings specified in the pszContent, pszExpandedInformation and pszFooter members.
             /// </summary>
             EnableHyperlinks = 0x0001, 
 
             /// <summary>
-            ///   Use a main icon
+            ///   Indicates that the dialog should use the icon referenced by the handle in the MainIcon member as the primary icon in the task dialog. If this flag is specified, the MainIcon member is ignored.
             /// </summary>
             UseIconMain = 0x0002, 
 
             /// <summary>
-            ///   Use a footer icon
+            ///   Indicates that the dialog should use the icon referenced by the handle in the FooterIcon member as the footer icon in the task dialog. If this flag is specified, the FooterIcon member is ignored.
             /// </summary>
             UseIconFooter = 0x0004, 
 
             /// <summary>
-            ///   Allow the dialog to be canceled
+            ///   Indicates that the dialog should be able to be closed using Alt-F4, Escape, and the title bar's close button even if no cancel button is specified in either the CommonButtons or Buttons members.
             /// </summary>
             AllowDialogCancellation = 0x0008, 
 
             /// <summary>
-            ///   Use command links
+            ///   Indicates that the buttons specified in the Buttons member are to be displayed as command links (using a standard task dialog glyph) instead of push buttons. When using command links, all characters up to the first new line character in the pszButtonText member will be treated as the command link's main text, and the remainder will be treated as the command link's note. This flag is ignored if the Buttons member is zero.
             /// </summary>
             UseCommandLinks = 0x0010, 
 
             /// <summary>
-            ///   Use command links with no icons
+            ///   Indicates that the buttons specified in the Buttons member are to be displayed as command links (without a glyph) instead of push buttons. When using command links, all characters up to the first new line character in the ButtonText member will be treated as the command link's main text, and the remainder will be treated as the command link's note. This flag is ignored if the Buttons member is zero.
             /// </summary>
             UseCommandLinksNoIcon = 0x0020, 
 
             /// <summary>
-            ///   Expands the footer area
+            ///   Indicates that the string specified by the ExpandedInformation member is displayed at the bottom of the dialog's footer area instead of immediately after the dialog's content. This flag is ignored if the ExpandedInformation member is null.
             /// </summary>
             ExpandFooterArea = 0x0040, 
 
             /// <summary>
-            ///   Expands the footer by default
+            ///   Indicates that the string specified by the ExpandedInformation member is displayed when the dialog is initially displayed. This flag is ignored if the ExpandedInformation member is NULL.
             /// </summary>
             ExpandedByDefault = 0x0080, 
 
             /// <summary>
-            ///   Verification enabled
+            ///   Indicates that the verification checkbox in the dialog is checked when the dialog is initially displayed. This flag is ignored if the VerificationText parameter is null.
             /// </summary>
             VerificationFlagChecked = 0x0100, 
 
             /// <summary>
-            ///   Shows a progress bar
+            ///   Indicates that a Progress Bar is to be displayed.
             /// </summary>
             ShowProgressBar = 0x0200, 
 
             /// <summary>
-            ///   Shows the progress bar as a marquee
+            ///   Indicates that an Marquee Progress Bar is to be displayed.
             /// </summary>
             ShowMarqueeProgressBar = 0x0400, 
 
             /// <summary>
-            ///   The callback timer
+            ///   Indicates that the task dialog's callback is to be called approximately every 200 milliseconds.
             /// </summary>
             CallbackTimer = 0x0800, 
 
             /// <summary>
-            ///   The dialog position relative to the window
+            ///   Indicates that the task dialog is positioned (centered) relative to the window specified by Parent. If the flag is not supplied (or no Parent member is specified), the task dialog is positioned (centered) relative to the monitor.
             /// </summary>
             PositionRelativeToWindow = 0x1000, 
 
             /// <summary>
-            ///   Use right to left layout
+            ///   Indicates that text is displayed reading right to left.
             /// </summary>
             RtlLayout = 0x2000, 
 
             /// <summary>
-            ///   No default radio button selected
+            ///   Indicates that no default item will be selected.
             /// </summary>
             NoDefaultRadioButton = 0x4000
         }
@@ -302,12 +282,12 @@ namespace System.Windows.Dialogs.TaskDialogs
         internal enum TaskDialogMessage
         {
             /// <summary>
-            ///   Navigates the page
+            ///   Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard.
             /// </summary>
             NavigatePage = NativeMethods.WmUser + 101, 
 
             /// <summary>
-            ///   parameter = Button ID
+            ///   Simulates the action of a button click in a dialog.
             /// </summary>
             ClickButton = NativeMethods.WmUser + 102, 
 
@@ -317,62 +297,62 @@ namespace System.Windows.Dialogs.TaskDialogs
             SetMarqueeProgressBar = NativeMethods.WmUser + 103, 
 
             /// <summary>
-            ///   parameter = new progress state
+            ///   Sets the current state of the progress bar.
             /// </summary>
             SetProgressBarState = NativeMethods.WmUser + 104, 
 
             /// <summary>
-            ///   parameterLength = MAKELPARAM(nMinRange, nMaxRange)
+            ///   Sets the minimum and maximum values for the hosted progress bar.
             /// </summary>
             SetProgressBarRange = NativeMethods.WmUser + 105, 
 
             /// <summary>
-            ///   parameter = new position
+            ///   Sets the current position for a progress bar.
             /// </summary>
             SetProgressBarPos = NativeMethods.WmUser + 106, 
 
             /// <summary>
-            ///   Sets the progress bar state to a marquee
+            ///   Indicates whether the hosted progress bar should be displayed in marquee mode.
             /// </summary>
             SetProgressBarMarquee = NativeMethods.WmUser + 107, 
 
             /// <summary>
-            ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
+            ///   Updates a text element in a task dialog.
             /// </summary>
             SetElementText = NativeMethods.WmUser + 108, 
 
             /// <summary>
-            ///   parameter = Radio Button ID
+            ///   Simulates the action of a radio button click in a task dialog.
             /// </summary>
             ClickRadioButton = NativeMethods.WmUser + 110, 
 
             /// <summary>
-            ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Button ID
+            ///   Enables or disables a push button in a task dialog.
             /// </summary>
             EnableButton = NativeMethods.WmUser + 111, 
 
             /// <summary>
-            ///   parameterLength = 0 (disable), parameterLength != 0 (enable), parameter = Radio Button ID
+            ///   Enables or disables a radio button in a task dialog.
             /// </summary>
             EnableRadioButton = NativeMethods.WmUser + 112, 
 
             /// <summary>
-            ///   parameter = 0 (unchecked), 1 (checked), parameterLength = 1 (set key focus)
+            ///   Simulates the action of a verification checkbox click in a task dialog.
             /// </summary>
             ClickVerification = NativeMethods.WmUser + 113, 
 
             /// <summary>
-            ///   parameter = element (TASKDIALOG_ELEMENTS), parameterLength = new element text (LPCWSTR)
+            ///   Updates a text element in a task dialog.
             /// </summary>
             UpdateElementText = NativeMethods.WmUser + 114, 
 
             /// <summary>
-            ///   Button ID, parameterLength = 0 (elevation not required), parameterLength != 0 (elevation required)
+            ///   Specifies whether a given task dialog button or command link should have a UAC shield icon; that is, whether the action invoked by the button requires elevation.
             /// </summary>
             SetButtonElevationRequiredState = NativeMethods.WmUser + 115, 
 
             /// <summary>
-            ///   Updates the icon
+            ///   Refreshes the icon of a task dialog.
             /// </summary>
             UpdateIcon = NativeMethods.WmUser + 116
         }
@@ -383,57 +363,57 @@ namespace System.Windows.Dialogs.TaskDialogs
         internal enum TaskDialogNotification
         {
             /// <summary>
-            ///   Task Dialog created
+            ///   Sent by a task dialog after the dialog has been created and before it is displayed. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             Created = 0, 
 
             /// <summary>
-            ///   Hyperlink navigated
+            ///   Sent by a task dialog when a navigation has occurred. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             Navigated = 1, 
 
             /// <summary>
-            ///   A button was clicked
+            ///   Sent by a task dialog when the user selects a button or command link in the task dialog. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             ButtonClicked = 2, 
 
             /// <summary>
-            ///   Hyperlink clicked
+            ///   Sent by a task dialog when the user clicks a hyperlink in the task dialog content. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             HyperlinkClicked = 3, 
 
             /// <summary>
-            ///   A dialog timer
+            ///   Sent by a task dialog approximately every 200 milliseconds. This notification code is sent when the CallbackTimer flag has been set in the flags member of the TaskDialog structure that was passed to the TaskDialogIndirect function. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             Timer = 4, 
 
             /// <summary>
-            ///   TaskDialog destroyed
+            ///   Sent by a task dialog when it is destroyed and its window handle is no longer valid. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             Destroyed = 5, 
 
             /// <summary>
-            ///   Radio button clicked
+            ///   Sent by a task dialog when the user selects a button or command link in the task dialog. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             RadioButtonClicked = 6, 
 
             /// <summary>
-            ///   Dialog created
+            ///   Sent by a task dialog after the dialog has been created and before it is displayed. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             DialogConstructed = 7, 
 
             /// <summary>
-            ///   Verification was clicked
+            ///   Sent by the task dialog when the user clicks the task dialog verification check box. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             VerificationClicked = 8, 
 
             /// <summary>
-            ///   Help link clicked
+            ///   Sent by a task dialog when the user presses F1 on the keyboard while the dialog has focus. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             Help = 9, 
 
             /// <summary>
-            ///   Expand button clicked
+            ///   Sent by a task dialog when the user clicks on the dialog's expanded button. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.
             /// </summary>
             ExpandButtonClicked = 10
         }
@@ -444,61 +424,71 @@ namespace System.Windows.Dialogs.TaskDialogs
         internal enum TaskDialogIcon
         {
             /// <summary>
-            ///   Displays a warning icon
+            ///   An exclamation-point icon appears in the task dialog.
             /// </summary>
             WarningIcon = 65535, 
 
             /// <summary>
-            ///   Displays a red x icon
+            ///   A stop-sign icon appears in the task dialog.
             /// </summary>
             ErrorIcon = 65534, 
 
             /// <summary>
-            ///   Displays a blue ! icon
+            ///   An icon consisting of a lowercase letter i in a circle appears in the task dialog.
             /// </summary>
             InformationIcon = 65533, 
 
             /// <summary>
-            ///   Displays the UAC shield
+            ///   A shield icon appears in the task dialog.
             /// </summary>
             ShieldIcon = 65532
         }
 
         /// <summary>
-        /// Accesses the task dialog indirectly
+        /// The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains application-defined icons, messages, title, verification check box, command links, push buttons, and radio buttons. This function can register a callback function to receive notification messages.
         /// </summary>
-        /// <param name="taskConfig">The task config.</param>
-        /// <param name="button">The button id</param>
-        /// <param name="radioButton">The radio button id</param>
-        /// <param name="verificationFlagChecked">if set to <see langword="true"/> verification is used</param>
-        /// <returns>The result</returns>
+        /// <param name="taskConfig">
+        /// A pointer to a <see cref="TaskDialogConfig"/> structure that contains information used to display the task dialog.
+        /// </param>
+        /// <param name="button">
+        /// Address of a variable that receives one of the button IDs specified in the <paramref name="button"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.
+        /// </param>
+        /// <param name="radioButtons">
+        /// Address of a variable that receives one of the button IDs specified in the <paramref name="radioButtons"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.
+        /// </param>
+        /// <param name="verificationFlagChecked">
+        /// <see langword="true"/> if the verification <see cref="CheckBox"/> was checked when the dialog was dismissed; otherwise, false
+        /// </param>
+        /// <returns>
+        /// The <see cref="Result"/>
+        /// </returns>
         [DllImport(@"comdlg32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern Result TaskDialogIndirect(
-            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
+            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButtons, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
 
         /// <summary>
-        /// Contains the data for the dialog config and icon
+        /// Contains the data for a <see cref="TaskDialogIcon"/>
         /// </summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
         internal struct TaskDialogConfigIconUnion
         {
             /// <summary>
-            ///   The main icon identifier
+            ///   The main icon Id to display
             /// </summary>
             [FieldOffset(0)]
-            internal int MainIcon;
+            private readonly int MainIcon;
 
             /// <summary>
-            ///   The icon identifier
+            ///   The footer icon id to display
             /// </summary>
             [FieldOffset(0)]
-            internal int Icon;
+            private readonly int Icon;
 
             /// <summary>
             ///   The pointer to the space
             /// </summary>
             [FieldOffset(0)]
-            internal IntPtr Spacer;
+            private readonly IntPtr Spacer;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="TaskDialogConfigIconUnion"/> struct.
@@ -521,7 +511,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         internal struct TaskDialogButtonData
         {
             /// <summary>
-            ///   The button id
+            ///   Indicates the value to be returned when this button is selected.
             /// </summary>
             internal int ButtonID;
 
@@ -548,143 +538,143 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>
-        /// Contains data for the dialog configuration
+        /// Contains information used to display a task dialog
         /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal class TaskDialogConfig : IDisposable
         {
             /// <summary>
-            ///   The size of the dialog
+            ///   Specifies the structure size, in bytes.
             /// </summary>
             internal uint Size;
 
             /// <summary>
-            ///   The parent for the dialog
+            ///   Handle to the parent window. This member can be <see langword = "null" />.
             /// </summary>
             internal IntPtr handleParent;
 
             /// <summary>
-            ///   The instance of the dialog
+            ///   Handle to the module that contains the icon resource identified by the mainIcon or footerIcon members, and the string resources identified by the windowTitle, mainInstruction, content, verificationText, expandedInformation, expandedControlText, collapsedControlText or footer members.
             /// </summary>
             internal IntPtr Instance;
 
             /// <summary>
-            ///   The flags for this instance
+            ///   Specifies the behavior of the task dialog
             /// </summary>
             internal TaskDialogFlags flags;
 
             /// <summary>
-            ///   The task dialog buttons
+            ///   Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the buttons and pButtons members, the task dialog will contain the OK button by default.
             /// </summary>
             internal TaskDialogCommonButtonFlags CommonButtons;
 
             /// <summary>
-            ///   The text to display on the window
+            ///   Pointer that references the string to be used for the task dialog title. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MakeIntResource macro. If this parameter is <see langword = "null" />, the filename of the executable program is used.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string WindowTitle;
 
             /// <summary>
-            ///   The main icon for the dialog
+            ///   A handle to an Icon that is to be displayed in the task dialog.
             /// </summary>
             internal TaskDialogConfigIconUnion MainIcon; // NOTE: 32-bit union field, holds MainIcon as well
 
             /// <summary>
-            ///   The main text for the dialog
+            ///   A pointer that references the string to be used for the main instruction. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string MainInstruction;
 
             /// <summary>
-            ///   The sub text for the dialog
+            ///   Pointer that references the string to be used for the dialog's primary content. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. If the EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the form: <A HREF = "executablestring">Hyperlink Text</A>.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string Content;
 
             /// <summary>
-            ///   The length for the buttons
+            ///   The number of entries in the buttons array that is used to create buttons or command links in the dialog. If this member is zero and no common buttons have been specified using the <see cref = "CommonButtons" /> member, then the task dialog will have a single OK button displayed.
             /// </summary>
             internal uint ButtonLength;
 
             /// <summary>
-            ///   The collection of buttons to display
+            ///   A pointer to an array of <see cref = "TaskDialogButton" /> structures containing the definition of the custom buttons that are to be displayed in the dialog. This array must contain at least the number of entries that are specified by the buttons member.
             /// </summary>
-            internal IntPtr ButtonCollection; // Ptr to TASKDIALOG_BUTTON structs
+            internal IntPtr ButtonCollection;
 
             /// <summary>
-            ///   The id for the default button
+            ///   The default button for the dialog. This may be any of the values specified in ButtonID members of one of the <see cref = "TaskDialogButton" /> structures in the <see cref = "ButtonCollection" />, or one of the IDs corresponding to the buttons specified in the <see cref = "CommonButtons" /> member
             /// </summary>
             internal int DefaultButton;
 
             /// <summary>
-            ///   The collection of <see cref = "RadioButton" />
+            ///   The number of entries in the <see cref = "RadioButtonCollection" /> that is used to create radio buttons in the dialog.
             /// </summary>
             internal uint RadioButtonsLength;
 
             /// <summary>
-            ///   The radio button collection
+            ///   Pointer to an array of <see cref = "TaskDialogButton" /> structures containing the definition of the radio buttons that are to be displayed in the dialog. This array must contain at least the number of entries that are specified by the cRadioButtons member. This parameter can be <see langword = "null" />.
             /// </summary>
-            internal IntPtr RadioButtonCollection; // Ptr to TASKDIALOG_BUTTON structs
+            internal IntPtr RadioButtonCollection;
 
             /// <summary>
-            ///   The id for the default radio button
+            ///   The button ID of the radio button that is selected by default. If this value does not correspond to a button ID, the first button in the array is selected by default.
             /// </summary>
             internal int DefaultRadioButton;
 
             /// <summary>
-            ///   The verification text
+            ///   Pointer that references the string to be used to label the verification <see cref = "CheckBox" />. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. If this parameter is <see langword = "null" />, the verification <see cref = "CheckBox" /> is not displayed in the task dialog. If the VerificationFlagChecked parameter of TaskDialogIndirect is <see langword = "null" />, the <see cref = "CheckBox" /> is not enabled.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string VerificationText;
 
             /// <summary>
-            ///   The expanded information text
+            ///   Pointer that references the string to be used for displaying additional information. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. The additional information is displayed either immediately below the content or below the footer text depending on whether the ExpanderFooterArea flag is specified. If the EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the form: <A HREF = "executablestring">Hyperlink Text</A>.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string ExpandedInformation;
 
             /// <summary>
-            ///   The text to display on the expander
+            ///   Pointer that references the string to be used to label the button for collapsing the expandable information. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the <see cref = "ExpandedInformation" /> member is NULL. If this member is NULL and the <see cref = "CollapsedControlText" /> is specified, then the <see cref = "CollapsedControlText" /> value will be used for this member as well.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string ExpandedControlText;
 
             /// <summary>
-            ///   The collapsed control text
+            ///   Pointer that references the string to be used to label the button for expanding the expandable information. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the <see cref = "ExpandedInformation" /> member is <see langword = "null" />. If this member is <see langword = "null" /> and the CollapsedControlText is specified, then the CollapsedControlText value will be used for this member as well.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string CollapsedControlText;
 
             /// <summary>
-            ///   The footer icon
+            ///   A handle to an Icon that is to be displayed in the footer of the task dialog.
             /// </summary>
             internal TaskDialogConfigIconUnion FooterIcon; // NOTE: 32-bit union field, holds FooterIcon as well
 
             /// <summary>
-            ///   The footer text
+            ///   Pointer to the string to be used in the footer area of the task dialog. This parameter can be either a <see langword = "null" />-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. If the EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in this form.
             /// </summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string Footer;
 
             /// <summary>
-            ///   The dialog callback
+            ///   The application-defined callback function.
             /// </summary>
             internal TaskDialogCallBack Callback;
 
             /// <summary>
-            ///   The dialog data
+            ///   A pointer to application-defined reference data. This value is defined by the caller.
             /// </summary>
             internal IntPtr CallbackData;
 
             /// <summary>
-            ///   The dialog width
+            ///   The width of the task dialog's client area. If 0, the task dialog manager will calculate the ideal width.
             /// </summary>
             internal uint Width;
 
             /// <summary>
             ///   Indicates if the dialog is disposed
             /// </summary>
-            protected bool disposed;
+            private bool disposed;
 
             /// <summary>
             /// Finalizes an instance of the <see cref="TaskDialogConfig"/> class.
