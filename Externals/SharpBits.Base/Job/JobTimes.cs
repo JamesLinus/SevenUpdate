@@ -14,28 +14,20 @@ namespace SharpBits.Base.Job
 {
     using System;
 
-    /// <summary>
-    /// Data containing various <see cref="DateTime"/>'s about the <see cref="BitsJob"/>
-    /// </summary>
+    /// <summary>Data containing various <see cref="DateTime"/>'s about the <see cref="BitsJob"/></summary>
     public class JobTimes
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current <see cref = "JobTimes" /> for the <see cref = "BitsJob" />
-        /// </summary>
+        /// <summary>The current <see cref = "JobTimes" /> for the <see cref = "BitsJob" /></summary>
         private BGJobTimes jobTimes;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobTimes"/> class.
-        /// </summary>
-        /// <param name="jobTimes">
-        /// The job times.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="JobTimes"/> class.</summary>
+        /// <param name="jobTimes">The job times.</param>
         internal JobTimes(BGJobTimes jobTimes)
         {
             this.jobTimes = jobTimes;
@@ -45,9 +37,7 @@ namespace SharpBits.Base.Job
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the creation time.
-        /// </summary>
+        /// <summary>Gets the creation time.</summary>
         /// <value>The creation time.</value>
         public DateTime CreationTime
         {
@@ -57,9 +47,7 @@ namespace SharpBits.Base.Job
             }
         }
 
-        /// <summary>
-        ///   Gets the modification time.
-        /// </summary>
+        /// <summary>Gets the modification time.</summary>
         /// <value>The modification time.</value>
         public DateTime ModificationTime
         {
@@ -69,9 +57,7 @@ namespace SharpBits.Base.Job
             }
         }
 
-        /// <summary>
-        ///   Gets the transfer completion time.
-        /// </summary>
+        /// <summary>Gets the transfer completion time.</summary>
         /// <value>The transfer completion time.</value>
         public DateTime TransferCompletionTime
         {

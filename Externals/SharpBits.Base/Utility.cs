@@ -18,16 +18,12 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Text;
 
-    /// <summary>
-    /// Various utility methods.
-    /// </summary>
+    /// <summary>Various utility methods.</summary>
     internal static class Utilities
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets the bits version.
-        /// </summary>
+        /// <summary>Gets the bits version.</summary>
         /// <value>The bits version.</value>
         internal static BitsVersion BitsVersion
         {
@@ -114,15 +110,9 @@ namespace SharpBits.Base
 
         #region Methods
 
-        /// <summary>
-        /// Converts a <see cref="DateTime"/> to <see cref="FileTime"/>
-        /// </summary>
-        /// <param name="dateTime">
-        /// The date time.
-        /// </param>
-        /// <returns>
-        /// The converted <see cref="DateTime"/> as a <see cref="FileTime"/>
-        /// </returns>
+        /// <summary>Converts a <see cref="DateTime"/> to <see cref="FileTime"/></summary>
+        /// <param name="dateTime">The date time.</param>
+        /// <returns>The converted <see cref="DateTime"/> as a <see cref="FileTime"/></returns>
         internal static FileTime DateTimeToFileTime(DateTime dateTime)
         {
             long fileTime = 0;
@@ -140,15 +130,9 @@ namespace SharpBits.Base
             return resultingFileTime;
         }
 
-        /// <summary>
-        /// Converts the <see cref="FileTime"/> to <see cref="DateTime"/>
-        /// </summary>
-        /// <param name="fileTime">
-        /// The file time.
-        /// </param>
-        /// <returns>
-        /// The converted <see cref="FileTime"/> to <see cref="DateTime"/>
-        /// </returns>
+        /// <summary>Converts the <see cref="FileTime"/> to <see cref="DateTime"/></summary>
+        /// <param name="fileTime">The file time.</param>
+        /// <returns>The converted <see cref="FileTime"/> to <see cref="DateTime"/></returns>
         internal static DateTime FileTimeToDateTime(FileTime fileTime)
         {
             if (fileTime.DWHighDateTime == 0 && fileTime.DWLowDateTime == 0)
@@ -161,15 +145,9 @@ namespace SharpBits.Base
             return DateTime.FromFileTime(dateTime);
         }
 
-        /// <summary>
-        /// Gets the name from a SID
-        /// </summary>
-        /// <param name="sid">
-        /// The SID as a string
-        /// </param>
-        /// <returns>
-        /// The name from the SID
-        /// </returns>
+        /// <summary>Gets the name from a SID</summary>
+        /// <param name="sid">The SID as a string</param>
+        /// <returns>The name from the SID</returns>
         internal static string GetName(string sid)
         {
             long userNameSize = 255;

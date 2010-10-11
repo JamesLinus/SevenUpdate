@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Helper
 {
     using System;
@@ -36,33 +37,23 @@ namespace SevenUpdate.Helper
 
     using Timer = System.Timers.Timer;
 
-    /// <summary>
-    /// The main class
-    /// </summary>
+    /// <summary>The main class</summary>
     internal static class Program
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Moves a file on reboot
-        /// </summary>
+        /// <summary>Moves a file on reboot</summary>
         private const int MoveOnReboot = 5;
 
-        /// <summary>
-        ///   The current directory the application resides in
-        /// </summary>
+        /// <summary>The current directory the application resides in</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        /// <param name="args">
-        /// The arguments passed to the program at startup
-        /// </param>
+        /// <summary>The main entry point for the application.</summary>
+        /// <param name="args">The arguments passed to the program at startup</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -196,33 +187,17 @@ namespace SevenUpdate.Helper
             }
         }
 
-        /// <summary>
-        /// Moves the file using the windows command
-        /// </summary>
-        /// <param name="sourceFileName">
-        /// The current name of the file or directory on the local computer.
-        /// </param>
-        /// <param name="newFileName">
-        /// The new name of the file or directory on the local computer.
-        /// </param>
-        /// <param name="flags">
-        /// The flags that determine how to move the file
-        /// </param>
-        /// <returns>
-        /// If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.
-        /// </returns>
+        /// <summary>Moves the file using the windows command</summary>
+        /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
+        /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
+        /// <param name="flags">The flags that determine how to move the file</param>
+        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
         [DllImport(@"kernel32.dll")]
         private static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
 
-        /// <summary>
-        /// Run Seven Update and auto check for updates
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Run Seven Update and auto check for updates</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
             Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");

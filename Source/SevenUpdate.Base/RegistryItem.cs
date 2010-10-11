@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -32,39 +33,29 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    /// Contains the Actions you can perform to the registry
-    /// </summary>
+    /// <summary>Contains the Actions you can perform to the registry</summary>
     [ProtoContract]
     [DataContract]
     [DefaultValue(Add)]
     public enum RegistryAction
     {
-        /// <summary>
-        ///   Adds a registry entry to the machine
-        /// </summary>
+        /// <summary>Adds a registry entry to the machine</summary>
         [ProtoEnum]
         [EnumMember]
         Add = 0, 
 
-        /// <summary>
-        ///   Deletes a registry key on the machine
-        /// </summary>
+        /// <summary>Deletes a registry key on the machine</summary>
         [ProtoEnum]
         [EnumMember]
         DeleteKey = 1, 
 
-        /// <summary>
-        ///   Deletes a value of a registry key on the machine
-        /// </summary>
+        /// <summary>Deletes a value of a registry key on the machine</summary>
         [ProtoEnum]
         [EnumMember]
         DeleteValue = 2
     }
 
-    /// <summary>
-    /// A registry entry within an update
-    /// </summary>
+    /// <summary>A registry entry within an update</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(RegistryAction))]
@@ -74,47 +65,33 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The action to perform on the <see cref = "RegistryItem" />
-        /// </summary>
+        /// <summary>The action to perform on the <see cref = "RegistryItem" /></summary>
         private RegistryAction action;
 
-        /// <summary>
-        ///   The data for the key value
-        /// </summary>
+        /// <summary>The data for the key value</summary>
         private string data;
 
-        /// <summary>
-        ///   The registry key and hive
-        /// </summary>
+        /// <summary>The registry key and hive</summary>
         private string key;
 
-        /// <summary>
-        ///   The value for the registry key
-        /// </summary>
+        /// <summary>The value for the registry key</summary>
         private string keyValue;
 
-        /// <summary>
-        ///   The type of the value
-        /// </summary>
+        /// <summary>The type of the value</summary>
         private RegistryValueKind valueKind;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed
-        /// </summary>
+        /// <summary>Occurs when a property has changed</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the action to perform on the <see cref = "RegistryItem" />
-        /// </summary>
+        /// <summary>Gets or sets the action to perform on the <see cref = "RegistryItem" /></summary>
         /// <value>The action.</value>
         [ProtoMember(1)] [DataMember] public RegistryAction Action
         {
@@ -132,9 +109,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the data for the key value
-        /// </summary>
+        /// <summary>Gets or sets the data for the key value</summary>
         /// <value>The data for the registry value</value>
         [ProtoMember(6, IsRequired = false)] [DataMember] public string Data
         {
@@ -152,9 +127,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the registry key and hive
-        /// </summary>
+        /// <summary>Gets or sets the registry key and hive</summary>
         /// <value>The registry key path</value>
         [ProtoMember(3)] [DataMember] public string Key
         {
@@ -172,9 +145,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the value for the registry key
-        /// </summary>
+        /// <summary>Gets or sets the value for the registry key</summary>
         /// <value>The value of the key</value>
         [ProtoMember(4, IsRequired = false)] [DataMember] public string KeyValue
         {
@@ -192,9 +163,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the type of the value
-        /// </summary>
+        /// <summary>Gets or sets the type of the value</summary>
         /// <value>The kind of the value</value>
         [ProtoMember(5, IsRequired = false)] [DataMember] public RegistryValueKind ValueKind
         {
@@ -216,12 +185,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="name">
-        /// The name of the property that changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

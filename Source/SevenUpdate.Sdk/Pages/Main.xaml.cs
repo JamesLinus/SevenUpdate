@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -38,16 +39,12 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    /// <summary>
-    /// Interaction logic for Main.xaml
-    /// </summary>
+    /// <summary>Interaction logic for Main.xaml</summary>
     public sealed partial class Main
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "Main" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "Main" /> class.</summary>
         public Main()
         {
             this.InitializeComponent();
@@ -71,15 +68,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Updates the UI based on the <see cref="TreeViewItem"/> selected
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="EventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the UI based on the <see cref="TreeViewItem"/> selected</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ChangeUI(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             if (this.treeView.SelectedItem == null)
@@ -129,15 +120,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Deletes an item from the <see cref="TreeView"/> and Project collection.
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Deletes an item from the <see cref="TreeView"/> and Project collection.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
             var item = this.treeView.SelectedItem as TreeViewItem;
@@ -170,37 +155,23 @@ namespace SevenUpdate.Sdk.Pages
             this.LoadProjects();
         }
 
-        /// <summary>
-        /// Edits the selected project item
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Edits the selected project item</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void EditSelectedItem(object sender, RoutedEventArgs e)
         {
             Core.EditItem();
         }
 
-        /// <summary>
-        /// Opens a browser and opens the support page
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Opens a browser and opens the support page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void GoToSupport(object sender, MouseButtonEventArgs e)
         {
             Process.Start(@"http://sevenupdate.com/support");
         }
 
-        /// <summary>
-        /// Loads the projects.
-        /// </summary>
+        /// <summary>Loads the projects.</summary>
         private void LoadProjects()
         {
             this.treeView.Items.Clear();
@@ -242,57 +213,33 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Loads the collection of <see cref="Project"/>'s into the UI
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Loads the collection of <see cref="Project"/>'s into the UI</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             this.LoadProjects();
         }
 
-        /// <summary>
-        /// Creates a new project
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Creates a new project</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NewProject(object sender, RoutedEventArgs e)
         {
             Core.NewProject();
         }
 
-        /// <summary>
-        /// Creates a new update for the selected <see cref="Project"/>
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Creates a new update for the selected <see cref="Project"/></summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NewUpdate(object sender, RoutedEventArgs e)
         {
             Core.NewUpdate();
         }
 
-        /// <summary>
-        /// Opens a dialog and saves the <see cref="Sua"/> for the selected project
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Opens a dialog and saves the <see cref="Sua"/> for the selected project</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
@@ -306,15 +253,9 @@ namespace SevenUpdate.Sdk.Pages
             File.Copy(Core.UserStore + appName + @".sua", fileName, true);
         }
 
-        /// <summary>
-        /// Opens a dialog and saves the Sui for the selected project
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Opens a dialog and saves the Sui for the selected project</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReleaseSui(object sender, RoutedEventArgs e)
         {
             var appName = Core.Projects[Core.AppIndex].ApplicationName;
@@ -329,15 +270,9 @@ namespace SevenUpdate.Sdk.Pages
             File.Copy(Core.UserStore + appName + @".sui", fileName, true);
         }
 
-        /// <summary>
-        /// Selects the <see cref="TreeViewItem"/> when right clicking on the <see cref="TreeView"/>
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Selects the <see cref="TreeViewItem"/> when right clicking on the <see cref="TreeView"/></summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void SelectedItemOnRightClick(object sender, MouseButtonEventArgs e)
         {
             var tv = (TreeView)sender;
@@ -367,30 +302,18 @@ namespace SevenUpdate.Sdk.Pages
             e.Handled = true;
         }
 
-        /// <summary>
-        /// Displays the About Window
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Displays the About Window</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
             about.ShowDialog();
         }
 
-        /// <summary>
-        /// Updates the UI based on whether Aero Glass is enabled
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

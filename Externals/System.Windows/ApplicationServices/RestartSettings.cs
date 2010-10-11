@@ -27,9 +27,7 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestartSettings"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="RestartSettings"/> class.</summary>
         /// <param name="commandLine">
         /// The command line arguments
         ///   used to restart the application.
@@ -49,9 +47,7 @@ namespace System.Windows.ApplicationServices
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the command line arguments used to restart the application.
-        /// </summary>
+        /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <see cref = "System.String" /> object.</value>
         public string Command { get; private set; }
 

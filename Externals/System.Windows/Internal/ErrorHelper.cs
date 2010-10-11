@@ -18,29 +18,19 @@ namespace System.Windows.Internal
     /// </summary>
     public enum Result : uint
     {
-        /// <summary>
-        ///   Result returns false
-        /// </summary>
+        /// <summary>Result returns false</summary>
         False = 0x0001, 
 
-        /// <summary>
-        ///   Returns OK
-        /// </summary>
+        /// <summary>Returns OK</summary>
         OK = 0x0000, 
 
-        /// <summary>
-        ///   Returns invalid argument
-        /// </summary>
+        /// <summary>Returns invalid argument</summary>
         InvalidArg = 0x80070057, 
 
-        /// <summary>
-        ///   Returns out of memory
-        /// </summary>
+        /// <summary>Returns out of memory</summary>
         OutOfMemory = 0x8007000E, 
 
-        /// <summary>
-        ///   Returns operation failed
-        /// </summary>
+        /// <summary>Returns operation failed</summary>
         Fail = 0x80004005, 
     }
 
@@ -52,9 +42,7 @@ namespace System.Windows.Internal
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   This is intended for Library Internal use only.
-        /// </summary>
+        /// <summary>This is intended for Library Internal use only.</summary>
         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "IGNORED", Justification = "OK")]
         public const int Ignored = (int)Result.OK;
 
@@ -62,29 +50,17 @@ namespace System.Windows.Internal
 
         #region Public Methods
 
-        /// <summary>
-        /// This is intended for Library Internal use only.
-        /// </summary>
-        /// <param name="result">
-        /// The error code.
-        /// </param>
-        /// <returns>
-        /// True if the error code indicates failure.
-        /// </returns>
+        /// <summary>This is intended for Library Internal use only.</summary>
+        /// <param name="result">The error code.</param>
+        /// <returns>True if the error code indicates failure.</returns>
         public static bool Failed(Result result)
         {
             return (int)result < 0;
         }
 
-        /// <summary>
-        /// This is intended for Library Internal use only.
-        /// </summary>
-        /// <param name="result">
-        /// The error code.
-        /// </param>
-        /// <returns>
-        /// True if the error code indicates success.
-        /// </returns>
+        /// <summary>This is intended for Library Internal use only.</summary>
+        /// <param name="result">The error code.</param>
+        /// <returns>True if the error code indicates success.</returns>
         public static bool Succeeded(int result)
         {
             return result >= 0;

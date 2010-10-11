@@ -12,61 +12,39 @@ namespace System.Windows.Dialogs.TaskDialogs
 {
     using System.Diagnostics.CodeAnalysis;
 
-    /// <summary>
-    /// Provides a visual representation of the progress of a long running operation.
-    /// </summary>
+    /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The maximum value
-        /// </summary>
+        /// <summary>The maximum value</summary>
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
-        /// <summary>
-        ///   The minimum value
-        /// </summary>
+        /// <summary>The minimum value</summary>
         private int minimum = TaskDialogDefaults.ProgressBarMinimumValue;
 
-        /// <summary>
-        ///   The progress bar value
-        /// </summary>
+        /// <summary>The progress bar value</summary>
         private int value = TaskDialogDefaults.ProgressBarMinimumValue;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class.</summary>
         protected TaskDialogProgressBar()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.
-        /// </summary>
-        /// <param name="name">
-        /// The name of the control.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.</summary>
+        /// <param name="name">The name of the control.</param>
         protected TaskDialogProgressBar(string name) : base(name)
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.
-        /// </summary>
-        /// <param name="minimum">
-        /// The minimum value for this control.
-        /// </param>
-        /// <param name="maximum">
-        /// The maximum value for this control.
-        /// </param>
-        /// <param name="value">
-        /// The current value for this control.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.</summary>
+        /// <param name="minimum">The minimum value for this control.</param>
+        /// <param name="maximum">The maximum value for this control.</param>
+        /// <param name="value">The current value for this control.</param>
         protected TaskDialogProgressBar(int minimum, int maximum, int value)
         {
             this.Minimum = minimum;
@@ -78,9 +56,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the maximum value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the maximum value for the control.</summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
             Justification = "Value is standard for progress bar's current value property")] public int Maximum
         {
@@ -104,9 +80,7 @@ namespace System.Windows.Dialogs.TaskDialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the minimum value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the minimum value for the control.</summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
             Justification = "Value is standard for progress bar's current value property")] public int Minimum
         {
@@ -136,9 +110,7 @@ namespace System.Windows.Dialogs.TaskDialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the current value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the current value for the control.</summary>
         [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", 
             Justification = "Value is standard for progress bar's current value property")] public int Value
         {
@@ -167,12 +139,8 @@ namespace System.Windows.Dialogs.TaskDialogs
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether this instance has valid values.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance has valid values; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets a value indicating whether this instance has valid values.</summary>
+        /// <value><see langword = "true" /> if this instance has valid values; otherwise, <see langword = "false" />.</value>
         internal bool HasValidValues
         {
             get
@@ -185,9 +153,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #region Methods
 
-        /// <summary>
-        /// Resets the control to its minimum value.
-        /// </summary>
+        /// <summary>Resets the control to its minimum value.</summary>
         protected internal override void Reset()
         {
             base.Reset();

@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Admin
 {
     using System;
@@ -44,75 +45,49 @@ namespace SevenUpdate.Admin
     using Application = System.Windows.Application;
     using Timer = System.Timers.Timer;
 
-    /// <summary>
-    /// The main class of the application
-    /// </summary>
+    /// <summary>The main class of the application</summary>
     internal static class App
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The collection of applications to update
-        /// </summary>
+        /// <summary>The collection of applications to update</summary>
         private static Collection<Sui> apps;
 
-        /// <summary>
-        ///   The WCF service host
-        /// </summary>
+        /// <summary>The WCF service host</summary>
         private static ServiceHost host;
 
-        /// <summary>
-        ///   Indicates if the installation was executed by automatic settings
-        /// </summary>
+        /// <summary>Indicates if the installation was executed by automatic settings</summary>
         private static bool isAutoInstall;
 
-        /// <summary>
-        ///   Indicates if the program is currently installing updates
-        /// </summary>
+        /// <summary>Indicates if the program is currently installing updates</summary>
         private static bool isInstalling;
 
-        /// <summary>
-        ///   The notifyIcon used only when Auto Updating
-        /// </summary>
+        /// <summary>The notifyIcon used only when Auto Updating</summary>
         private static NotifyIcon notifyIcon;
 
-        /// <summary>
-        ///   Indicates if the program is waiting
-        /// </summary>
+        /// <summary>Indicates if the program is waiting</summary>
         private static bool waiting;
 
         #endregion
 
         #region Enums
 
-        /// <summary>
-        /// Defines constants for the notification type, such has SearchComplete
-        /// </summary>
+        /// <summary>Defines constants for the notification type, such has SearchComplete</summary>
         private enum NotifyType
         {
-            /// <summary>
-            ///   Indicates searching is completed
-            /// </summary>
+            /// <summary>Indicates searching is completed</summary>
             SearchComplete, 
 
-            /// <summary>
-            ///   Indicates the downloading of updates has started
-            /// </summary>
+            /// <summary>Indicates the downloading of updates has started</summary>
             DownloadStarted, 
 
-            /// <summary>
-            ///   Indicates download has completed
-            /// </summary>
+            /// <summary>Indicates download has completed</summary>
             DownloadComplete, 
 
-            /// <summary>
-            ///   Indicates that the installation of updates has begun
-            /// </summary>
+            /// <summary>Indicates that the installation of updates has begun</summary>
             InstallStarted, 
 
-            /// <summary>
-            ///   Indicates that the installation of updates has completed
-            /// </summary>
+            /// <summary>Indicates that the installation of updates has completed</summary>
             InstallCompleted
         }
 
@@ -120,14 +95,10 @@ namespace SevenUpdate.Admin
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether Seven Update UI is currently connected.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
         private static bool IsClientConnected { get; set; }
 
-        /// <summary>
-        ///   Gets Seven Updates program settings
-        /// </summary>
+        /// <summary>Gets Seven Updates program settings</summary>
         private static Config Settings
         {
             get
@@ -145,15 +116,9 @@ namespace SevenUpdate.Admin
 
         #region Methods
 
-        /// <summary>
-        /// Reports that the download has completed and starts update installation if necessary
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports that the download has completed and starts update installation if necessary</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
@@ -175,15 +140,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Reports that the download progress has changed
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports that the download progress has changed</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             isInstalling = true;
@@ -196,12 +155,8 @@ namespace SevenUpdate.Admin
                 UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
-        /// <summary>
-        /// Starts the downloading of updates
-        /// </summary>
-        /// <param name="appUpdates">
-        /// The collection of applications and updates
-        /// </param>
+        /// <summary>Starts the downloading of updates</summary>
+        /// <param name="appUpdates">The collection of applications and updates</param>
         private static void DownloadUpdates(Collection<Sui> appUpdates)
         {
             try
@@ -215,15 +170,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Runs when there is an error searching for updates
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Runs when there is an error searching for updates</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.Type == ErrorType.FatalNetworkError)
@@ -232,15 +181,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Reports an error when the host faults
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.EventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports an error when the host faults</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
@@ -261,29 +204,17 @@ namespace SevenUpdate.Admin
             ShutdownApp();
         }
 
-        /// <summary>
-        /// Reports an error if an unknown message received
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.ServiceModel.UnknownMessageReceivedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports an error if an unknown message received</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ServiceModel.UnknownMessageReceivedEventArgs"/> instance containing the event data.</param>
         private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
         {
             Utilities.ReportError(e.Message.ToString(), Utilities.AllUserStore);
         }
 
-        /// <summary>
-        /// Reports the installation has completed
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="InstallCompletedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports the installation has completed</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             isInstalling = false;
@@ -296,15 +227,9 @@ namespace SevenUpdate.Admin
             ShutdownApp();
         }
 
-        /// <summary>
-        /// Reports when the installation progress has changed
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports when the installation progress has changed</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (WcfService.InstallProgressChanged != null && IsClientConnected)
@@ -315,12 +240,8 @@ namespace SevenUpdate.Admin
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
-        /// <summary>
-        /// The main execution method
-        /// </summary>
-        /// <param name="args">
-        /// The command line arguments
-        /// </param>
+        /// <summary>The main execution method</summary>
+        /// <param name="args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -443,15 +364,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Prevents the system from shutting down until the installation is safely stopped
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
@@ -476,15 +391,9 @@ namespace SevenUpdate.Admin
             e.Cancel = true;
         }
 
-        /// <summary>
-        /// Starts Seven Update UI
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.EventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Starts Seven Update UI</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -511,15 +420,9 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Runs when the search for updates has completed for an auto update
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SearchCompletedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Runs when the search for updates has completed for an auto update</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SearchCompletedEventArgs"/> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             isInstalling = false;
@@ -545,17 +448,13 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Occurs when Seven Update UI connects to the admin process
-        /// </summary>
+        /// <summary>Occurs when Seven Update UI connects to the admin process</summary>
         private static void ServiceClientConnected()
         {
             IsClientConnected = true;
         }
 
-        /// <summary>
-        /// Occurs when the Seven Update UI disconnected
-        /// </summary>
+        /// <summary>Occurs when the Seven Update UI disconnected</summary>
         private static void ServiceClientDisconnected()
         {
             IsClientConnected = false;
@@ -566,9 +465,7 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Shuts down the process and removes the icon of the notification bar
-        /// </summary>
+        /// <summary>Shuts down the process and removes the icon of the notification bar</summary>
         private static void ShutdownApp()
         {
             if (notifyIcon != null)
@@ -587,15 +484,9 @@ namespace SevenUpdate.Admin
             Environment.Exit(0);
         }
 
-        /// <summary>
-        /// Shutdowns the application
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Shutdowns the application</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void ShutdownApp(object sender, ElapsedEventArgs e)
         {
             if (isInstalling)
@@ -614,12 +505,8 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Updates the notify icon text
-        /// </summary>
-        /// <param name="text">
-        /// The string to set the <see cref="notifyIcon"/> text
-        /// </param>
+        /// <summary>Updates the notify icon text</summary>
+        /// <param name="text">The string to set the <see cref="notifyIcon"/> text</param>
         private static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
@@ -628,12 +515,8 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>
-        /// Updates the <see cref="notifyIcon"/> state
-        /// </summary>
-        /// <param name="filter">
-        /// The <see cref="NotifyType"/> to set the <see cref="notifyIcon"/> to.
-        /// </param>
+        /// <summary>Updates the <see cref="notifyIcon"/> state</summary>
+        /// <param name="filter">The <see cref="NotifyType"/> to set the <see cref="notifyIcon"/> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)

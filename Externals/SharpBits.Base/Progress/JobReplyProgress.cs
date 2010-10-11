@@ -14,28 +14,20 @@ namespace SharpBits.Base.Progress
 {
     using SharpBits.Base.Job;
 
-    /// <summary>
-    /// The <see cref="BitsJob"/> Progress
-    /// </summary>
+    /// <summary>The <see cref="BitsJob"/> Progress</summary>
     public class JobReplyProgress
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current project
-        /// </summary>
+        /// <summary>The current project</summary>
         private BGJobReplyProgress jobReplyProgress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JobReplyProgress"/> class.
-        /// </summary>
-        /// <param name="jobReplyProgress">
-        /// The job reply progress.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="JobReplyProgress"/> class.</summary>
+        /// <param name="jobReplyProgress">The job reply progress.</param>
         internal JobReplyProgress(BGJobReplyProgress jobReplyProgress)
         {
             this.jobReplyProgress = jobReplyProgress;
@@ -45,9 +37,7 @@ namespace SharpBits.Base.Progress
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the total number of bytes downloaded
-        /// </summary>
+        /// <summary>Gets the total number of bytes downloaded</summary>
         public ulong BytesTotal
         {
             get
@@ -56,9 +46,7 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        /// <summary>
-        ///   Gets the total number of bytes transferred
-        /// </summary>
+        /// <summary>Gets the total number of bytes transferred</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {

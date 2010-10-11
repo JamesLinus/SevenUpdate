@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,48 +21,36 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// The Shell link class
-    /// </summary>
+    /// <summary>The Shell link class</summary>
     [ComImport]
     [Guid("00021401-0000-0000-C000-000000000046")]
     public class ShellLink
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the shortcut command line arguments
-        /// </summary>
+        /// <summary>Gets or sets the shortcut command line arguments</summary>
         public extern string Arguments { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the shortcut description
-        /// </summary>
+        /// <summary>Gets or sets the shortcut description</summary>
         public extern string Description { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the path to the shortcut icon
-        /// </summary>
+        /// <summary>Gets or sets the path to the shortcut icon</summary>
         public extern string Icon { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the full path to the shortcut lnk file
-        /// </summary>
+        /// <summary>Gets or sets the full path to the shortcut lnk file</summary>
         public extern string Location { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the filename for the shortcut
-        /// </summary>
+        /// <summary>Gets or sets the filename for the shortcut</summary>
         public extern string Name { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the shortcut target
-        /// </summary>
+        /// <summary>Gets or sets the shortcut target</summary>
         public extern string Target { get; set; }
 
         #endregion

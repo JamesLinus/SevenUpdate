@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows.ValidationRules
 {
     using System.Globalization;
@@ -30,37 +31,23 @@ namespace System.Windows.ValidationRules
     using System.Windows.Controls;
     using System.Windows.Properties;
 
-    /// <summary>
-    /// Validates if the input is a filename
-    /// </summary>
+    /// <summary>Validates if the input is a filename</summary>
     public class FileNameInputRule : ValidationRule
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the filename is required to pass validation
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if the filename is required; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether the filename is required to pass validation</summary>
+        /// <value><see langword = "true" /> if the filename is required; otherwise, <see langword = "false" />.</value>
         public bool IsRequired { get; set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// When overridden in a derived class, performs validation checks on a value.
-        /// </summary>
-        /// <param name="value">
-        /// The value from the binding target to check.
-        /// </param>
-        /// <param name="cultureInfo">
-        /// The culture to use in this rule.
-        /// </param>
-        /// <returns>
-        /// A <see cref="T:System.Windows.Controls.ValidationResult"/> object.
-        /// </returns>
+        /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
+        /// <param name="value">The value from the binding target to check.</param>
+        /// <param name="cultureInfo">The culture to use in this rule.</param>
+        /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult"/> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;

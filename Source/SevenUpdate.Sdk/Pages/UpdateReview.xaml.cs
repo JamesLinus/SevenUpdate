@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -34,16 +35,12 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    /// <summary>
-    /// Interaction logic for UpdateRegistry.xaml
-    /// </summary>
+    /// <summary>Interaction logic for UpdateRegistry.xaml</summary>
     public sealed partial class UpdateReview
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "UpdateReview" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateReview" /> class.</summary>
         public UpdateReview()
         {
             this.InitializeComponent();
@@ -57,12 +54,8 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Saves the project.
-        /// </summary>
-        /// <param name="export">
-        /// <see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise
-        /// </param>
+        /// <summary>Saves the project.</summary>
+        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
         private static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -151,43 +144,25 @@ namespace SevenUpdate.Sdk.Pages
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// Saves and exports the Project
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Saves and exports the Project</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
             SaveProject(true);
         }
 
-        /// <summary>
-        /// Saves the Project
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Saves the Project</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
             SaveProject();
         }
 
-        /// <summary>
-        /// Updates the UI based on whether Aero Glass is enabled
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));

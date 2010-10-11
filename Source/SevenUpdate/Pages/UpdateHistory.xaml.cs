@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Pages
 {
     using System.Collections.ObjectModel;
@@ -33,30 +34,22 @@ namespace SevenUpdate.Pages
 
     using SevenUpdate.Windows;
 
-    /// <summary>
-    /// Interaction logic for UpdateHistory.xaml
-    /// </summary>
+    /// <summary>Interaction logic for UpdateHistory.xaml</summary>
     public partial class UpdateHistory
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The location of the update history file
-        /// </summary>
+        /// <summary>The location of the update history file</summary>
         private static readonly string HistoryFile = Utilities.AllUserStore + @"History.suh";
 
-        /// <summary>
-        ///   Gets or sets a collection of SUH items
-        /// </summary>
+        /// <summary>Gets or sets a collection of SUH items</summary>
         private ObservableCollection<Suh> updateHistory;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "UpdateHistory" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateHistory" /> class.</summary>
         public UpdateHistory()
         {
             this.InitializeComponent();
@@ -66,15 +59,9 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Gets the update history and loads it to the listView
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Gets the update history and loads it to the listView</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHistory(object sender, RoutedEventArgs e)
         {
             this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(HistoryFile);
@@ -87,15 +74,9 @@ namespace SevenUpdate.Pages
             this.updateHistory.CollectionChanged += this.RefreshDataView;
         }
 
-        /// <summary>
-        /// Updates the <see cref="CollectionView"/> when the collection changes
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the <see cref="CollectionView"/> when the collection changes</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -108,15 +89,9 @@ namespace SevenUpdate.Pages
             dataView.Refresh();
         }
 
-        /// <summary>
-        /// Shows the selected update details
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Shows the selected update details</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
@@ -128,15 +103,9 @@ namespace SevenUpdate.Pages
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
 
-        /// <summary>
-        /// Shows the selected update details
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Shows the selected update details</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();

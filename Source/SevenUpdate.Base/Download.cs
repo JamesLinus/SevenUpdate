@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
@@ -32,59 +33,41 @@ namespace SevenUpdate
 
     using SharpBits.Base;
 
-    /// <summary>
-    /// A class containing methods to download updates
-    /// </summary>
+    /// <summary>A class containing methods to download updates</summary>
     public static class Download
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Gets a value indicating whether an error has occurred
-        /// </summary>
+        /// <summary>Gets a value indicating whether an error has occurred</summary>
         private static bool errorOccurred;
 
-        /// <summary>
-        ///   Manager for Background Intelligent Transfer Service
-        /// </summary>
+        /// <summary>Manager for Background Intelligent Transfer Service</summary>
         private static BitsManager manager;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when the download completed.
-        /// </summary>
+        /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
 
-        /// <summary>
-        ///   Occurs when the download progress changed
-        /// </summary>
+        /// <summary>Occurs when the download progress changed</summary>
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether Seven update is currently downloading updates
-        /// </summary>
+        /// <summary>Gets a value indicating whether Seven update is currently downloading updates</summary>
         public static bool IsDownloading { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Downloads the updates using BITS
-        /// </summary>
-        /// <param name="appUpdates">
-        /// The application updates to download
-        /// </param>
-        /// <param name="isPriority">
-        /// if set to <see langword="true"/> the updates will download with priority
-        /// </param>
+        /// <summary>Downloads the updates using BITS</summary>
+        /// <param name="appUpdates">The application updates to download</param>
+        /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
         {
             if (appUpdates == null)
@@ -254,15 +237,9 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// Reports when a download completes
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports when a download completes</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Utilities.AllUserStore + "abort.lock"))
@@ -307,15 +284,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Reports a download error
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports a download error</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -357,15 +328,9 @@ namespace SevenUpdate
             return;
         }
 
-        /// <summary>
-        /// Reports the download progress
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Reports the download progress</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Utilities.AllUserStore + "abort.lock"))

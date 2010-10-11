@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,27 +21,21 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
 
-    /// <summary>
-    /// Provides event data for the InstallCompleted event
-    /// </summary>
+    /// <summary>Provides event data for the InstallCompleted event</summary>
     public sealed class InstallCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InstallCompletedEventArgs"/> class.
-        /// </summary>
-        /// <param name="updatesInstalled">
-        /// the number of updates installed
-        /// </param>
-        /// <param name="updatesFailed">
-        /// the number of updates that failed
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs"/> class.</summary>
+        /// <param name="updatesInstalled">the number of updates installed</param>
+        /// <param name="updatesFailed">the number of updates that failed</param>
         public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
         {
             this.UpdatesInstalled = updatesInstalled;
@@ -53,15 +46,11 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the number of updates that failed.
-        /// </summary>
+        /// <summary>Gets the number of updates that failed.</summary>
         /// <value>The updates failed.</value>
         public int UpdatesFailed { get; private set; }
 
-        /// <summary>
-        ///   Gets the number of updates that have been installed
-        /// </summary>
+        /// <summary>Gets the number of updates that have been installed</summary>
         /// <value>The updates installed.</value>
         public int UpdatesInstalled { get; private set; }
 

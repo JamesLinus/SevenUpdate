@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,33 +21,23 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
 
-    /// <summary>
-    /// Provides event data for the InstallProgressChanged event
-    /// </summary>
+    /// <summary>Provides event data for the InstallProgressChanged event</summary>
     public sealed class InstallProgressChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="InstallProgressChangedEventArgs"/> class.
-        /// </summary>
-        /// <param name="updateName">
-        /// the name of the update currently being installed
-        /// </param>
-        /// <param name="progress">
-        /// the progress percentage of the installation
-        /// </param>
-        /// <param name="updatesComplete">
-        /// the number of updates that have been installed so far
-        /// </param>
-        /// <param name="totalUpdates">
-        /// the total number of updates to install
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs"/> class.</summary>
+        /// <param name="updateName">the name of the update currently being installed</param>
+        /// <param name="progress">the progress percentage of the installation</param>
+        /// <param name="updatesComplete">the number of updates that have been installed so far</param>
+        /// <param name="totalUpdates">the total number of updates to install</param>
         public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
             this.CurrentProgress = progress;
@@ -61,27 +50,19 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the progress percentage of the installation
-        /// </summary>
+        /// <summary>Gets the progress percentage of the installation</summary>
         /// <value>The current progress.</value>
         public int CurrentProgress { get; private set; }
 
-        /// <summary>
-        ///   Gets the total number of updates to install
-        /// </summary>
+        /// <summary>Gets the total number of updates to install</summary>
         /// <value>The total updates.</value>
         public int TotalUpdates { get; private set; }
 
-        /// <summary>
-        ///   Gets the name of the current update being installed
-        /// </summary>
+        /// <summary>Gets the name of the current update being installed</summary>
         /// <value>The name of the update.</value>
         public string UpdateName { get; private set; }
 
-        /// <summary>
-        ///   Gets the number of updates that have been installed so far
-        /// </summary>
+        /// <summary>Gets the number of updates that have been installed so far</summary>
         /// <value>The updates complete.</value>
         public int UpdatesComplete { get; private set; }
 

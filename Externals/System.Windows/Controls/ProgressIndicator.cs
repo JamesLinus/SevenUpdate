@@ -8,8 +8,7 @@
 // </copyright>
 // <author>Michael Detras</author>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -23,7 +22,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows.Controls
 {
     using System.Linq;
@@ -32,82 +33,56 @@ namespace System.Windows.Controls
     using System.Windows.Media.Animation;
     using System.Windows.Threading;
 
-    /// <summary>
-    /// Displays a progress circle
-    /// </summary>
+    /// <summary>Displays a progress circle</summary>
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public sealed class ProgressIndicator : RangeBase
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The storyboard
-        /// </summary>
+        /// <summary>The storyboard</summary>
         public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register(
             "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   The text to display when the progress is indeterminate
-        /// </summary>
+        /// <summary>The text to display when the progress is indeterminate</summary>
         public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   Indicates if the progress is indeterminate
-        /// </summary>
+        /// <summary>Indicates if the progress is indeterminate</summary>
         public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   Indicates if the progress is running
-        /// </summary>
+        /// <summary>Indicates if the progress is running</summary>
         public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register(
             "IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
-        /// <summary>
-        ///   The element name
-        /// </summary>
+        /// <summary>The element name</summary>
         private const string ElementCanvas = "PART_Canvas";
 
-        /// <summary>
-        ///   The dispatch timer
-        /// </summary>
+        /// <summary>The dispatch timer</summary>
         private readonly DispatcherTimer dispatcherTimer;
 
-        /// <summary>
-        ///   The canvas
-        /// </summary>
+        /// <summary>The canvas</summary>
         private Canvas canvas;
 
-        /// <summary>
-        ///   The canvas elements
-        /// </summary>
+        /// <summary>The canvas elements</summary>
         private Array canvasElements;
 
-        /// <summary>
-        ///   Indicates if the progress runs clockwise
-        /// </summary>
+        /// <summary>Indicates if the progress runs clockwise</summary>
         private bool clockwise;
 
-        /// <summary>
-        ///   The index for the progress
-        /// </summary>
+        /// <summary>The index for the progress</summary>
         private int index;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes static members of the <see cref = "ProgressIndicator" /> class.
-        /// </summary>
+        /// <summary>Initializes static members of the <see cref = "ProgressIndicator" /> class.</summary>
         static ProgressIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(typeof(ProgressIndicator)));
             MaximumProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(100.0));
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "ProgressIndicator" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "ProgressIndicator" /> class.</summary>
         public ProgressIndicator()
         {
             if (this.Resources.Count != 0)
@@ -131,9 +106,7 @@ namespace System.Windows.Controls
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the element storyboard.
-        /// </summary>
+        /// <summary>Gets or sets the element storyboard.</summary>
         /// <value>The element storyboard.</value>
         public Storyboard ElementStoryboard
         {
@@ -148,9 +121,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the indeterminate text.
-        /// </summary>
+        /// <summary>Gets or sets the indeterminate text.</summary>
         /// <value>The indeterminate text.</value>
         public string IndeterminateText
         {
@@ -165,12 +136,8 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether this instance is indeterminate.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance is indeterminate; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether this instance is indeterminate.</summary>
+        /// <value><see langword = "true" /> if this instance is indeterminate; otherwise, <see langword = "false" />.</value>
         public bool IsIndeterminate
         {
             get
@@ -184,12 +151,8 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether this instance is running.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance is running; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether this instance is running.</summary>
+        /// <value><see langword = "true" /> if this instance is running; otherwise, <see langword = "false" />.</value>
         public bool IsRunning
         {
             get
@@ -207,9 +170,7 @@ namespace System.Windows.Controls
 
         #region Public Methods
 
-        /// <summary>
-        /// When overridden in a derived class, is invoked whenever application code or internal processes call <see cref="M:System.Windows.FrameworkElement.ApplyTemplate"/>.
-        /// </summary>
+        /// <summary>When overridden in a derived class, is invoked whenever application code or internal processes call <see cref="M:System.Windows.FrameworkElement.ApplyTemplate"/>.</summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -251,15 +212,9 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>
-        /// Stops or starts the progress indicator based on the <see cref="IsRunning"/> property
-        /// </summary>
-        /// <param name="d">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Stops or starts the progress indicator based on the <see cref="IsRunning"/> property</summary>
+        /// <param name="d">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var progressIndicator = (ProgressIndicator)d;
@@ -274,15 +229,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// Animates the progress wheel
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.EventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Animates the progress wheel</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Animate(object sender, EventArgs e)
         {
             if (this.canvasElements == null || this.ElementStoryboard == null)
@@ -299,21 +248,15 @@ namespace System.Windows.Controls
             this.index = (this.index + 1) % this.canvasElements.Length;
         }
 
-        /// <summary>
-        /// Starts this instance.
-        /// </summary>
+        /// <summary>Starts this instance.</summary>
         private void Start()
         {
             this.dispatcherTimer.Tick += this.Animate;
             this.dispatcherTimer.Start();
         }
 
-        /// <summary>
-        /// Starts the storyboard.
-        /// </summary>
-        /// <param name="element">
-        /// The element.
-        /// </param>
+        /// <summary>Starts the storyboard.</summary>
+        /// <param name="element">The element.</param>
         private void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());
@@ -334,9 +277,7 @@ namespace System.Windows.Controls
             storyboard.Begin(element);
         }
 
-        /// <summary>
-        /// Stops this instance.
-        /// </summary>
+        /// <summary>Stops this instance.</summary>
         private void Stop()
         {
             this.dispatcherTimer.Stop();

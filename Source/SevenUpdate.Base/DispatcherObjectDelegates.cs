@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,48 +21,34 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
     using System.Windows.Threading;
 
-    /// <summary>
-    /// Extension Methods for Dispatcher.BeginInvoke
-    /// </summary>
+    /// <summary>Extension Methods for Dispatcher.BeginInvoke</summary>
     public static class DispatcherObjectDelegates
     {
         #region Public Methods
 
-        /// <summary>
-        /// Invokes a Method to run on the UI thread
-        /// </summary>
-        /// <param name="dispatcher">
-        /// the dispatcher object
-        /// </param>
-        /// <param name="method">
-        /// the method to invoke
-        /// </param>
+        /// <summary>Invokes a Method to run on the UI thread</summary>
+        /// <param name="dispatcher">the dispatcher object</param>
+        /// <param name="method">the method to invoke</param>
         public static void BeginInvoke(this Dispatcher dispatcher, Action method)
         {
             dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
         }
 
-        /// <summary>
-        /// Invokes a Method to run on the UI thread
-        /// </summary>
+        /// <summary>Invokes a Method to run on the UI thread</summary>
         /// <typeparam name="T">
         /// the parameter type
         /// </typeparam>
-        /// <param name="dispatcher">
-        /// the dispatcher object
-        /// </param>
-        /// <param name="method">
-        /// the method to invoke
-        /// </param>
-        /// <param name="parameter">
-        /// the parameter to pass to the method
-        /// </param>
+        /// <param name="dispatcher">the dispatcher object</param>
+        /// <param name="method">the method to invoke</param>
+        /// <param name="parameter">the parameter to pass to the method</param>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, T parameter)
         {
             dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter);

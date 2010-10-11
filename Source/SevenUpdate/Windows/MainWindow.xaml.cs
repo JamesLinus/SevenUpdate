@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Windows
 {
     using System;
@@ -33,18 +34,14 @@ namespace SevenUpdate.Windows
 
     using SevenUpdate.Properties;
 
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// <summary>Interaction logic for MainWindow.xaml</summary>
     [ContentProperty]
     [TemplatePart(Name = @"PART_NavWinCP", Type = typeof(ContentPresenter))]
     public sealed partial class MainWindow
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "MainWindow" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "MainWindow" /> class.</summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -56,30 +53,18 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
-        /// <summary>
-        /// Sets the Height and Width of the window from the settings
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Sets the Height and Width of the window from the settings</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.windowHeight;
             this.Width = Settings.Default.windowWidth;
         }
 
-        /// <summary>
-        /// When Seven Update is closing, save the Window Width and Height in the settings
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>When Seven Update is closing, save the Window Width and Height in the settings</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = this.Height;

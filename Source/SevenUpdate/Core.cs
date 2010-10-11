@@ -7,21 +7,23 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
+//  This file is part of Seven Update.
+//
+//    Seven Update is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//    Seven Update is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
 // ***********************************************************************
-// This file is part of Seven Update.
-// Seven Update is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-
-// Seven Update is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-
-// You should have received a copy of the GNU General Public License
-// along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
 namespace SevenUpdate
 {
     using System;
@@ -36,49 +38,35 @@ namespace SevenUpdate
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;
 
-    /// <summary>
-    /// Contains properties and methods that are essential
-    /// </summary>
+    /// <summary>Contains properties and methods that are essential</summary>
     internal sealed class Core : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The static instance of the Core class
-        /// </summary>
+        /// <summary>The static instance of the Core class</summary>
         private static Core instance;
 
-        /// <summary>
-        ///   Indicates if the current user logged in is an admin
-        /// </summary>
+        /// <summary>Indicates if the current user logged in is an admin</summary>
         private static bool isAdmin;
 
-        /// <summary>
-        ///   The current action Seven Update is performing
-        /// </summary>
+        /// <summary>The current action Seven Update is performing</summary>
         private static UpdateAction updateAction;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property value changes.
-        /// </summary>
+        /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        ///   Occurs when the user cancels their update selection
-        /// </summary>
+        /// <summary>Occurs when the user cancels their update selection</summary>
         internal static event EventHandler UpdateActionChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the update configuration settings
-        /// </summary>
+        /// <summary>Gets the update configuration settings</summary>
         public static Config Settings
         {
             get
@@ -92,12 +80,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the current user enabled admin access
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance is admin; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether the current user enabled admin access</summary>
+        /// <value><see langword = "true" /> if this instance is admin; otherwise, <see langword = "false" />.</value>
         public bool IsAdmin
         {
             get
@@ -112,9 +96,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the current action relating to updates
-        /// </summary>
+        /// <summary>Gets or sets the current action relating to updates</summary>
         public UpdateAction UpdateAction
         {
             get
@@ -133,15 +115,11 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a collection of applications to update
-        /// </summary>
+        /// <summary>Gets or sets a collection of applications to update</summary>
         /// <value>The collection of Sui</value>
         internal static Collection<Sui> Applications { get; set; }
 
-        /// <summary>
-        ///   Gets the static instance of Core
-        /// </summary>
+        /// <summary>Gets the static instance of Core</summary>
         internal static Core Instance
         {
             get
@@ -150,14 +128,10 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check</summary>
         internal static bool IsReconnect { get; set; }
 
-        /// <summary>
-        ///   Gets a collection of software that Seven Update can check for updates
-        /// </summary>
+        /// <summary>Gets a collection of software that Seven Update can check for updates</summary>
         private static IEnumerable<Sua> AppsToUpdate
         {
             get
@@ -170,12 +144,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// Checks for updates
-        /// </summary>
-        /// <param name="auto">
-        /// <c>true</c> if it's called because of an auto update check, otherwise <c>false</c>
-        /// </param>
+        /// <summary>Checks for updates</summary>
+        /// <param name="auto"><see langword = "true" /> if it's called because of an auto update check, otherwise <see langword = "false" /></param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -191,9 +161,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Checks for updates
-        /// </summary>
+        /// <summary>Checks for updates</summary>
         internal static void CheckForUpdates()
         {
             if (!Install.IsInstalling && !Download.IsDownloading && !Search.IsSearching && !IsReconnect)
@@ -226,47 +194,23 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Gets the total size of a single update
-        /// </summary>
-        /// <param name="files">
-        /// the collection of files of an update
-        /// </param>
-        /// <returns>
-        /// a ulong value of the size of the update
-        /// </returns>
+        /// <summary>Gets the total size of a single update</summary>
+        /// <param name="files">the collection of files of an update</param>
+        /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="icon">
-        /// The icon to display
-        /// </param>
-        /// <param name="standardButtons">
-        /// The standard buttons to use (with or without the custom default button text)
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <param name="footerText">
-        /// Text to display as a footer message
-        /// </param>
-        /// <param name="defaultButtonText">
-        /// Text to display on the button
-        /// </param>
-        /// <param name="displayShieldOnButton">
-        /// Indicates if a UAC shield is to be displayed on the defaultButton
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The icon to display</param>
+        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name="footerText">Text to display as a footer message</param>
+        /// <param name="defaultButtonText">Text to display on the button</param>
+        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(
             string instructionText, 
             TaskDialogStandardIcon icon, 
@@ -352,29 +296,17 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="icon">
-        /// The icon to display
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The icon to display</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="name">
-        /// The name of the property that changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

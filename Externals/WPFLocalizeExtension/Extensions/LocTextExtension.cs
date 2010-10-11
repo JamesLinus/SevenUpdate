@@ -18,47 +18,33 @@ namespace WPFLocalizeExtension.Extensions
     using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
-    /// <summary>
-    /// <c>BaseLocalizeExtension</c> for string objects.
-    /// </summary>
+    /// <summary><c>BaseLocalizeExtension</c> for string objects.</summary>
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextExtension : BaseLocalizeExtension<string>
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Holds the local format segment array
-        /// </summary>
+        /// <summary>Holds the local format segment array</summary>
         private string[] formatSegments;
 
-        /// <summary>
-        ///   Holds the local prefix value
-        /// </summary>
+        /// <summary>Holds the local prefix value</summary>
         private string prefix;
 
-        /// <summary>
-        ///   Holds the local suffix value
-        /// </summary>
+        /// <summary>Holds the local suffix value</summary>
         private string suffix;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocTextExtension"/> class.
-        /// </summary>
-        /// <param name="key">
-        /// The resource identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="LocTextExtension"/> class.</summary>
+        /// <param name="key">The resource identifier.</param>
         public LocTextExtension(string key) : base(key)
         {
             this.InitializeLocText();
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "LocTextExtension" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocTextExtension" /> class.</summary>
         protected LocTextExtension()
         {
             this.InitializeLocText();
@@ -74,14 +60,10 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected enum TextAppendType
         {
-            /// <summary>
-            ///   The return value is used as prefix
-            /// </summary>
+            /// <summary>The return value is used as prefix</summary>
             Prefix, 
 
-            /// <summary>
-            ///   The return value is used as suffix
-            /// </summary>
+            /// <summary>The return value is used as suffix</summary>
             Suffix
         }
 
@@ -189,9 +171,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a prefix for the localized text
-        /// </summary>
+        /// <summary>Gets or sets a prefix for the localized text</summary>
         public string Prefix
         {
             get
@@ -208,9 +188,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a suffix for the localized text
-        /// </summary>
+        /// <summary>Gets or sets a suffix for the localized text</summary>
         public string Suffix
         {
             get
@@ -231,21 +209,11 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>
-        /// Provides the Value for the first Binding as <see cref="System.String"/>
-        /// </summary>
-        /// <param name="serviceProvider">
-        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
-        /// </param>
-        /// <returns>
-        /// The founded item from the .resx directory or <see langword="null"/> if not founded
-        /// </returns>
-        /// <exception cref="System.InvalidOperationException">
-        /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>
-        /// </exception>
-        /// <exception cref="System.NotSupportedException">
-        /// thrown if the founded object is not type of <see cref="System.String"/>
-        /// </exception>
+        /// <summary>Provides the Value for the first Binding as <see cref="System.String"/></summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of <see cref="System.String"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -273,15 +241,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>
-        /// This method returns the finished formatted text
-        /// </summary>
-        /// <param name="input">
-        /// If the passed string not <see langword="null"/>, it will be used, otherwise a fresh localized text will be loaded.
-        /// </param>
-        /// <returns>
-        /// Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX]
-        /// </returns>
+        /// <summary>This method returns the finished formatted text</summary>
+        /// <param name="input">If the passed string not <see langword="null"/>, it will be used, otherwise a fresh localized text will be loaded.</param>
+        /// <returns>Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX]</returns>
         protected override object FormatOutput(object input)
         {
             if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
@@ -332,20 +294,14 @@ namespace WPFLocalizeExtension.Extensions
         /// This method formats the localized text.
         ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
         /// </summary>
-        /// <param name="target">
-        /// The text to format.
-        /// </param>
-        /// <returns>
-        /// Returns the formated text or string.empty, if the target text was <see langword="null"/>.
-        /// </returns>
+        /// <param name="target">The text to format.</param>
+        /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
         protected virtual string FormatText(string target)
         {
             return target ?? string.Empty;
         }
 
-        /// <summary>
-        /// see <c>BaseLocalizeExtension</c>
-        /// </summary>
+        /// <summary>see <c>BaseLocalizeExtension</c></summary>
         protected override void HandleNewValue()
         {
             this.SetNewValue(this.FormatOutput(null));
@@ -355,12 +311,8 @@ namespace WPFLocalizeExtension.Extensions
         /// Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType"/>.
         ///   If the prefix or suffix is <see langword="null"/>, it will be returned a string.empty.
         /// </summary>
-        /// <param name="at">
-        /// The <see cref="TextAppendType"/> defines the format of the return value
-        /// </param>
-        /// <returns>
-        /// Returns the formated prefix or suffix
-        /// </returns>
+        /// <param name="at">The <see cref="TextAppendType"/> defines the format of the return value</param>
+        /// <returns>Returns the formated prefix or suffix</returns>
         private string GetAppendText(TextAppendType at)
         {
             // define a return value
@@ -381,9 +333,7 @@ namespace WPFLocalizeExtension.Extensions
             return retVal;
         }
 
-        /// <summary>
-        /// Initializes the <see cref="LocTextExtension"/> extension.
-        /// </summary>
+        /// <summary>Initializes the <see cref="LocTextExtension"/> extension.</summary>
         private void InitializeLocText()
         {
             this.formatSegments = new string[5];

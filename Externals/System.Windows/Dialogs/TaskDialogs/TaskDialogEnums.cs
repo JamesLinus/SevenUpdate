@@ -12,24 +12,16 @@ namespace System.Windows.Dialogs.TaskDialogs
 {
     #region TaskDialogExpandedDetailsLocation
 
-    /// <summary>
-    /// Specifies the options for expand/collapse sections in dialogs.
-    /// </summary>
+    /// <summary>Specifies the options for expand/collapse sections in dialogs.</summary>
     public enum TaskDialogExpandedDetailsLocation
     {
-        /// <summary>
-        ///   Do not show the content.
-        /// </summary>
+        /// <summary>Do not show the content.</summary>
         Hide, 
 
-        /// <summary>
-        ///   Show the content.
-        /// </summary>
+        /// <summary>Show the content.</summary>
         ExpandContent, 
 
-        /// <summary>
-        ///   Expand the footer content.
-        /// </summary>
+        /// <summary>Expand the footer content.</summary>
         ExpandFooter
     }
 
@@ -37,29 +29,19 @@ namespace System.Windows.Dialogs.TaskDialogs
 
     #region TaskDialogProgressBarState
 
-    /// <summary>
-    /// Sets the state of a task dialog progress bar.
-    /// </summary>
+    /// <summary>Sets the state of a task dialog progress bar.</summary>
     public enum TaskDialogProgressBarState
     {
-        /// <summary>
-        ///   Normal state.
-        /// </summary>
+        /// <summary>Normal state.</summary>
         Normal = TaskDialogNativeMethods.ProgressBarStatus.Normal, 
 
-        /// <summary>
-        ///   An error occurred.
-        /// </summary>
+        /// <summary>An error occurred.</summary>
         Error = TaskDialogNativeMethods.ProgressBarStatus.Error, 
 
-        /// <summary>
-        ///   The progress is paused.
-        /// </summary>
+        /// <summary>The progress is paused.</summary>
         Paused = TaskDialogNativeMethods.ProgressBarStatus.Paused, 
 
-        /// <summary>
-        ///   Displays marquee (indeterminate) style progress
-        /// </summary>
+        /// <summary>Displays marquee (indeterminate) style progress</summary>
         Marquee, 
     }
 
@@ -67,44 +49,28 @@ namespace System.Windows.Dialogs.TaskDialogs
 
     #region TaskDialogResult
 
-    /// <summary>
-    /// Indicates the various buttons and options clicked by the user on the task dialog.
-    /// </summary>
+    /// <summary>Indicates the various buttons and options clicked by the user on the task dialog.</summary>
     public enum TaskDialogResult
     {
-        /// <summary>
-        ///   "OK" button was clicked
-        /// </summary>
+        /// <summary>"OK" button was clicked</summary>
         Ok = 0x0001, 
 
-        /// <summary>
-        ///   "Yes" button was clicked
-        /// </summary>
+        /// <summary>"Yes" button was clicked</summary>
         Yes = 0x0002, 
 
-        /// <summary>
-        ///   "No" button was clicked
-        /// </summary>
+        /// <summary>"No" button was clicked</summary>
         No = 0x0004, 
 
-        /// <summary>
-        ///   "Cancel" button was clicked
-        /// </summary>
+        /// <summary>"Cancel" button was clicked</summary>
         Cancel = 0x0008, 
 
-        /// <summary>
-        ///   "Retry" button was clicked
-        /// </summary>
+        /// <summary>"Retry" button was clicked</summary>
         Retry = 0x0010, 
 
-        /// <summary>
-        ///   "Close" button was clicked
-        /// </summary>
+        /// <summary>"Close" button was clicked</summary>
         Close = 0x0020, 
 
-        /// <summary>
-        ///   A custom button was clicked.
-        /// </summary>
+        /// <summary>A custom button was clicked.</summary>
         CustomButtonClicked = 0x0100, 
     }
 
@@ -112,19 +78,13 @@ namespace System.Windows.Dialogs.TaskDialogs
 
     #region TaskDialogStartupLocation
 
-    /// <summary>
-    /// Specifies the initial display location for a task dialog.
-    /// </summary>
+    /// <summary>Specifies the initial display location for a task dialog.</summary>
     public enum TaskDialogStartupLocation
     {
-        /// <summary>
-        ///   The window placed in the center of the screen.
-        /// </summary>
+        /// <summary>The window placed in the center of the screen.</summary>
         CenterScreen, 
 
-        /// <summary>
-        ///   The window centered relative to the window that launched the dialog.
-        /// </summary>
+        /// <summary>The window centered relative to the window that launched the dialog.</summary>
         CenterOwner
     }
 
@@ -139,39 +99,25 @@ namespace System.Windows.Dialogs.TaskDialogs
     [Flags]
     public enum TaskDialogStandardButtons
     {
-        /// <summary>
-        ///   No buttons on the dialog.
-        /// </summary>
+        /// <summary>No buttons on the dialog.</summary>
         None = 0x0000, 
 
-        /// <summary>
-        ///   An "OK" button.
-        /// </summary>
+        /// <summary>An "OK" button.</summary>
         Ok = 0x0001, 
 
-        /// <summary>
-        ///   A "Yes" button.
-        /// </summary>
+        /// <summary>A "Yes" button.</summary>
         Yes = 0x0002, 
 
-        /// <summary>
-        ///   A "No" button.
-        /// </summary>
+        /// <summary>A "No" button.</summary>
         No = 0x0004, 
 
-        /// <summary>
-        ///   A "Cancel" button.
-        /// </summary>
+        /// <summary>A "Cancel" button.</summary>
         Cancel = 0x0008, 
 
-        /// <summary>
-        ///   A "Retry" button.
-        /// </summary>
+        /// <summary>A "Retry" button.</summary>
         Retry = 0x0010, 
 
-        /// <summary>
-        ///   A "Close" button.
-        /// </summary>
+        /// <summary>A "Close" button.</summary>
         Close = 0x0020
     }
 
@@ -179,59 +125,37 @@ namespace System.Windows.Dialogs.TaskDialogs
 
     #region TaskDialogStandardIcon
 
-    /// <summary>
-    /// Specifies the icon displayed in a task dialog.
-    /// </summary>
+    /// <summary>Specifies the icon displayed in a task dialog.</summary>
     public enum TaskDialogStandardIcon
     {
-        /// <summary>
-        ///   Displays no icons (default).
-        /// </summary>
+        /// <summary>Displays no icons (default).</summary>
         None = 0, 
 
-        /// <summary>
-        ///   Displays the warning icon.
-        /// </summary>
+        /// <summary>Displays the warning icon.</summary>
         Warning = 65535, 
 
-        /// <summary>
-        ///   Displays the error icon.
-        /// </summary>
+        /// <summary>Displays the error icon.</summary>
         Error = 65534, 
 
-        /// <summary>
-        ///   Displays the Information icon.
-        /// </summary>
+        /// <summary>Displays the Information icon.</summary>
         Information = 65533, 
 
-        /// <summary>
-        ///   Displays the User Account Control shield.
-        /// </summary>
+        /// <summary>Displays the User Account Control shield.</summary>
         Shield = UInt16.MaxValue - 3, 
 
-        /// <summary>
-        ///   Displays the User Account Control shield.
-        /// </summary>
+        /// <summary>Displays the User Account Control shield.</summary>
         ShieldBlue = UInt16.MaxValue - 4, 
 
-        /// <summary>
-        ///   Displays the User Account Control shield with gray background.
-        /// </summary>
+        /// <summary>Displays the User Account Control shield with gray background.</summary>
         ShieldGray = UInt16.MaxValue - 8, 
 
-        /// <summary>
-        ///   Displays a warning shield with yellow background.
-        /// </summary>
+        /// <summary>Displays a warning shield with yellow background.</summary>
         SecurityWarning = UInt16.MaxValue - 5, 
 
-        /// <summary>
-        ///   Displays an error shield with red background.
-        /// </summary>
+        /// <summary>Displays an error shield with red background.</summary>
         SecurityError = UInt16.MaxValue - 6, 
 
-        /// <summary>
-        ///   Displays a success shield with green background.
-        /// </summary>
+        /// <summary>Displays a success shield with green background.</summary>
         ShieldGreen = UInt16.MaxValue - 7, 
     }
 

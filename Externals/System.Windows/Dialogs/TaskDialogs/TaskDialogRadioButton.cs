@@ -18,19 +18,13 @@ namespace System.Windows.Dialogs.TaskDialogs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogRadioButton" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "TaskDialogRadioButton" /> class.</summary>
         protected TaskDialogRadioButton()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TaskDialogRadioButton"/> class.
-        /// </summary>
-        /// <param name="name">
-        /// The name for this control.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogRadioButton"/> class.</summary>
+        /// <param name="name">The name for this control.</param>
         /// <param name="text">
         /// The value for this controls
         ///   <see cref="TaskDialogButtonBase.Text"/> property.

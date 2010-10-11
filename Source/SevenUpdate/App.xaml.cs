@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
@@ -39,36 +40,24 @@ namespace SevenUpdate
     using SevenUpdate.Properties;
     using SevenUpdate.Windows;
 
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+    /// <summary>Interaction logic for App.xaml</summary>
     public sealed partial class App
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the navigation service for the <see cref = "MainWindow" />
-        /// </summary>
+        /// <summary>Gets or sets the navigation service for the <see cref = "MainWindow" /></summary>
         internal static NavigationService NavService { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the application TaskBarItemInfo
-        /// </summary>
+        /// <summary>Gets or sets the application TaskBarItemInfo</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.
-        /// </param>
-        /// <param name="isFirstInstance">
-        /// If set to <c>true</c> the current instance is the first application instance.
-        /// </param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             base.OnStartup(e, isFirstInstance);
@@ -80,12 +69,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <param name="e">The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -113,12 +98,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Gets the application ready for startup
-        /// </summary>
-        /// <param name="args">
-        /// The command line arguments passed to the application
-        /// </param>
+        /// <summary>Gets the application ready for startup</summary>
+        /// <param name="args">The command line arguments passed to the application</param>
         private static void Init(IList<string> args)
         {
             Utilities.Locale = Settings.Default.locale;
@@ -160,9 +141,7 @@ namespace SevenUpdate
             Core.IsReconnect = true;
         }
 
-        /// <summary>
-        /// Sets the application jump list
-        /// </summary>
+        /// <summary>Sets the application jump list</summary>
         private static void SetJumpList()
         {
             var jumpList = new JumpList();

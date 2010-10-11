@@ -17,41 +17,27 @@ namespace SharpBits.Base.File
 
     using SharpBits.Base.Job;
 
-    /// <summary>
-    /// Collection of <see cref="BitsFile"/>
-    /// </summary>
+    /// <summary>Collection of <see cref="BitsFile"/></summary>
     public class BitsFilesCollection : List<BitsFile>, IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current job in the collection
-        /// </summary>
+        /// <summary>The current job in the collection</summary>
         private readonly BitsJob job;
 
-        /// <summary>
-        ///   Indicates of the files has been disposed
-        /// </summary>
+        /// <summary>Indicates of the files has been disposed</summary>
         private bool disposed;
 
-        /// <summary>
-        ///   Gets a list of the <see cref = "BitsFile" />
-        /// </summary>
+        /// <summary>Gets a list of the <see cref = "BitsFile" /></summary>
         private IEnumBackgroundCopyFiles fileList;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitsFilesCollection"/> class.
-        /// </summary>
-        /// <param name="job">
-        /// The current job
-        /// </param>
-        /// <param name="fileList">
-        /// The file list.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection"/> class.</summary>
+        /// <param name="job">The current job</param>
+        /// <param name="fileList">The file list.</param>
         internal BitsFilesCollection(BitsJob job, IEnumBackgroundCopyFiles fileList)
         {
             this.fileList = fileList;
@@ -65,9 +51,7 @@ namespace SharpBits.Base.File
 
         #region IDisposable
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -80,9 +64,7 @@ namespace SharpBits.Base.File
 
         #region Methods
 
-        /// <summary>
-        /// Refreshes the <see cref="BitsFile"/> collection
-        /// </summary>
+        /// <summary>Refreshes the <see cref="BitsFile"/> collection</summary>
         internal void Refresh()
         {
             uint count;
@@ -101,12 +83,8 @@ namespace SharpBits.Base.File
             }
         }
 
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing">
-        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-        /// </param>
+        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

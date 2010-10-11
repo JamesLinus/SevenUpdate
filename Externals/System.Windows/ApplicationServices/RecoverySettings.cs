@@ -26,9 +26,7 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RecoverySettings"/> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="RecoverySettings"/> class.</summary>
         /// <param name="data">
         /// A recovery data object that contains the callback method (invoked by the system
         ///   before Windows Error Reporting terminates the application) and an optional state object.
@@ -77,9 +75,7 @@ namespace System.Windows.ApplicationServices
         /// Returns a string representation of the current state
         ///   of this object.
         /// </summary>
-        /// <returns>
-        /// A <see cref="System.String"/> object.
-        /// </returns>
+        /// <returns>A <see cref="System.String"/> object.</returns>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", 
             MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)", 
             Justification = "We are not currently handling globalization or localization")]

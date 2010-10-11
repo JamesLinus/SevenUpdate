@@ -21,19 +21,13 @@ namespace System.Windows.ApplicationServices
     [Flags]
     public enum RestartRestrictions
     {
-        /// <summary>
-        ///   Always restart the application.
-        /// </summary>
+        /// <summary>Always restart the application.</summary>
         None = 0, 
 
-        /// <summary>
-        ///   Do not restart when the application has crashed.
-        /// </summary>
+        /// <summary>Do not restart when the application has crashed.</summary>
         NotOnCrash = 1, 
 
-        /// <summary>
-        ///   Do not restart when the application is hung.
-        /// </summary>
+        /// <summary>Do not restart when the application is hung.</summary>
         NotOnHang = 2, 
 
         /// <summary>
@@ -91,9 +85,7 @@ namespace System.Windows.ApplicationServices
         /// A <see cref="System.Boolean"/> value indicating whether the user
         ///   canceled the recovery.
         /// </returns>
-        /// <exception cref="System.InvalidOperationException">
-        /// This method must be called from a registered callback method.
-        /// </exception>
+        /// <exception cref="System.InvalidOperationException">This method must be called from a registered callback method.</exception>
         public static bool ApplicationRecoveryInProgress()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -114,20 +106,14 @@ namespace System.Windows.ApplicationServices
             return canceled;
         }
 
-        /// <summary>
-        /// Registers an application for recovery by Application Restart and Recovery.
-        /// </summary>
+        /// <summary>Registers an application for recovery by Application Restart and Recovery.</summary>
         /// <param name="settings">
         /// An object that specifies
         ///   the callback method, an optional parameter to pass to the callback
         ///   method and a time interval.
         /// </param>
-        /// <exception cref="System.ArgumentException">
-        /// The registration failed due to an invalid parameter.
-        /// </exception>
-        /// <exception cref="System.ComponentModel.Win32Exception">
-        /// The registration failed.
-        /// </exception>
+        /// <exception cref="System.ArgumentException">The registration failed due to an invalid parameter.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">The registration failed.</exception>
         /// <remarks>
         /// The time interval is the period of time within 
         ///   which the recovery callback method 
@@ -170,15 +156,9 @@ namespace System.Windows.ApplicationServices
         ///   the conditions under which the application should not be 
         ///   restarted.
         /// </param>
-        /// <exception cref="System.ArgumentException">
-        /// Registration failed due to an invalid parameter.
-        /// </exception>
-        /// <exception cref="System.InvalidOperationException">
-        /// The attempt to register failed.
-        /// </exception>
-        /// <remarks>
-        /// A registered application will not be restarted if it executed for less than 60 seconds before terminating.
-        /// </remarks>
+        /// <exception cref="System.ArgumentException">Registration failed due to an invalid parameter.</exception>
+        /// <exception cref="System.InvalidOperationException">The attempt to register failed.</exception>
+        /// <remarks>A registered application will not be restarted if it executed for less than 60 seconds before terminating.</remarks>
         public static void RegisterForApplicationRestart(RestartSettings settings)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -200,12 +180,8 @@ namespace System.Windows.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Removes an application's recovery registration.
-        /// </summary>
-        /// <exception cref="System.ComponentModel.Win32Exception">
-        /// The attempt to unregister for recovery failed.
-        /// </exception>
+        /// <summary>Removes an application's recovery registration.</summary>
+        /// <exception cref="System.ComponentModel.Win32Exception">The attempt to unregister for recovery failed.</exception>
         public static void UnregisterApplicationRecovery()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -222,12 +198,8 @@ namespace System.Windows.ApplicationServices
             }
         }
 
-        /// <summary>
-        /// Removes an application's restart registration.
-        /// </summary>
-        /// <exception cref="System.ComponentModel.Win32Exception">
-        /// The attempt to unregister for restart failed.
-        /// </exception>
+        /// <summary>Removes an application's restart registration.</summary>
+        /// <exception cref="System.ComponentModel.Win32Exception">The attempt to unregister for restart failed.</exception>
         public static void UnregisterApplicationRestart()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond

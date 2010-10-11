@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -35,16 +36,12 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    /// <summary>
-    /// Interaction logic for UpdateInfo.xaml
-    /// </summary>
+    /// <summary>Interaction logic for UpdateInfo.xaml</summary>
     public sealed partial class UpdateInfo
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "UpdateInfo" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateInfo" /> class.</summary>
         public UpdateInfo()
         {
             this.InitializeComponent();
@@ -70,26 +67,16 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Navigates to the main page
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GoToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// Determines whether this instance has errors.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <summary>Determines whether this instance has errors.</summary>
+        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
         private bool HasErrors()
         {
             // ReSharper disable PossibleNullReferenceException
@@ -99,15 +86,9 @@ namespace SevenUpdate.Sdk.Pages
             // ReSharper restore PossibleNullReferenceException
         }
 
-        /// <summary>
-        /// Loads the <see cref="LocaleString"/>'s for the <see cref="Update"/> into the UI
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Update"/> into the UI</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxUpdateName == null || this.cbxLocale.SelectedIndex < 0)
@@ -146,15 +127,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Loads the <see cref="Update"/> information to the UI
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Loads the <see cref="Update"/> information to the UI</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             // ReSharper disable PossibleNullReferenceException
@@ -178,15 +153,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Moves on to the next pages if no errors are present
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Moves on to the next pages if no errors are present</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -199,15 +168,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Updates the UI based on whether Aero Glass is enabled
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

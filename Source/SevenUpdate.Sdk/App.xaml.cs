@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -32,22 +33,14 @@ namespace SevenUpdate.Sdk
 
     using SevenUpdate.Sdk.Properties;
 
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
+    /// <summary>Interaction logic for App.xaml</summary>
     public sealed partial class App
     {
         #region Methods
 
-        /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.Startup"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.
-        /// </param>
-        /// <param name="isFirstInstance">
-        /// If set to <c>true</c> the current instance is the first application instance.
-        /// </param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Utilities.SerializationError += Core.SerializationError;
@@ -63,12 +56,8 @@ namespace SevenUpdate.Sdk
             Core.SetJumpList();
         }
 
-        /// <summary>
-        /// Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.
-        /// </summary>
-        /// <param name="e">
-        /// The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <param name="e">The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);

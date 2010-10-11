@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -46,56 +47,38 @@ namespace SevenUpdate.Sdk
     using MessageBox = System.Windows.MessageBox;
     using Shortcut = SevenUpdate.Shortcut;
 
-    /// <summary>
-    /// Contains methods that are essential for the program
-    /// </summary>
+    /// <summary>Contains methods that are essential for the program</summary>
     internal static class Core
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The location of the file that contains the collection of Projects for the SDK
-        /// </summary>
+        /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
         public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
                                                      @"\Seven Software\Seven Update SDK\Projects.sul";
 
-        /// <summary>
-        ///   The user application data location
-        /// </summary>
+        /// <summary>The user application data location</summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
 
-        /// <summary>
-        ///   The application directory of Seven Update
-        /// </summary>
+        /// <summary>The application directory of Seven Update</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the application information of the project
-        /// </summary>
+        /// <summary>Gets the application information of the project</summary>
         /// <value>The application info.</value>
         public static Sua AppInfo { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the index for the selected project
-        /// </summary>
+        /// <summary>Gets or sets the index for the selected project</summary>
         /// <value>The index of the application</value>
         internal static int AppIndex { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the current project being edited is new
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether the current project being edited is new</summary>
+        /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
         internal static bool IsNewProject { get; set; }
 
-        /// <summary>
-        ///   Gets the collection of Project
-        /// </summary>
+        /// <summary>Gets the collection of Project</summary>
         /// <value>The projects.</value>
         internal static Collection<Project> Projects
         {
@@ -105,21 +88,15 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the index for the current shortcut being edited
-        /// </summary>
+        /// <summary>Gets or sets the index for the current shortcut being edited</summary>
         /// <value>The selected shortcut.</value>
         internal static int SelectedShortcut { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the index for the selected update in the selected project
-        /// </summary>
+        /// <summary>Gets or sets the index for the selected update in the selected project</summary>
         /// <value>The index of the update.</value>
         internal static int UpdateIndex { get; set; }
 
-        /// <summary>
-        ///   Gets the current update being edited
-        /// </summary>
+        /// <summary>Gets the current update being edited</summary>
         /// <value>The update info.</value>
         internal static Update UpdateInfo { get; private set; }
 
@@ -127,9 +104,7 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        /// <summary>
-        /// Edit the selected project or update
-        /// </summary>
+        /// <summary>Edit the selected project or update</summary>
         internal static void EditItem()
         {
             IsNewProject = false;
@@ -160,29 +135,17 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        /// The rectangle_ mouse left button down.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The arguments generated by the event
-        /// </param>
+        /// <summary>The rectangle_ mouse left button down.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The arguments generated by the event</param>
         internal static void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        /// <summary>
-        /// Gets the IWin32 window.
-        /// </summary>
-        /// <param name="visual">
-        /// The visual object
-        /// </param>
-        /// <returns>
-        /// The Win32 Window
-        /// </returns>
+        /// <summary>Gets the IWin32 window.</summary>
+        /// <param name="visual">The visual object</param>
+        /// <returns>The Win32 Window</returns>
         internal static IWin32Window GetIWin32Window(this Visual visual)
         {
             var source = PresentationSource.FromVisual(visual) as HwndSource;
@@ -195,9 +158,7 @@ namespace SevenUpdate.Sdk
             return null;
         }
 
-        /// <summary>
-        /// Creates a new project
-        /// </summary>
+        /// <summary>Creates a new project</summary>
         internal static void NewProject()
         {
             IsNewProject = true;
@@ -217,9 +178,7 @@ namespace SevenUpdate.Sdk
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// Creates a new update for the selected project
-        /// </summary>
+        /// <summary>Creates a new update for the selected project</summary>
         internal static void NewUpdate()
         {
             IsNewProject = false;
@@ -235,24 +194,12 @@ namespace SevenUpdate.Sdk
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// Opens a OpenFileDialog
-        /// </summary>
-        /// <param name="initialDirectory">
-        /// Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory
-        /// </param>
-        /// <param name="multiSelect">
-        /// Gets or sets a value that determines whether the user can select more than one file
-        /// </param>
-        /// <param name="defaultExtension">
-        /// Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names
-        /// </param>
-        /// <param name="navigateToShortcut">
-        /// Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file
-        /// </param>
-        /// <returns>
-        /// A collection of the selected files
-        /// </returns>
+        /// <summary>Opens a OpenFileDialog</summary>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="multiSelect">Gets or sets a value that determines whether the user can select more than one file</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
+        /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
+        /// <returns>A collection of the selected files</returns>
         internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
         {
             var openFileDialog = new OpenFileDialog
@@ -288,21 +235,11 @@ namespace SevenUpdate.Sdk
             return openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
         }
 
-        /// <summary>
-        /// Opens a SaveFileDialog
-        /// </summary>
-        /// <param name="initialDirectory">
-        /// Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory
-        /// </param>
-        /// <param name="defaultFileName">
-        /// Sets the default file name
-        /// </param>
-        /// <param name="defaultExtension">
-        /// Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names
-        /// </param>
-        /// <returns>
-        /// Gets the selected filename
-        /// </returns>
+        /// <summary>Opens a SaveFileDialog</summary>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="defaultFileName">Sets the default file name</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
+        /// <returns>Gets the selected filename</returns>
         internal static string SaveFileDialog(string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
             var saveFileDialog = new SaveFileDialog
@@ -338,23 +275,15 @@ namespace SevenUpdate.Sdk
             return saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
         }
 
-        /// <summary>
-        /// The base_ serialization error.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The arguments generated by the event
-        /// </param>
+        /// <summary>The base_ serialization error.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The arguments generated by the event</param>
         internal static void SerializationError(object sender, SerializationErrorEventArgs e)
         {
             ShowMessage(Resources.ProjectLoadError, TaskDialogStandardIcon.Error, e.Exception.Message);
         }
 
-        /// <summary>
-        /// Sets the Windows 7 <see cref="JumpList"/>
-        /// </summary>
+        /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>
         internal static void SetJumpList()
         {
             // Create JumpTask
@@ -409,53 +338,25 @@ namespace SevenUpdate.Sdk
             JumpList.SetJumpList(Application.Current, jumpList);
         }
 
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="icon">
-        /// The <see cref="TaskDialogStandardIcon"/> to display
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The <see cref="TaskDialogStandardIcon"/> to display</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             return ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>
-        /// Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.
-        /// </summary>
-        /// <param name="instructionText">
-        /// The main text to display (Blue 14pt for <see cref="TaskDialog"/>)
-        /// </param>
-        /// <param name="icon">
-        /// The icon to use
-        /// </param>
-        /// <param name="standardButtons">
-        /// The standard buttons to use (with or without the custom default button text)
-        /// </param>
-        /// <param name="description">
-        /// A description of the message, supplements the instruction text
-        /// </param>
-        /// <param name="footerText">
-        /// Text to display as a footer message
-        /// </param>
-        /// <param name="defaultButtonText">
-        /// Text to display on the button
-        /// </param>
-        /// <param name="displayShieldOnButton">
-        /// Indicates if a UAC shield is to be displayed on the defaultButton
-        /// </param>
-        /// <returns>
-        /// Returns the result of the message
-        /// </returns>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The icon to use</param>
+        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name="footerText">Text to display as a footer message</param>
+        /// <param name="defaultButtonText">Text to display on the button</param>
+        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <returns>Returns the result of the message</returns>
         private static TaskDialogResult ShowMessage(
             string instructionText, 
             TaskDialogStandardIcon icon, 
@@ -578,41 +479,29 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        /// <summary>
-        /// The old window
-        /// </summary>
+        /// <summary>The old window</summary>
         private sealed class OldWindow : IWin32Window, IDisposable
         {
             #region Constants and Fields
 
-            /// <summary>
-            ///   The pointer to the window
-            /// </summary>
+            /// <summary>The pointer to the window</summary>
             private readonly IntPtr windowHandle;
 
-            /// <summary>
-            ///   <see langword = "true" /> if the window is disposed
-            /// </summary>
+            /// <summary><see langword = "true" /> if the window is disposed</summary>
             private bool disposed;
 
             #endregion
 
             #region Constructors and Destructors
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="OldWindow"/> class.
-            /// </summary>
-            /// <param name="handle">
-            /// The handle.
-            /// </param>
+            /// <summary>Initializes a new instance of the <see cref="OldWindow"/> class.</summary>
+            /// <param name="handle">The handle.</param>
             public OldWindow(IntPtr handle)
             {
                 this.windowHandle = handle;
             }
 
-            /// <summary>
-            /// Finalizes an instance of the <see cref="OldWindow"/> class.
-            /// </summary>
+            /// <summary>Finalizes an instance of the <see cref="OldWindow"/> class.</summary>
             ~OldWindow()
             {
                 this.Dispose(false);
@@ -622,9 +511,7 @@ namespace SevenUpdate.Sdk
 
             #region Properties
 
-            /// <summary>
-            ///   Gets the handle to the window represented by the implementer.
-            /// </summary>
+            /// <summary>Gets the handle to the window represented by the implementer.</summary>
             /// <value></value>
             /// <returns>A handle to the window represented by the implementer.</returns>
             IntPtr IWin32Window.Handle
@@ -641,9 +528,7 @@ namespace SevenUpdate.Sdk
 
             #region IDisposable
 
-            /// <summary>
-            /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-            /// </summary>
+            /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
             public void Dispose()
             {
                 this.Dispose(false);
@@ -658,12 +543,8 @@ namespace SevenUpdate.Sdk
 
             #region Methods
 
-            /// <summary>
-            /// Releases unmanaged and - optionally - managed resources
-            /// </summary>
-            /// <param name="disposing">
-            /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-            /// </param>
+            /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+            /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
             private void Dispose(bool disposing)
             {
                 lock (this)

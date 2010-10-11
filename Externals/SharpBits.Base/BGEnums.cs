@@ -16,50 +16,32 @@ namespace SharpBits.Base
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Authentication scheme used for the background job
-    /// </summary>
+    /// <summary>Authentication scheme used for the background job</summary>
     internal enum BGAuthScheme
     {
-        /// <summary>
-        ///   Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.
-        /// </summary>
+        /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>
         Basic = 1, 
 
-        /// <summary>
-        ///   Digest is a challenge-response scheme that uses a server-specified data string for the challenge.
-        /// </summary>
+        /// <summary>Digest is a challenge-response scheme that uses a server-specified data string for the challenge.</summary>
         Digest = 2, 
 
-        /// <summary>
-        ///   Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the user for authentication in a Windows network environment.
-        /// </summary>
+        /// <summary>Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the user for authentication in a Windows network environment.</summary>
         Ntlm = 3, 
 
-        /// <summary>
-        ///   Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol, Secure Socket Layer (SSL), and NTLM.
-        /// </summary>
+        /// <summary>Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol, Secure Socket Layer (SSL), and NTLM.</summary>
         Negotiate = 4, 
 
-        /// <summary>
-        ///   Passport is a centralized authentication service provided by Microsoft that offers a single logon for member sites.
-        /// </summary>
+        /// <summary>Passport is a centralized authentication service provided by Microsoft that offers a single logon for member sites.</summary>
         Passport = 5, 
     }
 
-    /// <summary>
-    /// The location from which to download the code.
-    /// </summary>
+    /// <summary>The location from which to download the code.</summary>
     internal enum BGAuthTarget
     {
-        /// <summary>
-        ///   Use credentials for server requests.
-        /// </summary>
+        /// <summary>Use credentials for server requests.</summary>
         Server = 1, 
 
-        /// <summary>
-        ///   Use credentials for proxy requests.
-        /// </summary>
+        /// <summary>Use credentials for proxy requests.</summary>
         Proxy = 2, 
     }
 
@@ -84,14 +66,10 @@ namespace SharpBits.Base
         /// </summary>
         Connecting = 1, 
 
-        /// <summary>
-        ///   Specifies that BITS is transferring data for the job
-        /// </summary>
+        /// <summary>Specifies that BITS is transferring data for the job</summary>
         Transferring = 2, 
 
-        /// <summary>
-        ///   Specifies that the job is suspended (paused)
-        /// </summary>
+        /// <summary>Specifies that the job is suspended (paused)</summary>
         Suspended = 3, 
 
         /// <summary>
@@ -114,9 +92,7 @@ namespace SharpBits.Base
         /// </summary>
         TransientError = 5, 
 
-        /// <summary>
-        ///   Specifies that your job was successfully processed
-        /// </summary>
+        /// <summary>Specifies that your job was successfully processed</summary>
         Transferred = 6, 
 
         /// <summary>
@@ -131,9 +107,7 @@ namespace SharpBits.Base
         /// </summary>
         Canceled = 8, 
 
-        /// <summary>
-        ///   This is custom state not provided by BITS
-        /// </summary>
+        /// <summary>This is custom state not provided by BITS</summary>
         Unknown = 1001, // This is not provided by BITS but is Custom
     }
 
@@ -143,51 +117,33 @@ namespace SharpBits.Base
     /// </summary>
     internal enum BGJobType
     {
-        /// <summary>
-        ///   Specifies that the job downloads files to the client
-        /// </summary>
+        /// <summary>Specifies that the job downloads files to the client</summary>
         Download = 0, 
 
-        /// <summary>
-        ///   Specifies that the job uploads a file to the server
-        /// </summary>
+        /// <summary>Specifies that the job uploads a file to the server</summary>
         Upload = 1, 
 
-        /// <summary>
-        ///   Specifies that the job uploads a file to the server and receives a reply file from the server application.
-        /// </summary>
+        /// <summary>Specifies that the job uploads a file to the server and receives a reply file from the server application.</summary>
         UploadReply = 2, 
 
-        /// <summary>
-        ///   This is not provided by BITS but is Custom
-        /// </summary>
+        /// <summary>This is not provided by BITS but is Custom</summary>
         Unknown, 
     }
 
-    /// <summary>
-    /// Used for the SetNotifyFlags method.
-    /// </summary>
+    /// <summary>Used for the SetNotifyFlags method.</summary>
     [Flags]
     internal enum BGJobNotificationTypes
     {
-        /// <summary>
-        ///   All of the files in the job have been transferred.
-        /// </summary>
+        /// <summary>All of the files in the job have been transferred.</summary>
         BGNotifyJobTransferred = 0x0001, 
 
-        /// <summary>
-        ///   An error has occurred.
-        /// </summary>
+        /// <summary>An error has occurred.</summary>
         BGNotifyJobError = 0x0002, 
 
-        /// <summary>
-        ///   Event notification is disabled. BITS ignores the other flags.
-        /// </summary>
+        /// <summary>Event notification is disabled. BITS ignores the other flags.</summary>
         BGNotifyDisable = 0x0004, 
 
-        /// <summary>
-        ///   The job has been modified. For example, a property value changed, the state of the job changed, or progress is made transferring the files. This flag is ignored if command line notification is specified.
-        /// </summary>
+        /// <summary>The job has been modified. For example, a property value changed, the state of the job changed, or progress is made transferring the files. This flag is ignored if command line notification is specified.</summary>
         BGNotifyJobModification = 0x0008, 
     }
 
@@ -203,14 +159,10 @@ namespace SharpBits.Base
         /// </summary>
         PreConfig = 0, 
 
-        /// <summary>
-        ///   Do not use a proxy to transfer files
-        /// </summary>
+        /// <summary>Do not use a proxy to transfer files</summary>
         NoProxy = 1, 
 
-        /// <summary>
-        ///   Use the application's proxy and proxy bypass list to transfer files
-        /// </summary>
+        /// <summary>Use the application's proxy and proxy bypass list to transfer files</summary>
         Override = 2, 
 
         /// <summary>
@@ -226,9 +178,7 @@ namespace SharpBits.Base
     /// </summary>
     internal enum BGJobPriority
     {
-        /// <summary>
-        ///   Transfers the job in the foreground
-        /// </summary>
+        /// <summary>Transfers the job in the foreground</summary>
         Foreground = 0, 
 
         /// <summary>
@@ -256,19 +206,13 @@ namespace SharpBits.Base
     /// </summary>
     internal enum BGErrorContext
     {
-        /// <summary>
-        ///   An error has not occurred
-        /// </summary>
+        /// <summary>An error has not occurred</summary>
         None = 0, 
 
-        /// <summary>
-        ///   The error context is unknown
-        /// </summary>
+        /// <summary>The error context is unknown</summary>
         Unknown = 1, 
 
-        /// <summary>
-        ///   The transfer queue manager generated the error
-        /// </summary>
+        /// <summary>The transfer queue manager generated the error</summary>
         GeneralQueueManager = 2, 
 
         /// <summary>
@@ -296,35 +240,23 @@ namespace SharpBits.Base
         GeneralTransport = 6, 
     }
 
-    /// <summary>
-    /// The ACL's of the file to set when downloaded
-    /// </summary>
+    /// <summary>The ACL's of the file to set when downloaded</summary>
     [Flags]
     internal enum BGFileAclFlags
     {
-        /// <summary>
-        ///   Set current owner
-        /// </summary>
+        /// <summary>Set current owner</summary>
         BGCopyFileOwner = 0x0001, 
 
-        /// <summary>
-        ///   Set current group
-        /// </summary>
+        /// <summary>Set current group</summary>
         BGCopyFileGroup = 0x0002, 
 
-        /// <summary>
-        ///   Delete all ACL lists
-        /// </summary>
+        /// <summary>Delete all ACL lists</summary>
         BGCopyDestinationFileAcl = 0x0004, 
 
-        /// <summary>
-        ///   Give special permissions
-        /// </summary>
+        /// <summary>Give special permissions</summary>
         BGCopySourceFileAcl = 0x0008, 
 
-        /// <summary>
-        ///   Inherit all lists
-        /// </summary>
+        /// <summary>Inherit all lists</summary>
         BGCopyFileAll = 0x0015, 
     }
 
@@ -335,15 +267,11 @@ namespace SharpBits.Base
     [StructLayout(LayoutKind.Sequential, Pack = 4, Size = 0)]
     internal struct BGFileInfo
     {
-        /// <summary>
-        ///   Remote Name for the File
-        /// </summary>
+        /// <summary>Remote Name for the File</summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         public string RemoteName;
 
-        /// <summary>
-        ///   Local Name for the file
-        /// </summary>
+        /// <summary>Local Name for the file</summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         public string LocalName;
     }
@@ -355,80 +283,52 @@ namespace SharpBits.Base
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGJobProgress
     {
-        /// <summary>
-        ///   Total number of bytes to transfer for the job.
-        /// </summary>
+        /// <summary>Total number of bytes to transfer for the job.</summary>
         public ulong BytesTotal;
 
-        /// <summary>
-        ///   Number of bytes transferred
-        /// </summary>
+        /// <summary>Number of bytes transferred</summary>
         public ulong BytesTransferred;
 
-        /// <summary>
-        ///   Total number of files to transfer for this job
-        /// </summary>
+        /// <summary>Total number of files to transfer for this job</summary>
         public uint FilesTotal;
 
-        /// <summary>
-        ///   Number of files transferred.
-        /// </summary>
+        /// <summary>Number of files transferred.</summary>
         public uint FilesTransferred;
     }
 
-    /// <summary>
-    /// The BG_JOB_REPLY_PROGRESS structure provides progress information related to the reply portion of an upload-reply job.
-    /// </summary>
+    /// <summary>The BG_JOB_REPLY_PROGRESS structure provides progress information related to the reply portion of an upload-reply job.</summary>
     [StructLayout(LayoutKind.Sequential, Pack = 8)]
     internal struct BGJobReplyProgress
     {
-        /// <summary>
-        ///   Size of the file in bytes. The value is BG_SIZE_UNKNOWN if the reply has not begun.
-        /// </summary>
+        /// <summary>Size of the file in bytes. The value is BG_SIZE_UNKNOWN if the reply has not begun.</summary>
         public ulong BytesTotal;
 
-        /// <summary>
-        ///   Number of bytes transferred.
-        /// </summary>
+        /// <summary>Number of bytes transferred.</summary>
         public ulong BytesTransferred;
     }
 
-    /// <summary>
-    /// The BG_JOB_TIMES structure provides job-related timestamps
-    /// </summary>
+    /// <summary>The BG_JOB_TIMES structure provides job-related timestamps</summary>
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 4, Size = 0)]
     internal struct BGJobTimes
     {
-        /// <summary>
-        ///   Time the job was created
-        /// </summary>
+        /// <summary>Time the job was created</summary>
         public FileTime CreationTime;
 
-        /// <summary>
-        ///   Time the job was last modified or bytes were transferred
-        /// </summary>
+        /// <summary>Time the job was last modified or bytes were transferred</summary>
         public FileTime ModificationTime;
 
-        /// <summary>
-        ///   Time the job entered the BG_JOB_STATE_TRANSFERRED state
-        /// </summary>
+        /// <summary>Time the job entered the BG_JOB_STATE_TRANSFERRED state</summary>
         public FileTime TransferCompletionTime;
     }
 
-    /// <summary>
-    /// This structure is a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601.
-    /// </summary>
+    /// <summary>This structure is a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601.</summary>
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 4, Size = 0)]
     internal struct FileTime
     {
-        /// <summary>
-        ///   Specifies the low 32 bits of the file time.
-        /// </summary>
+        /// <summary>Specifies the low 32 bits of the file time.</summary>
         public uint DWLowDateTime;
 
-        /// <summary>
-        ///   Specifies the high 32 bits of the file time.
-        /// </summary>
+        /// <summary>Specifies the high 32 bits of the file time.</summary>
         public uint DWHighDateTime;
     }
 
@@ -439,102 +339,72 @@ namespace SharpBits.Base
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGFileProgress
     {
-        /// <summary>
-        ///   Size of the file in bytes
-        /// </summary>
+        /// <summary>Size of the file in bytes</summary>
         public ulong BytesTotal;
 
-        /// <summary>
-        ///   Number of bytes transferred.
-        /// </summary>
+        /// <summary>Number of bytes transferred.</summary>
         public ulong BytesTransferred;
 
         /// <summary>
-        ///   For downloads, the value is TRUE if the file is available to the user; 
-        ///   otherwise, the value is FALSE
+        ///   For downloads, the value is <see langword = "true" /> if the file is available to the user; 
+        ///   otherwise, the value is <see langword = "false" />
         /// </summary>
         public int Completed;
     }
 
-    /// <summary>
-    /// The BG_FILE_RANGE structure identifies a range of bytes to download from a file.
-    /// </summary>
+    /// <summary>The BG_FILE_RANGE structure identifies a range of bytes to download from a file.</summary>
     [StructLayout(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGFileRange
     {
-        /// <summary>
-        ///   The length to the end of the file
-        /// </summary>
+        /// <summary>The length to the end of the file</summary>
         public const ulong BGLengthToEof = unchecked((ulong)-1);
 
-        /// <summary>
-        ///   Zero-based offset to the beginning of the range of bytes to download from a file.
-        /// </summary>
+        /// <summary>Zero-based offset to the beginning of the range of bytes to download from a file.</summary>
         public ulong InitialOffset;
 
-        /// <summary>
-        ///   Number of bytes in the range. To indicate that the range extends to the end of the file, specify BG_LENGTH_TO_EOF
-        /// </summary>
+        /// <summary>Number of bytes in the range. To indicate that the range extends to the end of the file, specify BG_LENGTH_TO_EOF</summary>
         public ulong Length;
     }
 
-    /// <summary>
-    /// The BG_AUTH_CREDENTIALS_UNION union identifies the credentials to use for the authentication scheme specified in the BG_AUTH_CREDENTIALS structure.
-    /// </summary>
+    /// <summary>The BG_AUTH_CREDENTIALS_UNION union identifies the credentials to use for the authentication scheme specified in the BG_AUTH_CREDENTIALS structure.</summary>
     [StructLayout(LayoutKind.Sequential, Size = 8)]
     internal struct BGAuthCredentialsUnion
     {
-        /// <summary>
-        ///   Identifies the user name and password of the user to authenticate. For details, see the BG_BASIC_CREDENTIALS structure.
-        /// </summary>
+        /// <summary>Identifies the user name and password of the user to authenticate. For details, see the BG_BASIC_CREDENTIALS structure.</summary>
         public BGBasicCredentials Basic;
     }
 
-    /// <summary>
-    /// The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.
-    /// </summary>
+    /// <summary>The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.</summary>
     [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop")]
     [StructLayout(LayoutKind.Sequential, Size = 8)]
     internal struct BGBasicCredentials
     {
-        /// <summary>
-        ///   Null-terminated string that contains the user name to authenticate. The user name is limited to 300 characters, not including the <see langword = "null" /> terminator. The format of the user name depends on the authentication scheme requested. For example, for Basic, NTLM, and Negotiate authentication, the user name is of the form "domain\user name" or "user name". For Passport authentication, the user name is an e-mail address. If NULL, default credentials for this session context are used.
-        /// </summary>
+        /// <summary>Null-terminated string that contains the user name to authenticate. The user name is limited to 300 characters, not including the <see langword = "null" /> terminator. The format of the user name depends on the authentication scheme requested. For example, for Basic, NTLM, and Negotiate authentication, the user name is of the form "domain\user name" or "user name". For Passport authentication, the user name is an e-mail address. If <see langword = "null" />, default credentials for this session context are used.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop")]
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string UserName;
 
-        /// <summary>
-        ///   Null-terminated string that contains the password in clear-text. The password is limited to 300 characters, not including the <see langword = "null" /> terminator. The password can be blank. Set to NULL if <see cref = "UserName" /> is NULL. BITS encrypts the password before persisting the job if a network disconnect occurs or the user logs off.
-        /// </summary>
+        /// <summary>Null-terminated string that contains the password in clear-text. The password is limited to 300 characters, not including the <see langword = "null" /> terminator. The password can be blank. Set to <see langword = "null" /> if <see cref = "UserName" /> is <see langword = "null" />. BITS encrypts the password before persisting the job if a network disconnect occurs or the user logs off.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop")]
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string Password;
     }
 
-    /// <summary>
-    /// The BG_AUTH_CREDENTIALS structure identifies the target (proxy or server), authentication scheme, and the user's credentials to use for user authentication requests. The structure is passed to the IBackgroundCopyJob2::SetCredentials method.
-    /// </summary>
+    /// <summary>The BG_AUTH_CREDENTIALS structure identifies the target (proxy or server), authentication scheme, and the user's credentials to use for user authentication requests. The structure is passed to the IBackgroundCopyJob2::SetCredentials method.</summary>
     [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "UserName", Justification = "Interop")]
     [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop")]
     [StructLayout(LayoutKind.Sequential, Size = 16)]
     internal struct BGAuthCredentials
     {
-        /// <summary>
-        ///   Identifies whether to use the credentials for a proxy or server authentication request. For a list of values, see the BG_AUTH_TARGET enumeration.
-        /// </summary>
+        /// <summary>Identifies whether to use the credentials for a proxy or server authentication request. For a list of values, see the BG_AUTH_TARGET enumeration.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop"),]
         public BGAuthTarget Target;
 
-        /// <summary>
-        ///   Identifies the scheme to use for authentication (for example, Basic or NTLM). For a list of values, see the BG_AUTH_SCHEME enumeration.
-        /// </summary>
+        /// <summary>Identifies the scheme to use for authentication (for example, Basic or NTLM). For a list of values, see the BG_AUTH_SCHEME enumeration.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop")]
         public BGAuthScheme Scheme;
 
-        /// <summary>
-        ///   Identifies the credentials to use for the specified authentication scheme. For details, see the BG_AUTH_CREDENTIALS_UNION union.
-        /// </summary>
+        /// <summary>Identifies the credentials to use for the specified authentication scheme. For details, see the BG_AUTH_CREDENTIALS_UNION union.</summary>
         public BGAuthCredentialsUnion Credentials;
     }
 }

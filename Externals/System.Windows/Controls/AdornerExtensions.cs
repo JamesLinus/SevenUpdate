@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,33 +21,25 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows.Controls
 {
     using System.Windows.Documents;
 
-    /// <summary>
-    /// The adorner extensions
-    /// </summary>
+    /// <summary>The adorner extensions</summary>
     public static class AdornerExtensions
     {
         #region Public Methods
 
-        /// <summary>
-        /// Determines whether the adorner layer contains an element
-        /// </summary>
+        /// <summary>Determines whether the adorner layer contains an element</summary>
         /// <typeparam name="T">
         /// The type of element to check
         /// </typeparam>
-        /// <param name="adr">
-        /// The adorner.
-        /// </param>
-        /// <param name="elem">
-        /// The element
-        /// </param>
-        /// <returns>
-        /// <see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <param name="adr">The adorner.</param>
+        /// <param name="elem">The element</param>
+        /// <returns><see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.</returns>
         public static bool Contains<T>(this AdornerLayer adr, UIElement elem)
         {
             if (adr == null)
@@ -74,18 +65,12 @@ namespace System.Windows.Controls
             return false;
         }
 
-        /// <summary>
-        /// Removes the adorners
-        /// </summary>
+        /// <summary>Removes the adorners</summary>
         /// <typeparam name="T">
         /// The adorner control to remove
         /// </typeparam>
-        /// <param name="adr">
-        /// The adorner
-        /// </param>
-        /// <param name="elem">
-        /// The element
-        /// </param>
+        /// <param name="adr">The adorner</param>
+        /// <param name="elem">The element</param>
         /// <typeparameter name="T">
         ///   The type of element
         /// </typeparameter>
@@ -107,15 +92,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// Removes all.
-        /// </summary>
-        /// <param name="adr">
-        /// The adorner layer
-        /// </param>
-        /// <param name="elem">
-        /// The element
-        /// </param>
+        /// <summary>Removes all.</summary>
+        /// <param name="adr">The adorner layer</param>
+        /// <param name="elem">The element</param>
         public static void RemoveAll(this AdornerLayer adr, UIElement elem)
         {
             try
@@ -137,15 +116,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        /// Removes all recursive.
-        /// </summary>
-        /// <param name="adr">
-        /// The adorner layer
-        /// </param>
-        /// <param name="element">
-        /// The element.
-        /// </param>
+        /// <summary>Removes all recursive.</summary>
+        /// <param name="adr">The adorner layer</param>
+        /// <param name="element">The element.</param>
         public static void RemoveAllRecursive(this AdornerLayer adr, UIElement element)
         {
             try

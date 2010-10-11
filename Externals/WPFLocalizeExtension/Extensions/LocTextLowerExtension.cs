@@ -27,19 +27,13 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "LocTextLowerExtension" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocTextLowerExtension" /> class.</summary>
         public LocTextLowerExtension()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocTextLowerExtension"/> class.
-        /// </summary>
-        /// <param name="key">
-        /// The resource identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension"/> class.</summary>
+        /// <param name="key">The resource identifier.</param>
         public LocTextLowerExtension(string key) : base(key)
         {
         }
@@ -48,21 +42,11 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>
-        /// Provides the Value for the first Binding as <see cref="System.String"/>
-        /// </summary>
-        /// <param name="serviceProvider">
-        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
-        /// </param>
-        /// <returns>
-        /// The founded item from the .resx directory or <see langword="null"/> if not founded
-        /// </returns>
-        /// <exception cref="System.InvalidOperationException">
-        /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>
-        /// </exception>
-        /// <exception cref="System.NotSupportedException">
-        /// thrown if the founded object is not type of <see cref="System.String"/>
-        /// </exception>
+        /// <summary>Provides the Value for the first Binding as <see cref="System.String"/></summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of <see cref="System.String"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -95,20 +79,14 @@ namespace WPFLocalizeExtension.Extensions
         /// This method formats the localized text.
         ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
         /// </summary>
-        /// <param name="target">
-        /// The text to format.
-        /// </param>
-        /// <returns>
-        /// Returns the formated text or string.empty, if the target text was <see langword="null"/>.
-        /// </returns>
+        /// <param name="target">The text to format.</param>
+        /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
         protected override string FormatText(string target)
         {
             return target == null ? string.Empty : target.ToLower(this.GetForcedCultureOrDefault());
         }
 
-        /// <summary>
-        /// see <c>BaseLocalizeExtension</c>
-        /// </summary>
+        /// <summary>see <c>BaseLocalizeExtension</c></summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());

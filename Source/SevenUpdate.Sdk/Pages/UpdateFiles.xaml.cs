@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -44,25 +45,19 @@ namespace SevenUpdate.Sdk.Pages
     using KeyEventArgs = System.Windows.Input.KeyEventArgs;
     using TextBox = System.Windows.Controls.TextBox;
 
-    /// <summary>
-    /// Interaction logic for UpdateFiles.xaml
-    /// </summary>
+    /// <summary>Interaction logic for UpdateFiles.xaml</summary>
     public sealed partial class UpdateFiles
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The number of SHA-2 hashes generating
-        /// </summary>
+        /// <summary>The number of SHA-2 hashes generating</summary>
         private int hashesGenerating;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "UpdateFiles" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateFiles" /> class.</summary>
         public UpdateFiles()
         {
             this.InitializeComponent();
@@ -89,15 +84,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Gets the size of the file.
-        /// </summary>
-        /// <param name="file">
-        /// The <see cref="UpdateFile"/> to get the file size for
-        /// </param>
-        /// <param name="fileLocation">
-        /// The location for the file
-        /// </param>
+        /// <summary>Gets the size of the file.</summary>
+        /// <param name="file">The <see cref="UpdateFile"/> to get the file size for</param>
+        /// <param name="fileLocation">The location for the file</param>
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             var updateFile = file;
@@ -111,12 +100,8 @@ namespace SevenUpdate.Sdk.Pages
                     });
         }
 
-        /// <summary>
-        /// Adds a file to the list
-        /// </summary>
-        /// <param name="fullName">
-        /// The full path to the file
-        /// </param>
+        /// <summary>Adds a file to the list</summary>
+        /// <param name="fullName">The full path to the file</param>
         private void AddFile(string fullName)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
@@ -147,12 +132,8 @@ namespace SevenUpdate.Sdk.Pages
             GetFileSize(ref file);
         }
 
-        /// <summary>
-        /// Adds multiple files to the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="files">
-        /// The files.
-        /// </param>
+        /// <summary>Adds multiple files to the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="files">The files.</param>
         private void AddFiles(IList<string> files)
         {
             this.AddFile(files[0]);
@@ -164,15 +145,9 @@ namespace SevenUpdate.Sdk.Pages
             this.listBox.SelectedIndex = 0;
         }
 
-        /// <summary>
-        /// Browses for a folder contains files to add to the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
@@ -189,15 +164,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Browses for a file to add to the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Browses for a file to add to the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
@@ -213,15 +182,9 @@ namespace SevenUpdate.Sdk.Pages
             this.AddFiles(files);
         }
 
-        /// <summary>
-        /// Calculates the hash.
-        /// </summary>
-        /// <param name="file">
-        /// The <see cref="UpdateFile"/> to update the hash for
-        /// </param>
-        /// <param name="fileLocation">
-        /// The alternate location of the file
-        /// </param>
+        /// <summary>Calculates the hash.</summary>
+        /// <param name="file">The <see cref="UpdateFile"/> to update the hash for</param>
+        /// <param name="fileLocation">The alternate location of the file</param>
         private void CalculateHash(ref UpdateFile file, string fileLocation = null)
         {
             var context = TaskScheduler.FromCurrentSynchronizationContext();
@@ -242,12 +205,8 @@ namespace SevenUpdate.Sdk.Pages
         /// File
         ///   Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/>
         /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ChangeUI(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxDownloadUrl == null || this.listBox.SelectedItem == null)
@@ -283,9 +242,7 @@ namespace SevenUpdate.Sdk.Pages
             // ReSharper restore PossibleNullReferenceException
         }
 
-        /// <summary>
-        /// Checks if a hash is generating
-        /// </summary>
+        /// <summary>Checks if a hash is generating</summary>
         private void CheckHashGenerating()
         {
             this.hashesGenerating--;
@@ -296,15 +253,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Converts a path to system variables
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Converts a path to system variables</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
@@ -326,15 +277,9 @@ namespace SevenUpdate.Sdk.Pages
             source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
-        /// <summary>
-        /// Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
         private void DeleteItem(object sender, KeyEventArgs e)
         {
             var index = this.listBox.SelectedIndex;
@@ -357,26 +302,16 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Navigates to the main page
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GoToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
-        /// <summary>
-        /// Determines whether this instance has errors.
-        /// </summary>
-        /// <returns>
-        /// <see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.
-        /// </returns>
+        /// <summary>Determines whether this instance has errors.</summary>
+        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
         private bool HasErrors()
         {
             if (Core.UpdateInfo.Files.Count == 0)
@@ -390,15 +325,9 @@ namespace SevenUpdate.Sdk.Pages
             // ReSharper restore PossibleNullReferenceException
         }
 
-        /// <summary>
-        /// Navigates to the next page if no errors exist
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Navigates to the next page if no errors exist</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -411,43 +340,25 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>
-        /// Removes all files from the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Removes all files from the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveAllFiles(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.Clear();
         }
 
-        /// <summary>
-        /// Removes a files from the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Removes a files from the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.RemoveAt(this.listBox.SelectedIndex);
         }
 
-        /// <summary>
-        /// Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
@@ -467,15 +378,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = installUrl;
         }
 
-        /// <summary>
-        /// Updates the hash for the selected <see cref="UpdateFile"/>
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
@@ -493,15 +398,9 @@ namespace SevenUpdate.Sdk.Pages
             GetFileSize(ref selectedItem, files[0]);
         }
 
-        /// <summary>
-        /// Updates the UI based on whether Aero Glass is enabled
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

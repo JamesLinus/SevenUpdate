@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,27 +21,23 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows.Controls
 {
     using System.ComponentModel;
 
-    /// <summary>
-    /// Implements a CommandLink button that can be used in WPF user interfaces.
-    /// </summary>
+    /// <summary>Implements a CommandLink button that can be used in WPF user interfaces.</summary>
     public sealed class CommandLink : Button, INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The text to display below the main instruction text
-        /// </summary>
+        /// <summary>The text to display below the main instruction text</summary>
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
             "Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
-        /// <summary>
-        ///   Indicates if the Uac shield is needed
-        /// </summary>
+        /// <summary>Indicates if the Uac shield is needed</summary>
         public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
             "UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
 
@@ -50,17 +45,13 @@ namespace System.Windows.Controls
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes static members of the <see cref = "CommandLink" /> class.
-        /// </summary>
+        /// <summary>Initializes static members of the <see cref = "CommandLink" /> class.</summary>
         static CommandLink()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CommandLink), new FrameworkPropertyMetadata(typeof(CommandLink)));
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "CommandLink" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "CommandLink" /> class.</summary>
         public CommandLink()
         {
             if (this.Resources.Count != 0)
@@ -79,18 +70,14 @@ namespace System.Windows.Controls
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed
-        /// </summary>
+        /// <summary>Occurs when a property has changed</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether the application is running on XP
-        /// </summary>
+        /// <summary>Gets a value indicating whether the application is running on XP</summary>
         public static bool RunningOnXP
         {
             get
@@ -99,9 +86,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the supporting text to display on the <see cref = "CommandLink" /> below the instruction text
-        /// </summary>
+        /// <summary>Gets or sets the supporting text to display on the <see cref = "CommandLink" /> below the instruction text</summary>
         public string Note
         {
             get
@@ -115,12 +100,8 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether a Uac shield is needed.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if [use shield]; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether a Uac shield is needed.</summary>
+        /// <value><see langword = "true" /> if [use shield]; otherwise, <see langword = "false" />.</value>
         public bool UseShield
         {
             get
@@ -138,15 +119,9 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>
-        /// Handles a change to the <see cref="Note"/> property
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Handles a change to the <see cref="Note"/> property</summary>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -154,15 +129,9 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("Note");
         }
 
-        /// <summary>
-        /// Handles a change to the <see cref="UseShield"/> property
-        /// </summary>
-        /// <param name="obj">
-        /// The dependency object
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Handles a change to the <see cref="UseShield"/> property</summary>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -170,12 +139,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("UseShield");
         }
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="name">
-        /// The name of the property that has changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that has changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace System.Windows.Dwm
 {
     using System.Windows.Internal;
@@ -37,21 +38,15 @@ namespace System.Windows.Dwm
     {
         #region Events
 
-        /// <summary>
-        ///   Occurs when DWM becomes enabled or disabled on the system
-        /// </summary>
+        /// <summary>Occurs when DWM becomes enabled or disabled on the system</summary>
         public static event EventHandler<DwmCompositionChangedEventArgs> DwmCompositionChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether DWM is enabled on the desktop.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether DWM is enabled on the desktop.</summary>
+        /// <value><see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.</value>
         public static bool IsEnabled
         {
             get
@@ -82,29 +77,17 @@ namespace System.Windows.Dwm
 
         #region Public Methods
 
-        /// <summary>
-        /// Enables Blur on Aero Glass for a WPF window
-        /// </summary>
-        /// <param name="window">
-        /// The window object to add blur to
-        /// </param>
-        /// <param name="region">
-        /// The area to add the blur to
-        /// </param>
+        /// <summary>Enables Blur on Aero Glass for a WPF window</summary>
+        /// <param name="window">The window object to add blur to</param>
+        /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(Window window, IntPtr region)
         {
             EnableBlur(new WindowInteropHelper(window).Handle, region);
         }
 
-        /// <summary>
-        /// Enables Blur on Aero Glass
-        /// </summary>
-        /// <param name="windowHandle">
-        /// The windows handle to add the blur to
-        /// </param>
-        /// <param name="region">
-        /// The area to add the blur to
-        /// </param>
+        /// <summary>Enables Blur on Aero Glass</summary>
+        /// <param name="windowHandle">The windows handle to add the blur to</param>
+        /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
             var blur = new NativeMethods.DwmBlurBehind
@@ -116,15 +99,9 @@ namespace System.Windows.Dwm
             NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
         }
 
-        /// <summary>
-        /// Enables Aero Glass on a WPF window
-        /// </summary>
-        /// <param name="window">
-        /// The window to enable glass
-        /// </param>
-        /// <param name="margins">
-        /// The region to add glass
-        /// </param>
+        /// <summary>Enables Aero Glass on a WPF window</summary>
+        /// <param name="window">The window to enable glass</param>
+        /// <param name="margins">The region to add glass</param>
         public static void EnableGlass(Window window, NativeMethods.Margins margins = new NativeMethods.Margins())
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -152,15 +129,9 @@ namespace System.Windows.Dwm
             ResetAeroGlass(margins, windowHandle);
         }
 
-        /// <summary>
-        /// Excludes a UI element from the Aero Glass frame.
-        /// </summary>
-        /// <param name="element">
-        /// The element to exclude.
-        /// </param>
-        /// <param name="window">
-        /// The window the element resides in
-        /// </param>
+        /// <summary>Excludes a UI element from the Aero Glass frame.</summary>
+        /// <param name="element">The element to exclude.</param>
+        /// <param name="window">The window the element resides in</param>
         /// <remarks>
         /// c
         ///   Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
@@ -203,29 +174,17 @@ namespace System.Windows.Dwm
             NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins);
         }
 
-        /// <summary>
-        /// Resets the Aero Glass exclusion area.
-        /// </summary>
-        /// <param name="margins">
-        /// The margins.
-        /// </param>
-        /// <param name="window">
-        /// The window.
-        /// </param>
+        /// <summary>Resets the Aero Glass exclusion area.</summary>
+        /// <param name="margins">The margins.</param>
+        /// <param name="window">The window.</param>
         public static void ResetAeroGlass(NativeMethods.Margins margins, Window window)
         {
             ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
         }
 
-        /// <summary>
-        /// Resets the Aero Glass exclusion area.
-        /// </summary>
-        /// <param name="margins">
-        /// The margins.
-        /// </param>
-        /// <param name="windowHandle">
-        /// The window handle.
-        /// </param>
+        /// <summary>Resets the Aero Glass exclusion area.</summary>
+        /// <param name="margins">The margins.</param>
+        /// <param name="windowHandle">The window handle.</param>
         public static void ResetAeroGlass(NativeMethods.Margins margins, IntPtr windowHandle)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -240,27 +199,13 @@ namespace System.Windows.Dwm
 
         #region Methods
 
-        /// <summary>
-        /// An application-defined function that processes messages sent to a window.
-        /// </summary>
-        /// <param name="handle">
-        /// A handle to the window.
-        /// </param>
-        /// <param name="msg">
-        /// The message to send
-        /// </param>
-        /// <param name="parameter">
-        /// Additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.
-        /// </param>
-        /// <param name="parameter2">
-        /// Another additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.
-        /// </param>
-        /// <param name="handled">
-        /// if set to <see langword="true"/> the event was handled
-        /// </param>
-        /// <returns>
-        /// The return value is the result of the message processing and depends on the message sent.
-        /// </returns>
+        /// <summary>An application-defined function that processes messages sent to a window.</summary>
+        /// <param name="handle">A handle to the window.</param>
+        /// <param name="msg">The message to send</param>
+        /// <param name="parameter">Additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param>
+        /// <param name="parameter2">Another additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param>
+        /// <param name="handled">if set to <see langword="true"/> the event was handled</param>
+        /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
             if (msg == NativeMethods.DwmMessages.DwmCompositionChanged || msg == NativeMethods.DwmMessages.DwmRenderingChanged)
@@ -278,19 +223,13 @@ namespace System.Windows.Dwm
 
         #endregion
 
-        /// <summary>
-        /// Event argument for The <see cref="DwmCompositionChanged"/> event
-        /// </summary>
+        /// <summary>Event argument for The <see cref="DwmCompositionChanged"/> event</summary>
         public class DwmCompositionChangedEventArgs : EventArgs
         {
             #region Constructors and Destructors
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.
-            /// </summary>
-            /// <param name="isGlassEnabled">
-            /// if set to <see langword="true"/> aero glass is enabled
-            /// </param>
+            /// <summary>Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.</summary>
+            /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
             internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
             {
                 this.IsGlassEnabled = isGlassEnabled;
@@ -300,12 +239,8 @@ namespace System.Windows.Dwm
 
             #region Properties
 
-            /// <summary>
-            ///   Gets a value indicating whether DWM/Glass is currently enabled.
-            /// </summary>
-            /// <value>
-            ///   <see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.
-            /// </value>
+            /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
+            /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
             public bool IsGlassEnabled { get; private set; }
 
             #endregion

@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System.Collections.ObjectModel;
@@ -31,39 +32,29 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    /// The action to preform on the shortcut
-    /// </summary>
+    /// <summary>The action to preform on the shortcut</summary>
     [ProtoContract]
     [DataContract]
     [DefaultValue(Add)]
     public enum ShortcutAction
     {
-        /// <summary>
-        ///   Adds a shortcut
-        /// </summary>
+        /// <summary>Adds a shortcut</summary>
         [ProtoEnum]
         [EnumMember]
         Add = 0, 
 
-        /// <summary>
-        ///   Updates a shortcut only if it exists
-        /// </summary>
+        /// <summary>Updates a shortcut only if it exists</summary>
         [ProtoEnum]
         [EnumMember]
         Update = 1, 
 
-        /// <summary>
-        ///   Deletes a shortcut
-        /// </summary>
+        /// <summary>Deletes a shortcut</summary>
         [ProtoEnum]
         [EnumMember]
         Delete = 2
     }
 
-    /// <summary>
-    /// A shortcut to be created within an update
-    /// </summary>
+    /// <summary>A shortcut to be created within an update</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(ShortcutAction))]
@@ -71,57 +62,39 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The action to perform on the <see cref = "Shortcut" />
-        /// </summary>
+        /// <summary>The action to perform on the <see cref = "Shortcut" /></summary>
         private ShortcutAction action;
 
-        /// <summary>
-        ///   The command line arguments for the shortcut
-        /// </summary>
+        /// <summary>The command line arguments for the shortcut</summary>
         private string arguments;
 
-        /// <summary>
-        ///   The collection of localized shortcut descriptions
-        /// </summary>
+        /// <summary>The collection of localized shortcut descriptions</summary>
         private ObservableCollection<LocaleString> description;
 
-        /// <summary>
-        ///   The icon resource for the shortcut
-        /// </summary>
+        /// <summary>The icon resource for the shortcut</summary>
         private string icon;
 
-        /// <summary>
-        ///   The physical location of the shortcut lnk file
-        /// </summary>
+        /// <summary>The physical location of the shortcut lnk file</summary>
         private string location;
 
-        /// <summary>
-        ///   The collection of localized shortcut names
-        /// </summary>
+        /// <summary>The collection of localized shortcut names</summary>
         private ObservableCollection<LocaleString> name;
 
-        /// <summary>
-        ///   The file or folder that is executed by the shortcut
-        /// </summary>
+        /// <summary>The file or folder that is executed by the shortcut</summary>
         private string target;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed
-        /// </summary>
+        /// <summary>Occurs when a property has changed</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the action to perform on the <see cref = "Shortcut" />
-        /// </summary>
+        /// <summary>Gets or sets the action to perform on the <see cref = "Shortcut" /></summary>
         /// <value>The action.</value>
         [ProtoMember(3)] [DataMember] public ShortcutAction Action
         {
@@ -139,9 +112,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the command line arguments for the shortcut
-        /// </summary>
+        /// <summary>Gets or sets the command line arguments for the shortcut</summary>
         /// <value>The arguments of the shortcut</value>
         [ProtoMember(4, IsRequired = false)] [DataMember] public string Arguments
         {
@@ -159,9 +130,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the collection of localized shortcut descriptions
-        /// </summary>
+        /// <summary>Gets or sets the collection of localized shortcut descriptions</summary>
         /// <value>The localized descriptions for the shortcut</value>
         [ProtoMember(5, IsRequired = false)] [DataMember] public ObservableCollection<LocaleString> Description
         {
@@ -179,9 +148,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the icon resource for the shortcut
-        /// </summary>
+        /// <summary>Gets or sets the icon resource for the shortcut</summary>
         /// <value>The icon for the shortcut</value>
         [ProtoMember(6, IsRequired = false)] [DataMember] public string Icon
         {
@@ -199,9 +166,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the physical location of the shortcut lnk file
-        /// </summary>
+        /// <summary>Gets or sets the physical location of the shortcut lnk file</summary>
         /// <value>The shortcut location</value>
         [ProtoMember(2)] [DataMember] public string Location
         {
@@ -219,9 +184,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the collection of localized shortcut names
-        /// </summary>
+        /// <summary>Gets or sets the collection of localized shortcut names</summary>
         /// <value>The localized names for the shortcut</value>
         [ProtoMember(1)] [DataMember] public ObservableCollection<LocaleString> Name
         {
@@ -239,9 +202,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the file or folder that is executed by the shortcut
-        /// </summary>
+        /// <summary>Gets or sets the file or folder that is executed by the shortcut</summary>
         /// <value>The target for the shortcut</value>
         [ProtoMember(7, IsRequired = false)] [DataMember] public string Target
         {
@@ -263,12 +224,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="propertyName">
-        /// The name of the property that changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="propertyName">The name of the property that changed</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

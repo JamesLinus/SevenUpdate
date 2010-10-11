@@ -16,28 +16,20 @@ namespace SharpBits.Base.Progress
 
     using SharpBits.Base.File;
 
-    /// <summary>
-    /// The <see cref="BitsFile"/> progress
-    /// </summary>
+    /// <summary>The <see cref="BitsFile"/> progress</summary>
     public class FileProgress
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current file progress
-        /// </summary>
+        /// <summary>The current file progress</summary>
         private BGFileProgress fileProgress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FileProgress"/> class.
-        /// </summary>
-        /// <param name="fileProgress">
-        /// The file progress.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="FileProgress"/> class.</summary>
+        /// <param name="fileProgress">The file progress.</param>
         internal FileProgress(BGFileProgress fileProgress)
         {
             this.fileProgress = fileProgress;
@@ -47,9 +39,7 @@ namespace SharpBits.Base.Progress
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the total number of bytes downloaded
-        /// </summary>
+        /// <summary>Gets the total number of bytes downloaded</summary>
         /// <value>The bytes total.</value>
         public ulong BytesTotal
         {
@@ -59,9 +49,7 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        /// <summary>
-        ///   Gets the total number of bytes transferred.
-        /// </summary>
+        /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {
@@ -71,12 +59,8 @@ namespace SharpBits.Base.Progress
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether this <see cref = "FileProgress" /> is completed.
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> if completed; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets a value indicating whether this <see cref = "FileProgress" /> is completed.</summary>
+        /// <value><see langword = "true" /> if completed; otherwise, <see langword = "false" />.</value>
         public bool Completed
         {
             get

@@ -18,57 +18,39 @@ namespace SharpBits.Base.Job
     using System.Runtime.Serialization;
     using System.Security.Permissions;
 
-    /// <summary>
-    /// The collection of <see cref="BitsJob"/>'s
-    /// </summary>
+    /// <summary>The collection of <see cref="BitsJob"/>'s</summary>
     [Serializable]
     public class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current BITS manager
-        /// </summary>
+        /// <summary>The current BITS manager</summary>
         private readonly BitsManager manager;
 
-        /// <summary>
-        ///   Indicates if the job collection as been disposed
-        /// </summary>
+        /// <summary>Indicates if the job collection as been disposed</summary>
         private bool disposed;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
         public BitsJobsDictionary()
         {
         }
 
         // only required for initialization
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
-        /// </summary>
-        /// <param name="manager">
-        /// The manager.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <param name="manager">The manager.</param>
         internal BitsJobsDictionary(BitsManager manager)
         {
             this.manager = manager;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
-        /// </summary>
-        /// <param name="manager">
-        /// The manager.
-        /// </param>
-        /// <param name="jobList">
-        /// The job list.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <param name="manager">The manager.</param>
+        /// <param name="jobList">The job list.</param>
         internal BitsJobsDictionary(BitsManager manager, IEnumBackgroundCopyJobs jobList)
         {
             this.manager = manager;
@@ -76,15 +58,9 @@ namespace SharpBits.Base.Job
             this.Update();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.
-        /// </summary>
-        /// <param name="info">
-        /// The serialization info
-        /// </param>
-        /// <param name="context">
-        /// The context.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <param name="info">The serialization info</param>
+        /// <param name="context">The context.</param>
         protected BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             this.disposed = (bool)info.GetValue("disposed", typeof(bool));
@@ -94,9 +70,7 @@ namespace SharpBits.Base.Job
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the jobs.
-        /// </summary>
+        /// <summary>Gets the jobs.</summary>
         /// <value>The jobs of the current collection</value>
         internal IEnumBackgroundCopyJobs Jobs { get; private set; }
 
@@ -104,15 +78,9 @@ namespace SharpBits.Base.Job
 
         #region Public Methods
 
-        /// <summary>
-        /// Gets the object data.
-        /// </summary>
-        /// <param name="info">
-        /// The serialization info
-        /// </param>
-        /// <param name="context">
-        /// The context.
-        /// </param>
+        /// <summary>Gets the object data.</summary>
+        /// <param name="info">The serialization info</param>
+        /// <param name="context">The context.</param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -126,9 +94,7 @@ namespace SharpBits.Base.Job
 
         #region IDisposable
 
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -141,12 +107,8 @@ namespace SharpBits.Base.Job
 
         #region Methods
 
-        /// <summary>
-        /// Updates the specified job list.
-        /// </summary>
-        /// <param name="jobList">
-        /// The job list.
-        /// </param>
+        /// <summary>Updates the specified job list.</summary>
+        /// <param name="jobList">The job list.</param>
         internal void Update(IEnumBackgroundCopyJobs jobList)
         {
             lock (this)
@@ -157,12 +119,8 @@ namespace SharpBits.Base.Job
             }
         }
 
-        /// <summary>
-        /// Releases unmanaged and - optionally - managed resources
-        /// </summary>
-        /// <param name="disposing">
-        /// <see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.
-        /// </param>
+        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -181,9 +139,7 @@ namespace SharpBits.Base.Job
             this.disposed = true;
         }
 
-        /// <summary>
-        /// Updates the <see cref="BitsJob"/> collection
-        /// </summary>
+        /// <summary>Updates the <see cref="BitsJob"/> collection</summary>
         private void Update()
         {
             uint count;

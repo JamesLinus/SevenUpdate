@@ -13,30 +13,22 @@ namespace System.Windows.Dialogs.TaskDialogs
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Encapsulates additional configuration needed by <see cref="NativeTaskDialog"/> that it can't get from the <see cref="TaskDialogNativeMethods.TaskDialogConfig"/> struct.
-    /// </summary>
+    /// <summary>Encapsulates additional configuration needed by <see cref="NativeTaskDialog"/> that it can't get from the <see cref="TaskDialogNativeMethods.TaskDialogConfig"/> struct.</summary>
     internal sealed class NativeTaskDialogSettings
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   A collection of <see cref = "TaskDialogButton" />
-        /// </summary>
+        /// <summary>A collection of <see cref = "TaskDialogButton" /></summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] buttons;
 
-        /// <summary>
-        ///   /// A collection of <see cref = "TaskDialogRadioButton" />
-        /// </summary>
+        /// <summary>/// A collection of <see cref = "TaskDialogRadioButton" /></summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] radioButtons;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "NativeTaskDialogSettings" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "NativeTaskDialogSettings" /> class.</summary>
         internal NativeTaskDialogSettings()
         {
             this.NativeConfiguration = new TaskDialogNativeMethods.TaskDialogConfig();
@@ -74,47 +66,31 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the elevated buttons.
-        /// </summary>
+        /// <summary>Gets or sets the elevated buttons.</summary>
         /// <value>The elevated buttons.</value>
         public List<int> ElevatedButtons { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether to invoke help
-        /// </summary>
-        /// <value>
-        ///   <see langword = "true" /> to invoke help; otherwise, <see langword = "false" />.
-        /// </value>
+        /// <summary>Gets or sets a value indicating whether to invoke help</summary>
+        /// <value><see langword = "true" /> to invoke help; otherwise, <see langword = "false" />.</value>
         public bool InvokeHelp { get; set; }
 
-        /// <summary>
-        ///   Gets the native configuration.
-        /// </summary>
+        /// <summary>Gets the native configuration.</summary>
         /// <value>The native configuration.</value>
         public TaskDialogNativeMethods.TaskDialogConfig NativeConfiguration { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar maximum.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar maximum.</summary>
         /// <value>The progress bar maximum.</value>
         public int ProgressBarMaximum { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar minimum.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar minimum.</summary>
         /// <value>The progress bar minimum.</value>
         public int ProgressBarMinimum { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the state of the progress bar.
-        /// </summary>
+        /// <summary>Gets or sets the state of the progress bar.</summary>
         /// <value>The state of the progress bar.</value>
         public TaskDialogProgressBarState ProgressBarState { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar value.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar value.</summary>
         /// <value>The progress bar value.</value>
         public int ProgressBarValue { get; set; }
 
@@ -122,45 +98,29 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #region Public Methods
 
-        /// <summary>
-        /// Gets the buttons.
-        /// </summary>
-        /// <returns>
-        /// The collection of <see cref="TaskDialogButton"/>'s of the dialog dialog
-        /// </returns>
+        /// <summary>Gets the buttons.</summary>
+        /// <returns>The collection of <see cref="TaskDialogButton"/>'s of the dialog dialog</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetButtons()
         {
             return this.buttons;
         }
 
-        /// <summary>
-        /// Gets the radio buttons.
-        /// </summary>
-        /// <returns>
-        /// The collection of <see cref="TaskDialogRadioButton"/>'s of the dialog dialog
-        /// </returns>
+        /// <summary>Gets the radio buttons.</summary>
+        /// <returns>The collection of <see cref="TaskDialogRadioButton"/>'s of the dialog dialog</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetRadioButtons()
         {
             return this.radioButtons;
         }
 
-        /// <summary>
-        /// Sets the buttons.
-        /// </summary>
-        /// <param name="value">
-        /// The value.
-        /// </param>
+        /// <summary>Sets the buttons.</summary>
+        /// <param name="value">The value.</param>
         public void SetButtons(TaskDialogNativeMethods.TaskDialogButtonData[] value)
         {
             this.buttons = value;
         }
 
-        /// <summary>
-        /// Sets the radio buttons.
-        /// </summary>
-        /// <param name="value">
-        /// The value.
-        /// </param>
+        /// <summary>Sets the radio buttons.</summary>
+        /// <param name="value">The value.</param>
         public void SetRadioButtons(TaskDialogNativeMethods.TaskDialogButtonData[] value)
         {
             this.radioButtons = value;

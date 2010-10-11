@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate.Pages
 {
     using System;
@@ -37,35 +38,25 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Navigation;
 
-    /// <summary>
-    /// Interaction logic for Options.xaml
-    /// </summary>
+    /// <summary>Interaction logic for Options.xaml</summary>
     public partial class Options
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The Seven Update list location
-        /// </summary>
+        /// <summary>The Seven Update list location</summary>
         private const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
 
-        /// <summary>
-        ///   A collection of <see cref = "Sua" /> that Seven Update can update
-        /// </summary>
+        /// <summary>A collection of <see cref = "Sua" /> that Seven Update can update</summary>
         private static ObservableCollection<Sua> machineAppList;
 
-        /// <summary>
-        ///   The program configuration
-        /// </summary>
+        /// <summary>The program configuration</summary>
         private Config config;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "Options" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "Options" /> class.</summary>
         public Options()
         {
             this.InitializeComponent();
@@ -77,9 +68,7 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        /// <summary>
-        /// Downloads the Seven Update Application List
-        /// </summary>
+        /// <summary>Downloads the Seven Update Application List</summary>
         private void DownloadSul()
         {
             try
@@ -92,15 +81,9 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>
-        /// Loads the settings and <see cref="Sua"/> list when the page is loaded
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -110,12 +93,8 @@ namespace SevenUpdate.Pages
             Task.Factory.StartNew(this.DownloadSul);
         }
 
-        /// <summary>
-        /// Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system
-        /// </summary>
-        /// <param name="officialApplicationList">
-        /// The official application list from the server.
-        /// </param>
+        /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
+        /// <param name="officialApplicationList">The official application list from the server.</param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.ApplicationsFile);
@@ -195,15 +174,9 @@ namespace SevenUpdate.Pages
             this.Dispatcher.BeginInvoke(this.UpdateList);
         }
 
-        /// <summary>
-        /// Navigates to a Uri
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Navigates to a Uri</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             try
@@ -217,37 +190,23 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>
-        /// Limit the size of the <see cref="GridViewColumn"/> when it's being resized
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
-        /// <summary>
-        /// Saves the settings and goes back to the Main page
-        /// </summary>
-        /// <param name="sender">
-        /// The source of the event.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <summary>Saves the settings and goes back to the Main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             AdminClient.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList);
         }
 
-        /// <summary>
-        /// Updates the list with the <see cref="machineAppList"/>
-        /// </summary>
+        /// <summary>Updates the list with the <see cref="machineAppList"/></summary>
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;

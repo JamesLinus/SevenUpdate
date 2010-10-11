@@ -20,27 +20,19 @@ namespace WPFLocalizeExtension.Extensions
     using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
-    /// <summary>
-    /// <c>BaseLocalizeExtension</c> for Thickness values
-    /// </summary>
+    /// <summary><c>BaseLocalizeExtension</c> for Thickness values</summary>
     [MarkupExtensionReturnType(typeof(Thickness))]
     public class LocThicknessExtension : BaseLocalizeExtension<Thickness>
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <see cref = "LocThicknessExtension" /> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocThicknessExtension" /> class.</summary>
         public LocThicknessExtension()
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="LocThicknessExtension"/> class.
-        /// </summary>
-        /// <param name="key">
-        /// The resource identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="LocThicknessExtension"/> class.</summary>
+        /// <param name="key">The resource identifier.</param>
         public LocThicknessExtension(string key) : base(key)
         {
         }
@@ -49,21 +41,11 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>
-        /// Provides the Value for the first Binding as Thickness
-        /// </summary>
-        /// <param name="serviceProvider">
-        /// The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>
-        /// </param>
-        /// <returns>
-        /// The founded item from the .resx directory or <see langword="null"/> if not founded
-        /// </returns>
-        /// <exception cref="System.InvalidOperationException">
-        /// thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>
-        /// </exception>
-        /// <exception cref="System.NotSupportedException">
-        /// thrown if the founded object is not type of Thickness
-        /// </exception>
+        /// <summary>Provides the Value for the first Binding as Thickness</summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of Thickness</exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -91,15 +73,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>
-        /// This method is used to modify the passed object into the target format
-        /// </summary>
-        /// <param name="input">
-        /// The object that will be modified
-        /// </param>
-        /// <returns>
-        /// Returns the modified object
-        /// </returns>
+        /// <summary>This method is used to modify the passed object into the target format</summary>
+        /// <param name="input">The object that will be modified</param>
+        /// <returns>Returns the modified object</returns>
         protected override object FormatOutput(object input)
         {
             var method = typeof(ThicknessConverter).GetMethod("FromString", BindingFlags.Static | BindingFlags.NonPublic);
@@ -130,9 +106,7 @@ namespace WPFLocalizeExtension.Extensions
             return (Thickness)method.Invoke(null, args);
         }
 
-        /// <summary>
-        /// see <c>BaseLocalizeExtension</c>
-        /// </summary>
+        /// <summary>see <c>BaseLocalizeExtension</c></summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());

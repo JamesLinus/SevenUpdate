@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System;
@@ -34,66 +35,46 @@ namespace SevenUpdate
     using System.Net.Sockets;
     using System.Threading.Tasks;
 
-    /// <summary>
-    /// Contains methods to search for updates
-    /// </summary>
+    /// <summary>Contains methods to search for updates</summary>
     public static class Search
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Location of the SUI for Seven Update
-        /// </summary>
+        /// <summary>Location of the SUI for Seven Update</summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
 
-        /// <summary>
-        ///   The number of important updates found
-        /// </summary>
+        /// <summary>The number of important updates found</summary>
         private static int importantCount;
 
-        /// <summary>
-        ///   The number of optional updates found
-        /// </summary>
+        /// <summary>The number of optional updates found</summary>
         private static int optionalCount;
 
-        /// <summary>
-        ///   The number of recommended updates found
-        /// </summary>
+        /// <summary>The number of recommended updates found</summary>
         private static int recommendedCount;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs if an error occurred
-        /// </summary>
+        /// <summary>Occurs if an error occurred</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
-        /// <summary>
-        ///   Occurs when the searching of updates has completed.
-        /// </summary>
+        /// <summary>Occurs when the searching of updates has completed.</summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchCompleted;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether Seven update is currently searching for updates
-        /// </summary>
+        /// <summary>Gets a value indicating whether Seven update is currently searching for updates</summary>
         public static bool IsSearching { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Searches for updates while blocking the calling thread
-        /// </summary>
-        /// <param name="applications">
-        /// The collection of applications to check for updates
-        /// </param>
+        /// <summary>Searches for updates while blocking the calling thread</summary>
+        /// <param name="applications">The collection of applications to check for updates</param>
         public static void SearchForUpdates(IEnumerable<Sua> applications)
         {
             IsSearching = true;
@@ -255,23 +236,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Searches for files without blocking the calling thread
-        /// </summary>
-        /// <param name="applications">
-        /// The collection of applications to check for updates
-        /// </param>
+        /// <summary>Searches for files without blocking the calling thread</summary>
+        /// <param name="applications">The collection of applications to check for updates</param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> applications)
         {
             Task.Factory.StartNew(() => SearchForUpdates(applications));
         }
 
-        /// <summary>
-        /// Manually sets an <see cref="Sui"/> collection has updates found
-        /// </summary>
-        /// <param name="updates">
-        /// The updates to set as found
-        /// </param>
+        /// <summary>Manually sets an <see cref="Sui"/> collection has updates found</summary>
+        /// <param name="updates">The updates to set as found</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
             importantCount = 0;
@@ -304,18 +277,10 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// Checks for updates
-        /// </summary>
-        /// <param name="app">
-        /// a collection of applications to check for updates
-        /// </param>
-        /// <param name="hidden">
-        /// a collection of hidden updates
-        /// </param>
-        /// <returns>
-        /// returns <c>true</c> if found updates, otherwise <c>false</c>
-        /// </returns>
+        /// <summary>Checks for updates</summary>
+        /// <param name="app">a collection of applications to check for updates</param>
+        /// <param name="hidden">a collection of hidden updates</param>
+        /// <returns>returns <see langword = "true" /> if found updates, otherwise <see langword = "false" /></returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)

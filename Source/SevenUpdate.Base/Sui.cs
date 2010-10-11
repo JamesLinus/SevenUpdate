@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System.Collections.ObjectModel;
@@ -31,9 +32,7 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    /// The collection of updates and the application info.
-    /// </summary>
+    /// <summary>The collection of updates and the application info.</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(Sua))]
@@ -42,32 +41,24 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The application information
-        /// </summary>
+        /// <summary>The application information</summary>
         private Sua appInfo;
 
-        /// <summary>
-        ///   A collection of updates for the application
-        /// </summary>
+        /// <summary>A collection of updates for the application</summary>
         private ObservableCollection<Update> updates;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed
-        /// </summary>
+        /// <summary>Occurs when a property has changed</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the  software information for the application updates.
-        /// </summary>
+        /// <summary>Gets or sets the  software information for the application updates.</summary>
         [ProtoMember(2)] [DataMember] public Sua AppInfo
         {
             get
@@ -84,9 +75,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the collection of updates for the application
-        /// </summary>
+        /// <summary>Gets or sets the collection of updates for the application</summary>
         [ProtoMember(1)] [DataMember] public ObservableCollection<Update> Updates
         {
             get
@@ -107,12 +96,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="name">
-        /// The name of the property that changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

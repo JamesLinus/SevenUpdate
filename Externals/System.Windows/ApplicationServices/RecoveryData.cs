@@ -15,12 +15,8 @@ namespace System.Windows.ApplicationServices
     ///   by the system when an application has registered for 
     ///   application recovery.
     /// </summary>
-    /// <param name="state">
-    /// An application-defined state object that is passed to the callback method.
-    /// </param>
-    /// <returns>
-    /// The result code
-    /// </returns>
+    /// <param name="state">An application-defined state object that is passed to the callback method.</param>
+    /// <returns>The result code</returns>
     /// <remarks>
     /// The callback method will be invoked
     ///   prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
@@ -38,15 +34,9 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RecoveryData"/> class.
-        /// </summary>
-        /// <param name="callback">
-        /// The callback delegate.
-        /// </param>
-        /// <param name="state">
-        /// The current state of the application.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref="RecoveryData"/> class.</summary>
+        /// <param name="callback">The callback delegate.</param>
+        /// <param name="state">The current state of the application.</param>
         protected RecoveryData(RecoveryCallback callback, object state)
         {
             this.Callback = callback;
@@ -57,23 +47,17 @@ namespace System.Windows.ApplicationServices
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the recovery callback function.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the recovery callback function.</summary>
         public RecoveryCallback Callback { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the application state.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the application state.</summary>
         public object State { get; set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Invokes the recovery callback function.
-        /// </summary>
+        /// <summary>Invokes the recovery callback function.</summary>
         public void Invoke()
         {
             if (this.Callback != null)

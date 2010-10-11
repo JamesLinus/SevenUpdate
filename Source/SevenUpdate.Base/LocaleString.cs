@@ -7,8 +7,7 @@
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt">GNU General Public License Version 3</license>
-// ***********************************************************************
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
 //
 //    Seven Update is free software: you can redistribute it and/or modify
@@ -22,7 +21,9 @@
 //    GNU General Public License for more details.
 //
 //    You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see <http://www.gnu.org/licenses/>.
+//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
+// </license>
+// ***********************************************************************
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -30,41 +31,31 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    /// Contains a string indicating the language and a value
-    /// </summary>
+    /// <summary>Contains a string indicating the language and a value</summary>
     [ProtoContract]
     [DataContract]
     public sealed class LocaleString : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The ISO language code
-        /// </summary>
+        /// <summary>The ISO language code</summary>
         private string lang;
 
-        /// <summary>
-        ///   The value of the string
-        /// </summary>
+        /// <summary>The value of the string</summary>
         private string value;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed
-        /// </summary>
+        /// <summary>Occurs when a property has changed</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets an ISO language code
-        /// </summary>
+        /// <summary>Gets or sets an ISO language code</summary>
         /// <value>The iso code</value>
         [ProtoMember(1)] [DataMember] public string Lang
         {
@@ -82,9 +73,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the value of the string
-        /// </summary>
+        /// <summary>Gets or sets the value of the string</summary>
         /// <value>The value.</value>
         [ProtoMember(2)] [DataMember] public string Value
         {
@@ -106,12 +95,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
-        /// </summary>
-        /// <param name="name">
-        /// The name of the property that changed
-        /// </param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;
