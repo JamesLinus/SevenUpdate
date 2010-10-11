@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"
@@ -26,7 +26,7 @@ using System.Windows.Markup;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.1")]
-[assembly: AssemblyFileVersion("10.9.30")]
+[assembly: AssemblyFileVersion("10.10.11")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: Guid("59ffa091-2f23-45bc-8212-125250bf213d")]

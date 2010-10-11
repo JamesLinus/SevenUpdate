@@ -40,6 +40,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersionAttribute("1.2.0.1")]
-[assembly: AssemblyFileVersionAttribute("10.10.6")]
+[assembly: AssemblyFileVersionAttribute("10.10.11")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]

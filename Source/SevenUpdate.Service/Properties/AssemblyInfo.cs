@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="SevenUpdate.Service"
 //            assembly="SevenUpdate.Service"
@@ -41,7 +41,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.2.0")]
-[assembly: AssemblyFileVersion("10.10.6")]
+[assembly: AssemblyVersion("1.2.1")]
+[assembly: AssemblyFileVersion("10.10.11")]
 [assembly: ComVisible(false)]
 [assembly: Guid("9c9e7ad5-4de8-4057-a2c5-aef12fb60f55")]

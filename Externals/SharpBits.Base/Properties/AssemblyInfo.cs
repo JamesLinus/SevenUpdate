@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
@@ -28,6 +28,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.0")]
-[assembly: AssemblyFileVersion("10.9.17")]
+[assembly: AssemblyFileVersion("10.10.11")]
 [assembly: CLSCompliant(false)]
 [assembly: Guid("6d72f0c4-b48b-4f08-ae9f-a85fd4281942")]
