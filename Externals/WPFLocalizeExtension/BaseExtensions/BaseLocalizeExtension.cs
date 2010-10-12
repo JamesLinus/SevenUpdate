@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="BaseLocalizeExtension.cs"
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"

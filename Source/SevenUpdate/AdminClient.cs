@@ -111,7 +111,7 @@ namespace SevenUpdate
                 {
                     t.Kill();
                 }
-                catch (Exception)
+                catch (UnauthorizedAccessException)
                 {
                 }
             }
@@ -134,13 +134,8 @@ namespace SevenUpdate
             }
             else
             {
-                try
-                {
+                if (wcfClient.State == CommunicationState.Opened)
                     wcfClient.Unsubscribe();
-                }
-                catch (Exception)
-                {
-                }
             }
         }
 
@@ -230,9 +225,11 @@ namespace SevenUpdate
                 {
                     return false;
                 }
+
                 Thread.Sleep(1000);
                 wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
             }
+
             #endif
 
             if (wcfClient == null)
@@ -253,7 +250,7 @@ namespace SevenUpdate
 
             if (wcfClient.State == CommunicationState.Faulted)
             {
-                AdminError(new Exception("Fault"));
+                AdminError(new FaultException());
                 return WaitForAdmin();
             }
 
@@ -267,11 +264,6 @@ namespace SevenUpdate
             {
                 Thread.SpinWait(200);
                 return WaitForAdmin();
-            }
-            catch (Exception e)
-            {
-                AdminError(e);
-                return false;
             }
         }
 

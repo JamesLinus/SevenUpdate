@@ -12,8 +12,6 @@
 // ***********************************************************************
 namespace SharpBits.Base
 {
-    using SharpBits.Base.Job;
-
     /// <summary>The proxy settings for the <see cref="BitsJob"/></summary>
     public class ProxySettings
     {

@@ -48,20 +48,18 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            try
+            var files = value as Collection<UpdateFile>;
+            if (files != null)
             {
-                var files = value as Collection<UpdateFile>;
-
                 // Gets the full size of the update then converts it into a string format
                 return Utilities.ConvertFileSize(Core.GetUpdateSize(files));
             }
-            catch (Exception)
-            {
-                var size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
 
-                // Converts the ulong into a readable file size string
-                return Utilities.ConvertFileSize(size);
-            }
+            var size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
+
+            // Converts the ulong into a readable file size string
+            return Utilities.ConvertFileSize(size);
+            
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

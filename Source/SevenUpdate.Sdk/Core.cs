@@ -64,14 +64,6 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        /// <summary>
-        /// Initializes static members of the <see cref="Core"/> class.
-        /// </summary>
-        static Core()
-        {
-            Projects = Utilities.Deserialize<Collection<Project>>(ProjectsFile);
-        }
-
         #region Properties
 
         /// <summary>Gets the application information of the project</summary>
@@ -88,7 +80,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets a collection of Projects</summary>
         /// <value>The projects.</value>
-        internal static Collection<Project> Projects { get; private set; }
+        internal static Collection<Project> Projects { get; set; }
 
         /// <summary>Gets or sets the index for the current shortcut being edited</summary>
         /// <value>The selected shortcut.</value>
@@ -222,10 +214,10 @@ namespace SevenUpdate.Sdk
                 case @"sui":
                     openFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
                     break;
-                case "reg":
+                case @"reg":
                     openFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
                     break;
-                case "lnk":
+                case @"lnk":
                     openFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
                     break;
                 default:
@@ -392,28 +384,28 @@ namespace SevenUpdate.Sdk
                     switch (standardButtons)
                     {
                         case TaskDialogStandardButtons.Ok:
-                            button = new TaskDialogButton(@"btnOK", "OK")
+                            button = new TaskDialogButton(@"btnOK", Resources.OK)
                                 {
                                     Default = false
                                 };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Cancel:
-                            button = new TaskDialogButton(@"btnCancel", "Cancel")
+                            button = new TaskDialogButton(@"btnCancel", Resources.Cancel)
                                 {
                                     Default = false
                                 };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Retry:
-                            button = new TaskDialogButton(@"btnRetry", "Retry")
+                            button = new TaskDialogButton(@"btnRetry", Resources.Retry)
                                 {
                                     Default = false
                                 };
                             td.Controls.Add(button);
                             break;
                         case TaskDialogStandardButtons.Close:
-                            button = new TaskDialogButton(@"btnClose", "Close")
+                            button = new TaskDialogButton(@"btnClose", Resources.Close)
                                 {
                                     Default = false
                                 };

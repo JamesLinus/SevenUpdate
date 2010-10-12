@@ -27,6 +27,7 @@
 namespace SevenUpdate.Admin
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.Globalization;
@@ -159,15 +160,8 @@ namespace SevenUpdate.Admin
         /// <param name="appUpdates">The collection of applications and updates</param>
         private static void DownloadUpdates(Collection<Sui> appUpdates)
         {
-            try
-            {
-                apps = appUpdates;
-                Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
-            }
-            catch (Exception e)
-            {
-                Utilities.ReportError(e, Utilities.AllUserStore);
-            }
+            apps = appUpdates;
+            Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
@@ -175,7 +169,7 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
-            if (e.Type == ErrorType.FatalNetworkError)
+            if (e.ErrorType == ErrorType.FatalNetworkError)
             {
                 ShutdownApp();
             }
@@ -187,20 +181,14 @@ namespace SevenUpdate.Admin
         private static void HostFaulted(object sender, EventArgs e)
         {
             IsClientConnected = false;
-            Utilities.ReportError("Host Fault", Utilities.AllUserStore);
+            Utilities.ReportError(@"Host Fault", Utilities.AllUserStore);
             if (WcfService.ErrorOccurred != null)
             {
-                WcfService.ErrorOccurred(@"Communication with the update service has been interrupted and cannot be resumed", ErrorType.FatalError);
+                WcfService.ErrorOccurred(Resources.UpdateServiceInterrupted, ErrorType.FatalError);
             }
 
-            try
-            {
+            if (host.State == CommunicationState.Opened)
                 host.Abort();
-            }
-            catch (Exception)
-            {
-            }
-
             ShutdownApp();
         }
 
@@ -240,6 +228,38 @@ namespace SevenUpdate.Admin
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
+        private static void StartWcfHost()
+        {
+            host = new ServiceHost(typeof(WcfService));
+            host.Faulted += HostFaulted;
+            host.UnknownMessageReceived += HostUnknownMessageReceived;
+            WcfService.ClientConnected += ServiceClientConnected;
+            WcfService.ClientDisconnected += ServiceClientDisconnected;
+            WcfService.DownloadUpdates += DownloadUpdates;
+            SystemEvents.SessionEnding += PreventClose;
+            Search.SearchCompleted += SearchCompleted;
+            Search.ErrorOccurred += ErrorOccurred;
+            Download.DownloadCompleted += DownloadCompleted;
+            Download.DownloadProgressChanged += DownloadProgressChanged;
+            Install.InstallCompleted += InstallCompleted;
+            Install.InstallProgressChanged += InstallProgressChanged;
+            try
+            {
+                host.Open();
+            }
+            catch (FaultException e)
+                {
+                    Utilities.ReportError(e, Utilities.AllUserStore);
+                    if (WcfService.ErrorOccurred != null)
+                    {
+                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
+                    }
+
+                    SystemEvents.SessionEnding -= PreventClose;
+                    ShutdownApp();
+                }
+        }
+
         /// <summary>The main execution method</summary>
         /// <param name="args">The command line arguments</param>
         [STAThread]
@@ -254,101 +274,19 @@ namespace SevenUpdate.Admin
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
-                try
+                if (createdNew)
                 {
-                    if (createdNew)
+                    StartWcfHost();
+                    if (!Directory.Exists(Utilities.AllUserStore))
                     {
-                        host = new ServiceHost(typeof(WcfService));
-                        host.Faulted += HostFaulted;
-                        host.UnknownMessageReceived += HostUnknownMessageReceived;
-                        WcfService.ClientConnected += ServiceClientConnected;
-                        WcfService.ClientDisconnected += ServiceClientDisconnected;
-                        WcfService.DownloadUpdates += DownloadUpdates;
-                        SystemEvents.SessionEnding += PreventClose;
-                        Search.SearchCompleted += SearchCompleted;
-                        Search.ErrorOccurred += ErrorOccurred;
-                        Download.DownloadCompleted += DownloadCompleted;
-                        Download.DownloadProgressChanged += DownloadProgressChanged;
-                        Install.InstallCompleted += InstallCompleted;
-                        Install.InstallProgressChanged += InstallProgressChanged;
-                        host.Open();
-                        if (!Directory.Exists(Utilities.AllUserStore))
-                        {
-                            Directory.CreateDirectory(Utilities.AllUserStore);
-                        }
+                        Directory.CreateDirectory(Utilities.AllUserStore);
                     }
-                }
-                catch (FaultException e)
-                {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
-                    if (WcfService.ErrorOccurred != null)
-                    {
-                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
-                    }
-
-                    SystemEvents.SessionEnding -= PreventClose;
-                    ShutdownApp();
-                }
-                catch (Exception e)
-                {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
-                    if (WcfService.ErrorOccurred != null)
-                    {
-                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
-                    }
-
-                    SystemEvents.SessionEnding -= PreventClose;
-
-                    ShutdownApp();
                 }
             }
 
             var app = new Application();
 
-            try
-            {
-                if (args.Length > 0)
-                {
-                    if (args[0] == "Abort")
-                    {
-                        using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
-                        {
-                            fs.WriteByte(0);
-                            fs.Close();
-                            ShutdownApp();
-                        }
-                    }
-
-                    if (args[0] == "Auto")
-                    {
-                        if (File.Exists(Utilities.AllUserStore + "abort.lock"))
-                        {
-                            File.Delete(Utilities.AllUserStore + "abort.lock");
-                        }
-
-                        isAutoInstall = true;
-                        isInstalling = true;
-                        notifyIcon = new NotifyIcon
-                            {
-                                Icon = Resources.trayIcon, 
-                                Text = Resources.CheckingForUpdates, 
-                                Visible = true
-                            };
-                        notifyIcon.BalloonTipClicked += RunSevenUpdate;
-                        notifyIcon.Click += RunSevenUpdate;
-                        Search.ErrorOccurred += ErrorOccurred;
-                        Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile));
-                    }
-                    else
-                    {
-                        ShutdownApp();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Utilities.ReportError(e, Utilities.AllUserStore);
-            }
+            ProcessArgs(args);
 
             app.Run();
             SystemEvents.SessionEnding -= PreventClose;
@@ -366,6 +304,73 @@ namespace SevenUpdate.Admin
             }
         }
 
+        /// <summary>
+        /// Processes the command line arguments
+        /// </summary>
+        /// <param name="args">The arguments to process</param>
+        private static void ProcessArgs(IList<string> args)
+        {
+            if (args.Count > 0)
+            {
+                if (args[0] == "Abort")
+                {
+                    try
+                    {
+                        using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
+                        {
+                            fs.WriteByte(0);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                        {
+                            throw;
+                        }
+                        Utilities.ReportError(e, Utilities.UserStore);
+                    }
+
+                    ShutdownApp();
+                }
+
+                if (args[0] == "Auto")
+                {
+                    if (File.Exists(Utilities.AllUserStore + "abort.lock"))
+
+                        try
+                        {
+                            File.Delete(Utilities.AllUserStore + "abort.lock");
+                        }
+                        catch (Exception e)
+                        {
+                            if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                            {
+                                throw;
+                            }
+                            Utilities.ReportError(e, Utilities.UserStore);
+                        }
+
+
+                    isAutoInstall = true;
+                    isInstalling = true;
+                    notifyIcon = new NotifyIcon
+                        {
+                            Icon = Resources.trayIcon,
+                            Text = Resources.CheckingForUpdates,
+                            Visible = true
+                        };
+                    notifyIcon.BalloonTipClicked += RunSevenUpdate;
+                    notifyIcon.Click += RunSevenUpdate;
+                    Search.ErrorOccurred += ErrorOccurred;
+                    Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile));
+                }
+                else
+                {
+                    ShutdownApp();
+                }
+            }
+        }
+
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
@@ -373,21 +378,15 @@ namespace SevenUpdate.Admin
         {
             if (notifyIcon != null)
             {
-                try
-                {
-                    notifyIcon.Visible = false;
-                    notifyIcon.Dispose();
-                    notifyIcon = null;
-                }
-                catch (Exception)
-                {
-                }
+                notifyIcon.Visible = false;
+                notifyIcon.Dispose();
+                notifyIcon = null;
             }
 
-            using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
+            FileStream fs = null;
+            using (fs = File.Create(Utilities.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
-                fs.Close();
             }
 
             e.Cancel = true;
@@ -472,15 +471,9 @@ namespace SevenUpdate.Admin
         {
             if (notifyIcon != null)
             {
-                try
-                {
-                    notifyIcon.Visible = false;
-                    notifyIcon.Dispose();
-                    notifyIcon = null;
-                }
-                catch (Exception)
-                {
-                }
+                notifyIcon.Visible = false;
+                notifyIcon.Dispose();
+                notifyIcon = null;
             }
 
             Environment.Exit(0);

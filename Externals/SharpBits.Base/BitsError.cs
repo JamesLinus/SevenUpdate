@@ -16,11 +16,8 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    using SharpBits.Base.File;
-    using SharpBits.Base.Job;
-
     /// <summary>Bits error</summary>
-    public class BitsError
+    public class BitsError : Exception
     {
         #region Constants and Fields
 

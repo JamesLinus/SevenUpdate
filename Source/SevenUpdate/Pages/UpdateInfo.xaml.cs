@@ -29,6 +29,7 @@ namespace SevenUpdate.Pages
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Windows;
     using System.Windows.Controls;
@@ -143,13 +144,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                Process.Start(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
-            }
-            catch (Exception)
-            {
-            }
+            Utilities.StartProcess(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl.PathAndQuery);
         }
 
         /// <summary>Launches the More Information <c>Url</c> of the update</summary>
@@ -157,13 +152,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                Process.Start(((Update)this.lvUpdates.SelectedItem).InfoUrl);
-            }
-            catch (Exception)
-            {
-            }
+            Utilities.StartProcess(((Update)this.lvUpdates.SelectedItem).InfoUrl.PathAndQuery);
         }
 
         /// <summary>Saves the selection of updates and navigates back to the Main page</summary>

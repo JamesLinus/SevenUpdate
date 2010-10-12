@@ -96,7 +96,7 @@ namespace SevenUpdate.Sdk.Pages
                     {
                         updateFile.FileSize =
                             Utilities.GetFileSize(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination.PathAndQuery, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
                     });
         }
 
@@ -119,9 +119,9 @@ namespace SevenUpdate.Sdk.Pages
             var file = new UpdateFile
                 {
                     Action = FileAction.Update, 
-                    Destination = installUrl, 
+                    Destination = new Uri(installUrl), 
                     Hash = Properties.Resources.CalculatingHash, 
-                    Source = downloadUrl
+                    Source = new Uri(downloadUrl)
                 };
 
             Core.UpdateInfo.Files.Add(file);
@@ -196,7 +196,7 @@ namespace SevenUpdate.Sdk.Pages
                     {
                         updateFile.Hash =
                             Utilities.GetHash(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination.PathAndQuery, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
                     }).
                 ContinueWith(_ => this.CheckHashGenerating(), context);
         }
@@ -375,7 +375,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var installUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = installUrl;
+            Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = new Uri(installUrl);
         }
 
         /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>

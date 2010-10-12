@@ -26,6 +26,7 @@
 // ***********************************************************************
 namespace SevenUpdate
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Runtime.Serialization;
@@ -75,7 +76,7 @@ namespace SevenUpdate
         private ObservableCollection<LocaleString> description;
 
         /// <summary>The source main location to download files for the update</summary>
-        private string downloadUrl;
+        private Uri downloadUrl;
 
         /// <summary>The collection of files to perform actions on in the update</summary>
         private ObservableCollection<UpdateFile> files;
@@ -86,11 +87,11 @@ namespace SevenUpdate
         /// <summary>Indicates the importance type of the update</summary>
         private Importance importance;
 
-        /// <summary>The url pointing to a resource to find more information about the update</summary>
-        private string infoUrl;
+        /// <summary>The Uri pointing to a resource to find more information about the update</summary>
+        private Uri infoUrl;
 
-        /// <summary>The url pointing to the software license for the application/update</summary>
-        private string licenseUrl;
+        /// <summary>The Uri pointing to the software license for the application/update</summary>
+        private Uri licenseUrl;
 
         /// <summary>The collection of localized update names</summary>
         private ObservableCollection<LocaleString> name;
@@ -141,7 +142,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the source main location to download files for the update</summary>
         /// <value>The url to download the update files.</value>
-        [ProtoMember(3)] [DataMember] public string DownloadUrl
+        [ProtoMember(3)] [DataMember] public Uri DownloadUrl
         {
             get
             {
@@ -213,7 +214,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to a resource to find more information about the update</summary>
         /// <value>The info URL.</value>
-        [ProtoMember(6, IsRequired = false)] [DataMember] public string InfoUrl
+        [ProtoMember(6, IsRequired = false)] [DataMember] public Uri InfoUrl
         {
             get
             {
@@ -231,7 +232,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to the software license for the application/update</summary>
         /// <value>The url pointing to the software license</value>
-        [ProtoMember(7, IsRequired = false)] [DataMember] public string LicenseUrl
+        [ProtoMember(7, IsRequired = false)] [DataMember] public Uri LicenseUrl
         {
             get
             {

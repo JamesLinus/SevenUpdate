@@ -26,7 +26,6 @@
 // ***********************************************************************
 namespace SevenUpdate.Windows
 {
-    using System.Diagnostics;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Navigation;
@@ -63,7 +62,7 @@ namespace SevenUpdate.Windows
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(e.Uri.AbsoluteUri);
+            Utilities.StartProcess(e.Uri.PathAndQuery);
             e.Handled = true;
         }
 

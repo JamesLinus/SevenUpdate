@@ -2,7 +2,6 @@
     <Converters:FileSizeConverter x:Key="fileSizeConverter" />
     <Converters:LocaleStringToStringConverter x:Key="localeStringToString" />
     <Converters:Is64BitToStringConverter x:Key="is64BitToString" />
-    <Converters:UpdateStatusToBoolConverter x:Key="updateStatusToBool" />
     <Converters:ImportanceToStringConverter x:Key="importanceToString" />
     <StringToVisibilityConverter x:Key="stringToVisibility" />
     <StringToBooleanConverter x:Key="stringToBool" />

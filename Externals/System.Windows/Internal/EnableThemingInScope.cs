@@ -14,7 +14,6 @@ namespace System.Windows.Internal
     using System.Runtime.InteropServices;
     using System.Security;
     using System.Security.Permissions;
-    using System.Windows.Forms;
 
     /// <summary>
     /// Enables the process to access theming controls
@@ -47,17 +46,21 @@ namespace System.Windows.Internal
         /// <param name="enable">if set to <see langword="true"/> [enable].</param>
         public EnableThemingInScope(bool enable)
         {
-            if (enable && OSFeature.Feature.IsPresent(OSFeature.Themes))
+            if (!enable)
             {
-                // what does this line look like in WPF land?
-                if (EnsureActivateContextCreated())
-                {
-                    if (!ActivateActCtx(activationContext, out this.cookie))
-                    {
-                        // Be sure cookie always zero if activation failed
-                        this.cookie = IntPtr.Zero;
-                    }
-                }
+                return;
+            }
+
+            // what does this line look like in WPF land?
+            if (!EnsureActivateContextCreated())
+            {
+                return;
+            }
+
+            if (!ActivateActCtx(activationContext, out this.cookie))
+            {
+                // Be sure cookie always zero if activation failed
+                this.cookie = IntPtr.Zero;
             }
         }
 
@@ -112,6 +115,7 @@ namespace System.Windows.Internal
         /// Ensures the activation context is created
         /// </summary>
         /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
+        [SuppressUnmanagedCodeSecurity]
         private static bool EnsureActivateContextCreated()
         {
             lock (typeof(EnableThemingInScope))

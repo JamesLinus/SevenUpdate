@@ -105,10 +105,9 @@ namespace SevenUpdate
             Utilities.Locale = Settings.Default.locale;
             foreach (var t in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)))
             {
-                var suaLoc = t;
+                var suaLoc = new Uri(t.Replace(@"sevenupdate://", null));
                 try
                 {
-                    suaLoc = suaLoc.Replace(@"sevenupdate://", null);
                     var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(suaLoc), suaLoc);
                     var appName = Utilities.GetLocaleString(sua.Name);
                     if (

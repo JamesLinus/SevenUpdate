@@ -34,11 +34,11 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="SerializationErrorEventArgs"/> class.</summary>
-        /// <param name="e">The exception data</param>
+        /// <param name="exception">The exception data</param>
         /// <param name="file">The full path of the file</param>
-        public SerializationErrorEventArgs(Exception e, string file)
+        public SerializationErrorEventArgs(Exception exception, Uri file)
         {
-            this.Exception = e;
+            this.Exception = exception;
             this.File = file;
         }
 
@@ -52,7 +52,7 @@ namespace SevenUpdate
 
         /// <summary>Gets the full path of the file</summary>
         /// <value>The file that the serialization error occurred for</value>
-        public string File { get; private set; }
+        public Uri File { get; private set; }
 
         #endregion
     }

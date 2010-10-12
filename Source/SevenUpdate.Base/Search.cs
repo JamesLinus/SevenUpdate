@@ -88,7 +88,7 @@ namespace SevenUpdate
                 var client = new TcpClient(@"sevenupdate.com", 80);
                 client.Close();
             }
-            catch (Exception e)
+            catch (WebException e)
             {
                 if (ErrorOccurred != null)
                 {
@@ -98,68 +98,55 @@ namespace SevenUpdate
                 return;
             }
 
-            try
-            {
-                var publisher = new ObservableCollection<LocaleString>();
-                var ls = new LocaleString
-                    {
-                        Value = "Seven Software", 
-                        Lang = "en"
-                    };
-                publisher.Add(ls);
-
-                var name = new ObservableCollection<LocaleString>();
-                ls = new LocaleString
-                    {
-                        Value = "Seven Update", 
-                        Lang = "en"
-                    };
-                name.Add(ls);
-
-                // Download the Seven Update SUI and load it.
-                var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-
-                if (app != null)
+            var publisher = new ObservableCollection<LocaleString>();
+            var ls = new LocaleString
                 {
-                    app.AppInfo = new Sua
-                        {
-                            AppUrl = "http://sevenupdate.com/", 
-                            Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
-                            Publisher = publisher, 
-                            Name = name, 
-                            HelpUrl = "http://sevenupdate.com/support/", 
-                            Is64Bit = true, 
-                            IsEnabled = true, 
-                            SuiUrl = SevenUpdateSui
-                        };
+                    Value = "Seven Software",
+                    Lang = "en"
+                };
+            publisher.Add(ls);
 
-                    // Check if there is a newer version of Seven Update
-                    if (CheckForUpdates(ref app, null))
+            var name = new ObservableCollection<LocaleString>();
+            ls = new LocaleString
+                {
+                    Value = "Seven Update",
+                    Lang = "en"
+                };
+            name.Add(ls);
+
+            // Download the Seven Update SUI and load it.
+            var sevenUpdateUri = new Uri(SevenUpdateSui);
+            var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(sevenUpdateUri), sevenUpdateUri);
+
+            if (app != null)
+            {
+                app.AppInfo = new Sua
                     {
-                        // If there are updates add it to the collection
-                        applicationsFound.Add(app);
+                        AppUrl = new Uri("http://sevenupdate.com/"),
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                        Publisher = publisher,
+                        Name = name,
+                        HelpUrl = new Uri("http://sevenupdate.com/support/"),
+                        Is64Bit = true,
+                        IsEnabled = true,
+                        SuiUrl = new Uri(SevenUpdateSui)
+                    };
 
-                        // Search is complete!
-                        IsSearching = false;
+                // Check if there is a newer version of Seven Update
+                if (CheckForUpdates(ref app, null))
+                {
+                    // If there are updates add it to the collection
+                    applicationsFound.Add(app);
 
-                        if (SearchCompleted != null)
-                        {
-                            SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
-                        }
+                    // Search is complete!
+                    IsSearching = false;
 
-                        return;
+                    if (SearchCompleted != null)
+                    {
+                        SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
                     }
-                }
-            }
-            catch (Exception e)
-            {
-                // If this happens i am the only one to blame lol.
-                Utilities.ReportError(e, Utilities.AllUserStore);
 
-                // Notify that there was an error that occurred.
-                if (ErrorOccurred != null)
-                {
-                    ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
+                    return;
                 }
             }
 
@@ -190,39 +177,29 @@ namespace SevenUpdate
                     try
                     {
                         // Loads a SUI that was downloaded
-                        var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl), t.SuiUrl);
-                        if (app != null)
+                        app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl), t.SuiUrl);
+                    }
+                    catch (WebException)
+                    {
+                        Utilities.ReportError(@"Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
+                        continue;
+                    }
+
+                    if (app != null)
+                    {
+                        app.AppInfo = t;
+
+                        // Check to see if any updates are available and exclude hidden updates
+
+                        // If there is an update available, add it.
+                        if (CheckForUpdates(ref app, hidden))
                         {
-                            app.AppInfo = t;
-
-                            // Check to see if any updates are available and exclude hidden updates
-
-                            // If there is an update available, add it.
-                            if (CheckForUpdates(ref app, hidden))
-                            {
-                                applicationsFound.Add(app);
-                            }
+                            applicationsFound.Add(app);
                         }
                     }
-                    catch (WebException e)
+                    else
                     {
-                        Utilities.ReportError("Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
-
-                        // Notify that there was an error that occurred.
-                        if (ErrorOccurred != null)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Utilities.ReportError(e, Utilities.AllUserStore);
-
-                        // Notify that there was an error that occurred.
-                        if (ErrorOccurred != null)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.SearchError));
-                        }
+                        Utilities.ReportError(@"Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
                     }
                 }
             }
@@ -321,99 +298,11 @@ namespace SevenUpdate
                         continue;
                     }
                 }
+                var updates = app.Updates[y];
 
-                ulong size = 0;
-                for (var z = 0; z < app.Updates[y].Files.Count; z++)
-                {
-                    app.Updates[y].Files[z].Destination = Utilities.ConvertPath(
-                        app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
+                ulong size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
 
-                    // Checks to see if the file needs updated, if it doesn't it removes it from the list.
-                    if (File.Exists(app.Updates[y].Files[z].Destination))
-                    {
-                        switch (app.Updates[y].Files[z].Action)
-                        {
-                            case FileAction.Update:
-                            case FileAction.UpdateThenExecute:
-                            case FileAction.UpdateThenRegister:
-                            case FileAction.UpdateIfExist:
-                            case FileAction.CompareOnly:
-                                if (Utilities.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
-                                {
-                                    app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                    if (app.Updates[y].Files.Count == 0)
-                                    {
-                                        break;
-                                    }
-
-                                    z--;
-                                }
-                                else if (
-                                    Utilities.GetHash(
-                                        Utilities.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
-                                        Path.GetFileName(app.Updates[y].Files[z].Destination)) != app.Updates[y].Files[z].Hash)
-                                {
-                                    if (app.Updates[y].Files[z].Action != FileAction.CompareOnly)
-                                    {
-                                        size += app.Updates[y].Files[z].FileSize;
-                                    }
-                                }
-
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        switch (app.Updates[y].Files[z].Action)
-                        {
-                            case FileAction.Delete:
-                            case FileAction.UnregisterThenDelete:
-                                app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                if (app.Updates[y].Files.Count == 0)
-                                {
-                                    break;
-                                }
-
-                                z--;
-                                break;
-
-                            case FileAction.UpdateIfExist:
-                                app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                if (app.Updates[y].Files.Count == 0)
-                                {
-                                    break;
-                                }
-
-                                z--;
-                                break;
-                            case FileAction.ExecuteThenDelete:
-                                size += app.Updates[y].Files[z].FileSize;
-                                break;
-                            case FileAction.Update:
-                            case FileAction.UpdateThenExecute:
-                            case FileAction.UpdateThenRegister:
-                                if (Utilities.GetHash(app.Updates[y].Files[z].Destination) == app.Updates[y].Files[z].Hash)
-                                {
-                                    app.Updates[y].Files.Remove(app.Updates[y].Files[z]);
-                                    if (app.Updates[y].Files.Count == 0)
-                                    {
-                                        break;
-                                    }
-
-                                    z--;
-                                }
-                                else if (
-                                    Utilities.GetHash(
-                                        Utilities.AllUserStore + @"downloads\" + app.Updates[y].Name[0].Value + @"\" +
-                                        Path.GetFileName(app.Updates[y].Files[z].Destination)) != app.Updates[y].Files[z].Hash)
-                                {
-                                    size += app.Updates[y].Files[z].FileSize;
-                                }
-
-                                break;
-                        }
-                    }
-                }
+                app.Updates[y] = updates;
 
                 var remove = true;
 
@@ -474,5 +363,105 @@ namespace SevenUpdate
         }
 
         #endregion
+
+        /// <summary>
+        /// Iterates through the update and removes un needed values. Returns the download size for the update
+        /// </summary>
+        /// <param name="update">The update to iterate</param>
+        /// <param name="directory">The uri or registry key to the application directory </param>
+        /// <param name="valueName">The name of the registry value, can be <see langword="null"/></param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <returns>The current download size of the update</returns>
+        private static ulong IterateUpdate(ref Update update, string directory, string valueName, bool is64Bit)
+        {
+            ulong size = 0;
+            for (var z = 0; z < update.Files.Count; z++)
+            {
+                update.Files[z].Destination = new Uri(Utilities.ConvertPath(update.Files[z].Destination.PathAndQuery, directory, valueName, is64Bit));
+                var downloadFile = Utilities.AllUserStore + @"downloads\" + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination.PathAndQuery);
+
+                // Checks to see if the file needs updated, if it doesn't it removes it from the list.
+                if (File.Exists(update.Files[z].Destination.PathAndQuery))
+                {
+                    switch (update.Files[z].Action)
+                    {
+                        case FileAction.Update:
+                        case FileAction.UpdateThenExecute:
+                        case FileAction.UpdateThenRegister:
+                        case FileAction.UpdateIfExist:
+                        case FileAction.CompareOnly:
+                            if (Utilities.GetHash(update.Files[z].Destination.PathAndQuery) == update.Files[z].Hash)
+                            {
+                                update.Files.Remove(update.Files[z]);
+                                if (update.Files.Count == 0)
+                                {
+                                    break;
+                                }
+
+                                z--;
+                            }
+                            else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
+                            {
+                                if (update.Files[z].Action != FileAction.CompareOnly)
+                                {
+                                    size += update.Files[z].FileSize;
+                                }
+                            }
+
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (update.Files[z].Action)
+                    {
+                        case FileAction.Delete:
+                        case FileAction.UnregisterThenDelete:
+                            update.Files.Remove(update.Files[z]);
+                            if (update.Files.Count == 0)
+                            {
+                                break;
+                            }
+
+                            z--;
+                            break;
+
+                        case FileAction.UpdateIfExist:
+                            update.Files.Remove(update.Files[z]);
+                            if (update.Files.Count == 0)
+                            {
+                                break;
+                            }
+
+                            z--;
+                            break;
+                        case FileAction.ExecuteThenDelete:
+                            size += update.Files[z].FileSize;
+                            break;
+                        case FileAction.Update:
+                        case FileAction.UpdateThenExecute:
+                        case FileAction.UpdateThenRegister:
+                            if (Utilities.GetHash(update.Files[z].Destination.PathAndQuery) == update.Files[z].Hash)
+                            {
+                                update.Files.Remove(update.Files[z]);
+                                if (update.Files.Count == 0)
+                                {
+                                    break;
+                                }
+
+                                z--;
+                            }
+                            else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
+                            {
+                                size += update.Files[z].FileSize;
+                            }
+
+                            break;
+                    }
+                }
+            }
+
+            return size;
+        }
     }
 }

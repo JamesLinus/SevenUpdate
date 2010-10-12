@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="Program.cs"
 //            project="SevenUpdate.Helper"
 //            assembly="SevenUpdate.Helper"
@@ -131,22 +131,27 @@ namespace SevenUpdate.Helper
                     Console.WriteLine(e.Message);
                 }
 
-                try
+
+                if (!File.Exists(appStore + @"reboot.lock"))
                 {
-                    if (!File.Exists(appStore + @"reboot.lock"))
+                    try
                     {
                         Directory.Delete(appStore + downloadDir, true);
-
                         Directory.Delete(appStore + @"downloads", true);
                     }
-                    else
+                    catch (Exception e)
                     {
-                        MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
+                        if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                        {
+                            throw;
+                        }
                     }
                 }
-                catch (Exception)
+                else
                 {
+                    MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
                 }
+
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {

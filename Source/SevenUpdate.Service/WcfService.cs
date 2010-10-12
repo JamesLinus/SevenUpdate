@@ -138,7 +138,7 @@ namespace SevenUpdate.Service
 
             sul.Add(application);
 
-            Utilities.Serialize(sul, Utilities.ApplicationsFile);
+            Utilities.Serialize(sul, new Uri(Utilities.ApplicationsFile));
         }
 
         /// <summary>Changes the program settings</summary>

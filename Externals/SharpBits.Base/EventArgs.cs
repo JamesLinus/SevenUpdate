@@ -16,8 +16,6 @@ namespace SharpBits.Base
     using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
 
-    using SharpBits.Base.Job;
-
     /// <summary>The event data for the JobNotification event</summary>
     public class JobNotificationEventArgs : EventArgs
     {

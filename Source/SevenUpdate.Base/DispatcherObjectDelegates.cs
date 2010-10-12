@@ -39,7 +39,8 @@ namespace SevenUpdate
         /// <param name="method">the method to invoke</param>
         public static void BeginInvoke(this Dispatcher dispatcher, Action method)
         {
-            dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
+            if (dispatcher != null)
+                dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
         }
 
         /// <summary>Invokes a Method to run on the UI thread</summary>
@@ -51,7 +52,8 @@ namespace SevenUpdate
         /// <param name="parameter">the parameter to pass to the method</param>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, T parameter)
         {
-            dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter);
+            if (dispatcher != null)
+                dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter);
         }
 
         #endregion

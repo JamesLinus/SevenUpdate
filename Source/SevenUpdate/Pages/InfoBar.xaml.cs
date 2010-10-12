@@ -242,7 +242,7 @@ namespace SevenUpdate.Pages
         private void ErrorOccurred(ErrorOccurredEventArgs e)
         {
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            switch (e.Type)
+            switch (e.ErrorType)
             {
                 case ErrorType.FatalNetworkError:
                     this.tbStatus.Text = Properties.Resources.CheckConnection;

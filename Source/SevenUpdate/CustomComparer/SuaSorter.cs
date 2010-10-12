@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="SuaSorter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
@@ -45,58 +45,51 @@ namespace SevenUpdate.CustomComparer
         /// </returns>
         public override int Compare(object x, object y)
         {
-            try
+            var first = (Sua)x;
+            var second = (Sua)y;
+
+            string valueX = String.Empty, valueY = String.Empty;
+            var result = 0;
+
+            foreach (var sort in this.GetSortColumnList())
             {
-                var first = (Sua)x;
-                var second = (Sua)y;
-
-                string valueX = String.Empty, valueY = String.Empty;
-                var result = 0;
-
-                foreach (var sort in this.GetSortColumnList())
+                switch (sort)
                 {
-                    switch (sort)
-                    {
-                        case "Name":
+                    case "Name":
 
-                            valueX = Utilities.GetLocaleString(first.Name);
-                            valueY = Utilities.GetLocaleString(second.Name);
-                            break;
-
-                        case "Publisher":
-                            valueX = Utilities.GetLocaleString(first.Publisher);
-                            valueY = Utilities.GetLocaleString(second.Publisher);
-                            break;
-                        case "Is64Bit":
-                            valueX = first.Is64Bit.ToString(CultureInfo.CurrentCulture);
-                            valueY = second.Is64Bit.ToString(CultureInfo.CurrentCulture);
-
-                            break;
-                    }
-
-                    if (this.SortColumns[sort] == ListSortDirection.Ascending)
-                    {
-                        result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
-                    }
-                    else
-                    {
-                        result = (-1) * String.Compare(valueX, valueY, StringComparison.CurrentCulture);
-                    }
-
-                    if (result != 0)
-                    {
+                        valueX = Utilities.GetLocaleString(first.Name);
+                        valueY = Utilities.GetLocaleString(second.Name);
                         break;
-                    }
 
-                    continue;
+                    case "Publisher":
+                        valueX = Utilities.GetLocaleString(first.Publisher);
+                        valueY = Utilities.GetLocaleString(second.Publisher);
+                        break;
+                    case "Is64Bit":
+                        valueX = first.Is64Bit.ToString(CultureInfo.CurrentCulture);
+                        valueY = second.Is64Bit.ToString(CultureInfo.CurrentCulture);
+
+                        break;
                 }
 
-                return result;
+                if (this.SortColumns[sort] == ListSortDirection.Ascending)
+                {
+                    result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
+                }
+                else
+                {
+                    result = (-1) * String.Compare(valueX, valueY, StringComparison.CurrentCulture);
+                }
+
+                if (result != 0)
+                {
+                    break;
+                }
+
+                continue;
             }
-            catch (Exception)
-            {
-                return 0;
-            }
+
+            return result;
         }
 
         #endregion

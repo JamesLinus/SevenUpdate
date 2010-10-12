@@ -55,6 +55,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -65,6 +66,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DebugSymbols>false</DebugSymbols>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -109,21 +111,21 @@
     <Compile Include="BitsCredentials.cs" />
     <Compile Include="BitsError.cs" />
     <Compile Include="EventArgs.cs" />
-    <Compile Include="File\BitsFile.cs" />
-    <Compile Include="File\BitsFilesCollection.cs" />
+    <Compile Include="BitsFile.cs" />
+    <Compile Include="BitsFilesCollection.cs" />
     <Compile Include="BitsInterop.cs" />
     <Compile Include="JobErrorNotificationEventArgs.cs" />
-    <Compile Include="Job\BitsJob.cs" />
-    <Compile Include="Job\BitsJobsDictionary.cs" />
+    <Compile Include="BitsJob.cs" />
+    <Compile Include="BitsJobsDictionary.cs" />
     <Compile Include="BitsManager.cs" />
-    <Compile Include="File\BitsFileInfo.cs" />
+    <Compile Include="BitsFileInfo.cs" />
     <Compile Include="BitsNotification.cs" />
     <Compile Include="NotificationEventArgs.cs" />
-    <Compile Include="Progress\JobReplyProgress.cs" />
-    <Compile Include="Progress\FileProgress.cs" />
-    <Compile Include="File\FileRange.cs" />
-    <Compile Include="Progress\JobProgress.cs" />
-    <Compile Include="Job\JobTimes.cs" />
+    <Compile Include="JobReplyProgress.cs" />
+    <Compile Include="FileProgress.cs" />
+    <Compile Include="FileRange.cs" />
+    <Compile Include="JobProgress.cs" />
+    <Compile Include="JobTimes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxySettings.cs" />
     <Compile Include="NativeMethods.cs" />

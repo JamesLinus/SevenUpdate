@@ -71,19 +71,19 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
-        private string appUrl;
+        private Uri appUrl;
 
         /// <summary>The collection of localized update descriptions</summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>The help website <see cref = "Uri" /> of the application</summary>
-        private string helpUrl;
+        private Uri helpUrl;
 
         /// <summary>The importance of the update</summary>
         private Importance importance;
 
         /// <summary>The url pointing to a resource to find more information about the update</summary>
-        private string infoUrl;
+        private Uri infoUrl;
 
         /// <summary>The formatted date string when the update was installed</summary>
         private string installDate;
@@ -116,7 +116,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
-        [ProtoMember(8)] [DataMember] public string AppUrl
+        [ProtoMember(8)] [DataMember] public Uri AppUrl
         {
             get
             {
@@ -152,7 +152,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
-        [ProtoMember(9, IsRequired = false)] [DataMember] public string HelpUrl
+        [ProtoMember(9, IsRequired = false)] [DataMember] public Uri HelpUrl
         {
             get
             {
@@ -188,7 +188,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to a resource to find more information about the update</summary>
         /// <value>The info URL.</value>
-        [ProtoMember(10, IsRequired = false)] [DataMember] public string InfoUrl
+        [ProtoMember(10, IsRequired = false)] [DataMember] public Uri InfoUrl
         {
             get
             {

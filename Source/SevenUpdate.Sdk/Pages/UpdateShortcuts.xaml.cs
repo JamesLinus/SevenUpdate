@@ -192,7 +192,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var importedShortcut = System.Windows.Shortcut.GetShortcutData(file[0]);
+            var importedShortcut = Shortcut.GetShortcutData(file[0]);
 
             var path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
@@ -209,19 +209,6 @@ namespace SevenUpdate.Sdk.Pages
                     Name = new ObservableCollection<LocaleString>(), 
                     Description = new ObservableCollection<LocaleString>()
                 };
-
-            var ls = new LocaleString
-                {
-                    Lang = Utilities.Locale, 
-                    Value = importedShortcut.Name
-                };
-            shortcut.Name.Add(ls);
-            ls = new LocaleString
-                {
-                    Lang = Utilities.Locale, 
-                    Value = importedShortcut.Description
-                };
-            shortcut.Description.Add(ls);
 
             Core.UpdateInfo.Shortcuts.Add(shortcut);
             this.listBox.SelectedIndex = Core.UpdateInfo.Shortcuts.Count - 1;

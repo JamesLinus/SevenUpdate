@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="ErrorOccurredEventArgs.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
@@ -61,7 +61,7 @@ namespace SevenUpdate
         public ErrorOccurredEventArgs(string exception, ErrorType type)
         {
             this.Exception = exception;
-            this.Type = type;
+            this.ErrorType = type;
         }
 
         #endregion
@@ -74,7 +74,7 @@ namespace SevenUpdate
 
         /// <summary>Gets the <see cref = "ErrorType" /> of the error that occurred</summary>
         /// <value>The type of error that occurred</value>
-        public ErrorType Type { get; private set; }
+        public ErrorType ErrorType { get; private set; }
 
         #endregion
     }

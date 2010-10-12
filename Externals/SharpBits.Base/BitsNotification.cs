@@ -14,8 +14,6 @@ namespace SharpBits.Base
 {
     using System;
 
-    using SharpBits.Base.Job;
-
     /// <summary>The notification class for the bits manager</summary>
     internal class BitsNotification : IBackgroundCopyCallback
     {

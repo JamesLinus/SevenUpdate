@@ -318,7 +318,7 @@
     <comment>TextBlock.Text</comment>
   </data>
   <data name="ApplicationInstallLocationToolTip" xml:space="preserve">
-    <value>The directory where the application is is installed. It is best to use system path variabes when applicable.</value>
+    <value>The directory where the application is is installed. It is best to use system path variables when applicable.</value>
     <comment>TextBlock.ToolTip</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
@@ -466,7 +466,7 @@
     <comment>TextBlock.Text</comment>
   </data>
   <data name="InstallLocationToolTip" xml:space="preserve">
-    <value>Standard windows variables are allowed ex. %USERNAME%. Use %INSTALLDIR% for files in the app directory and %DOWNLOADURL% for files in the download directory</value>
+    <value>Standard windows variables are allowed ex. %UserName%. Use %InstallDir% for files in the app directory and %DownloadUrl% for files in the download directory</value>
     <comment>TextBlock.ToolTip</comment>
   </data>
   <data name="LocateFileLocation" xml:space="preserve">
@@ -875,5 +875,11 @@
   </data>
   <data name="WPFLocalizeExtensionLicense" xml:space="preserve">
     <value>WPFLocalizeExtension is licensed under the</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>_OK</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>_Retry</value>
   </data>
 </root>

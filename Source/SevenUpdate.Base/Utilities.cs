@@ -129,7 +129,7 @@ namespace SevenUpdate
         /// <summary>Expands the file location variables</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="directory">a string that contains a directory</param>
-        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location</param>
+        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, string valueName = null, bool is64Bit = false)
@@ -272,7 +272,7 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
+            var task = Task.Factory.StartNew(() => DeserializeFile<T>(new Uri(fileName)));
             task.Wait();
             return task.Result;
         }
@@ -284,7 +284,7 @@ namespace SevenUpdate
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
+        public static T Deserialize<T>(Stream stream, Uri sourceUrl) where T : class
         {
             var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl));
             task.Wait();
@@ -294,11 +294,16 @@ namespace SevenUpdate
         /// <summary>Downloads a file</summary>
         /// <param name="url">A Uri pointing to the location of the file to download</param>
         /// <returns>the downloaded file <see cref="Stream"/></returns>
-        public static Stream DownloadFile(string url)
+        public static Stream DownloadFile(Uri url)
         {
             // Get a data stream from the url
-            var wc = new WebClient();
-            return new MemoryStream(wc.DownloadData(url));
+            MemoryStream memStream;
+            using (var wc = new WebClient())
+            {
+                memStream = new MemoryStream(wc.DownloadData(url));
+            }
+
+            return memStream;
         }
 
         /// <summary>Gets the file size of a file</summary>
@@ -324,19 +329,17 @@ namespace SevenUpdate
                 return null;
             }
 
-            var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192);
-
-            var sha2 = new SHA256Managed();
-
-            sha2.ComputeHash(stream);
-
-            stream.Close();
-
             var buff = new StringBuilder(10);
-
-            foreach (var hashByte in sha2.Hash)
+            using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192))
             {
-                buff.Append(String.Format(CultureInfo.CurrentCulture, "{0:X1}", hashByte));
+                using (var sha2 = new SHA256Managed())
+                {
+                    sha2.ComputeHash(stream);
+                    foreach (var hashByte in sha2.Hash)
+                    {
+                        buff.Append(String.Format("{0:X1}", hashByte));
+                    }
+                }
             }
 
             return buff.ToString();
@@ -347,6 +350,11 @@ namespace SevenUpdate
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
+            if (localeStrings == null)
+            {
+                throw new ArgumentNullException(@"localeStrings");
+            }
+
             foreach (var t in localeStrings.Where(t => t.Lang == Locale))
             {
                 return t.Value;
@@ -411,7 +419,7 @@ namespace SevenUpdate
 
                 registryKey = Registry.GetValue(registryKey, valueName, null).ToString();
             }
-            catch (Exception)
+            catch (UnauthorizedAccessException)
             {
                 registryKey = null;
             }
@@ -428,27 +436,27 @@ namespace SevenUpdate
         }
 
         /// <summary>Replaces a string within a string</summary>
-        /// <param name="str">the string that will be searched</param>
+        /// <param name="value">the string that will be searched</param>
         /// <param name="find">a string to find in the complete string</param>
         /// <param name="replaceValue">a string to use to replace the find string in the complete string</param>
         /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
         /// <returns>The replacement string</returns>
-        public static string Replace(this string str, string find, string replaceValue, bool ignoreCase)
+        public static string Replace(this string value, string find, string replaceValue, bool ignoreCase)
         {
-            if (str == null || find == null)
+            if (value == null || find == null)
             {
-                return str;
+                return value;
             }
 
             // Get input string length
-            var expressionLength = str.Length;
+            var expressionLength = value.Length;
 
             var findLength = find.Length;
 
             // Check inputs
             if (0 == expressionLength || 0 == findLength || findLength > expressionLength)
             {
-                return str;
+                return value;
             }
 
             var sb = new StringBuilder(expressionLength);
@@ -457,7 +465,7 @@ namespace SevenUpdate
 
             while (pos + findLength <= expressionLength)
             {
-                if (0 == string.Compare(str, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
+                if (0 == string.Compare(value, pos, find, 0, findLength, ignoreCase, CultureInfo.CurrentCulture))
                 {
                     // Add the replaced string
                     sb.Append(replaceValue);
@@ -468,11 +476,11 @@ namespace SevenUpdate
                 }
 
                 // Advance one character
-                sb.Append(str, pos++, 1);
+                sb.Append(value, pos++, 1);
             }
 
             // Append remaining characters
-            sb.Append(str, pos, expressionLength - pos);
+            sb.Append(value, pos, expressionLength - pos);
 
             // Return string
             return sb.ToString();
@@ -483,11 +491,10 @@ namespace SevenUpdate
         /// <param name="directoryStore">The directory to store the log</param>
         public static void ReportError(string message, string directoryStore)
         {
-            TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
-
-            tw.WriteLine(DateTime.Now + ": " + message);
-
-            tw.Close();
+            using (var tw = new StreamWriter(directoryStore + "error.log", true))
+            {
+                tw.WriteLine(DateTime.Now + ": " + message);
+            }
         }
 
         /// <summary>Reports the error that occurred to a log file</summary>
@@ -495,53 +502,65 @@ namespace SevenUpdate
         /// <param name="directoryStore">The directory to store the log</param>
         public static void ReportError(Exception exception, string directoryStore)
         {
-            TextWriter tw = new StreamWriter(directoryStore + "error.log", true);
-            tw.WriteLine(DateTime.Now + ": " + exception.Source);
-            tw.WriteLine(DateTime.Now + ": " + exception.Message);
-            tw.WriteLine(DateTime.Now + ": " + exception.StackTrace);
-
-            if (exception.TargetSite != null)
+            if (exception == null)
             {
-                tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+                return;
             }
 
-            if (exception.InnerException != null)
+            using (var tw = new StreamWriter(directoryStore + "error.log", true))
             {
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
+                tw.WriteLine(DateTime.Now + ": " + exception.Source);
+                tw.WriteLine(DateTime.Now + ": " + exception.Message);
+                tw.WriteLine(DateTime.Now + ": " + exception.StackTrace);
 
                 if (exception.TargetSite != null)
                 {
                     tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
                 }
 
-                if (exception.InnerException.InnerException != null)
+                if (exception.InnerException != null)
                 {
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
+                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
 
                     if (exception.TargetSite != null)
                     {
                         tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
                     }
+
+                    if (exception.InnerException.InnerException != null)
+                    {
+                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
+                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
+                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
+
+                        if (exception.TargetSite != null)
+                        {
+                            tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+                        }
+                    }
                 }
             }
-
-            tw.Close();
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name="T">
-        /// the object
-        /// </typeparam>
+        /// <typeparam name="T">The object type to serialize</typeparam>
+        /// <param name="item">the object to serialize</param>
+        /// <param name="fileName">the location of a file that will be serialized</param>
+        public static void Serialize<T>(T item, Uri fileName) where T : class
+        {
+            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
+            task.Wait();
+        }
+
+        /// <summary>Serializes an object into a file</summary>
+        /// <typeparam name="T">The object type to serialize</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
-            task.Wait();
+            Serialize(item, new Uri(fileName));
         }
 
         /// <summary>Starts a process on the system</summary>
@@ -552,6 +571,7 @@ namespace SevenUpdate
         /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
+            bool success;
             var process = new Process
                 {
                     StartInfo =
@@ -575,6 +595,25 @@ namespace SevenUpdate
             try
             {
                 process.Start();
+                success = true;
+            }
+            catch (Exception e)
+            {
+                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                {
+                    throw;
+                }
+
+                success = false;
+                ReportError(e, UserStore);
+            }
+            finally
+            {
+                process.Dispose();
+            }
+
+            if (success)
+            {
                 if (wait)
                 {
                     process.WaitForExit();
@@ -582,16 +621,8 @@ namespace SevenUpdate
 
                 return true;
             }
-            catch (Exception e)
-            {
-                if (e.Message != @"The operation was canceled by the user")
-                {
-                    ReportError(e, UserStore);
-                }
 
-                process.Dispose();
-                return false;
-            }
+            return false;
         }
 
         #endregion
@@ -614,21 +645,22 @@ namespace SevenUpdate
         /// </typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
-        private static T DeserializeFile<T>(string fileName) where T : class
+        private static T DeserializeFile<T>(Uri fileName) where T : class
         {
-            if (File.Exists(fileName))
+            var sourceFile = fileName.AbsoluteUri;
+            if (File.Exists(sourceFile))
             {
                 try
                 {
-                    using (var file = File.OpenRead(fileName))
+                    T obj;
+                    using (var file = File.OpenRead(sourceFile))
                     {
-                        var obj = Serializer.Deserialize<T>(file);
-
-                        file.Close();
-                        return obj;
+                        obj = Serializer.Deserialize<T>(file);
                     }
+
+                    return obj;
                 }
-                catch (Exception e)
+                catch (InvalidCastException e)
                 {
                     if (SerializationError != null)
                     {
@@ -647,7 +679,7 @@ namespace SevenUpdate
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The <see cref="Uri"/> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
+        private static T DeserializeStream<T>(Stream stream, Uri sourceUrl) where T : class
         {
             try
             {
@@ -655,6 +687,11 @@ namespace SevenUpdate
             }
             catch (Exception e)
             {
+                if (!(e is IOException || e is ProtoException))
+                {
+                    throw;
+                }
+
                 ReportError(e, UserStore);
                 if (SerializationError != null)
                 {
@@ -721,34 +758,36 @@ namespace SevenUpdate
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name="T">
-        /// the object
-        /// </typeparam>
+        /// <typeparam name="T">the object type to serialize</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
-        private static void SerializeFile<T>(T item, string fileName) where T : class
+        private static void SerializeFile<T>(T item, Uri fileName) where T : class
         {
             try
             {
-                if (File.Exists(fileName))
+                var fileDestination = fileName.PathAndQuery;
+                if (File.Exists(fileDestination))
                 {
-                    using (var file = File.Open(fileName, FileMode.Truncate))
+                    using (var file = File.Open(fileDestination, FileMode.Truncate))
                     {
                         Serializer.Serialize(file, item);
-                        file.Close();
                     }
                 }
                 else
                 {
-                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                    using (var file = File.Open(fileDestination, FileMode.CreateNew))
                     {
                         Serializer.Serialize(file, item);
-                        file.Close();
                     }
                 }
             }
             catch (Exception e)
             {
+                if (!(e is IOException || e is ProtoException || e is UnauthorizedAccessException))
+                {
+                    throw;
+                }
+
                 ReportError(e, UserStore);
                 if (SerializationError != null)
                 {

@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="SuiLocationRule.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
@@ -57,7 +57,7 @@ namespace SevenUpdate.Sdk.ValidationRules
             {
                 new Uri(input);
             }
-            catch (Exception)
+            catch (UriFormatException)
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }

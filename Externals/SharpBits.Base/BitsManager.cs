@@ -16,8 +16,6 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    using SharpBits.Base.Job;
-
     /// <summary>
     /// Use the <see cref="IBackgroundCopyManager"/> interface to create transfer jobs, 
     ///   retrieve an enumerator object that contains the jobs in the queue, 

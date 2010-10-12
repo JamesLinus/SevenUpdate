@@ -28,6 +28,7 @@ namespace SevenUpdate.Pages
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
     using System.Net;
@@ -73,7 +74,8 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(SulLocation), SulLocation));
+                var sul = new Uri(SulLocation);
+                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(sul), sul));
             }
             catch (WebException)
             {
@@ -179,13 +181,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
-            try
-            {
-                Process.Start(e.Uri.AbsoluteUri);
-            }
-            catch (Exception)
-            {
-            }
+            Utilities.StartProcess(e.Uri.PathAndQuery);
 
             e.Handled = true;
         }

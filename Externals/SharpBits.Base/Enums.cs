@@ -14,8 +14,6 @@ namespace SharpBits.Base
 {
     using System;
 
-    using SharpBits.Base.Job;
-
     /// <summary>Specifies the owner of the current <see cref="BitsJob"/></summary>
     public enum JobOwner
     {
@@ -136,6 +134,9 @@ namespace SharpBits.Base
     /// <summary>The AuthenticationTarget enumeration defines the constant values that specify whether the credentials are used for proxy or server user authentication requests.</summary>
     public enum AuthenticationTarget
     {
+        /// <summary>Use no credentials</summary>
+        None = 0,
+
         /// <summary>Use credentials for server requests.</summary>
         Server = 1, 
 
@@ -146,6 +147,9 @@ namespace SharpBits.Base
     /// <summary>The AuthenticationScheme enumeration defines the constant values that specify the authentication scheme to use when a proxy or server requests user authentication.</summary>
     public enum AuthenticationScheme
     {
+        /// <summary>Use no authentication scheme</summary>
+        None = 0,
+
         /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>
         Basic = 1, 
 

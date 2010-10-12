@@ -62,6 +62,8 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
+
+            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
         }
 
         #endregion
@@ -168,7 +170,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void GoToSupport(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(@"http://sevenupdate.com/support");
+             Utilities.StartProcess(@"http://sevenupdate.com/support");
         }
 
         /// <summary>Loads the projects.</summary>

@@ -12,8 +12,6 @@
 // ***********************************************************************
 namespace SharpBits.Base
 {
-    using SharpBits.Base.Job;
-
     /// <summary>The event data for the Notification event</summary>
     public class NotificationEventArgs : JobNotificationEventArgs
     {

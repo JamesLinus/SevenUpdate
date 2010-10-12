@@ -42,7 +42,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
-        private string appUrl;
+        private Uri appUrl;
 
         /// <summary>The collection of localized descriptions for the application</summary>
         private ObservableCollection<LocaleString> description;
@@ -51,7 +51,7 @@ namespace SevenUpdate
         private string directory;
 
         /// <summary>The help website <see cref = "Uri" /> of the application.</summary>
-        private string helpUrl;
+        private Uri helpUrl;
 
         /// <summary>Indicates whether if the application is 64 bit</summary>
         private bool is64Bit;
@@ -66,7 +66,7 @@ namespace SevenUpdate
         private ObservableCollection<LocaleString> publisher;
 
         /// <summary>The <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
-        private string suiUrl;
+        private Uri suiUrl;
 
         /// <summary>The name of the value to the registry key that contains the application directory location</summary>
         private string valueName;
@@ -84,7 +84,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
-        [ProtoMember(8, IsRequired = false)] [DataMember] public string AppUrl
+        [ProtoMember(8, IsRequired = false)] [DataMember] public Uri AppUrl
         {
             get
             {
@@ -138,7 +138,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
-        [ProtoMember(9, IsRequired = false)] [DataMember] public string HelpUrl
+        [ProtoMember(9, IsRequired = false)] [DataMember] public Uri HelpUrl
         {
             get
             {
@@ -228,7 +228,9 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
         /// <value>The url pointing to the sui file</value>
-        [ProtoMember(7)] [DataMember] public string SuiUrl
+        [ProtoMember(7)]
+        [DataMember]
+        public Uri SuiUrl
         {
             get
             {

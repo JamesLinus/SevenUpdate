@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="UpdateFile.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
@@ -26,6 +26,7 @@
 // ***********************************************************************
 namespace SevenUpdate
 {
+    using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
 
@@ -98,7 +99,7 @@ namespace SevenUpdate
         private string args;
 
         /// <summary>The location where the file will be installed</summary>
-        private string destination;
+        private Uri destination;
 
         /// <summary>The size of the file in bytes</summary>
         private ulong fileSize;
@@ -107,7 +108,7 @@ namespace SevenUpdate
         private string hash;
 
         /// <summary>The download location for the file</summary>
-        private string source;
+        private Uri source;
 
         #endregion
 
@@ -158,7 +159,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the location where the file will be installed</summary>
         /// <value>The destination.</value>
-        [ProtoMember(3)] [DataMember] public string Destination
+        [ProtoMember(3)] [DataMember] public Uri Destination
         {
             get
             {
@@ -212,7 +213,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the download location for the file</summary>
         /// <value>The download location of the file</value>
-        [ProtoMember(2)] [DataMember] public string Source
+        [ProtoMember(2)] [DataMember] public Uri Source
         {
             get
             {

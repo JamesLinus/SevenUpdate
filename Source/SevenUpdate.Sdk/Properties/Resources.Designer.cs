@@ -187,7 +187,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The directory where the application is is installed. It is best to use system path variabes when applicable..
+        ///   Looks up a localized string similar to The directory where the application is is installed. It is best to use system path variables when applicable..
         /// </summary>
         public static string ApplicationInstallLocationToolTip {
             get {
@@ -718,7 +718,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard windows variables are allowed ex. %USERNAME%. Use %INSTALLDIR% for files in the app directory and %DOWNLOADURL% for files in the download directory.
+        ///   Looks up a localized string similar to Standard windows variables are allowed ex. %UserName%. Use %InstallDir% for files in the app directory and %DownloadUrl% for files in the download directory.
         /// </summary>
         public static string InstallLocationToolTip {
             get {
@@ -858,6 +858,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string Next {
             get {
                 return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _OK.
+        /// </summary>
+        public static string OK {
+            get {
+                return ResourceManager.GetString("OK", resourceCulture);
             }
         }
         
@@ -1110,6 +1119,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string RemoveShortcut {
             get {
                 return ResourceManager.GetString("RemoveShortcut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Retry.
+        /// </summary>
+        public static string Retry {
+            get {
+                return ResourceManager.GetString("Retry", resourceCulture);
             }
         }
         

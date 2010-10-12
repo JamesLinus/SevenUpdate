@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="AppDirectoryRule.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
@@ -82,7 +82,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                             : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
                 new Uri(input);
             }
-            catch (Exception)
+            catch (UriFormatException)
             {
                 return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
                            ? new ValidationResult(true, null)

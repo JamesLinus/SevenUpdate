@@ -35,8 +35,6 @@ namespace SevenUpdate
     using System.Runtime.InteropServices;
     using System.Threading.Tasks;
 
-    using IWshRuntimeLibrary;
-
     using Microsoft.Win32;
 
     using File = System.IO.File;
@@ -120,7 +118,7 @@ namespace SevenUpdate
                         {
                             Process.GetProcessesByName(@"SevenUpdate.Helper")[0].Kill();
                         }
-                        catch (Exception)
+                        catch (UnauthorizedAccessException)
                         {
                         }
                     }
@@ -160,11 +158,15 @@ namespace SevenUpdate
                                 case FileAction.UnregisterThenDelete:
                                     try
                                     {
-                                        File.Delete(t.Destination);
+                                        File.Delete(t.Destination.PathAndQuery);
                                     }
-                                    catch (Exception)
+                                    catch (IOException)
                                     {
-                                        MoveFileExW(t.Destination, null, MoveOnReboot);
+                                        NativeMethods.MoveFileExW(t.Destination.PathAndQuery, null, MoveOnReboot);
+                                    }
+                                    catch (UnauthorizedAccessException)
+                                    {
+                                        NativeMethods.MoveFileExW(t.Destination.PathAndQuery, null, MoveOnReboot);
                                     }
 
                                     break;
@@ -188,11 +190,11 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                MoveFileExW(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                NativeMethods.MoveFileExW(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
 
                 if (Directory.Exists(Utilities.AllUserStore + "downloads"))
                 {
-                    MoveFileExW(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
                 }
             }
             else
@@ -206,7 +208,7 @@ namespace SevenUpdate
                         {
                             Directory.Delete(Utilities.AllUserStore + "downloads", true);
                         }
-                        catch (Exception)
+                        catch (IOException)
                         {
                         }
                     }
@@ -249,16 +251,8 @@ namespace SevenUpdate
 
             history.Add(hist);
 
-            Utilities.Serialize(history, Utilities.HistoryFile);
+            Utilities.Serialize(history, new Uri(Utilities.HistoryFile));
         }
-
-        /// <summary>Moves the file using the windows command</summary>
-        /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
-        /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
-        /// <param name="flags">The flags that determine how to move the file</param>
-        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
-        [DllImport(@"kernel32.dll")]
-        private static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
 
         /// <summary>Reports the installation progress</summary>
         /// <param name="installProgress">The current install progress percentage</param>
@@ -310,7 +304,7 @@ namespace SevenUpdate
                         {
                             Registry.SetValue(keyPath, regItems[x].KeyValue, regItems[x].Data, regItems[x].ValueKind);
                         }
-                        catch (Exception e)
+                        catch (UnauthorizedAccessException e)
                         {
                             Utilities.ReportError(e, Utilities.AllUserStore);
                             errorOccurred = true;
@@ -328,7 +322,7 @@ namespace SevenUpdate
 
                             // ReSharper restore PossibleNullReferenceException
                         }
-                        catch (Exception e)
+                        catch (UnauthorizedAccessException e)
                         {
                             Utilities.ReportError(e, Utilities.AllUserStore);
                         }
@@ -342,7 +336,7 @@ namespace SevenUpdate
 
                             // ReSharper restore PossibleNullReferenceException
                         }
-                        catch (Exception e)
+                        catch (UnauthorizedAccessException e)
                         {
                             Utilities.ReportError(e, Utilities.AllUserStore);
                         }
@@ -370,62 +364,54 @@ namespace SevenUpdate
                 return;
             }
 
-            var ws = new WshShell();
-
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
-                try
+                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
+
+                if (!shortcuts[x].Location.EndsWith(@"\", StringComparison.CurrentCulture))
                 {
-                    shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
-                    var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
-
-                    if (!shortcuts[x].Location.EndsWith(@"\", StringComparison.CurrentCulture))
-                    {
-                        shortcuts[x].Location = shortcuts[x].Location + @"\";
-                    }
-
-                    if (shortcuts[x].Action == ShortcutAction.Add ||
-                        (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
-                    {
-                        // ReSharper disable AssignNullToNotNullAttribute
-                        if (!Directory.Exists(shortcuts[x].Location))
-                        {
-                            Directory.CreateDirectory(shortcuts[x].Location);
-                        }
-
-                        File.Delete(shortcuts[x].Location + linkName + @".lnk");
-
-                        // ReSharper restore AssignNullToNotNullAttribute
-                        var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
-
-                        // Where the shortcut should point to
-                        shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
-
-                        // Description for the shortcut
-                        shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
-
-                        // Location for the shortcut's icon
-                        shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
-
-                        // The arguments to be used for the shortcut
-                        shortcut.Arguments = shortcuts[x].Arguments;
-
-                        // The working directory to be used for the shortcut
-                        shortcut.WorkingDirectory = appInfo.Directory;
-
-                        // Create the shortcut at the given path
-                        shortcut.Save();
-                    }
-
-                    if (shortcuts[x].Action == ShortcutAction.Delete)
-                    {
-                        File.Delete(shortcuts[x].Location);
-                    }
+                    shortcuts[x].Location = shortcuts[x].Location + @"\";
                 }
-                catch (Exception e)
+
+                if (shortcuts[x].Action == ShortcutAction.Add ||
+                    (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
                 {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
+                    // ReSharper disable AssignNullToNotNullAttribute
+                    if (!Directory.Exists(shortcuts[x].Location))
+                    {
+                        Directory.CreateDirectory(shortcuts[x].Location);
+                    }
+
+                    File.Delete(shortcuts[x].Location + linkName + @".lnk");
+
+                    //// ReSharper restore AssignNullToNotNullAttribute
+
+                    ////var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
+
+                    ////// Where the shortcut should point to
+                    ////shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+
+                    ////// Description for the shortcut
+                    ////shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
+
+                    ////// Location for the shortcut's icon
+                    ////shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+
+                    ////// The arguments to be used for the shortcut
+                    ////shortcut.Arguments = shortcuts[x].Arguments;
+
+                    ////// The working directory to be used for the shortcut
+                    ////shortcut.WorkingDirectory = appInfo.Directory;
+
+                    ////// Create the shortcut at the given path
+                    ////shortcut.Save();
+                }
+
+                if (shortcuts[x].Action == ShortcutAction.Delete)
+                {
+                    File.Delete(shortcuts[x].Location);
                 }
 
                 var installProgress = (x * 100) / shortcuts.Count;
@@ -449,9 +435,9 @@ namespace SevenUpdate
                 case FileAction.Delete:
                     if (file.Action == FileAction.ExecuteThenDelete)
                     {
-                        if (File.Exists(file.Source))
+                        if (File.Exists(file.Source.PathAndQuery))
                         {
-                            Utilities.StartProcess(file.Source, file.Args, true);
+                            Utilities.StartProcess(file.Source.PathAndQuery, file.Args, true);
                         }
                     }
 
@@ -462,11 +448,11 @@ namespace SevenUpdate
 
                     try
                     {
-                        File.Delete(file.Destination);
+                        File.Delete(file.Destination.PathAndQuery);
                     }
-                    catch (Exception)
+                    catch (IOException)
                     {
-                        MoveFileExW(file.Destination, null, MoveOnReboot);
+                        NativeMethods.MoveFileExW(file.Destination.PathAndQuery, null, MoveOnReboot);
                     }
 
                     break;
@@ -474,11 +460,11 @@ namespace SevenUpdate
                 case FileAction.Execute:
                     try
                     {
-                        Utilities.StartProcess(file.Destination, file.Args);
+                        Utilities.StartProcess(file.Destination.PathAndQuery, file.Args);
                     }
-                    catch (Exception e)
+                    catch (FileNotFoundException e)
                     {
-                        Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
+                        Utilities.ReportError(e + file.Source.PathAndQuery, Utilities.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -488,31 +474,41 @@ namespace SevenUpdate
                 case FileAction.UpdateIfExist:
                 case FileAction.UpdateThenExecute:
                 case FileAction.UpdateThenRegister:
-                    if (File.Exists(file.Source))
+                    if (File.Exists(file.Source.PathAndQuery))
                     {
                         try
                         {
-                            if (File.Exists(file.Destination))
+                            if (File.Exists(file.Destination.PathAndQuery))
                             {
-                                File.Copy(file.Destination, file.Destination + @".bak", true);
-                                File.Delete(file.Destination);
+                                File.Copy(file.Destination.PathAndQuery, file.Destination + @".bak", true);
+                                File.Delete(file.Destination.PathAndQuery);
                             }
 
-                            File.Move(file.Source, file.Destination);
+                            File.Move(file.Source.PathAndQuery, file.Destination.PathAndQuery);
 
                             if (File.Exists(file.Destination + @".bak"))
                             {
                                 File.Delete(file.Destination + @".bak");
                             }
                         }
-                        catch (Exception)
+                        catch (IOException)
                         {
                             if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
                             {
                                 File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
                             }
 
-                            MoveFileExW(file.Source, file.Destination, MoveOnReboot);
+                            NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);
+                            File.Delete(file.Destination + @".bak");
+                        }
+                        catch (UnauthorizedAccessException)
+                        {
+                            if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
+                            {
+                                File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
+                            }
+
+                            NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
                         }
                     }
@@ -526,11 +522,11 @@ namespace SevenUpdate
                     {
                         try
                         {
-                            Utilities.StartProcess(file.Destination, file.Args);
+                            Utilities.StartProcess(file.Destination.PathAndQuery, file.Args);
                         }
-                        catch (Exception e)
+                        catch (FileNotFoundException e)
                         {
-                            Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
+                            Utilities.ReportError(e + file.Source.PathAndQuery, Utilities.AllUserStore);
                             errorOccurred = true;
                         }
                     }
@@ -551,15 +547,15 @@ namespace SevenUpdate
         {
             for (var x = 0; x < files.Count; x++)
             {
-                files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
+                files[x].Source = new Uri (downloadDirectory + Path.GetFileName(files[x].Destination.PathAndQuery));
                 try
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
-                    Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
+                    Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination.PathAndQuery));
 
                     // ReSharper restore AssignNullToNotNullAttribute
                 }
-                catch (Exception e)
+                catch (IOException e)
                 {
                     Utilities.ReportError(e, Utilities.AllUserStore);
                     errorOccurred = true;
