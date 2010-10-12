@@ -10,10 +10,8 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.Progress
+namespace SharpBits.Base
 {
-    using SharpBits.Base.Job;
-
     /// <summary>The <see cref="BitsJob"/> Progress</summary>
     public class JobProgress
     {

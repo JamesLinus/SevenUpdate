@@ -10,14 +10,11 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.File
+namespace SharpBits.Base
 {
     using System;
     using System.Collections.ObjectModel;
     using System.Runtime.InteropServices;
-
-    using SharpBits.Base.Job;
-    using SharpBits.Base.Progress;
 
     /// <summary>A file that can be added to a <see cref="BitsJob"/></summary>
     public sealed partial class BitsFile : IDisposable

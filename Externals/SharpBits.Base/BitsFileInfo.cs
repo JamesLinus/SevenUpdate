@@ -10,7 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.File
+namespace SharpBits.Base
 {
     /// <summary>The file info for the <see cref="BitsFile"/></summary>
     public class BitsFileInfo

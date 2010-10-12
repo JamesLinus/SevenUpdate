@@ -10,11 +10,9 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.Progress
+namespace SharpBits.Base
 {
     using System;
-
-    using SharpBits.Base.File;
 
     /// <summary>The <see cref="BitsFile"/> progress</summary>
     public class FileProgress

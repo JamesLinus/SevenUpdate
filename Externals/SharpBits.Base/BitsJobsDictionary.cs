@@ -10,7 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.Job
+namespace SharpBits.Base
 {
     using System;
     using System.Collections.Generic;

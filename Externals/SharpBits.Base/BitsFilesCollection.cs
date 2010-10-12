@@ -10,15 +10,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
-namespace SharpBits.Base.File
+namespace SharpBits.Base
 {
     using System;
     using System.Collections.Generic;
-
-    using SharpBits.Base.Job;
+    using System.Collections.ObjectModel;
 
     /// <summary>Collection of <see cref="BitsFile"/></summary>
-    public class BitsFilesCollection : List<BitsFile>, IDisposable
+    public class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
         #region Constants and Fields
 
