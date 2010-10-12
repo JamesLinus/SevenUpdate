@@ -265,9 +265,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
@@ -278,9 +276,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
@@ -640,9 +636,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         private static T DeserializeFile<T>(Uri fileName) where T : class
@@ -673,9 +667,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The <see cref="Uri"/> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>

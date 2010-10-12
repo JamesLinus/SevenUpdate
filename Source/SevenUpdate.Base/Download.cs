@@ -77,12 +77,8 @@ namespace SevenUpdate
         /// <summary>
         /// Downloads the updates using BITS
         /// </summary>
-        /// <param name="appUpdates">
-        /// The application updates to download
-        /// </param>
-        /// <param name="isPriority">
-        /// if set to <see langword="true"/> the updates will download with priority
-        /// </param>
+        /// <param name="appUpdates">The application updates to download</param>
+        /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
         {
             if (appUpdates == null)
@@ -236,12 +232,8 @@ namespace SevenUpdate
         /// <summary>
         /// Reports when a download completes
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Utilities.AllUserStore + "abort.lock"))
@@ -289,12 +281,8 @@ namespace SevenUpdate
         /// <summary>
         /// Reports a download error
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -343,12 +331,8 @@ namespace SevenUpdate
         /// <summary>
         /// Reports the download progress
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.
-        /// </param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (File.Exists(Utilities.AllUserStore + "abort.lock"))

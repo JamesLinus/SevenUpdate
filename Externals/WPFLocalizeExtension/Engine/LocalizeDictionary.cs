@@ -288,9 +288,7 @@ namespace WPFLocalizeExtension.Engine
         /// Returns an object from the passed dictionary with the given name.
         ///   If a wrong <typeparamref name="TType"/> is passed, no exception will get thrown (return obj as <typeparamref name="TType"/>).
         /// </summary>
-        /// <typeparam name="TType">
-        /// Type of result type. Have to be a class.
-        /// </typeparam>
+        /// <typeparam name="TType">Type of result type. Have to be a class.</typeparam>
         /// <param name="resourceAssembly">The Assembly where the Resource is located at</param>
         /// <param name="resourceDictionary">Name of the resource directory</param>
         /// <param name="resourceKey">The key for the resource</param>

@@ -13,7 +13,6 @@
 namespace SharpBits.Base
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
     /// <summary>Collection of <see cref="BitsFile"/></summary>

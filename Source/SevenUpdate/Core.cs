@@ -30,7 +30,6 @@ namespace SevenUpdate
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using System.Diagnostics;
     using System.Linq;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
@@ -246,7 +245,9 @@ namespace SevenUpdate
                         td.Controls.Add(button);
                     }
 
-                    return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                    var taskResult = Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                    td.Dispose();
+                    return taskResult;
                 }
             }
 

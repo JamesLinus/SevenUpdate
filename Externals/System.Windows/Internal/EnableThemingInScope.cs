@@ -19,7 +19,7 @@ namespace System.Windows.Internal
     /// Enables the process to access theming controls
     /// </summary>
     [SuppressUnmanagedCodeSecurity]
-    public class EnableThemingInScope : IDisposable
+    public sealed class EnableThemingInScope : IDisposable
     {
         #region Constants and Fields
 
@@ -30,7 +30,7 @@ namespace System.Windows.Internal
         private static bool contextCreationSucceeded;
 
         /// <summary>enable theming</summary>
-        private static ActivationContext enableThemingActivationContext;
+        private static NativeMethods.ActivationContext enableThemingActivationContext;
 
         /// <summary>The activation context</summary>
         private static IntPtr activationContext;
@@ -57,7 +57,7 @@ namespace System.Windows.Internal
                 return;
             }
 
-            if (!ActivateActCtx(activationContext, out this.cookie))
+            if (!NativeMethods.ActivateActCtx(activationContext, out this.cookie))
             {
                 // Be sure cookie always zero if activation failed
                 this.cookie = IntPtr.Zero;
@@ -77,7 +77,7 @@ namespace System.Windows.Internal
         #region IDisposable
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             this.Dispose(true);
         }
@@ -87,29 +87,6 @@ namespace System.Windows.Internal
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Activates the specified activation context. It does this by pushing the specified activation context to the top of the activation stack.
-        /// The specified activation context is thus associated with the current thread and any appropriate side-by-side API functions.
-        /// </summary>
-        /// <param name="activationContext">Handle to an ACTCTX structure that contains information on the activation context that is to be made active.</param>
-        /// <param name="cookie">Pointer to a ULONG_PTR that functions as a cookie, uniquely identifying a specific, activated activation context.</param>
-        /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
-        [DllImport(@"Kernel32.dll")]
-        private static extern bool ActivateActCtx(IntPtr activationContext, out IntPtr cookie);
-
-        /// <summary>Creates an activation context.</summary>
-        /// <param name="activationContext">Pointer to an ACTCTX structure that contains information about the activation context to be created.</param>
-        /// <returns>If the function succeeds, it returns a handle to the returned activation context. Otherwise, it returns InvalidHandleValue.</returns>
-        [DllImport(@"Kernel32.dll")]
-        private static extern IntPtr CreateActCtx(ref ActivationContext activationContext);
-
-        /// <summary>Deactivates the activation context corresponding to the specified cookie.</summary>
-        /// <param name="flags">Flags that indicate how the deactivation is to occur.</param>
-        /// <param name="cookie">The ULONG_PTR that was passed into the call to <see cref="ActivateActCtx"/>. This value is used as a cookie to identify a specific activated activation context.</param>
-        /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
-        [DllImport(@"Kernel32.dll")]
-        private static extern bool DeactivateActCtx(uint flags, IntPtr cookie);
 
         /// <summary>
         /// Ensures the activation context is created
@@ -144,9 +121,9 @@ namespace System.Windows.Internal
                     if (installDir != null)
                     {
                         var manifestLoc = Path.Combine(installDir, @"XPThemes.manifest");
-                        enableThemingActivationContext = new ActivationContext
+                        enableThemingActivationContext = new NativeMethods.ActivationContext
                             {
-                                Size = Marshal.SizeOf(typeof(ActivationContext)),
+                                Size = Marshal.SizeOf(typeof(NativeMethods.ActivationContext)),
                                 Source = manifestLoc,
                                 AssemblyDirectory = installDir,
                                 Flags = AssemblyDirectoryValid
@@ -160,7 +137,7 @@ namespace System.Windows.Internal
 
                         // Note this will fail gracefully if file specified
                         // by manifestLoc doesn't exist.
-                        activationContext = CreateActCtx(ref enableThemingActivationContext);
+                        activationContext = NativeMethods.CreateActCtx(ref enableThemingActivationContext);
                         contextCreationSucceeded = activationContext != (IntPtr.Size > 4 ? new IntPtr(-1L) : new IntPtr(-1));
                     }
                 }
@@ -175,63 +152,18 @@ namespace System.Windows.Internal
         /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
-            if (disposing && this.cookie != IntPtr.Zero)
+            if (!disposing || this.cookie == IntPtr.Zero)
             {
-                if (DeactivateActCtx(0, this.cookie))
-                {
-                    // deactivation succeeded...
-                    this.cookie = IntPtr.Zero;
-                }
+                return;
+            }
+
+            if (NativeMethods.DeactivateActCtx(0, this.cookie))
+            {
+                // deactivation succeeded...
+                this.cookie = IntPtr.Zero;
             }
         }
 
         #endregion
-
-        /// <summary>
-        /// Data used to create the activation context.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ActivationContext
-        {   
-            /// <summary>
-            /// Identifies the type of processor used. Specifies the system's processor architecture.
-            /// </summary>
-            public readonly ushort ProcessorArchitecture;
-
-            /// <summary>
-            /// Specifies the language manifest that should be used. The default is the current user's current UI language.
-            /// </summary>
-            public readonly ushort LangId;
-
-            /// <summary>
-            /// Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.
-            /// </summary>
-            public readonly string ResourceName;
-
-            /// <summary>
-            /// The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.
-            /// </summary>
-            public readonly string ApplicationName;
-
-            /// <summary>
-            /// The size, in bytes, of this structure. This is used to determine the version of this structure.
-            /// </summary>
-            public int Size;
-
-            /// <summary>
-            /// Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.
-            /// </summary>
-            public uint Flags;
-
-            /// <summary>
-            /// Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.
-            /// </summary>
-            public string Source;
-
-            /// <summary>
-            /// The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.
-            /// </summary>
-            public string AssemblyDirectory;
-        }
     }
 }

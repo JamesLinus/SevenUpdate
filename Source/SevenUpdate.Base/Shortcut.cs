@@ -218,9 +218,7 @@ namespace SevenUpdate
             /// <summary>
             /// Gets the class ID.
             /// </summary>
-            /// <param name="classID">
-            /// The class ID.
-            /// </param>
+            /// <param name="classID">The class ID.</param>
             [PreserveSig]
             void GetClassID(out Guid classID);
         }
@@ -236,9 +234,7 @@ namespace SevenUpdate
             /// <summary>
             /// Gets the class ID.
             /// </summary>
-            /// <param name="classID">
-            /// The class ID.
-            /// </param>
+            /// <param name="classID">The class ID.</param>
             new void GetClassID(out Guid classID);
 
             /// <summary>
@@ -253,42 +249,30 @@ namespace SevenUpdate
             /// <summary>
             /// Loads the specified file name.
             /// </summary>
-            /// <param name="fileName">
-            /// Name of the file.
-            /// </param>
-            /// <param name="mode">
-            /// The mode how to load the file
-            /// </param>
+            /// <param name="fileName">Name of the file.</param>
+            /// <param name="mode">The mode how to load the file</param>
             [PreserveSig]
             void Load([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>
             /// Saves the specified file name.
             /// </summary>
-            /// <param name="fileName">
-            /// Name of the file.
-            /// </param>
-            /// <param name="remember">
-            /// if set to <see langword="true"/> [remember].
-            /// </param>
+            /// <param name="fileName">Name of the file.</param>
+            /// <param name="remember">if set to <see langword="true"/> [remember].</param>
             [PreserveSig]
             void Save([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, [In] [MarshalAs(UnmanagedType.Bool)] bool remember);
 
             /// <summary>
             /// Saves the shortcut
             /// </summary>
-            /// <param name="fileName">
-            /// Name of the file.
-            /// </param>
+            /// <param name="fileName">Name of the file.</param>
             [PreserveSig]
             void SaveCompleted([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
             /// <summary>
             /// Gets the shortcut from the filename
             /// </summary>
-            /// <param name="fileName">
-            /// Name of the file.
-            /// </param>
+            /// <param name="fileName">Name of the file.</param>
             [PreserveSig]
             void GetCurFile([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
         }
@@ -304,167 +288,113 @@ namespace SevenUpdate
             /// <summary>
             /// Retrieves the path and file name of a Shell link object
             /// </summary>
-            /// <param name="file">
-            /// The filename of the shortcut
-            /// </param>
-            /// <param name="maxPath">
-            /// The max path.
-            /// </param>
-            /// <param name="data">
-            /// The data to get
-            /// </param>
-            /// <param name="flags">
-            /// The options to specify the path is retrieved.
-            /// </param>
+            /// <param name="file">The filename of the shortcut</param>
+            /// <param name="maxPath">The max path.</param>
+            /// <param name="data">The data to get</param>
+            /// <param name="flags">The options to specify the path is retrieved.</param>
             void GetPath([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, out Win32FindData data, int flags);
 
             /// <summary>
             /// Retrieves the list of item identifiers for a Shell link object
             /// </summary>
-            /// <param name="indentifer">
-            /// The indentifer list.
-            /// </param>
+            /// <param name="indentifer">The indentifer list.</param>
             void GetIDList(out IntPtr indentifer);
 
             /// <summary>
             /// Sets the pointer to an item identifier list (PIDL) for a Shell link object.
             /// </summary>
-            /// <param name="indentifer">
-            /// The indentifer list
-            /// </param>
+            /// <param name="indentifer">The indentifer list</param>
             void SetIDList(IntPtr indentifer);
 
             /// <summary>
             /// Retrieves the description string for a Shell link object
             /// </summary>
-            /// <param name="description">
-            /// The description.
-            /// </param>
-            /// <param name="maxName">
-            /// Name of the max.
-            /// </param>
+            /// <param name="description">The description.</param>
+            /// <param name="maxName">Name of the max.</param>
             void GetDescription([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder description, int maxName);
 
             /// <summary>
             /// Sets the description for a Shell link object. The description can be any application-defined string
             /// </summary>
-            /// <param name="description">
-            /// The description.
-            /// </param>
+            /// <param name="description">The description.</param>
             void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string description);
 
             /// <summary>
             /// Retrieves the name of the working directory for a Shell link object
             /// </summary>
-            /// <param name="dir">
-            /// The working directory.
-            /// </param>
-            /// <param name="maxPath">
-            /// The max path.
-            /// </param>
+            /// <param name="dir">The working directory.</param>
+            /// <param name="maxPath">The max path.</param>
             void GetWorkingDirectory([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dir, int maxPath);
 
             /// <summary>
             /// Sets the name of the working directory for a Shell link object
             /// </summary>
-            /// <param name="dir">
-            /// The working directory.
-            /// </param>
+            /// <param name="dir">The working directory.</param>
             void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string dir);
 
             /// <summary>
             /// Retrieves the command-line arguments associated with a Shell link object
             /// </summary>
-            /// <param name="args">
-            /// The arguments for the shortcut
-            /// </param>
-            /// <param name="maxPath">
-            /// The max path.
-            /// </param>
+            /// <param name="args">The arguments for the shortcut</param>
+            /// <param name="maxPath">The max path.</param>
             void GetArguments([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder args, int maxPath);
 
             /// <summary>
             /// Sets the command-line arguments for a Shell link object
             /// </summary>
-            /// <param name="args">
-            /// The arguments for the shortcut
-            /// </param>
+            /// <param name="args">The arguments for the shortcut</param>
             void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string args);
 
             /// <summary>
             /// Retrieves the hot key for a Shell link object
             /// </summary>
-            /// <param name="hotkey">
-            /// The hotkey.
-            /// </param>
+            /// <param name="hotkey">The hotkey.</param>
             void GetHotkey(out short hotkey);
 
             /// <summary>
             /// Sets a hot key for a Shell link object
             /// </summary>
-            /// <param name="hotkey">
-            /// The hotkey.
-            /// </param>
+            /// <param name="hotkey">The hotkey.</param>
             void SetHotkey(short hotkey);
 
             /// <summary>
             /// Retrieves the show command for a Shell link object
             /// </summary>
-            /// <param name="showCmd">
-            /// The show CMD.
-            /// </param>
+            /// <param name="showCmd">The show CMD.</param>
             void GetShowCmd(out int showCmd);
 
             /// <summary>
             /// Sets the show command for a Shell link object. The show command sets the initial show state of the window.
             /// </summary>
-            /// <param name="showCmd">
-            /// The show CMD.
-            /// </param>
+            /// <param name="showCmd">The show CMD.</param>
             void SetShowCmd(int showCmd);
 
             /// <summary>
             /// Retrieves the location (path and index) of the icon for a Shell link object
             /// </summary>
-            /// <param name="iconPath">
-            /// The icon path.
-            /// </param>
-            /// <param name="iconPathLength">
-            /// Length of the icon path.
-            /// </param>
-            /// <param name="iconIndex">
-            /// Index of the icon.
-            /// </param>
+            /// <param name="iconPath">The icon path.</param>
+            /// <param name="iconPathLength">Length of the icon path.</param>
+            /// <param name="iconIndex">Index of the icon.</param>
             void GetIconLocation([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder iconPath, int iconPathLength, out int iconIndex);
 
             /// <summary>
             /// Sets the location (path and index) of the icon for a Shell link object
             /// </summary>
-            /// <param name="iconPath">
-            /// The icon path.
-            /// </param>
-            /// <param name="iconIndex">
-            /// Index of the icon.
-            /// </param>
+            /// <param name="iconPath">The icon path.</param>
+            /// <param name="iconIndex">Index of the icon.</param>
             void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string iconPath, int iconIndex);
 
             /// <summary>
             /// Sets the relative path to the Shell link object
             /// </summary>
-            /// <param name="relativePath">
-            /// The relative path.
-            /// </param>
-            /// <param name="reserved">
-            /// The reserved.
-            /// </param>
+            /// <param name="relativePath">The relative path.</param>
+            /// <param name="reserved">The reserved.</param>
             void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string relativePath, int reserved);
 
             /// <summary>
             /// Sets the path and file name of a Shell link object
             /// </summary>
-            /// <param name="file">
-            /// The file to set the path
-            /// </param>
+            /// <param name="file">The file to set the path</param>
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string file);
         }
 
@@ -619,9 +549,7 @@ namespace SevenUpdate
         /// <summary>
         /// Gets data associated with a shortcut
         /// </summary>
-        /// <param name="shortcutName">
-        /// The full path to the shortcut lnk file
-        /// </param>
+        /// <param name="shortcutName">The full path to the shortcut lnk file</param>
         /// <returns>
         /// The data for the shortcut
         /// </returns>
@@ -715,9 +643,7 @@ namespace SevenUpdate
         /// <summary>
         /// When a property has changed, call the <see cref="OnPropertyChanged"/> Event
         /// </summary>
-        /// <param name="propertyName">
-        /// The name of the property.
-        /// </param>
+        /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

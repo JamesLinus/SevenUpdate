@@ -28,9 +28,7 @@ namespace WPFLocalizeExtension.BaseExtensions
     /// Implements the BaseLocalizeExtension.
     ///   Represents a LocalizationExtension which provides a localized object of a .resx dictionary.
     /// </summary>
-    /// <typeparam name="TValue">
-    /// The type of the provided value.
-    /// </typeparam>
+    /// <typeparam name="TValue">The type of the provided value.</typeparam>
     /// <remarks>If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled properties</remarks>
     [MarkupExtensionReturnType(typeof(object))]
     [ContentProperty("ResourceIdentifierKey")]

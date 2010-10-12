@@ -115,7 +115,7 @@ namespace System.Windows
         /// <summary>Finalizes an instance of the <see cref="InstanceAwareApplication"/> class.</summary>
         ~InstanceAwareApplication()
         {
-            this.Dispose();
+            this.Dispose(false);
         }
 
         #endregion
@@ -155,18 +155,12 @@ namespace System.Windows
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IDisposable
-
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        void IDisposable.Dispose()
+        public void Dispose()
         {
-            this.Dispose();
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
 
         #region IPriorApplicationInstance
 
@@ -181,8 +175,6 @@ namespace System.Windows
             // Since the method is called asynchronously, invoke the function using the dispatcher!
             this.Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
         }
-
-        #endregion
 
         #endregion
 
@@ -294,13 +286,6 @@ namespace System.Windows
         private static Uri GetPipeUri(string applicationPath)
         {
             return new Uri(string.Format(CultureInfo.CurrentCulture, @"net.pipe://localhost/{0}/", applicationPath));
-        }
-
-        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        private void Dispose()
-        {
-            // Try to dispose the synchronization objects, just in case the application did not exit...
-            this.TryDisposeSynchronizationObjects();
         }
 
         /// <summary>Initializes the first application instance.</summary>
@@ -510,10 +495,21 @@ namespace System.Windows
             this.signaledToFirstInstanceSemaphore = null;
         }
 
+        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                this.Dispose();
+                GC.SuppressFinalize(this);
+            }
+        }
+
         #endregion
 
         /// <summary>Class used to define the arguments of another application instance startup.</summary>
-        public class StartupNextInstanceEventArgs : EventArgs
+        public sealed class StartupNextInstanceEventArgs : EventArgs
         {
             #region Constants and Fields
 

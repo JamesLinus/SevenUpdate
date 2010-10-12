@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="LocaleStringToStringConverter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"

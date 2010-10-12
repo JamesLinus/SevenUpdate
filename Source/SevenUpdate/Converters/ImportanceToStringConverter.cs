@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="ImportanceToStringConverter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"

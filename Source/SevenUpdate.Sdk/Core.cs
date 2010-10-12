@@ -145,8 +145,10 @@ namespace SevenUpdate.Sdk
             var source = PresentationSource.FromVisual(visual) as HwndSource;
             if (source != null)
             {
-                IWin32Window win = new OldWindow(source.Handle);
-                return win;
+                var win = new OldWindow(source.Handle);
+                var window = win;
+                win.Dispose();
+                return window;
             }
 
             return null;
@@ -225,8 +227,10 @@ namespace SevenUpdate.Sdk
                     openFileDialog.Filter = Resources.AllFiles + @"|*.*";
                     break;
             }
-
-            return openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
+            
+            var result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
+            openFileDialog.Dispose();
+            return result;
         }
 
         /// <summary>Opens a SaveFileDialog</summary>
@@ -266,7 +270,9 @@ namespace SevenUpdate.Sdk
                     break;
             }
 
-            return saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
+            var result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
+            saveFileDialog.Dispose();
+            return result;
         }
 
         /// <summary>The base_ serialization error.</summary>
@@ -418,7 +424,9 @@ namespace SevenUpdate.Sdk
                     td.StandardButtons = standardButtons;
                 }
 
-                return td.ShowDialog(Application.Current.MainWindow);
+                var dialogResult = td.ShowDialog(Application.Current.MainWindow);
+                td.Dispose();
+                return dialogResult;
             }
 
             var message = instructionText;

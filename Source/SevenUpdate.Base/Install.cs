@@ -32,7 +32,6 @@ namespace SevenUpdate
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
 
     using Microsoft.Win32;
@@ -495,7 +494,10 @@ namespace SevenUpdate
                         {
                             if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
                             {
-                                File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
+                                using (var rebootFile = File.Create(Utilities.AllUserStore + @"reboot.lock"))
+                                {
+                                    rebootFile.WriteByte(0);
+                                }
                             }
 
                             NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);
@@ -505,7 +507,10 @@ namespace SevenUpdate
                         {
                             if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
                             {
-                                File.Create(Utilities.AllUserStore + @"reboot.lock").WriteByte(0);
+                                using (var rebootFile = File.Create(Utilities.AllUserStore + @"reboot.lock"))
+                                {
+                                    rebootFile.WriteByte(0);
+                                }
                             }
 
                             NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);

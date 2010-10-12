@@ -15,12 +15,8 @@ namespace System.Windows.Dialogs
     using System.Linq;
 
     /// <summary>Strongly typed collection for dialog controls.</summary>
-    /// <typeparam name="T">
-    /// The control
-    /// </typeparam>
-    /// <typeparameter name="T">
-    ///   The <see cref="DialogControl"/>
-    /// </typeparameter>
+    /// <typeparam name="T">The control</typeparam>
+    /// <typeparameter name="T">The <see cref="DialogControl"/></typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T>
         where T : DialogControl
     {

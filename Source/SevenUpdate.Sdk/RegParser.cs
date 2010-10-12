@@ -96,8 +96,11 @@ namespace SevenUpdate.Sdk
 
             // Raw Data
             var encoder = Encoding.GetEncoding(0);
-            var fileStream = new StreamReader(file, encoder, true);
-            var rawRegFileData = fileStream.ReadToEnd();
+            string rawRegFileData;
+            using (var fileStream = new StreamReader(file, encoder, true))
+            {
+                rawRegFileData  = fileStream.ReadToEnd();
+            }
 
             // Nuke all comments (these have given me a royal headache 
             // to try to workaround but it is unfortunately the ONLY way I can do the

@@ -283,12 +283,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Gets the ancestor.</summary>
-        /// <typeparam name="T">
-        /// The type of the ancestor to get
-        /// </typeparam>
-        /// <typeparameter name="T">
-        ///   The Ancestor class
-        /// </typeparameter>
+        /// <typeparam name="T">The type of the ancestor to get</typeparam>
+        /// <typeparameter name="T">The Ancestor class</typeparameter>
         /// <param name="reference">The reference.</param>
         /// <returns>Returns the ancestor class</returns>
         private static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject

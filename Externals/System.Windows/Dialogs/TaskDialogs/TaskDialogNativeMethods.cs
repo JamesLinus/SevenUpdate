@@ -279,21 +279,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #endregion
 
-        /// <summary>
-        /// Creates, displays, and operates a task dialog. The task dialog contains application-defined message text and title, icons, and any combination of predefined push buttons. 
-        /// This function does not support the registration of a callback function to receive notifications.
-        /// </summary>
-        /// <param name="parent">Handle to the owner window of the task dialog to be created. If this parameter is <see langword="null"/>, the task dialog has no owner window.</param>
-        /// <param name="instance">Handle to the module that contains the icon resource identified by the Icon member, and the string resources identified by the title and <paramref name="mainInstruction"/> members. If this parameter is <see langword="null"/>, Icon must not be <see langword="null"/>, but must point to a <see langword="null"/>-terminated, Unicode string that contains a system resource identifier.</param>
-        /// <param name="title">Pointer to the string to be used for the task dialog title. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. If this parameter is <see langword="null"/>, the filename of the executable program is used.</param>
-        /// <param name="mainInstruction">Pointer to the string to be used for the main instruction. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. If this parameter is <see langword="null"/>, the filename of the executable program is used.</param>
-        /// <param name="content">Pointer to a string used for additional text that appears below the main instruction, in a smaller font. This parameter is a <see langword="null"/>-terminated, Unicode string that contains either text, or an integer resource identifier passed through the MAKEINTRESOURCE macro. Can be <see langword="null"/> if no additional text is wanted.</param>
-        /// <param name="buttons">Specifies the push buttons displayed in the dialog box.</param>
-        /// <param name="icon">Pointer to a string that identifies the icon to display in the task dialog. This parameter must be an integer resource identifier passed to the MAKEINTRESOURCE macro or one of the following predefined values. If this parameter is NULL, no icon will be displayed.</param>
-        /// <returns>The result</returns>
-        [DllImport(@"comctl32.dll", PreserveSig = false, CharSet = CharSet.Unicode)]
-        public static extern TaskDialogResult TaskDialog(IntPtr parent, IntPtr instance, string title, string mainInstruction, string content, TaskDialogCommonButtonFlags buttons, TaskDialogIcon icon);
-
         /// <summary>The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains application-defined icons, messages, title, verification check box, command links, push buttons, and radio buttons. This function can register a callback function to receive notification messages.</summary>
         /// <param name="taskConfig">A pointer to a <see cref="TaskDialogConfig"/> structure that contains information used to display the task dialog.</param>
         /// <param name="button">Address of a variable that receives one of the button IDs specified in the <paramref name="button"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>

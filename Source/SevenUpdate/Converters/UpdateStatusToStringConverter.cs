@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="UpdateStatusToStringConverter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"

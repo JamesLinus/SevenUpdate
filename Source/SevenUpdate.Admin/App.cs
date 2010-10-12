@@ -44,7 +44,6 @@ namespace SevenUpdate.Admin
     using SevenUpdate.Service;
 
     using Application = System.Windows.Application;
-    using Timer = System.Timers.Timer;
 
     /// <summary>The main class of the application</summary>
     internal static class App
@@ -286,22 +285,25 @@ namespace SevenUpdate.Admin
 
             var app = new Application();
 
+            notifyIcon = new NotifyIcon
+                {
+                    Icon = Resources.trayIcon,
+                    Text = Resources.CheckingForUpdates,
+                    Visible = false
+            };
+
             ProcessArgs(args);
 
             app.Run();
             SystemEvents.SessionEnding -= PreventClose;
-            try
+            if (notifyIcon == null)
             {
-                if (notifyIcon != null)
-                {
-                    notifyIcon.Visible = false;
-                    notifyIcon.Dispose();
-                    notifyIcon = null;
-                }
+                return;
             }
-            catch (Exception)
-            {
-            }
+
+            notifyIcon.Visible = false;
+            notifyIcon.Dispose();
+            notifyIcon = null;
         }
 
         /// <summary>
@@ -353,14 +355,9 @@ namespace SevenUpdate.Admin
 
                     isAutoInstall = true;
                     isInstalling = true;
-                    notifyIcon = new NotifyIcon
-                        {
-                            Icon = Resources.trayIcon,
-                            Text = Resources.CheckingForUpdates,
-                            Visible = true
-                        };
                     notifyIcon.BalloonTipClicked += RunSevenUpdate;
                     notifyIcon.Click += RunSevenUpdate;
+                    notifyIcon.Visible = true;
                     Search.ErrorOccurred += ErrorOccurred;
                     Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile));
                 }
@@ -383,8 +380,7 @@ namespace SevenUpdate.Admin
                 notifyIcon = null;
             }
 
-            FileStream fs = null;
-            using (fs = File.Create(Utilities.AllUserStore + "abort.lock"))
+            using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
             {
                 fs.WriteByte(0);
             }

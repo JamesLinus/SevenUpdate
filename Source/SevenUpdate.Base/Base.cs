@@ -275,9 +275,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
@@ -288,9 +286,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
@@ -599,9 +595,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name="T">
-        /// the object
-        /// </typeparam>
+        /// <typeparam name="T">the object</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string fileName) where T : class
@@ -658,9 +652,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         private static T DeserializeFile<T>(string fileName) where T : class
@@ -690,9 +682,7 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name="T">
-        /// the object to deserialize
-        /// </typeparam>
+        /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The <see cref="Uri"/> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
@@ -715,9 +705,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name="T">
-        /// the object
-        /// </typeparam>
+        /// <typeparam name="T">the object</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
         private static void SerializeFile<T>(T item, string fileName) where T : class
