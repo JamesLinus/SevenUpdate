@@ -32,53 +32,50 @@ namespace SevenUpdate.Service
     using ProtoBuf.ServiceModel;
 
     /// <summary>Callback methods for the WCF Service</summary>
-    public interface IServiceCallBack
+    public interface IServiceCallback
     {
         #region Public Methods
 
         /// <summary>Occurs when the download has completed</summary>
-        /// <param name="errorOccurred"><see langword = "true" /> if an error occurred, otherwise <see langword = "false" /></param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void OnDownloadCompleted(bool errorOccurred);
+        void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e);
 
         /// <summary>Occurs when the download progress has changed</summary>
-        /// <param name="bytesTransferred">The number of bytes downloaded</param>
-        /// <param name="bytesTotal">The total number of bytes to download</param>
-        /// <param name="filesTransferred">The number of files downloaded</param>
-        /// <param name="filesTotal">The total number of files to download</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
+        void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e);
 
         /// <summary>Occurs when an error occurs</summary>
-        /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void OnErrorOccurred(string exception, ErrorType type);
+        void OnErrorOccurred(object sender, ErrorOccurredEventArgs e);
 
         /// <summary>Occurs when the installation of updates has completed</summary>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of failed updates</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void OnInstallCompleted(int updatesInstalled, int updatesFailed);
+        void OnInstallCompleted(object sender, InstallCompletedEventArgs e);
 
         /// <summary>Occurs when the installation progress has changed</summary>
-        /// <param name="updateName">The name of the update that is being installed</param>
-        /// <param name="progress">The current update progress</param>
-        /// <param name="updatesComplete">The number of updates that have completed</param>
-        /// <param name="totalUpdates">The total number of updates</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = true)]
         [ProtoBehavior]
-        void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates);
+        void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e);
 
         #endregion
     }
 
     /// <summary>Methods for the Event Service</summary>
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallBack))]
+    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallback))]
     internal interface IService
     {
         #region Public Methods

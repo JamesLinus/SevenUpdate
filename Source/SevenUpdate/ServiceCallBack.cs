@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="ServiceCallBack.cs"
+// <copyright file="ServiceCallback.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -31,7 +31,7 @@ namespace SevenUpdate
     using SevenUpdate.Service;
 
     /// <summary>Contains callback methods for WCF</summary>
-    internal sealed class ServiceCallBack : IServiceCallback
+    internal sealed class ServiceCallback : IServiceCallback
     {
         #region Events
 
@@ -52,54 +52,47 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IServiceCallback
+        #region Implementation of IServiceCallback
 
         /// <summary>Occurs when the download of updates has completed</summary>
-        /// <param name="errorOccurred"><see langword = "true" /> if an error occurred, otherwise <see langword = "false" /></param>
-        public void OnDownloadCompleted(bool errorOccurred)
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
-            DownloadDone(this, new DownloadCompletedEventArgs(errorOccurred));
+            DownloadDone(this, e);
         }
 
         /// <summary>Occurs when the download progress has changed</summary>
-        /// <param name="bytesTransferred">the number of bytes downloaded</param>
-        /// <param name="bytesTotal">the total number of bytes to download</param>
-        /// <param name="filesTransferred">The number of files downloaded</param>
-        /// <param name="filesTotal">The total number of files to download</param>
-        public void OnDownloadProgressChanged(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            DownloadProgressChanged(this, new DownloadProgressChangedEventArgs(bytesTransferred, bytesTotal, filesTransferred, filesTotal));
+            DownloadProgressChanged(this, e);
         }
 
         /// <summary>Occurs when a error occurs when downloading or installing updates</summary>
-        /// <param name="exception">the exception that occurred</param>
-        /// <param name="type">the type of error that occurred</param>
-        public void OnErrorOccurred(string exception, ErrorType type)
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
-            ErrorOccurred(this, new ErrorOccurredEventArgs(exception, type));
+            ErrorOccurred(this, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed</summary>
-        /// <param name="installedUpdates">the number of updates installed</param>
-        /// <param name="failedUpdates">the number of failed updates</param>
-        public void OnInstallCompleted(int installedUpdates, int failedUpdates)
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
-            InstallDone(this, new InstallCompletedEventArgs(installedUpdates, failedUpdates));
+            InstallDone(this, e);
         }
 
         /// <summary>Occurs when the install progress has changed</summary>
-        /// <param name="updateName">the name of the update being installed</param>
-        /// <param name="progress">the progress percentage completion</param>
-        /// <param name="updatesComplete">the number of updates that have already been installed</param>
-        /// <param name="totalUpdates">the total number of updates being installed</param>
-        public void OnInstallProgressChanged(string updateName, int progress, int updatesComplete, int totalUpdates)
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
-            InstallProgressChanged(this, new InstallProgressChangedEventArgs(updateName, progress, updatesComplete, totalUpdates));
+            InstallProgressChanged(this, e);
         }
-
-        #endregion
 
         #endregion
     }

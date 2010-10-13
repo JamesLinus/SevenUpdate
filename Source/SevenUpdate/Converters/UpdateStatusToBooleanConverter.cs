@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="FileSizeConverter.cs"
+// <copyright file="UpdateStatusToBooleanConverter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -27,14 +27,12 @@
 namespace SevenUpdate.Converters
 {
     using System;
-    using System.Collections.ObjectModel;
     using System.Globalization;
-    using System.Windows;
     using System.Windows.Data;
 
-    /// <summary>Converts a ulong or group of ulong values into a string readable file size</summary>
-    [ValueConversion(typeof(UpdateFile), typeof(string))]
-    internal sealed class FileSizeConverter : IValueConverter
+    /// <summary>Converts an Enum to a Boolean value</summary>
+    [ValueConversion(typeof(UpdateStatus), typeof(bool))]
+    internal sealed class UpdateStatusToBooleanConverter : IValueConverter
     {
         #region Implemented Interfaces
 
@@ -48,17 +46,8 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var files = value as Collection<UpdateFile>;
-            if (files != null)
-            {
-                // Gets the full size of the update then converts it into a string format
-                return Utilities.ConvertFileSize(Core.GetUpdateSize(files));
-            }
-
-            var size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
-
-            // Converts the ulong into a readable file size string
-            return Utilities.ConvertFileSize(size);
+            // If the UpdateStatus is hidden return False, otherwise return true
+            return ((UpdateStatus)value) != UpdateStatus.Hidden;
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>
@@ -69,7 +58,7 @@ namespace SevenUpdate.Converters
         /// <returns>The original object</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return DependencyProperty.UnsetValue;
+            return ((bool)value) == false ? UpdateStatus.Hidden : UpdateStatus.Visible;
         }
 
         #endregion

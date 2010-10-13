@@ -139,14 +139,14 @@ namespace System.Windows.Internal
         /// <param name="handle">The handle to the window on which the blur behind data is applied.</param>
         /// <param name="bb">A pointer to a <see cref="DwmBlurBehind"/> structure that provides blur behind data.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
-        [DllImport(@"DwmApi.dll")]
+        [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
 
         /// <summary>Extends glass into the client area</summary>
         /// <param name="handle">The handle to the window for which the frame is extended into the client area.</param>
         /// <param name="margins">A pointer to a Margins structure that describes the margins to use when extending the frame into the client area.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code..</returns>
-        [DllImport(@"DwmApi.dll")]
+        [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
 
         /// <summary>Gets a value that indicates whether Desktop Window Manager (DWM) composition is enabled. Applications can listen for composition state changes by handling the WM_DWMCOMPOSITIONCHANGED notification.</summary>
@@ -164,7 +164,7 @@ namespace System.Windows.Internal
         /// <param name="handle">A handle to the window.</param>
         /// <param name="rect">A pointer to a <see cref="Rect"/> structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
         /// <returns><see langword="true"/> if successful</returns>
-        [DllImport(@"user32.dll")]
+        [DllImport(@"user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
 
@@ -172,7 +172,7 @@ namespace System.Windows.Internal
         /// <param name="handle">A handle to the window whose client coordinates are to be retrieved.</param>
         /// <param name="rect">A pointer to a <see cref="Rect"/> structure that receives the client coordinates. The left and top members are zero. The right and bottom members contain the width and height of the window.</param>
         /// <returns><see langword="true"/> if successful</returns>
-        [DllImport(@"user32.dll")]
+        [DllImport(@"user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);
 
@@ -252,50 +252,32 @@ namespace System.Windows.Internal
             public bool TransitionOnMaximized;
         }
 
-        /// <summary>
-        /// Data used to create the activation context.
-        /// </summary>
+        /// <summary>Data used to create the activation context.</summary>
         [StructLayout(LayoutKind.Sequential)]
         internal struct ActivationContext
         {
-            /// <summary>
-            /// Identifies the type of processor used. Specifies the system's processor architecture.
-            /// </summary>
+            /// <summary>Identifies the type of processor used. Specifies the system's processor architecture.</summary>
             public readonly ushort ProcessorArchitecture;
 
-            /// <summary>
-            /// Specifies the language manifest that should be used. The default is the current user's current UI language.
-            /// </summary>
+            /// <summary>Specifies the language manifest that should be used. The default is the current user's current UI language.</summary>
             public readonly ushort LangId;
 
-            /// <summary>
-            /// Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.
-            /// </summary>
+            /// <summary>Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.</summary>
             public readonly string ResourceName;
 
-            /// <summary>
-            /// The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.
-            /// </summary>
+            /// <summary>The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.</summary>
             public readonly string ApplicationName;
 
-            /// <summary>
-            /// The size, in bytes, of this structure. This is used to determine the version of this structure.
-            /// </summary>
+            /// <summary>The size, in bytes, of this structure. This is used to determine the version of this structure.</summary>
             public int Size;
 
-            /// <summary>
-            /// Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.
-            /// </summary>
+            /// <summary>Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.</summary>
             public uint Flags;
 
-            /// <summary>
-            /// Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.
-            /// </summary>
+            /// <summary>Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.</summary>
             public string Source;
 
-            /// <summary>
-            /// The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.
-            /// </summary>
+            /// <summary>The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.</summary>
             public string AssemblyDirectory;
         }
 

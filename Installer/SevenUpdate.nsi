@@ -16,7 +16,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "D:\Documents\Visual Studio 2010\Projects\SevenUpdate\Source\SevenUpdate\icon.ico"
+!define MUI_ICON "..\Source\SevenUpdate\icon.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 
@@ -24,7 +24,7 @@
 !insertmacro MUI_PAGE_WELCOME
 ; License page
 !define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "D:\Documents\Software Development\Install Files\license.txt"
+!insertmacro MUI_PAGE_LICENSE ".\license.txt"
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -152,6 +152,12 @@ FunctionEnd
   Pop $R0
   
 FunctionEnd
+
+Function RefreshShellIcons
+  !define SHCNE_ASSOCCHANGED 0x08000000
+  !define SHCNF_IDLIST 0
+  System::Call 'shell32.dll::SHChangeNotify(i, i, i, i) v (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'
+FunctionEnd
  
 !macro DownloadFile SOURCE DEST 
 
@@ -205,26 +211,26 @@ Section "Main Section" SEC01
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.xml" /TN "SevenUpdate"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.Admin.xml" /TN "SevenUpdate.Admin"'
   ${EndIf}
-	
+  
+  Delete "$APPDATA\Seven Software\Seven Update\updates.sui"
+  
   SetShellVarContext current
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   SetShellVarContext all
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   CreateDirectory "$SMPROGRAMS\Seven Software"
-  
-CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\SevenUpdate.exe"
+  CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\SevenUpdate.exe"
   
   WriteRegStr HKCR "sevenupdate" "" "URL:Seven Update Protocol"
   WriteRegStr HKCR "sevenupdate" "URL Protocol" ""
   WriteRegStr HKCR "sevenupdate\DefaultIcon" "" "SevenUpdate.exe,0"
   WriteRegStr HKCR "sevenupdate\shell\open\command" "" '"$INSTDIR\SevenUpdate.exe" "%1"'
   
-  
   WriteRegStr HKCR ".sua" "" "SevenUpdate.sua"
   WriteRegStr HKCR "SevenUpdate.sua" "" "Seven Update Application Information"
-  WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,2"
+  WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,1"
   WriteRegStr HKCR "SevenUpdate.sua\shell\open\command" "" '"$INSTDIR\SevenUpdate.exe" "%1"'
-	
+  Call RefreshShellIcons
 SectionEnd
 
 Section -Post

@@ -185,7 +185,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
-            var file = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), false, "lnk", true);
+            var file = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
 
             if (file == null)
             {
@@ -290,7 +290,7 @@ namespace SevenUpdate.Sdk.Pages
                                        : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
-            var shortcut = Core.OpenFileDialog(installDirectory, false, "lnk", true);
+            var shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
 
             if (shortcut == null)
             {

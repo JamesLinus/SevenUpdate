@@ -127,7 +127,7 @@ namespace System.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view to sort</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplyCustomSort(ListCollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
         {
             if (view.SortDescriptions.Count > 0)
             {
@@ -186,7 +186,7 @@ namespace System.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplySort(ICollectionView view, string propertyName, ListView listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplySort(ICollectionView view, string propertyName, DependencyObject listView, GridViewColumnHeader sortedColumnHeader)
         {
             var direction = ListSortDirection.Ascending;
 

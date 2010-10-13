@@ -15,9 +15,7 @@ namespace System.Windows.Internal
     using System.Security;
     using System.Security.Permissions;
 
-    /// <summary>
-    /// Enables the process to access theming controls
-    /// </summary>
+    /// <summary>Enables the process to access theming controls</summary>
     [SuppressUnmanagedCodeSecurity]
     public sealed class EnableThemingInScope : IDisposable
     {
@@ -88,9 +86,7 @@ namespace System.Windows.Internal
 
         #region Methods
 
-        /// <summary>
-        /// Ensures the activation context is created
-        /// </summary>
+        /// <summary>Ensures the activation context is created</summary>
         /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
         [SuppressUnmanagedCodeSecurity]
         private static bool EnsureActivateContextCreated()

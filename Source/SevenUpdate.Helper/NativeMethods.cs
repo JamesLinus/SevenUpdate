@@ -1,7 +1,7 @@
 // ***********************************************************************
-// <copyright file="AssemblyInfo.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
+// <copyright file="NativeMethods.cs"
+//            project="SevenUpdate.Helper"
+//            assembly="SevenUpdate.Helper"
 //            solution="SevenUpdate"
 //            company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
@@ -24,27 +24,20 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
-using System;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
-using System.Windows;
+namespace SevenUpdate.Helper
+{
+    using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("Seven Update")]
-[assembly: AssemblyDescription("Provides an easy way to update your software")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Seven Software")]
-[assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.2.1")]
-[assembly: AssemblyFileVersion("10.10.12")]
-[assembly: CLSCompliant(false)]
-[assembly: ComVisible(false)]
-[assembly: NeutralResourcesLanguage("en-US")]
-[assembly: GuidAttribute("4BC799CE-7658-48D9-AC98-829F64638E41")]
-[assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
+    /// <summary>The Win32 native methods</summary>
+    internal static class NativeMethods
+    {
+        /// <summary>Moves the file using the windows command</summary>
+        /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
+        /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
+        /// <param name="flags">The flags that determine how to move the file</param>
+        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
+        [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
+    }
+}

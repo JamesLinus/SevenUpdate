@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -126,25 +123,24 @@ namespace SevenUpdate
             return "0 Bytes";
         }
 
-        /// <summary>Expands the file location variables</summary>
+        /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="directory">a string that contains a directory</param>
-        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory, string valueName = null, bool is64Bit = false)
+        public static string ConvertPath(string path, string directory, bool is64Bit = false, string valueName = null)
         {
             path = path.Replace(
-                "%INSTALLDIR%", 
-                !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), 
-                true);
-            path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, is64Bit), true);
+                                "%INSTALLDIR%", 
+                                !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), 
+                                true);
             return ConvertPath(path, true, is64Bit);
         }
 
-        /// <summary>Expands the system variables in a string</summary>
+        /// <summary>Expands the system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
         /// <param name="path">a string that contains a file path</param>
-        /// <param name="expand"><see langword = "true" /> to expand system variable, <see langword = "false" /> to converts paths into system variables</param>
+        /// <param name="expand"><see langword="true"/> to expand system variable, <see langword="false"/> to converts paths into system variables</param>
         /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
@@ -270,7 +266,7 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeFile<T>(new Uri(fileName)));
+            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
             task.Wait();
             return task.Result;
         }
@@ -280,7 +276,7 @@ namespace SevenUpdate
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, Uri sourceUrl) where T : class
+        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
         {
             var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl));
             task.Wait();
@@ -290,7 +286,7 @@ namespace SevenUpdate
         /// <summary>Downloads a file</summary>
         /// <param name="url">A Uri pointing to the location of the file to download</param>
         /// <returns>the downloaded file <see cref="Stream"/></returns>
-        public static Stream DownloadFile(Uri url)
+        public static Stream DownloadFile(string url)
         {
             // Get a data stream from the url
             MemoryStream memStream;
@@ -514,28 +510,32 @@ namespace SevenUpdate
                     tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
                 }
 
-                if (exception.InnerException != null)
+                if (exception.InnerException == null)
                 {
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
-                    tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
+                    return;
+                }
 
-                    if (exception.TargetSite != null)
-                    {
-                        tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
-                    }
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
 
-                    if (exception.InnerException.InnerException != null)
-                    {
-                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
-                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
-                        tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
+                if (exception.TargetSite != null)
+                {
+                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
+                }
 
-                        if (exception.TargetSite != null)
-                        {
-                            tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
-                        }
-                    }
+                if (exception.InnerException.InnerException == null)
+                {
+                    return;
+                }
+
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
+                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
+
+                if (exception.TargetSite != null)
+                {
+                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
                 }
             }
         }
@@ -544,19 +544,10 @@ namespace SevenUpdate
         /// <typeparam name="T">The object type to serialize</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, Uri fileName) where T : class
+        public static void Serialize<T>(T item, string fileName) where T : class
         {
             var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
             task.Wait();
-        }
-
-        /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name="T">The object type to serialize</typeparam>
-        /// <param name="item">the object to serialize</param>
-        /// <param name="fileName">the location of a file that will be serialized</param>
-        public static void Serialize<T>(T item, string fileName) where T : class
-        {
-            Serialize(item, new Uri(fileName));
         }
 
         /// <summary>Starts a process on the system</summary>
@@ -567,55 +558,40 @@ namespace SevenUpdate
         /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
-            bool success;
-            var process = new Process
+            using (var process = new Process())
+            {
+                process.StartInfo.FileName = fileName;
+                process.StartInfo.UseShellExecute = true;
+                if (arguments != null)
                 {
-                    StartInfo =
-                        {
-                            FileName = fileName, 
-                            UseShellExecute = true
-                        }
-                };
-
-            if (arguments != null)
-            {
-                process.StartInfo.Arguments = arguments;
-            }
-
-            if (hidden)
-            {
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            }
-
-            try
-            {
-                process.Start();
-                success = true;
-            }
-            catch (Exception e)
-            {
-                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
-                {
-                    throw;
+                    process.StartInfo.Arguments = arguments;
                 }
 
-                success = false;
-                ReportError(e, UserStore);
-            }
-            finally
-            {
-                process.Dispose();
-            }
-
-            if (success)
-            {
-                if (wait)
+                if (hidden)
                 {
-                    process.WaitForExit();
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 }
 
-                return true;
+                try
+                {
+                    process.Start();
+                    if (wait)
+                    {
+                        process.WaitForExit();
+                    }
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                    {
+                        throw;
+                    }
+
+                    ReportError(e, UserStore);
+                }
             }
 
             return false;
@@ -639,15 +615,14 @@ namespace SevenUpdate
         /// <typeparam name="T">the object to deserialize</typeparam>
         /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
-        private static T DeserializeFile<T>(Uri fileName) where T : class
+        private static T DeserializeFile<T>(string fileName) where T : class
         {
-            var sourceFile = fileName.AbsoluteUri;
-            if (File.Exists(sourceFile))
+            if (File.Exists(fileName))
             {
                 try
                 {
                     T obj;
-                    using (var file = File.OpenRead(sourceFile))
+                    using (var file = File.OpenRead(fileName))
                     {
                         obj = Serializer.Deserialize<T>(file);
                     }
@@ -671,7 +646,7 @@ namespace SevenUpdate
         /// <param name="stream">The Stream to deserialize</param>
         /// <param name="sourceUrl">The <see cref="Uri"/> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        private static T DeserializeStream<T>(Stream stream, Uri sourceUrl) where T : class
+        private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
         {
             try
             {
@@ -753,21 +728,20 @@ namespace SevenUpdate
         /// <typeparam name="T">the object type to serialize</typeparam>
         /// <param name="item">the object to serialize</param>
         /// <param name="fileName">the location of a file that will be serialized</param>
-        private static void SerializeFile<T>(T item, Uri fileName) where T : class
+        private static void SerializeFile<T>(T item, string fileName) where T : class
         {
             try
             {
-                var fileDestination = fileName.PathAndQuery;
-                if (File.Exists(fileDestination))
+                if (File.Exists(fileName))
                 {
-                    using (var file = File.Open(fileDestination, FileMode.Truncate))
+                    using (var file = File.Open(fileName, FileMode.Truncate))
                     {
                         Serializer.Serialize(file, item);
                     }
                 }
                 else
                 {
-                    using (var file = File.Open(fileDestination, FileMode.CreateNew))
+                    using (var file = File.Open(fileName, FileMode.CreateNew))
                     {
                         Serializer.Serialize(file, item);
                     }

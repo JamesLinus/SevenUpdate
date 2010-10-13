@@ -499,11 +499,13 @@ namespace System.Windows
         /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!disposing)
             {
-                this.Dispose();
-                GC.SuppressFinalize(this);
+                return;
             }
+
+            this.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         #endregion

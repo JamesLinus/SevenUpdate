@@ -103,22 +103,21 @@ namespace SevenUpdate
         private static void Init(IList<string> args)
         {
             Utilities.Locale = Settings.Default.locale;
-            foreach (var t in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)))
+            foreach (var suaLoc in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)).Select(t => t.Replace(@"sevenupdate://", null)))
             {
-                var suaLoc = new Uri(t.Replace(@"sevenupdate://", null));
                 try
                 {
                     var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(suaLoc), suaLoc);
                     var appName = Utilities.GetLocaleString(sua.Name);
                     if (
                         Core.ShowMessage(
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
-                            TaskDialogStandardIcon.ShieldBlue, 
-                            TaskDialogStandardButtons.Cancel, 
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
-                            null, 
-                            SevenUpdate.Properties.Resources.Add, 
-                            true) != TaskDialogResult.Cancel)
+                                         String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
+                                         TaskDialogStandardIcon.ShieldBlue, 
+                                         TaskDialogStandardButtons.Cancel, 
+                                         String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
+                                         null, 
+                                         SevenUpdate.Properties.Resources.Add, 
+                                         true) != TaskDialogResult.Cancel)
                     {
                         AdminClient.AddSua(sua);
                     }

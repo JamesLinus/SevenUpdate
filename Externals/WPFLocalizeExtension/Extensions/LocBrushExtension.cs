@@ -17,7 +17,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows.Markup;
     using System.Windows.Media;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for brush objects as string (uses <see cref="TypeConverter"/>)</summary>
@@ -79,7 +78,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns the modified object</returns>
         protected override object FormatOutput(object input)
         {
-            if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
+            if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 try
                 {

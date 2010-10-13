@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -101,7 +98,7 @@ namespace SevenUpdate
             var publisher = new ObservableCollection<LocaleString>();
             var ls = new LocaleString
                 {
-                    Value = "Seven Software",
+                    Value = "Seven Software", 
                     Lang = "en"
                 };
             publisher.Add(ls);
@@ -109,27 +106,26 @@ namespace SevenUpdate
             var name = new ObservableCollection<LocaleString>();
             ls = new LocaleString
                 {
-                    Value = "Seven Update",
+                    Value = "Seven Update", 
                     Lang = "en"
                 };
             name.Add(ls);
 
             // Download the Seven Update SUI and load it.
-            var sevenUpdateUri = new Uri(SevenUpdateSui);
-            var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(sevenUpdateUri), sevenUpdateUri);
+            var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(SevenUpdateSui), SevenUpdateSui);
 
             if (app != null)
             {
                 app.AppInfo = new Sua
                     {
-                        AppUrl = new Uri("http://sevenupdate.com/"),
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
-                        Publisher = publisher,
-                        Name = name,
-                        HelpUrl = new Uri("http://sevenupdate.com/support/"),
-                        Is64Bit = true,
-                        IsEnabled = true,
-                        SuiUrl = new Uri(SevenUpdateSui)
+                        AppUrl = @"http://sevenupdate.com/", 
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
+                        Publisher = publisher, 
+                        Name = name, 
+                        HelpUrl = @"http://sevenupdate.com/support/", 
+                        Is64Bit = true, 
+                        IsEnabled = true, 
+                        SuiUrl = SevenUpdateSui
                     };
 
                 // Check if there is a newer version of Seven Update
@@ -257,7 +253,7 @@ namespace SevenUpdate
         /// <summary>Checks for updates</summary>
         /// <param name="app">a collection of applications to check for updates</param>
         /// <param name="hidden">a collection of hidden updates</param>
-        /// <returns>returns <see langword = "true" /> if found updates, otherwise <see langword = "false" /></returns>
+        /// <returns>returns <see langword="true"/> if found updates, otherwise <see langword="false"/></returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
@@ -298,9 +294,10 @@ namespace SevenUpdate
                         continue;
                     }
                 }
+
                 var updates = app.Updates[y];
 
-                ulong size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
+                var size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
 
                 app.Updates[y] = updates;
 
@@ -312,6 +309,14 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
+                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(
+                                                                                    app.Updates[y].Files[z].Destination,
+                                                                                    app.AppInfo.Directory,
+                                                                                    app.AppInfo.Is64Bit,
+                                                                                    app.AppInfo.ValueName);
+
+                        app.Updates[y].Files[z].Source = Utilities.ConvertPath(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Is64Bit);
+
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
                             remove = false;
@@ -362,13 +367,9 @@ namespace SevenUpdate
             return false;
         }
 
-        #endregion
-
-        /// <summary>
-        /// Iterates through the update and removes un needed values. Returns the download size for the update
-        /// </summary>
+        /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update</summary>
         /// <param name="update">The update to iterate</param>
-        /// <param name="directory">The uri or registry key to the application directory </param>
+        /// <param name="directory">The Uri or registry key to the application directory </param>
         /// <param name="valueName">The name of the registry value, can be <see langword="null"/></param>
         /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>The current download size of the update</returns>
@@ -377,11 +378,11 @@ namespace SevenUpdate
             ulong size = 0;
             for (var z = 0; z < update.Files.Count; z++)
             {
-                update.Files[z].Destination = new Uri(Utilities.ConvertPath(update.Files[z].Destination.PathAndQuery, directory, valueName, is64Bit));
-                var downloadFile = Utilities.AllUserStore + @"downloads\" + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination.PathAndQuery);
+                update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, is64Bit, valueName);
+                var downloadFile = Utilities.AllUserStore + @"downloads\" + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination);
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
-                if (File.Exists(update.Files[z].Destination.PathAndQuery))
+                if (File.Exists(update.Files[z].Destination))
                 {
                     switch (update.Files[z].Action)
                     {
@@ -390,7 +391,7 @@ namespace SevenUpdate
                         case FileAction.UpdateThenRegister:
                         case FileAction.UpdateIfExist:
                         case FileAction.CompareOnly:
-                            if (Utilities.GetHash(update.Files[z].Destination.PathAndQuery) == update.Files[z].Hash)
+                            if (Utilities.GetHash(update.Files[z].Destination) == update.Files[z].Hash)
                             {
                                 update.Files.Remove(update.Files[z]);
                                 if (update.Files.Count == 0)
@@ -441,7 +442,7 @@ namespace SevenUpdate
                         case FileAction.Update:
                         case FileAction.UpdateThenExecute:
                         case FileAction.UpdateThenRegister:
-                            if (Utilities.GetHash(update.Files[z].Destination.PathAndQuery) == update.Files[z].Hash)
+                            if (Utilities.GetHash(update.Files[z].Destination) == update.Files[z].Hash)
                             {
                                 update.Files.Remove(update.Files[z]);
                                 if (update.Files.Count == 0)
@@ -463,5 +464,7 @@ namespace SevenUpdate
 
             return size;
         }
+
+        #endregion
     }
 }

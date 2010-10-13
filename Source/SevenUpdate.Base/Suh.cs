@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -40,24 +37,16 @@ namespace SevenUpdate
     public enum UpdateStatus
     {
         /// <summary>Indicates that the update installation failed</summary>
-        [ProtoEnum]
-        [EnumMember]
-        Failed = 0, 
+        [ProtoEnum] [EnumMember] Failed = 0, 
 
         /// <summary>Indicates that the update is hidden</summary>
-        [ProtoEnum]
-        [EnumMember]
-        Hidden = 1, 
+        [ProtoEnum] [EnumMember] Hidden = 1, 
 
         /// <summary>Indicates that the update is visible</summary>
-        [ProtoEnum]
-        [EnumMember]
-        Visible = 2, 
+        [ProtoEnum] [EnumMember] Visible = 2, 
 
         /// <summary>Indicates that the update installation succeeded</summary>
-        [ProtoEnum]
-        [EnumMember]
-        Successful = 3
+        [ProtoEnum] [EnumMember] Successful = 3
     }
 
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK</summary>
@@ -71,19 +60,19 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
-        private Uri appUrl;
+        private string appUrl;
 
         /// <summary>The collection of localized update descriptions</summary>
         private ObservableCollection<LocaleString> description;
 
         /// <summary>The help website <see cref = "Uri" /> of the application</summary>
-        private Uri helpUrl;
+        private string helpUrl;
 
         /// <summary>The importance of the update</summary>
         private Importance importance;
 
         /// <summary>The url pointing to a resource to find more information about the update</summary>
-        private Uri infoUrl;
+        private string infoUrl;
 
         /// <summary>The formatted date string when the update was installed</summary>
         private string installDate;
@@ -116,7 +105,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
-        [ProtoMember(8)] [DataMember] public Uri AppUrl
+        [ProtoMember(8), DataMember]
+        public string AppUrl
         {
             get
             {
@@ -134,7 +124,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection localized update descriptions</summary>
         /// <value>The localized description for the update</value>
-        [ProtoMember(2)] [DataMember] public ObservableCollection<LocaleString> Description
+        [ProtoMember(2), DataMember]
+        public ObservableCollection<LocaleString> Description
         {
             get
             {
@@ -152,7 +143,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
-        [ProtoMember(9, IsRequired = false)] [DataMember] public Uri HelpUrl
+        [ProtoMember(9, IsRequired = false), DataMember]
+        public string HelpUrl
         {
             get
             {
@@ -170,7 +162,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the importance of the update</summary>
         /// <value>The importance</value>
-        [ProtoMember(3)] [DataMember] public Importance Importance
+        [ProtoMember(3), DataMember]
+        public Importance Importance
         {
             get
             {
@@ -188,7 +181,9 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to a resource to find more information about the update</summary>
         /// <value>The info URL.</value>
-        [ProtoMember(10, IsRequired = false)] [DataMember] public Uri InfoUrl
+        [ProtoMember(10, IsRequired = false)]
+        [DataMember]
+        public string InfoUrl
         {
             get
             {
@@ -206,7 +201,9 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the formatted date string when the update was installed</summary>
         /// <value>The formatted install date string (MM/DD/YYYY).</value>
-        [ProtoMember(11)] [DataMember] public string InstallDate
+        [ProtoMember(11)]
+        [DataMember]
+        public string InstallDate
         {
             get
             {
@@ -224,7 +221,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized update names</summary>
         /// <value>The localized update names</value>
-        [ProtoMember(1)] [DataMember] public ObservableCollection<LocaleString> Name
+        [ProtoMember(1), DataMember]
+        public ObservableCollection<LocaleString> Name
         {
             get
             {
@@ -242,7 +240,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
-        [ProtoMember(7)] [DataMember] public ObservableCollection<LocaleString> Publisher
+        [ProtoMember(7), DataMember]
+        public ObservableCollection<LocaleString> Publisher
         {
             get
             {
@@ -260,7 +259,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
-        [ProtoMember(5)] [DataMember] public string ReleaseDate
+        [ProtoMember(5), DataMember]
+        public string ReleaseDate
         {
             get
             {
@@ -278,7 +278,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the current status of the update</summary>
         /// <value>The status.</value>
-        [ProtoMember(4)] [DataMember] public UpdateStatus Status
+        [ProtoMember(4), DataMember]
+        public UpdateStatus Status
         {
             get
             {
@@ -296,7 +297,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the total download size in bytes of the update</summary>
         /// <value>The total download size of the update</value>
-        [ProtoMember(6)] [DataMember] public ulong UpdateSize
+        [ProtoMember(6), DataMember]
+        public ulong UpdateSize
         {
             get
             {

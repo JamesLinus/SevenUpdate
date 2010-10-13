@@ -98,11 +98,11 @@ namespace SevenUpdate.Pages
             Search.SearchCompleted += this.SearchCompleted;
             UpdateInfo.UpdateSelectionChanged += this.UpdateSelectionChanged;
             Core.UpdateActionChanged += this.SetUI;
-            ServiceCallBack.DownloadProgressChanged += this.DownloadProgressChanged;
-            ServiceCallBack.DownloadDone += this.DownloadCompleted;
-            ServiceCallBack.InstallProgressChanged += this.InstallProgressChanged;
-            ServiceCallBack.InstallDone += this.InstallCompleted;
-            ServiceCallBack.ErrorOccurred += this.ErrorOccurred;
+            ServiceCallback.DownloadProgressChanged += this.DownloadProgressChanged;
+            ServiceCallback.DownloadDone += this.DownloadCompleted;
+            ServiceCallback.InstallProgressChanged += this.InstallProgressChanged;
+            ServiceCallback.InstallDone += this.InstallCompleted;
+            ServiceCallback.ErrorOccurred += this.ErrorOccurred;
         }
 
         #endregion
@@ -421,13 +421,9 @@ namespace SevenUpdate.Pages
 
             if (Core.Applications.Count > 0)
             {
-                try
-                {
-                    Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
-                }
-                catch (Exception)
-                {
-                }
+                Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
+                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
+                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /r " + Environment.UserName);
 
                 if (Core.Settings.IncludeRecommended)
                 {
@@ -480,8 +476,6 @@ namespace SevenUpdate.Pages
                         this.tbViewOptionalUpdates.Visibility = Visibility.Collapsed;
                     }
                 }
-
-                // End Code
             }
             else
             {

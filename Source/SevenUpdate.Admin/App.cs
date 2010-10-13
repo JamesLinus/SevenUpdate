@@ -32,6 +32,7 @@ namespace SevenUpdate.Admin
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
+    using System.Security.AccessControl;
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
@@ -123,9 +124,9 @@ namespace SevenUpdate.Admin
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
             {
-                if (WcfService.DownloadCompleted != null && IsClientConnected)
+                if (IsClientConnected)
                 {
-                    WcfService.DownloadCompleted(false);
+                    WcfService.ReportProgress(e);
                 }
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
@@ -146,21 +147,13 @@ namespace SevenUpdate.Admin
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             isInstalling = true;
-            if (WcfService.DownloadProgressChanged != null && IsClientConnected)
+            if (IsClientConnected)
             {
-                WcfService.DownloadProgressChanged(e.BytesTransferred, e.BytesTotal, e.FilesTransferred, e.FilesTotal);
+                WcfService.ReportProgress(e);
             }
 
             Application.Current.Dispatcher.BeginInvoke(
                 UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
-        }
-
-        /// <summary>Starts the downloading of updates</summary>
-        /// <param name="appUpdates">The collection of applications and updates</param>
-        private static void DownloadUpdates(Collection<Sui> appUpdates)
-        {
-            apps = appUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(apps, true));
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
@@ -181,13 +174,13 @@ namespace SevenUpdate.Admin
         {
             IsClientConnected = false;
             Utilities.ReportError(@"Host Fault", Utilities.AllUserStore);
-            if (WcfService.ErrorOccurred != null)
-            {
-                WcfService.ErrorOccurred(Resources.UpdateServiceInterrupted, ErrorType.FatalError);
-            }
+            WcfService.ReportProgress(new ErrorOccurredEventArgs(Resources.UpdateServiceInterrupted, ErrorType.FatalError));
 
             if (host.State == CommunicationState.Opened)
+            {
                 host.Abort();
+            }
+
             ShutdownApp();
         }
 
@@ -205,9 +198,9 @@ namespace SevenUpdate.Admin
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             isInstalling = false;
-            if (WcfService.InstallCompleted != null && IsClientConnected)
+            if (IsClientConnected)
             {
-                WcfService.InstallCompleted(e.UpdatesInstalled, e.UpdatesFailed);
+                WcfService.ReportProgress(e);
             }
 
             File.Delete(Utilities.AllUserStore + "updates.sui");
@@ -219,14 +212,15 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
-            if (WcfService.InstallProgressChanged != null && IsClientConnected)
+            if (IsClientConnected)
             {
-                WcfService.InstallProgressChanged(e.UpdateName, e.CurrentProgress, e.UpdatesComplete, e.TotalUpdates);
+                WcfService.ReportProgress(e);
             }
 
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
+        /// <summary>Starts the WCF service</summary>
         private static void StartWcfHost()
         {
             host = new ServiceHost(typeof(WcfService));
@@ -234,7 +228,6 @@ namespace SevenUpdate.Admin
             host.UnknownMessageReceived += HostUnknownMessageReceived;
             WcfService.ClientConnected += ServiceClientConnected;
             WcfService.ClientDisconnected += ServiceClientDisconnected;
-            WcfService.DownloadUpdates += DownloadUpdates;
             SystemEvents.SessionEnding += PreventClose;
             Search.SearchCompleted += SearchCompleted;
             Search.ErrorOccurred += ErrorOccurred;
@@ -247,16 +240,13 @@ namespace SevenUpdate.Admin
                 host.Open();
             }
             catch (FaultException e)
-                {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
-                    if (WcfService.ErrorOccurred != null)
-                    {
-                        WcfService.ErrorOccurred(e.Message, ErrorType.FatalError);
-                    }
+            {
+                Utilities.ReportError(e, Utilities.AllUserStore);
+                WcfService.ReportProgress(new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
 
-                    SystemEvents.SessionEnding -= PreventClose;
-                    ShutdownApp();
-                }
+                SystemEvents.SessionEnding -= PreventClose;
+                ShutdownApp();
+            }
         }
 
         /// <summary>The main execution method</summary>
@@ -285,34 +275,28 @@ namespace SevenUpdate.Admin
 
             var app = new Application();
 
-            notifyIcon = new NotifyIcon
-                {
-                    Icon = Resources.trayIcon,
-                    Text = Resources.CheckingForUpdates,
-                    Visible = false
-            };
-
-            ProcessArgs(args);
-
-            app.Run();
-            SystemEvents.SessionEnding -= PreventClose;
-            if (notifyIcon == null)
+            using (notifyIcon = new NotifyIcon())
             {
-                return;
+                notifyIcon.Icon = Resources.trayIcon;
+                notifyIcon.Text = Resources.CheckingForUpdates;
+                notifyIcon.Visible = false;
+
+                ProcessArgs(args);
+
+                app.Run();
             }
 
-            notifyIcon.Visible = false;
-            notifyIcon.Dispose();
-            notifyIcon = null;
+            SystemEvents.SessionEnding -= PreventClose;
         }
 
-        /// <summary>
-        /// Processes the command line arguments
-        /// </summary>
+        /// <summary>Processes the command line arguments</summary>
         /// <param name="args">The arguments to process</param>
         private static void ProcessArgs(IList<string> args)
         {
-            if (args.Count > 0)
+            if (args.Count <= 0)
+            {
+            }
+            else
             {
                 if (args[0] == "Abort")
                 {
@@ -329,6 +313,7 @@ namespace SevenUpdate.Admin
                         {
                             throw;
                         }
+
                         Utilities.ReportError(e, Utilities.UserStore);
                     }
 
@@ -338,7 +323,7 @@ namespace SevenUpdate.Admin
                 if (args[0] == "Auto")
                 {
                     if (File.Exists(Utilities.AllUserStore + "abort.lock"))
-
+                    {
                         try
                         {
                             File.Delete(Utilities.AllUserStore + "abort.lock");
@@ -349,9 +334,10 @@ namespace SevenUpdate.Admin
                             {
                                 throw;
                             }
+
                             Utilities.ReportError(e, Utilities.UserStore);
                         }
-
+                    }
 
                     isAutoInstall = true;
                     isInstalling = true;
@@ -428,10 +414,12 @@ namespace SevenUpdate.Admin
             {
                 Utilities.Serialize(apps, Utilities.AllUserStore + "updates.sui");
 
+                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
+
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
-                }
+                } 
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
@@ -446,13 +434,17 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Occurs when Seven Update UI connects to the admin process</summary>
-        private static void ServiceClientConnected()
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The data related to the event</param>
+        private static void ServiceClientConnected(object sender, EventArgs e)
         {
             IsClientConnected = true;
         }
 
         /// <summary>Occurs when the Seven Update UI disconnected</summary>
-        private static void ServiceClientDisconnected()
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The data related to the event</param>
+        private static void ServiceClientDisconnected(object sender, EventArgs e)
         {
             IsClientConnected = false;
 

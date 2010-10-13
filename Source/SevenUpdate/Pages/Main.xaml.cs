@@ -136,7 +136,10 @@ namespace SevenUpdate.Pages
                         lastCheck.Day + 4 == today.Day || lastCheck.Day + 5 == today.Day)
                     {
                         AdminClient.Disconnect();
-                        Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(Utilities.AllUserStore + @"updates.sui")));
+                        if (File.Exists(Utilities.AllUserStore + @"updates.sui"))
+                        {
+                            Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(Utilities.AllUserStore + @"updates.sui")));
+                        }
                     }
                 }
                 else

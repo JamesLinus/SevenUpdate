@@ -72,8 +72,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                var sul = new Uri(SulLocation);
-                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(sul), sul));
+                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(SulLocation), SulLocation));
             }
             catch (WebException)
             {
@@ -179,7 +178,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
-            Utilities.StartProcess(e.Uri.PathAndQuery);
+            Utilities.StartProcess(e.Uri.AbsoluteUri);
 
             e.Handled = true;
         }

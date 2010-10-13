@@ -180,7 +180,7 @@ namespace SevenUpdate.Windows
                         continue;
                     }
 
-                    if (Core.Applications[x].Updates[y].LicenseUrl.PathAndQuery.Length <= 0)
+                    if (Core.Applications[x].Updates[y].LicenseUrl.Length <= 0)
                     {
                         continue;
                     }
@@ -256,7 +256,7 @@ namespace SevenUpdate.Windows
             internal int AppIndex { get; set; }
 
             /// <summary>Gets or sets the <see cref = "Uri" /> for the license agreement</summary>
-            internal Uri LicenseUrl { get; set; }
+            internal string LicenseUrl { get; set; }
 
             /// <summary>Gets or sets the update title</summary>
             internal string Title { get; set; }

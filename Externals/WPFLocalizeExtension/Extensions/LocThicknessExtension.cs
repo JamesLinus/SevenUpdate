@@ -17,7 +17,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows;
     using System.Windows.Markup;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for Thickness values</summary>
@@ -81,7 +80,7 @@ namespace WPFLocalizeExtension.Extensions
             var method = typeof(ThicknessConverter).GetMethod("FromString", BindingFlags.Static | BindingFlags.NonPublic);
             object[] args;
             
-            if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
+            if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 try
                 {

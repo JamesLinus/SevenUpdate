@@ -78,7 +78,7 @@ namespace SevenUpdate.Sdk
         /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
         internal static bool IsNewProject { get; set; }
 
-        /// <summary>Gets a collection of Projects</summary>
+        /// <summary>Gets or sets a collection of Projects</summary>
         /// <value>The projects.</value>
         internal static Collection<Project> Projects { get; set; }
 
@@ -192,44 +192,48 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Opens a OpenFileDialog</summary>
         /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="initialFileName">Gets or sets the initial filename displayed when the dialog is shown.</param>
         /// <param name="multiSelect">Gets or sets a value that determines whether the user can select more than one file</param>
         /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
         /// <returns>A collection of the selected files</returns>
-        internal static string[] OpenFileDialog(string initialDirectory = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
         {
-            var openFileDialog = new OpenFileDialog
-                {
-                    AutoUpgradeEnabled = true, 
-                    Multiselect = multiSelect, 
-                    InitialDirectory = initialDirectory, 
-                    DereferenceLinks = navigateToShortcut, 
-                    CheckFileExists = true, 
-                    DefaultExt = defaultExtension, 
-                    ValidateNames = true
-                };
-            switch (defaultExtension)
+            string[] result;
+            using (var openFileDialog = new OpenFileDialog())
             {
-                case @"sua":
-                    openFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
-                    break;
-                case @"sui":
-                    openFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
-                    break;
-                case @"reg":
-                    openFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
-                    break;
-                case @"lnk":
-                    openFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
-                    break;
-                default:
-                    openFileDialog.AddExtension = false;
-                    openFileDialog.Filter = Resources.AllFiles + @"|*.*";
-                    break;
+                openFileDialog.AutoUpgradeEnabled = true;
+                openFileDialog.Multiselect = multiSelect;
+                openFileDialog.InitialDirectory = initialDirectory;
+                openFileDialog.DereferenceLinks = navigateToShortcut;
+                openFileDialog.CheckFileExists = true;
+                openFileDialog.DefaultExt = defaultExtension;
+                openFileDialog.FileName = initialFileName;
+                openFileDialog.ValidateNames = true;
+
+                switch (defaultExtension)
+                {
+                    case @"sua":
+                        openFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
+                        break;
+                    case @"sui":
+                        openFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
+                        break;
+                    case @"reg":
+                        openFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
+                        break;
+                    case @"lnk":
+                        openFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
+                        break;
+                    default:
+                        openFileDialog.AddExtension = false;
+                        openFileDialog.Filter = Resources.AllFiles + @"|*.*";
+                        break;
+                }
+
+                result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
             }
-            
-            var result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
-            openFileDialog.Dispose();
+
             return result;
         }
 
@@ -240,38 +244,39 @@ namespace SevenUpdate.Sdk
         /// <returns>Gets the selected filename</returns>
         internal static string SaveFileDialog(string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
-            var saveFileDialog = new SaveFileDialog
-                {
-                    FileName = defaultFileName, 
-                    CheckFileExists = false, 
-                    DefaultExt = defaultExtension, 
-                    AddExtension = true, 
-                    InitialDirectory = initialDirectory, 
-                    ValidateNames = true
-                };
-
-            switch (defaultExtension)
+            string result;
+            using (var saveFileDialog = new SaveFileDialog())
             {
-                case @"sua":
-                    saveFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
-                    break;
-                case @"sui":
-                    saveFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
-                    break;
-                case @"reg":
-                    saveFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
-                    break;
-                case @"lnk":
-                    saveFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
-                    break;
-                default:
-                    saveFileDialog.AddExtension = false;
-                    saveFileDialog.Filter = Resources.AllFiles + @"|*.*";
-                    break;
+                saveFileDialog.FileName = defaultFileName;
+                saveFileDialog.CheckFileExists = false;
+                saveFileDialog.DefaultExt = defaultExtension;
+                saveFileDialog.AddExtension = true;
+                saveFileDialog.InitialDirectory = initialDirectory;
+                saveFileDialog.ValidateNames = true;
+
+                switch (defaultExtension)
+                {
+                    case @"sua":
+                        saveFileDialog.Filter = Resources.Sua + @" (*.sua)|*.sua";
+                        break;
+                    case @"sui":
+                        saveFileDialog.Filter = Resources.Sui + @" (*.sui)|*.sui";
+                        break;
+                    case @"reg":
+                        saveFileDialog.Filter = Resources.RegFile + @" (*.reg)|*.reg";
+                        break;
+                    case @"lnk":
+                        saveFileDialog.Filter = Resources.Shortcut + @" (*.lnk)|*.lnk";
+                        break;
+                    default:
+                        saveFileDialog.AddExtension = false;
+                        saveFileDialog.Filter = Resources.AllFiles + @"|*.*";
+                        break;
+                }
+
+                result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
             }
 
-            var result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
-            saveFileDialog.Dispose();
             return result;
         }
 
@@ -368,65 +373,64 @@ namespace SevenUpdate.Sdk
         {
             if (TaskDialog.IsPlatformSupported)
             {
-                var td = new TaskDialog
-                    {
-                        Caption = Resources.SevenUpdateSDK, 
-                        InstructionText = instructionText, 
-                        Text = description, 
-                        Icon = icon, 
-                        FooterText = footerText, 
-                        FooterIcon = TaskDialogStandardIcon.Information, 
-                        CanCancel = true, 
-                    };
-                if (defaultButtonText != null)
+                using (var td = new TaskDialog())
                 {
-                    var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                    td.Caption = Resources.SevenUpdateSDK;
+                    td.InstructionText = instructionText;
+                    td.Text = description;
+                    td.Icon = icon;
+                    td.FooterText = footerText;
+                    td.FooterIcon = TaskDialogStandardIcon.Information;
+                    td.CanCancel = true;
+
+                    if (defaultButtonText != null)
+                    {
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                            {
+                                Default = true,
+                                ShowElevationIcon = displayShieldOnButton
+                            };
+                        td.Controls.Add(button);
+
+                        switch (standardButtons)
                         {
-                            Default = true, 
-                            ShowElevationIcon = displayShieldOnButton
-                        };
-                    td.Controls.Add(button);
-
-                    switch (standardButtons)
-                    {
-                        case TaskDialogStandardButtons.Ok:
-                            button = new TaskDialogButton(@"btnOK", Resources.OK)
-                                {
-                                    Default = false
-                                };
-                            td.Controls.Add(button);
-                            break;
-                        case TaskDialogStandardButtons.Cancel:
-                            button = new TaskDialogButton(@"btnCancel", Resources.Cancel)
-                                {
-                                    Default = false
-                                };
-                            td.Controls.Add(button);
-                            break;
-                        case TaskDialogStandardButtons.Retry:
-                            button = new TaskDialogButton(@"btnRetry", Resources.Retry)
-                                {
-                                    Default = false
-                                };
-                            td.Controls.Add(button);
-                            break;
-                        case TaskDialogStandardButtons.Close:
-                            button = new TaskDialogButton(@"btnClose", Resources.Close)
-                                {
-                                    Default = false
-                                };
-                            td.Controls.Add(button);
-                            break;
+                            case TaskDialogStandardButtons.Ok:
+                                button = new TaskDialogButton(@"btnOK", Resources.OK)
+                                    {
+                                        Default = false
+                                    };
+                                td.Controls.Add(button);
+                                break;
+                            case TaskDialogStandardButtons.Cancel:
+                                button = new TaskDialogButton(@"btnCancel", Resources.Cancel)
+                                    {
+                                        Default = false
+                                    };
+                                td.Controls.Add(button);
+                                break;
+                            case TaskDialogStandardButtons.Retry:
+                                button = new TaskDialogButton(@"btnRetry", Resources.Retry)
+                                    {
+                                        Default = false
+                                    };
+                                td.Controls.Add(button);
+                                break;
+                            case TaskDialogStandardButtons.Close:
+                                button = new TaskDialogButton(@"btnClose", Resources.Close)
+                                    {
+                                        Default = false
+                                    };
+                                td.Controls.Add(button);
+                                break;
+                        }
                     }
-                }
-                else
-                {
-                    td.StandardButtons = standardButtons;
-                }
+                    else
+                    {
+                        td.StandardButtons = standardButtons;
+                    }
 
-                var dialogResult = td.ShowDialog(Application.Current.MainWindow);
-                td.Dispose();
-                return dialogResult;
+                    return td.ShowDialog(Application.Current.MainWindow);
+                }
             }
 
             var message = instructionText;

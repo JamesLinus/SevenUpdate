@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update SDK"
-!define PRODUCT_VERSION "1.2.1.0"
+!define PRODUCT_VERSION "1.2.0.1"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.Sdk.exe"
@@ -15,7 +15,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "D:\Documents\Visual Studio 2010\Projects\SevenUpdate\Source\SevenUpdate.Sdk\icon.ico"
+!define MUI_ICON "..\Source\SevenUpdate.Sdk\icon.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 
@@ -23,7 +23,7 @@
 !insertmacro MUI_PAGE_WELCOME
 ; License page
 !define MUI_LICENSEPAGE_CHECKBOX
-!insertmacro MUI_PAGE_LICENSE "D:\Documents\Software Development\Install Files\license.txt"
+!insertmacro MUI_PAGE_LICENSE ".\license.txt"
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -162,6 +162,7 @@ Section "Main Section" SEC01
   RMDir /r $INSTDIR
   
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/System.Windows.dll" "$INSTDIR\System.Windows.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
@@ -175,8 +176,7 @@ Section "Main Section" SEC01
   
   WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
   WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
-  WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,1"
-  
+  WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,0"
   Call RefreshShellIcons
 SectionEnd
 
@@ -189,8 +189,6 @@ Section -Post
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayVersion" "${PRODUCT_VERSION}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "URLInfoAbout" "${PRODUCT_WEB_SITE}"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "Publisher" "${PRODUCT_PUBLISHER}"
-	
-
 SectionEnd
 
 
@@ -209,7 +207,6 @@ Section Uninstall
   SetShellVarContext all
   nsExec::Exec '"FTYPE" SevenUpdate.SUI="$INSTDIR\SevenUpdate.Sdk.exe" %1 %*"'
   nsExec::Exec '"ASSOC" .sui=SevenUpdate.SUI"'
-
   
   Delete "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk"
   

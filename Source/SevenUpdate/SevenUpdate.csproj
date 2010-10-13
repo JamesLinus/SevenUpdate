@@ -43,7 +43,7 @@
     <DefineConstants>
     </DefineConstants>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -94,13 +94,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\UpdateStatusToBooleanConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Service References\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ServiceCallBack.cs" />
+    <Compile Include="ServiceCallback.cs" />
     <Compile Include="AdminClient.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -230,6 +231,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Service\Mex3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Service\Mex4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Service\WcfService.wsdl" />

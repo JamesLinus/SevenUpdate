@@ -148,7 +148,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="specificCulture">The specific culture.</param>
         /// <returns>The ready to use odds string.</returns>
         /// <remarks>The specific Culture has to be a "xx-xx" culture to support the value.<see cref="ToString"/> method.</remarks>
-        public static string GetLocalizedOddsString(decimal sourceOdds, OddsFormatType oddsType, CultureInfo specificCulture)
+        public static string GetLocalizedOddsString(decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
         {
             switch (oddsType)
             {

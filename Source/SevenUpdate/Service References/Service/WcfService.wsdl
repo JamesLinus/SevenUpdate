@@ -35,6 +35,7 @@
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/SevenUpdate" />
       <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Win32" />
+      <xsd:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IService_AddApp_InputMessage">

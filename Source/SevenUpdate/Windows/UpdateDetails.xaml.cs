@@ -36,10 +36,10 @@ namespace SevenUpdate.Windows
         #region Constants and Fields
 
         /// <summary>The help and support url for the update</summary>
-        private Uri helpUrl;
+        private string helpUrl;
 
         /// <summary>The more update information url for the update</summary>
-        private Uri infoUrl;
+        private string infoUrl;
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace SevenUpdate.Windows
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
-            Utilities.StartProcess(this.helpUrl.PathAndQuery);
+            Utilities.StartProcess(this.helpUrl);
         }
 
         /// <summary>Launches the More Information <see cref="Uri"/></summary>
@@ -86,7 +86,7 @@ namespace SevenUpdate.Windows
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
-            Utilities.StartProcess(this.infoUrl.PathAndQuery);
+            Utilities.StartProcess(this.infoUrl);
         }
 
         #endregion

@@ -117,11 +117,14 @@ namespace SevenUpdate.Helper
                         }
                         catch (Exception)
                         {
-                            MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
+                            NativeMethods.MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
 
                             if (!File.Exists(appStore + "reboot.lock"))
                             {
-                                File.Create(appStore + "reboot.lock").WriteByte(0);
+                                using (var file = File.Create(appStore + "reboot.lock"))
+                                {
+                                    file.WriteByte(0);
+                                }
                             }
                         }
                     }
@@ -130,7 +133,6 @@ namespace SevenUpdate.Helper
                 {
                     Console.WriteLine(e.Message);
                 }
-
 
                 if (!File.Exists(appStore + @"reboot.lock"))
                 {
@@ -149,9 +151,8 @@ namespace SevenUpdate.Helper
                 }
                 else
                 {
-                    MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
                 }
-
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {
@@ -159,17 +160,7 @@ namespace SevenUpdate.Helper
                 }
                 else
                 {
-                    var p = new Process
-                        {
-                            StartInfo =
-                                {
-                                    FileName = @"schtasks.exe", 
-                                    CreateNoWindow = true, 
-                                    WindowStyle = ProcessWindowStyle.Hidden, 
-                                    Arguments = "/Run /TN \"SevenUpdate\""
-                                }
-                        };
-                    p.Start();
+                    Process.Start(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
                 }
 
                 Environment.Exit(0);
@@ -178,12 +169,13 @@ namespace SevenUpdate.Helper
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    var timer = new Timer();
-
-                    timer.Elapsed += RunSevenUpdate;
-                    timer.Interval = 7200000;
-                    timer.Enabled = true;
-                    Application.Run();
+                    using (var timer = new Timer())
+                    {
+                        timer.Elapsed += RunSevenUpdate;
+                        timer.Interval = 7200000;
+                        timer.Enabled = true;
+                        Application.Run();
+                    }
                 }
                 else
                 {
@@ -191,14 +183,6 @@ namespace SevenUpdate.Helper
                 }
             }
         }
-
-        /// <summary>Moves the file using the windows command</summary>
-        /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
-        /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
-        /// <param name="flags">The flags that determine how to move the file</param>
-        /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
-        [DllImport(@"kernel32.dll")]
-        private static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
 
         /// <summary>Run Seven Update and auto check for updates</summary>
         /// <param name="sender">The sender.</param>

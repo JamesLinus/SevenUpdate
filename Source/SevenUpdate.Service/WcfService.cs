@@ -28,10 +28,10 @@ namespace SevenUpdate.Service
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.ServiceModel;
+    using System.Threading.Tasks;
 
     using Microsoft.Win32;
 
@@ -39,81 +39,80 @@ namespace SevenUpdate.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public sealed class WcfService : IService
     {
-        #region Constants and Fields
-
-        /// <summary>Occurs when the download of updates has completed</summary>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "WCF Service Delegate")]
-        public static DownloadCompletedCallbackDelegate DownloadCompleted;
-
-        /// <summary>Occurs when the install progress has changed</summary>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "WCF Service Delegate")]
-        public static DownloadProgressChangedCallbackDelegate DownloadProgressChanged;
-
-        /// <summary>Occurs when a error occurs when downloading or installing updates</summary>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "WCF Service Delegate")]
-        public static ErrorOccurredCallbackDelegate ErrorOccurred;
-
-        /// <summary>Occurs when the installation of updates has completed</summary>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "WCF Service Delegate")]
-        public static InstallCompletedCallbackDelegate InstallCompleted;
-
-        /// <summary>Occurs when the install progress has changed</summary>
-        [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "WCF Service Delegate")]
-        public static InstallProgressCallbackDelegate InstallProgressChanged;
-
-        #endregion
-
-        #region Delegates
-
-        /// <summary>A callback delegate for a WCF Event</summary>
-        public delegate void CallbackDelegate();
-
-        /// <summary>A callback Delegate for a WCF Event</summary>
-        /// <param name="applications">The applications to download</param>
-        public delegate void DownloadCallbackDelegate(Collection<Sui> applications);
-
-        /// <summary>A callback delegate for the <see cref="DownloadCompleted"/> event</summary>
-        /// <param name="errorOccurred"><see langword = "true" /> if an error occurred, otherwise <see langword = "false" /></param>
-        public delegate void DownloadCompletedCallbackDelegate(bool errorOccurred);
-
-        /// <summary>A callback delegate for the <see cref="DownloadProgressChanged"/> event</summary>
-        /// <param name="bytesTransferred">The number of bytes downloaded</param>
-        /// <param name="bytesTotal">The total number of bytes to download</param>
-        /// <param name="filesTransferred">The number of files downloaded</param>
-        /// <param name="filesTotal">The total number of files to download</param>
-        public delegate void DownloadProgressChangedCallbackDelegate(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal);
-
-        /// <summary>A callback delegate for the <see cref="DownloadProgressChanged"/> event</summary>
-        /// <param name="exception">The exception data</param>
-        /// <param name="type">The <see cref="ErrorType"/> of the error that occurred</param>
-        public delegate void ErrorOccurredCallbackDelegate(string exception, ErrorType type);
-
-        /// <summary>A callback delegate for the <see cref="InstallCompleted"/> event</summary>
-        /// <param name="updatesInstalled">The number of updates installed</param>
-        /// <param name="updatesFailed">The number of failed updates</param>
-        public delegate void InstallCompletedCallbackDelegate(int updatesInstalled, int updatesFailed);
-
-        /// <summary>A callback Delegate for a WCF Event</summary>
-        /// <param name="updateName">The name of the update being installed</param>
-        /// <param name="progress">The progress of the update being installed</param>
-        /// <param name="updatesCompleted">The number of updates completed</param>
-        /// <param name="totalUpdates">The total number of updates being installed</param>
-        public delegate void InstallProgressCallbackDelegate(string updateName, int progress, int updatesCompleted, int totalUpdates);
-
-        #endregion
-
         #region Events
 
+        /// <summary>Occurs when the download progress changes</summary>
+        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
+
+        /// <summary>Occurs when an error occurs</summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
+
+        /// <summary>Occurs when the install completes</summary>
+        public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
+
+        /// <summary>Occurs when the install progress changes</summary>
+        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
+
+        /// <summary>Occurs when the download completes</summary>
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
+
         /// <summary>Raises an event when the client is connected</summary>
-        public static event CallbackDelegate ClientConnected;
+        public static event EventHandler<EventArgs> ClientConnected;
 
         /// <summary>Raises an event when the client disconnects</summary>
-        public static event CallbackDelegate ClientDisconnected;
-
-        /// <summary>Raises an event when the client disconnects</summary>
-        public static event DownloadCallbackDelegate DownloadUpdates;
+        public static event EventHandler<EventArgs> ClientDisconnected;
 
         #endregion
+
+        /// <summary>Fires the service call back event to report back to the WCF service</summary>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
+        public static void ReportProgress(DownloadCompletedEventArgs eventArgs)
+        {
+            if (DownloadCompleted != null)
+            {
+                DownloadCompleted(null, eventArgs);
+            }
+        }
+
+        /// <summary>Fires the service call back event to report back to the WCF service</summary>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
+        public static void ReportProgress(InstallCompletedEventArgs eventArgs)
+        {
+            if (InstallCompleted != null)
+            {
+                InstallCompleted(null, eventArgs);
+            }
+        }
+
+        /// <summary>Fires the service call back event to report back to the WCF service</summary>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
+        public static void ReportProgress(DownloadProgressChangedEventArgs eventArgs)
+        {
+            if (DownloadProgressChanged != null)
+            {
+                DownloadProgressChanged(null, eventArgs);
+            }
+        }
+
+        /// <summary>Fires the service call back event to report back to the WCF service</summary>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
+        public static void ReportProgress(InstallProgressChangedEventArgs eventArgs)
+        {
+            if (InstallProgressChanged != null)
+            {
+                InstallProgressChanged(null, eventArgs);
+            }
+        }
+
+        /// <summary>Fires the service call back event to report back to the WCF service</summary>
+        /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
+        public static void ReportProgress(ErrorOccurredEventArgs eventArgs)
+        {
+            if (ErrorOccurred != null)
+            {
+                ErrorOccurred(null, eventArgs);
+            }
+        }
 
         #region Implemented Interfaces
 
@@ -138,7 +137,7 @@ namespace SevenUpdate.Service
 
             sul.Add(application);
 
-            Utilities.Serialize(sul, new Uri(Utilities.ApplicationsFile));
+            Utilities.Serialize(sul, Utilities.ApplicationsFile);
         }
 
         /// <summary>Changes the program settings</summary>
@@ -208,15 +207,17 @@ namespace SevenUpdate.Service
                     File.Delete(Utilities.AllUserStore + "abort.lock");
                 }
             }
-            catch (Exception f)
+            catch (Exception e)
             {
-                Utilities.ReportError(f, Utilities.AllUserStore);
+                if (!(e is UnauthorizedAccessException || e is InvalidOperationException))
+                {
+                    throw;
+                }
+
+                Utilities.ReportError(e, Utilities.AllUserStore);
             }
 
-            if (DownloadUpdates != null)
-            {
-                DownloadUpdates(appUpdates);
-            }
+            Task.Factory.StartNew(() => Download.DownloadUpdates(appUpdates, true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
@@ -239,7 +240,7 @@ namespace SevenUpdate.Service
         /// <summary>Subscribes to the WCF service</summary>
         public void Subscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IServiceCallBack>();
+            var callback = OperationContext.Current.GetCallbackChannel<IServiceCallback>();
 
             InstallCompleted -= callback.OnInstallCompleted;
             InstallProgressChanged -= callback.OnInstallProgressChanged;
@@ -254,7 +255,7 @@ namespace SevenUpdate.Service
             ErrorOccurred += callback.OnErrorOccurred;
             if (ClientConnected != null)
             {
-                ClientConnected();
+                ClientConnected(null, null);
             }
         }
 
@@ -263,11 +264,11 @@ namespace SevenUpdate.Service
         {
             InstallCompleted = null;
             InstallProgressChanged = null;
-            DownloadCompleted = null;
+            ////DownloadCompleted = null;
             DownloadProgressChanged = null;
             if (ClientDisconnected != null)
             {
-                ClientDisconnected();
+                ClientDisconnected(null, null);
             }
         }
 

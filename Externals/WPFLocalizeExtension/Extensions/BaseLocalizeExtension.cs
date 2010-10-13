@@ -9,7 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
-namespace WPFLocalizeExtension.BaseExtensions
+namespace WPFLocalizeExtension.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -487,7 +487,7 @@ namespace WPFLocalizeExtension.BaseExtensions
                 catch (ArgumentException ex)
                 {
                     // on error, check if design mode is on
-                    if (Localize.Instance.GetIsInDesignMode())
+                    if (Localize.Instance.IsInDesignMode)
                     {
                         // cultureInfo will be set to the current specific culture
                         cultureInfo = Localize.Instance.SpecificCulture;

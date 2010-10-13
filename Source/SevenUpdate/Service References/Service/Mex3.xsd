@@ -2,6 +2,7 @@
 <xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/SevenUpdate" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/SevenUpdate" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Microsoft.Win32" />
+  <xs:import schemaLocation="http://localhost/SevenUpdate/Mex?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/System" />
   <xs:complexType name="Sua">
     <xs:sequence>
       <xs:element minOccurs="0" name="AppUrl" nillable="true" type="xs:string" />
@@ -224,15 +225,59 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="ShortcutAction" nillable="true" type="tns:ShortcutAction" />
-  <xs:simpleType name="ErrorType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="DownloadError" />
-      <xs:enumeration value="InstallationError" />
-      <xs:enumeration value="FatalNetworkError" />
-      <xs:enumeration value="GeneralErrorNonFatal" />
-      <xs:enumeration value="FatalError" />
-      <xs:enumeration value="SearchError" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="ErrorType" nillable="true" type="tns:ErrorType" />
+  <xs:complexType name="DownloadCompletedEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System" base="q2:EventArgs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ErrorOccurred" type="xs:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DownloadCompletedEventArgs" nillable="true" type="tns:DownloadCompletedEventArgs" />
+  <xs:complexType name="DownloadProgressChangedEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System" base="q3:EventArgs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BytesTotal" type="xs:unsignedLong" />
+          <xs:element minOccurs="0" name="BytesTransferred" type="xs:unsignedLong" />
+          <xs:element minOccurs="0" name="FilesTotal" type="xs:unsignedInt" />
+          <xs:element minOccurs="0" name="FilesTransferred" type="xs:unsignedInt" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DownloadProgressChangedEventArgs" nillable="true" type="tns:DownloadProgressChangedEventArgs" />
+  <xs:complexType name="ErrorOccurredEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System" base="q4:EventArgs">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ErrorOccurredEventArgs" nillable="true" type="tns:ErrorOccurredEventArgs" />
+  <xs:complexType name="InstallCompletedEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/System" base="q5:EventArgs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="UpdatesFailed" type="xs:int" />
+          <xs:element minOccurs="0" name="UpdatesInstalled" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InstallCompletedEventArgs" nillable="true" type="tns:InstallCompletedEventArgs" />
+  <xs:complexType name="InstallProgressChangedEventArgs">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/System" base="q6:EventArgs">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CurrentProgress" type="xs:int" />
+          <xs:element minOccurs="0" name="TotalUpdates" type="xs:int" />
+          <xs:element minOccurs="0" name="UpdateName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="UpdatesComplete" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="InstallProgressChangedEventArgs" nillable="true" type="tns:InstallProgressChangedEventArgs" />
 </xs:schema>

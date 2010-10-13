@@ -3,14 +3,17 @@
     <Converters:LocaleStringToStringConverter x:Key="localeStringToString" />
     <Converters:Is64BitToStringConverter x:Key="is64BitToString" />
     <Converters:ImportanceToStringConverter x:Key="importanceToString" />
+    <Converters:UpdateStatusToStringConverter x:Key="statusToString" />
+    <Converters:UpdateStatusToBooleanConverter x:Key="statusToBool" />
+    <Converters:DateConverter x:Key="dateConverter" />
     <StringToVisibilityConverter x:Key="stringToVisibility" />
     <StringToBooleanConverter x:Key="stringToBool" />
     <IntToVisibilityConverter x:Key="intToVisibility" />
     <IntToBooleanConverter x:Key="intToBool" />
     <IndexToVisibilityConverter x:Key="indexToVisibility" />
-    <Converters:DateConverter x:Key="dateConverter" />
+    
     <InverseBooleanConverter x:Key="inverseBool" />
-    <Converters:UpdateStatusToStringConverter x:Key="statusToString" />
+    
 
     <Style TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />

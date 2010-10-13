@@ -42,7 +42,7 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.2.0.1")]
-[assembly: AssemblyFileVersion("10.10.11")]
+[assembly: AssemblyFileVersion("10.10.12")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: GuidAttribute("82893A11-B7D9-48D2-87B1-9F6F19B17300")]

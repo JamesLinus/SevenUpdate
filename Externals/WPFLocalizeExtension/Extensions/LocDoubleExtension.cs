@@ -15,7 +15,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Globalization;
     using System.Windows.Markup;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for double values</summary>
@@ -76,7 +75,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns the modified object</returns>
         protected override object FormatOutput(object input)
         {
-            if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
+            if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 try
                 {

@@ -16,7 +16,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows;
     using System.Windows.Markup;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for <see cref="FlowDirection"/> values</summary>
@@ -72,7 +71,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns the modified object</returns>
         protected override object FormatOutput(object input)
         {
-            if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
+            if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 try
                 {

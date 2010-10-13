@@ -15,7 +15,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Globalization;
     using System.Windows.Markup;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary>

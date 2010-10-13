@@ -79,7 +79,7 @@ namespace SevenUpdate.Sdk.ValidationRules
             {
                 input = Core.AppInfo.Directory == null
                             ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit)
-                            : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+                            : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
                 new Uri(input);
             }
             catch (UriFormatException)

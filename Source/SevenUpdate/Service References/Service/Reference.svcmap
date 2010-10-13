@@ -24,6 +24,7 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="WcfService.wsdl" MetadataType="Wsdl" ID="e67158b0-7c70-46a2-a99b-986455a5d9f8" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex" />
+    <MetadataFile FileName="Mex4.xsd" MetadataType="Schema" ID="b853bfe7-4e00-4689-a1ff-f605648b6136" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd4" />
     <MetadataFile FileName="Mex.xsd" MetadataType="Schema" ID="69fd3a39-89aa-44c2-8972-92bfa17f4449" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd1" />
     <MetadataFile FileName="Mex1.xsd" MetadataType="Schema" ID="0a00d20e-6870-4f8a-94f7-4214b6ec0333" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd0" />
     <MetadataFile FileName="Mex2.xsd" MetadataType="Schema" ID="287aeb5c-13a6-48fe-966b-2b70f008042f" SourceId="1" SourceUrl="http://localhost/SevenUpdate/Mex?xsd=xsd3" />

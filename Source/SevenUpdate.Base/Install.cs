@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -35,8 +32,6 @@ namespace SevenUpdate
     using System.Threading.Tasks;
 
     using Microsoft.Win32;
-
-    using File = System.IO.File;
 
     /// <summary>Class containing methods to install updates</summary>
     public static class Install
@@ -149,34 +144,7 @@ namespace SevenUpdate
 
                     if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Utilities.RebootNeeded)
                     {
-                        foreach (var t in applications[x].Updates[y].Files)
-                        {
-                            switch (t.Action)
-                            {
-                                case FileAction.Delete:
-                                case FileAction.UnregisterThenDelete:
-                                    try
-                                    {
-                                        File.Delete(t.Destination.PathAndQuery);
-                                    }
-                                    catch (IOException)
-                                    {
-                                        NativeMethods.MoveFileExW(t.Destination.PathAndQuery, null, MoveOnReboot);
-                                    }
-                                    catch (UnauthorizedAccessException)
-                                    {
-                                        NativeMethods.MoveFileExW(t.Destination.PathAndQuery, null, MoveOnReboot);
-                                    }
-
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-
-                        Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
-                        IsInstalling = false;
-                        return;
+                        UpdateSevenUpdate(applications[x].Updates[y].Files);
                     }
 
                     ReportProgress(100);
@@ -227,10 +195,45 @@ namespace SevenUpdate
 
         #region Methods
 
+        /// <summary>Updates Seven Update</summary>
+        /// <param name="updateFiles">The collection of files that will update Seven Update</param>
+        private static void UpdateSevenUpdate(IEnumerable<UpdateFile> updateFiles)
+        {
+            foreach (var t in updateFiles)
+            {
+                switch (t.Action)
+                {
+                    case FileAction.Delete:
+                    case FileAction.UnregisterThenDelete:
+                        try
+                        {
+                            File.Delete(t.Destination);
+                        }
+                        catch (Exception e)
+                        {
+                            if (!(e is UnauthorizedAccessException || e is InvalidOperationException))
+                            {
+                                throw;
+                            }
+
+                            NativeMethods.MoveFileExW(t.Destination, null, MoveOnReboot);
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
+            IsInstalling = false;
+            return;
+        }
+
         /// <summary>Adds an update to the update history</summary>
         /// <param name="appInfo">the application information</param>
         /// <param name="updateInfo">the update information</param>
-        /// <param name="failed"><see langword = "true" /> if the update failed, otherwise <see langword = "false" /></param>
+        /// <param name="failed"><see langword="true"/> if the update failed, otherwise <see langword="false"/></param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
             var history = Utilities.Deserialize<Collection<Suh>>(Utilities.HistoryFile) ?? new Collection<Suh>();
@@ -250,7 +253,7 @@ namespace SevenUpdate
 
             history.Add(hist);
 
-            Utilities.Serialize(history, new Uri(Utilities.HistoryFile));
+            Utilities.Serialize(history, Utilities.HistoryFile);
         }
 
         /// <summary>Reports the installation progress</summary>
@@ -366,7 +369,7 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.Is64Bit, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                 if (!shortcuts[x].Location.EndsWith(@"\", StringComparison.CurrentCulture))
@@ -374,8 +377,7 @@ namespace SevenUpdate
                     shortcuts[x].Location = shortcuts[x].Location + @"\";
                 }
 
-                if (shortcuts[x].Action == ShortcutAction.Add ||
-                    (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
+                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
                     if (!Directory.Exists(shortcuts[x].Location))
@@ -434,9 +436,9 @@ namespace SevenUpdate
                 case FileAction.Delete:
                     if (file.Action == FileAction.ExecuteThenDelete)
                     {
-                        if (File.Exists(file.Source.PathAndQuery))
+                        if (File.Exists(file.Source))
                         {
-                            Utilities.StartProcess(file.Source.PathAndQuery, file.Args, true);
+                            Utilities.StartProcess(file.Source, file.Args, true);
                         }
                     }
 
@@ -447,11 +449,11 @@ namespace SevenUpdate
 
                     try
                     {
-                        File.Delete(file.Destination.PathAndQuery);
+                        File.Delete(file.Destination);
                     }
                     catch (IOException)
                     {
-                        NativeMethods.MoveFileExW(file.Destination.PathAndQuery, null, MoveOnReboot);
+                        NativeMethods.MoveFileExW(file.Destination, null, MoveOnReboot);
                     }
 
                     break;
@@ -459,11 +461,11 @@ namespace SevenUpdate
                 case FileAction.Execute:
                     try
                     {
-                        Utilities.StartProcess(file.Destination.PathAndQuery, file.Args);
+                        Utilities.StartProcess(file.Destination, file.Args);
                     }
                     catch (FileNotFoundException e)
                     {
-                        Utilities.ReportError(e + file.Source.PathAndQuery, Utilities.AllUserStore);
+                        Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
                         errorOccurred = true;
                     }
 
@@ -473,17 +475,17 @@ namespace SevenUpdate
                 case FileAction.UpdateIfExist:
                 case FileAction.UpdateThenExecute:
                 case FileAction.UpdateThenRegister:
-                    if (File.Exists(file.Source.PathAndQuery))
+                    if (File.Exists(file.Source))
                     {
                         try
                         {
-                            if (File.Exists(file.Destination.PathAndQuery))
+                            if (File.Exists(file.Destination))
                             {
-                                File.Copy(file.Destination.PathAndQuery, file.Destination + @".bak", true);
-                                File.Delete(file.Destination.PathAndQuery);
+                                File.Copy(file.Destination, file.Destination + @".bak", true);
+                                File.Delete(file.Destination);
                             }
 
-                            File.Move(file.Source.PathAndQuery, file.Destination.PathAndQuery);
+                            File.Move(file.Source, file.Destination);
 
                             if (File.Exists(file.Destination + @".bak"))
                             {
@@ -500,7 +502,7 @@ namespace SevenUpdate
                                 }
                             }
 
-                            NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);
+                            NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
                         }
                         catch (UnauthorizedAccessException)
@@ -513,7 +515,7 @@ namespace SevenUpdate
                                 }
                             }
 
-                            NativeMethods.MoveFileExW(file.Source.PathAndQuery, file.Destination.PathAndQuery, MoveOnReboot);
+                            NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
                         }
                     }
@@ -527,11 +529,11 @@ namespace SevenUpdate
                     {
                         try
                         {
-                            Utilities.StartProcess(file.Destination.PathAndQuery, file.Args);
+                            Utilities.StartProcess(file.Destination, file.Args);
                         }
                         catch (FileNotFoundException e)
                         {
-                            Utilities.ReportError(e + file.Source.PathAndQuery, Utilities.AllUserStore);
+                            Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
                             errorOccurred = true;
                         }
                     }
@@ -552,11 +554,11 @@ namespace SevenUpdate
         {
             for (var x = 0; x < files.Count; x++)
             {
-                files[x].Source = new Uri (downloadDirectory + Path.GetFileName(files[x].Destination.PathAndQuery));
+                files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
                 try
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
-                    Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination.PathAndQuery));
+                    Directory.CreateDirectory(Path.GetDirectoryName(files[x].Destination));
 
                     // ReSharper restore AssignNullToNotNullAttribute
                 }
@@ -569,16 +571,16 @@ namespace SevenUpdate
                 var x1 = x;
                 var x2 = x;
                 Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
-                    delegate
-                        {
-                            var installProgress = (x2 * 100) / files.Count;
-                            if (installProgress > 70)
-                            {
-                                installProgress -= 15;
-                            }
+                                                                                delegate
+                                                                                    {
+                                                                                        var installProgress = (x2 * 100) / files.Count;
+                                                                                        if (installProgress > 70)
+                                                                                        {
+                                                                                            installProgress -= 15;
+                                                                                        }
 
-                            ReportProgress(installProgress);
-                        });
+                                                                                        ReportProgress(installProgress);
+                                                                                    });
             }
         }
 

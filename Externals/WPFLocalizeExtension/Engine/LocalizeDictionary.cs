@@ -76,15 +76,6 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
-        /// <summary>Gets the default <see cref = "CultureInfo" /> to initialize the LocalizeDictionary.<see cref = "CultureInfo" /></summary>
-        public static CultureInfo DefaultCultureInfo
-        {
-            get
-            {
-                return CultureInfo.InvariantCulture;
-            }
-        }
-
         /// <summary>
         ///   Gets the LocalizeDictionary singleton.
         ///   If the underlying instance is <see langword = "null" />, a instance will be created.
@@ -113,6 +104,25 @@ namespace WPFLocalizeExtension.Engine
 
                 // return the existing/new instance
                 return instance;
+            }
+        }
+
+        /// <summary>Gets the default <see cref = "CultureInfo" /> to initialize the LocalizeDictionary.<see cref = "CultureInfo" /></summary>
+        public static CultureInfo DefaultCultureInfo
+        {
+            get
+            {
+                return CultureInfo.InvariantCulture;
+            }
+        }
+
+        /// <summary>Gets a value indicating whether the status of the design mode</summary>
+        /// <returns><see langword = "true" /> if in design mode, else <see langword = "false" /></returns>
+        public bool IsInDesignMode
+        {
+            get
+            {
+                return DesignerProperties.GetIsInDesignMode(this);
             }
         }
 
@@ -208,10 +218,10 @@ namespace WPFLocalizeExtension.Engine
         [DesignOnly(true)]
         public static string GetDesignCulture(DependencyObject obj)
         {
-            return Instance.GetIsInDesignMode() ? (string)obj.GetValue(DesignCultureProperty) : Instance.Culture.ToString();
+            return Instance.IsInDesignMode ? (string)obj.GetValue(DesignCultureProperty) : Instance.Culture.ToString();
         }
 
-        /// <summary>Parses a key ([[Assembly:]Dict:]Key and return the parts of it.</summary>
+        /// <summary>Parses a key and return the parts of it.</summary>
         /// <param name="inKey">The key to parse.</param>
         /// <param name="outAssembly">The found or default assembly.</param>
         /// <param name="outDictionary">The found or default dictionary.</param>
@@ -255,7 +265,7 @@ namespace WPFLocalizeExtension.Engine
             else
             {
                 // if the passed value is null pr empty, throw an exception if in runtime
-                if (!Instance.GetIsInDesignMode())
+                if (!Instance.IsInDesignMode)
                 {
                     throw new ArgumentNullException("inKey");
                 }
@@ -271,17 +281,10 @@ namespace WPFLocalizeExtension.Engine
         [DesignOnly(true)]
         public static void SetDesignCulture(DependencyObject obj, string value)
         {
-            if (Instance.GetIsInDesignMode())
+            if (Instance.IsInDesignMode)
             {
                 obj.SetValue(DesignCultureProperty, value);
             }
-        }
-
-        /// <summary>Gets the status of the design mode</summary>
-        /// <returns><see langword = "true" /> if in design mode, else <see langword = "false" /></returns>
-        public bool GetIsInDesignMode()
-        {
-            return DesignerProperties.GetIsInDesignMode(this);
         }
 
         /// <summary>
@@ -325,7 +328,7 @@ namespace WPFLocalizeExtension.Engine
 
             if (string.IsNullOrEmpty(resourceKey))
             {
-                if (this.GetIsInDesignMode())
+                if (this.IsInDesignMode)
                 {
                     return null;
                 }
@@ -352,7 +355,7 @@ namespace WPFLocalizeExtension.Engine
             catch
             {
                 // if an error occur, throw exception, if in runtime
-                if (this.GetIsInDesignMode())
+                if (this.IsInDesignMode)
                 {
                     return null;
                 }
@@ -364,7 +367,7 @@ namespace WPFLocalizeExtension.Engine
             object retVal = resManager.GetObject(resourceKey, cultureToUse) as TType;
 
             // if the retVal is null, throw exception, if in runtime
-            if (retVal == null && !this.GetIsInDesignMode())
+            if (retVal == null && !this.IsInDesignMode)
             {
                 throw new ArgumentException(
                     string.Format(
@@ -426,7 +429,7 @@ namespace WPFLocalizeExtension.Engine
             }
             catch
             {
-                if (this.GetIsInDesignMode())
+                if (this.IsInDesignMode)
                 {
                     return false;
                 }
@@ -448,7 +451,7 @@ namespace WPFLocalizeExtension.Engine
         [DesignOnly(true)]
         private static void SetCultureFromDependencyProperty(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
-            if (!Instance.GetIsInDesignMode())
+            if (!Instance.IsInDesignMode)
             {
                 return;
             }
@@ -461,7 +464,7 @@ namespace WPFLocalizeExtension.Engine
             }
             catch
             {
-                if (Instance.GetIsInDesignMode())
+                if (Instance.IsInDesignMode)
                 {
                     culture = DefaultCultureInfo;
                 }

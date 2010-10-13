@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -33,10 +30,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The collection of updates and the application info.</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
-    [KnownType(typeof(Sua))]
-    [KnownType(typeof(ObservableCollection<Update>))]
+    [ProtoContract, DataContract(IsReference = true)]
+    [KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
     public sealed class Sui : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -59,7 +54,8 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets or sets the  software information for the application updates.</summary>
-        [ProtoMember(2)] [DataMember] public Sua AppInfo
+        [ProtoMember(2), DataMember]
+        public Sua AppInfo
         {
             get
             {
@@ -76,7 +72,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets the collection of updates for the application</summary>
-        [ProtoMember(1)] [DataMember] public ObservableCollection<Update> Updates
+        [ProtoMember(1), DataMember]
+        public ObservableCollection<Update> Updates
         {
             get
             {

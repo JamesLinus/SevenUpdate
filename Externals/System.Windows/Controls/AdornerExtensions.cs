@@ -110,44 +110,6 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Removes all recursive.</summary>
-        /// <param name="adr">The adorner layer</param>
-        /// <param name="element">The element.</param>
-        public static void RemoveAllRecursive(this AdornerLayer adr, UIElement element)
-        {
-            try
-            {
-                Action<UIElement> recurse = null;
-                recurse = delegate(UIElement elem)
-                    {
-                        adr.RemoveAll(elem);
-                        if (elem is Panel)
-                        {
-                            foreach (UIElement e in ((Panel)elem).Children)
-                            {
-                                recurse(e);
-                            }
-                        }
-                        else if (elem is Decorator)
-                        {
-                            recurse(((Decorator)elem).Child);
-                        }
-                        else if (elem is ContentControl)
-                        {
-                            if (((ContentControl)elem).Content is UIElement)
-                            {
-                                recurse(((ContentControl)elem).Content as UIElement);
-                            }
-                        }
-                    };
-
-                recurse(element);
-            }
-            catch (Exception)
-            {
-            }
-        }
-
         #endregion
     }
 }

@@ -20,7 +20,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows.Markup;
     using System.Windows.Media.Imaging;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for image objects</summary>

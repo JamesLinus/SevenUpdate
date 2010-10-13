@@ -114,6 +114,9 @@ namespace SevenUpdate
                 catch (UnauthorizedAccessException)
                 {
                 }
+                catch (AccessViolationException)
+                {
+                }
             }
         }
 
@@ -135,7 +138,9 @@ namespace SevenUpdate
             else
             {
                 if (wcfClient.State == CommunicationState.Opened)
+                {
                     wcfClient.Unsubscribe();
+                }
             }
         }
 
@@ -227,14 +232,14 @@ namespace SevenUpdate
                 }
 
                 Thread.Sleep(1000);
-                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallback()));
             }
 
             #endif
 
             if (wcfClient == null)
             {
-                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallBack()));
+                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallback()));
             }
 
             while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)

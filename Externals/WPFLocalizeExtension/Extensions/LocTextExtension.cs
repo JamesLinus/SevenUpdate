@@ -15,7 +15,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Globalization;
     using System.Windows.Markup;
 
-    using WPFLocalizeExtension.BaseExtensions;
     using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for string objects.</summary>
@@ -246,7 +245,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX]</returns>
         protected override object FormatOutput(object input)
         {
-            if (Localize.Instance.GetIsInDesignMode() && this.DesignValue != null)
+            if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 input = this.DesignValue;
             }

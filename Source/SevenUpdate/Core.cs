@@ -30,6 +30,7 @@ namespace SevenUpdate
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
@@ -164,6 +165,7 @@ namespace SevenUpdate
         /// <summary>Checks for updates</summary>
         internal static void CheckForUpdates()
         {
+            File.Delete(Utilities.AllUserStore + @"updates.sui");
             if (!Install.IsInstalling && !Download.IsDownloading && !Search.IsSearching && !IsReconnect)
             {
                 if (Utilities.RebootNeeded == false)
@@ -224,30 +226,29 @@ namespace SevenUpdate
             {
                 using (new EnableThemingInScope(true))
                 {
-                    var td = new TaskDialog
-                        {
-                            Caption = Resources.SevenUpdate,
-                            InstructionText = instructionText,
-                            Text = description,
-                            Icon = icon,
-                            FooterText = footerText,
-                            FooterIcon = TaskDialogStandardIcon.Information,
-                            CanCancel = true,
-                            StandardButtons = standardButtons
-                        };
-                    if (defaultButtonText != null)
+                    using (var td = new TaskDialog())
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
-                            {
-                                Default = true,
-                                ShowElevationIcon = displayShieldOnButton
-                            };
-                        td.Controls.Add(button);
-                    }
+                        td.Caption = Resources.SevenUpdate;
+                        td.InstructionText = instructionText;
+                        td.Text = description;
+                        td.Icon = icon;
+                        td.FooterText = footerText;
+                        td.FooterIcon = TaskDialogStandardIcon.Information;
+                        td.CanCancel = true;
+                        td.StandardButtons = standardButtons;
 
-                    var taskResult = Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
-                    td.Dispose();
-                    return taskResult;
+                        if (defaultButtonText != null)
+                        {
+                            var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                                {
+                                    Default = true,
+                                    ShowElevationIcon = displayShieldOnButton
+                                };
+                            td.Controls.Add(button);
+                        }
+
+                        return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                    }
                 }
             }
 

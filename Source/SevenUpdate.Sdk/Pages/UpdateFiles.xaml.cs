@@ -96,7 +96,7 @@ namespace SevenUpdate.Sdk.Pages
                     {
                         updateFile.FileSize =
                             Utilities.GetFileSize(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination.PathAndQuery, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
                     });
         }
 
@@ -119,9 +119,9 @@ namespace SevenUpdate.Sdk.Pages
             var file = new UpdateFile
                 {
                     Action = FileAction.Update, 
-                    Destination = new Uri(installUrl), 
+                    Destination = installUrl, 
                     Hash = Properties.Resources.CalculatingHash, 
-                    Source = new Uri(downloadUrl)
+                    Source = downloadUrl
                 };
 
             Core.UpdateInfo.Files.Add(file);
@@ -173,7 +173,7 @@ namespace SevenUpdate.Sdk.Pages
                                 ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
                                 : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
-            var files = Core.OpenFileDialog(directory, true);
+            var files = Core.OpenFileDialog(directory, null, true);
             if (files == null)
             {
                 return;
@@ -196,7 +196,7 @@ namespace SevenUpdate.Sdk.Pages
                     {
                         updateFile.Hash =
                             Utilities.GetHash(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination.PathAndQuery, Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit));
+                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
                     }).
                 ContinueWith(_ => this.CheckHashGenerating(), context);
         }
@@ -375,7 +375,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var installUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = new Uri(installUrl);
+            Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = installUrl;
         }
 
         /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
@@ -383,17 +383,21 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
-            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var files = Core.OpenFileDialog(directory);
+            var selectedItem = this.listBox.SelectedItem as UpdateFile;
+            if (selectedItem == null)
+            {
+                return;
+            }
+
+            var fileLocation = Utilities.ConvertPath(selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
+
+            var files = Core.OpenFileDialog(Path.GetDirectoryName(fileLocation), Path.GetFileName(fileLocation));
 
             if (files == null)
             {
                 return;
             }
 
-            var selectedItem = this.listBox.SelectedItem as UpdateFile;
             this.CalculateHash(ref selectedItem, files[0]);
             GetFileSize(ref selectedItem, files[0]);
         }

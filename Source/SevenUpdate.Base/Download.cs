@@ -30,53 +30,39 @@ namespace SevenUpdate
 
     using SharpBits.Base;
 
-    /// <summary>
-    /// A class containing methods to download updates
-    /// </summary>
+    /// <summary>A class containing methods to download updates</summary>
     public static class Download
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Gets a value indicating whether an error has occurred
-        /// </summary>
+        /// <summary>Gets a value indicating whether an error has occurred</summary>
         private static bool errorOccurred;
 
-        /// <summary>
-        ///   Manager for Background Intelligent Transfer Service
-        /// </summary>
+        /// <summary>Manager for Background Intelligent Transfer Service</summary>
         private static BitsManager manager;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when the download completed.
-        /// </summary>
+        /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
 
-        /// <summary>
-        ///   Occurs when the download progress changed
-        /// </summary>
+        /// <summary>Occurs when the download progress changed</summary>
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether Seven update is currently downloading updates
-        /// </summary>
+        /// <summary>Gets a value indicating whether Seven update is currently downloading updates</summary>
         public static bool IsDownloading { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Downloads the updates using BITS
-        /// </summary>
+        /// <summary>Downloads the updates using BITS</summary>
         /// <param name="appUpdates">The application updates to download</param>
         /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
@@ -182,9 +168,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        /// Downloads the application updates
-        /// </summary>
+        /// <summary>Downloads the application updates</summary>
         /// <param name="application">The Sui containing the update info</param>
         /// <param name="bitsJob">The bits job that will download the update.</param>
         private static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
@@ -198,40 +182,31 @@ namespace SevenUpdate
 
                 for (var z = 0; z < application.Updates[y].Files.Count; z++)
                 {
-                    application.Updates[y].Files[z].Destination =
-                        new Uri(
-                            Utilities.ConvertPath(application.Updates[y].Files[z].Destination.PathAndQuery, application.AppInfo.Directory, application.AppInfo.ValueName, application.AppInfo.Is64Bit));
-
                     if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
                         application.Updates[y].Files[z].Action == FileAction.CompareOnly)
                     {
                         continue;
                     }
 
-                    if (Utilities.GetHash(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination.PathAndQuery)) == application.Updates[y].Files[z].Hash)
+                    if (Utilities.GetHash(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination)) == application.Updates[y].Files[z].Hash)
                     {
                         continue;
                     }
 
                     try
                     {
-                        File.Delete(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination.PathAndQuery));
+                        File.Delete(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
                     }
                     catch (IOException)
                     {
                     }
 
-                    var url =
-                        new Uri(Utilities.ConvertPath(application.Updates[y].Files[z].Source.PathAndQuery, application.Updates[y].DownloadUrl.PathAndQuery, null, application.AppInfo.Is64Bit));
-
-                    bitsJob.AddFile(url.PathAndQuery, downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination.PathAndQuery));
+                    bitsJob.AddFile(application.Updates[y].Files[z].Source, downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
                 }
             }
         }
 
-        /// <summary>
-        /// Reports when a download completes
-        /// </summary>
+        /// <summary>Reports when a download completes</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
@@ -278,9 +253,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Reports a download error
-        /// </summary>
+        /// <summary>Reports a download error</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
@@ -328,9 +301,7 @@ namespace SevenUpdate
             return;
         }
 
-        /// <summary>
-        /// Reports the download progress
-        /// </summary>
+        /// <summary>Reports the download progress</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
