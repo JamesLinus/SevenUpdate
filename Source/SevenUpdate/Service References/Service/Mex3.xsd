@@ -31,6 +31,8 @@
       <xs:element minOccurs="0" name="Lang" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
     </xs:sequence>
+    <xs:attribute ref="ser:Id" />
+    <xs:attribute ref="ser:Ref" />
   </xs:complexType>
   <xs:element name="LocaleString" nillable="true" type="tns:LocaleString" />
   <xs:complexType name="ArrayOfSua">

@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="LocaleString.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
@@ -29,8 +29,7 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains a string indicating the language and a value</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract(IsReference = true)]
     public sealed class LocaleString : INotifyPropertyChanged
     {
         #region Constants and Fields

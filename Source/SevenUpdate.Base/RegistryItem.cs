@@ -31,24 +31,25 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains the Actions you can perform to the registry</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
     [DefaultValue(Add)]
     public enum RegistryAction
     {
         /// <summary>Adds a registry entry to the machine</summary>
-        [ProtoEnum] [EnumMember] Add = 0, 
+        [ProtoEnum, EnumMember]
+        Add = 0, 
 
         /// <summary>Deletes a registry key on the machine</summary>
-        [ProtoEnum] [EnumMember] DeleteKey = 1, 
+        [ProtoEnum, EnumMember]
+        DeleteKey = 1, 
 
         /// <summary>Deletes a value of a registry key on the machine</summary>
-        [ProtoEnum] [EnumMember] DeleteValue = 2
+        [ProtoEnum, EnumMember]
+        DeleteValue = 2
     }
 
     /// <summary>A registry entry within an update</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
+    [ProtoContract, DataContract(IsReference = true)]
     [KnownType(typeof(RegistryAction))]
     [KnownType(typeof(RegistryHive))]
     [KnownType(typeof(RegistryValueKind))]

@@ -30,27 +30,29 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains the UpdateType of the update</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
     [DefaultValue(Important)]
     public enum Importance
     {
         /// <summary>Important update</summary>
-        [ProtoEnum] [EnumMember] Important = 0, 
+        [ProtoEnum, EnumMember]
+        Important = 0, 
 
         /// <summary>Locale or language</summary>
-        [ProtoEnum] [EnumMember] Locale = 1, 
+        [ProtoEnum, EnumMember]
+        Locale = 1, 
 
         /// <summary>Optional update</summary>
-        [ProtoEnum] [EnumMember] Optional = 2, 
+        [ProtoEnum, EnumMember]
+        Optional = 2, 
 
         /// <summary>Recommended update</summary>
-        [ProtoEnum] [EnumMember] Recommended = 3
+        [ProtoEnum, EnumMember]
+        Recommended = 3
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
+    [ProtoContract, DataContract(IsReference = true)]
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     [KnownType(typeof(UpdateFile))]
     [KnownType(typeof(RegistryItem))]

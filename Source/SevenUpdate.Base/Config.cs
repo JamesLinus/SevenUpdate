@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="Config.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
@@ -29,22 +29,25 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Automatic Update option Seven Update can use</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
     [DefaultValue(Install)]
     public enum AutoUpdateOption
     {
         /// <summary>Download and Installs updates automatically</summary>
-        [ProtoEnum] [EnumMember] Install = 0, 
+        [ProtoEnum, EnumMember]
+        Install = 0, 
 
         /// <summary>Downloads Updates automatically</summary>
-        [ProtoEnum] [EnumMember] Download = 1, 
+        [ProtoEnum, EnumMember]
+        Download = 1, 
 
         /// <summary>Only checks and notifies the user of updates</summary>
-        [ProtoEnum] [EnumMember] Notify = 2, 
+        [ProtoEnum, EnumMember]
+        Notify = 2, 
 
         /// <summary>No automatic checking</summary>
-        [ProtoEnum] [EnumMember] Never = 3
+        [ProtoEnum, EnumMember]
+        Never = 3
     }
 
     /// <summary>Configuration options</summary>

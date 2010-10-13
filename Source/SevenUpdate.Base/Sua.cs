@@ -31,8 +31,7 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Seven Update Application information</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
+    [ProtoContract, DataContract(IsReference = true)]
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Sua : INotifyPropertyChanged
     {

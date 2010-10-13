@@ -34,19 +34,21 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The action to preform on the shortcut</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
     [DefaultValue(Add)]
     public enum ShortcutAction
     {
         /// <summary>Adds a shortcut</summary>
-        [ProtoEnum] [EnumMember] Add = 0, 
+        [ProtoEnum, EnumMember]
+        Add = 0, 
 
         /// <summary>Updates a shortcut only if it exists</summary>
-        [ProtoEnum] [EnumMember] Update = 1, 
+        [ProtoEnum, EnumMember]
+        Update = 1, 
 
         /// <summary>Deletes a shortcut</summary>
-        [ProtoEnum] [EnumMember] Delete = 2
+        [ProtoEnum, EnumMember]
+        Delete = 2
     }
 
     /// <summary>The Msi Component install state</summary>
@@ -87,8 +89,7 @@ namespace SevenUpdate
     }
 
     /// <summary>A shortcut to be created within an update</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
+    [ProtoContract, DataContract(IsReference = true)]
     [KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
     {
