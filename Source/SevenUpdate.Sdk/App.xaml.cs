@@ -48,14 +48,14 @@ namespace SevenUpdate.Sdk
             Utilities.Locale = Settings.Default.locale;
             base.OnStartup(e, isFirstInstance);
 
-            if (!isFirstInstance)
-            {
-                this.Shutdown(1);
-            }
+            //if (!isFirstInstance)
+            //{
+            //    this.Shutdown(1);
+            //}
 
-            Directory.CreateDirectory(Core.UserStore);
-            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
-            Core.SetJumpList();
+            //Directory.CreateDirectory(Core.UserStore);
+            //Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
+            //Core.SetJumpList();
         }
 
         /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>

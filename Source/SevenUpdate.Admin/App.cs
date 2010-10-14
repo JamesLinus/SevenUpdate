@@ -44,6 +44,7 @@ namespace SevenUpdate.Admin
     using SevenUpdate.Service;
 
     using Application = System.Windows.Application;
+    using Timer = System.Timers.Timer;
 
     /// <summary>The main class of the application</summary>
     internal static class App

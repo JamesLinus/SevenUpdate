@@ -225,7 +225,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
-            Task.Factory.StartNew(this.LoadProjects);
+            this.LoadProjects();
         }
 
         /// <summary>Creates a new project</summary>
