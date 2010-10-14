@@ -58,18 +58,16 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The regex that matches the root key</summary>
         private static readonly Regex RegexRootKey = new Regex(
-            @"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))", 
-            RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+            @"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches a string value</summary>
         private static readonly Regex RegexStringValueMatcher = new Regex(
             @"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches a sub key</summary>
-        private static readonly Regex RegexSubKey =
-            new Regex(
-                @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]", 
-                RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        private static readonly Regex RegexSubKey = new Regex(
+            @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]",
+            RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches the split token</summary>
         private static readonly string SplitToken = @"_!Split" + new Random().Next(99) + "!_";
@@ -99,7 +97,7 @@ namespace SevenUpdate.Sdk
             string rawRegFileData;
             using (var fileStream = new StreamReader(file, encoder, true))
             {
-                rawRegFileData  = fileStream.ReadToEnd();
+                rawRegFileData = fileStream.ReadToEnd();
             }
 
             // Nuke all comments (these have given me a royal headache 
@@ -194,8 +192,7 @@ namespace SevenUpdate.Sdk
             valueData = PutOnOneLineAndTrim(valueData);
 
             // Remove hex: at the beginning
-            valueData = Regex.Replace(
-                valueData, @"^hex\(0*" + hexType + @"\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+            valueData = Regex.Replace(valueData, @"^hex\(0*" + hexType + @"\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
             methodResult.ValueKind = flag;
             methodResult.KeyValue = valueNameData;
 
@@ -301,14 +298,10 @@ namespace SevenUpdate.Sdk
             }
 
             // Dword: | [hex(4):]AABBCCDDEEFF (no reverse) | [hex(4):]FF,EE,DD,CC,BB,AA (reverse)
-            if (Regex.IsMatch(
-                valueData, 
-                @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", 
-                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
+            if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
             {
                 // Remove dword: at the beginning
-                valueData = Regex.Replace(
-                    valueData, @"^(dword|hex\(0*4\)):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Check for empty ValueData
                 if (String.IsNullOrEmpty(valueData.Trim()))
@@ -387,7 +380,7 @@ namespace SevenUpdate.Sdk
                             new[]
                                 {
                                     ','
-                                }, 
+                                },
                             StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as DBCS (Double byte characters)
@@ -407,7 +400,7 @@ namespace SevenUpdate.Sdk
                             new[]
                                 {
                                     ','
-                                }, 
+                                },
                             StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as SBCS (Single byte characters)
@@ -461,8 +454,7 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // RegEx match all pairs of bytes
-                    var readInTwos = Regex.Matches(
-                        valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    var readInTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
                     foreach (Match found in readInTwos)
                     {
                         if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
@@ -494,14 +486,13 @@ namespace SevenUpdate.Sdk
                             new[]
                                 {
                                     ','
-                                }, 
+                                },
                             StringSplitOptions.RemoveEmptyEntries));
                     var y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
                     valueDataBuilder.Append(Encoding.Default.GetString(y.ToArray()));
                 }
 
-                multiStringEntries.AddRange(
-                    Regex.Split(valueDataBuilder.ToString(), @"\r\n", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
+                multiStringEntries.AddRange(Regex.Split(valueDataBuilder.ToString(), @"\r\n", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
 
                 // multiStringEntries.RemoveAt((multiStringEntries.Count-1));
                 multiStringEntries.RemoveAll(EmptyString);
@@ -563,7 +554,7 @@ namespace SevenUpdate.Sdk
                         new[]
                             {
                                 ','
-                            }, 
+                            },
                         StringSplitOptions.RemoveEmptyEntries));
 
                 // Treat as DBCS (Double byte characters)
@@ -758,7 +749,7 @@ namespace SevenUpdate.Sdk
                 // Then return data to DelReg instead of AddReg property of INFConversionResult instance
                 var regBlockResult = new RegistryItem
                     {
-                        Key = infRootKey + infSubKeyValue, 
+                        Key = infRootKey + infSubKeyValue,
                         Action = RegistryAction.DeleteKey
                     };
                 this.regItem.Add(regBlockResult);

@@ -68,31 +68,59 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         /// <summary>Gets or sets the elevated buttons.</summary>
         /// <value>The elevated buttons.</value>
-        public List<int> ElevatedButtons { get; set; }
+        public List<int> ElevatedButtons
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets a value indicating whether to invoke help</summary>
         /// <value><see langword = "true" /> to invoke help; otherwise, <see langword = "false" />.</value>
-        public bool InvokeHelp { get; set; }
+        public bool InvokeHelp
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets the native configuration.</summary>
         /// <value>The native configuration.</value>
-        public TaskDialogNativeMethods.TaskDialogConfig NativeConfiguration { get; private set; }
+        public TaskDialogNativeMethods.TaskDialogConfig NativeConfiguration
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets or sets the progress bar maximum.</summary>
         /// <value>The progress bar maximum.</value>
-        public int ProgressBarMaximum { get; set; }
+        public int ProgressBarMaximum
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the progress bar minimum.</summary>
         /// <value>The progress bar minimum.</value>
-        public int ProgressBarMinimum { get; set; }
+        public int ProgressBarMinimum
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the state of the progress bar.</summary>
         /// <value>The state of the progress bar.</value>
-        public TaskDialogProgressBarState ProgressBarState { get; set; }
+        public TaskDialogProgressBarState ProgressBarState
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the progress bar value.</summary>
         /// <value>The progress bar value.</value>
-        public int ProgressBarValue { get; set; }
+        public int ProgressBarValue
+        {
+            get;
+            set;
+        }
 
         #endregion
 

@@ -64,8 +64,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -79,7 +78,7 @@ namespace WPFLocalizeExtension.Extensions
         {
             var method = typeof(ThicknessConverter).GetMethod("FromString", BindingFlags.Static | BindingFlags.NonPublic);
             object[] args;
-            
+
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
                 try

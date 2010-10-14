@@ -50,7 +50,11 @@ namespace SevenUpdate.Sdk.ValidationRules
 
         /// <summary>Gets or sets a value indicating whether this instance is registry path.</summary>
         /// <value><see langword = "true" /> if this instance is registry path; otherwise, <see langword = "false" />.</value>
-        internal bool IsRegistryPath { private get; set; }
+        internal bool IsRegistryPath
+        {
+            private get;
+            set;
+        }
 
         #endregion
 
@@ -70,9 +74,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (this.IsRegistryPath)
             {
-                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                           ? new ValidationResult(true, null)
-                           : new ValidationResult(false, Resources.FilePathInvalid);
+                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             try
@@ -84,9 +86,7 @@ namespace SevenUpdate.Sdk.ValidationRules
             }
             catch (UriFormatException)
             {
-                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                           ? new ValidationResult(true, null)
-                           : new ValidationResult(false, Resources.FilePathInvalid);
+                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)

@@ -47,12 +47,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #endregion
 
-        // Note that we don't need to explicitly 
-        // implement the add/remove delegate for the Click event;
-        // the hosting dialog only needs the delegate 
-        // information when the Click event is 
-        // raised (indirectly) by NativeTaskDialog, 
-        // so the latest delegate is always available.
         #region Events
 
         /// <summary>Raised when the task dialog button is clicked.</summary>

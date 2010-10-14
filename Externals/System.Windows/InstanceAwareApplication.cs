@@ -29,7 +29,7 @@ namespace System.Windows
     public enum ApplicationInstanceAwareness : byte
     {
         /// <summary>The awareness is global, meaning that the first application instance is aware of any other instances running on the host.</summary>
-        Host = 0x00, 
+        Host = 0x00,
 
         /// <summary>The awareness is local, meaning that the first application instance is aware only of other instances running in the current user session.</summary>
         UserSession = 0x01
@@ -151,7 +151,11 @@ namespace System.Windows
         /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
         /// <value><see langword = "true" /> if the current application instance is the first one, otherwise <see langword = "false" />.</value>
         /// <remarks>The first application instance gets notified about subsequent application instances startup.</remarks>
-        public bool IsFirstInstance { get; private set; }
+        public bool IsFirstInstance
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -380,9 +384,7 @@ namespace System.Windows
             }
             catch (Exception exc)
             {
-                Debug.WriteLine(
-                    "Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + exc, 
-                    this.GetType().ToString());
+                Debug.WriteLine("Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + exc, this.GetType().ToString());
                 return false;
             }
 
@@ -548,7 +550,11 @@ namespace System.Windows
 
             /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
             /// <value><see langword = "true" /> if the application window has to be brought to foreground, otherwise <see langword = "false" /></value>
-            public bool BringToForeground { get; private set; }
+            public bool BringToForeground
+            {
+                get;
+                private set;
+            }
 
             #endregion
 

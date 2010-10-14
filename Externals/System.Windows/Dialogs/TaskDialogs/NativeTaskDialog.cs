@@ -196,7 +196,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", 
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)",
             Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {

@@ -40,8 +40,7 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>The storyboard</summary>
-        public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register(
-            "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
+        public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register("ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
 
         /// <summary>The text to display when the progress is indeterminate</summary>
         public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressIndicator));

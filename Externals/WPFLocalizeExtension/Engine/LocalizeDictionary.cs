@@ -162,7 +162,11 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets the used ResourceManagers with their corresponding <c>namespaces</c>.</summary>
-        public Dictionary<string, ResourceManager> ResourceManagerList { get; private set; }
+        public Dictionary<string, ResourceManager> ResourceManagerList
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         ///   Gets the specific <see cref = "CultureInfo" /> of the current culture.
@@ -371,11 +375,7 @@ namespace WPFLocalizeExtension.Engine
             {
                 throw new ArgumentException(
                     string.Format(
-                        CultureInfo.CurrentCulture, 
-                        "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' founded! ({2}.{1}.{0})", 
-                        resourceKey, 
-                        resourceDictionary, 
-                        resourceAssembly));
+                        CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' founded! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
             }
 
             // finally, return the searched object as type of the generic type
@@ -566,10 +566,10 @@ namespace WPFLocalizeExtension.Engine
                 {
                     throw new ArgumentException(
                         string.Format(
-                            CultureInfo.CurrentCulture, 
-                            "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' founded! ({2}.{1}.{0})", 
-                            resourceKey, 
-                            resourceDictionary, 
+                            CultureInfo.CurrentCulture,
+                            "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' founded! ({2}.{1}.{0})",
+                            resourceKey,
+                            resourceDictionary,
                             resourceAssembly));
                 }
 

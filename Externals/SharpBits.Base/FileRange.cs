@@ -24,7 +24,7 @@ namespace SharpBits.Base
         {
             this.BGFileRange = new BGFileRange
                 {
-                    InitialOffset = initialOffset, 
+                    InitialOffset = initialOffset,
                     Length = length
                 };
         }
@@ -62,7 +62,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the BG file range.</summary>
         /// <value>The BG file range.</value>
-        internal BGFileRange BGFileRange { get; private set; }
+        internal BGFileRange BGFileRange
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

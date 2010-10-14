@@ -30,6 +30,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Dwm;
@@ -61,8 +62,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
-
-            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
         }
 
         #endregion
@@ -169,13 +168,20 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void GoToSupport(object sender, MouseButtonEventArgs e)
         {
-             Utilities.StartProcess(@"http://sevenupdate.com/support");
+            Utilities.StartProcess(@"http://sevenupdate.com/support");
         }
 
         /// <summary>Loads the projects.</summary>
         private void LoadProjects()
         {
+            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
             this.treeView.Items.Clear();
+            if (Core.Projects == null)
+            {
+                this.treeView.Visibility = Visibility.Collapsed;
+                return;
+            }
+
             if (Core.Projects.Count <= 0)
             {
                 this.treeView.Visibility = Visibility.Collapsed;
@@ -188,7 +194,7 @@ namespace SevenUpdate.Sdk.Pages
             {
                 var app = new TreeViewItem
                     {
-                        Header = Core.Projects[x].ApplicationName, 
+                        Header = Core.Projects[x].ApplicationName,
                         Tag = x
                     };
                 for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
@@ -200,7 +206,7 @@ namespace SevenUpdate.Sdk.Pages
                     app.Items.Add(
                         new TreeViewItem
                             {
-                                Header = Core.Projects[x].UpdateNames[y], 
+                                Header = Core.Projects[x].UpdateNames[y],
                                 Tag = index
                             });
                 }
@@ -219,7 +225,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
-            this.LoadProjects();
+            Task.Factory.StartNew(this.LoadProjects);
         }
 
         /// <summary>Creates a new project</summary>

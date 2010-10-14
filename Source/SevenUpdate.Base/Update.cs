@@ -30,29 +30,35 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains the UpdateType of the update</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(Important)]
     public enum Importance
     {
         /// <summary>Important update</summary>
-        [ProtoEnum, EnumMember]
-        Important = 0, 
+        [ProtoEnum]
+        [EnumMember]
+        Important = 0,
 
         /// <summary>Locale or language</summary>
-        [ProtoEnum, EnumMember]
-        Locale = 1, 
+        [ProtoEnum]
+        [EnumMember]
+        Locale = 1,
 
         /// <summary>Optional update</summary>
-        [ProtoEnum, EnumMember]
-        Optional = 2, 
+        [ProtoEnum]
+        [EnumMember]
+        Optional = 2,
 
         /// <summary>Recommended update</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         Recommended = 3
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract, DataContract(IsReference = true)]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     [KnownType(typeof(UpdateFile))]
     [KnownType(typeof(RegistryItem))]
@@ -114,7 +120,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized update descriptions</summary>
         /// <value>The localized description for the update</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public ObservableCollection<LocaleString> Description
         {
             get
@@ -133,7 +140,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the source main location to download files for the update</summary>
         /// <value>The url to download the update files.</value>
-        [ProtoMember(3), DataMember]
+        [ProtoMember(3)]
+        [DataMember]
         public string DownloadUrl
         {
             get
@@ -152,7 +160,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of files to perform actions on in the update</summary>
         /// <value>The files.</value>
-        [ProtoMember(8, IsRequired = false), DataMember]
+        [ProtoMember(8, IsRequired = false)]
+        [DataMember]
         public ObservableCollection<UpdateFile> Files
         {
             get
@@ -191,7 +200,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the importance of the update</summary>
         /// <value>The importance</value>
-        [ProtoMember(4), DataMember]
+        [ProtoMember(4)]
+        [DataMember]
         public Importance Importance
         {
             get
@@ -210,7 +220,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to a resource to find more information about the update</summary>
         /// <value>The info URL.</value>
-        [ProtoMember(6, IsRequired = false), DataMember]
+        [ProtoMember(6, IsRequired = false)]
+        [DataMember]
         public string InfoUrl
         {
             get
@@ -229,7 +240,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the url pointing to the software license for the application/update</summary>
         /// <value>The url pointing to the software license</value>
-        [ProtoMember(7, IsRequired = false), DataMember]
+        [ProtoMember(7, IsRequired = false)]
+        [DataMember]
         public string LicenseUrl
         {
             get
@@ -248,7 +260,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized update names</summary>
         /// <value>The localized update names</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<LocaleString> Name
         {
             get
@@ -267,7 +280,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of registry keys and values to perform actions on in the update</summary>
         /// <value>The registry items</value>
-        [ProtoMember(9, IsRequired = false), DataMember]
+        [ProtoMember(9, IsRequired = false)]
+        [DataMember]
         public ObservableCollection<RegistryItem> RegistryItems
         {
             get
@@ -286,7 +300,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
-        [ProtoMember(5), DataMember]
+        [ProtoMember(5)]
+        [DataMember]
         public string ReleaseDate
         {
             get

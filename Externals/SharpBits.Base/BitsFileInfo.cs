@@ -31,7 +31,7 @@ namespace SharpBits.Base
         {
             this.BGFileInfo = new BGFileInfo
                 {
-                    RemoteName = remoteName, 
+                    RemoteName = remoteName,
                     LocalName = localName
                 };
         }
@@ -61,7 +61,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the BG file info.</summary>
         /// <value>The BG file info.</value>
-        internal BGFileInfo BGFileInfo { get; private set; }
+        internal BGFileInfo BGFileInfo
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

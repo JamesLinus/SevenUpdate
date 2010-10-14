@@ -187,9 +187,9 @@ namespace SevenUpdate.Windows
 
                     var sla = new Eula
                         {
-                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, 
-                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), 
-                            AppIndex = x, 
+                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl,
+                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name),
+                            AppIndex = x,
                             UpdateIndex = y
                         };
 
@@ -253,16 +253,32 @@ namespace SevenUpdate.Windows
             #region Properties
 
             /// <summary>Gets or sets the index of the application of the update</summary>
-            internal int AppIndex { get; set; }
+            internal int AppIndex
+            {
+                get;
+                set;
+            }
 
             /// <summary>Gets or sets the <see cref = "Uri" /> for the license agreement</summary>
-            internal string LicenseUrl { get; set; }
+            internal string LicenseUrl
+            {
+                get;
+                set;
+            }
 
             /// <summary>Gets or sets the update title</summary>
-            internal string Title { get; set; }
+            internal string Title
+            {
+                get;
+                set;
+            }
 
             /// <summary>Gets or sets the index of the update</summary>
-            internal int UpdateIndex { get; set; }
+            internal int UpdateIndex
+            {
+                get;
+                set;
+            }
 
             #endregion
         }

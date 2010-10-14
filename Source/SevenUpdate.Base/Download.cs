@@ -56,7 +56,11 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven update is currently downloading updates</summary>
-        public static bool IsDownloading { get; private set; }
+        public static bool IsDownloading
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -201,7 +205,7 @@ namespace SevenUpdate
                     {
                     }
 
-                    bitsJob.AddFile(application.Updates[y].Files[z].Source, downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
+                    bitsJob.AddFile(new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
                 }
             }
         }
@@ -332,8 +336,7 @@ namespace SevenUpdate
                 return;
             }
 
-            var eventArgs = new DownloadProgressChangedEventArgs(
-                e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+            var eventArgs = new DownloadProgressChangedEventArgs(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
             DownloadProgressChanged(null, eventArgs);
         }
 

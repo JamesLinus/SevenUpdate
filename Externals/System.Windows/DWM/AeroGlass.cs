@@ -92,7 +92,7 @@ namespace System.Windows.Dwm
         {
             var blur = new NativeMethods.DwmBlurBehind
                 {
-                    RegionBlur = region, 
+                    RegionBlur = region,
                     Flags = NativeMethods.DwmBlurBehindFlag.DwmBlurBehindRegion
                 };
 
@@ -153,8 +153,7 @@ namespace System.Windows.Dwm
             NativeMethods.GetWindowRect(handleSource.Handle, ref windowRect);
             NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
             var nonClientSize = new Size(
-                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), 
-                (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
+                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             var transform = element.TransformToAncestor(window);
@@ -164,9 +163,9 @@ namespace System.Windows.Dwm
             // Create a margin structure
             var margins = new NativeMethods.Margins
                 {
-                    LeftWidth = (int)topLeftFrame.X, 
-                    RightWidth = (int)(window.ActualWidth - bottomRightFrame.X), 
-                    TopHeight = (int)topLeftFrame.Y, 
+                    LeftWidth = (int)topLeftFrame.X,
+                    RightWidth = (int)(window.ActualWidth - bottomRightFrame.X),
+                    TopHeight = (int)topLeftFrame.Y,
                     BottomHeight = (int)(window.ActualHeight - bottomRightFrame.Y)
                 };
 
@@ -241,7 +240,11 @@ namespace System.Windows.Dwm
 
             /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
             /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
-            public bool IsGlassEnabled { get; private set; }
+            public bool IsGlassEnabled
+            {
+                get;
+                private set;
+            }
 
             #endregion
         }

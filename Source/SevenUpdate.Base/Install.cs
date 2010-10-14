@@ -68,7 +68,11 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven Update is installing updates</summary>
-        public static bool IsInstalling { get; private set; }
+        public static bool IsInstalling
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -239,15 +243,15 @@ namespace SevenUpdate
             var history = Utilities.Deserialize<Collection<Suh>>(Utilities.HistoryFile) ?? new Collection<Suh>();
             var hist = new Suh
                 {
-                    HelpUrl = appInfo.AppInfo.HelpUrl, 
-                    Publisher = appInfo.AppInfo.Publisher, 
-                    AppUrl = appInfo.AppInfo.AppUrl, 
-                    Description = updateInfo.Description, 
-                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, 
-                    InfoUrl = updateInfo.InfoUrl, 
-                    InstallDate = DateTime.Now.ToShortDateString(), 
-                    ReleaseDate = updateInfo.ReleaseDate, 
-                    Importance = updateInfo.Importance, 
+                    HelpUrl = appInfo.AppInfo.HelpUrl,
+                    Publisher = appInfo.AppInfo.Publisher,
+                    AppUrl = appInfo.AppInfo.AppUrl,
+                    Description = updateInfo.Description,
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
+                    InfoUrl = updateInfo.InfoUrl,
+                    InstallDate = DateTime.Now.ToShortDateString(),
+                    ReleaseDate = updateInfo.ReleaseDate,
+                    Importance = updateInfo.Importance,
                     Name = updateInfo.Name
                 };
 
@@ -571,16 +575,16 @@ namespace SevenUpdate
                 var x1 = x;
                 var x2 = x;
                 Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
-                                                                                delegate
-                                                                                    {
-                                                                                        var installProgress = (x2 * 100) / files.Count;
-                                                                                        if (installProgress > 70)
-                                                                                        {
-                                                                                            installProgress -= 15;
-                                                                                        }
+                    delegate
+                        {
+                            var installProgress = (x2 * 100) / files.Count;
+                            if (installProgress > 70)
+                            {
+                                installProgress -= 15;
+                            }
 
-                                                                                        ReportProgress(installProgress);
-                                                                                    });
+                            ReportProgress(installProgress);
+                        });
             }
         }
 

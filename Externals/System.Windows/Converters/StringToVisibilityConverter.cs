@@ -26,12 +26,10 @@
 // ***********************************************************************
 namespace System.Windows.Converters
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Windows.Data;
 
     /// <summary>Converts the string to a bool</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ValueConverter")]
     [ValueConversion(typeof(string), typeof(Visibility))]
     public class StringToVisibilityConverter : IValueConverter
     {

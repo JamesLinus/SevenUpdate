@@ -58,8 +58,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
         }
 
         #endregion

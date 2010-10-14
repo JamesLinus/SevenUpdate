@@ -222,7 +222,7 @@ namespace SevenUpdate
         /// <returns><see langword="true"/> if the admin process was successfully started</returns>
         private static bool WaitForAdmin()
         {
-            #if !DEBUG
+#if !DEBUG
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
                 var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
@@ -235,7 +235,7 @@ namespace SevenUpdate
                 wcfClient = new ServiceClient(new InstanceContext(new ServiceCallback()));
             }
 
-            #endif
+#endif
 
             if (wcfClient == null)
             {

@@ -75,7 +75,7 @@ namespace SevenUpdate
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config
                     {
-                        AutoOption = AutoUpdateOption.Notify, 
+                        AutoOption = AutoUpdateOption.Notify,
                         IncludeRecommended = false
                     };
             }
@@ -118,7 +118,11 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets a collection of applications to update</summary>
         /// <value>The collection of Sui</value>
-        internal static Collection<Sui> Applications { get; set; }
+        internal static Collection<Sui> Applications
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets the static instance of Core</summary>
         internal static Core Instance
@@ -130,7 +134,11 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check</summary>
-        internal static bool IsReconnect { get; set; }
+        internal static bool IsReconnect
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets a collection of software that Seven Update can check for updates</summary>
         private static IEnumerable<Sua> AppsToUpdate
@@ -177,14 +185,8 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (
-                        ShowMessage(
-                            Resources.RebootComputer, 
-                            TaskDialogStandardIcon.Information, 
-                            TaskDialogStandardButtons.Cancel, 
-                            Resources.RebootNeededFirst, 
-                            null, 
-                            Resources.RestartNow) != TaskDialogResult.Cancel)
+                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) !=
+                        TaskDialogResult.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -214,14 +216,14 @@ namespace SevenUpdate
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(
-            string instructionText, 
-            TaskDialogStandardIcon icon, 
-            TaskDialogStandardButtons standardButtons, 
-            string description = null, 
-            string footerText = null, 
-            string defaultButtonText = null, 
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
             bool displayShieldOnButton = false)
-        {   
+        {
             if (TaskDialog.IsPlatformSupported)
             {
                 using (new EnableThemingInScope(true))

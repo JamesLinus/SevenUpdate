@@ -30,8 +30,10 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The collection of updates and the application info.</summary>
-    [ProtoContract, DataContract(IsReference = true)]
-    [KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(Sua))]
+    [KnownType(typeof(ObservableCollection<Update>))]
     public sealed class Sui : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -54,7 +56,8 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets or sets the  software information for the application updates.</summary>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public Sua AppInfo
         {
             get
@@ -72,7 +75,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets the collection of updates for the application</summary>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<Update> Updates
         {
             get

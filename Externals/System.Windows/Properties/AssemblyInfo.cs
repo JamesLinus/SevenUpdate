@@ -32,9 +32,6 @@ using System.Windows.Markup;
 
 [assembly: CLSCompliant(false)]
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("System.Windows")]
 [assembly: AssemblyDescription("Provides additional controls for WPF")]
 [assembly: AssemblyConfiguration("")]

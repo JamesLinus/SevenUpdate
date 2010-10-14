@@ -29,24 +29,29 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Automatic Update option Seven Update can use</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(Install)]
     public enum AutoUpdateOption
     {
         /// <summary>Download and Installs updates automatically</summary>
-        [ProtoEnum, EnumMember]
-        Install = 0, 
+        [ProtoEnum]
+        [EnumMember]
+        Install = 0,
 
         /// <summary>Downloads Updates automatically</summary>
-        [ProtoEnum, EnumMember]
-        Download = 1, 
+        [ProtoEnum]
+        [EnumMember]
+        Download = 1,
 
         /// <summary>Only checks and notifies the user of updates</summary>
-        [ProtoEnum, EnumMember]
-        Notify = 2, 
+        [ProtoEnum]
+        [EnumMember]
+        Notify = 2,
 
         /// <summary>No automatic checking</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         Never = 3
     }
 
@@ -76,7 +81,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets which automatic update option Seven Update should use</summary>
         /// <value>The automatic update option</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public AutoUpdateOption AutoOption
         {
             get
@@ -95,7 +101,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates</summary>
         /// <value><see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public bool IncludeRecommended
         {
             get

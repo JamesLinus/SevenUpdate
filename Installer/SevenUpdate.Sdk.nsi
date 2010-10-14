@@ -9,7 +9,6 @@
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
 !include "x64.nsh"
-!include "DotNET.nsh"
 !include "LogicLib.nsh"
 !include "WinVer.nsh"
 
@@ -150,17 +149,99 @@ FunctionEnd
   
 !macroend
 
+!include "WordFunc.nsh"
+!insertmacro VersionCompare
+ 
+Function GetLatestDotNETVersion
+ 
+	;Save the variables in case something else is using them
+ 
+	Push $0		; Registry key enumerator index
+	Push $1		; Registry value
+	Push $2		; Temp var
+	Push $R0	; Max version number
+	Push $R1	; Looping version number
+ 
+	StrCpy $R0 "0.0.0"
+	StrCpy $0 0
+ 
+	loop:
+ 
+		; Get each sub key under "SOFTWARE\Microsoft\NET Framework Setup\NDP"
+		EnumRegKey $1 HKLM "SOFTWARE\Microsoft\NET Framework Setup\NDP" $0
+ 
+		StrCmp $1 "" done 	; jump to end if no more registry keys
+ 
+		IntOp $0 $0 + 1 	; Increase registry key index
+		StrCpy $R1 $1 "" 1 	; Looping version number, cut of leading 'v'
+ 
+		${VersionCompare} $R1 $R0 $2
+		; $2=0  Versions are equal, ignore
+		; $2=1  Looping version $R1 is newer
+        ; $2=2  Looping version $R1 is older, ignore
+ 
+		IntCmp $2 1 newer_version loop loop
+ 
+		newer_version:
+		StrCpy $R0 $R1
+		goto loop
+ 
+	done:
+ 
+	; If the latest version is 0.0.0, there is no .NET installed ?!
+	${VersionCompare} $R0 "0.0.0" $2
+	IntCmp $2 0 no_dotnet clean clean
+ 
+	no_dotnet:
+	StrCpy $R0 ""
+ 
+	clean:
+	; Pop the variables we pushed earlier
+	Pop $0
+	Pop $1
+	Pop $2
+	Pop $R1
+ 
+	; $R0 contains the latest .NET version or empty string if no .NET is available
+FunctionEnd
+
+!macro DownloadDotNet DotNetReqVer
+!define DOTNET_URL "http://download.microsoft.com/download/5/6/2/562A10F9-C9F4-4313-A044-9C94E0A8FAC8/dotNetFx40_Client_x86_x64.exe"
+  DetailPrint "Checking your .NET Framework version..."
+  Call GetLatestDotNETVersion
+  DetailPrint "Installed .Net framework version: $R0"
+  ${VersionCompare} $R0 ${DotNetReqVer} $2
+  IntCmp $2 2 installDotNet installApp
+  installDotNet:
+  Pop $0
+  Pop $2
+  Pop $R0
+  !insertmacro DownloadFile ${DOTNET_URL} "$TEMP\dotnetfx40.exe"
+  DetailPrint "Pausing installation while downloaded .NET Framework installer runs."
+  ExecWait '$TEMP\dotnetfx40.exe /q /norestart /c:"install /q"'
+  DetailPrint "Completed .NET Framework install/update. Removing .NET Framework installer."
+  Delete "$TEMP\dotnetfx40.exe"
+  DetailPrint ".NET Framework installer removed."
+  
+  installApp:
+  Pop $0
+  Pop $2
+  Pop $R0
+!macroend
+
 Section "Main Section" SEC01
   SetOutPath $INSTDIR
   SetShellVarContext all
   SetOverwrite on
   SectionIn RO
   Call ConnectInternet
-  !insertmacro CheckDotNet4
+  !insertmacro DownloadDotNet "4.0"
   Call CloseSevenUpdate
   
+  DetailPrint "Removing old installation files"
   RMDir /r $INSTDIR
   
+  DetailPrint "Downloading Seven Update SDK..."
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
@@ -168,12 +249,13 @@ Section "Main Section" SEC01
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
   
+  DetailPrint "Creating shortcuts..."
   SetShellVarContext current
   CreateDirectory "$APPDATA\Seven Software\Seven Update SDK"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\Seven Software"
   CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk" "$INSTDIR\SevenUpdate.Sdk.exe"
-  
+  DetailPrint "Registering filetypes..."
   WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
   WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
   WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,0"

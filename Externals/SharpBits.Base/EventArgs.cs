@@ -41,7 +41,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the error.</summary>
         /// <value>The error that occurred</value>
-        public BitsError Error { get; private set; }
+        public BitsError Error
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }
@@ -74,7 +78,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the description.</summary>
         /// <value>The description.</value>
-        public string Description { get; private set; }
+        public string Description
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the message.</summary>
         /// <value>The message.</value>

@@ -30,7 +30,6 @@ namespace SevenUpdate.Helper
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
-    using System.Runtime.InteropServices;
     using System.Threading;
     using System.Timers;
     using System.Windows.Forms;

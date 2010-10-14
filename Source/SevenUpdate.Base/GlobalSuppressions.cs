@@ -45,28 +45,44 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Scope = "member", Target = "SevenUpdate.Shortcut.#Name")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Scope = "member", Target = "SevenUpdate.Shortcut.#Description")]
 [assembly: SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Scope = "member", Target = "SevenUpdate.Update.#RegistryItems")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "FileNotFound", Scope = "member", Target = "SevenUpdate.Install.#UpdateFile(SevenUpdate.UpdateFile)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Suh", Scope = "type", Target = "SevenUpdate.Suh")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sua", Scope = "type", Target = "SevenUpdate.Sua")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "NonFatal", Scope = "member", Target = "SevenUpdate.ErrorType.#GeneralErrorNonFatal")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#AppUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#HelpUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#SuiUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#AppUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#HelpUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#InfoUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#DownloadUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#InfoUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#LicenseUrl")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Utilities.#StartProcess(System.String,System.String,System.Boolean,System.Boolean)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Utilities.#ConvertPath(System.String,System.String,System.Boolean,System.String)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Download.#DownloadUpdates(System.Collections.ObjectModel.Collection`1<SevenUpdate.Sui>,System.Boolean)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#", Scope = "member", Target = "SevenUpdate.Utilities.#Deserialize`1(System.IO.Stream,System.String)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member", Target = "SevenUpdate.Download.#ReportDownloadError(System.Object,SharpBits.Base.ErrorNotificationEventArgs)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member", Target = "SevenUpdate.Install.#UpdateFile(SevenUpdate.UpdateFile)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member", Target = "SevenUpdate.Search.#SearchForUpdates(System.Collections.Generic.IEnumerable`1<SevenUpdate.Sua>)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Scope = "member", Target = "SevenUpdate.Utilities.#GetHash(System.String)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Lang")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#PropertyChanged")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Value")]
+[assembly:
+    SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "FileNotFound", Scope = "member", Target = "SevenUpdate.Install.#UpdateFile(SevenUpdate.UpdateFile)")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Suh", Scope = "type", Target = "SevenUpdate.Suh")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sua", Scope = "type", Target = "SevenUpdate.Sua")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "NonFatal", Scope = "member", Target = "SevenUpdate.ErrorType.#GeneralErrorNonFatal")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#AppUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#HelpUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#SuiUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#AppUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#HelpUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Suh.#InfoUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#DownloadUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#InfoUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Update.#LicenseUrl")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String)")]
+[assembly:
+    SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member",
+        Target = "SevenUpdate.Utilities.#StartProcess(System.String,System.String,System.Boolean,System.Boolean)")]
+[assembly:
+    SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member",
+        Target = "SevenUpdate.Utilities.#ConvertPath(System.String,System.String,System.Boolean,System.String)")]
+[assembly:
+    SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member",
+        Target = "SevenUpdate.Download.#DownloadUpdates(System.Collections.ObjectModel.Collection`1<SevenUpdate.Sui>,System.Boolean)")]
+[assembly:
+    SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#", Scope = "member", Target = "SevenUpdate.Utilities.#Deserialize`1(System.IO.Stream,System.String)")]
+[assembly:
+    SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member",
+        Target = "SevenUpdate.Download.#ReportDownloadError(System.Object,SharpBits.Base.ErrorNotificationEventArgs)")]
+[assembly:
+    SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member",
+        Target = "SevenUpdate.Install.#UpdateFile(SevenUpdate.UpdateFile)")]
+[assembly:
+    SuppressMessage("Microsoft.Globalization", "CA1303:Do not pass literals as localized parameters", MessageId = "SevenUpdate.Utilities.ReportError(System.String,System.String)", Scope = "member",
+        Target = "SevenUpdate.Search.#SearchForUpdates(System.Collections.Generic.IEnumerable`1<SevenUpdate.Sua>)")]
+[assembly:
+    SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Scope = "member",
+        Target = "SevenUpdate.Utilities.#GetHash(System.String)")]
+[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Lang")]
+[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#PropertyChanged")]
+[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Value")]

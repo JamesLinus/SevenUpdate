@@ -39,8 +39,6 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    using Shortcut = SevenUpdate.Shortcut;
-
     /// <summary>Interaction logic for UpdateShortcuts.xaml</summary>
     public sealed partial class UpdateShortcuts
     {
@@ -94,13 +92,13 @@ namespace SevenUpdate.Sdk.Pages
 
             var shortcut = new Shortcut
                 {
-                    Location = path, 
-                    Action = ShortcutAction.Add, 
-                    Name = new ObservableCollection<LocaleString>(), 
+                    Location = path,
+                    Action = ShortcutAction.Add,
+                    Name = new ObservableCollection<LocaleString>(),
                 };
             var ls = new LocaleString
                 {
-                    Lang = Utilities.Locale, 
+                    Lang = Utilities.Locale,
                     Value = Path.GetFileNameWithoutExtension(file)
                 };
             shortcut.Name.Add(ls);
@@ -201,12 +199,12 @@ namespace SevenUpdate.Sdk.Pages
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
-                    Arguments = importedShortcut.Arguments, 
-                    Icon = icon, 
-                    Location = path, 
-                    Action = ShortcutAction.Update, 
-                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit), 
-                    Name = new ObservableCollection<LocaleString>(), 
+                    Arguments = importedShortcut.Arguments,
+                    Icon = icon,
+                    Location = path,
+                    Action = ShortcutAction.Update,
+                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
+                    Name = new ObservableCollection<LocaleString>(),
                     Description = new ObservableCollection<LocaleString>()
                 };
 

@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="BaseLocalizeExtension.cs"
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"
@@ -113,17 +113,28 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Gets or sets the culture to force a fixed localized object</summary>
-        public string ForceCulture { get; set; }
+        public string ForceCulture
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         ///   Gets or sets the initialize value.
         ///   This is ONLY used to support the localize extension in blend!
         /// </summary>
         /// <value>The initialize value.</value>
-        [EditorBrowsable(EditorBrowsableState.Never)] [ConstructorArgument("key")] public string InitializeValue { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ConstructorArgument("key")]
+        public string InitializeValue
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)</summary>
-        [EditorBrowsable(EditorBrowsableState.Never)] public string ResourceIdentifierKey
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public string ResourceIdentifierKey
         {
             get
             {
@@ -164,7 +175,12 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Gets or sets the design value.</summary>
         /// <value>The design value.</value>
-        [DesignOnly(true)] protected object DesignValue { get; set; }
+        [DesignOnly(true)]
+        protected object DesignValue
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.

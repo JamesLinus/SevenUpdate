@@ -27,10 +27,6 @@ namespace System.Windows.Dialogs.TaskDialogs
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
-        // Global instance of TaskDialog, to be used by static Show() method.
-        // As most parameters of a dialog created via static Show() will have
-        // identical parameters, we'll create one TaskDialog and treat it
-        // as a NativeTaskDialog generator for all static Show() calls.
         #region Constants and Fields
 
         /// <summary>The static dialog</summary>
@@ -198,7 +194,11 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>Gets a value that contains the <see cref = "TaskDialog" /> controls.</summary>
-        public DialogControlCollection<TaskDialogControl> Controls { get; private set; }
+        public DialogControlCollection<TaskDialogControl> Controls
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
         public string DetailsCollapsedLabel
@@ -630,7 +630,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #endregion
 
-        // Called whenever controls have been added or removed.
         #region Implemented Interfaces
 
         #region IDialogControlHost
@@ -810,9 +809,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #endregion
 
-        // All Raise*() methods are called by the 
-        // NativeTaskDialog when various pseudo-controls
-        // are triggered.
         #region Methods
 
         /// <summary>Raises the button click event.</summary>
@@ -1435,7 +1431,11 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets or sets the text of the hyperlink that was clicked.</summary>
-            public string LinkText { get; set; }
+            public string LinkText
+            {
+                get;
+                set;
+            }
 
             #endregion
         }
@@ -1446,10 +1446,18 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets or sets the text of the custom button that was clicked.</summary>
-            public string CustomButton { get; set; }
+            public string CustomButton
+            {
+                get;
+                set;
+            }
 
             /// <summary>Gets or sets the standard button that was clicked.</summary>
-            public TaskDialogResult TaskDialogResult { get; set; }
+            public TaskDialogResult TaskDialogResult
+            {
+                get;
+                set;
+            }
 
             #endregion
         }
@@ -1471,7 +1479,11 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets  a value indicating whether the current number of ticks.</summary>
-            public int Ticks { get; private set; }
+            public int Ticks
+            {
+                get;
+                private set;
+            }
 
             #endregion
         }

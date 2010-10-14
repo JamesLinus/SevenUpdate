@@ -57,7 +57,11 @@ namespace System.Windows.ApplicationServices
         ///   By default, the interval is 5 seconds. 
         ///   If you specify zero, the default interval is used.
         /// </remarks>
-        public uint PingInterval { get; private set; }
+        public uint PingInterval
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         ///   Gets the recovery data object that contains the callback method and an optional
@@ -65,7 +69,11 @@ namespace System.Windows.ApplicationServices
         ///   callback method.
         /// </summary>
         /// <value>A <see cref = "RecoveryData" /> object.</value>
-        public RecoveryData RecoveryData { get; private set; }
+        public RecoveryData RecoveryData
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -76,13 +84,11 @@ namespace System.Windows.ApplicationServices
         ///   of this object.
         /// </summary>
         /// <returns>A <see cref="System.String"/> object.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", 
-            MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)", 
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)",
             Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
-            return String.Format(
-                CultureInfo.CurrentCulture, "delegate: {0}, state: {1}, ping: {2}", this.RecoveryData.Callback.Method, this.RecoveryData.State, this.PingInterval);
+            return String.Format(CultureInfo.CurrentCulture, "delegate: {0}, state: {1}, ping: {2}", this.RecoveryData.Callback.Method, this.RecoveryData.State, this.PingInterval);
         }
 
         #endregion

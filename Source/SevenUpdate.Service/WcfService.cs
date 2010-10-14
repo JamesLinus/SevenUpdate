@@ -164,10 +164,7 @@ namespace SevenUpdate.Service
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Registry.SetValue(
-                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
-                        "Seven Update Automatic Checking", 
-                        Utilities.AppDir + @"SevenUpdate.Helper.exe ");
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Utilities.AppDir + @"SevenUpdate.Helper.exe ");
                 }
                 else
                 {

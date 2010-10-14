@@ -29,7 +29,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Provides event data for the DownloadProgressChanged event</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     public sealed class DownloadProgressChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
@@ -53,23 +54,43 @@ namespace SevenUpdate
 
         /// <summary>Gets the total number of bytes to download</summary>
         /// <value>The bytes total.</value>
-        [ProtoMember(1), DataMember]
-        public ulong BytesTotal { get; private set; }
+        [ProtoMember(1)]
+        [DataMember]
+        public ulong BytesTotal
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the number of bytes transferred</summary>
         /// <value>The bytes transferred.</value>
-        [ProtoMember(2), DataMember]
-        public ulong BytesTransferred { get; private set; }
+        [ProtoMember(2)]
+        [DataMember]
+        public ulong BytesTransferred
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the total number of files to download</summary>
         /// <value>The files total.</value>
-        [ProtoMember(3), DataMember]
-        public uint FilesTotal { get; private set; }
+        [ProtoMember(3)]
+        [DataMember]
+        public uint FilesTotal
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the number of files downloaded</summary>
         /// <value>The files transferred.</value>
-        [ProtoMember(4), DataMember]
-        public uint FilesTransferred { get; private set; }
+        [ProtoMember(4)]
+        [DataMember]
+        public uint FilesTransferred
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

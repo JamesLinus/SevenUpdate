@@ -30,8 +30,7 @@ namespace SharpBits.Base
         /// <param name="type">Type of transfer job, such as BGJob_TYPE_DOWNLOAD. For a list of transfer types, see the BGJob_TYPE enumeration.</param>
         /// <param name="jobId">Uniquely identifies your job in the queue. Use this identifier when you call the <see cref="IBackgroundCopyManager"/>::<see cref="GetJob"/> method to get a job from the queue.</param>
         /// <param name="job">An <see cref="IBackgroundCopyJob"/> interface pointer that you use to modify the job's properties and specify the files to be transferred. To activate the job in the queue, call the <see cref="IBackgroundCopyJob"/>::Resume method. Release <paramref name="job"/> when done.</param>
-        void CreateJob(
-            [MarshalAs(UnmanagedType.LPWStr)] string displayName, BGJobType type, out Guid jobId, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
+        void CreateJob([MarshalAs(UnmanagedType.LPWStr)] string displayName, BGJobType type, out Guid jobId, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
         /// <summary>Retrieves a given job from the queue</summary>
         /// <param name="jobID">Identifies the job to retrieve from the transfer queue. The <see cref="CreateJob"/> method returns the job identifier.</param>
@@ -258,8 +257,7 @@ namespace SharpBits.Base
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see cref="BGJobProxyUsage"/> enumeration.</param>
         /// <param name="proxyList"><see langword="null"/>-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyList"/> when done.</param>
         /// <param name="proxyBypassList"><see langword="null"/>-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyBypassList"/> when done.</param>
-        void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+        void GetProxySettings(out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user</summary>
         void TakeOwnership();
@@ -450,8 +448,7 @@ namespace SharpBits.Base
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see cref="BGJobProxyUsage"/> enumeration. </param>
         /// <param name="proxyList"><see langword="null"/>-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyList"/> when done.</param>
         /// <param name="proxyBypassList"><see langword="null"/>-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyBypassList"/> when done.</param>
-        void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+        void GetProxySettings(out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user</summary>
         void TakeOwnership();
@@ -674,8 +671,7 @@ namespace SharpBits.Base
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see cref="BGJobProxyUsage"/> enumeration. </param>
         /// <param name="proxyList"><see langword="null"/>-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyList"/> when done.</param>
         /// <param name="proxyBypassList"><see langword="null"/>-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyBypassList"/> when done.</param>
-        void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+        void GetProxySettings(out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user</summary>
         void TakeOwnership();
@@ -727,10 +723,7 @@ namespace SharpBits.Base
         /// <param name="rangeCount">The range count.</param>
         /// <param name="ranges">The ranges.</param>
         void AddFileWithRanges(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, 
-            [MarshalAs(UnmanagedType.LPWStr)] string localName, 
-            uint rangeCount, 
-            [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
+            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>
         /// <param name="flags">The flags.</param>
@@ -922,8 +915,7 @@ namespace SharpBits.Base
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see cref="BGJobProxyUsage"/> enumeration. </param>
         /// <param name="proxyList"><see langword="null"/>-terminated string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyList"/> when done.</param>
         /// <param name="proxyBypassList"><see langword="null"/>-terminated string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyBypassList"/> when done.</param>
-        void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+        void GetProxySettings(out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user</summary>
         void TakeOwnership();
@@ -975,10 +967,7 @@ namespace SharpBits.Base
         /// <param name="rangeCount">The range count.</param>
         /// <param name="ranges">The ranges.</param>
         void AddFileWithRanges(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, 
-            [MarshalAs(UnmanagedType.LPWStr)] string localName, 
-            uint rangeCount, 
-            [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
+            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>
         /// <param name="flags">The flags.</param>

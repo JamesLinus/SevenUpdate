@@ -60,7 +60,7 @@ namespace WPFLocalizeExtension.Extensions
         protected enum TextAppendType
         {
             /// <summary>The return value is used as prefix</summary>
-            Prefix, 
+            Prefix,
 
             /// <summary>The return value is used as suffix</summary>
             Suffix
@@ -232,8 +232,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -262,12 +261,12 @@ namespace WPFLocalizeExtension.Extensions
             {
                 // add some format segments, in case that the main text contains format place holders like {0}
                 textMain = string.Format(
-                    Localize.Instance.SpecificCulture, 
-                    textMain, 
-                    this.formatSegments[0] ?? string.Empty, 
-                    this.formatSegments[1] ?? string.Empty, 
-                    this.formatSegments[2] ?? string.Empty, 
-                    this.formatSegments[3] ?? string.Empty, 
+                    Localize.Instance.SpecificCulture,
+                    textMain,
+                    this.formatSegments[0] ?? string.Empty,
+                    this.formatSegments[1] ?? string.Empty,
+                    this.formatSegments[2] ?? string.Empty,
+                    this.formatSegments[3] ?? string.Empty,
                     this.formatSegments[4] ?? string.Empty);
             }
             catch (FormatException)

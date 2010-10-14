@@ -237,6 +237,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\Service\WcfService.wsdl" />
+    <None Include="Seven Software.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

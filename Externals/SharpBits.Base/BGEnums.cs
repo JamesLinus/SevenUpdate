@@ -20,29 +20,29 @@ namespace SharpBits.Base
     internal enum BGAuthScheme
     {
         /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>
-        Basic = 1, 
+        Basic = 1,
 
         /// <summary>Digest is a challenge-response scheme that uses a server-specified data string for the challenge.</summary>
-        Digest = 2, 
+        Digest = 2,
 
         /// <summary>Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the user for authentication in a Windows network environment.</summary>
-        Ntlm = 3, 
+        Ntlm = 3,
 
         /// <summary>Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol, Secure Socket Layer (SSL), and NTLM.</summary>
-        Negotiate = 4, 
+        Negotiate = 4,
 
         /// <summary>Passport is a centralized authentication service provided by Microsoft that offers a single logon for member sites.</summary>
-        Passport = 5, 
+        Passport = 5,
     }
 
     /// <summary>The location from which to download the code.</summary>
     internal enum BGAuthTarget
     {
         /// <summary>Use credentials for server requests.</summary>
-        Server = 1, 
+        Server = 1,
 
         /// <summary>Use credentials for proxy requests.</summary>
-        Proxy = 2, 
+        Proxy = 2,
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ namespace SharpBits.Base
         ///   If a user logs off while their job is transferring, the job 
         ///   transitions to the queued state
         /// </summary>
-        Queued = 0, 
+        Queued = 0,
 
         /// <summary>
         ///   Specifies that BITS is trying to connect to the server. If the 
@@ -64,13 +64,13 @@ namespace SharpBits.Base
         ///   BG_JOB_STATE_TRANSFERRING; otherwise, the state becomes 
         ///   BG_JOB_STATE_TRANSIENT_ERROR
         /// </summary>
-        Connecting = 1, 
+        Connecting = 1,
 
         /// <summary>Specifies that BITS is transferring data for the job</summary>
-        Transferring = 2, 
+        Transferring = 2,
 
         /// <summary>Specifies that the job is suspended (paused)</summary>
-        Suspended = 3, 
+        Suspended = 3,
 
         /// <summary>
         ///   Specifies that a non-recoverable error occurred (the service is 
@@ -81,7 +81,7 @@ namespace SharpBits.Base
         ///   the job, or call the IBackgroundCopyJob::Complete method to accept 
         ///   the portion of a download job that transferred successfully.
         /// </summary>
-        Error = 4, 
+        Error = 4,
 
         /// <summary>
         ///   Specifies that a recoverable error occurred. The service tries to 
@@ -90,22 +90,22 @@ namespace SharpBits.Base
         ///   expires. If the retry time expires, the job state changes to 
         ///   BG_JOB_STATE_ERROR
         /// </summary>
-        TransientError = 5, 
+        TransientError = 5,
 
         /// <summary>Specifies that your job was successfully processed</summary>
-        Transferred = 6, 
+        Transferred = 6,
 
         /// <summary>
         ///   Specifies that you called the IBackgroundCopyJob::Complete method 
         ///   to acknowledge that your job completed successfully
         /// </summary>
-        Acknowledged = 7, 
+        Acknowledged = 7,
 
         /// <summary>
         ///   Specifies that you called the IBackgroundCopyJob::Cancel method to 
         ///   cancel the job (remove the job from the transfer queue)
         /// </summary>
-        Canceled = 8, 
+        Canceled = 8,
 
         /// <summary>This is custom state not provided by BITS</summary>
         Unknown = 1001, // This is not provided by BITS but is Custom
@@ -118,16 +118,16 @@ namespace SharpBits.Base
     internal enum BGJobType
     {
         /// <summary>Specifies that the job downloads files to the client</summary>
-        Download = 0, 
+        Download = 0,
 
         /// <summary>Specifies that the job uploads a file to the server</summary>
-        Upload = 1, 
+        Upload = 1,
 
         /// <summary>Specifies that the job uploads a file to the server and receives a reply file from the server application.</summary>
-        UploadReply = 2, 
+        UploadReply = 2,
 
         /// <summary>This is not provided by BITS but is Custom</summary>
-        Unknown, 
+        Unknown,
     }
 
     /// <summary>Used for the SetNotifyFlags method.</summary>
@@ -135,16 +135,16 @@ namespace SharpBits.Base
     internal enum BGJobNotificationTypes
     {
         /// <summary>All of the files in the job have been transferred.</summary>
-        BGNotifyJobTransferred = 0x0001, 
+        BGNotifyJobTransferred = 0x0001,
 
         /// <summary>An error has occurred.</summary>
-        BGNotifyJobError = 0x0002, 
+        BGNotifyJobError = 0x0002,
 
         /// <summary>Event notification is disabled. BITS ignores the other flags.</summary>
-        BGNotifyDisable = 0x0004, 
+        BGNotifyDisable = 0x0004,
 
         /// <summary>The job has been modified. For example, a property value changed, the state of the job changed, or progress is made transferring the files. This flag is ignored if command line notification is specified.</summary>
-        BGNotifyJobModification = 0x0008, 
+        BGNotifyJobModification = 0x0008,
     }
 
     /// <summary>
@@ -157,19 +157,19 @@ namespace SharpBits.Base
         ///   Use the proxy and proxy bypass list settings defined by each 
         ///   user to transfer files
         /// </summary>
-        PreConfig = 0, 
+        PreConfig = 0,
 
         /// <summary>Do not use a proxy to transfer files</summary>
-        NoProxy = 1, 
+        NoProxy = 1,
 
         /// <summary>Use the application's proxy and proxy bypass list to transfer files</summary>
-        Override = 2, 
+        Override = 2,
 
         /// <summary>
         ///   Automatically detect proxy settings. 
         ///   BITS detects proxy settings for each file in the job
         /// </summary>
-        AutoDetect = 3, 
+        AutoDetect = 3,
     }
 
     /// <summary>
@@ -179,25 +179,25 @@ namespace SharpBits.Base
     internal enum BGJobPriority
     {
         /// <summary>Transfers the job in the foreground</summary>
-        Foreground = 0, 
+        Foreground = 0,
 
         /// <summary>
         ///   Transfers the job in the background. This is the highest background 
         ///   priority level.
         /// </summary>
-        High = 1, 
+        High = 1,
 
         /// <summary>
         ///   Transfers the job in the background. This is the default priority 
         ///   level for a job
         /// </summary>
-        Normal = 2, 
+        Normal = 2,
 
         /// <summary>
         ///   Transfers the job in the background. This is the lowest background 
         ///   priority level
         /// </summary>
-        Low = 3, 
+        Low = 3,
     }
 
     /// <summary>
@@ -207,37 +207,37 @@ namespace SharpBits.Base
     internal enum BGErrorContext
     {
         /// <summary>An error has not occurred</summary>
-        None = 0, 
+        None = 0,
 
         /// <summary>The error context is unknown</summary>
-        Unknown = 1, 
+        Unknown = 1,
 
         /// <summary>The transfer queue manager generated the error</summary>
-        GeneralQueueManager = 2, 
+        GeneralQueueManager = 2,
 
         /// <summary>
         ///   The error was generated while the queue manager was 
         ///   notifying the client of an event
         /// </summary>
-        QueueManagerNotification = 3, 
+        QueueManagerNotification = 3,
 
         /// <summary>
         ///   The error was related to the specified local file. For example, 
         ///   permission was denied or the volume was unavailable
         /// </summary>
-        LocalFile = 4, 
+        LocalFile = 4,
 
         /// <summary>
         ///   The error was related to the specified remote file. 
         ///   For example, the Url is not accessible
         /// </summary>
-        RemoteFile = 5, 
+        RemoteFile = 5,
 
         /// <summary>
         ///   The transport layer generated the error. These errors are general 
         ///   transport failures; errors not specific to the remote file
         /// </summary>
-        GeneralTransport = 6, 
+        GeneralTransport = 6,
     }
 
     /// <summary>The ACL's of the file to set when downloaded</summary>
@@ -245,19 +245,19 @@ namespace SharpBits.Base
     internal enum BGFileAclFlags
     {
         /// <summary>Set current owner</summary>
-        BGCopyFileOwner = 0x0001, 
+        BGCopyFileOwner = 0x0001,
 
         /// <summary>Set current group</summary>
-        BGCopyFileGroup = 0x0002, 
+        BGCopyFileGroup = 0x0002,
 
         /// <summary>Delete all ACL lists</summary>
-        BGCopyDestinationFileAcl = 0x0004, 
+        BGCopyDestinationFileAcl = 0x0004,
 
         /// <summary>Give special permissions</summary>
-        BGCopySourceFileAcl = 0x0008, 
+        BGCopySourceFileAcl = 0x0008,
 
         /// <summary>Inherit all lists</summary>
-        BGCopyFileAll = 0x0015, 
+        BGCopyFileAll = 0x0015,
     }
 
     /// <summary>

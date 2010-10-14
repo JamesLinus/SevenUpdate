@@ -26,7 +26,6 @@
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Net;
@@ -124,8 +123,7 @@ namespace SevenUpdate.Pages
                     if (
                         !Directory.Exists(
                             Utilities.IsRegistryKey(officialApplicationList[x].Directory)
-                                ? Utilities.GetRegistryValue(
-                                    officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
+                                ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
                     {
                         // Remove the application from the list if it is not installed

@@ -49,12 +49,10 @@ namespace System.Windows.Controls
             "CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort</summary>
-        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached(
-            "PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached("PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow</summary>
-        public static readonly DependencyProperty ShowSortGlyphProperty = DependencyProperty.RegisterAttached(
-            "ShowSortGlyph", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(true));
+        public static readonly DependencyProperty ShowSortGlyphProperty = DependencyProperty.RegisterAttached("ShowSortGlyph", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(true));
 
         /// <summary>The sort arrow up</summary>
         public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached(
@@ -73,7 +71,6 @@ namespace System.Windows.Controls
 
         #endregion
 
-        // Using a DependencyProperty as the backing store for SortGlyphAscending.  This enables animation, styling, binding, etc...
         #region Public Methods
 
         /// <summary>Sets the auto sort.</summary>
@@ -172,10 +169,7 @@ namespace System.Windows.Controls
 
             if (GetShowSortGlyph(listView))
             {
-                AddSortGlyph(
-                    sortedColumnHeader, 
-                    currentSortDirection, 
-                    currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
+                AddSortGlyph(sortedColumnHeader, currentSortDirection, currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
             }
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
@@ -492,8 +486,8 @@ namespace System.Windows.Controls
                         new SolidColorBrush(Colors.LightGray)
                             {
                                 Opacity = 0.5
-                            }, 
-                        new Pen(Brushes.Gray, 0.5), 
+                            },
+                        new Pen(Brushes.Gray, 0.5),
                         this.GetDefaultGlyph());
                 }
             }
@@ -517,7 +511,7 @@ namespace System.Windows.Controls
 
                 var pathSegmentCollection = new PathSegmentCollection
                     {
-                        new LineSegment(new Point(x2, y1), true), 
+                        new LineSegment(new Point(x2, y1), true),
                         new LineSegment(new Point(x3, y2), true)
                     };
 

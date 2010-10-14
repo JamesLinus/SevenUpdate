@@ -29,7 +29,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains a string indicating the language and a value</summary>
-    [ProtoContract, DataContract(IsReference = true)]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
     public sealed class LocaleString : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -53,7 +54,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets an ISO language code</summary>
         /// <value>The iso code</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public string Lang
         {
             get
@@ -72,7 +74,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the value of the string</summary>
         /// <value>The value.</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public string Value
         {
             get

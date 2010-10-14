@@ -30,7 +30,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the job.</summary>
         /// <value>The <see cref = "BitsJob" /> the notification occurred for</value>
-        public BitsJob Job { get; private set; }
+        public BitsJob Job
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

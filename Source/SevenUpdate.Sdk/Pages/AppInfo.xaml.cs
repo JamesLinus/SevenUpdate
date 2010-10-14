@@ -313,7 +313,7 @@ namespace SevenUpdate.Sdk.Pages
                     // Save project file
                     var project = new Project
                         {
-                            ApplicationName = appName, 
+                            ApplicationName = appName,
                             UpdateNames = updateNames
                         };
 

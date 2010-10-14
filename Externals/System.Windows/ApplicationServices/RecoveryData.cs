@@ -48,10 +48,18 @@ namespace System.Windows.ApplicationServices
         #region Properties
 
         /// <summary>Gets or sets a value indicating whether the recovery callback function.</summary>
-        public RecoveryCallback Callback { get; set; }
+        public RecoveryCallback Callback
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets a value indicating whether the application state.</summary>
-        public object State { get; set; }
+        public object State
+        {
+            get;
+            set;
+        }
 
         #endregion
 

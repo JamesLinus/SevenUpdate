@@ -38,24 +38,23 @@ namespace System.Windows.Controls
 
         /// <summary>Dependency Property - Specifies the text to display on the button</summary>
         private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
-            "ButtonText", 
-            typeof(string), 
-            typeof(UacButton), 
+            "ButtonText",
+            typeof(string),
+            typeof(UacButton),
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
 
         /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button</summary>
         private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
-            "IsShieldNeeded", 
-            typeof(bool), 
-            typeof(UacButton), 
+            "IsShieldNeeded",
+            typeof(bool),
+            typeof(UacButton),
             new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield</summary>
         private static readonly BitmapImage Shield = new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/Shield.png", UriKind.Absolute));
 
         /// <summary>The disabled shield image</summary>
-        private static readonly BitmapImage ShieldDisabled =
-            new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/ShieldDisabled.png", UriKind.Absolute));
+        private static readonly BitmapImage ShieldDisabled = new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/ShieldDisabled.png", UriKind.Absolute));
 
         /// <summary>Dependency Property - The shield icon to display</summary>
         private static readonly DependencyProperty ShieldIconProperty;
@@ -74,10 +73,7 @@ namespace System.Windows.Controls
         static UacButton()
         {
             ShieldIconProperty = DependencyProperty.Register(
-                "ShieldIcon", 
-                typeof(ImageSource), 
-                typeof(Button), 
-                new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
+                "ShieldIcon", typeof(ImageSource), typeof(Button), new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
             ButtonTextProperty = DependencyProperty.Register(
                 "ButtonText", typeof(string), typeof(Button), new FrameworkPropertyMetadata(Text, FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
@@ -101,15 +97,15 @@ namespace System.Windows.Controls
 
             var imgShield = new Image
                 {
-                    Source = this.IsEnabled ? Shield : ShieldDisabled, 
-                    Stretch = Stretch.None, 
+                    Source = this.IsEnabled ? Shield : ShieldDisabled,
+                    Stretch = Stretch.None,
                     Margin = new Thickness(0, 0, 5, 0)
                 };
             stackPanel.Children.Add(imgShield);
 
             var textBlock = new TextBlock
                 {
-                    Text = Text, 
+                    Text = Text,
                     VerticalAlignment = VerticalAlignment.Center
                 };
             stackPanel.Children.Add(textBlock);
@@ -186,11 +182,19 @@ namespace System.Windows.Controls
 
         /// <summary>Gets or sets <see cref = "ToolTip" /> shown when elevation has been preformed</summary>
         /// <value>A string that is used as the <see cref = "ToolTip" /> when elevation is complete</value>
-        public object ToolTipElevated { get; set; }
+        public object ToolTipElevated
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets <see cref = "ToolTip" /> shown when elevation has not been preformed</summary>
         /// <value>A string that is used as the <see cref = "ToolTip" /> when elevation is required</value>
-        public object ToolTipNotElevated { get; set; }
+        public object ToolTipNotElevated
+        {
+            get;
+            set;
+        }
 
         #endregion
 

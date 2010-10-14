@@ -50,7 +50,7 @@ namespace System.Windows.Controls
         {
             this.textBlock = new TextBlock
                 {
-                    Style = labelStyle, 
+                    Style = labelStyle,
                     Text = label
                 };
         }

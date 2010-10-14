@@ -53,8 +53,7 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
-        public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                                                     @"\Seven Software\Seven Update SDK\Projects.sul";
+        public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\Projects.sul";
 
         /// <summary>The user application data location</summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
@@ -68,31 +67,59 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets the application information of the project</summary>
         /// <value>The application info.</value>
-        public static Sua AppInfo { get; private set; }
+        public static Sua AppInfo
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets or sets the index for the selected project</summary>
         /// <value>The index of the application</value>
-        internal static int AppIndex { get; set; }
+        internal static int AppIndex
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets a value indicating whether the current project being edited is new</summary>
         /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
-        internal static bool IsNewProject { get; set; }
+        internal static bool IsNewProject
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets a collection of Projects</summary>
         /// <value>The projects.</value>
-        internal static Collection<Project> Projects { get; set; }
+        internal static Collection<Project> Projects
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the index for the current shortcut being edited</summary>
         /// <value>The selected shortcut.</value>
-        internal static int SelectedShortcut { get; set; }
+        internal static int SelectedShortcut
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets or sets the index for the selected update in the selected project</summary>
         /// <value>The index of the update.</value>
-        internal static int UpdateIndex { get; set; }
+        internal static int UpdateIndex
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets the current update being edited</summary>
         /// <value>The update info.</value>
-        internal static Update UpdateInfo { get; private set; }
+        internal static Update UpdateInfo
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -181,10 +208,10 @@ namespace SevenUpdate.Sdk
             AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
             UpdateInfo = new Update
                 {
-                    Files = new ObservableCollection<UpdateFile>(), 
-                    RegistryItems = new ObservableCollection<RegistryItem>(), 
-                    Shortcuts = new ObservableCollection<Shortcut>(), 
-                    Description = new ObservableCollection<LocaleString>(), 
+                    Files = new ObservableCollection<UpdateFile>(),
+                    RegistryItems = new ObservableCollection<RegistryItem>(),
+                    Shortcuts = new ObservableCollection<Shortcut>(),
+                    Description = new ObservableCollection<LocaleString>(),
                     Name = new ObservableCollection<LocaleString>()
                 };
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
@@ -197,7 +224,8 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
         /// <returns>A collection of the selected files</returns>
-        internal static string[] OpenFileDialog(string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(
+            string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
         {
             string[] result;
             using (var openFileDialog = new OpenFileDialog())
@@ -293,50 +321,53 @@ namespace SevenUpdate.Sdk
         {
             // Create JumpTask
             var jumpList = new JumpList();
-
-            var startIndex = Projects.Count - 2;
-            if (startIndex < 0)
-            {
-                startIndex = 0;
-            }
-
             JumpTask jumpTask;
-            for (var x = startIndex; x < Projects.Count; x++)
+
+            if (Projects != null)
             {
-                jumpTask = new JumpTask
-                    {
-                        ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
-                        IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
-                        IconResourceIndex = 7, 
-                        Title = Resources.CreateUpdate, 
-                        CustomCategory = Projects[x].ApplicationName, 
-                        Arguments = @"-newupdate " + x, 
-                    };
-                jumpList.JumpItems.Add(jumpTask);
-                for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
+                var startIndex = Projects.Count - 2;
+                if (startIndex < 0)
+                {
+                    startIndex = 0;
+                }
+
+                for (var x = startIndex; x < Projects.Count; x++)
                 {
                     jumpTask = new JumpTask
                         {
-                            ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
-                            IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
-                            IconResourceIndex = 8, 
-                            Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]), 
-                            CustomCategory = Projects[x].ApplicationName, 
-                            Arguments = @"-edit " + x + " " + y
+                            ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
+                            IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
+                            IconResourceIndex = 7,
+                            Title = Resources.CreateUpdate,
+                            CustomCategory = Projects[x].ApplicationName,
+                            Arguments = @"-newupdate " + x,
                         };
-
                     jumpList.JumpItems.Add(jumpTask);
+                    for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
+                    {
+                        jumpTask = new JumpTask
+                            {
+                                ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
+                                IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
+                                IconResourceIndex = 8,
+                                Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]),
+                                CustomCategory = Projects[x].ApplicationName,
+                                Arguments = @"-edit " + x + " " + y
+                            };
+
+                        jumpList.JumpItems.Add(jumpTask);
+                    }
                 }
             }
 
             // Configure a new JumpTask
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe", 
-                    IconResourcePath = AppDir + @"SevenUpdate.Base.dll", 
-                    IconResourceIndex = 6, 
-                    Title = Resources.CreateProject, 
-                    CustomCategory = Resources.Tasks, 
+                    ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
+                    IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
+                    IconResourceIndex = 6,
+                    Title = Resources.CreateProject,
+                    CustomCategory = Resources.Tasks,
                     Arguments = @"-newproject"
                 };
             jumpList.JumpItems.Add(jumpTask);
@@ -363,12 +394,12 @@ namespace SevenUpdate.Sdk
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         private static TaskDialogResult ShowMessage(
-            string instructionText, 
-            TaskDialogStandardIcon icon, 
-            TaskDialogStandardButtons standardButtons, 
-            string description = null, 
-            string footerText = null, 
-            string defaultButtonText = null, 
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)

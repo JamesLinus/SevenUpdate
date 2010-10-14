@@ -94,9 +94,7 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.FileSize =
-                            Utilities.GetFileSize(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                        updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
                     });
         }
 
@@ -118,9 +116,9 @@ namespace SevenUpdate.Sdk.Pages
 
             var file = new UpdateFile
                 {
-                    Action = FileAction.Update, 
-                    Destination = installUrl, 
-                    Hash = Properties.Resources.CalculatingHash, 
+                    Action = FileAction.Update,
+                    Destination = installUrl,
+                    Hash = Properties.Resources.CalculatingHash,
                     Source = downloadUrl
                 };
 
@@ -194,11 +192,8 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.Hash =
-                            Utilities.GetHash(
-                                Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
-                    }).
-                ContinueWith(_ => this.CheckHashGenerating(), context);
+                        updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
         /// <summary>

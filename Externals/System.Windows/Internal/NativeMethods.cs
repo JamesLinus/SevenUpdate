@@ -74,10 +74,10 @@ namespace System.Windows.Internal
         internal enum DwmBlurBehindFlag : uint
         {
             /// <summary>Enables blur behind</summary>
-            DwmBlurBehindEnable = 0x00000001, 
+            DwmBlurBehindEnable = 0x00000001,
 
             /// <summary>The blur behind region</summary>
-            DwmBlurBehindRegion = 0x00000002, 
+            DwmBlurBehindRegion = 0x00000002,
 
             /// <summary>True to show effects with maximizing</summary>
             DwmTransitionOnMaximized = 0x00000004

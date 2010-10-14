@@ -30,7 +30,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the error.</summary>
         /// <value>The error that occurred</value>
-        public BitsError Error { get; private set; }
+        public BitsError Error
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

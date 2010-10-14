@@ -62,7 +62,11 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Gets the <see cref = "NavigationService" /> for the current window</summary>
         /// <value>The nav service.</value>
-        internal static NavigationService NavService { get; private set; }
+        internal static NavigationService NavService
+        {
+            get;
+            private set;
+        }
 
         #endregion
 

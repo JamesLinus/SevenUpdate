@@ -118,7 +118,7 @@ namespace SevenUpdate.Pages
                 Core.Instance.UpdateAction = UpdateAction.ConnectingToService;
                 this.timer = new Timer
                     {
-                        Enabled = true, 
+                        Enabled = true,
                         Interval = 30000
                     };
                 this.timer.Elapsed += this.CheckIfConnecting;
@@ -132,8 +132,8 @@ namespace SevenUpdate.Pages
 
                 if (lastCheck.Month == today.Month && lastCheck.Year == today.Year)
                 {
-                    if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day ||
-                        lastCheck.Day + 4 == today.Day || lastCheck.Day + 5 == today.Day)
+                    if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day ||
+                        lastCheck.Day + 5 == today.Day)
                     {
                         AdminClient.Disconnect();
                         if (File.Exists(Utilities.AllUserStore + @"updates.sui"))

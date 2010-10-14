@@ -34,20 +34,24 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The action to preform on the shortcut</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(Add)]
     public enum ShortcutAction
     {
         /// <summary>Adds a shortcut</summary>
-        [ProtoEnum, EnumMember]
-        Add = 0, 
+        [ProtoEnum]
+        [EnumMember]
+        Add = 0,
 
         /// <summary>Updates a shortcut only if it exists</summary>
-        [ProtoEnum, EnumMember]
-        Update = 1, 
+        [ProtoEnum]
+        [EnumMember]
+        Update = 1,
 
         /// <summary>Deletes a shortcut</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         Delete = 2
     }
 
@@ -55,41 +59,42 @@ namespace SevenUpdate
     internal enum InstallState
     {
         /// <summary>The component being requested is disabled on the computer.</summary>
-        NotUsed = -7, 
+        NotUsed = -7,
 
         /// <summary>The configuration data is corrupt.</summary>
-        BadConfig = -6, 
+        BadConfig = -6,
 
         /// <summary>The installation is incomplete</summary>
-        Incomplete = -5, 
+        Incomplete = -5,
 
         /// <summary>The component source is inaccessible.</summary>
-        SourceAbsent = -4, 
+        SourceAbsent = -4,
 
         /// <summary>One of the function parameters is invalid.</summary>
-        InvalidArg = -2, 
+        InvalidArg = -2,
 
         /// <summary>The product code or component ID is unknown.</summary>
-        Unknown = -1, 
+        Unknown = -1,
 
         /// <summary>The shortcut is advertised</summary>
-        Advertised = 1, 
+        Advertised = 1,
 
         /// <summary>The component has been removed</summary>
-        Removed = 1, 
+        Removed = 1,
 
         /// <summary>The component is not installed.</summary>
-        Absent = 2, 
+        Absent = 2,
 
         /// <summary>The component is installed locally.</summary>
-        Local = 3, 
+        Local = 3,
 
         /// <summary>The component is installed to run from source.</summary>
-        Source = 4, 
+        Source = 4,
     }
 
     /// <summary>A shortcut to be created within an update</summary>
-    [ProtoContract, DataContract(IsReference = true)]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
     {
@@ -283,7 +288,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the action to perform on the <see cref = "Shortcut" /></summary>
         /// <value>The action.</value>
-        [ProtoMember(3), DataMember]
+        [ProtoMember(3)]
+        [DataMember]
         public ShortcutAction Action
         {
             get
@@ -302,7 +308,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the command line arguments for the shortcut</summary>
         /// <value>The arguments of the shortcut</value>
-        [ProtoMember(4, IsRequired = false), DataMember]
+        [ProtoMember(4, IsRequired = false)]
+        [DataMember]
         public string Arguments
         {
             get
@@ -321,7 +328,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized shortcut descriptions</summary>
         /// <value>The localized descriptions for the shortcut</value>
-        [ProtoMember(5, IsRequired = false), DataMember]
+        [ProtoMember(5, IsRequired = false)]
+        [DataMember]
         public ObservableCollection<LocaleString> Description
         {
             get
@@ -340,7 +348,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the icon resource for the shortcut</summary>
         /// <value>The icon for the shortcut</value>
-        [ProtoMember(6, IsRequired = false), DataMember]
+        [ProtoMember(6, IsRequired = false)]
+        [DataMember]
         public string Icon
         {
             get
@@ -359,7 +368,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the physical location of the shortcut lnk file</summary>
         /// <value>The shortcut location</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public string Location
         {
             get
@@ -378,7 +388,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized shortcut names</summary>
         /// <value>The localized names for the shortcut</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<LocaleString> Name
         {
             get
@@ -397,7 +408,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the file or folder that is executed by the shortcut</summary>
         /// <value>The target for the shortcut</value>
-        [ProtoMember(7, IsRequired = false), DataMember]
+        [ProtoMember(7, IsRequired = false)]
+        [DataMember]
         public string Target
         {
             get
@@ -429,16 +441,16 @@ namespace SevenUpdate
             var sb = new StringBuilder(MaxPath);
             var ls = new LocaleString
                 {
-                    Lang = Utilities.Locale, 
+                    Lang = Utilities.Locale,
                     Value = Path.GetFileNameWithoutExtension(shortcutName)
                 };
             var shortcut = new Shortcut
                 {
-                    Target = GetMsiTargetPath(shortcutName), 
+                    Target = GetMsiTargetPath(shortcutName),
                     Name = new ObservableCollection<LocaleString>
                         {
                             ls
-                        }, 
+                        },
                 };
 
             var shellLink = link as IShellLink;
@@ -549,10 +561,12 @@ namespace SevenUpdate
             private readonly uint Reserved1;
 
             /// <summary>The name of the file</summary>
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] private readonly string FileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            private readonly string FileName;
 
             /// <summary>The alternate name of the file</summary>
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] private readonly string AlternateFileName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
+            private readonly string AlternateFileName;
         }
 
         /// <summary>The Shell link class</summary>

@@ -16,13 +16,13 @@ namespace System.Windows.Dialogs
     internal enum DialogShowState
     {
         /// <summary>The dialog is about to be shown</summary>
-        PreShow, 
+        PreShow,
 
         /// <summary>Currently Showing</summary>
-        Showing, 
+        Showing,
 
         /// <summary>Currently Closing</summary>
-        Closing, 
+        Closing,
 
         /// <summary>Closed dialog</summary>
         Closed
@@ -93,7 +93,11 @@ namespace System.Windows.Dialogs
 
         /// <summary>Gets the identifier for this control.</summary>
         /// <value>An <see cref = "System.Int32" /> value.</value>
-        public int Id { get; private set; }
+        public int Id
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets or sets the name for this control.</summary>
         /// <value>A <see cref = "System.String" /> value.</value>

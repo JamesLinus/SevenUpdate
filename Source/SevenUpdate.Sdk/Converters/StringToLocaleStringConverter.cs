@@ -106,7 +106,7 @@ namespace SevenUpdate.Sdk.Converters
                     {
                         var ls = new LocaleString
                             {
-                                Lang = Utilities.Locale, 
+                                Lang = Utilities.Locale,
                                 Value = valueString
                             };
                         localeStrings.Add(ls);
@@ -130,7 +130,7 @@ namespace SevenUpdate.Sdk.Converters
                     localeStrings = new ObservableCollection<LocaleString>();
                     var ls = new LocaleString
                         {
-                            Lang = Utilities.Locale, 
+                            Lang = Utilities.Locale,
                             Value = valueString
                         };
                     localeStrings.Add(ls);

@@ -36,16 +36,13 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>The text to display when there is no text in the <see cref = "InfoTextBox" /></summary>
-        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-            "Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, LabelPropertyChanged));
+        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, LabelPropertyChanged));
 
         /// <summary>The style of the Note</summary>
-        public static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
-            "NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
 
         /// <summary>Indicates if the <see cref = "InfoTextBox" /> has text</summary>
-        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
-            "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>The adorner label</summary>
         private AdornerLabel myAdornerLabel;
@@ -137,13 +134,23 @@ namespace System.Windows.Controls
             var focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof(FrameworkElement));
             if (focusProp != null)
             {
-                focusProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                focusProp.AddValueChanged(
+                    this,
+                    delegate
+                        {
+                            this.UpdateAdorner(this);
+                        });
             }
 
             var containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof(InfoTextBox));
             if (containsTextProp != null)
             {
-                containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                containsTextProp.AddValueChanged(
+                    this,
+                    delegate
+                        {
+                            this.UpdateAdorner(this);
+                        });
             }
         }
 

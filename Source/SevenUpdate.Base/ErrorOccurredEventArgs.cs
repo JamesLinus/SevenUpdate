@@ -30,37 +30,45 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Indicates a type of error that can occur</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(GeneralErrorNonFatal)]
     public enum ErrorType
     {
         /// <summary>An error that occurred while trying to download updates</summary>
-        [ProtoEnum, EnumMember]
-        DownloadError, 
+        [ProtoEnum]
+        [EnumMember]
+        DownloadError,
 
         /// <summary>An error that occurred while trying to install updates</summary>
-        [ProtoEnum, EnumMember]
-        InstallationError, 
+        [ProtoEnum]
+        [EnumMember]
+        InstallationError,
 
         /// <summary>A general network connection error</summary>
-        [ProtoEnum, EnumMember]
-        FatalNetworkError, 
+        [ProtoEnum]
+        [EnumMember]
+        FatalNetworkError,
 
         /// <summary>An unspecified error, non fatal</summary>
-        [ProtoEnum, EnumMember]
-        GeneralErrorNonFatal, 
+        [ProtoEnum]
+        [EnumMember]
+        GeneralErrorNonFatal,
 
         /// <summary>An unspecified error that prevents Seven Update from continuing</summary>
-        [ProtoEnum, EnumMember]
-        FatalError, 
+        [ProtoEnum]
+        [EnumMember]
+        FatalError,
 
         /// <summary>An error that occurs while searching for updates</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         SearchError
     }
 
     /// <summary>Provides event data for the ErrorOccurred event</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     public sealed class ErrorOccurredEventArgs : EventArgs
     {
         #region Constructors and Destructors
@@ -80,11 +88,19 @@ namespace SevenUpdate
 
         /// <summary>Gets the <see cref = "ErrorType" /> of the error that occurred</summary>
         /// <value>The type of error that occurred</value>
-        public ErrorType ErrorType { get; private set; }
+        public ErrorType ErrorType
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the Exception information of the error that occurred</summary>
         /// <value>The exception.</value>
-        public string Exception { get; private set; }
+        public string Exception
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

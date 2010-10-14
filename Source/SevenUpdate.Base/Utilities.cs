@@ -79,7 +79,11 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the ISO language code</summary>
         /// <value>The locale.</value>
-        public static string Locale { get; set; }
+        public static string Locale
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
@@ -131,10 +135,8 @@ namespace SevenUpdate
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, bool is64Bit = false, string valueName = null)
         {
-            path = path.Replace(
-                                "%INSTALLDIR%", 
-                                !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), 
-                                true);
+            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), true);
+            path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, is64Bit), true);
             return ConvertPath(path, true, is64Bit);
         }
 

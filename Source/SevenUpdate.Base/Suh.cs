@@ -31,29 +31,35 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The current status of the update</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(Successful)]
     public enum UpdateStatus
     {
         /// <summary>Indicates that the update installation failed</summary>
-        [ProtoEnum, EnumMember]
-        Failed = 0, 
+        [ProtoEnum]
+        [EnumMember]
+        Failed = 0,
 
         /// <summary>Indicates that the update is hidden</summary>
-        [ProtoEnum, EnumMember]
-        Hidden = 1, 
+        [ProtoEnum]
+        [EnumMember]
+        Hidden = 1,
 
         /// <summary>Indicates that the update is visible</summary>
-        [ProtoEnum, EnumMember]
-        Visible = 2, 
+        [ProtoEnum]
+        [EnumMember]
+        Visible = 2,
 
         /// <summary>Indicates that the update installation succeeded</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         Successful = 3
     }
 
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK</summary>
-    [ProtoContract, DataContract(IsReference = true)]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(UpdateStatus))]
     [KnownType(typeof(Importance))]
     [KnownType(typeof(ObservableCollection<LocaleString>))]
@@ -107,7 +113,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
-        [ProtoMember(8), DataMember]
+        [ProtoMember(8)]
+        [DataMember]
         public string AppUrl
         {
             get
@@ -126,7 +133,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection localized update descriptions</summary>
         /// <value>The localized description for the update</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public ObservableCollection<LocaleString> Description
         {
             get
@@ -145,7 +153,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
-        [ProtoMember(9, IsRequired = false), DataMember]
+        [ProtoMember(9, IsRequired = false)]
+        [DataMember]
         public string HelpUrl
         {
             get
@@ -164,7 +173,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the importance of the update</summary>
         /// <value>The importance</value>
-        [ProtoMember(3), DataMember]
+        [ProtoMember(3)]
+        [DataMember]
         public Importance Importance
         {
             get
@@ -223,7 +233,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized update names</summary>
         /// <value>The localized update names</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<LocaleString> Name
         {
             get
@@ -242,7 +253,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
-        [ProtoMember(7), DataMember]
+        [ProtoMember(7)]
+        [DataMember]
         public ObservableCollection<LocaleString> Publisher
         {
             get
@@ -261,7 +273,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
-        [ProtoMember(5), DataMember]
+        [ProtoMember(5)]
+        [DataMember]
         public string ReleaseDate
         {
             get
@@ -280,7 +293,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the current status of the update</summary>
         /// <value>The status.</value>
-        [ProtoMember(4), DataMember]
+        [ProtoMember(4)]
+        [DataMember]
         public UpdateStatus Status
         {
             get
@@ -299,7 +313,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the total download size in bytes of the update</summary>
         /// <value>The total download size of the update</value>
-        [ProtoMember(6), DataMember]
+        [ProtoMember(6)]
+        [DataMember]
         public ulong UpdateSize
         {
             get

@@ -38,7 +38,11 @@ namespace System.Windows.ValidationRules
 
         /// <summary>Gets or sets a value indicating whether the filename is required to pass validation</summary>
         /// <value><see langword = "true" /> if the filename is required; otherwise, <see langword = "false" />.</value>
-        public bool IsRequired { get; set; }
+        public bool IsRequired
+        {
+            get;
+            set;
+        }
 
         #endregion
 

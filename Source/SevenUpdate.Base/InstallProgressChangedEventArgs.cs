@@ -29,7 +29,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Provides event data for the InstallProgressChanged event</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     public sealed class InstallProgressChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
@@ -53,23 +54,43 @@ namespace SevenUpdate
 
         /// <summary>Gets the progress percentage of the installation</summary>
         /// <value>The current progress.</value>
-        [ProtoMember(1), DataMember]
-        public int CurrentProgress { get; private set; }
+        [ProtoMember(1)]
+        [DataMember]
+        public int CurrentProgress
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the total number of updates to install</summary>
         /// <value>The total updates.</value>
-        [ProtoMember(2), DataMember]
-        public int TotalUpdates { get; private set; }
+        [ProtoMember(2)]
+        [DataMember]
+        public int TotalUpdates
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the name of the current update being installed</summary>
         /// <value>The name of the update.</value>
-        [ProtoMember(3), DataMember]
-        public string UpdateName { get; private set; }
+        [ProtoMember(3)]
+        [DataMember]
+        public string UpdateName
+        {
+            get;
+            private set;
+        }
 
         /// <summary>Gets the number of updates that have been installed so far</summary>
         /// <value>The updates complete.</value>
-        [ProtoMember(4), DataMember]
-        public int UpdatesComplete { get; private set; }
+        [ProtoMember(4)]
+        [DataMember]
+        public int UpdatesComplete
+        {
+            get;
+            private set;
+        }
 
         #endregion
     }

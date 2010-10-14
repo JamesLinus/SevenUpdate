@@ -38,7 +38,11 @@ namespace System.Windows.ValidationRules
 
         /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
         /// <value><see langword = "true" /> if this instance is required; otherwise, <see langword = "false" />.</value>
-        public bool IsRequired { private get; set; }
+        public bool IsRequired
+        {
+            private get;
+            set;
+        }
 
         #endregion
 

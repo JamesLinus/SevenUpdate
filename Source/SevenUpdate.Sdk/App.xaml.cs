@@ -27,6 +27,7 @@
 namespace SevenUpdate.Sdk
 {
     using System;
+    using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
     using System.Windows;
@@ -53,6 +54,7 @@ namespace SevenUpdate.Sdk
             }
 
             Directory.CreateDirectory(Core.UserStore);
+            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
             Core.SetJumpList();
         }
 

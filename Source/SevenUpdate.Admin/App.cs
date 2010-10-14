@@ -76,16 +76,16 @@ namespace SevenUpdate.Admin
         private enum NotifyType
         {
             /// <summary>Indicates searching is completed</summary>
-            SearchComplete, 
+            SearchComplete,
 
             /// <summary>Indicates the downloading of updates has started</summary>
-            DownloadStarted, 
+            DownloadStarted,
 
             /// <summary>Indicates download has completed</summary>
-            DownloadComplete, 
+            DownloadComplete,
 
             /// <summary>Indicates that the installation of updates has begun</summary>
-            InstallStarted, 
+            InstallStarted,
 
             /// <summary>Indicates that the installation of updates has completed</summary>
             InstallCompleted
@@ -96,7 +96,11 @@ namespace SevenUpdate.Admin
         #region Properties
 
         /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
-        private static bool IsClientConnected { get; set; }
+        private static bool IsClientConnected
+        {
+            get;
+            set;
+        }
 
         /// <summary>Gets Seven Updates program settings</summary>
         private static Config Settings
@@ -106,7 +110,7 @@ namespace SevenUpdate.Admin
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config
                     {
-                        AutoOption = AutoUpdateOption.Notify, 
+                        AutoOption = AutoUpdateOption.Notify,
                         IncludeRecommended = false
                     };
             }
@@ -151,8 +155,7 @@ namespace SevenUpdate.Admin
                 WcfService.ReportProgress(e);
             }
 
-            Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
@@ -254,11 +257,11 @@ namespace SevenUpdate.Admin
         private static void Main(string[] args)
         {
             bool createdNew;
-            #if !DEBUG
+#if !DEBUG
             var timer = new Timer(10000);
             timer.Elapsed += ShutdownApp;
             timer.Start();
-            #endif
+#endif
 
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
@@ -380,8 +383,7 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                    notifyIcon.Text == Resources.CheckingForUpdates)
+                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
                 {
                     Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.exe", @"Auto");
                 }
@@ -395,8 +397,7 @@ namespace SevenUpdate.Admin
                 Utilities.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
             }
 
-            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                notifyIcon.Text == Resources.CheckingForUpdates)
+            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
             {
                 ShutdownApp();
             }
@@ -418,7 +419,7 @@ namespace SevenUpdate.Admin
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.SearchComplete);
-                } 
+                }
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);

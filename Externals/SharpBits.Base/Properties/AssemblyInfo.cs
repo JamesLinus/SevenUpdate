@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
@@ -15,10 +15,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
-
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("SharpBits.Base")]
 [assembly: AssemblyDescription("SharpBits.Base")]
 [assembly: AssemblyConfiguration("")]

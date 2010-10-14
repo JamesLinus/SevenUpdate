@@ -166,9 +166,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             var registryItem = new RegistryItem
                 {
-                    KeyValue = Properties.Resources.NewRegistryItem, 
-                    Key = @"HKLM\Software\MyApp", 
-                    Action = RegistryAction.Add, 
+                    KeyValue = Properties.Resources.NewRegistryItem,
+                    Key = @"HKLM\Software\MyApp",
+                    Action = RegistryAction.Add,
                     ValueKind = RegistryValueKind.String
                 };
             Core.UpdateInfo.RegistryItems.Add(registryItem);

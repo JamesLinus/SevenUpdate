@@ -124,7 +124,7 @@ namespace SharpBits.Base
 
             var resultingFileTime = new FileTime
                 {
-                    DWLowDateTime = (uint)(fileTime & 0xFFFFFFFF), 
+                    DWLowDateTime = (uint)(fileTime & 0xFFFFFFFF),
                     DWHighDateTime = (uint)(fileTime >> 32)
                 };
             return resultingFileTime;

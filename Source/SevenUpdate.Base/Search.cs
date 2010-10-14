@@ -64,7 +64,11 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven update is currently searching for updates</summary>
-        public static bool IsSearching { get; private set; }
+        public static bool IsSearching
+        {
+            get;
+            private set;
+        }
 
         #endregion
 
@@ -98,7 +102,7 @@ namespace SevenUpdate
             var publisher = new ObservableCollection<LocaleString>();
             var ls = new LocaleString
                 {
-                    Value = "Seven Software", 
+                    Value = "Seven Software",
                     Lang = "en"
                 };
             publisher.Add(ls);
@@ -106,7 +110,7 @@ namespace SevenUpdate
             var name = new ObservableCollection<LocaleString>();
             ls = new LocaleString
                 {
-                    Value = "Seven Update", 
+                    Value = "Seven Update",
                     Lang = "en"
                 };
             name.Add(ls);
@@ -118,13 +122,13 @@ namespace SevenUpdate
             {
                 app.AppInfo = new Sua
                     {
-                        AppUrl = @"http://sevenupdate.com/", 
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), 
-                        Publisher = publisher, 
-                        Name = name, 
-                        HelpUrl = @"http://sevenupdate.com/support/", 
-                        Is64Bit = true, 
-                        IsEnabled = true, 
+                        AppUrl = @"http://sevenupdate.com/",
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                        Publisher = publisher,
+                        Name = name,
+                        HelpUrl = @"http://sevenupdate.com/support/",
+                        Is64Bit = true,
+                        IsEnabled = true,
                         SuiUrl = SevenUpdateSui
                     };
 
@@ -309,11 +313,7 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(
-                                                                                    app.Updates[y].Files[z].Destination,
-                                                                                    app.AppInfo.Directory,
-                                                                                    app.AppInfo.Is64Bit,
-                                                                                    app.AppInfo.ValueName);
+                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Is64Bit, app.AppInfo.ValueName);
 
                         app.Updates[y].Files[z].Source = Utilities.ConvertPath(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Is64Bit);
 

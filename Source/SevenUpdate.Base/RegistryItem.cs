@@ -31,25 +31,30 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Contains the Actions you can perform to the registry</summary>
-    [ProtoContract, DataContract]
+    [ProtoContract]
+    [DataContract]
     [DefaultValue(Add)]
     public enum RegistryAction
     {
         /// <summary>Adds a registry entry to the machine</summary>
-        [ProtoEnum, EnumMember]
-        Add = 0, 
+        [ProtoEnum]
+        [EnumMember]
+        Add = 0,
 
         /// <summary>Deletes a registry key on the machine</summary>
-        [ProtoEnum, EnumMember]
-        DeleteKey = 1, 
+        [ProtoEnum]
+        [EnumMember]
+        DeleteKey = 1,
 
         /// <summary>Deletes a value of a registry key on the machine</summary>
-        [ProtoEnum, EnumMember]
+        [ProtoEnum]
+        [EnumMember]
         DeleteValue = 2
     }
 
     /// <summary>A registry entry within an update</summary>
-    [ProtoContract, DataContract(IsReference = true)]
+    [ProtoContract]
+    [DataContract(IsReference = true)]
     [KnownType(typeof(RegistryAction))]
     [KnownType(typeof(RegistryHive))]
     [KnownType(typeof(RegistryValueKind))]
@@ -85,7 +90,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the action to perform on the <see cref = "RegistryItem" /></summary>
         /// <value>The action.</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public RegistryAction Action
         {
             get
@@ -104,7 +110,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the data for the key value</summary>
         /// <value>The data for the registry value</value>
-        [ProtoMember(6, IsRequired = false), DataMember]
+        [ProtoMember(6, IsRequired = false)]
+        [DataMember]
         public string Data
         {
             get
@@ -123,7 +130,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the registry key and hive</summary>
         /// <value>The registry key path</value>
-        [ProtoMember(3), DataMember]
+        [ProtoMember(3)]
+        [DataMember]
         public string Key
         {
             get
@@ -142,7 +150,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the value for the registry key</summary>
         /// <value>The value of the key</value>
-        [ProtoMember(4, IsRequired = false), DataMember]
+        [ProtoMember(4, IsRequired = false)]
+        [DataMember]
         public string KeyValue
         {
             get
@@ -161,7 +170,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the type of the value</summary>
         /// <value>The kind of the value</value>
-        [ProtoMember(5, IsRequired = false), DataMember]
+        [ProtoMember(5, IsRequired = false)]
+        [DataMember]
         public RegistryValueKind ValueKind
         {
             get
