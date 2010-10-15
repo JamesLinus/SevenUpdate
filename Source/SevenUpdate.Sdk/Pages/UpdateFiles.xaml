@@ -3,7 +3,7 @@
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" MaxWidth="420" />
+			<ColumnDefinition Width="Auto" MaxWidth="350" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="520*" />
 			<ColumnDefinition Width="Auto" />
@@ -28,7 +28,7 @@
 			<TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate.Sdk:Resources:Files}" VerticalAlignment="Center" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
 		</StackPanel>
 		<!--ListBox-->
-		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" KeyDown="DeleteItem" SelectedIndex="0" TabIndex="0">
+		<ListBox Grid.Row="1" Margin="10" BorderBrush="LightGray" Name="listBox" DisplayMemberPath="Destination" MinWidth="200" MaxWidth="260" Grid.RowSpan="9" KeyDown="DeleteItem" SelectedIndex="0" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:AddFiles}" Click="BrowseForFile">

@@ -98,11 +98,11 @@ namespace SevenUpdate.Pages
             Search.SearchCompleted += this.SearchCompleted;
             UpdateInfo.UpdateSelectionChanged += this.UpdateSelectionChanged;
             Core.UpdateActionChanged += this.SetUI;
-            ServiceCallback.DownloadProgressChanged += this.DownloadProgressChanged;
-            ServiceCallback.DownloadDone += this.DownloadCompleted;
-            ServiceCallback.InstallProgressChanged += this.InstallProgressChanged;
-            ServiceCallback.InstallDone += this.InstallCompleted;
-            ServiceCallback.ErrorOccurred += this.ErrorOccurred;
+            WcfServiceCallback.DownloadProgressChanged += this.DownloadProgressChanged;
+            WcfServiceCallback.DownloadDone += this.DownloadCompleted;
+            WcfServiceCallback.InstallProgressChanged += this.InstallProgressChanged;
+            WcfServiceCallback.InstallDone += this.InstallCompleted;
+            WcfServiceCallback.ErrorOccurred += this.ErrorOccurred;
         }
 
         #endregion
@@ -171,7 +171,7 @@ namespace SevenUpdate.Pages
                     {
                         File.Delete(Utilities.AllUserStore + @"updates.sui");
                     }
-                    catch (Exception)
+                    catch (IOException)
                     {
                     }
 
@@ -410,10 +410,16 @@ namespace SevenUpdate.Pages
 
             if (Core.Applications.Count > 0)
             {
-                Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
-                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
-                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /r " + Environment.UserName);
-
+                try
+                {
+                    Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
+                    Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
+                    Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /r " + Environment.UserName);
+                }
+                catch (IOException)
+                {
+                }
+                
                 if (Core.Settings.IncludeRecommended)
                 {
                     e.ImportantCount += e.RecommendedCount;

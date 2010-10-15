@@ -3,7 +3,7 @@
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" MaxWidth="420" />
+			<ColumnDefinition Width="Auto" MaxWidth="350" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="364*" />
 			<ColumnDefinition Width="241*" />
@@ -43,7 +43,7 @@
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="8" />
 			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="GoToMainPage" TabIndex="9" />
 		</StackPanel>
-		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="200" MaxWidth="400" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="DeleteRegistryItem" TabIndex="0">
+		<ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="10" Grid.Row="1" MinWidth="200" MaxWidth="260" Grid.RowSpan="9" DisplayMemberPath="KeyValue" KeyDown="DeleteRegistryItem" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
 					<MenuItem Click="NewRegistryItem" Header="{LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />

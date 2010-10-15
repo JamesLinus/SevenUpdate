@@ -173,7 +173,14 @@ namespace SevenUpdate
         /// <summary>Checks for updates</summary>
         internal static void CheckForUpdates()
         {
-            File.Delete(Utilities.AllUserStore + @"updates.sui");
+            try
+            {
+                File.Delete(Utilities.AllUserStore + @"updates.sui");
+            }
+            catch (IOException)
+            {
+            }
+
             if (!Install.IsInstalling && !Download.IsDownloading && !Search.IsSearching && !IsReconnect)
             {
                 if (Utilities.RebootNeeded == false)

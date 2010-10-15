@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="IService.cs"
+// <copyright file="IWcfService.cs"
 //            project="SevenUpdate.Service"
 //            assembly="SevenUpdate.Service"
 //            solution="SevenUpdate"
@@ -32,7 +32,7 @@ namespace SevenUpdate.Service
     using ProtoBuf.ServiceModel;
 
     /// <summary>Callback methods for the WCF Service</summary>
-    public interface IServiceCallback
+    public interface IWcfServiceCallback
     {
         #region Public Methods
 
@@ -75,8 +75,8 @@ namespace SevenUpdate.Service
     }
 
     /// <summary>Methods for the Event Service</summary>
-    [ServiceContract(SessionMode = SessionMode.Required, CallbackContract = typeof(IServiceCallback))]
-    internal interface IService
+    [ServiceContract(CallbackContract = typeof(IWcfServiceCallback))]
+    internal interface IWcfService
     {
         #region Public Methods
 

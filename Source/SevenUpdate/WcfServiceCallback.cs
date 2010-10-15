@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="ServiceCallback.cs"
+// <copyright file="WcfServiceCallback.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -31,7 +31,7 @@ namespace SevenUpdate
     using SevenUpdate.Service;
 
     /// <summary>Contains callback methods for WCF</summary>
-    internal sealed class ServiceCallback : IServiceCallback
+    internal sealed class WcfServiceCallback : IWcfServiceCallback
     {
         #region Events
 
@@ -52,7 +52,7 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Implementation of IServiceCallback
+        #region Implementation of IWcfServiceCallback
 
         /// <summary>Occurs when the download of updates has completed</summary>
         /// <param name="sender">The sender of the event</param>

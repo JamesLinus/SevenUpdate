@@ -37,24 +37,10 @@ namespace SevenUpdate.Service
 
     /// <summary>Class containing events and delegates for the EventService</summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
-    public sealed class WcfService : IService
+    public sealed class WcfService : IWcfService
     {
+        private static IWcfServiceCallback callback;
         #region Events
-
-        /// <summary>Occurs when the download progress changes</summary>
-        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
-
-        /// <summary>Occurs when an error occurs</summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
-
-        /// <summary>Occurs when the install completes</summary>
-        public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
-
-        /// <summary>Occurs when the install progress changes</summary>
-        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
-
-        /// <summary>Occurs when the download completes</summary>
-        public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
 
         /// <summary>Raises an event when the client is connected</summary>
         public static event EventHandler<EventArgs> ClientConnected;
@@ -68,9 +54,9 @@ namespace SevenUpdate.Service
         /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
         public static void ReportProgress(DownloadCompletedEventArgs eventArgs)
         {
-            if (DownloadCompleted != null)
+            if (callback != null)
             {
-                DownloadCompleted(null, eventArgs);
+                callback.OnDownloadCompleted(null, eventArgs);
             }
         }
 
@@ -78,9 +64,9 @@ namespace SevenUpdate.Service
         /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
         public static void ReportProgress(InstallCompletedEventArgs eventArgs)
         {
-            if (InstallCompleted != null)
+            if (callback != null)
             {
-                InstallCompleted(null, eventArgs);
+                callback.OnInstallCompleted(null, eventArgs);
             }
         }
 
@@ -88,9 +74,9 @@ namespace SevenUpdate.Service
         /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
         public static void ReportProgress(DownloadProgressChangedEventArgs eventArgs)
         {
-            if (DownloadProgressChanged != null)
+            if (callback != null)
             {
-                DownloadProgressChanged(null, eventArgs);
+                callback.OnDownloadProgressChanged(null, eventArgs);
             }
         }
 
@@ -98,9 +84,9 @@ namespace SevenUpdate.Service
         /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
         public static void ReportProgress(InstallProgressChangedEventArgs eventArgs)
         {
-            if (InstallProgressChanged != null)
+            if (callback != null)
             {
-                InstallProgressChanged(null, eventArgs);
+                callback.OnInstallProgressChanged(null, eventArgs);
             }
         }
 
@@ -108,15 +94,15 @@ namespace SevenUpdate.Service
         /// <param name="eventArgs">The <see cref="EventArgs"/> containing the data of the event</param>
         public static void ReportProgress(ErrorOccurredEventArgs eventArgs)
         {
-            if (ErrorOccurred != null)
+            if (callback != null)
             {
-                ErrorOccurred(null, eventArgs);
+                callback.OnErrorOccurred(null, eventArgs);
             }
         }
 
         #region Implemented Interfaces
 
-        #region IService
+        #region IWcfService
 
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
         /// <param name="application">The application to add to Seven Update</param>
@@ -213,8 +199,9 @@ namespace SevenUpdate.Service
 
                 Utilities.ReportError(e, Utilities.AllUserStore);
             }
+            Download.DownloadUpdates(appUpdates, true);
 
-            Task.Factory.StartNew(() => Download.DownloadUpdates(appUpdates, true));
+            //Task.Factory.StartNew(() => Download.DownloadUpdates(appUpdates, true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
@@ -237,19 +224,8 @@ namespace SevenUpdate.Service
         /// <summary>Subscribes to the WCF service</summary>
         public void Subscribe()
         {
-            var callback = OperationContext.Current.GetCallbackChannel<IServiceCallback>();
+            callback = OperationContext.Current.GetCallbackChannel<IWcfServiceCallback>();
 
-            InstallCompleted -= callback.OnInstallCompleted;
-            InstallProgressChanged -= callback.OnInstallProgressChanged;
-            DownloadProgressChanged -= callback.OnDownloadProgressChanged;
-            DownloadCompleted -= callback.OnDownloadCompleted;
-            ErrorOccurred -= callback.OnErrorOccurred;
-
-            InstallCompleted += callback.OnInstallCompleted;
-            InstallProgressChanged += callback.OnInstallProgressChanged;
-            DownloadProgressChanged += callback.OnDownloadProgressChanged;
-            DownloadCompleted += callback.OnDownloadCompleted;
-            ErrorOccurred += callback.OnErrorOccurred;
             if (ClientConnected != null)
             {
                 ClientConnected(null, null);
@@ -259,10 +235,10 @@ namespace SevenUpdate.Service
         /// <summary>UnSubscribes from the wcf service</summary>
         public void Unsubscribe()
         {
-            InstallCompleted = null;
-            InstallProgressChanged = null;
-            ////DownloadCompleted = null;
-            DownloadProgressChanged = null;
+            //InstallCompleted = null;
+            //InstallProgressChanged = null;
+            //DownloadCompleted = null;
+            //DownloadProgressChanged = null;
             if (ClientDisconnected != null)
             {
                 ClientDisconnected(null, null);

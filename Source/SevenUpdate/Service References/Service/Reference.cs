@@ -8,286 +8,269 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SevenUpdate.Service
-{
-    using System;
-    using System.CodeDom.Compiler;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
-    using System.ServiceModel;
-    using System.ServiceModel.Channels;
-
-    using Microsoft.Win32;
-
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    [ServiceContract(ConfigurationName = "Service.IService", CallbackContract = typeof(IServiceCallback), SessionMode = SessionMode.Required)]
-    public interface IService
-    {
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/AddApp")]
-        void AddApp(Sua application);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/ChangeSettings")]
-        void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/HideUpdate")]
-        void HideUpdate(Suh hiddenUpdate);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/HideUpdates")]
-        void HideUpdates(Collection<Suh> hiddenUpdates);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/InstallUpdates")]
-        void InstallUpdates(Collection<Sui> appUpdates);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/ShowUpdate")]
-        void ShowUpdate(Suh hiddenUpdate);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/Subscribe")]
+namespace SevenUpdate.Service {
+    
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Service.IWcfService", CallbackContract=typeof(SevenUpdate.Service.IWcfServiceCallback))]
+    public interface IWcfService {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/AddApp")]
+        void AddApp(SevenUpdate.Sua application);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/ChangeSettings")]
+        void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> applications, SevenUpdate.Config options, bool autoCheck);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/HideUpdate")]
+        void HideUpdate(SevenUpdate.Suh hiddenUpdate);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/HideUpdates")]
+        void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/InstallUpdates")]
+        void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/ShowUpdate")]
+        void ShowUpdate(SevenUpdate.Suh hiddenUpdate);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/Subscribe")]
         void Subscribe();
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/Unsubscribe")]
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/Unsubscribe")]
         void Unsubscribe();
     }
-
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceCallback
-    {
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnDownloadCompleted")]
-        [ServiceKnownType(typeof(EventArgs))]
-        [ServiceKnownType(typeof(RegistryValueKind))]
-        [ServiceKnownType(typeof(RegistryHive))]
-        [ServiceKnownType(typeof(Sua))]
-        [ServiceKnownType(typeof(Collection<LocaleString>))]
-        [ServiceKnownType(typeof(LocaleString))]
-        [ServiceKnownType(typeof(Collection<Sua>))]
-        [ServiceKnownType(typeof(Config))]
-        [ServiceKnownType(typeof(AutoUpdateOption))]
-        [ServiceKnownType(typeof(Suh))]
-        [ServiceKnownType(typeof(Importance))]
-        [ServiceKnownType(typeof(UpdateStatus))]
-        [ServiceKnownType(typeof(Collection<Suh>))]
-        [ServiceKnownType(typeof(Collection<Sui>))]
-        [ServiceKnownType(typeof(Sui))]
-        [ServiceKnownType(typeof(Collection<Update>))]
-        [ServiceKnownType(typeof(Update))]
-        [ServiceKnownType(typeof(Collection<UpdateFile>))]
-        [ServiceKnownType(typeof(UpdateFile))]
-        [ServiceKnownType(typeof(FileAction))]
-        [ServiceKnownType(typeof(Collection<RegistryItem>))]
-        [ServiceKnownType(typeof(RegistryItem))]
-        [ServiceKnownType(typeof(RegistryAction))]
-        [ServiceKnownType(typeof(Collection<Shortcut>))]
-        [ServiceKnownType(typeof(Shortcut))]
-        [ServiceKnownType(typeof(ShortcutAction))]
-        [ServiceKnownType(typeof(DownloadCompletedEventArgs))]
-        [ServiceKnownType(typeof(DownloadProgressChangedEventArgs))]
-        [ServiceKnownType(typeof(ErrorOccurredEventArgs))]
-        [ServiceKnownType(typeof(InstallCompletedEventArgs))]
-        [ServiceKnownType(typeof(InstallProgressChangedEventArgs))]
-        void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnDownloadProgressChanged")]
-        [ServiceKnownType(typeof(EventArgs))]
-        [ServiceKnownType(typeof(RegistryValueKind))]
-        [ServiceKnownType(typeof(RegistryHive))]
-        [ServiceKnownType(typeof(Sua))]
-        [ServiceKnownType(typeof(Collection<LocaleString>))]
-        [ServiceKnownType(typeof(LocaleString))]
-        [ServiceKnownType(typeof(Collection<Sua>))]
-        [ServiceKnownType(typeof(Config))]
-        [ServiceKnownType(typeof(AutoUpdateOption))]
-        [ServiceKnownType(typeof(Suh))]
-        [ServiceKnownType(typeof(Importance))]
-        [ServiceKnownType(typeof(UpdateStatus))]
-        [ServiceKnownType(typeof(Collection<Suh>))]
-        [ServiceKnownType(typeof(Collection<Sui>))]
-        [ServiceKnownType(typeof(Sui))]
-        [ServiceKnownType(typeof(Collection<Update>))]
-        [ServiceKnownType(typeof(Update))]
-        [ServiceKnownType(typeof(Collection<UpdateFile>))]
-        [ServiceKnownType(typeof(UpdateFile))]
-        [ServiceKnownType(typeof(FileAction))]
-        [ServiceKnownType(typeof(Collection<RegistryItem>))]
-        [ServiceKnownType(typeof(RegistryItem))]
-        [ServiceKnownType(typeof(RegistryAction))]
-        [ServiceKnownType(typeof(Collection<Shortcut>))]
-        [ServiceKnownType(typeof(Shortcut))]
-        [ServiceKnownType(typeof(ShortcutAction))]
-        [ServiceKnownType(typeof(DownloadCompletedEventArgs))]
-        [ServiceKnownType(typeof(DownloadProgressChangedEventArgs))]
-        [ServiceKnownType(typeof(ErrorOccurredEventArgs))]
-        [ServiceKnownType(typeof(InstallCompletedEventArgs))]
-        [ServiceKnownType(typeof(InstallProgressChangedEventArgs))]
-        void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnErrorOccurred")]
-        [ServiceKnownType(typeof(EventArgs))]
-        [ServiceKnownType(typeof(RegistryValueKind))]
-        [ServiceKnownType(typeof(RegistryHive))]
-        [ServiceKnownType(typeof(Sua))]
-        [ServiceKnownType(typeof(Collection<LocaleString>))]
-        [ServiceKnownType(typeof(LocaleString))]
-        [ServiceKnownType(typeof(Collection<Sua>))]
-        [ServiceKnownType(typeof(Config))]
-        [ServiceKnownType(typeof(AutoUpdateOption))]
-        [ServiceKnownType(typeof(Suh))]
-        [ServiceKnownType(typeof(Importance))]
-        [ServiceKnownType(typeof(UpdateStatus))]
-        [ServiceKnownType(typeof(Collection<Suh>))]
-        [ServiceKnownType(typeof(Collection<Sui>))]
-        [ServiceKnownType(typeof(Sui))]
-        [ServiceKnownType(typeof(Collection<Update>))]
-        [ServiceKnownType(typeof(Update))]
-        [ServiceKnownType(typeof(Collection<UpdateFile>))]
-        [ServiceKnownType(typeof(UpdateFile))]
-        [ServiceKnownType(typeof(FileAction))]
-        [ServiceKnownType(typeof(Collection<RegistryItem>))]
-        [ServiceKnownType(typeof(RegistryItem))]
-        [ServiceKnownType(typeof(RegistryAction))]
-        [ServiceKnownType(typeof(Collection<Shortcut>))]
-        [ServiceKnownType(typeof(Shortcut))]
-        [ServiceKnownType(typeof(ShortcutAction))]
-        [ServiceKnownType(typeof(DownloadCompletedEventArgs))]
-        [ServiceKnownType(typeof(DownloadProgressChangedEventArgs))]
-        [ServiceKnownType(typeof(ErrorOccurredEventArgs))]
-        [ServiceKnownType(typeof(InstallCompletedEventArgs))]
-        [ServiceKnownType(typeof(InstallProgressChangedEventArgs))]
-        void OnErrorOccurred(object sender, ErrorOccurredEventArgs e);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnInstallCompleted")]
-        [ServiceKnownType(typeof(EventArgs))]
-        [ServiceKnownType(typeof(RegistryValueKind))]
-        [ServiceKnownType(typeof(RegistryHive))]
-        [ServiceKnownType(typeof(Sua))]
-        [ServiceKnownType(typeof(Collection<LocaleString>))]
-        [ServiceKnownType(typeof(LocaleString))]
-        [ServiceKnownType(typeof(Collection<Sua>))]
-        [ServiceKnownType(typeof(Config))]
-        [ServiceKnownType(typeof(AutoUpdateOption))]
-        [ServiceKnownType(typeof(Suh))]
-        [ServiceKnownType(typeof(Importance))]
-        [ServiceKnownType(typeof(UpdateStatus))]
-        [ServiceKnownType(typeof(Collection<Suh>))]
-        [ServiceKnownType(typeof(Collection<Sui>))]
-        [ServiceKnownType(typeof(Sui))]
-        [ServiceKnownType(typeof(Collection<Update>))]
-        [ServiceKnownType(typeof(Update))]
-        [ServiceKnownType(typeof(Collection<UpdateFile>))]
-        [ServiceKnownType(typeof(UpdateFile))]
-        [ServiceKnownType(typeof(FileAction))]
-        [ServiceKnownType(typeof(Collection<RegistryItem>))]
-        [ServiceKnownType(typeof(RegistryItem))]
-        [ServiceKnownType(typeof(RegistryAction))]
-        [ServiceKnownType(typeof(Collection<Shortcut>))]
-        [ServiceKnownType(typeof(Shortcut))]
-        [ServiceKnownType(typeof(ShortcutAction))]
-        [ServiceKnownType(typeof(DownloadCompletedEventArgs))]
-        [ServiceKnownType(typeof(DownloadProgressChangedEventArgs))]
-        [ServiceKnownType(typeof(ErrorOccurredEventArgs))]
-        [ServiceKnownType(typeof(InstallCompletedEventArgs))]
-        [ServiceKnownType(typeof(InstallProgressChangedEventArgs))]
-        void OnInstallCompleted(object sender, InstallCompletedEventArgs e);
-
-        [OperationContract(IsOneWay = true, Action = "http://tempuri.org/IService/OnInstallProgressChanged")]
-        [ServiceKnownType(typeof(EventArgs))]
-        [ServiceKnownType(typeof(RegistryValueKind))]
-        [ServiceKnownType(typeof(RegistryHive))]
-        [ServiceKnownType(typeof(Sua))]
-        [ServiceKnownType(typeof(Collection<LocaleString>))]
-        [ServiceKnownType(typeof(LocaleString))]
-        [ServiceKnownType(typeof(Collection<Sua>))]
-        [ServiceKnownType(typeof(Config))]
-        [ServiceKnownType(typeof(AutoUpdateOption))]
-        [ServiceKnownType(typeof(Suh))]
-        [ServiceKnownType(typeof(Importance))]
-        [ServiceKnownType(typeof(UpdateStatus))]
-        [ServiceKnownType(typeof(Collection<Suh>))]
-        [ServiceKnownType(typeof(Collection<Sui>))]
-        [ServiceKnownType(typeof(Sui))]
-        [ServiceKnownType(typeof(Collection<Update>))]
-        [ServiceKnownType(typeof(Update))]
-        [ServiceKnownType(typeof(Collection<UpdateFile>))]
-        [ServiceKnownType(typeof(UpdateFile))]
-        [ServiceKnownType(typeof(FileAction))]
-        [ServiceKnownType(typeof(Collection<RegistryItem>))]
-        [ServiceKnownType(typeof(RegistryItem))]
-        [ServiceKnownType(typeof(RegistryAction))]
-        [ServiceKnownType(typeof(Collection<Shortcut>))]
-        [ServiceKnownType(typeof(Shortcut))]
-        [ServiceKnownType(typeof(ShortcutAction))]
-        [ServiceKnownType(typeof(DownloadCompletedEventArgs))]
-        [ServiceKnownType(typeof(DownloadProgressChangedEventArgs))]
-        [ServiceKnownType(typeof(ErrorOccurredEventArgs))]
-        [ServiceKnownType(typeof(InstallCompletedEventArgs))]
-        [ServiceKnownType(typeof(InstallProgressChangedEventArgs))]
-        void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e);
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IWcfServiceCallback {
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/OnDownloadCompleted")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.EventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryValueKind))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryHive))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sua))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.LocaleString>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.LocaleString))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sua>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Config))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.AutoUpdateOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Suh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Importance))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Suh>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sui>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sui))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Update>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Update))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.UpdateFile>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateFile))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.FileAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.RegistryItem>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryItem))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Shortcut>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Shortcut))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ShortcutAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadProgressChangedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ErrorOccurredEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallProgressChangedEventArgs))]
+        void OnDownloadCompleted(object sender, SevenUpdate.DownloadCompletedEventArgs e);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/OnDownloadProgressChanged")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.EventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryValueKind))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryHive))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sua))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.LocaleString>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.LocaleString))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sua>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Config))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.AutoUpdateOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Suh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Importance))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Suh>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sui>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sui))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Update>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Update))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.UpdateFile>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateFile))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.FileAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.RegistryItem>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryItem))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Shortcut>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Shortcut))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ShortcutAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadProgressChangedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ErrorOccurredEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallProgressChangedEventArgs))]
+        void OnDownloadProgressChanged(object sender, SevenUpdate.DownloadProgressChangedEventArgs e);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/OnErrorOccurred")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.EventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryValueKind))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryHive))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sua))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.LocaleString>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.LocaleString))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sua>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Config))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.AutoUpdateOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Suh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Importance))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Suh>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sui>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sui))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Update>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Update))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.UpdateFile>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateFile))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.FileAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.RegistryItem>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryItem))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Shortcut>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Shortcut))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ShortcutAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadProgressChangedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ErrorOccurredEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallProgressChangedEventArgs))]
+        void OnErrorOccurred(object sender, SevenUpdate.ErrorOccurredEventArgs e);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/OnInstallCompleted")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.EventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryValueKind))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryHive))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sua))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.LocaleString>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.LocaleString))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sua>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Config))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.AutoUpdateOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Suh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Importance))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Suh>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sui>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sui))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Update>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Update))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.UpdateFile>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateFile))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.FileAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.RegistryItem>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryItem))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Shortcut>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Shortcut))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ShortcutAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadProgressChangedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ErrorOccurredEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallProgressChangedEventArgs))]
+        void OnInstallCompleted(object sender, SevenUpdate.InstallCompletedEventArgs e);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IWcfService/OnInstallProgressChanged")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.EventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryValueKind))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(Microsoft.Win32.RegistryHive))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sua))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.LocaleString>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.LocaleString))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sua>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Config))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.AutoUpdateOption))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Suh))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Importance))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateStatus))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Suh>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Sui>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Sui))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Update>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Update))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.UpdateFile>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.UpdateFile))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.FileAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.RegistryItem>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryItem))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.RegistryAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(System.Collections.ObjectModel.Collection<SevenUpdate.Shortcut>))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.Shortcut))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ShortcutAction))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.DownloadProgressChangedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.ErrorOccurredEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallCompletedEventArgs))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(SevenUpdate.InstallProgressChangedEventArgs))]
+        void OnInstallProgressChanged(object sender, SevenUpdate.InstallProgressChangedEventArgs e);
     }
-
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceChannel : IService, IClientChannel
-    {
+    
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IWcfServiceChannel : SevenUpdate.Service.IWcfService, System.ServiceModel.IClientChannel {
     }
-
-    [DebuggerStepThrough]
-    [GeneratedCode("System.ServiceModel", "4.0.0.0")]
-    public class ServiceClient : DuplexClientBase<IService>, IService
-    {
-        public ServiceClient(InstanceContext callbackInstance) : base(callbackInstance)
-        {
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class WcfServiceClient : System.ServiceModel.DuplexClientBase<SevenUpdate.Service.IWcfService>, SevenUpdate.Service.IWcfService {
+        
+        public WcfServiceClient(System.ServiceModel.InstanceContext callbackInstance) : 
+                base(callbackInstance) {
         }
-
-        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName) : base(callbackInstance, endpointConfigurationName)
-        {
+        
+        public WcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName) : 
+                base(callbackInstance, endpointConfigurationName) {
         }
-
-        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress)
-        {
+        
+        public WcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, string remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
-
-        public ServiceClient(InstanceContext callbackInstance, string endpointConfigurationName, EndpointAddress remoteAddress) : base(callbackInstance, endpointConfigurationName, remoteAddress)
-        {
+        
+        public WcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, endpointConfigurationName, remoteAddress) {
         }
-
-        public ServiceClient(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : base(callbackInstance, binding, remoteAddress)
-        {
+        
+        public WcfServiceClient(System.ServiceModel.InstanceContext callbackInstance, System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+                base(callbackInstance, binding, remoteAddress) {
         }
-
-        public void AddApp(Sua application)
-        {
+        
+        public void AddApp(SevenUpdate.Sua application) {
             base.Channel.AddApp(application);
         }
-
-        public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
-        {
+        
+        public void ChangeSettings(System.Collections.ObjectModel.Collection<SevenUpdate.Sua> applications, SevenUpdate.Config options, bool autoCheck) {
             base.Channel.ChangeSettings(applications, options, autoCheck);
         }
-
-        public void HideUpdate(Suh hiddenUpdate)
-        {
+        
+        public void HideUpdate(SevenUpdate.Suh hiddenUpdate) {
             base.Channel.HideUpdate(hiddenUpdate);
         }
-
-        public void HideUpdates(Collection<Suh> hiddenUpdates)
-        {
+        
+        public void HideUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Suh> hiddenUpdates) {
             base.Channel.HideUpdates(hiddenUpdates);
         }
-
-        public void InstallUpdates(Collection<Sui> appUpdates)
-        {
+        
+        public void InstallUpdates(System.Collections.ObjectModel.Collection<SevenUpdate.Sui> appUpdates) {
             base.Channel.InstallUpdates(appUpdates);
         }
-
-        public void ShowUpdate(Suh hiddenUpdate)
-        {
+        
+        public void ShowUpdate(SevenUpdate.Suh hiddenUpdate) {
             base.Channel.ShowUpdate(hiddenUpdate);
         }
-
-        public void Subscribe()
-        {
+        
+        public void Subscribe() {
             base.Channel.Subscribe();
         }
-
-        public void Unsubscribe()
-        {
+        
+        public void Unsubscribe() {
             base.Channel.Unsubscribe();
         }
     }

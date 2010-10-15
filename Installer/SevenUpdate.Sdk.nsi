@@ -55,7 +55,7 @@ loop:
 	IntCmp $5 0 done
 	Goto prompt
 prompt:
-  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update SDK must be closed before installation can begin.$\r$\nPress "Retry" to automatically close Seven Update SDK and continue or cancel the installation.'  IDCANCEL BailOut
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP '$(^Name) must be closed before installation can begin.$\r$\nPress "Retry" to automatically close $(^Name) and continue or cancel the installation.'  IDCANCEL BailOut
   push "SevenUpdate.Sdk.exe"
   processwork::KillProcess
   Sleep 1000
@@ -80,7 +80,7 @@ loop:
 	IntCmp $5 0 done
 	Goto prompt
 prompt:
-  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update SDK must be closed before you can uninstall it.$\r$\nPress "Retry" to automatically close Seven Update SDK and continue or cancel the uninstallation.'  IDCANCEL BailOut
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP '$(^Name) must be closed before you can uninstall it.$\r$\nPress "Retry" to automatically close $(^Name) and continue or cancel the uninstallation.'  IDCANCEL BailOut
   push "SevenUpdate.Sdk.exe"
   processwork::KillProcess
   Sleep 1000
@@ -137,7 +137,6 @@ FunctionEnd
 
   inetc::get /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
   Pop $0 ;Get the return value
-  DetailPrint "Result: $0"
   StrCmp $0 "OK" +3
   StrCmp $0 "cancelled" +6
   inetc::get /TIMEOUT=30000 /NOPROXY "${SOURCE}" "${DEST}" /END
@@ -241,7 +240,7 @@ Section "Main Section" SEC01
   DetailPrint "Removing old installation files"
   RMDir /r $INSTDIR
   
-  DetailPrint "Downloading Seven Update SDK..."
+  DetailPrint "Downloading $(^Name)..."
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
@@ -254,12 +253,15 @@ Section "Main Section" SEC01
   CreateDirectory "$APPDATA\Seven Software\Seven Update SDK"
   SetShellVarContext all
   CreateDirectory "$SMPROGRAMS\Seven Software"
-  CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk" "$INSTDIR\SevenUpdate.Sdk.exe"
+  CreateShortCut "$SMPROGRAMS\Seven Software\$(^Name).lnk" "$INSTDIR\SevenUpdate.Sdk.exe"
   DetailPrint "Registering filetypes..."
   WriteRegStr HKCR ".sui" "" "SevenUpdate.sui"
   WriteRegStr HKCR "SevenUpdate.sui" "" "Seven Update Information"
   WriteRegStr HKCR "SevenUpdate.sui\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,0"
   Call RefreshShellIcons
+  
+  DetailPrint "Optimizing .Net framework..."
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" update'
 SectionEnd
 
 Section -Post
@@ -290,7 +292,7 @@ Section Uninstall
   nsExec::Exec '"FTYPE" SevenUpdate.SUI="$INSTDIR\SevenUpdate.Sdk.exe" %1 %*"'
   nsExec::Exec '"ASSOC" .sui=SevenUpdate.SUI"'
   
-  Delete "$SMPROGRAMS\Seven Software\Seven Update SDK.lnk"
+  Delete "$SMPROGRAMS\Seven Software\$(^Name).lnk"
   
   RMDir "$SMPROGRAMS\Seven Software"
   RMDir /r /REBOOTOK $INSTDIR

@@ -55,7 +55,7 @@ loop:
 	IntCmp $5 0 CheckAdmin
 	Goto prompt
 prompt:
-  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update must be closed before installation can begin.$\r$\nPress "Retry" to automatically close Seven Update and continue or cancel the installation.'  IDCANCEL BailOut
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP '$(^Name) must be closed before installation can begin.$\r$\nPress "Retry" to automatically close $(^Name) and continue or cancel the installation.'  IDCANCEL BailOut
   push "SevenUpdate.exe"
   processwork::KillProcess
 	push "SevenUpdate.Admin.exe"
@@ -90,7 +90,7 @@ loop:
 	IntCmp $5 0 CheckAdmin
 	Goto prompt
 prompt:
-  MessageBox MB_RETRYCANCEL|MB_ICONSTOP 'Seven Update must be closed before you can uninstall it.$\r$\nPress "Retry" to automatically close Seven Update and continue or cancel the uninstallation.'  IDCANCEL BailOut
+  MessageBox MB_RETRYCANCEL|MB_ICONSTOP '$(^Name) must be closed before you can uninstall it.$\r$\nPress "Retry" to automatically close $(^Name) and continue or cancel the uninstallation.'  IDCANCEL BailOut
   push "SevenUpdate.exe"
   processwork::KillProcess
 	push "SevenUpdate.Admin.exe"
@@ -161,7 +161,6 @@ FunctionEnd
   DetailPrint "Downloading: ${SOURCE}"
   inetc::get /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
   Pop $0 ;Get the return value
-  DetailPrint "Result: $0"
   StrCmp $0 "OK" +3
   StrCmp $0 "cancelled" +6
   inetc::get /TIMEOUT=30000 /NOPROXY "${SOURCE}" "${DEST}" /END
@@ -265,7 +264,7 @@ Section "Main Section" SEC01
   DetailPrint "Removing old installation files"
   RMDir /r $INSTDIR
   
-  DetailPrint "Downloading Seven Update..."
+  DetailPrint "Downloading $(^Name)..."
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
@@ -282,7 +281,7 @@ Section "Main Section" SEC01
 	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe'
 	  
   ${Else}
-  	DetailPrint "Installing Seven Update service..."
+  	DetailPrint "Installing $(^Name) service..."
   
     !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml"
     !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml"
@@ -303,7 +302,7 @@ Section "Main Section" SEC01
   SetShellVarContext all
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   CreateDirectory "$SMPROGRAMS\Seven Software"
-  CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\SevenUpdate.exe"
+  CreateShortCut "$SMPROGRAMS\Seven Software\$(^Name).lnk" "$INSTDIR\SevenUpdate.exe"
   
   DetailPrint "Registering file types..."
   WriteRegStr HKCR "sevenupdate" "" "URL:Seven Update Protocol"
@@ -316,6 +315,9 @@ Section "Main Section" SEC01
   WriteRegStr HKCR "SevenUpdate.sua\DefaultIcon" "" "$INSTDIR\SevenUpdate.Base.dll,1"
   WriteRegStr HKCR "SevenUpdate.sua\shell\open\command" "" '"$INSTDIR\SevenUpdate.exe" "%1"'
   Call RefreshShellIcons
+  
+  DetailPrint "Optimizing .Net framework..."
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" update'
 SectionEnd
 
 Section -Post
@@ -344,7 +346,7 @@ FunctionEnd
 Section Uninstall
   SetShellVarContext all
   
-  Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
+  Delete "$SMPROGRAMS\Seven Software\$(^Name).lnk"
 
   RMDir "$SMPROGRAMS\Seven Software"
   RMDir /r /REBOOTOK $INSTDIR

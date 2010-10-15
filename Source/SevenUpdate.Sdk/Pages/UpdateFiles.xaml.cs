@@ -111,8 +111,10 @@ namespace SevenUpdate.Sdk.Pages
             var installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%\", true);
-            downloadUrl = downloadUrl.Replace(@"\\", @"\");
+            var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%/", true);
+            downloadUrl = downloadUrl.Replace(@"\\", @"/");
+            downloadUrl = downloadUrl.Replace(@"\", @"/");
+            downloadUrl = downloadUrl.Replace(@"//", @"/");
 
             var file = new UpdateFile
                 {

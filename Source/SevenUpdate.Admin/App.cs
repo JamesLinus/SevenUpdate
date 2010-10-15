@@ -44,7 +44,6 @@ namespace SevenUpdate.Admin
     using SevenUpdate.Service;
 
     using Application = System.Windows.Application;
-    using Timer = System.Timers.Timer;
 
     /// <summary>The main class of the application</summary>
     internal static class App
@@ -259,34 +258,39 @@ namespace SevenUpdate.Admin
         {
             bool createdNew;
 #if !DEBUG
-            var timer = new Timer(10000);
+            var timer = new System.Timers.Timer(10000);
             timer.Elapsed += ShutdownApp;
             timer.Start();
 #endif
-
-            using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
+            try
             {
-                if (createdNew)
+                using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
                 {
-                    StartWcfHost();
-                    if (!Directory.Exists(Utilities.AllUserStore))
+                    if (createdNew)
                     {
-                        Directory.CreateDirectory(Utilities.AllUserStore);
+                        StartWcfHost();
+                        if (!Directory.Exists(Utilities.AllUserStore))
+                        {
+                            Directory.CreateDirectory(Utilities.AllUserStore);
+                        }
                     }
                 }
+
+                var app = new Application();
+
+                using (notifyIcon = new NotifyIcon())
+                {
+                    notifyIcon.Icon = Resources.trayIcon;
+                    notifyIcon.Text = Resources.CheckingForUpdates;
+                    notifyIcon.Visible = false;
+
+                    ProcessArgs(args);
+                    app.Run();
+                }
             }
-
-            var app = new Application();
-
-            using (notifyIcon = new NotifyIcon())
+            catch (Exception e)
             {
-                notifyIcon.Icon = Resources.trayIcon;
-                notifyIcon.Text = Resources.CheckingForUpdates;
-                notifyIcon.Visible = false;
-
-                ProcessArgs(args);
-
-                app.Run();
+                Utilities.ReportError(e, Utilities.AllUserStore);
             }
 
             SystemEvents.SessionEnding -= PreventClose;

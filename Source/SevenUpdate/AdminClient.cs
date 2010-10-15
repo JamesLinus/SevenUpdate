@@ -41,7 +41,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The client of the WCF service</summary>
-        private static ServiceClient wcfClient;
+        private static WcfServiceClient wcfClient;
 
         #endregion
 
@@ -232,14 +232,14 @@ namespace SevenUpdate
                 }
 
                 Thread.Sleep(1000);
-                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallback()));
+                wcfClient = new WcfServiceClient(new InstanceContext(new WcfServiceCallback()));
             }
 
 #endif
 
             if (wcfClient == null)
             {
-                wcfClient = new ServiceClient(new InstanceContext(new ServiceCallback()));
+                wcfClient = new WcfServiceClient(new InstanceContext(new WcfServiceCallback()));
             }
 
             while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)
@@ -269,6 +269,10 @@ namespace SevenUpdate
             {
                 Thread.SpinWait(200);
                 return WaitForAdmin();
+            }
+            catch (FaultException)
+            {
+                return false;
             }
         }
 
