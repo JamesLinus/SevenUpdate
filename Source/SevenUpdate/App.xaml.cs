@@ -69,6 +69,9 @@ namespace SevenUpdate
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             base.OnStartup(e, isFirstInstance);
+            #if DEBUG
+            MyServiceHost.StartService(null);
+            #endif
             Init(e.Args);
             SetJumpList();
             if (!isFirstInstance)
@@ -127,7 +130,7 @@ namespace SevenUpdate
                             SevenUpdate.Properties.Resources.Add,
                             true) != TaskDialogResult.Cancel)
                     {
-                        AdminClient.AddSua(sua);
+                        WcfService.AddSua(sua);
                     }
                 }
                 catch (Exception)

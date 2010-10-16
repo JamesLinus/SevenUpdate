@@ -54,7 +54,7 @@ namespace SevenUpdate.Admin
         private static Collection<Sui> apps;
 
         /// <summary>The WCF service host</summary>
-        private static ServiceHost host;
+        private static WaitForElevatedProcess client;
 
         /// <summary>Indicates if the installation was executed by automatic settings</summary>
         private static bool isAutoInstall;
@@ -96,11 +96,7 @@ namespace SevenUpdate.Admin
         #region Properties
 
         /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
-        private static bool IsClientConnected
-        {
-            get;
-            set;
-        }
+        private static bool IsClientConnected { get; set; }
 
         /// <summary>Gets Seven Updates program settings</summary>
         private static Config Settings
@@ -129,7 +125,7 @@ namespace SevenUpdate.Admin
             {
                 if (IsClientConnected)
                 {
-                    WcfService.ReportProgress(e);
+                    client.OnDownloadCompleted(sender, e);
                 }
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
@@ -152,7 +148,7 @@ namespace SevenUpdate.Admin
             isInstalling = true;
             if (IsClientConnected)
             {
-                WcfService.ReportProgress(e);
+                client.OnDownloadProgressChanged(sender, e);
             }
 
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
@@ -169,31 +165,6 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Reports an error when the host faults</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        private static void HostFaulted(object sender, EventArgs e)
-        {
-            IsClientConnected = false;
-            Utilities.ReportError(@"Host Fault", Utilities.AllUserStore);
-            WcfService.ReportProgress(new ErrorOccurredEventArgs(Resources.UpdateServiceInterrupted, ErrorType.FatalError));
-
-            if (host.State == CommunicationState.Opened)
-            {
-                host.Abort();
-            }
-
-            ShutdownApp();
-        }
-
-        /// <summary>Reports an error if an unknown message received</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.ServiceModel.UnknownMessageReceivedEventArgs"/> instance containing the event data.</param>
-        private static void HostUnknownMessageReceived(object sender, UnknownMessageReceivedEventArgs e)
-        {
-            Utilities.ReportError(e.Message.ToString(), Utilities.AllUserStore);
-        }
-
         /// <summary>Reports the installation has completed</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
@@ -202,7 +173,7 @@ namespace SevenUpdate.Admin
             isInstalling = false;
             if (IsClientConnected)
             {
-                WcfService.ReportProgress(e);
+                client.OnInstallCompleted(sender, e);
             }
 
             File.Delete(Utilities.AllUserStore + "updates.sui");
@@ -216,7 +187,7 @@ namespace SevenUpdate.Admin
         {
             if (IsClientConnected)
             {
-                WcfService.ReportProgress(e);
+                client.OnInstallProgressChanged(sender, e);
             }
 
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
@@ -225,29 +196,26 @@ namespace SevenUpdate.Admin
         /// <summary>Starts the WCF service</summary>
         private static void StartWcfHost()
         {
-            host = new ServiceHost(typeof(WcfService));
-            host.Faulted += HostFaulted;
-            host.UnknownMessageReceived += HostUnknownMessageReceived;
-            WcfService.ClientConnected += ServiceClientConnected;
-            WcfService.ClientDisconnected += ServiceClientDisconnected;
-            SystemEvents.SessionEnding += PreventClose;
-            Search.SearchCompleted += SearchCompleted;
-            Search.ErrorOccurred += ErrorOccurred;
-            Download.DownloadCompleted += DownloadCompleted;
-            Download.DownloadProgressChanged += DownloadProgressChanged;
-            Install.InstallCompleted += InstallCompleted;
-            Install.InstallProgressChanged += InstallProgressChanged;
+            var binding = new NetNamedPipeBinding
+                {
+                    Name = "uacbinding",
+                    Security =
+                        {
+                            Mode = NetNamedPipeSecurityMode.Transport
+                        }
+                };
+
+            const string url = "net.pipe://localhost/sevenupdate/";
+            var address = new EndpointAddress(url);
+
             try
             {
-                host.Open();
+                client = new WaitForElevatedProcess(new InstanceContext(new WcfServiceCallback()), binding, address);
+                client.ElevatedProcessStarted();
             }
-            catch (FaultException e)
+            catch (EndpointNotFoundException)
             {
-                Utilities.ReportError(e, Utilities.AllUserStore);
-                WcfService.ReportProgress(new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));
-
-                SystemEvents.SessionEnding -= PreventClose;
-                ShutdownApp();
+                client = null;
             }
         }
 
@@ -256,19 +224,25 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            bool createdNew;
-#if !DEBUG
             var timer = new System.Timers.Timer(10000);
-            timer.Elapsed += ShutdownApp;
+            timer.Elapsed += CheckIfRunning;
             timer.Start();
-#endif
+            
             try
             {
+                bool createdNew;
                 using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
                 {
                     if (createdNew)
                     {
                         StartWcfHost();
+                        SystemEvents.SessionEnding += PreventClose;
+                        Search.SearchCompleted += SearchCompleted;
+                        Search.ErrorOccurred += ErrorOccurred;
+                        Download.DownloadCompleted += DownloadCompleted;
+                        Download.DownloadProgressChanged += DownloadProgressChanged;
+                        Install.InstallCompleted += InstallCompleted;
+                        Install.InstallProgressChanged += InstallProgressChanged;
                         if (!Directory.Exists(Utilities.AllUserStore))
                         {
                             Directory.CreateDirectory(Utilities.AllUserStore);
@@ -286,6 +260,14 @@ namespace SevenUpdate.Admin
 
                     ProcessArgs(args);
                     app.Run();
+                    try
+                    {
+                        client.ElevatedProcessStopped();
+                        client.Close();
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
             catch (Exception e)
@@ -438,27 +420,6 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Occurs when Seven Update UI connects to the admin process</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The data related to the event</param>
-        private static void ServiceClientConnected(object sender, EventArgs e)
-        {
-            IsClientConnected = true;
-        }
-
-        /// <summary>Occurs when the Seven Update UI disconnected</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The data related to the event</param>
-        private static void ServiceClientDisconnected(object sender, EventArgs e)
-        {
-            IsClientConnected = false;
-
-            if (isInstalling == false)
-            {
-                ShutdownApp();
-            }
-        }
-
         /// <summary>Shuts down the process and removes the icon of the notification bar</summary>
         private static void ShutdownApp()
         {
@@ -472,25 +433,37 @@ namespace SevenUpdate.Admin
             Environment.Exit(0);
         }
 
-        /// <summary>Shutdowns the application</summary>
+        /// <summary>Checks if Seven Update is running</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
-        private static void ShutdownApp(object sender, ElapsedEventArgs e)
+        private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
             if (isInstalling)
             {
                 return;
             }
 
-            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 && waiting)
+            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0)
             {
-                ShutdownApp();
+                IsClientConnected = true;
+                if (client == null)
+                    StartWcfHost();
+
+                #if !DEBUG
+                if (waiting)
+                    ShutdownApp();
+                #endif
             }
 
-            if (Process.GetProcessesByName(@"SevenUpdate").Length < 1 && !waiting)
+            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0 || waiting)
             {
-                ShutdownApp();
+                return;
             }
+
+            IsClientConnected = false;
+
+            if (!waiting)
+                ShutdownApp();
         }
 
         /// <summary>Updates the notify icon text</summary>

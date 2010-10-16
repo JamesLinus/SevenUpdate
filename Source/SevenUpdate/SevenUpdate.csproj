@@ -87,6 +87,7 @@
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xaml" />
@@ -96,13 +97,8 @@
   <ItemGroup>
     <Compile Include="Converters\UpdateStatusToBooleanConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Service References\Service\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="WcfServiceCallback.cs" />
-    <Compile Include="AdminClient.cs" />
+    <Compile Include="MyServiceHost.cs" />
+    <Compile Include="WcfService.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -221,22 +217,6 @@
     </EmbeddedResource>
     <None Include="Properties\app.manifest" />
     <AppDesigner Include="Properties\" />
-    <None Include="Service References\Service\Mex.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service\Mex1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service\Mex2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service\Mex3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service\Mex4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\Service\WcfService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -294,21 +274,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\Service\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Service\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Service\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Service\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

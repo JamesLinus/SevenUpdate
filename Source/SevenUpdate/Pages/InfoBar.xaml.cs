@@ -94,15 +94,15 @@ namespace SevenUpdate.Pages
         {
             this.InitializeComponent();
             Search.ErrorOccurred += this.ErrorOccurred;
-            AdminClient.ServiceError += this.ErrorOccurred;
+            WcfService.ServiceError += this.ErrorOccurred;
             Search.SearchCompleted += this.SearchCompleted;
             UpdateInfo.UpdateSelectionChanged += this.UpdateSelectionChanged;
             Core.UpdateActionChanged += this.SetUI;
-            WcfServiceCallback.DownloadProgressChanged += this.DownloadProgressChanged;
-            WcfServiceCallback.DownloadDone += this.DownloadCompleted;
-            WcfServiceCallback.InstallProgressChanged += this.InstallProgressChanged;
-            WcfServiceCallback.InstallDone += this.InstallCompleted;
-            WcfServiceCallback.ErrorOccurred += this.ErrorOccurred;
+            WcfService.DownloadProgressChanged += this.DownloadProgressChanged;
+            WcfService.DownloadDone += this.DownloadCompleted;
+            WcfService.InstallProgressChanged += this.InstallProgressChanged;
+            WcfService.InstallDone += this.InstallCompleted;
+            WcfService.ErrorOccurred += this.ErrorOccurred;
         }
 
         #endregion
@@ -165,7 +165,7 @@ namespace SevenUpdate.Pages
                     return;
                 }
 
-                if (AdminClient.Install())
+                if (WcfService.Install())
                 {
                     try
                     {
@@ -373,7 +373,7 @@ namespace SevenUpdate.Pages
                     break;
                 case UpdateAction.Downloading:
                 case UpdateAction.Installing:
-                    if (AdminClient.AbortInstall())
+                    if (WcfService.AbortInstall())
                     {
                         Core.Instance.UpdateAction = UpdateAction.Canceled;
                     }

@@ -98,7 +98,7 @@ namespace SevenUpdate.Pages
                 x--;
             }
 
-            if (AdminClient.HideUpdates(this.hiddenUpdates))
+            if (WcfService.HideUpdates(this.hiddenUpdates))
             {
                 if (RestoredHiddenUpdate != null)
                 {

@@ -281,7 +281,7 @@ namespace SevenUpdate.Pages
 
             if (!update.Hidden)
             {
-                if (AdminClient.HideUpdate(hnh))
+                if (WcfService.HideUpdate(hnh))
                 {
                     update.Hidden = true;
                     update.Selected = false;
@@ -289,7 +289,7 @@ namespace SevenUpdate.Pages
             }
             else
             {
-                if (AdminClient.ShowUpdate(hnh))
+                if (WcfService.ShowUpdate(hnh))
                 {
                     update.Hidden = false;
                 }

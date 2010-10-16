@@ -194,7 +194,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
-            AdminClient.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList);
+            WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList);
         }
 
         /// <summary>Updates the list with the <see cref="machineAppList"/></summary>

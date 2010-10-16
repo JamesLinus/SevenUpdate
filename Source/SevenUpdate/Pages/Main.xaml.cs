@@ -59,7 +59,7 @@ namespace SevenUpdate.Pages
             this.InitializeComponent();
 
             RestoreUpdates.RestoredHiddenUpdate += SettingsChanged;
-            AdminClient.SettingsChanged += SettingsChanged;
+            WcfService.SettingsChanged += SettingsChanged;
         }
 
         #endregion
@@ -94,7 +94,7 @@ namespace SevenUpdate.Pages
                 return;
             }
 
-            AdminClient.AdminError(new Exception(Properties.Resources.CouldNotConnectService));
+            WcfService.AdminError(new Exception(Properties.Resources.CouldNotConnectService));
         }
 
         /// <summary>Loads settings and UI for the page</summary>
@@ -122,7 +122,7 @@ namespace SevenUpdate.Pages
                         Interval = 30000
                     };
                 this.timer.Elapsed += this.CheckIfConnecting;
-                AdminClient.Connect();
+                WcfService.Connect();
             }
             else if (File.Exists(Utilities.AllUserStore + @"updates.sui"))
             {
@@ -135,7 +135,7 @@ namespace SevenUpdate.Pages
                     if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day ||
                         lastCheck.Day + 5 == today.Day)
                     {
-                        AdminClient.Disconnect();
+                        WcfService.Disconnect();
                         if (File.Exists(Utilities.AllUserStore + @"updates.sui"))
                         {
                             Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(Utilities.AllUserStore + @"updates.sui")));

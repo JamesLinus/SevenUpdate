@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="AdminClient.cs"
+// <copyright file="WcfServiceCallback.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -35,17 +35,27 @@ namespace SevenUpdate
 
     using SevenUpdate.Service;
 
-    /// <summary>Provides static methods that control <see cref="SevenUpdate"/>.Admin for operations that require administrator access</summary>
-    internal static class AdminClient
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
+    public class WcfService : IWaitForElevatedProcess
     {
-        #region Constants and Fields
-
-        /// <summary>The client of the WCF service</summary>
-        private static WcfServiceClient wcfClient;
-
-        #endregion
+        private static IElevatedProcess context;
 
         #region Events
+
+        /// <summary>Occurs when the download completed.</summary>
+        public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
+
+        /// <summary>Occurs when the download progress changed</summary>
+        public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
+
+        /// <summary>Occurs when an error has occurred when downloading or installing updates</summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
+
+        /// <summary>Occurs when the installation completed.</summary>
+        public static event EventHandler<InstallCompletedEventArgs> InstallDone;
+
+        /// <summary>Occurs when the installation progress changed</summary>
+        public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
         /// <summary>Occurs when the <see cref = "SevenUpdate" />.Admin service faults or encounters a serious error</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ServiceError;
@@ -54,6 +64,81 @@ namespace SevenUpdate
         public static event EventHandler<EventArgs> SettingsChanged;
 
         #endregion
+
+        #region Public Methods
+
+        public void ElevatedProcessStarted()
+        {
+            context = OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
+
+            if (context == null)
+            {
+                IsConnected = false;
+                Core.Instance.IsAdmin = false;
+                return;
+            }
+
+            IsConnected = true;
+            Core.Instance.IsAdmin = true;
+
+            // Signal Seven Update it can do elevated actions now
+        }
+
+        public void ElevatedProcessStopped()
+        {
+            Core.Instance.IsAdmin = false;
+            IsConnected = false;
+            context = null;
+            // OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
+            // Signal Seven Update it can do elevated actions now
+        }
+
+        /// <summary>Occurs when the download of updates has completed</summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            DownloadDone(this, e);
+        }
+
+        /// <summary>Occurs when the download progress has changed</summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            DownloadProgressChanged(this, e);
+        }
+
+        /// <summary>Occurs when a error occurs when downloading or installing updates</summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            ErrorOccurred(this, e);
+        }
+
+        /// <summary>Occurs when the installation of updates has completed</summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
+        {
+            InstallDone(this, e);
+        }
+
+        /// <summary>Occurs when the install progress has changed</summary>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
+        public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        {
+            InstallProgressChanged(this, e);
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Seven Update is connected to the admin process
+        /// </summary>
+        internal static bool IsConnected { get; set; }
 
         #region Methods
 
@@ -65,13 +150,6 @@ namespace SevenUpdate
             try
             {
                 abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort", true);
-                if (abort && wcfClient != null)
-                {
-                    if (wcfClient.State == CommunicationState.Opened)
-                    {
-                        wcfClient.Unsubscribe();
-                    }
-                }
             }
             catch (Exception e)
             {
@@ -90,7 +168,7 @@ namespace SevenUpdate
                 return;
             }
 
-            wcfClient.AddApp(application);
+            
         }
 
         /// <summary>Reports an error with the admin process</summary>
@@ -124,24 +202,37 @@ namespace SevenUpdate
         /// <returns><see langword="true"/> if the connection to <see cref="WcfService"/> was successful</returns>
         internal static bool Connect()
         {
-            var task = Task.Factory.StartNew(() => WaitForAdmin());
-            task.Wait();
-            return task.Result;
+            if (MyServiceHost.Instance == null)
+            {
+                MyServiceHost.StartService(null);
+            }
+
+            #if !DEBUG
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            {
+                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
+                if (!success)
+                {
+                    return false;
+                }
+            }
+            #endif
+
+            if (!IsConnected)
+            {
+               var task = Task.Factory.StartNew(WaitForAdmin);
+                task.Wait(10000);
+            }
+
+            return Core.Instance.IsAdmin = IsConnected;
         }
 
         /// <summary>Disconnects from <see cref="SevenUpdate"/>.Admin</summary>
         internal static void Disconnect()
         {
-            if (wcfClient == null)
-            {
-            }
-            else
-            {
-                if (wcfClient.State == CommunicationState.Opened)
-                {
-                    wcfClient.Unsubscribe();
-                }
-            }
+            Core.Instance.IsAdmin = false;
+            IsConnected = false;
+            MyServiceHost.StopService();
         }
 
         /// <summary>Hides an update</summary>
@@ -154,7 +245,7 @@ namespace SevenUpdate
                 return false;
             }
 
-            wcfClient.HideUpdate(hiddenUpdate);
+            context.HideUpdate(hiddenUpdate);
             return true;
         }
 
@@ -168,7 +259,10 @@ namespace SevenUpdate
                 return false;
             }
 
-            wcfClient.HideUpdates(hiddenUpdates);
+            if (context == null)
+                return false;
+
+            context.HideUpdates(hiddenUpdates);
             return true;
         }
 
@@ -181,7 +275,10 @@ namespace SevenUpdate
                 return false;
             }
 
-            wcfClient.InstallUpdates(Core.Applications);
+            if (context == null)
+                return false;
+
+            context.InstallUpdates(Core.Applications);
             return true;
         }
 
@@ -196,7 +293,10 @@ namespace SevenUpdate
                 return;
             }
 
-            wcfClient.ChangeSettings(sul, options, autoOn);
+            if (context == null)
+                return;
+            
+            context.ChangeSettings(sul, options, autoOn);
 
             if (SettingsChanged != null)
             {
@@ -214,65 +314,19 @@ namespace SevenUpdate
                 return false;
             }
 
-            wcfClient.ShowUpdate(hiddenUpdate);
+            if (context == null)
+                return false;
+
+            context.ShowUpdate(hiddenUpdate);
+
             return true;
         }
 
-        /// <summary>Waits for the admin process</summary>
-        /// <returns><see langword="true"/> if the admin process was successfully started</returns>
-        private static bool WaitForAdmin()
+        private static void WaitForAdmin()
         {
-#if !DEBUG
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            while (!IsConnected)
             {
-                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
-                if (!success)
-                {
-                    return false;
-                }
-
-                Thread.Sleep(1000);
-                wcfClient = new WcfServiceClient(new InstanceContext(new WcfServiceCallback()));
-            }
-
-#endif
-
-            if (wcfClient == null)
-            {
-                wcfClient = new WcfServiceClient(new InstanceContext(new WcfServiceCallback()));
-            }
-
-            while (wcfClient.State != CommunicationState.Opened && wcfClient.State != CommunicationState.Created)
-            {
-                if (wcfClient.State == CommunicationState.Faulted)
-                {
-                    break;
-                }
-
-                Thread.SpinWait(200);
-                continue;
-            }
-
-            if (wcfClient.State == CommunicationState.Faulted)
-            {
-                AdminError(new FaultException());
-                return WaitForAdmin();
-            }
-
-            try
-            {
-                wcfClient.Subscribe();
-                Core.Instance.IsAdmin = true;
-                return true;
-            }
-            catch (EndpointNotFoundException)
-            {
-                Thread.SpinWait(200);
-                return WaitForAdmin();
-            }
-            catch (FaultException)
-            {
-                return false;
+                Thread.Sleep(500);
             }
         }
 

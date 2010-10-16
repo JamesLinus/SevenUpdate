@@ -70,7 +70,7 @@ namespace SevenUpdate.Windows
             Settings.Default.windowHeight = this.Height;
             Settings.Default.windowWidth = this.Width;
             Settings.Default.Save();
-            AdminClient.Disconnect();
+            WcfService.Disconnect();
             Environment.Exit(0);
         }
 
