@@ -70,10 +70,8 @@ namespace SevenUpdate
         {   
             Init(e.Args);
             SetJumpList();
-            #if (DEBUG)
-            MyServiceHost.StartService(null);
-            #endif
             base.OnStartup(e, isFirstInstance);
+            MyServiceHost.StartService();
 
             if (!isFirstInstance)
             {

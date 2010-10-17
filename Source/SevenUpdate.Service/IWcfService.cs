@@ -118,7 +118,7 @@ namespace SevenUpdate.Service
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void ShowUpdate(Suh hiddenUpdate);
 
-        /// <summary>Requests shutdown of the admin process. App will only shutdown if it's not busy</summary>
+        /// <summary>Requests shutdown of the admin process. App will only shutdown if it's not installing updates. To shutdown when updates are being installed, execute the admin process with the 'Abort' argument</summary>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void Shutdown();
     }

@@ -1,7 +1,7 @@
 ﻿// ***********************************************************************
 // <copyright file="WcfServiceCallback.cs"
-//            project="SevenUpdate.Service"
-//            assembly="SevenUpdate.Service"
+//            project="SevenUpdate.Admin"
+//            assembly="SevenUpdate.Admin"
 //            solution="SevenUpdate"
 //            company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
@@ -24,15 +24,19 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
-namespace SevenUpdate.Service
+namespace SevenUpdate.Admin
 {
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
     using System.ServiceModel;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     using Microsoft.Win32;
+
+    using SevenUpdate.Service;
 
     /// <summary>
     /// Contains methods to execute for the service callback
@@ -156,10 +160,16 @@ namespace SevenUpdate.Service
             }
         }
 
-        /// <summary>Requests shutdown of the admin process. App will shutdown as soon as it's safe</summary>
+        /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort</summary>
         public void Shutdown()
         {
-            Environment.Exit(0);
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        Thread.Sleep(1000);
+                        if (!App.IsInstalling)
+                            Environment.Exit(0);
+                    });
         }
     }
 }

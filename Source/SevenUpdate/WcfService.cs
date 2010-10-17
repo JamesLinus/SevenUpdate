@@ -187,11 +187,6 @@ namespace SevenUpdate
                 return;
             }
 
-            if (!ConnectCallback())
-            {
-                return;
-            }
-
             if (!IsConnected || context == null)
             {
                 Task.Factory.StartNew(WaitForAdmin).ContinueWith(
@@ -262,6 +257,8 @@ namespace SevenUpdate
                 var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
                 if (!success)
                 {
+                    IsConnected = false;
+                    Core.Instance.IsAdmin = false;
                     return false;
                 }
             }
@@ -275,7 +272,8 @@ namespace SevenUpdate
         {
             Core.Instance.IsAdmin = false;
             IsConnected = false;
-            context.Shutdown();
+            if (context != null)
+                context.Shutdown();
             MyServiceHost.StopService();
         }
 
@@ -285,11 +283,6 @@ namespace SevenUpdate
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
-            {
-                return false;
-            }
-
-            if (!ConnectCallback())
             {
                 return false;
             }
@@ -334,11 +327,6 @@ namespace SevenUpdate
                 return false;
             }
 
-            if (!ConnectCallback())
-            {
-                return false;
-            }
-
             if (!IsConnected || context == null)
             {
                 Task.Factory.StartNew(WaitForAdmin).ContinueWith(
@@ -374,11 +362,6 @@ namespace SevenUpdate
         internal static bool Install()
         {
             if (!Connect())
-            {
-                return false;
-            }
-
-            if (!ConnectCallback())
             {
                 return false;
             }
@@ -420,11 +403,6 @@ namespace SevenUpdate
         internal static void SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             if (!Connect())
-            {
-                return;
-            }
-
-            if (!ConnectCallback())
             {
                 return;
             }
@@ -472,11 +450,6 @@ namespace SevenUpdate
                 return false;
             }
 
-            if (!ConnectCallback())
-            {
-                return false;
-            }
-
             if (!IsConnected || context == null)
             {
                 Task.Factory.StartNew(WaitForAdmin).ContinueWith(
@@ -503,37 +476,7 @@ namespace SevenUpdate
         {
             while (!IsConnected)
             {
-                if (context != null)
-                {
-                    continue;
-                }
             }
-        }
-
-        /// <summary>
-        /// Connects to the callback for the admin process
-        /// </summary>
-        /// <returns><see langword="true" /> is connection was sucessful; otherwise, <see langword="false" /></returns>
-        private static bool ConnectCallback()
-        {
-            try
-            {
-                context = OperationContext.Current != null ? OperationContext.Current.GetCallbackChannel<IElevatedProcess>() : null;
-            }
-            catch (NullReferenceException)
-            {
-            }
-
-            if (context == null)
-            {
-                IsConnected = false;
-                Core.Instance.IsAdmin = false;
-                return false;
-            }
-
-            IsConnected = true;
-            Core.Instance.IsAdmin = true;
-            return true;
         }
 
         #endregion

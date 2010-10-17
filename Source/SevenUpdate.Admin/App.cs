@@ -49,8 +49,6 @@ namespace SevenUpdate.Admin
     internal static class App
     {
         #region Constants and Fields
-        /// <summary>Gets a value indicating whether the program is currently installing updates</summary>
-        private static bool isInstalling;
 
         /// <summary>The collection of applications to update</summary>
         private static Collection<Sui> apps;
@@ -58,8 +56,11 @@ namespace SevenUpdate.Admin
         /// <summary>The WCF service host</summary>
         private static ElevatedProcessCallback client;
 
-        /// <summary>Indicates if the installation was executed by automatic settings</summary>
+        /// <summary>Gets or sets a value indicating whether the installation was executed by automatic settings</summary>
         private static bool isAutoInstall;
+
+        /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
+        private static bool isClientConnected;
 
         /// <summary>The notifyIcon used only when Auto Updating</summary>
         private static NotifyIcon notifyIcon;
@@ -94,8 +95,8 @@ namespace SevenUpdate.Admin
 
         #region Properties
 
-        /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
-        private static bool IsClientConnected { get; set; }
+        /// <summary>Gets a value indicating whether the program is currently installing updates</summary>
+        internal static bool IsInstalling { get; private set; }
 
         /// <summary>Gets Seven Updates program settings</summary>
         private static Config Settings
@@ -122,19 +123,19 @@ namespace SevenUpdate.Admin
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
             {
-                if (IsClientConnected)
+                if (isClientConnected)
                 {
                     client.OnDownloadCompleted(sender, e);
                 }
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
-                isInstalling = true;
+                IsInstalling = true;
                 File.Delete(Utilities.AllUserStore + "updates.sui");
                 Install.InstallUpdates(apps);
             }
             else
             {
-                isInstalling = false;
+                IsInstalling = false;
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadComplete);
             }
         }
@@ -144,8 +145,8 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            isInstalling = true;
-            if (IsClientConnected)
+            IsInstalling = true;
+            if (isClientConnected)
             {
                 client.OnDownloadProgressChanged(sender, e);
             }
@@ -169,8 +170,8 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
-            isInstalling = false;
-            if (IsClientConnected)
+            IsInstalling = false;
+            if (isClientConnected)
             {
                 client.OnInstallCompleted(sender, e);
             }
@@ -184,7 +185,7 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
-            if (IsClientConnected)
+            if (isClientConnected)
             {
                 client.OnInstallProgressChanged(sender, e);
             }
@@ -306,7 +307,7 @@ namespace SevenUpdate.Admin
                     }
 
                     isAutoInstall = true;
-                    isInstalling = true;
+                    IsInstalling = true;
                     notifyIcon.BalloonTipClicked += RunSevenUpdate;
                     notifyIcon.Click += RunSevenUpdate;
                     notifyIcon.Visible = true;
@@ -372,7 +373,7 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="SearchCompletedEventArgs"/> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
-            isInstalling = false;
+            IsInstalling = false;
             apps = e.Applications as Collection<Sui>;
             if (apps.Count > 0)
             {
@@ -388,7 +389,7 @@ namespace SevenUpdate.Admin
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
                     Task.Factory.StartNew(() => Download.DownloadUpdates(apps));
-                    isInstalling = true;
+                    IsInstalling = true;
                 }
             }
             else
@@ -440,14 +441,14 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
-            if (isInstalling)
+            if (IsInstalling)
             {
                 return;
             }
 
             if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0)
             {
-                IsClientConnected = true;
+                isClientConnected = true;
                 if (client == null)
                 {
                     StartWcfHost();
@@ -464,7 +465,7 @@ namespace SevenUpdate.Admin
                 return;
             }
 
-            IsClientConnected = false;
+            isClientConnected = false;
 
             if (!waiting)
             {

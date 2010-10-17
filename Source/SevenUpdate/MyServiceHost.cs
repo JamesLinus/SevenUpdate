@@ -73,6 +73,7 @@ namespace SevenUpdate
             {
                 Instance.Close();
             }
+            Instance = null;
         }
     }
 }
