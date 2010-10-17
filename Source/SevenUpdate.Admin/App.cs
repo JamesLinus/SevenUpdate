@@ -198,10 +198,6 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            #if (DEBUG)
-            Thread.Sleep(4000);
-            #endif
-
             var timer = new System.Timers.Timer(10000);
             timer.Elapsed += CheckIfRunning;
             timer.Start();
@@ -454,10 +450,10 @@ namespace SevenUpdate.Admin
                     StartWcfHost();
                 }
 
-                #if (DEBUG == FALSE)
+#if (!DEBUG)
                 if (waiting)
                     ShutdownApp();
-                #endif
+#endif
             }
 
             if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0 || waiting)

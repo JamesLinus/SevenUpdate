@@ -251,8 +251,8 @@ namespace SevenUpdate
                 MyServiceHost.StartService();
             }
 
-            #if (DEBUG == FALSE)
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1 && Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1)
+#if (!DEBUG)
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
                 var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
                 if (!success)
@@ -262,7 +262,7 @@ namespace SevenUpdate
                     return false;
                 }
             }
-            #endif
+#endif
 
             return true;
         }

@@ -166,7 +166,7 @@ namespace SevenUpdate.Admin
             Task.Factory.StartNew(
                 () =>
                     {
-                        Thread.Sleep(1000);
+                        Thread.Sleep(500);
                         if (!App.IsInstalling)
                             Environment.Exit(0);
                     });
