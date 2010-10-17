@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="WcfServiceCallback.cs"
+// <copyright file="WcfService.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -30,15 +30,24 @@ namespace SevenUpdate
     using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.ServiceModel;
-    using System.Threading;
     using System.Threading.Tasks;
 
     using SevenUpdate.Service;
 
+    /// <summary>
+    /// Contains methods and events that run a WCF service
+    /// </summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
-    public class WcfService : IWaitForElevatedProcess
+    public class WcfService : IElevatedProcessCallback
     {
+        #region Fields
+
+        /// <summary>
+        /// The service callback context
+        /// </summary>
         private static IElevatedProcess context;
+
+        #endregion
 
         #region Events
 
@@ -65,12 +74,23 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Seven Update is connected to the admin process
+        /// </summary>
+        internal static bool IsConnected { get; set; }
+
+        #endregion
+
         #region Public Methods
 
+        /// <summary>
+        /// Occurs when the process starts
+        /// </summary>
         public void ElevatedProcessStarted()
         {
             context = OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
-
             if (context == null)
             {
                 IsConnected = false;
@@ -84,11 +104,15 @@ namespace SevenUpdate
             // Signal Seven Update it can do elevated actions now
         }
 
+        /// <summary>
+        /// Occurs when the process as exited
+        /// </summary>
         public void ElevatedProcessStopped()
         {
             Core.Instance.IsAdmin = false;
             IsConnected = false;
             context = null;
+
             // OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
             // Signal Seven Update it can do elevated actions now
         }
@@ -135,11 +159,6 @@ namespace SevenUpdate
 
         #endregion
 
-        /// <summary>
-        /// Gets or sets a value indicating whether Seven Update is connected to the admin process
-        /// </summary>
-        internal static bool IsConnected { get; set; }
-
         #region Methods
 
         /// <summary>Aborts the installation of updates</summary>
@@ -168,7 +187,37 @@ namespace SevenUpdate
                 return;
             }
 
-            
+            if (!ConnectCallback())
+            {
+                return;
+            }
+
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                    {
+                        try
+                        {
+                            context.AddApp(application);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                        }
+                    });
+            }
+            else
+            {
+                try
+                {
+                    context.AddApp(application);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    context = null;
+                }
+            }
         }
 
         /// <summary>Reports an error with the admin process</summary>
@@ -204,11 +253,11 @@ namespace SevenUpdate
         {
             if (MyServiceHost.Instance == null)
             {
-                MyServiceHost.StartService(null);
+                MyServiceHost.StartService();
             }
 
-            #if !DEBUG
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            #if (DEBUG == FALSE)
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1 && Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1)
             {
                 var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
                 if (!success)
@@ -218,13 +267,7 @@ namespace SevenUpdate
             }
             #endif
 
-            if (!IsConnected)
-            {
-               var task = Task.Factory.StartNew(WaitForAdmin);
-                task.Wait(10000);
-            }
-
-            return Core.Instance.IsAdmin = IsConnected;
+            return true;
         }
 
         /// <summary>Disconnects from <see cref="SevenUpdate"/>.Admin</summary>
@@ -232,6 +275,7 @@ namespace SevenUpdate
         {
             Core.Instance.IsAdmin = false;
             IsConnected = false;
+            context.Shutdown();
             MyServiceHost.StopService();
         }
 
@@ -245,8 +289,39 @@ namespace SevenUpdate
                 return false;
             }
 
-            context.HideUpdate(hiddenUpdate);
-            return true;
+            if (!ConnectCallback())
+            {
+                return false;
+            }
+
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                        {
+                            try
+                            {
+                                context.HideUpdate(hiddenUpdate);
+                            }
+                            catch (CommunicationObjectAbortedException)
+                            {
+                                context = null;
+                            }
+                        });
+            }
+            else
+            {
+                try
+                {
+                    context.HideUpdate(hiddenUpdate);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    context = null;
+                }
+            }
+
+            return context != null;
         }
 
         /// <summary>Hides multiple updates</summary>
@@ -259,11 +334,39 @@ namespace SevenUpdate
                 return false;
             }
 
-            if (context == null)
+            if (!ConnectCallback())
+            {
                 return false;
+            }
 
-            context.HideUpdates(hiddenUpdates);
-            return true;
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                    {
+                        try
+                        {
+                            context.HideUpdates(hiddenUpdates);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                        }
+                    });
+            }
+            else
+            {
+                try
+                {
+                    context.HideUpdates(hiddenUpdates);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    context = null;
+                }
+            }
+
+            return context != null;
         }
 
         /// <summary>Installs selected updates</summary>
@@ -275,11 +378,39 @@ namespace SevenUpdate
                 return false;
             }
 
-            if (context == null)
+            if (!ConnectCallback())
+            {
                 return false;
+            }
 
-            context.InstallUpdates(Core.Applications);
-            return true;
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                    {
+                        try
+                        {
+                            context.InstallUpdates(Core.Applications);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                        }
+                    });
+            }
+            else
+            {
+                try
+                {
+                    context.InstallUpdates(Core.Applications);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    context = null;
+                }
+            }
+
+            return context != null;
         }
 
         /// <summary>Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.</summary>
@@ -293,10 +424,37 @@ namespace SevenUpdate
                 return;
             }
 
-            if (context == null)
+            if (!ConnectCallback())
+            {
                 return;
-            
-            context.ChangeSettings(sul, options, autoOn);
+            }
+
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                    {
+                        try
+                        {
+                            context.ChangeSettings(sul, options, autoOn);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                        }
+                    });
+            }
+            else
+            {
+                try
+                {
+                    context.ChangeSettings(sul, options, autoOn);
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                    context = null;
+                }
+            }
 
             if (SettingsChanged != null)
             {
@@ -314,20 +472,68 @@ namespace SevenUpdate
                 return false;
             }
 
-            if (context == null)
+            if (!ConnectCallback())
+            {
                 return false;
+            }
 
-            context.ShowUpdate(hiddenUpdate);
+            if (!IsConnected || context == null)
+            {
+                Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                    delegate
+                    {
+                        try
+                        {
+                            context.ShowUpdate(hiddenUpdate);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                        }
+                    });
+            }
 
-            return true;
+            return context != null;
         }
 
+        /// <summary>
+        /// Waits for the admin process to connect
+        /// </summary>
         private static void WaitForAdmin()
         {
             while (!IsConnected)
             {
-                Thread.Sleep(500);
+                if (context != null)
+                {
+                    continue;
+                }
             }
+        }
+
+        /// <summary>
+        /// Connects to the callback for the admin process
+        /// </summary>
+        /// <returns><see langword="true" /> is connection was sucessful; otherwise, <see langword="false" /></returns>
+        private static bool ConnectCallback()
+        {
+            try
+            {
+                context = OperationContext.Current != null ? OperationContext.Current.GetCallbackChannel<IElevatedProcess>() : null;
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+            if (context == null)
+            {
+                IsConnected = false;
+                Core.Instance.IsAdmin = false;
+                return false;
+            }
+
+            IsConnected = true;
+            Core.Instance.IsAdmin = true;
+            return true;
         }
 
         #endregion

@@ -67,13 +67,14 @@ namespace SevenUpdate
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
         /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
-        {
-            base.OnStartup(e, isFirstInstance);
-            #if DEBUG
-            MyServiceHost.StartService(null);
-            #endif
+        {   
             Init(e.Args);
             SetJumpList();
+            #if (DEBUG)
+            MyServiceHost.StartService(null);
+            #endif
+            base.OnStartup(e, isFirstInstance);
+
             if (!isFirstInstance)
             {
                 this.Shutdown(1);

@@ -31,8 +31,11 @@ namespace SevenUpdate.Service
 
     using ProtoBuf.ServiceModel;
 
+    /// <summary>
+    /// Contains callbacks/events to relay back to the server
+    /// </summary>
     [ServiceContract(Namespace = "http://sevenupdate.com", CallbackContract = typeof(IElevatedProcess))]
-    public interface IWaitForElevatedProcess
+    public interface IElevatedProcessCallback
     {
         /// <summary>
         /// Occurs when the process starts
@@ -77,6 +80,9 @@ namespace SevenUpdate.Service
         void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e);
     }
 
+    /// <summary>
+    /// Contains callbacks/events to relay back to the client
+    /// </summary>
     [ServiceContract(Namespace = "http://sevenupdate.com")]
     public interface IElevatedProcess
     {
@@ -111,5 +117,9 @@ namespace SevenUpdate.Service
         /// <param name="hiddenUpdate">The hidden update to show</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void ShowUpdate(Suh hiddenUpdate);
+
+        /// <summary>Requests shutdown of the admin process. App will only shutdown if it's not busy</summary>
+        [OperationContract(IsOneWay = false), ProtoBehavior]
+        void Shutdown();
     }
 }

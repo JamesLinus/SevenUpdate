@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate", "SevenUpdate\SevenUpdate.csproj", "{2E657E42-F85A-49C4-AB26-8EC9488B8BCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate.Admin", "SevenUpdate.Admin\SevenUpdate.Admin.csproj", "{762D246E-1DF7-4C49-8169-413AD897F8BD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2E657E42-F85A-49C4-AB26-8EC9488B8BCE} = {2E657E42-F85A-49C4-AB26-8EC9488B8BCE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SevenUpdate.Base", "SevenUpdate.Base\SevenUpdate.Base.csproj", "{918773CA-2A8D-4825-9516-DD1B4AFB8B46}"
 EndProject

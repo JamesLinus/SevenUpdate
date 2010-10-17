@@ -49,25 +49,24 @@ namespace SevenUpdate.Admin
     internal static class App
     {
         #region Constants and Fields
+        /// <summary>Gets a value indicating whether the program is currently installing updates</summary>
+        private static bool isInstalling;
 
         /// <summary>The collection of applications to update</summary>
         private static Collection<Sui> apps;
 
         /// <summary>The WCF service host</summary>
-        private static WaitForElevatedProcess client;
+        private static ElevatedProcessCallback client;
 
         /// <summary>Indicates if the installation was executed by automatic settings</summary>
         private static bool isAutoInstall;
-
-        /// <summary>Indicates if the program is currently installing updates</summary>
-        private static bool isInstalling;
 
         /// <summary>The notifyIcon used only when Auto Updating</summary>
         private static NotifyIcon notifyIcon;
 
         /// <summary>Indicates if the program is waiting</summary>
         private static bool waiting;
-
+        
         #endregion
 
         #region Enums
@@ -193,37 +192,15 @@ namespace SevenUpdate.Admin
             Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
-        /// <summary>Starts the WCF service</summary>
-        private static void StartWcfHost()
-        {
-            var binding = new NetNamedPipeBinding
-                {
-                    Name = "uacbinding",
-                    Security =
-                        {
-                            Mode = NetNamedPipeSecurityMode.Transport
-                        }
-                };
-
-            const string url = "net.pipe://localhost/sevenupdate/";
-            var address = new EndpointAddress(url);
-
-            try
-            {
-                client = new WaitForElevatedProcess(new InstanceContext(new WcfServiceCallback()), binding, address);
-                client.ElevatedProcessStarted();
-            }
-            catch (EndpointNotFoundException)
-            {
-                client = null;
-            }
-        }
-
         /// <summary>The main execution method</summary>
         /// <param name="args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
+            #if (DEBUG)
+            Thread.Sleep(4000);
+            #endif
+
             var timer = new System.Timers.Timer(10000);
             timer.Elapsed += CheckIfRunning;
             timer.Start();
@@ -433,6 +410,31 @@ namespace SevenUpdate.Admin
             Environment.Exit(0);
         }
 
+        /// <summary>Starts the WCF service</summary>
+        private static void StartWcfHost()
+        {
+            var binding = new NetNamedPipeBinding
+                {
+                    Name = "uacbinding",
+                    Security =
+                        {
+                            Mode = NetNamedPipeSecurityMode.Transport
+                        }
+                };
+
+            var address = new EndpointAddress("net.pipe://localhost/sevenupdate/");
+
+            try
+            {
+                client = new ElevatedProcessCallback(new InstanceContext(new WcfServiceCallback()), binding, address);
+                client.ElevatedProcessStarted();
+            }
+            catch (EndpointNotFoundException)
+            {
+                client = null;
+            }
+        }
+
         /// <summary>Checks if Seven Update is running</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
@@ -447,9 +449,11 @@ namespace SevenUpdate.Admin
             {
                 IsClientConnected = true;
                 if (client == null)
+                {
                     StartWcfHost();
+                }
 
-                #if !DEBUG
+                #if (DEBUG == FALSE)
                 if (waiting)
                     ShutdownApp();
                 #endif
@@ -463,7 +467,9 @@ namespace SevenUpdate.Admin
             IsClientConnected = false;
 
             if (!waiting)
+            {
                 ShutdownApp();
+            }
         }
 
         /// <summary>Updates the notify icon text</summary>
