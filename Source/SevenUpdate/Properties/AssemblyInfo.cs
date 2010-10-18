@@ -39,7 +39,7 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.2.1.1")]
-[assembly: AssemblyFileVersion("10.10.14")]
+[assembly: AssemblyFileVersion("10.10.17")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]

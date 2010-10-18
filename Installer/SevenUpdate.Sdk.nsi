@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update SDK"
-!define PRODUCT_VERSION "1.2.0.1"
+!define PRODUCT_VERSION "1.2.0.2"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.Sdk.exe"
