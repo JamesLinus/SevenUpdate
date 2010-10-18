@@ -50,10 +50,10 @@ namespace SevenUpdate.Sdk.Windows
         public MainWindow()
         {
             this.InitializeComponent();
-
             NavService = this.NavigationService;
-
             AeroGlass.DwmCompositionChanged += this.ChangeWindowChrome;
+            NavService = this.NavigationService;
+            App.ProcessArgs(App.Args);
         }
 
         #endregion

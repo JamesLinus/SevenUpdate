@@ -169,7 +169,7 @@ namespace SevenUpdate
             var abort = false;
             try
             {
-                abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort", true);
+                abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort");
             }
             catch (Exception e)
             {
@@ -188,18 +188,22 @@ namespace SevenUpdate
                 return;
             }
 
-            try
-            {
-                context.AddApp(application);
-            }
-            catch (CommunicationObjectAbortedException)
-            {
-                context = null;
-                IsConnected = false;
-            }
-            catch (TimeoutException)
-            {
-            }
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
+                {
+                    try
+                    {
+                        context.AddApp(application);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                    }
+                    catch (TimeoutException)
+                    {
+                    }
+                });
         }
 
         /// <summary>Reports an error with the admin process</summary>
@@ -233,10 +237,7 @@ namespace SevenUpdate
         /// <returns><see langword="true"/> if the connection to <see cref="WcfService"/> was successful</returns>
         internal static bool Connect()
         {
-            if (MyServiceHost.Instance == null)
-            {
-                MyServiceHost.StartService();
-            }
+            MyServiceHost.StartService();
 
 #if (!DEBUG)
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
@@ -271,10 +272,18 @@ namespace SevenUpdate
         {
             Core.Instance.IsAdmin = false;
             IsConnected = false;
-
-            if (context != null)
+            try
             {
-                context.Shutdown();
+                if (context != null)
+                {
+                    context.Shutdown();
+                }
+            }
+            catch (CommunicationObjectAbortedException)
+            {
+            }
+            catch (CommunicationObjectFaultedException)
+            {
             }
 
             MyServiceHost.StopService();

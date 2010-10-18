@@ -496,7 +496,7 @@ namespace SevenUpdate.Pages
         private void SelectImportantUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
-            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         /// <summary>Selects optional updates and navigates to the <see cref="UpdateInfo"/> page</summary>
@@ -505,7 +505,7 @@ namespace SevenUpdate.Pages
         private void SelectOptionalUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
-            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         /// <summary>Sets the data context for the page</summary>

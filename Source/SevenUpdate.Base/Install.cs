@@ -53,6 +53,9 @@ namespace SevenUpdate
         /// <summary>The index position of the current update being installed</summary>
         private static int updateIndex;
 
+        /// <summary>Indicates if the installation of updates should be cancelled.</summary>
+        private static bool cancelInstall;
+
         #endregion
 
         #region Events
@@ -73,6 +76,12 @@ namespace SevenUpdate
         #endregion
 
         #region Public Methods
+
+        /// <summary>Cancel the installation of updates</summary>
+        public static void CancelInstall()
+        {
+            cancelInstall = true;
+        }
 
         /// <summary>Installs updates</summary>
         /// <param name="applications">The collection of applications to install updates</param>
@@ -99,10 +108,9 @@ namespace SevenUpdate
                 for (var y = 0; y < applications[x].Updates.Count; y++)
                 {
                     errorOccurred = false;
-                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
+                    if (cancelInstall)
                     {
-                        File.Delete(Utilities.AllUserStore + @"abort.lock");
-                        return;
+                        Environment.Exit(0);
                     }
 
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
@@ -110,7 +118,11 @@ namespace SevenUpdate
                     {
                         try
                         {
-                            Process.GetProcessesByName(@"SevenUpdate.Helper")[0].Kill();
+                            var process = Process.GetProcessesByName(@"SevenUpdate.Helper");
+                            if (process.Length > 0)
+                            {
+                                process[0].Kill();
+                            }
                         }
                         catch (UnauthorizedAccessException)
                         {

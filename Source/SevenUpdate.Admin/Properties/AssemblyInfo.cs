@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersionAttribute("1.2.1.1")]
-[assembly: AssemblyFileVersionAttribute("10.10.17")]
+[assembly: AssemblyFileVersionAttribute("10.10.18")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]

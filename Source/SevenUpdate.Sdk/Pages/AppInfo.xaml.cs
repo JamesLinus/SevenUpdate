@@ -308,7 +308,7 @@ namespace SevenUpdate.Sdk.Pages
                     }
 
                     // Save the SUA file
-                    Utilities.Serialize(Core.AppInfo, Core.UserStore + appName + ".sua");
+                    Utilities.Serialize(Core.AppInfo, App.UserStore + appName + ".sua");
 
                     // Save project file
                     var project = new Project

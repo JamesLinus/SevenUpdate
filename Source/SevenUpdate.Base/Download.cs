@@ -41,6 +41,14 @@ namespace SevenUpdate
         /// <summary>Manager for Background Intelligent Transfer Service</summary>
         private static BitsManager manager;
 
+        /// <summary>Gets a value indicating whether to cancel the current download</summary>
+        private static bool cancelDownload;
+
+        /// <summary>
+        /// The download job name
+        /// </summary>
+        private static string jobName;
+
         #endregion
 
         #region Events
@@ -62,11 +70,19 @@ namespace SevenUpdate
 
         #region Public Methods
 
+        /// <summary>Cancel the downloading of updates</summary>
+        public static void CancelDownload()
+        {
+            cancelDownload = true;
+        }
+
         /// <summary>Downloads the updates using BITS</summary>
         /// <param name="appUpdates">The application updates to download</param>
+        /// <param name="downloadName">The name of the job</param>
         /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, bool isPriority = false)
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, bool isPriority = false)
         {
+            jobName = downloadName;
             if (appUpdates == null)
             {
                 throw new ArgumentNullException(@"appUpdates");
@@ -98,7 +114,7 @@ namespace SevenUpdate
             }
 
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
-            foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == "SevenUpdate"))
+            foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName))
             {
                 job.EnumerateFiles();
 
@@ -125,7 +141,7 @@ namespace SevenUpdate
                 }
             }
 
-            var bitsJob = manager.CreateJob("SevenUpdate", JobType.Download);
+            var bitsJob = manager.CreateJob(jobName, JobType.Download);
             if (isPriority)
             {
                 bitsJob.Priority = JobPriority.ForeGround;
@@ -211,18 +227,12 @@ namespace SevenUpdate
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Utilities.AllUserStore + "abort.lock"))
-            {
-                File.Delete(Utilities.AllUserStore + "abort.lock");
-                return;
-            }
-
             if (e.Job == null)
             {
                 return;
             }
 
-            if (e.Job.DisplayName != "SevenUpdate")
+            if (e.Job.DisplayName != jobName)
             {
                 return;
             }
@@ -234,6 +244,11 @@ namespace SevenUpdate
 
             IsDownloading = false;
             e.Job.Complete();
+
+            if (cancelDownload)
+            {
+                Environment.Exit(0);
+            }
 
             if (DownloadCompleted != null)
             {
@@ -263,7 +278,7 @@ namespace SevenUpdate
                 return;
             }
 
-            if (e.Job.DisplayName != "SevenUpdate")
+            if (e.Job.DisplayName != jobName)
             {
                 return;
             }
@@ -306,10 +321,10 @@ namespace SevenUpdate
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
-            if (File.Exists(Utilities.AllUserStore + "abort.lock"))
+            if (cancelDownload)
             {
-                File.Delete(Utilities.AllUserStore + "abort.lock");
-                return;
+                e.Job.Cancel();
+                Environment.Exit(0);
             }
 
             if (e.Job == null)
@@ -317,7 +332,7 @@ namespace SevenUpdate
                 return;
             }
 
-            if (e.Job.DisplayName != "SevenUpdate")
+            if (e.Job.DisplayName != jobName)
             {
                 return;
             }

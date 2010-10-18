@@ -106,7 +106,7 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            App.NavService.GoBack();
+            MainWindow.NavService.GoBack();
         }
 
         /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>

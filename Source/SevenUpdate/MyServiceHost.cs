@@ -47,6 +47,9 @@ namespace SevenUpdate
         /// <summary>Starts the service</summary>
         internal static void StartService()
         {
+            if (Instance != null)
+                return;
+
             var binding = new NetNamedPipeBinding
                 {
                     Name = "sevenupdatebinding",
@@ -78,7 +81,14 @@ namespace SevenUpdate
             }
 #endif
             Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(new ProtoEndpointBehavior());
-            Instance.Open();
+            try
+            {
+                Instance.Open();
+            }
+            catch (InvalidOperationException)
+            {
+                Instance = null;
+            }
         }
 
         /// <summary>Stops the service</summary>
@@ -92,7 +102,16 @@ namespace SevenUpdate
             // Call StopService from your shutdown logic (i.e. dispose method)
             if (Instance.State != CommunicationState.Closed)
             {
-                Instance.Close();
+                try
+                {
+                    Instance.Close();
+                }
+                catch (CommunicationObjectFaultedException)
+                {
+                }
+                catch (CommunicationObjectAbortedException)
+                {
+                }
             }
 
             Instance = null;

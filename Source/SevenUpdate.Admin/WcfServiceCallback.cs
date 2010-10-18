@@ -141,7 +141,7 @@ namespace SevenUpdate.Admin
             }
 
             App.Applications = applicationUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, true));
+            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>

@@ -181,7 +181,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToOptions(object sender, MouseButtonEventArgs e)
         {
-            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
         }
 
         /// <summary>Navigates to the Restore Updates page</summary>
@@ -189,7 +189,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
         {
-            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
         }
 
         /// <summary>Navigates to the Update History page</summary>
@@ -197,7 +197,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
         {
-            App.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
         }
 
         /// <summary>Shows the About Dialog window</summary>

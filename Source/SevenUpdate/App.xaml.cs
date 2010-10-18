@@ -32,87 +32,78 @@ namespace SevenUpdate
     using System.Globalization;
     using System.IO;
     using System.Linq;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
-    using System.Windows.Navigation;
     using System.Windows.Shell;
 
     using SevenUpdate.Properties;
-    using SevenUpdate.Windows;
 
     /// <summary>Interaction logic for App.xaml</summary>
     public sealed partial class App
     {
         #region Properties
 
-        /// <summary>Gets or sets the navigation service for the <see cref = "MainWindow" /></summary>
-        internal static NavigationService NavService { get; set; }
-
         /// <summary>Gets or sets the application TaskBarItemInfo</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
+
+        /// <summary>
+        /// Gets the command line arguments passed to this instance
+        /// </summary>
+        internal static IList<string> Args { get; private set; }
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Process command line args
+        /// </summary>
+        /// <param name="args">The list of arguments</param>
+        internal static void ProcessArgs(IList<string> args)
+        {
+            if (args == null)
+            {
+                return;
+            }
+
+            if (args.Count <= 0)
+            {
+                return;
+            }
+
+            switch (args[0])
+            {
+                case "-check":
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+                    Core.CheckForUpdates(true);
+                    break;
+                case "-history":
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
+                    break;
+                case "-hidden":
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
+                    break;
+                case "-settings":
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
+                    break;
+            }
+        }
 
         /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
         /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            Init(e.Args);
-            SetJumpList();
-            base.OnStartup(e, isFirstInstance);
-            MyServiceHost.StartService();
-
-            if (!isFirstInstance)
+            Init();
+            if (e.Args.Length > 0)
             {
-                this.Shutdown(1);
-            }
-        }
-
-        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
-        /// <param name="e">The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
-        protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
-        {
-            base.OnStartupNextInstance(e);
-
-            if (e.GetArgs().Length <= 0)
-            {
-                return;
-            }
-
-            switch (e.GetArgs()[0])
-            {
-                case "-check":
-                    NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
-                    Core.CheckForUpdates(true);
-                    break;
-                case "-history":
-                    NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
-                    break;
-                case "-hidden":
-                    NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
-                    break;
-                case "-settings":
-                    NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
-                    break;
-            }
-        }
-
-        /// <summary>Gets the application ready for startup</summary>
-        /// <param name="args">The command line arguments passed to the application</param>
-        private static void Init(IList<string> args)
-        {
-            Utilities.Locale = Settings.Default.locale;
-            foreach (var suaLoc in args.Where(t => args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase)).Select(t => t.Replace(@"sevenupdate://", null)))
-            {
-                try
+                if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
                 {
-                    var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(suaLoc), suaLoc);
+                    e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
+                    var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]), e.Args[0]);
                     var appName = Utilities.GetLocaleString(sua.Name);
-                    if (
-                        Core.ShowMessage(
+                    if (Core.ShowMessage(
                             String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
                             TaskDialogStandardIcon.ShieldBlue,
                             TaskDialogStandardButtons.Cancel,
@@ -123,16 +114,41 @@ namespace SevenUpdate
                     {
                         WcfService.AddSua(sua);
                     }
+                    else
+                    {
+                        Environment.Exit(0);
+                    }
                 }
-                catch (Exception)
-                {
-                }
-
-                Environment.Exit(0);
             }
 
-            Directory.CreateDirectory(Utilities.UserStore);
+            base.OnStartup(e, isFirstInstance);
 
+            if (!isFirstInstance)
+            {
+                this.Shutdown(1);
+            }
+            else
+            {
+                MyServiceHost.StartService();
+                Args = e.Args;
+                SetJumpList();
+            }
+        }
+
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <param name="e">The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
+        {
+            base.OnStartupNextInstance(e);
+            ProcessArgs(e.GetArgs());
+        }
+
+        /// <summary>Gets the application ready for startup</summary>
+        private static void Init()
+        {
+            Utilities.Locale = Settings.Default.locale;
+
+            Directory.CreateDirectory(Utilities.UserStore);
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Utilities.AllUserStore + @"updates.sui"))
             {
                 return;

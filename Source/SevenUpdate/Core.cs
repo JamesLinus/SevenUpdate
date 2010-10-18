@@ -248,7 +248,7 @@ namespace SevenUpdate
                             td.Controls.Add(button);
                         }
 
-                        return Application.Current == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                        return Application.Current.MainWindow == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
                     }
                 }
             }

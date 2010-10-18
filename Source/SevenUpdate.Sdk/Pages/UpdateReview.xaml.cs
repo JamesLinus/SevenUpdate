@@ -74,7 +74,7 @@ namespace SevenUpdate.Sdk.Pages
             // If SUA exists lets remove the old info
             if (Core.AppIndex > -1)
             {
-                appUpdates = Utilities.Deserialize<Collection<Update>>(Core.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui");
+                appUpdates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui");
                 updateNames = Core.Projects[Core.AppIndex].UpdateNames;
                 Core.Projects.RemoveAt(Core.AppIndex);
             }
@@ -95,7 +95,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             // Save the SUI File
-            Utilities.Serialize(appUpdates, Core.UserStore + appName + @".sui");
+            Utilities.Serialize(appUpdates, App.UserStore + appName + @".sui");
 
             // Save project file
             var project = new Project
@@ -109,7 +109,7 @@ namespace SevenUpdate.Sdk.Pages
             if (Core.IsNewProject)
             {
                 // Save the SUA file
-                Utilities.Serialize(Core.AppInfo, Core.UserStore + appName + @".sua");
+                Utilities.Serialize(Core.AppInfo, App.UserStore + appName + @".sua");
             }
 
             if (!export)
@@ -119,25 +119,25 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileName = Core.SaveFileDialog(null, appName, @"sui");
+            var fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sui");
 
             if (fileName == null)
             {
                 return;
             }
 
-            File.Copy(Core.UserStore + appName + @".sui", fileName, true);
+            File.Copy(App.UserStore + appName + @".sui", fileName, true);
 
             if (Core.IsNewProject)
             {
-                fileName = Core.SaveFileDialog(null, appName, @"sua");
+                fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sua");
 
                 if (fileName == null)
                 {
                     return;
                 }
 
-                File.Copy(Core.UserStore + appName + @".sua", fileName, true);
+                File.Copy(App.UserStore + appName + @".sua", fileName, true);
             }
 
             Core.IsNewProject = false;

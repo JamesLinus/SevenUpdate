@@ -31,6 +31,7 @@ namespace SevenUpdate.Windows
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Markup;
+    using System.Windows.Navigation;
 
     using SevenUpdate.Properties;
 
@@ -46,8 +47,17 @@ namespace SevenUpdate.Windows
         {
             this.InitializeComponent();
             App.TaskBar = this.taskBar;
-            App.NavService = this.NavigationService;
+            NavService = this.NavigationService;
+            App.ProcessArgs(App.Args);
         }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>Gets the <see cref = "NavigationService" /> for the current window</summary>
+        /// <value>The nav service.</value>
+        internal static NavigationService NavService { get; private set; }
 
         #endregion
 

@@ -28,16 +28,12 @@ namespace SevenUpdate.Sdk
 {
     using System;
     using System.Collections.ObjectModel;
-    using System.Globalization;
-    using System.IO;
-    using System.Reflection;
     using System.Windows;
     using System.Windows.Dialogs.TaskDialogs;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Interop;
     using System.Windows.Media;
-    using System.Windows.Shell;
 
     using SevenUpdate.Sdk.Properties;
     using SevenUpdate.Sdk.Windows;
@@ -54,12 +50,6 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
         public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\Projects.sul";
-
-        /// <summary>The user application data location</summary>
-        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
-
-        /// <summary>The application directory of Seven Update</summary>
-        private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         #endregion
 
@@ -101,14 +91,14 @@ namespace SevenUpdate.Sdk
         internal static void EditItem()
         {
             IsNewProject = false;
-            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
+            AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
             if (UpdateIndex < 0)
             {
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
             }
             else
             {
-                UpdateInfo = Utilities.Deserialize<Collection<Update>>(UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
+                UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
                 if (UpdateInfo.Files == null)
                 {
                     UpdateInfo.Files = new ObservableCollection<UpdateFile>();
@@ -177,7 +167,7 @@ namespace SevenUpdate.Sdk
         internal static void NewUpdate()
         {
             IsNewProject = false;
-            AppInfo = Utilities.Deserialize<Sua>(UserStore + Projects[AppIndex].ApplicationName + @".sua");
+            AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
             UpdateInfo = new Update
                 {
                     Files = new ObservableCollection<UpdateFile>(),
@@ -286,64 +276,6 @@ namespace SevenUpdate.Sdk
         internal static void SerializationError(object sender, SerializationErrorEventArgs e)
         {
             ShowMessage(Resources.ProjectLoadError, TaskDialogStandardIcon.Error, e.Exception.Message);
-        }
-
-        /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>
-        internal static void SetJumpList()
-        {
-            // Create JumpTask
-            var jumpList = new JumpList();
-            JumpTask jumpTask;
-
-            if (Projects != null)
-            {
-                var startIndex = Projects.Count - 2;
-                if (startIndex < 0)
-                {
-                    startIndex = 0;
-                }
-
-                for (var x = startIndex; x < Projects.Count; x++)
-                {
-                    jumpTask = new JumpTask
-                        {
-                            ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
-                            IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
-                            IconResourceIndex = 7,
-                            Title = Resources.CreateUpdate,
-                            CustomCategory = Projects[x].ApplicationName,
-                            Arguments = @"-newupdate " + x,
-                        };
-                    jumpList.JumpItems.Add(jumpTask);
-                    for (var y = 0; y < Projects[x].UpdateNames.Count; y++)
-                    {
-                        jumpTask = new JumpTask
-                            {
-                                ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
-                                IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
-                                IconResourceIndex = 8,
-                                Title = String.Format(CultureInfo.CurrentCulture, Resources.Edit, Projects[x].UpdateNames[y]),
-                                CustomCategory = Projects[x].ApplicationName,
-                                Arguments = @"-edit " + x + " " + y
-                            };
-
-                        jumpList.JumpItems.Add(jumpTask);
-                    }
-                }
-            }
-
-            // Configure a new JumpTask
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = AppDir + @"SevenUpdate.Sdk.exe",
-                    IconResourcePath = AppDir + @"SevenUpdate.Base.dll",
-                    IconResourceIndex = 6,
-                    Title = Resources.CreateProject,
-                    CustomCategory = Resources.Tasks,
-                    Arguments = @"-newproject"
-                };
-            jumpList.JumpItems.Add(jumpTask);
-            JumpList.SetJumpList(Application.Current, jumpList);
         }
 
         /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>

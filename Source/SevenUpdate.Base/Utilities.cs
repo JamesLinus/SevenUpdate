@@ -25,6 +25,7 @@ namespace SevenUpdate
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
@@ -48,7 +49,7 @@ namespace SevenUpdate
         /// <summary>The all users application data location</summary>
         public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
 
-        /// <summary>The application directory of Seven Update</summary>
+        /// <summary>The application directory of the current assembly</summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
         /// <summary>The location of the list of applications Seven Update can update</summary>
@@ -583,7 +584,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
                         throw;
                     }

@@ -131,7 +131,7 @@ namespace SevenUpdate.Admin
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 IsInstalling = true;
                 File.Delete(Utilities.AllUserStore + "updates.sui");
-                Install.InstallUpdates(Applications);
+                Task.Factory.StartNew(() => Install.InstallUpdates(Applications));
             }
             else
             {
@@ -200,10 +200,6 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            var timer = new Timer(3000);
-            timer.Elapsed += CheckIfRunning;
-            timer.Start();
-
             try
             {
                 bool createdNew;
@@ -235,13 +231,27 @@ namespace SevenUpdate.Admin
                     notifyIcon.Visible = false;
 
                     ProcessArgs(args);
+                    var timer = new Timer(3000);
+                    timer.Elapsed += CheckIfRunning;
+                    timer.Start();
                     app.Run();
                     try
                     {
-                        client.ElevatedProcessStopped();
-                        client.Close();
+                        if (client != null)
+                        {
+                            client.ElevatedProcessStopped();
+                            client.Close();
+                        }
                     }
                     catch (Exception)
+                    {
+                    }
+
+                    try
+                    {
+                        File.Delete(Utilities.AllUserStore + @"abort.lock");
+                    }
+                    catch (IOException)
                     {
                     }
                 }
@@ -287,11 +297,11 @@ namespace SevenUpdate.Admin
 
                 if (args[0] == "Auto")
                 {
-                    if (File.Exists(Utilities.AllUserStore + "abort.lock"))
+                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
                     {
                         try
                         {
-                            File.Delete(Utilities.AllUserStore + "abort.lock");
+                            File.Delete(Utilities.AllUserStore + @"abort.lock");
                         }
                         catch (Exception e)
                         {
@@ -331,7 +341,7 @@ namespace SevenUpdate.Admin
                 notifyIcon = null;
             }
 
-            using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
+            using (var fs = File.Create(Utilities.AllUserStore + @"abort.lock"))
             {
                 fs.WriteByte(0);
             }
@@ -391,7 +401,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate"));
                     IsInstalling = true;
                 }
             }
@@ -408,7 +418,16 @@ namespace SevenUpdate.Admin
             {
                 if (client.State != CommunicationState.Closed)
                 {
-                    client.Close();
+                    try
+                    {
+                        client.Close();
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                    }
+                    catch (CommunicationObjectFaultedException)
+                    {
+                    }
                 }
             }
 
@@ -417,6 +436,14 @@ namespace SevenUpdate.Admin
                 notifyIcon.Visible = false;
                 notifyIcon.Dispose();
                 notifyIcon = null;
+            }
+
+            try
+            {
+                File.Delete(Utilities.AllUserStore + @"abort.lock");
+            }
+            catch (IOException)
+            {
             }
 
             Environment.Exit(0);
@@ -456,6 +483,19 @@ namespace SevenUpdate.Admin
             Task.Factory.StartNew(
                 () =>
                     {
+                        if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
+                        {
+                            Download.CancelDownload();
+                            Install.CancelInstall();
+                            try
+                            {
+                                File.Delete(Utilities.AllUserStore + @"abort.lock");
+                            }
+                            catch (IOException)
+                            {
+                            }
+                        }
+
                         if (client == null)
                         {
                             StartWcfHost();
