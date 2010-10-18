@@ -427,7 +427,7 @@ namespace SevenUpdate.Admin
         {
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "uacbinding",
+                    Name = "sevenupdatebinding",
                     Security =
                         {
                             Mode = NetNamedPipeSecurityMode.Transport
