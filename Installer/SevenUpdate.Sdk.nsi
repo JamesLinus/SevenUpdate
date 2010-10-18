@@ -134,7 +134,7 @@ FunctionEnd
 FunctionEnd
 
 !macro DownloadFile SOURCE DEST 
-
+  DetailPrint "Downloading: ${SOURCE}"
   inetc::get /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
   Pop $0 ;Get the return value
   StrCmp $0 "OK" +3
