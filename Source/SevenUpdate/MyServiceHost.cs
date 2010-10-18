@@ -60,6 +60,7 @@ namespace SevenUpdate
 
             Instance = new ServiceHost(typeof(WcfService), baseAddress);
 
+#if (DEBUG)
             var debug = Instance.Description.Behaviors.Find<ServiceDebugBehavior>();
 
             // if not found - add behavior with setting turned on 
@@ -75,7 +76,7 @@ namespace SevenUpdate
                     debug.IncludeExceptionDetailInFaults = true;
                 }
             }
-
+#endif
             Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(new ProtoEndpointBehavior());
             Instance.Open();
         }

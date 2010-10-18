@@ -33,7 +33,6 @@ namespace SevenUpdate.Admin
     using System.Globalization;
     using System.IO;
     using System.ServiceModel;
-    using System.ServiceModel.Description;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Timers;

@@ -159,7 +159,7 @@ namespace SharpBits.Base
         /// <param name="nameSize">On input, specifies the size, of the name buffer. If the function fails because the buffer is too small or if name is zero, name receives the required buffer size, including the terminating <see langword="null"/> character.</param>
         /// <param name="referencedDomainName">A pointer to a buffer that receives a <see langword="null"/>-terminated string that contains the name of the domain where the account name was found.</param>
         /// <param name="domainNameSize">On input, specifies the size, of the <paramref name="referencedDomainName"/> buffer. If the function fails because the buffer is too small or if <paramref name="referencedDomainName"/> is zero, <paramref name="referencedDomainName"/> receives the required buffer size, including the terminating <see langword="null"/> character.</param>
-        /// <param name="use">A pointer to a variable that receives a <see cref="SidNameUse"/> value that indicates the type of the account.</param>
+        /// <param name="use">A pointer to a variable that receives a SidNameUse value that indicates the type of the account.</param>
         /// <returns><see langword="true"/> if function succecced</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
