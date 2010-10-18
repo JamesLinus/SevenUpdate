@@ -325,10 +325,6 @@
     <value>Not Available</value>
     <comment>TextBlock.Text</comment>
   </data>
-  <data name="CouldNotConnectToService" xml:space="preserve">
-    <value>Could not connect to the Seven Update service</value>
-    <comment>TextBlock.Text</comment>
-  </data>
   <data name="RebootComputer" xml:space="preserve">
     <value>Would you like to reboot your computer?</value>
     <comment>TaskDialog.Content</comment>

@@ -331,7 +331,7 @@ namespace SevenUpdate
                 return;
             }
 
-            if (DownloadProgressChanged == null || e.Job.Progress.BytesTotal <= 0 || e.Job.Progress.BytesTransferred <= 0)
+            if (DownloadProgressChanged == null || e.Job.Progress.BytesTransferred <= 0)
             {
                 return;
             }

@@ -198,7 +198,7 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            var timer = new System.Timers.Timer(10000);
+            var timer = new System.Timers.Timer(3000);
             timer.Elapsed += CheckIfRunning;
             timer.Start();
             
@@ -437,36 +437,40 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
-            if (IsInstalling)
-            {
-                return;
-            }
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        if (IsInstalling)
+                        {
+                            return;
+                        }
 
-            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0)
-            {
-                isClientConnected = true;
-                if (client == null)
-                {
-                    StartWcfHost();
-                }
+                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0)
+                        {
+                            isClientConnected = true;
+                            if (client == null)
+                            {
+                                StartWcfHost();
+                            }
 
 #if (!DEBUG)
                 if (waiting)
                     ShutdownApp();
 #endif
-            }
+                        }
 
-            if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0 || waiting)
-            {
-                return;
-            }
+                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0 || waiting)
+                        {
+                            return;
+                        }
 
-            isClientConnected = false;
+                        isClientConnected = false;
 
-            if (!waiting)
-            {
-                ShutdownApp();
-            }
+                        if (!waiting)
+                        {
+                            ShutdownApp();
+                        }
+                    });
         }
 
         /// <summary>Updates the notify icon text</summary>
