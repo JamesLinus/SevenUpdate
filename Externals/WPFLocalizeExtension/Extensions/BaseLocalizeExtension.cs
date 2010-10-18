@@ -30,8 +30,8 @@ namespace WPFLocalizeExtension.Extensions
     /// </summary>
     /// <typeparam name="TValue">The type of the provided value.</typeparam>
     /// <remarks>If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled properties</remarks>
-    [MarkupExtensionReturnType(typeof(object))]
-    [ContentProperty("ResourceIdentifierKey")]
+    [MarkupExtensionReturnType(typeof(object)), ContentProperty("ResourceIdentifierKey")]
+    
     public abstract class BaseLocalizeExtension<TValue> : MarkupExtension, IWeakEventListener, INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -113,24 +113,16 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Gets or sets the culture to force a fixed localized object</summary>
-        public string ForceCulture
-        {
-            get;
-            set;
-        }
+        public string ForceCulture { get; set; }
 
         /// <summary>
         ///   Gets or sets the initialize value.
         ///   This is ONLY used to support the localize extension in blend!
         /// </summary>
         /// <value>The initialize value.</value>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ConstructorArgument("key")]
-        public string InitializeValue
-        {
-            get;
-            set;
-        }
+        [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("key")]
+        
+        public string InitializeValue { get; set; }
 
         /// <summary>Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -176,11 +168,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets the design value.</summary>
         /// <value>The design value.</value>
         [DesignOnly(true)]
-        protected object DesignValue
-        {
-            get;
-            set;
-        }
+        protected object DesignValue { get; set; }
 
         /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.

@@ -109,9 +109,9 @@ namespace SevenUpdate.Service
         void HideUpdates(Collection<Suh> hiddenUpdates);
 
         /// <summary>Gets a collection of <see cref="Sui"/></summary>
-        /// <param name="appUpdates">The collection of applications and updates to install</param>
+        /// <param name="applicationUpdates">The collection of applications and updates to install</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
-        void InstallUpdates(Collection<Sui> appUpdates);
+        void InstallUpdates(Collection<Sui> applicationUpdates);
 
         /// <summary>The update to show and remove from hidden updates</summary>
         /// <param name="hiddenUpdate">The hidden update to show</param>

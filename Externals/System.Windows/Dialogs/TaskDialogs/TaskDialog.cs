@@ -194,11 +194,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         /// <summary>Gets a value that contains the <see cref = "TaskDialog" /> controls.</summary>
-        public DialogControlCollection<TaskDialogControl> Controls
-        {
-            get;
-            private set;
-        }
+        public DialogControlCollection<TaskDialogControl> Controls { get; private set; }
 
         /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
         public string DetailsCollapsedLabel
@@ -1431,11 +1427,7 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets or sets the text of the hyperlink that was clicked.</summary>
-            public string LinkText
-            {
-                get;
-                set;
-            }
+            public string LinkText { get; set; }
 
             #endregion
         }
@@ -1446,18 +1438,10 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets or sets the text of the custom button that was clicked.</summary>
-            public string CustomButton
-            {
-                get;
-                set;
-            }
+            public string CustomButton { get; set; }
 
             /// <summary>Gets or sets the standard button that was clicked.</summary>
-            public TaskDialogResult TaskDialogResult
-            {
-                get;
-                set;
-            }
+            public TaskDialogResult TaskDialogResult { get; set; }
 
             #endregion
         }
@@ -1479,11 +1463,7 @@ namespace System.Windows.Dialogs.TaskDialogs
             #region Properties
 
             /// <summary>Gets  a value indicating whether the current number of ticks.</summary>
-            public int Ticks
-            {
-                get;
-                private set;
-            }
+            public int Ticks { get; private set; }
 
             #endregion
         }

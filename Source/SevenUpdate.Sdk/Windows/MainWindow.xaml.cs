@@ -40,8 +40,8 @@ namespace SevenUpdate.Sdk.Windows
     using SevenUpdate.Sdk.Properties;
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
-    [ContentProperty]
-    [TemplatePart(Name = "PART_NavWinCP", Type = typeof(ContentPresenter))]
+    [ContentProperty, TemplatePart(Name = "PART_NavWinCP", Type = typeof(ContentPresenter))]
+    
     public sealed partial class MainWindow
     {
         #region Constructors and Destructors
@@ -62,11 +62,7 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Gets the <see cref = "NavigationService" /> for the current window</summary>
         /// <value>The nav service.</value>
-        internal static NavigationService NavService
-        {
-            get;
-            private set;
-        }
+        internal static NavigationService NavService { get; private set; }
 
         #endregion
 

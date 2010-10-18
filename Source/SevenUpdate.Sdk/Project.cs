@@ -33,10 +33,8 @@ namespace SevenUpdate.Sdk
     using ProtoBuf;
 
     /// <summary>Contains data specifying the application name and it's updates</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
-    [KnownType(typeof(Sua))]
-    [KnownType(typeof(ObservableCollection<Update>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
+    
     public class Project : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -60,8 +58,8 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets or sets the localized application name</summary>
         /// <value>The name of the application.</value>
-        [ProtoMember(1)]
-        [DataMember]
+        [ProtoMember(1), DataMember]
+        
         public string ApplicationName
         {
             get
@@ -78,8 +76,8 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets or sets the update names.</summary>
         /// <value>The update names.</value>
-        [ProtoMember(2)]
-        [DataMember]
+        [ProtoMember(2), DataMember]
+        
         public ObservableCollection<string> UpdateNames
         {
             get

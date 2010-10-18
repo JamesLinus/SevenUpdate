@@ -29,35 +29,34 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Automatic Update option Seven Update can use</summary>
-    [ProtoContract]
-    [DataContract]
-    [DefaultValue(Install)]
+    [ProtoContract, DataContract, DefaultValue(Install)]
+    
     public enum AutoUpdateOption
     {
         /// <summary>Download and Installs updates automatically</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Install = 0,
 
         /// <summary>Downloads Updates automatically</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Download = 1,
 
         /// <summary>Only checks and notifies the user of updates</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Notify = 2,
 
         /// <summary>No automatic checking</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Never = 3
     }
 
     /// <summary>Configuration options</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
+    [ProtoContract, DataContract(IsReference = true)]
+    
     public sealed class Config : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -81,8 +80,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets which automatic update option Seven Update should use</summary>
         /// <value>The automatic update option</value>
-        [ProtoMember(1)]
-        [DataMember]
+        [ProtoMember(1), DataMember]
+        
         public AutoUpdateOption AutoOption
         {
             get
@@ -101,8 +100,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates</summary>
         /// <value><see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.</value>
-        [ProtoMember(2)]
-        [DataMember]
+        [ProtoMember(2), DataMember]
+        
         public bool IncludeRecommended
         {
             get

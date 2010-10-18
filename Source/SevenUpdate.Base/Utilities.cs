@@ -79,11 +79,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the ISO language code</summary>
         /// <value>The locale.</value>
-        public static string Locale
-        {
-            get;
-            set;
-        }
+        public static string Locale { get; set; }
 
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>

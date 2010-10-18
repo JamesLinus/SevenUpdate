@@ -20,9 +20,8 @@ namespace SharpBits.Base
     /// Use the IBackgroundCopyManager interface to create transfer jobs,
     ///   retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.
     /// </summary>
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C")]
-    [ComImportAttribute]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C"), ComImportAttribute]
+    
     internal interface IBackgroundCopyManager
     {
         /// <summary>Creates a new transfer job</summary>
@@ -53,9 +52,8 @@ namespace SharpBits.Base
     /// Implement the IBackgroundCopyCallback interface to receive notification that a job is complete, has been modified, or
     ///   is in error. Clients use this interface instead of polling for the status of the job.
     /// </summary>
-    [ComImport]
-    [Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22")]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport, Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    
     internal interface IBackgroundCopyCallback
     {
         /// <summary>Called when all of the files in the job have successfully transferred.</summary>
@@ -77,9 +75,8 @@ namespace SharpBits.Base
     /// Use the IBackgroundCopyJob interface to add files to the job, set the priority level of the job, determine the state
     ///   of the job, and to start and stop the job.
     /// </summary>
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("37668D37-507E-4160-9316-26306D150B12")]
-    [ComImportAttribute]
+    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("37668D37-507E-4160-9316-26306D150B12"), ComImportAttribute]
+    
     internal interface IBackgroundCopyJob
     {
         /// <summary>Adds multiple files to the job</summary>
@@ -268,9 +265,8 @@ namespace SharpBits.Base
     ///   reply data transfer to the client, request command line execution, and provide credentials for proxy and remote
     ///   server authentication requests.
     /// </summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid("54B50739-686F-45EB-9DFF-D6A9A0FAA9AF")]
+    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("54B50739-686F-45EB-9DFF-D6A9A0FAA9AF")]
+    
     internal interface IBackgroundCopyJob2
     {
         /// <summary>Adds multiple files to the job</summary>
@@ -491,9 +487,8 @@ namespace SharpBits.Base
     }
 
     /// <summary>Use the IBackgroundCopyJob3 interface to download ranges of a file and change the prefix of a remote file name.</summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid("443C8934-90FF-48ED-BCDE-26F5C7450042")]
+    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("443C8934-90FF-48ED-BCDE-26F5C7450042")]
+    
     internal interface IBackgroundCopyJob3
     {
         /// <summary>Adds multiple files to the job</summary>
@@ -735,9 +730,8 @@ namespace SharpBits.Base
     }
 
     /// <summary>Use this interface to enable peer caching, restrict download time, and inspect user token characteristics.</summary>
-    [ComImport]
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [Guid("BC2C92DF-4972-4FA7-B8A0-444E127BA670")]
+    [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("BC2C92DF-4972-4FA7-B8A0-444E127BA670")]
+    
     internal interface IBackgroundCopyJob4
     {
         /// <summary>Adds multiple files to the job</summary>
@@ -1006,9 +1000,8 @@ namespace SharpBits.Base
     /// Use the information in the IBackgroundCopyError interface to determine the cause of the error and if the transfer
     ///   process can proceed.
     /// </summary>
-    [GuidAttribute("19C613A0-FCB8-4F28-81AE-897C3D078F81")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [GuidAttribute("19C613A0-FCB8-4F28-81AE-897C3D078F81"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
+    
     internal interface IBackgroundCopyError
     {
         /// <summary>
@@ -1042,9 +1035,8 @@ namespace SharpBits.Base
     }
 
     /// <summary>Use the IEnumBackgroundCopyJobs interface to enumerate the list of jobs in the transfer queue. To get an <see cref="IEnumBackgroundCopyJobs"/> interface pointer, call the <see cref="IBackgroundCopyManager"/>:: EnumJobs method.</summary>
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD")]
-    [ComImportAttribute]
+    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD"), ComImportAttribute]
+    
     internal interface IEnumBackgroundCopyJobs
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence</summary>
@@ -1076,9 +1068,8 @@ namespace SharpBits.Base
     /// Use the IEnumBackgroundCopyFiles interface to enumerate the files
     ///   that a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob"/>::EnumFiles method.
     /// </summary>
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40")]
-    [ComImportAttribute]
+    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
+    
     internal interface IEnumBackgroundCopyFiles
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence</summary>
@@ -1111,9 +1102,8 @@ namespace SharpBits.Base
     ///   that is part of a job. For example, you can use the interfaces methods to retrieve the local and remote names of the
     ///   file and transfer progress information.
     /// </summary>
-    [GuidAttribute("01B7BD23-FB88-4A77-8490-5891D3E4653A")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [GuidAttribute("01B7BD23-FB88-4A77-8490-5891D3E4653A"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
+    
     internal interface IBackgroundCopyFile
     {
         /// <summary>Retrieves the remote name of the file</summary>
@@ -1134,9 +1124,8 @@ namespace SharpBits.Base
     ///   that is part of a job. The IBackgroundCopyFile2 interface is used to specify a new remote name for the file and
     ///   retrieve the list of ranges to download.
     /// </summary>
-    [GuidAttribute("83E81B93-0873-474D-8A8C-F2018B1A939C")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [GuidAttribute("83E81B93-0873-474D-8A8C-F2018B1A939C"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
+    
     internal interface IBackgroundCopyFile2
     {
         /// <summary>Retrieves the remote name of the file</summary>
@@ -1162,10 +1151,8 @@ namespace SharpBits.Base
     }
 
     /// <summary>Entry point to the BITS infrastructure.</summary>
-    [Guid("4991D34B-80A1-4291-83B6-3328366B9097")]
-    [ClassInterfaceAttribute(ClassInterfaceType.None)]
-    [ComImportAttribute]
-    [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
+    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute, SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
+    
     internal class BackgroundCopyManager
     {
     }

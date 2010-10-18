@@ -64,11 +64,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven update is currently searching for updates</summary>
-        public static bool IsSearching
-        {
-            get;
-            private set;
-        }
+        public static bool IsSearching { get; private set; }
 
         #endregion
 

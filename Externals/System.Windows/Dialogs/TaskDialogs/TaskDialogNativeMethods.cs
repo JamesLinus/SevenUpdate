@@ -287,7 +287,7 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <returns>The result</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Auto, PreserveSig = false)]
         internal static extern Result TaskDialogIndirect(
-            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
+            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
         /// <summary>Contains the data for a <see cref="TaskDialogIcon"/></summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]

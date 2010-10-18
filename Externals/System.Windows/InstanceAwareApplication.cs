@@ -151,11 +151,7 @@ namespace System.Windows
         /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
         /// <value><see langword = "true" /> if the current application instance is the first one, otherwise <see langword = "false" />.</value>
         /// <remarks>The first application instance gets notified about subsequent application instances startup.</remarks>
-        public bool IsFirstInstance
-        {
-            get;
-            private set;
-        }
+        public bool IsFirstInstance { get; private set; }
 
         #endregion
 
@@ -550,11 +546,7 @@ namespace System.Windows
 
             /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
             /// <value><see langword = "true" /> if the application window has to be brought to foreground, otherwise <see langword = "false" /></value>
-            public bool BringToForeground
-            {
-                get;
-                private set;
-            }
+            public bool BringToForeground { get; private set; }
 
             #endregion
 

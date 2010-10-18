@@ -68,11 +68,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven Update is installing updates</summary>
-        public static bool IsInstalling
-        {
-            get;
-            private set;
-        }
+        public static bool IsInstalling { get; private set; }
 
         #endregion
 
@@ -84,12 +80,12 @@ namespace SevenUpdate
         {
             if (applications == null)
             {
-                return;
+                throw new ArgumentNullException();
             }
 
             if (applications.Count < 1)
             {
-                return;
+                throw new ArgumentNullException();
             }
 
             IsInstalling = true;

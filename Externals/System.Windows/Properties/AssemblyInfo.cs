@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="System.Windows"
 //            assembly="System.Windows"
@@ -31,7 +31,6 @@ using System.Windows;
 using System.Windows.Markup;
 
 [assembly: CLSCompliant(false)]
-
 [assembly: AssemblyTitle("System.Windows")]
 [assembly: AssemblyDescription("Provides additional controls for WPF")]
 [assembly: AssemblyConfiguration("")]

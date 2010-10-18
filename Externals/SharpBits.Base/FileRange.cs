@@ -62,11 +62,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the BG file range.</summary>
         /// <value>The BG file range.</value>
-        internal BGFileRange BGFileRange
-        {
-            get;
-            private set;
-        }
+        internal BGFileRange BGFileRange { get; private set; }
 
         #endregion
     }

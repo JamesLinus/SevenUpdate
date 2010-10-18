@@ -26,8 +26,8 @@ namespace WPFLocalizeExtension.Extensions
 
     /// <summary>Represents a OddsFormatExtension which provides a formated decimal odds value.</summary>
     /// <remarks>If a content between two tags in Xaml is set, this has the higher priority and will overwrite the settled properties</remarks>
-    [MarkupExtensionReturnType(typeof(string))]
-    [ContentProperty("ResourceIdentifierKey")]
+    [MarkupExtensionReturnType(typeof(string)), ContentProperty("ResourceIdentifierKey")]
+    
     public sealed class OddsFormatExtension : MarkupExtension, IWeakEventListener
     {
         #region Constants and Fields
@@ -100,24 +100,16 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Gets or sets the <see cref = "OddsFormatType" /> to force a fixed output</summary>
-        public OddsFormatType? ForceOddsFormatType
-        {
-            get;
-            set;
-        }
+        public OddsFormatType? ForceOddsFormatType { get; set; }
 
         /// <summary>
         ///   Gets or sets the initialize value.
         ///   This is ONLY used to support the localize extension in blend!
         /// </summary>
         /// <value>The initialize value.</value>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ConstructorArgument("displayValue")]
-        public decimal InitializeValue
-        {
-            get;
-            set;
-        }
+        [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("displayValue")]
+        
+        public decimal InitializeValue { get; set; }
 
         /// <summary>Gets the collection of <see cref = "DependencyObject" /> as WeakReferences which contains the <see cref = "TargetProperty" />.</summary>
         public ReadOnlyCollection<WeakReference> TargetObjects
@@ -129,11 +121,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Gets the <see cref = "DependencyProperty" /> which should get the localized content.</summary>
-        public DependencyProperty TargetProperty
-        {
-            get;
-            private set;
-        }
+        public DependencyProperty TargetProperty { get; private set; }
 
         #endregion
 

@@ -240,11 +240,7 @@ namespace System.Windows.Dwm
 
             /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
             /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
-            public bool IsGlassEnabled
-            {
-                get;
-                private set;
-            }
+            public bool IsGlassEnabled { get; private set; }
 
             #endregion
         }

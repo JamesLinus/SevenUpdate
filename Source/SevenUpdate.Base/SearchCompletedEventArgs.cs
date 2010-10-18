@@ -30,8 +30,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Provides event data for the SearchCompleted event</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
+    
     public sealed class SearchCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
@@ -49,49 +49,38 @@ namespace SevenUpdate
             this.RecommendedCount = recommendedCount;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs"/> class.</summary>
+        public SearchCompletedEventArgs()
+        {
+        }
+
         #endregion
 
         #region Properties
 
         /// <summary>Gets a collection of applications that contain updates to install</summary>
         /// <value>The applications.</value>
-        [ProtoMember(1)]
-        [DataMember]
-        public IEnumerable<Sui> Applications
-        {
-            get;
-            private set;
-        }
+        [ProtoMember(1), DataMember]
+        
+        public IEnumerable<Sui> Applications { get; private set; }
 
         /// <summary>Gets or sets the important updates count.</summary>
         /// <value>The important count.</value>
-        [ProtoMember(2)]
-        [DataMember]
-        public int ImportantCount
-        {
-            get;
-            set;
-        }
+        [ProtoMember(2), DataMember]
+        
+        public int ImportantCount { get; set; }
 
         /// <summary>Gets or sets the optional updates count.</summary>
         /// <value>The optional count.</value>
-        [ProtoMember(3)]
-        [DataMember]
-        public int OptionalCount
-        {
-            get;
-            set;
-        }
+        [ProtoMember(3), DataMember]
+        
+        public int OptionalCount { get; set; }
 
         /// <summary>Gets the recommended updates count.</summary>
         /// <value>The recommended count.</value>
-        [ProtoMember(4)]
-        [DataMember]
-        public int RecommendedCount
-        {
-            get;
-            private set;
-        }
+        [ProtoMember(4), DataMember]
+        
+        public int RecommendedCount { get; private set; }
 
         #endregion
     }

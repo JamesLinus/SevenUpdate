@@ -35,7 +35,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
 
     using SevenUpdate.Properties;
-    using SevenUpdate.Service;
     using SevenUpdate.Windows;
 
     /// <summary>Interaction logic for Main.xaml</summary>

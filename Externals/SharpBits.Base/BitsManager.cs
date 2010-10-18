@@ -160,19 +160,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets the collection of <see cref = "BitsJob" /></summary>
         /// <value>The collection of <see cref = "BitsJob" /></value>
-        public BitsJobsDictionary Jobs
-        {
-            get;
-            private set;
-        }
+        public BitsJobsDictionary Jobs { get; private set; }
 
         /// <summary>Gets the background copy manager.</summary>
         /// <value>The background copy manager.</value>
-        internal IBackgroundCopyManager BackgroundCopyManager
-        {
-            get;
-            private set;
-        }
+        internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
 
         /// <summary>Gets the bits version.</summary>
         /// <value>The bits version.</value>
@@ -186,19 +178,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets current owner of the job</summary>
         /// <value>The current owner.</value>
-        internal JobOwner CurrentOwner
-        {
-            get;
-            set;
-        }
+        internal JobOwner CurrentOwner { get; set; }
 
         /// <summary>Gets the notification handler.</summary>
         /// <value>The notification handler.</value>
-        internal BitsNotification NotificationHandler
-        {
-            get;
-            private set;
-        }
+        internal BitsNotification NotificationHandler { get; private set; }
 
         #endregion
 

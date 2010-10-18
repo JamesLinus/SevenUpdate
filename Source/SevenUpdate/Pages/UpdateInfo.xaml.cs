@@ -70,11 +70,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Gets or sets a value indicating whether to expand the Optional Updates Group by default.</summary>
         /// <value><see langword = "true" /> to expand the optional updates; otherwise, <see langword = "false" />.</value>
-        internal static bool DisplayOptionalUpdates
-        {
-            private get;
-            set;
-        }
+        internal static bool DisplayOptionalUpdates { private get; set; }
 
         #endregion
 
@@ -324,32 +320,16 @@ namespace SevenUpdate.Pages
             #region Properties
 
             /// <summary>Gets the total download size in bytes of the important updates</summary>
-            internal ulong ImportantDownloadSize
-            {
-                get;
-                private set;
-            }
+            internal ulong ImportantDownloadSize { get; private set; }
 
             /// <summary>Gets the number of Important Updates selected</summary>
-            internal int ImportantUpdates
-            {
-                get;
-                private set;
-            }
+            internal int ImportantUpdates { get; private set; }
 
             /// <summary>Gets the total download size in bytes of the optional updates</summary>
-            internal ulong OptionalDownloadSize
-            {
-                get;
-                private set;
-            }
+            internal ulong OptionalDownloadSize { get; private set; }
 
             /// <summary>Gets the number of Optional Updates selected</summary>
-            internal int OptionalUpdates
-            {
-                get;
-                private set;
-            }
+            internal int OptionalUpdates { get; private set; }
 
             #endregion
         }

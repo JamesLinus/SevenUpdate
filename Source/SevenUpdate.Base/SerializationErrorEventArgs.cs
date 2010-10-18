@@ -39,25 +39,22 @@ namespace SevenUpdate
             this.File = file;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="SerializationErrorEventArgs"/> class.</summary>
+        public SerializationErrorEventArgs()
+        {
+        }
+
         #endregion
 
         #region Properties
 
         /// <summary>Gets the exception data</summary>
         /// <value>The exception.</value>
-        public Exception Exception
-        {
-            get;
-            private set;
-        }
+        public Exception Exception { get; private set; }
 
         /// <summary>Gets the full path of the file</summary>
         /// <value>The file that the serialization error occurred for</value>
-        public string File
-        {
-            get;
-            private set;
-        }
+        public string File { get; private set; }
 
         #endregion
     }

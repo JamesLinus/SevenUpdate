@@ -56,11 +56,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets a value indicating whether Seven update is currently downloading updates</summary>
-        public static bool IsDownloading
-        {
-            get;
-            private set;
-        }
+        public static bool IsDownloading { get; private set; }
 
         #endregion
 

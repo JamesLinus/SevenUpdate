@@ -162,11 +162,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets the used ResourceManagers with their corresponding <c>namespaces</c>.</summary>
-        public Dictionary<string, ResourceManager> ResourceManagerList
-        {
-            get;
-            private set;
-        }
+        public Dictionary<string, ResourceManager> ResourceManagerList { get; private set; }
 
         /// <summary>
         ///   Gets the specific <see cref = "CultureInfo" /> of the current culture.

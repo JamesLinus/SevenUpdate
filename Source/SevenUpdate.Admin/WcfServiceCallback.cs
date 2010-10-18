@@ -120,8 +120,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Gets a collection of <see cref="Sui"/></summary>
-        /// <param name="appUpdates">The collection of applications and updates to install</param>
-        public void InstallUpdates(Collection<Sui> appUpdates)
+        /// <param name="applicationUpdates">The collection of applications and updates to install</param>
+        public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
             {
@@ -140,7 +140,8 @@ namespace SevenUpdate.Admin
                 Utilities.ReportError(e, Utilities.AllUserStore);
             }
 
-            Download.DownloadUpdates(appUpdates, true);
+            App.Applications = applicationUpdates;
+            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
@@ -168,7 +169,9 @@ namespace SevenUpdate.Admin
                     {
                         Thread.Sleep(500);
                         if (!App.IsInstalling)
+                        {
                             Environment.Exit(0);
+                        }
                     });
         }
     }

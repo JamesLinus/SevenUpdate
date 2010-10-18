@@ -67,59 +67,31 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets the application information of the project</summary>
         /// <value>The application info.</value>
-        public static Sua AppInfo
-        {
-            get;
-            private set;
-        }
+        public static Sua AppInfo { get; private set; }
 
         /// <summary>Gets or sets the index for the selected project</summary>
         /// <value>The index of the application</value>
-        internal static int AppIndex
-        {
-            get;
-            set;
-        }
+        internal static int AppIndex { get; set; }
 
         /// <summary>Gets or sets a value indicating whether the current project being edited is new</summary>
         /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
-        internal static bool IsNewProject
-        {
-            get;
-            set;
-        }
+        internal static bool IsNewProject { get; set; }
 
         /// <summary>Gets or sets a collection of Projects</summary>
         /// <value>The projects.</value>
-        internal static Collection<Project> Projects
-        {
-            get;
-            set;
-        }
+        internal static Collection<Project> Projects { get; set; }
 
         /// <summary>Gets or sets the index for the current shortcut being edited</summary>
         /// <value>The selected shortcut.</value>
-        internal static int SelectedShortcut
-        {
-            get;
-            set;
-        }
+        internal static int SelectedShortcut { get; set; }
 
         /// <summary>Gets or sets the index for the selected update in the selected project</summary>
         /// <value>The index of the update.</value>
-        internal static int UpdateIndex
-        {
-            get;
-            set;
-        }
+        internal static int UpdateIndex { get; set; }
 
         /// <summary>Gets the current update being edited</summary>
         /// <value>The update info.</value>
-        internal static Update UpdateInfo
-        {
-            get;
-            private set;
-        }
+        internal static Update UpdateInfo { get; private set; }
 
         #endregion
 

@@ -49,22 +49,14 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <see cref = "System.String" /> object.</value>
-        public string Command
-        {
-            get;
-            private set;
-        }
+        public string Command { get; private set; }
 
         /// <summary>
         ///   Gets the set of conditions when the application 
         ///   should not be restarted.
         /// </summary>
         /// <value>A set of <see cref = "RestartRestrictions" /> values.</value>
-        public RestartRestrictions Restrictions
-        {
-            get;
-            private set;
-        }
+        public RestartRestrictions Restrictions { get; private set; }
 
         #endregion
 

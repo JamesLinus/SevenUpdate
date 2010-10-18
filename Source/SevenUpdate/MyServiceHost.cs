@@ -28,6 +28,9 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
+    using System.ServiceModel.Description;
+
+    using ProtoBuf.ServiceModel;
 
     using SevenUpdate.Service;
 
@@ -56,7 +59,24 @@ namespace SevenUpdate
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");
 
             Instance = new ServiceHost(typeof(WcfService), baseAddress);
-            Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(new ProtoBuf.ServiceModel.ProtoEndpointBehavior());
+
+            var debug = Instance.Description.Behaviors.Find<ServiceDebugBehavior>();
+
+            // if not found - add behavior with setting turned on 
+            if (debug == null)
+            {
+                Instance.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+            }
+            else
+            {
+                // make sure setting is turned ON
+                if (!debug.IncludeExceptionDetailInFaults)
+                {
+                    debug.IncludeExceptionDetailInFaults = true;
+                }
+            }
+
+            Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(new ProtoEndpointBehavior());
             Instance.Open();
         }
 
@@ -73,6 +93,7 @@ namespace SevenUpdate
             {
                 Instance.Close();
             }
+
             Instance = null;
         }
     }

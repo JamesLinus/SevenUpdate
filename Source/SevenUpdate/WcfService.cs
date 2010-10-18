@@ -241,11 +241,24 @@ namespace SevenUpdate
 #if (!DEBUG)
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
+                IsConnected = false;
+                context = null;
+                Core.Instance.IsAdmin = false;
                 var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
                 if (!success)
                 {
-                    IsConnected = false;
-                    Core.Instance.IsAdmin = false;
+                    return false;
+                }
+            }
+#else
+            if (Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1 && Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            {
+                IsConnected = false;
+                context = null;
+                Core.Instance.IsAdmin = false;
+                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
+                if (!success)
+                {
                     return false;
                 }
             }

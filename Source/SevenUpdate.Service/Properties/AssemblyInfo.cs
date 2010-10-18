@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
 //            project="SevenUpdate.Service"
 //            assembly="SevenUpdate.Service"
@@ -29,7 +29,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(false)]
-
 [assembly: AssemblyTitle("SevenUpdate.Service")]
 [assembly: AssemblyDescription("SevenUpdate.Service")]
 [assembly: AssemblyConfiguration("")]

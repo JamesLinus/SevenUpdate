@@ -36,11 +36,7 @@ namespace System.Windows.Controls
         #region Properties
 
         /// <summary>Gets or sets a dictionary of SortColumns</summary>
-        protected Dictionary<string, ListSortDirection> SortColumns
-        {
-            get;
-            set;
-        }
+        protected Dictionary<string, ListSortDirection> SortColumns { get; set; }
 
         #endregion
 

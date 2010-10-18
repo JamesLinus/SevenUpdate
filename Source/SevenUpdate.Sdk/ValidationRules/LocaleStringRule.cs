@@ -41,11 +41,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
         /// <summary>Gets or sets the name of the Collection of locale strings to get</summary>
         /// <value>The name of the property.</value>
-        internal string PropertyName
-        {
-            private get;
-            set;
-        }
+        internal string PropertyName { private get; set; }
 
         #endregion
 

@@ -57,11 +57,7 @@ namespace System.Windows.ApplicationServices
         ///   By default, the interval is 5 seconds. 
         ///   If you specify zero, the default interval is used.
         /// </remarks>
-        public uint PingInterval
-        {
-            get;
-            private set;
-        }
+        public uint PingInterval { get; private set; }
 
         /// <summary>
         ///   Gets the recovery data object that contains the callback method and an optional
@@ -69,11 +65,7 @@ namespace System.Windows.ApplicationServices
         ///   callback method.
         /// </summary>
         /// <value>A <see cref = "RecoveryData" /> object.</value>
-        public RecoveryData RecoveryData
-        {
-            get;
-            private set;
-        }
+        public RecoveryData RecoveryData { get; private set; }
 
         #endregion
 

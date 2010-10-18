@@ -33,6 +33,7 @@ namespace SevenUpdate.Admin
     using System.Globalization;
     using System.IO;
     using System.ServiceModel;
+    using System.ServiceModel.Description;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Timers;
@@ -41,17 +42,14 @@ namespace SevenUpdate.Admin
     using Microsoft.Win32;
 
     using SevenUpdate.Admin.Properties;
-    using SevenUpdate.Service;
 
     using Application = System.Windows.Application;
+    using Timer = System.Timers.Timer;
 
     /// <summary>The main class of the application</summary>
     internal static class App
     {
         #region Constants and Fields
-
-        /// <summary>The collection of applications to update</summary>
-        private static Collection<Sui> apps;
 
         /// <summary>The WCF service host</summary>
         private static ElevatedProcessCallback client;
@@ -67,7 +65,7 @@ namespace SevenUpdate.Admin
 
         /// <summary>Indicates if the program is waiting</summary>
         private static bool waiting;
-        
+
         #endregion
 
         #region Enums
@@ -94,6 +92,9 @@ namespace SevenUpdate.Admin
         #endregion
 
         #region Properties
+
+        /// <summary>Gets or sets the collection of applications to update</summary>
+        internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>Gets a value indicating whether the program is currently installing updates</summary>
         internal static bool IsInstalling { get; private set; }
@@ -131,7 +132,7 @@ namespace SevenUpdate.Admin
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 IsInstalling = true;
                 File.Delete(Utilities.AllUserStore + "updates.sui");
-                Install.InstallUpdates(apps);
+                Install.InstallUpdates(Applications);
             }
             else
             {
@@ -171,13 +172,15 @@ namespace SevenUpdate.Admin
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
+            File.Delete(Utilities.AllUserStore + "updates.sui");
             if (isClientConnected)
             {
                 client.OnInstallCompleted(sender, e);
             }
-
-            File.Delete(Utilities.AllUserStore + "updates.sui");
-            ShutdownApp();
+            else
+            {
+                ShutdownApp();
+            }
         }
 
         /// <summary>Reports when the installation progress has changed</summary>
@@ -198,10 +201,10 @@ namespace SevenUpdate.Admin
         [STAThread]
         private static void Main(string[] args)
         {
-            var timer = new System.Timers.Timer(3000);
+            var timer = new Timer(3000);
             timer.Elapsed += CheckIfRunning;
             timer.Start();
-            
+
             try
             {
                 bool createdNew;
@@ -370,10 +373,15 @@ namespace SevenUpdate.Admin
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
-            apps = e.Applications as Collection<Sui>;
-            if (apps.Count > 0)
+            Applications = e.Applications as Collection<Sui>;
+            if (Applications == null)
             {
-                Utilities.Serialize(apps, Utilities.AllUserStore + "updates.sui");
+                return;
+            }
+
+            if (Applications.Count > 0)
+            {
+                Utilities.Serialize(Applications, Utilities.AllUserStore + "updates.sui");
 
                 Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
 
@@ -384,7 +392,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(apps));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications));
                     IsInstalling = true;
                 }
             }
@@ -397,6 +405,14 @@ namespace SevenUpdate.Admin
         /// <summary>Shuts down the process and removes the icon of the notification bar</summary>
         private static void ShutdownApp()
         {
+            if (client != null)
+            {
+                if (client.State != CommunicationState.Closed)
+                {
+                    client.Close();
+                }
+            }
+
             if (notifyIcon != null)
             {
                 notifyIcon.Visible = false;
@@ -420,15 +436,16 @@ namespace SevenUpdate.Admin
                 };
 
             var address = new EndpointAddress("net.pipe://localhost/sevenupdate/");
-
             try
             {
                 client = new ElevatedProcessCallback(new InstanceContext(new WcfServiceCallback()), binding, address);
                 client.ElevatedProcessStarted();
+                isClientConnected = true;
             }
             catch (EndpointNotFoundException)
             {
                 client = null;
+                isClientConnected = false;
             }
         }
 
@@ -440,36 +457,24 @@ namespace SevenUpdate.Admin
             Task.Factory.StartNew(
                 () =>
                     {
+                        if (client == null)
+                        {
+                            StartWcfHost();
+                        }
+
                         if (IsInstalling)
                         {
                             return;
                         }
 
-                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0)
-                        {
-                            isClientConnected = true;
-                            if (client == null)
-                            {
-                                StartWcfHost();
-                            }
-
-#if (!DEBUG)
-                if (waiting)
-                    ShutdownApp();
-#endif
-                        }
-
-                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || Process.GetProcessesByName(@"SevenUpdate.vshost").Length > 0 || waiting)
+                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || waiting)
                         {
                             return;
                         }
 
-                        isClientConnected = false;
-
-                        if (!waiting)
-                        {
-                            ShutdownApp();
-                        }
+#if (!DEBUG)
+                        ShutdownApp();
+#endif
                     });
         }
 

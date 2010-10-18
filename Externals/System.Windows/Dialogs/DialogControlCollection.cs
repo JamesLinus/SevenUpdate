@@ -17,8 +17,7 @@ namespace System.Windows.Dialogs
     /// <summary>Strongly typed collection for dialog controls.</summary>
     /// <typeparam name="T">The control</typeparam>
     /// <typeparameter name="T">The <see cref="DialogControl"/></typeparameter>
-    public sealed class DialogControlCollection<T> : Collection<T>
-        where T : DialogControl
+    public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
         #region Constants and Fields
 

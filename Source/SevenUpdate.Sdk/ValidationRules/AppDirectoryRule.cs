@@ -50,11 +50,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
         /// <summary>Gets or sets a value indicating whether this instance is registry path.</summary>
         /// <value><see langword = "true" /> if this instance is registry path; otherwise, <see langword = "false" />.</value>
-        internal bool IsRegistryPath
-        {
-            private get;
-            set;
-        }
+        internal bool IsRegistryPath { private get; set; }
 
         #endregion
 

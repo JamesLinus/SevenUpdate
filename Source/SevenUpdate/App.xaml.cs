@@ -46,18 +46,10 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets or sets the navigation service for the <see cref = "MainWindow" /></summary>
-        internal static NavigationService NavService
-        {
-            get;
-            set;
-        }
+        internal static NavigationService NavService { get; set; }
 
         /// <summary>Gets or sets the application TaskBarItemInfo</summary>
-        internal static TaskbarItemInfo TaskBar
-        {
-            get;
-            set;
-        }
+        internal static TaskbarItemInfo TaskBar { get; set; }
 
         #endregion
 
@@ -67,7 +59,7 @@ namespace SevenUpdate
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
         /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
-        {   
+        {
             Init(e.Args);
             SetJumpList();
             base.OnStartup(e, isFirstInstance);

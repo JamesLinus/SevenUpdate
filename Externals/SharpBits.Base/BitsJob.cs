@@ -244,11 +244,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the collection of <see cref = "BitsFile" />'s for the job</summary>
         /// <value>The files.</value>
-        public BitsFilesCollection Files
-        {
-            get;
-            private set;
-        }
+        public BitsFilesCollection Files { get; private set; }
 
         /// <summary>Gets the GUID of the current job</summary>
         public Guid JobId
@@ -530,11 +526,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the current <see cref = "BitsJob" /></summary>
         /// <value>The <see cref = "BitsJob" /></value>
-        internal IBackgroundCopyJob Job
-        {
-            get;
-            private set;
-        }
+        internal IBackgroundCopyJob Job { get; private set; }
 
         /// <summary>Gets or sets the notification interface.</summary>
         /// <value>The notification interface.</value>
@@ -570,11 +562,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the notification target</summary>
         /// <value>The notification target.</value>
-        internal IBackgroundCopyCallback NotificationTarget
-        {
-            get;
-            set;
-        }
+        internal IBackgroundCopyCallback NotificationTarget { get; set; }
 
         #endregion
 

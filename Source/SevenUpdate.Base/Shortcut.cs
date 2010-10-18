@@ -34,24 +34,23 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The action to preform on the shortcut</summary>
-    [ProtoContract]
-    [DataContract]
-    [DefaultValue(Add)]
+    [ProtoContract, DataContract, DefaultValue(Add)]
+    
     public enum ShortcutAction
     {
         /// <summary>Adds a shortcut</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Add = 0,
 
         /// <summary>Updates a shortcut only if it exists</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Update = 1,
 
         /// <summary>Deletes a shortcut</summary>
-        [ProtoEnum]
-        [EnumMember]
+        [ProtoEnum, EnumMember]
+        
         Delete = 2
     }
 
@@ -93,9 +92,8 @@ namespace SevenUpdate
     }
 
     /// <summary>A shortcut to be created within an update</summary>
-    [ProtoContract]
-    [DataContract(IsReference = true)]
-    [KnownType(typeof(ShortcutAction))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ShortcutAction))]
+    
     public sealed class Shortcut : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -148,9 +146,8 @@ namespace SevenUpdate
         #region Interfaces
 
         /// <summary>The interface for a Persistent file</summary>
-        [ComImport]
-        [Guid("0000010c-0000-0000-c000-000000000046")]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [ComImport, Guid("0000010c-0000-0000-c000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        
         private interface IPersist
         {
             /// <summary>Gets the class ID.</summary>
@@ -160,9 +157,8 @@ namespace SevenUpdate
         }
 
         /// <summary>The persistent file for win32</summary>
-        [ComImport]
-        [Guid("0000010b-0000-0000-C000-000000000046")]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [ComImport, Guid("0000010b-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        
         private interface IPersistFile : IPersist
         {
             /// <summary>Gets the class ID.</summary>
@@ -178,29 +174,28 @@ namespace SevenUpdate
             /// <param name="fileName">Name of the file.</param>
             /// <param name="mode">The mode how to load the file</param>
             [PreserveSig]
-            void Load([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
+            void Load([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>Saves the specified file name.</summary>
             /// <param name="fileName">Name of the file.</param>
             /// <param name="remember">if set to <see langword="true"/> [remember].</param>
             [PreserveSig]
-            void Save([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName, [In] [MarshalAs(UnmanagedType.Bool)] bool remember);
+            void Save([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, [In, MarshalAs(UnmanagedType.Bool)] bool remember);
 
             /// <summary>Saves the shortcut</summary>
             /// <param name="fileName">Name of the file.</param>
             [PreserveSig]
-            void SaveCompleted([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
+            void SaveCompleted([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
             /// <summary>Gets the shortcut from the filename</summary>
             /// <param name="fileName">Name of the file.</param>
             [PreserveSig]
-            void GetCurFile([In] [MarshalAs(UnmanagedType.LPWStr)] string fileName);
+            void GetCurFile([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
         }
 
         /// <summary>The IShellLink interface allows Shell links to be created, modified, and resolved</summary>
-        [ComImport]
-        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        [Guid("000214F9-0000-0000-C000-000000000046")]
+        [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
+        
         private interface IShellLink
         {
             /// <summary>Retrieves the path and file name of a Shell link object</summary>
@@ -208,7 +203,7 @@ namespace SevenUpdate
             /// <param name="maxPath">The max path.</param>
             /// <param name="data">The data to get</param>
             /// <param name="flags">The options to specify the path is retrieved.</param>
-            void GetPath([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, out Win32FindData data, int flags);
+            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, out Win32FindData data, int flags);
 
             /// <summary>Retrieves the list of item identifiers for a Shell link object</summary>
             /// <param name="indentifer">The indentifer list.</param>
@@ -221,7 +216,7 @@ namespace SevenUpdate
             /// <summary>Retrieves the description string for a Shell link object</summary>
             /// <param name="description">The description.</param>
             /// <param name="maxName">Name of the max.</param>
-            void GetDescription([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder description, int maxName);
+            void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder description, int maxName);
 
             /// <summary>Sets the description for a Shell link object. The description can be any application-defined string</summary>
             /// <param name="description">The description.</param>
@@ -230,7 +225,7 @@ namespace SevenUpdate
             /// <summary>Retrieves the name of the working directory for a Shell link object</summary>
             /// <param name="dir">The working directory.</param>
             /// <param name="maxPath">The max path.</param>
-            void GetWorkingDirectory([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder dir, int maxPath);
+            void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder dir, int maxPath);
 
             /// <summary>Sets the name of the working directory for a Shell link object</summary>
             /// <param name="dir">The working directory.</param>
@@ -239,7 +234,7 @@ namespace SevenUpdate
             /// <summary>Retrieves the command-line arguments associated with a Shell link object</summary>
             /// <param name="args">The arguments for the shortcut</param>
             /// <param name="maxPath">The max path.</param>
-            void GetArguments([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder args, int maxPath);
+            void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder args, int maxPath);
 
             /// <summary>Sets the command-line arguments for a Shell link object</summary>
             /// <param name="args">The arguments for the shortcut</param>
@@ -265,7 +260,7 @@ namespace SevenUpdate
             /// <param name="iconPath">The icon path.</param>
             /// <param name="iconPathLength">Length of the icon path.</param>
             /// <param name="iconIndex">Index of the icon.</param>
-            void GetIconLocation([Out] [MarshalAs(UnmanagedType.LPWStr)] StringBuilder iconPath, int iconPathLength, out int iconIndex);
+            void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder iconPath, int iconPathLength, out int iconIndex);
 
             /// <summary>Sets the location (path and index) of the icon for a Shell link object</summary>
             /// <param name="iconPath">The icon path.</param>
@@ -288,8 +283,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the action to perform on the <see cref = "Shortcut" /></summary>
         /// <value>The action.</value>
-        [ProtoMember(3)]
-        [DataMember]
+        [ProtoMember(3), DataMember]
+        
         public ShortcutAction Action
         {
             get
@@ -308,8 +303,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the command line arguments for the shortcut</summary>
         /// <value>The arguments of the shortcut</value>
-        [ProtoMember(4, IsRequired = false)]
-        [DataMember]
+        [ProtoMember(4, IsRequired = false), DataMember]
+        
         public string Arguments
         {
             get
@@ -328,8 +323,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized shortcut descriptions</summary>
         /// <value>The localized descriptions for the shortcut</value>
-        [ProtoMember(5, IsRequired = false)]
-        [DataMember]
+        [ProtoMember(5, IsRequired = false), DataMember]
+        
         public ObservableCollection<LocaleString> Description
         {
             get
@@ -348,8 +343,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the icon resource for the shortcut</summary>
         /// <value>The icon for the shortcut</value>
-        [ProtoMember(6, IsRequired = false)]
-        [DataMember]
+        [ProtoMember(6, IsRequired = false), DataMember]
+        
         public string Icon
         {
             get
@@ -368,8 +363,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the physical location of the shortcut lnk file</summary>
         /// <value>The shortcut location</value>
-        [ProtoMember(2)]
-        [DataMember]
+        [ProtoMember(2), DataMember]
+        
         public string Location
         {
             get
@@ -388,8 +383,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the collection of localized shortcut names</summary>
         /// <value>The localized names for the shortcut</value>
-        [ProtoMember(1)]
-        [DataMember]
+        [ProtoMember(1), DataMember]
+        
         public ObservableCollection<LocaleString> Name
         {
             get
@@ -408,8 +403,8 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the file or folder that is executed by the shortcut</summary>
         /// <value>The target for the shortcut</value>
-        [ProtoMember(7, IsRequired = false)]
-        [DataMember]
+        [ProtoMember(7, IsRequired = false), DataMember]
+        
         public string Target
         {
             get
@@ -570,8 +565,8 @@ namespace SevenUpdate
         }
 
         /// <summary>The Shell link class</summary>
-        [ComImport]
-        [Guid("00021401-0000-0000-C000-000000000046")]
+        [ComImport, Guid("00021401-0000-0000-C000-000000000046")]
+        
         internal class ShellLink
         {
         }

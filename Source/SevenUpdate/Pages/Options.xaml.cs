@@ -195,7 +195,9 @@ namespace SevenUpdate.Pages
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
+            {
                 App.NavService.GoBack();
+            }
         }
 
         /// <summary>Updates the list with the <see cref="machineAppList"/></summary>

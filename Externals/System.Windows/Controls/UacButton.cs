@@ -182,19 +182,11 @@ namespace System.Windows.Controls
 
         /// <summary>Gets or sets <see cref = "ToolTip" /> shown when elevation has been preformed</summary>
         /// <value>A string that is used as the <see cref = "ToolTip" /> when elevation is complete</value>
-        public object ToolTipElevated
-        {
-            get;
-            set;
-        }
+        public object ToolTipElevated { get; set; }
 
         /// <summary>Gets or sets <see cref = "ToolTip" /> shown when elevation has not been preformed</summary>
         /// <value>A string that is used as the <see cref = "ToolTip" /> when elevation is required</value>
-        public object ToolTipNotElevated
-        {
-            get;
-            set;
-        }
+        public object ToolTipNotElevated { get; set; }
 
         #endregion
 

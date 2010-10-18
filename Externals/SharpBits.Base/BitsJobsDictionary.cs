@@ -72,11 +72,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the jobs.</summary>
         /// <value>The jobs of the current collection</value>
-        internal IEnumBackgroundCopyJobs Jobs
-        {
-            get;
-            private set;
-        }
+        internal IEnumBackgroundCopyJobs Jobs { get; private set; }
 
         #endregion
 

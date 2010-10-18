@@ -118,11 +118,7 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets a collection of applications to update</summary>
         /// <value>The collection of Sui</value>
-        internal static Collection<Sui> Applications
-        {
-            get;
-            set;
-        }
+        internal static Collection<Sui> Applications { get; set; }
 
         /// <summary>Gets the static instance of Core</summary>
         internal static Core Instance
@@ -134,11 +130,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check</summary>
-        internal static bool IsReconnect
-        {
-            get;
-            set;
-        }
+        internal static bool IsReconnect { get; set; }
 
         /// <summary>Gets a collection of software that Seven Update can check for updates</summary>
         private static IEnumerable<Sua> AppsToUpdate

@@ -29,8 +29,8 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Provides event data for the DownloadCompleted event</summary>
-    [ProtoContract]
-    [DataContract]
+    [ProtoContract, DataContract]
+    
     public sealed class DownloadCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
@@ -42,19 +42,20 @@ namespace SevenUpdate
             this.ErrorOccurred = errorOccurred;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs"/> class.</summary>
+        public DownloadCompletedEventArgs()
+        {
+        }
+
         #endregion
 
         #region Properties
 
         /// <summary>Gets a value indicating whether an error occurred</summary>
         /// <value><see langword = "true" /> if an error occurred otherwise, <see langword = "false" />.</value>
-        [ProtoMember(1, IsRequired = false)]
-        [DataMember]
-        public bool ErrorOccurred
-        {
-            get;
-            private set;
-        }
+        [ProtoMember(1, IsRequired = false), DataMember]
+        
+        public bool ErrorOccurred { get; private set; }
 
         #endregion
     }

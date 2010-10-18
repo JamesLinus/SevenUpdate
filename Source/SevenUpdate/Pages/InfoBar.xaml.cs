@@ -94,7 +94,7 @@ namespace SevenUpdate.Pages
         {
             this.InitializeComponent();
             Search.ErrorOccurred += this.ErrorOccurred;
-            WcfService.ServiceError += this.ErrorOccurred;
+
             Search.SearchCompleted += this.SearchCompleted;
             UpdateInfo.UpdateSelectionChanged += this.UpdateSelectionChanged;
             Core.UpdateActionChanged += this.SetUI;
@@ -103,6 +103,7 @@ namespace SevenUpdate.Pages
             WcfService.InstallProgressChanged += this.InstallProgressChanged;
             WcfService.InstallDone += this.InstallCompleted;
             WcfService.ErrorOccurred += this.ErrorOccurred;
+            WcfService.ServiceError += this.ErrorOccurred;
         }
 
         #endregion
@@ -419,7 +420,7 @@ namespace SevenUpdate.Pages
                 catch (IOException)
                 {
                 }
-                
+
                 if (Core.Settings.IncludeRecommended)
                 {
                     e.ImportantCount += e.RecommendedCount;
