@@ -38,25 +38,17 @@ namespace SevenUpdate.Admin
 
     using SevenUpdate.Service;
 
-    /// <summary>
-    /// Contains methods to execute for the service callback
-    /// </summary>
+    /// <summary>Contains methods to execute for the service callback</summary>
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name="application">The application to add to Seven Update</param>
+        /// <param name = "application">The application to add to Seven Update</param>
         public void AddApp(Sua application)
         {
             var sul = Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile);
-            var exists = false;
 
-            foreach (var t in sul.Where(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
-            {
-                exists = true;
-            }
-
-            if (exists)
+            if (sul.Any(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
             {
                 return;
             }
@@ -67,9 +59,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Changes the program settings</summary>
-        /// <param name="applications">The applications Seven Update will check and manage updates for</param>
-        /// <param name="options">The Seven Update settings</param>
-        /// <param name="autoCheck">if set to <see langword="true"/> automatic updates will be enabled</param>
+        /// <param name = "applications">The applications Seven Update will check and manage updates for</param>
+        /// <param name = "options">The Seven Update settings</param>
+        /// <param name = "autoCheck">if set to <see langword = "true" /> automatic updates will be enabled</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -103,7 +95,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a single update</summary>
-        /// <param name="hiddenUpdate">The update to hide</param>
+        /// <param name = "hiddenUpdate">The update to hide</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
             var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
@@ -112,15 +104,15 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hidden, Utilities.HiddenFile);
         }
 
-        /// <summary>Hides a collection of <see cref="Suh"/> to hide</summary>
-        /// <param name="hiddenUpdates">The collection of updates to hide</param>
+        /// <summary>Hides a collection of <see cref = "Suh" /> to hide</summary>
+        /// <param name = "hiddenUpdates">The collection of updates to hide</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             Utilities.Serialize(hiddenUpdates, Utilities.HiddenFile);
         }
 
-        /// <summary>Gets a collection of <see cref="Sui"/></summary>
-        /// <param name="applicationUpdates">The collection of applications and updates to install</param>
+        /// <summary>Gets a collection of <see cref = "Sui" /></summary>
+        /// <param name = "applicationUpdates">The collection of applications and updates to install</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -145,7 +137,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
-        /// <param name="hiddenUpdate">The hidden update to show</param>
+        /// <param name = "hiddenUpdate">The hidden update to show</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             var show = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
@@ -164,15 +156,14 @@ namespace SevenUpdate.Admin
         /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort</summary>
         public void Shutdown()
         {
-            Task.Factory.StartNew(
-                () =>
+            Task.Factory.StartNew(() =>
+                {
+                    Thread.Sleep(500);
+                    if (!App.IsInstalling)
                     {
-                        Thread.Sleep(500);
-                        if (!App.IsInstalling)
-                        {
-                            Environment.Exit(0);
-                        }
-                    });
+                        Environment.Exit(0);
+                    }
+                });
         }
     }
 }

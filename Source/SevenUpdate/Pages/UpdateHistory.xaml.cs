@@ -60,8 +60,8 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>Gets the update history and loads it to the listView</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void GetHistory(object sender, RoutedEventArgs e)
         {
             this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(HistoryFile);
@@ -74,9 +74,9 @@ namespace SevenUpdate.Pages
             this.updateHistory.CollectionChanged += this.RefreshDataView;
         }
 
-        /// <summary>Updates the <see cref="CollectionView"/> when the collection changes</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Updates the <see cref = "CollectionView" /> when the collection changes</summary>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Collections.Specialized.NotifyCollectionChangedEventArgs" /> instance containing the event data.</param>
         private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -90,8 +90,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
@@ -104,8 +104,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();

@@ -30,33 +30,27 @@ namespace SevenUpdate
 
     /// <summary>Automatic Update option Seven Update can use</summary>
     [ProtoContract, DataContract, DefaultValue(Install)]
-    
     public enum AutoUpdateOption
     {
         /// <summary>Download and Installs updates automatically</summary>
         [ProtoEnum, EnumMember]
-        
         Install = 0,
 
         /// <summary>Downloads Updates automatically</summary>
         [ProtoEnum, EnumMember]
-        
         Download = 1,
 
         /// <summary>Only checks and notifies the user of updates</summary>
         [ProtoEnum, EnumMember]
-        
         Notify = 2,
 
         /// <summary>No automatic checking</summary>
         [ProtoEnum, EnumMember]
-        
         Never = 3
     }
 
     /// <summary>Configuration options</summary>
     [ProtoContract, DataContract(IsReference = true)]
-    
     public sealed class Config : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -81,7 +75,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets which automatic update option Seven Update should use</summary>
         /// <value>The automatic update option</value>
         [ProtoMember(1), DataMember]
-        
         public AutoUpdateOption AutoOption
         {
             get
@@ -101,7 +94,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates</summary>
         /// <value><see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.</value>
         [ProtoMember(2), DataMember]
-        
         public bool IncludeRecommended
         {
             get
@@ -122,8 +114,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

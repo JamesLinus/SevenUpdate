@@ -57,9 +57,9 @@ namespace SevenUpdate.Sdk.ValidationRules
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
-        /// <param name="value">The value from the binding target to check.</param>
-        /// <param name="cultureInfo">The culture to use in this rule.</param>
-        /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult"/> object.</returns>
+        /// <param name = "value">The value from the binding target to check.</param>
+        /// <param name = "cultureInfo">The culture to use in this rule.</param>
+        /// <returns>A <see cref = "T:System.Windows.Controls.ValidationResult" /> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
@@ -73,14 +73,11 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            try
-            {
-                input = Core.AppInfo.Directory == null
-                            ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit)
-                            : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
-                new Uri(input);
-            }
-            catch (UriFormatException)
+            input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit) : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
+            Uri url;
+            var result = Uri.TryCreate(input, UriKind.RelativeOrAbsolute, out url);
+
+            if (!result)
             {
                 return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
             }

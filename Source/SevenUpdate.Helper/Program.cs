@@ -27,6 +27,7 @@
 namespace SevenUpdate.Helper
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.IO;
     using System.Reflection;
@@ -47,111 +48,42 @@ namespace SevenUpdate.Helper
         /// <summary>The current directory the application resides in</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
 
+        /// <summary>The all users app data location</summary>
+        private static readonly string AllUsersStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+
         #endregion
 
         #region Methods
 
         /// <summary>The main entry point for the application.</summary>
-        /// <param name="args">The arguments passed to the program at startup</param>
+        /// <param name = "args">The arguments passed to the program at startup</param>
         [STAThread]
         private static void Main(string[] args)
         {
             if (args.Length > 0)
             {
-                var appStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+                var downloadDir = AllUsersStore + @"downloads\" + args[0] + @"\";
 
-                var downloadDir = appStore + @"downloads\" + args[0] + @"\";
-
-                try
-                {
-                    Process.GetProcessesByName("SevenUpdate")[0].CloseMainWindow();
-                }
-                catch (Exception)
-                {
-                    try
-                    {
-                        Process.GetProcessesByName("SevenUpdate")[0].Kill();
-                    }
-                    catch (Exception)
-                    {
-                    }
-                }
-
-                try
-                {
-                    Process.GetProcessesByName("SevenUpdate.Admin")[0].Kill();
-                }
-                catch (Exception)
-                {
-                }
+                KillProcess("SevenUpdate");
+                KillProcess("SevenUpdate.Admin");
 
                 Thread.Sleep(1000);
 
                 try
                 {
-                    File.Delete(appStore + "reboot.lock");
-                }
-                catch (Exception)
-                {
-                }
-
-                Thread.Sleep(1000);
-
-                try
-                {
-                    var files = new DirectoryInfo(downloadDir).GetFiles();
-
-                    foreach (var t in files)
-                    {
-                        try
-                        {
-                            File.Copy(t.FullName, AppDir + t.Name, true);
-                            try
-                            {
-                                File.Delete(t.FullName);
-                            }
-                            catch (Exception)
-                            {
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            NativeMethods.MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
-
-                            if (!File.Exists(appStore + "reboot.lock"))
-                            {
-                                using (var file = File.Create(appStore + "reboot.lock"))
-                                {
-                                    file.WriteByte(0);
-                                }
-                            }
-                        }
-                    }
+                    File.Delete(AllUsersStore + "reboot.lock");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e.Message);
+                    if (!(e is UnauthorizedAccessException || e is IOException))
+                    {
+                        throw;
+                    }
                 }
 
-                if (!File.Exists(appStore + @"reboot.lock"))
-                {
-                    try
-                    {
-                        Directory.Delete(appStore + downloadDir, true);
-                        Directory.Delete(appStore + @"downloads", true);
-                    }
-                    catch (Exception e)
-                    {
-                        if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
-                        {
-                            throw;
-                        }
-                    }
-                }
-                else
-                {
-                    NativeMethods.MoveFileExW(appStore + @"reboot.lock", null, MoveOnReboot);
-                }
+                Thread.Sleep(1000);
+
+                DeleteFiles(downloadDir);
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {
@@ -183,9 +115,97 @@ namespace SevenUpdate.Helper
             }
         }
 
+        /// <summary>Deletes files from the specified folder</summary>
+        /// <param name = "folder">The folder to delete the files</param>
+        private static void DeleteFiles(string folder)
+        {
+            var files = new DirectoryInfo(folder).GetFiles();
+
+            foreach (var t in files)
+            {
+                try
+                {
+                    File.Copy(t.FullName, AppDir + t.Name, true);
+
+                    try
+                    {
+                        File.Delete(t.FullName);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!(e is UnauthorizedAccessException || e is IOException))
+                        {
+                            throw;
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    if (!(e is UnauthorizedAccessException || e is IOException))
+                    {
+                        throw;
+                    }
+
+                    NativeMethods.MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
+
+                    if (!File.Exists(AllUsersStore + "reboot.lock"))
+                    {
+                        using (var file = File.Create(AllUsersStore + "reboot.lock"))
+                        {
+                            file.WriteByte(0);
+                        }
+                    }
+                }
+            }
+
+            if (!File.Exists(AllUsersStore + @"reboot.lock"))
+            {
+                try
+                {
+                    Directory.Delete(AllUsersStore + folder, true);
+                    Directory.Delete(AllUsersStore + @"downloads", true);
+                }
+                catch (Exception e)
+                {
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                    {
+                        throw;
+                    }
+                }
+            }
+            else
+            {
+                NativeMethods.MoveFileExW(AllUsersStore + @"reboot.lock", null, MoveOnReboot);
+            }
+        }
+
+        /// <summary>Stops a running process</summary>
+        /// <param name = "name">The name of the process to kill</param>
+        private static void KillProcess(string name)
+        {
+            try
+            {
+                var processes = Process.GetProcessesByName(name);
+                if (processes.Length > 0)
+                {
+                    foreach (var t in processes)
+                    {
+                        t.Kill();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                {
+                    throw;
+                }
+            }
+        }
+
         /// <summary>Run Seven Update and auto check for updates</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
             Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");

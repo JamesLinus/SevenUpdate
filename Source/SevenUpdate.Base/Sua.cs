@@ -32,16 +32,21 @@ namespace SevenUpdate
 
     /// <summary>Seven Update Application information</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>))]
-    
     public sealed class Sua : INotifyPropertyChanged
     {
         #region Constants and Fields
 
+        /// <summary>The collection of localized descriptions for the application</summary>
+        private readonly ObservableCollection<LocaleString> description;
+
+        /// <summary>A collection of localized application names</summary>
+        private readonly ObservableCollection<LocaleString> name;
+
+        /// <summary>A collection of localized publisher names</summary>
+        private readonly ObservableCollection<LocaleString> publisher;
+
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
         private string appUrl;
-
-        /// <summary>The collection of localized descriptions for the application</summary>
-        private ObservableCollection<LocaleString> description;
 
         /// <summary>The directory where the application is installed</summary>
         private string directory;
@@ -55,17 +60,61 @@ namespace SevenUpdate
         /// <summary>Indicates whether the SUA is enabled with Seven Update (SDK does not use this value)</summary>
         private bool isEnabled;
 
-        /// <summary>A collection of localized application names</summary>
-        private ObservableCollection<LocaleString> name;
-
-        /// <summary>A collection of localized publisher names</summary>
-        private ObservableCollection<LocaleString> publisher;
-
         /// <summary>The <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
         private string suiUrl;
 
         /// <summary>The name of the value to the registry key that contains the application directory location</summary>
         private string valueName;
+
+        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
+        /// <param name = "name">The collection of localized update names</param>
+        /// <param name = "publisher">The collection of localized publisher names</param>
+        /// <param name = "description">The collection of localized update descriptions</param>
+        public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        {
+            this.name = name;
+            this.publisher = publisher;
+            this.description = description;
+
+            if (this.name == null)
+            {
+                this.name = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.description == null)
+            {
+                this.description = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.publisher == null)
+            {
+                this.publisher = new ObservableCollection<LocaleString>();
+            }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
+        /// <param name = "name">The collection of localized update names</param>
+        /// <param name = "publisher">The collection of localized publisher names</param>
+        public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher)
+        {
+            this.name = name;
+            this.publisher = publisher;
+
+            if (this.name == null)
+            {
+                this.name = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.publisher == null)
+            {
+                this.publisher = new ObservableCollection<LocaleString>();
+            }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
+        public Sua()
+        {
+        }
 
         #endregion
 
@@ -81,7 +130,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
         [ProtoMember(8, IsRequired = false), DataMember]
-        
         public string AppUrl
         {
             get
@@ -98,30 +146,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection of localized descriptions for the application</summary>
+        /// <summary>Gets the collection of localized descriptions for the application</summary>
         /// <value>The application description</value>
         [ProtoMember(2), DataMember]
-        
         public ObservableCollection<LocaleString> Description
         {
             get
             {
                 return this.description;
             }
-
-            set
-            {
-                this.description = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Description");
-            }
         }
 
         /// <summary>Gets or sets the directory where the application is installed</summary>
         /// <value>The install directory</value>
         [ProtoMember(3), DataMember]
-        
         public string Directory
         {
             get
@@ -141,7 +179,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false), DataMember]
-        
         public string HelpUrl
         {
             get
@@ -161,7 +198,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets a value indicating whether if the application is 64 bit</summary>
         /// <value><see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.</value>
         [ProtoMember(4), DataMember]
-        
         public bool Is64Bit
         {
             get
@@ -181,7 +217,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value)</summary>
         /// <value><see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.</value>
         [ProtoMember(5), DataMember]
-        
         public bool IsEnabled
         {
             get
@@ -198,50 +233,31 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets a collection of localized application names</summary>
+        /// <summary>Gets the collection of localized application names</summary>
         /// <value>The name of the application localized</value>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<LocaleString> Name
         {
             get
             {
                 return this.name;
             }
-
-            set
-            {
-                this.name = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Name");
-            }
         }
 
-        /// <summary>Gets or sets the collection of localized publisher names</summary>
+        /// <summary>Gets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
         [ProtoMember(6), DataMember]
-        
         public ObservableCollection<LocaleString> Publisher
         {
             get
             {
                 return this.publisher;
             }
-
-            set
-            {
-                this.publisher = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Publisher");
-            }
         }
 
         /// <summary>Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
         /// <value>The url pointing to the sui file</value>
         [ProtoMember(7), DataMember]
-        
         public string SuiUrl
         {
             get
@@ -261,7 +277,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the name of the value to the registry key that contains the application directory location</summary>
         /// <value>The name of the value.</value>
         [ProtoMember(10, IsRequired = false), DataMember]
-        
         public string ValueName
         {
             get
@@ -282,8 +297,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="propertyName">The name of the property.</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

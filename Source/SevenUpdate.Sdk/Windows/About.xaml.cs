@@ -50,16 +50,16 @@ namespace SevenUpdate.Sdk.Windows
         #region Methods
 
         /// <summary>Closes the About window</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
         /// <summary>Opens a web browser and navigates to the specified url</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.</param>
         private void NavigateToUrl(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);

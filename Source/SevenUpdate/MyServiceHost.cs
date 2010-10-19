@@ -28,7 +28,6 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Description;
 
     using ProtoBuf.ServiceModel;
 
@@ -39,7 +38,7 @@ namespace SevenUpdate
     {
         #region Properties
 
-        /// <summary>Gets or sets the <see cref="ServiceHost" /> instance</summary>
+        /// <summary>Gets or sets the <see cref = "ServiceHost" /> instance</summary>
         internal static ServiceHost Instance { get; set; }
 
         #endregion
@@ -48,15 +47,16 @@ namespace SevenUpdate
         internal static void StartService()
         {
             if (Instance != null)
+            {
                 return;
+            }
 
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "sevenupdatebinding",
-                    Security =
-                        {
-                            Mode = NetNamedPipeSecurityMode.Transport
-                        }
+                    Name = "sevenupdatebinding", Security =
+                                                     {
+                                                         Mode = NetNamedPipeSecurityMode.Transport
+                                                     }
                 };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");
@@ -69,7 +69,10 @@ namespace SevenUpdate
             // if not found - add behavior with setting turned on 
             if (debug == null)
             {
-                Instance.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+                Instance.Description.Behaviors.Add(new ServiceDebugBehavior
+                    {
+                        IncludeExceptionDetailInFaults = true
+                    });
             }
             else
             {

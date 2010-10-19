@@ -56,34 +56,30 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>Shows the window and displays the update information</summary>
-        /// <param name="updateInfo">The update information to display</param>
+        /// <param name = "updateInfo">The update information to display</param>
         internal void ShowDialog(Suh updateInfo)
         {
             this.DataContext = updateInfo;
             this.helpUrl = updateInfo.HelpUrl;
             this.infoUrl = updateInfo.InfoUrl;
-            var updateStatus = updateInfo.Status == UpdateStatus.Failed
-                                   ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
-                                   : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
-            this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                     ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
-                                     : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
+            var updateStatus = updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture) : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
+            this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize)) : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
 
             this.ShowDialog();
             return;
         }
 
-        /// <summary>Launches the Help <see cref="Uri"/></summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>Launches the Help <see cref = "Uri" /></summary>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.helpUrl);
         }
 
-        /// <summary>Launches the More Information <see cref="Uri"/></summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>Launches the More Information <see cref = "Uri" /></summary>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.infoUrl);

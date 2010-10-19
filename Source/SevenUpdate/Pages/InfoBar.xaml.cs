@@ -111,15 +111,15 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>Updates the UI when the downloading of updates completes</summary>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.DownloadCompletedEventArgs" /> instance containing the event data.</param>
         private static void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
         }
 
         /// <summary>Updates the UI when the downloading of updates has completed</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.DownloadCompletedEventArgs" /> instance containing the event data.</param>
         private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -191,7 +191,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when the download progress has changed</summary>
-        /// <param name="e">The DownloadProgress data</param>
+        /// <param name = "e">The DownloadProgress data</param>
         private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
         {
             if (Core.IsReconnect)
@@ -210,8 +210,7 @@ namespace SevenUpdate.Pages
                 var progress = e.BytesTransferred * 100 / e.BytesTotal;
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
-                this.tbStatus.Text = String.Format(
-                    CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
+                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
             }
             else
             {
@@ -221,8 +220,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when the download progress has changed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.DownloadProgressChangedEventArgs" /> instance containing the event data.</param>
         private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -236,7 +235,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the UI when an error occurs</summary>
-        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.ErrorOccurredEventArgs" /> instance containing the event data.</param>
         private void ErrorOccurred(ErrorOccurredEventArgs e)
         {
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
@@ -248,7 +247,7 @@ namespace SevenUpdate.Pages
                 case ErrorType.InstallationError:
                 case ErrorType.SearchError:
                 case ErrorType.DownloadError:
-                case ErrorType.GeneralErrorNonFatal:
+                case ErrorType.GeneralError:
                 case ErrorType.FatalError:
                     this.tbStatus.Text = e.Exception;
                     break;
@@ -256,8 +255,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the UI when an error has occurred</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.ErrorOccurredEventArgs" /> instance containing the event data.</param>
         private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -271,7 +270,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when the installation has completed</summary>
-        /// <param name="e">The InstallCompleted data</param>
+        /// <param name = "e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
         {
             Settings.Default.lastInstall = DateTime.Now;
@@ -288,9 +287,7 @@ namespace SevenUpdate.Pages
 
             if (e.UpdatesFailed <= 0)
             {
-                this.tbStatus.Text = e.UpdatesInstalled == 1
-                                         ? Properties.Resources.UpdateInstalled
-                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
+                this.tbStatus.Text = e.UpdatesInstalled == 1 ? Properties.Resources.UpdateInstalled : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
                 return;
             }
 
@@ -307,8 +304,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the UI when the installation of updates has completed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.InstallCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.InstallCompletedEventArgs" /> instance containing the event data.</param>
         private void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -322,7 +319,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when the installation progress has changed</summary>
-        /// <param name="e">The InstallProgress data</param>
+        /// <param name = "e">The InstallProgress data</param>
         private void InstallProgressChanged(InstallProgressChangedEventArgs e)
         {
             if (Core.IsReconnect)
@@ -340,15 +337,13 @@ namespace SevenUpdate.Pages
             {
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = e.CurrentProgress;
-                this.tbStatus.Text = e.TotalUpdates > 1
-                                         ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress)
-                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
+                this.tbStatus.Text = e.TotalUpdates > 1 ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress) : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
             }
         }
 
         /// <summary>Sets the UI when the install progress has changed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.InstallProgressChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.InstallProgressChangedEventArgs" /> instance containing the event data.</param>
         private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -361,9 +356,9 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Performs an action based on the <see cref="UpdateAction"/></summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Performs an action based on the <see cref = "UpdateAction" /></summary>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void PerformAction(object sender, RoutedEventArgs e)
         {
             switch (Core.Instance.UpdateAction)
@@ -394,7 +389,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI the search for updates has completed</summary>
-        /// <param name="e">The SearchComplete data</param>
+        /// <param name = "e">The SearchComplete data</param>
         private void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (Core.Instance.UpdateAction == UpdateAction.ErrorOccurred)
@@ -441,8 +436,7 @@ namespace SevenUpdate.Pages
 
                     if (e.ImportantCount > 0)
                     {
-                        this.tbViewImportantUpdates.Text = String.Format(
-                            CultureInfo.CurrentCulture, e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
+                        this.tbViewImportantUpdates.Text = String.Format(CultureInfo.CurrentCulture, e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
 
                         this.tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -458,8 +452,7 @@ namespace SevenUpdate.Pages
                             this.tbHeading.Text = Properties.Resources.NoImportantUpdates;
                         }
 
-                        this.tbViewOptionalUpdates.Text = String.Format(
-                            CultureInfo.CurrentCulture, e.OptionalCount == 1 ? Properties.Resources.OptionalUpdateAvailable : Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
+                        this.tbViewOptionalUpdates.Text = String.Format(CultureInfo.CurrentCulture, e.OptionalCount == 1 ? Properties.Resources.OptionalUpdateAvailable : Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
 
                         this.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -476,8 +469,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the UI when the search for updates has completed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.SearchCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SevenUpdate.SearchCompletedEventArgs" /> instance containing the event data.</param>
         private void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -491,17 +484,17 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Handles the MouseDown event of the ImportantUpdates control.</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void SelectImportantUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
-        /// <summary>Selects optional updates and navigates to the <see cref="UpdateInfo"/> page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>Selects optional updates and navigates to the <see cref = "UpdateInfo" /> page</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void SelectOptionalUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
@@ -509,15 +502,15 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the data context for the page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SetDataContext(object sender, RoutedEventArgs e)
         {
             this.DataContext = Core.Instance;
         }
 
-        /// <summary>Sets the UI based on the <see cref="UpdateAction"/></summary>
-        /// <param name="action">The action.</param>
+        /// <summary>Sets the UI based on the <see cref = "UpdateAction" /></summary>
+        /// <param name = "action">The action.</param>
         private void SetUI(UpdateAction action)
         {
             this.btnAction.IsShieldNeeded = false;
@@ -664,8 +657,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Sets the UI when the update action is changed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.EventArgs" /> instance containing the event data.</param>
         private void SetUI(object sender, EventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
@@ -679,16 +672,14 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when the update selection changes</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="UpdateInfo.UpdateSelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "UpdateInfo.UpdateSelectionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateSelectionChanged(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
         {
             if (e.ImportantUpdates > 0)
             {
                 this.tbViewImportantUpdates.Visibility = Visibility.Visible;
-                this.tbSelectedUpdates.Text = e.ImportantUpdates == 1
-                                                  ? Properties.Resources.ImportantUpdateSelected
-                                                  : String.Format(CultureInfo.CurrentCulture, Properties.Resources.ImportantUpdatesSelected, e.ImportantUpdates);
+                this.tbSelectedUpdates.Text = e.ImportantUpdates == 1 ? Properties.Resources.ImportantUpdateSelected : String.Format(CultureInfo.CurrentCulture, Properties.Resources.ImportantUpdatesSelected, e.ImportantUpdates);
 
                 if (e.ImportantDownloadSize > 0)
                 {
@@ -701,9 +692,7 @@ namespace SevenUpdate.Pages
                 this.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                 if (e.ImportantUpdates == 0)
                 {
-                    this.tbSelectedUpdates.Text = e.OptionalUpdates == 1
-                                                      ? Properties.Resources.OptionalUpdateSelected
-                                                      : String.Format(CultureInfo.CurrentCulture, Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
+                    this.tbSelectedUpdates.Text = e.OptionalUpdates == 1 ? Properties.Resources.OptionalUpdateSelected : String.Format(CultureInfo.CurrentCulture, Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
                 }
                 else
                 {

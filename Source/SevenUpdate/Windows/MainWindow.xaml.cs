@@ -37,7 +37,6 @@ namespace SevenUpdate.Windows
 
     /// <summary>Interaction logic for MainWindow.xaml</summary>
     [ContentProperty, TemplatePart(Name = @"PART_NavWinCP", Type = typeof(ContentPresenter))]
-    
     public sealed partial class MainWindow
     {
         #region Constructors and Destructors
@@ -64,8 +63,8 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>Sets the Height and Width of the window from the settings</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.windowHeight;
@@ -73,8 +72,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.ComponentModel.CancelEventArgs" /> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = this.Height;

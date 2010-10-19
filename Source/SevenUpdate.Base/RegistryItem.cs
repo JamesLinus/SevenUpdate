@@ -32,28 +32,23 @@ namespace SevenUpdate
 
     /// <summary>Contains the Actions you can perform to the registry</summary>
     [ProtoContract, DataContract, DefaultValue(Add)]
-    
     public enum RegistryAction
     {
         /// <summary>Adds a registry entry to the machine</summary>
         [ProtoEnum, EnumMember]
-        
         Add = 0,
 
         /// <summary>Deletes a registry key on the machine</summary>
         [ProtoEnum, EnumMember]
-        
         DeleteKey = 1,
 
         /// <summary>Deletes a value of a registry key on the machine</summary>
         [ProtoEnum, EnumMember]
-        
         DeleteValue = 2
     }
 
     /// <summary>A registry entry within an update</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)), KnownType(typeof(RegistryValueKind))]
-    
     public sealed class RegistryItem : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -87,7 +82,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the action to perform on the <see cref = "RegistryItem" /></summary>
         /// <value>The action.</value>
         [ProtoMember(1), DataMember]
-        
         public RegistryAction Action
         {
             get
@@ -107,7 +101,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the data for the key value</summary>
         /// <value>The data for the registry value</value>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string Data
         {
             get
@@ -127,7 +120,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the registry key and hive</summary>
         /// <value>The registry key path</value>
         [ProtoMember(3), DataMember]
-        
         public string Key
         {
             get
@@ -147,7 +139,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the value for the registry key</summary>
         /// <value>The value of the key</value>
         [ProtoMember(4, IsRequired = false), DataMember]
-        
         public string KeyValue
         {
             get
@@ -167,7 +158,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the type of the value</summary>
         /// <value>The kind of the value</value>
         [ProtoMember(5, IsRequired = false), DataMember]
-        
         public RegistryValueKind ValueKind
         {
             get
@@ -188,8 +178,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

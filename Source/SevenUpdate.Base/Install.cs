@@ -84,17 +84,17 @@ namespace SevenUpdate
         }
 
         /// <summary>Installs updates</summary>
-        /// <param name="applications">The collection of applications to install updates</param>
+        /// <param name = "applications">The collection of applications to install updates</param>
         public static void InstallUpdates(Collection<Sui> applications)
         {
             if (applications == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("applications");
             }
 
             if (applications.Count < 1)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException("applications");
             }
 
             IsInstalling = true;
@@ -208,7 +208,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Updates Seven Update</summary>
-        /// <param name="updateFiles">The collection of files that will update Seven Update</param>
+        /// <param name = "updateFiles">The collection of files that will update Seven Update</param>
         private static void UpdateSevenUpdate(IEnumerable<UpdateFile> updateFiles)
         {
             foreach (var t in updateFiles)
@@ -243,24 +243,15 @@ namespace SevenUpdate
         }
 
         /// <summary>Adds an update to the update history</summary>
-        /// <param name="appInfo">the application information</param>
-        /// <param name="updateInfo">the update information</param>
-        /// <param name="failed"><see langword="true"/> if the update failed, otherwise <see langword="false"/></param>
+        /// <param name = "appInfo">the application information</param>
+        /// <param name = "updateInfo">the update information</param>
+        /// <param name = "failed"><see langword = "true" /> if the update failed, otherwise <see langword = "false" /></param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
             var history = Utilities.Deserialize<Collection<Suh>>(Utilities.HistoryFile) ?? new Collection<Suh>();
-            var hist = new Suh
+            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
                 {
-                    HelpUrl = appInfo.AppInfo.HelpUrl,
-                    Publisher = appInfo.AppInfo.Publisher,
-                    AppUrl = appInfo.AppInfo.AppUrl,
-                    Description = updateInfo.Description,
-                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
-                    InfoUrl = updateInfo.InfoUrl,
-                    InstallDate = DateTime.Now.ToShortDateString(),
-                    ReleaseDate = updateInfo.ReleaseDate,
-                    Importance = updateInfo.Importance,
-                    Name = updateInfo.Name
+                    HelpUrl = appInfo.AppInfo.HelpUrl, AppUrl = appInfo.AppInfo.AppUrl, Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, InfoUrl = updateInfo.InfoUrl, InstallDate = DateTime.Now.ToShortDateString(), ReleaseDate = updateInfo.ReleaseDate, Importance = updateInfo.Importance,
                 };
 
             history.Add(hist);
@@ -269,7 +260,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports the installation progress</summary>
-        /// <param name="installProgress">The current install progress percentage</param>
+        /// <param name = "installProgress">The current install progress percentage</param>
         private static void ReportProgress(int installProgress)
         {
             if (InstallProgressChanged != null)
@@ -279,8 +270,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Sets the registry items of an update</summary>
-        /// <param name="regItems">The registry changes to install on the system</param>
-        /// <param name="is64Bit">Indicates if the application is 64 bit</param>
+        /// <param name = "regItems">The registry changes to install on the system</param>
+        /// <param name = "is64Bit">Indicates if the application is 64 bit</param>
         private static void SetRegistryItems(IList<RegistryItem> regItems, bool is64Bit)
         {
             RegistryKey key;
@@ -369,8 +360,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Installs the shortcuts of an update</summary>
-        /// <param name="shortcuts">the shortcuts to install on the system</param>
-        /// <param name="appInfo">the application information</param>
+        /// <param name = "shortcuts">the shortcuts to install on the system</param>
+        /// <param name = "appInfo">the application information</param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, Sua appInfo)
         {
             if (shortcuts == null)
@@ -438,7 +429,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Updates the file on the system</summary>
-        /// <param name="file">The file to install or update</param>
+        /// <param name = "file">The file to install or update</param>
         private static void UpdateFile(UpdateFile file)
         {
             switch (file.Action)
@@ -560,8 +551,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Installs the files in the update</summary>
-        /// <param name="files">the collection of files to update</param>
-        /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
+        /// <param name = "files">the collection of files to update</param>
+        /// <param name = "downloadDirectory">the path to the download folder where the update files are located</param>
         private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             for (var x = 0; x < files.Count; x++)
@@ -582,17 +573,16 @@ namespace SevenUpdate
 
                 var x1 = x;
                 var x2 = x;
-                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
-                    delegate
+                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
+                    {
+                        var installProgress = (x2 * 100) / files.Count;
+                        if (installProgress > 70)
                         {
-                            var installProgress = (x2 * 100) / files.Count;
-                            if (installProgress > 70)
-                            {
-                                installProgress -= 15;
-                            }
+                            installProgress -= 15;
+                        }
 
-                            ReportProgress(installProgress);
-                        });
+                        ReportProgress(installProgress);
+                    });
             }
         }
 

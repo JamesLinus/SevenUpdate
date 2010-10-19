@@ -36,6 +36,8 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Navigation;
 
+    using SevenUpdate.Windows;
+
     /// <summary>Interaction logic for Options.xaml</summary>
     public partial class Options
     {
@@ -79,9 +81,9 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Loads the settings and <see cref = "Sua" /> list when the page is loaded</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -92,7 +94,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
-        /// <param name="officialApplicationList">The official application list from the server.</param>
+        /// <param name = "officialApplicationList">The official application list from the server.</param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.ApplicationsFile);
@@ -101,9 +103,7 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
-                                ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
-                                : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
+                    if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory) ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit) : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                     {
                         continue;
                     }
@@ -118,9 +118,7 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
-                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
-                                ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
-                                : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
+                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory) ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit) : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
                     {
                         // Remove the application from the list if it is not installed
                         officialApplicationList.RemoveAt(x);
@@ -168,8 +166,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates to a Uri</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
@@ -177,26 +175,26 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
+        /// <summary>Limit the size of the <see cref = "GridViewColumn" /> when it's being resized</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
         /// <summary>Saves the settings and goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
             {
-                Windows.MainWindow.NavService.GoBack();
+                MainWindow.NavService.GoBack();
             }
         }
 
-        /// <summary>Updates the list with the <see cref="machineAppList"/></summary>
+        /// <summary>Updates the list with the <see cref = "machineAppList" /></summary>
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;

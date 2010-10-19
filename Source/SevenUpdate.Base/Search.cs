@@ -71,7 +71,7 @@ namespace SevenUpdate
         #region Public Methods
 
         /// <summary>Searches for updates while blocking the calling thread</summary>
-        /// <param name="applications">The collection of applications to check for updates</param>
+        /// <param name = "applications">The collection of applications to check for updates</param>
         public static void SearchForUpdates(IEnumerable<Sua> applications)
         {
             IsSearching = true;
@@ -98,16 +98,14 @@ namespace SevenUpdate
             var publisher = new ObservableCollection<LocaleString>();
             var ls = new LocaleString
                 {
-                    Value = "Seven Software",
-                    Lang = "en"
+                    Value = "Seven Software", Lang = "en"
                 };
             publisher.Add(ls);
 
             var name = new ObservableCollection<LocaleString>();
             ls = new LocaleString
                 {
-                    Value = "Seven Update",
-                    Lang = "en"
+                    Value = "Seven Update", Lang = "en"
                 };
             name.Add(ls);
 
@@ -116,16 +114,9 @@ namespace SevenUpdate
 
             if (app != null)
             {
-                app.AppInfo = new Sua
+                app.AppInfo = new Sua(name, publisher)
                     {
-                        AppUrl = @"http://sevenupdate.com/",
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
-                        Publisher = publisher,
-                        Name = name,
-                        HelpUrl = @"http://sevenupdate.com/support/",
-                        Is64Bit = true,
-                        IsEnabled = true,
-                        SuiUrl = SevenUpdateSui
+                        AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), HelpUrl = @"http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui
                     };
 
                 // Check if there is a newer version of Seven Update
@@ -210,14 +201,14 @@ namespace SevenUpdate
         }
 
         /// <summary>Searches for files without blocking the calling thread</summary>
-        /// <param name="applications">The collection of applications to check for updates</param>
+        /// <param name = "applications">The collection of applications to check for updates</param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> applications)
         {
             Task.Factory.StartNew(() => SearchForUpdates(applications));
         }
 
-        /// <summary>Manually sets an <see cref="Sui"/> collection has updates found</summary>
-        /// <param name="updates">The updates to set as found</param>
+        /// <summary>Manually sets an <see cref = "Sui" /> collection has updates found</summary>
+        /// <param name = "updates">The updates to set as found</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
             importantCount = 0;
@@ -251,14 +242,12 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates</summary>
-        /// <param name="app">a collection of applications to check for updates</param>
-        /// <param name="hidden">a collection of hidden updates</param>
-        /// <returns>returns <see langword="true"/> if found updates, otherwise <see langword="false"/></returns>
+        /// <param name = "app">a collection of applications to check for updates</param>
+        /// <param name = "hidden">a collection of hidden updates</param>
+        /// <returns>returns <see langword = "true" /> if found updates, otherwise <see langword = "false" /></returns>
         private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
         {
-            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
-                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit)
-                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
+            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory) ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit) : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {
@@ -364,10 +353,10 @@ namespace SevenUpdate
         }
 
         /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update</summary>
-        /// <param name="update">The update to iterate</param>
-        /// <param name="directory">The Uri or registry key to the application directory </param>
-        /// <param name="valueName">The name of the registry value, can be <see langword="null"/></param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name = "update">The update to iterate</param>
+        /// <param name = "directory">The Uri or registry key to the application directory </param>
+        /// <param name = "valueName">The name of the registry value, can be <see langword = "null" /></param>
+        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
         /// <returns>The current download size of the update</returns>
         private static ulong IterateUpdate(ref Update update, string directory, string valueName, bool is64Bit)
         {

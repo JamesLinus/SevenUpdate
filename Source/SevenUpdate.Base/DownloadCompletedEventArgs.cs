@@ -30,19 +30,18 @@ namespace SevenUpdate
 
     /// <summary>Provides event data for the DownloadCompleted event</summary>
     [ProtoContract, DataContract]
-    
     public sealed class DownloadCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs"/> class.</summary>
-        /// <param name="errorOccurred"><see langword="true"/> is an error occurred, otherwise <see langword="false"/></param>
+        /// <summary>Initializes a new instance of the <see cref = "DownloadCompletedEventArgs" /> class.</summary>
+        /// <param name = "errorOccurred"><see langword = "true" /> is an error occurred, otherwise <see langword = "false" /></param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "DownloadCompletedEventArgs" /> class.</summary>
         public DownloadCompletedEventArgs()
         {
         }
@@ -54,7 +53,6 @@ namespace SevenUpdate
         /// <summary>Gets a value indicating whether an error occurred</summary>
         /// <value><see langword = "true" /> if an error occurred otherwise, <see langword = "false" />.</value>
         [ProtoMember(1, IsRequired = false), DataMember]
-        
         public bool ErrorOccurred { get; private set; }
 
         #endregion

@@ -106,8 +106,7 @@ namespace SevenUpdate.Admin
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config
                     {
-                        AutoOption = AutoUpdateOption.Notify,
-                        IncludeRecommended = false
+                        AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false
                     };
             }
         }
@@ -117,8 +116,8 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>Reports that the download has completed and starts update installation if necessary</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "DownloadCompletedEventArgs" /> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
@@ -141,8 +140,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download progress has changed</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "DownloadProgressChangedEventArgs" /> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             IsInstalling = true;
@@ -155,8 +154,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "ErrorOccurredEventArgs" /> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.ErrorType == ErrorType.FatalNetworkError)
@@ -166,8 +165,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports the installation has completed</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "InstallCompletedEventArgs" /> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -183,8 +182,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports when the installation progress has changed</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "InstallProgressChangedEventArgs" /> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (isClientConnected)
@@ -196,76 +195,67 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The main execution method</summary>
-        /// <param name="args">The command line arguments</param>
+        /// <param name = "args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
-            try
+            bool createdNew;
+            using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
             {
-                bool createdNew;
-                using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
+                if (createdNew)
                 {
-                    if (createdNew)
+                    StartWcfHost();
+                    SystemEvents.SessionEnding += PreventClose;
+                    Search.SearchCompleted += SearchCompleted;
+                    Search.ErrorOccurred += ErrorOccurred;
+                    Download.DownloadCompleted += DownloadCompleted;
+                    Download.DownloadProgressChanged += DownloadProgressChanged;
+                    Install.InstallCompleted += InstallCompleted;
+                    Install.InstallProgressChanged += InstallProgressChanged;
+                    if (!Directory.Exists(Utilities.AllUserStore))
                     {
-                        StartWcfHost();
-                        SystemEvents.SessionEnding += PreventClose;
-                        Search.SearchCompleted += SearchCompleted;
-                        Search.ErrorOccurred += ErrorOccurred;
-                        Download.DownloadCompleted += DownloadCompleted;
-                        Download.DownloadProgressChanged += DownloadProgressChanged;
-                        Install.InstallCompleted += InstallCompleted;
-                        Install.InstallProgressChanged += InstallProgressChanged;
-                        if (!Directory.Exists(Utilities.AllUserStore))
-                        {
-                            Directory.CreateDirectory(Utilities.AllUserStore);
-                        }
-                    }
-                }
-
-                var app = new Application();
-
-                using (notifyIcon = new NotifyIcon())
-                {
-                    notifyIcon.Icon = Resources.trayIcon;
-                    notifyIcon.Text = Resources.CheckingForUpdates;
-                    notifyIcon.Visible = false;
-
-                    ProcessArgs(args);
-                    var timer = new Timer(3000);
-                    timer.Elapsed += CheckIfRunning;
-                    timer.Start();
-                    app.Run();
-                    try
-                    {
-                        if (client != null)
-                        {
-                            client.ElevatedProcessStopped();
-                            client.Close();
-                        }
-                    }
-                    catch (Exception)
-                    {
-                    }
-
-                    try
-                    {
-                        File.Delete(Utilities.AllUserStore + @"abort.lock");
-                    }
-                    catch (IOException)
-                    {
+                        Directory.CreateDirectory(Utilities.AllUserStore);
                     }
                 }
             }
-            catch (Exception e)
+
+            var app = new Application();
+
+            using (notifyIcon = new NotifyIcon())
             {
-                Utilities.ReportError(e, Utilities.AllUserStore);
+                notifyIcon.Icon = Resources.trayIcon;
+                notifyIcon.Text = Resources.CheckingForUpdates;
+                notifyIcon.Visible = false;
+
+                ProcessArgs(args);
+
+                using (var timer = new Timer(3000))
+                {
+                    timer.Elapsed += CheckIfRunning;
+                    timer.Start();
+                    app.Run();
+                }
+
+                if (client != null)
+                {
+                    client.ElevatedProcessStopped();
+                    client.Close();
+                }
+
+                try
+                {
+                    File.Delete(Utilities.AllUserStore + @"abort.lock");
+                }
+                catch (IOException)
+                {
+                }
             }
 
             SystemEvents.SessionEnding -= PreventClose;
         }
 
         /// <summary>Processes the command line arguments</summary>
-        /// <param name="args">The arguments to process</param>
+        /// <param name = "args">The arguments to process</param>
         private static void ProcessArgs(IList<string> args)
         {
             if (args.Count <= 0)
@@ -330,8 +320,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
@@ -350,8 +340,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts Seven Update UI</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "System.EventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -377,8 +367,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="SearchCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "SearchCompletedEventArgs" /> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -454,11 +444,10 @@ namespace SevenUpdate.Admin
         {
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "sevenupdatebinding",
-                    Security =
-                        {
-                            Mode = NetNamedPipeSecurityMode.Transport
-                        }
+                    Name = "sevenupdatebinding", Security =
+                                                     {
+                                                         Mode = NetNamedPipeSecurityMode.Transport
+                                                     }
                 };
 
             var address = new EndpointAddress("net.pipe://localhost/sevenupdate/");
@@ -476,49 +465,48 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Checks if Seven Update is running</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
-            Task.Factory.StartNew(
-                () =>
+            Task.Factory.StartNew(() =>
+                {
+                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
                     {
-                        if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
+                        Download.CancelDownload();
+                        Install.CancelInstall();
+                        try
                         {
-                            Download.CancelDownload();
-                            Install.CancelInstall();
-                            try
-                            {
-                                File.Delete(Utilities.AllUserStore + @"abort.lock");
-                            }
-                            catch (IOException)
-                            {
-                            }
+                            File.Delete(Utilities.AllUserStore + @"abort.lock");
                         }
+                        catch (IOException)
+                        {
+                        }
+                    }
 
-                        if (client == null)
-                        {
-                            StartWcfHost();
-                        }
+                    if (client == null)
+                    {
+                        StartWcfHost();
+                    }
 
-                        if (IsInstalling)
-                        {
-                            return;
-                        }
+                    if (IsInstalling)
+                    {
+                        return;
+                    }
 
-                        if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || waiting)
-                        {
-                            return;
-                        }
+                    if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || waiting)
+                    {
+                        return;
+                    }
 
 #if (!DEBUG)
                         ShutdownApp();
 #endif
-                    });
+                });
         }
 
         /// <summary>Updates the notify icon text</summary>
-        /// <param name="text">The string to set the <see cref="notifyIcon"/> text</param>
+        /// <param name = "text">The string to set the <see cref = "notifyIcon" /> text</param>
         private static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
@@ -527,8 +515,8 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Updates the <see cref="notifyIcon"/> state</summary>
-        /// <param name="filter">The <see cref="NotifyType"/> to set the <see cref="notifyIcon"/> to.</param>
+        /// <summary>Updates the <see cref = "notifyIcon" /> state</summary>
+        /// <param name = "filter">The <see cref = "NotifyType" /> to set the <see cref = "notifyIcon" /> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)

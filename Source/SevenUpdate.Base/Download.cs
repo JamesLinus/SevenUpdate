@@ -44,9 +44,7 @@ namespace SevenUpdate
         /// <summary>Gets a value indicating whether to cancel the current download</summary>
         private static bool cancelDownload;
 
-        /// <summary>
-        /// The download job name
-        /// </summary>
+        /// <summary>The download job name</summary>
         private static string jobName;
 
         #endregion
@@ -77,10 +75,18 @@ namespace SevenUpdate
         }
 
         /// <summary>Downloads the updates using BITS</summary>
-        /// <param name="appUpdates">The application updates to download</param>
-        /// <param name="downloadName">The name of the job</param>
-        /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, bool isPriority = false)
+        /// <param name = "appUpdates">The application updates to download</param>
+        /// <param name = "downloadName">The name of the job</param>
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName)
+        {
+            DownloadUpdates(appUpdates, downloadName, false);
+        }
+
+        /// <summary>Downloads the updates using BITS</summary>
+        /// <param name = "appUpdates">The application updates to download</param>
+        /// <param name = "downloadName">The name of the job</param>
+        /// <param name = "isPriority">if set to <see langword = "true" /> the updates will download with priority</param>
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, bool isPriority)
         {
             jobName = downloadName;
             if (appUpdates == null)
@@ -185,8 +191,8 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Downloads the application updates</summary>
-        /// <param name="application">The Sui containing the update info</param>
-        /// <param name="bitsJob">The bits job that will download the update.</param>
+        /// <param name = "application">The Sui containing the update info</param>
+        /// <param name = "bitsJob">The bits job that will download the update.</param>
         private static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
         {
             for (var y = 0; y < application.Updates.Count; y++)
@@ -198,8 +204,7 @@ namespace SevenUpdate
 
                 for (var z = 0; z < application.Updates[y].Files.Count; z++)
                 {
-                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
-                        application.Updates[y].Files[z].Action == FileAction.CompareOnly)
+                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete || application.Updates[y].Files[z].Action == FileAction.CompareOnly)
                     {
                         continue;
                     }
@@ -223,8 +228,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports when a download completes</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SharpBits.Base.NotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (e.Job == null)
@@ -269,8 +274,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports a download error</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -317,8 +322,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports the download progress</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The sender.</param>
+        /// <param name = "e">The <see cref = "SharpBits.Base.NotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (cancelDownload)

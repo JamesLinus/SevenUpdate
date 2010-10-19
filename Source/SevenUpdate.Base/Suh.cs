@@ -32,42 +32,42 @@ namespace SevenUpdate
 
     /// <summary>The current status of the update</summary>
     [ProtoContract, DataContract, DefaultValue(Successful)]
-    
     public enum UpdateStatus
     {
         /// <summary>Indicates that the update installation failed</summary>
         [ProtoEnum, EnumMember]
-        
         Failed = 0,
 
         /// <summary>Indicates that the update is hidden</summary>
         [ProtoEnum, EnumMember]
-        
         Hidden = 1,
 
         /// <summary>Indicates that the update is visible</summary>
         [ProtoEnum, EnumMember]
-        
         Visible = 2,
 
         /// <summary>Indicates that the update installation succeeded</summary>
         [ProtoEnum, EnumMember]
-        
         Successful = 3
     }
 
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)), KnownType(typeof(ObservableCollection<LocaleString>))]
-    
     public sealed class Suh : INotifyPropertyChanged
     {
         #region Constants and Fields
 
+        /// <summary>The collection of localized update descriptions</summary>
+        private readonly ObservableCollection<LocaleString> description;
+
+        /// <summary>The collection of localized update names</summary>
+        private readonly ObservableCollection<LocaleString> name;
+
+        /// <summary>The collection of localized publisher names</summary>
+        private readonly ObservableCollection<LocaleString> publisher;
+
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
         private string appUrl;
-
-        /// <summary>The collection of localized update descriptions</summary>
-        private ObservableCollection<LocaleString> description;
 
         /// <summary>The help website <see cref = "Uri" /> of the application</summary>
         private string helpUrl;
@@ -81,12 +81,6 @@ namespace SevenUpdate
         /// <summary>The formatted date string when the update was installed</summary>
         private string installDate;
 
-        /// <summary>The collection of localized update names</summary>
-        private ObservableCollection<LocaleString> name;
-
-        /// <summary>The collection of localized publisher names</summary>
-        private ObservableCollection<LocaleString> publisher;
-
         /// <summary>The formatted date string depicting the release date of the update</summary>
         private string releaseDate;
 
@@ -95,6 +89,32 @@ namespace SevenUpdate
 
         /// <summary>The total download size in bytes of the update</summary>
         private ulong updateSize;
+
+        /// <summary>Initializes a new instance of the <see cref = "Suh" /> class</summary>
+        /// <param name = "name">The collection of localized update names</param>
+        /// <param name = "publisher">The collection of localized publisher names</param>
+        /// <param name = "description">The collection of localized update descriptions</param>
+        public Suh(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        {
+            this.name = name;
+            this.description = description;
+            this.publisher = publisher;
+
+            if (this.name == null)
+            {
+                this.name = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.description == null)
+            {
+                this.description = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.publisher == null)
+            {
+                this.publisher = new ObservableCollection<LocaleString>();
+            }
+        }
 
         #endregion
 
@@ -110,7 +130,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
         /// <value>The application website</value>
         [ProtoMember(8), DataMember]
-        
         public string AppUrl
         {
             get
@@ -127,30 +146,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection localized update descriptions</summary>
+        /// <summary>Gets the collection localized update descriptions</summary>
         /// <value>The localized description for the update</value>
         [ProtoMember(2), DataMember]
-        
         public ObservableCollection<LocaleString> Description
         {
             get
             {
                 return this.description;
             }
-
-            set
-            {
-                this.description = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Description");
-            }
         }
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false), DataMember]
-        
         public string HelpUrl
         {
             get
@@ -170,7 +179,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the importance of the update</summary>
         /// <value>The importance</value>
         [ProtoMember(3), DataMember]
-        
         public Importance Importance
         {
             get
@@ -190,7 +198,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the url pointing to a resource to find more information about the update</summary>
         /// <value>The info URL.</value>
         [ProtoMember(10, IsRequired = false), DataMember]
-        
         public string InfoUrl
         {
             get
@@ -210,7 +217,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the formatted date string when the update was installed</summary>
         /// <value>The formatted install date string (MM/DD/YYYY).</value>
         [ProtoMember(11), DataMember]
-        
         public string InstallDate
         {
             get
@@ -227,50 +233,31 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection of localized update names</summary>
+        /// <summary>Gets the collection of localized update names</summary>
         /// <value>The localized update names</value>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<LocaleString> Name
         {
             get
             {
                 return this.name;
             }
-
-            set
-            {
-                this.name = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Name");
-            }
         }
 
-        /// <summary>Gets or sets the collection of localized publisher names</summary>
+        /// <summary>Gets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
         [ProtoMember(7), DataMember]
-        
         public ObservableCollection<LocaleString> Publisher
         {
             get
             {
                 return this.publisher;
             }
-
-            set
-            {
-                this.publisher = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Publisher");
-            }
         }
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
         [ProtoMember(5), DataMember]
-        
         public string ReleaseDate
         {
             get
@@ -290,7 +277,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the current status of the update</summary>
         /// <value>The status.</value>
         [ProtoMember(4), DataMember]
-        
         public UpdateStatus Status
         {
             get
@@ -310,7 +296,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the total download size in bytes of the update</summary>
         /// <value>The total download size of the update</value>
         [ProtoMember(6), DataMember]
-        
         public ulong UpdateSize
         {
             get
@@ -331,8 +316,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="propertyName">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "propertyName">The name of the property that changed</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

@@ -44,19 +44,15 @@ namespace SevenUpdate.Sdk
         /// <summary>The user application data location</summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\";
 
-        /// <summary>
-        /// Gets the command line arguments passed to this instance
-        /// </summary>
+        /// <summary>Gets the command line arguments passed to this instance</summary>
         internal static IList<string> Args { get; private set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Process command line args
-        /// </summary>
-        /// <param name="args">The list of arguments</param>
+        /// <summary>Process command line args</summary>
+        /// <param name = "args">The list of arguments</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -89,9 +85,9 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
+        /// <summary>Raises the <see cref = "InstanceAwareApplication.Startup" /> event.</summary>
+        /// <param name = "e">The <see cref = "System.Windows.StartupEventArgs" /> instance containing the event data.</param>
+        /// <param name = "isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Utilities.SerializationError += Core.SerializationError;
@@ -105,21 +101,21 @@ namespace SevenUpdate.Sdk
             else
             {
                 Args = e.Args;
-                Directory.CreateDirectory(App.UserStore);
+                Directory.CreateDirectory(UserStore);
                 Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
                 SetJumpList();
             }
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
-        /// <param name="e">The <see cref="InstanceAwareApplication.StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        /// <summary>Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.</summary>
+        /// <param name = "e">The <see cref = "InstanceAwareApplication.StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
             ProcessArgs(e.GetArgs());
         }
 
-        /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>
+        /// <summary>Sets the Windows 7 <see cref = "JumpList" /></summary>
         private static void SetJumpList()
         {
             // Create JumpTask
@@ -137,26 +133,16 @@ namespace SevenUpdate.Sdk
                 for (var x = startIndex; x < Core.Projects.Count; x++)
                 {
                     jumpTask = new JumpTask
-                    {
-                        ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe",
-                        IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
-                        IconResourceIndex = 7,
-                        Title = Sdk.Properties.Resources.CreateUpdate,
-                        CustomCategory = Core.Projects[x].ApplicationName,
-                        Arguments = @"-newupdate " + x,
-                    };
+                        {
+                            ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 7, Title = Sdk.Properties.Resources.CreateUpdate, CustomCategory = Core.Projects[x].ApplicationName, Arguments = @"-newupdate " + x,
+                        };
                     jumpList.JumpItems.Add(jumpTask);
                     for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                     {
                         jumpTask = new JumpTask
-                        {
-                            ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe",
-                            IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
-                            IconResourceIndex = 8,
-                            Title = String.Format(CultureInfo.CurrentCulture, Sdk.Properties.Resources.Edit, Core.Projects[x].UpdateNames[y]),
-                            CustomCategory = Core.Projects[x].ApplicationName,
-                            Arguments = @"-edit " + x + " " + y
-                        };
+                            {
+                                ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 8, Title = String.Format(CultureInfo.CurrentCulture, Sdk.Properties.Resources.Edit, Core.Projects[x].UpdateNames[y]), CustomCategory = Core.Projects[x].ApplicationName, Arguments = @"-edit " + x + " " + y
+                            };
 
                         jumpList.JumpItems.Add(jumpTask);
                     }
@@ -165,14 +151,9 @@ namespace SevenUpdate.Sdk
 
             // Configure a new JumpTask
             jumpTask = new JumpTask
-            {
-                ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe",
-                IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
-                IconResourceIndex = 6,
-                Title = Sdk.Properties.Resources.CreateProject,
-                CustomCategory = Sdk.Properties.Resources.Tasks,
-                Arguments = @"-newproject"
-            };
+                {
+                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.Sdk.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, CustomCategory = Sdk.Properties.Resources.Tasks, Arguments = @"-newproject"
+                };
             jumpList.JumpItems.Add(jumpTask);
             JumpList.SetJumpList(Current, jumpList);
         }

@@ -35,17 +35,13 @@ namespace SevenUpdate
     using SevenUpdate.Properties;
     using SevenUpdate.Service;
 
-    /// <summary>
-    /// Contains methods and events that run a WCF service
-    /// </summary>
+    /// <summary>Contains methods and events that run a WCF service</summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     public class WcfService : IElevatedProcessCallback
     {
         #region Fields
 
-        /// <summary>
-        /// The service callback context
-        /// </summary>
+        /// <summary>The service callback context</summary>
         private static IElevatedProcess context;
 
         #endregion
@@ -77,18 +73,14 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        /// Gets or sets a value indicating whether Seven Update is connected to the admin process
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether Seven Update is connected to the admin process</summary>
         internal static bool IsConnected { get; set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        /// Occurs when the process starts
-        /// </summary>
+        /// <summary>Occurs when the process starts</summary>
         public void ElevatedProcessStarted()
         {
             context = OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
@@ -105,9 +97,7 @@ namespace SevenUpdate
             // Signal Seven Update it can do elevated actions now
         }
 
-        /// <summary>
-        /// Occurs when the process as exited
-        /// </summary>
+        /// <summary>Occurs when the process as exited</summary>
         public void ElevatedProcessStopped()
         {
             Core.Instance.IsAdmin = false;
@@ -119,40 +109,40 @@ namespace SevenUpdate
         }
 
         /// <summary>Occurs when the download of updates has completed</summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The event data</param>
+        /// <param name = "sender">The sender of the event</param>
+        /// <param name = "e">The event data</param>
         public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             DownloadDone(this, e);
         }
 
         /// <summary>Occurs when the download progress has changed</summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The event data</param>
+        /// <param name = "sender">The sender of the event</param>
+        /// <param name = "e">The event data</param>
         public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             DownloadProgressChanged(this, e);
         }
 
         /// <summary>Occurs when a error occurs when downloading or installing updates</summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The event data</param>
+        /// <param name = "sender">The sender of the event</param>
+        /// <param name = "e">The event data</param>
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             ErrorOccurred(this, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed</summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The event data</param>
+        /// <param name = "sender">The sender of the event</param>
+        /// <param name = "e">The event data</param>
         public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             InstallDone(this, e);
         }
 
         /// <summary>Occurs when the install progress has changed</summary>
-        /// <param name="sender">The sender of the event</param>
-        /// <param name="e">The event data</param>
+        /// <param name = "sender">The sender of the event</param>
+        /// <param name = "e">The event data</param>
         public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             InstallProgressChanged(this, e);
@@ -166,21 +156,13 @@ namespace SevenUpdate
         /// <returns><see langword = "true" /> if the install was aborted, otherwise <see langword = "false" /></returns>
         internal static bool AbortInstall()
         {
-            var abort = false;
-            try
-            {
-                abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort");
-            }
-            catch (Exception e)
-            {
-                Utilities.ReportError(e, Utilities.UserStore);
-            }
+            var abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort");
 
             return abort;
         }
 
         /// <summary>Adds an application to Seven Update</summary>
-        /// <param name="application">the application to add to Seven Update</param>
+        /// <param name = "application">the application to add to Seven Update</param>
         internal static void AddSua(Sua application)
         {
             if (!Connect())
@@ -188,8 +170,7 @@ namespace SevenUpdate
                 return;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
                 {
                     try
                     {
@@ -207,7 +188,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports an error with the admin process</summary>
-        /// <param name="e">The exception data that caused the error</param>
+        /// <param name = "e">The exception data that caused the error</param>
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
@@ -233,8 +214,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Connects to the <see cref="SevenUpdate"/>.Admin sub program</summary>
-        /// <returns><see langword="true"/> if the connection to <see cref="WcfService"/> was successful</returns>
+        /// <summary>Connects to the <see cref = "SevenUpdate" />.Admin sub program</summary>
+        /// <returns><see langword = "true" /> if the connection to <see cref = "WcfService" /> was successful</returns>
         internal static bool Connect()
         {
             MyServiceHost.StartService();
@@ -267,7 +248,7 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>Disconnects from <see cref="SevenUpdate"/>.Admin</summary>
+        /// <summary>Disconnects from <see cref = "SevenUpdate" />.Admin</summary>
         internal static void Disconnect()
         {
             Core.Instance.IsAdmin = false;
@@ -290,8 +271,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Hides an update</summary>
-        /// <param name="hiddenUpdate">the update to hide</param>
-        /// <returns><see langword="true"/> if the admin process was executed</returns>
+        /// <param name = "hiddenUpdate">the update to hide</param>
+        /// <returns><see langword = "true" /> if the admin process was executed</returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
@@ -299,30 +280,29 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
+                {
+                    try
                     {
-                        try
-                        {
-                            context.HideUpdate(hiddenUpdate);
-                        }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            context = null;
-                            IsConnected = false;
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                        catch (TimeoutException)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                    });
+                        context.HideUpdate(hiddenUpdate);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                    catch (TimeoutException)
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                });
 
             return true;
         }
 
         /// <summary>Hides multiple updates</summary>
-        /// <param name="hiddenUpdates">the list of updates to hide</param>
+        /// <param name = "hiddenUpdates">the list of updates to hide</param>
         /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
@@ -332,20 +312,19 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
+                {
+                    try
                     {
-                        try
-                        {
-                            context.HideUpdates(hiddenUpdates);
-                        }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            context = null;
-                            IsConnected = false;
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                    });
+                        context.HideUpdates(hiddenUpdates);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                });
             return true;
         }
 
@@ -358,32 +337,31 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
+                {
+                    try
                     {
-                        try
-                        {
-                            context.InstallUpdates(Core.Applications);
-                        }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            context = null;
-                            IsConnected = false;
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                        catch (TimeoutException)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                    });
+                        context.InstallUpdates(Core.Applications);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                    catch (TimeoutException)
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                });
 
             return true;
         }
 
-        /// <summary>Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.</summary>
-        /// <param name="autoOn"><see langword = "true" /> if auto updates are enabled, otherwise <see langword = "false" /></param>
-        /// <param name="options">the options to save</param>
-        /// <param name="sul">the list of application to update to save</param>
+        /// <summary>Save the settings and call <see cref = "SevenUpdate" />.Admin to commit them.</summary>
+        /// <param name = "autoOn"><see langword = "true" /> if auto updates are enabled, otherwise <see langword = "false" /></param>
+        /// <param name = "options">the options to save</param>
+        /// <param name = "sul">the list of application to update to save</param>
         /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
@@ -392,34 +370,33 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
+                {
+                    try
                     {
-                        try
+                        context.ChangeSettings(sul, options, autoOn);
+                        if (SettingsChanged != null)
                         {
-                            context.ChangeSettings(sul, options, autoOn);
-                            if (SettingsChanged != null)
-                            {
-                                SettingsChanged(null, new EventArgs());
-                            }
+                            SettingsChanged(null, new EventArgs());
                         }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            context = null;
-                            IsConnected = false;
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                        catch (TimeoutException)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                    });
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                    catch (TimeoutException)
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                });
 
             return true;
         }
 
         /// <summary>Removes an update from the hidden list</summary>
-        /// <param name="hiddenUpdate">the hidden update to show</param>
+        /// <param name = "hiddenUpdate">the hidden update to show</param>
         /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
@@ -428,40 +405,36 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
-                delegate
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
+                {
+                    try
                     {
-                        try
-                        {
-                            context.ShowUpdate(hiddenUpdate);
-                        }
-                        catch (CommunicationObjectAbortedException)
-                        {
-                            context = null;
-                            IsConnected = false;
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                        catch (TimeoutException)
-                        {
-                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        }
-                    });
+                        context.ShowUpdate(hiddenUpdate);
+                    }
+                    catch (CommunicationObjectAbortedException)
+                    {
+                        context = null;
+                        IsConnected = false;
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                    catch (TimeoutException)
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                    }
+                });
 
             return true;
         }
 
-        /// <summary>
-        /// Waits for the admin process to connect
-        /// </summary>
+        /// <summary>Waits for the admin process to connect</summary>
         private static void WaitForAdmin()
         {
-            var task = Task.Factory.StartNew(
-                () =>
+            var task = Task.Factory.StartNew(() =>
+                {
+                    while (!IsConnected)
                     {
-                        while (!IsConnected)
-                        {
-                        }
-                    });
+                    }
+                });
             task.Wait(30000);
         }
 

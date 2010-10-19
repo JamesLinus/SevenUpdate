@@ -30,16 +30,16 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="SerializationErrorEventArgs"/> class.</summary>
-        /// <param name="exception">The exception data</param>
-        /// <param name="file">The full path of the file</param>
+        /// <summary>Initializes a new instance of the <see cref = "SerializationErrorEventArgs" /> class.</summary>
+        /// <param name = "exception">The exception data</param>
+        /// <param name = "file">The full path of the file</param>
         public SerializationErrorEventArgs(Exception exception, string file)
         {
             this.Exception = exception;
             this.File = file;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="SerializationErrorEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "SerializationErrorEventArgs" /> class.</summary>
         public SerializationErrorEventArgs()
         {
         }

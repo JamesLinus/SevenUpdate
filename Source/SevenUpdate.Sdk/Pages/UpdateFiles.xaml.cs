@@ -85,26 +85,23 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Gets the size of the file.</summary>
-        /// <param name="file">The <see cref="UpdateFile"/> to get the file size for</param>
-        /// <param name="fileLocation">The location for the file</param>
+        /// <param name = "file">The <see cref = "UpdateFile" /> to get the file size for</param>
+        /// <param name = "fileLocation">The location for the file</param>
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(
-                () =>
-                    {
-                        updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
-                    });
+            Task.Factory.StartNew(() =>
+                {
+                    updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                });
         }
 
         /// <summary>Adds a file to the list</summary>
-        /// <param name="fullName">The full path to the file</param>
+        /// <param name = "fullName">The full path to the file</param>
         private void AddFile(string fullName)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -118,10 +115,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var file = new UpdateFile
                 {
-                    Action = FileAction.Update,
-                    Destination = installUrl,
-                    Hash = Properties.Resources.CalculatingHash,
-                    Source = downloadUrl
+                    Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl
                 };
 
             Core.UpdateInfo.Files.Add(file);
@@ -132,8 +126,8 @@ namespace SevenUpdate.Sdk.Pages
             GetFileSize(ref file);
         }
 
-        /// <summary>Adds multiple files to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="files">The files.</param>
+        /// <summary>Adds multiple files to the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "files">The files.</param>
         private void AddFiles(IList<string> files)
         {
             this.AddFile(files[0]);
@@ -145,33 +139,29 @@ namespace SevenUpdate.Sdk.Pages
             this.listBox.SelectedIndex = 0;
         }
 
-        /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Browses for a folder contains files to add to the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
-            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
-            var folderBrowserDialog = new FolderBrowserDialog
-                {
-                    SelectedPath = directory
-                };
-
-            if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            using (var folderBrowserDialog = new FolderBrowserDialog())
             {
-                this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
+                folderBrowserDialog.SelectedPath = directory;
+
+                if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
+                {
+                    this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
+                }
             }
         }
 
-        /// <summary>Browses for a file to add to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Browses for a file to add to the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
-            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
-                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var files = Core.OpenFileDialog(directory, null, true);
             if (files == null)
@@ -183,27 +173,23 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Calculates the hash.</summary>
-        /// <param name="file">The <see cref="UpdateFile"/> to update the hash for</param>
-        /// <param name="fileLocation">The alternate location of the file</param>
+        /// <param name = "file">The <see cref = "UpdateFile" /> to update the hash for</param>
+        /// <param name = "fileLocation">The alternate location of the file</param>
         private void CalculateHash(ref UpdateFile file, string fileLocation = null)
         {
             var context = TaskScheduler.FromCurrentSynchronizationContext();
             var updateFile = file;
             this.tbHashCalculating.Visibility = Visibility.Visible;
             this.hashesGenerating++;
-            Task.Factory.StartNew(
-                () =>
-                    {
-                        updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
-                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
+            Task.Factory.StartNew(() =>
+                {
+                    updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                }).ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
-        /// <summary>
-        /// File
-        ///   Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/>
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/></summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void ChangeUI(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxDownloadUrl == null || this.listBox.SelectedItem == null)
@@ -251,8 +237,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Converts a path to system variables</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
@@ -262,9 +248,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -274,9 +258,9 @@ namespace SevenUpdate.Sdk.Pages
             source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
         }
 
-        /// <summary>Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
+        /// <summary>Deletes an item from the <see cref = "System.Windows.Controls.ListBox" /> on delete key down</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
         private void DeleteItem(object sender, KeyEventArgs e)
         {
             var index = this.listBox.SelectedIndex;
@@ -300,15 +284,15 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void GoToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword = "true" /> if this instance has errors; otherwise, <see langword = "false" />.</returns>
         private bool HasErrors()
         {
             if (Core.UpdateInfo.Files.Count == 0)
@@ -323,8 +307,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the next page if no errors exist</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -337,30 +321,28 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Removes all files from the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Removes all files from the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveAllFiles(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.Clear();
         }
 
-        /// <summary>Removes a files from the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>Removes a files from the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.RemoveAt(this.listBox.SelectedIndex);
         }
 
-        /// <summary>Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>Opens a dialog to browse for the selected file in the <see cref = "UpdateFile" /> collection</summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -375,9 +357,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = installUrl;
         }
 
-        /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>Updates the hash for the selected <see cref = "UpdateFile" /></summary>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = this.listBox.SelectedItem as UpdateFile;
@@ -400,8 +382,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "AeroGlass.DwmCompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

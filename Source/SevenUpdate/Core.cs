@@ -75,8 +75,7 @@ namespace SevenUpdate
                 var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
                 return t ?? new Config
                     {
-                        AutoOption = AutoUpdateOption.Notify,
-                        IncludeRecommended = false
+                        AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false
                     };
             }
         }
@@ -146,7 +145,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates</summary>
-        /// <param name="auto"><see langword = "true" /> if it's called because of an auto update check, otherwise <see langword = "false" /></param>
+        /// <param name = "auto"><see langword = "true" /> if it's called because of an auto update check, otherwise <see langword = "false" /></param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -184,8 +183,7 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) !=
-                        TaskDialogResult.Cancel)
+                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) != TaskDialogResult.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -198,30 +196,23 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the total size of a single update</summary>
-        /// <param name="files">the collection of files of an update</param>
+        /// <param name = "files">the collection of files of an update</param>
         /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
-        /// <param name="icon">The icon to display</param>
-        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="footerText">Text to display as a footer message</param>
-        /// <param name="defaultButtonText">Text to display on the button</param>
-        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <summary>Shows either a <see cref = "TaskDialog" /> or a <see cref = "MessageBox" /> if running legacy windows.</summary>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref = "TaskDialog" />)</param>
+        /// <param name = "icon">The icon to display</param>
+        /// <param name = "standardButtons">The standard buttons to use (with or without the custom default button text)</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
+        /// <param name = "footerText">Text to display as a footer message</param>
+        /// <param name = "defaultButtonText">Text to display on the button</param>
+        /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(
-            string instructionText,
-            TaskDialogStandardIcon icon,
-            TaskDialogStandardButtons standardButtons,
-            string description = null,
-            string footerText = null,
-            string defaultButtonText = null,
-            bool displayShieldOnButton = false)
+        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
@@ -242,8 +233,7 @@ namespace SevenUpdate
                         {
                             var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
                                 {
-                                    Default = true,
-                                    ShowElevationIcon = displayShieldOnButton
+                                    Default = true, ShowElevationIcon = displayShieldOnButton
                                 };
                             td.Controls.Add(button);
                         }
@@ -303,17 +293,17 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
-        /// <param name="icon">The icon to display</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <summary>Shows either a <see cref = "TaskDialog" /> or a <see cref = "MessageBox" /> if running legacy windows.</summary>
+        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref = "TaskDialog" />)</param>
+        /// <param name = "icon">The icon to display</param>
+        /// <param name = "description">A description of the message, supplements the instruction text</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

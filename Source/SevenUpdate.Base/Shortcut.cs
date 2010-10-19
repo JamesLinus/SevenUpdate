@@ -35,22 +35,18 @@ namespace SevenUpdate
 
     /// <summary>The action to preform on the shortcut</summary>
     [ProtoContract, DataContract, DefaultValue(Add)]
-    
     public enum ShortcutAction
     {
         /// <summary>Adds a shortcut</summary>
         [ProtoEnum, EnumMember]
-        
         Add = 0,
 
         /// <summary>Updates a shortcut only if it exists</summary>
         [ProtoEnum, EnumMember]
-        
         Update = 1,
 
         /// <summary>Deletes a shortcut</summary>
         [ProtoEnum, EnumMember]
-        
         Delete = 2
     }
 
@@ -93,10 +89,15 @@ namespace SevenUpdate
 
     /// <summary>A shortcut to be created within an update</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ShortcutAction))]
-    
     public sealed class Shortcut : INotifyPropertyChanged
     {
         #region Constants and Fields
+
+        /// <summary>The collection of localized shortcut descriptions</summary>
+        private readonly ObservableCollection<LocaleString> description;
+
+        /// <summary>The collection of localized shortcut names</summary>
+        private readonly ObservableCollection<LocaleString> name;
 
         /// <summary>The max feature length</summary>
         private const int MaxFeatureLength = 38;
@@ -119,20 +120,38 @@ namespace SevenUpdate
         /// <summary>The command line arguments for the shortcut</summary>
         private string arguments;
 
-        /// <summary>The collection of localized shortcut descriptions</summary>
-        private ObservableCollection<LocaleString> description;
-
         /// <summary>The icon resource for the shortcut</summary>
         private string icon;
 
         /// <summary>The physical location of the shortcut lnk file</summary>
         private string location;
 
-        /// <summary>The collection of localized shortcut names</summary>
-        private ObservableCollection<LocaleString> name;
-
         /// <summary>The file or folder that is executed by the shortcut</summary>
         private string target;
+
+        /// <summary>Initializes a new instance of the <see cref = "Shortcut" /> class</summary>
+        /// <param name = "name">The collection of localized update names</param>
+        /// <param name = "description">The collection of localized update descriptions</param>
+        public Shortcut(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> description)
+        {
+            this.description = description;
+            this.name = name;
+
+            if (this.description == null)
+            {
+                this.description = new ObservableCollection<LocaleString>();
+            }
+
+            if (this.name == null)
+            {
+                this.name = new ObservableCollection<LocaleString>();
+            }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref = "Shortcut" /> class</summary>
+        public Shortcut()
+        {
+        }
 
         #endregion
 
@@ -147,22 +166,20 @@ namespace SevenUpdate
 
         /// <summary>The interface for a Persistent file</summary>
         [ComImport, Guid("0000010c-0000-0000-c000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        
         private interface IPersist
         {
             /// <summary>Gets the class ID.</summary>
-            /// <param name="classID">The class ID.</param>
+            /// <param name = "classID">The class ID.</param>
             [PreserveSig]
             void GetClassID(out Guid classID);
         }
 
         /// <summary>The persistent file for win32</summary>
         [ComImport, Guid("0000010b-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        
         private interface IPersistFile : IPersist
         {
             /// <summary>Gets the class ID.</summary>
-            /// <param name="classID">The class ID.</param>
+            /// <param name = "classID">The class ID.</param>
             new void GetClassID(out Guid classID);
 
             /// <summary>Determines whether this instance is dirty.</summary>
@@ -171,109 +188,108 @@ namespace SevenUpdate
             int IsDirty();
 
             /// <summary>Loads the specified file name.</summary>
-            /// <param name="fileName">Name of the file.</param>
-            /// <param name="mode">The mode how to load the file</param>
+            /// <param name = "fileName">Name of the file.</param>
+            /// <param name = "mode">The mode how to load the file</param>
             [PreserveSig]
             void Load([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>Saves the specified file name.</summary>
-            /// <param name="fileName">Name of the file.</param>
-            /// <param name="remember">if set to <see langword="true"/> [remember].</param>
+            /// <param name = "fileName">Name of the file.</param>
+            /// <param name = "remember">if set to <see langword = "true" /> [remember].</param>
             [PreserveSig]
             void Save([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, [In, MarshalAs(UnmanagedType.Bool)] bool remember);
 
             /// <summary>Saves the shortcut</summary>
-            /// <param name="fileName">Name of the file.</param>
+            /// <param name = "fileName">Name of the file.</param>
             [PreserveSig]
             void SaveCompleted([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
             /// <summary>Gets the shortcut from the filename</summary>
-            /// <param name="fileName">Name of the file.</param>
+            /// <param name = "fileName">Name of the file.</param>
             [PreserveSig]
             void GetCurFile([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
         }
 
         /// <summary>The IShellLink interface allows Shell links to be created, modified, and resolved</summary>
         [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
-        
         private interface IShellLink
         {
             /// <summary>Retrieves the path and file name of a Shell link object</summary>
-            /// <param name="file">The filename of the shortcut</param>
-            /// <param name="maxPath">The max path.</param>
-            /// <param name="data">The data to get</param>
-            /// <param name="flags">The options to specify the path is retrieved.</param>
+            /// <param name = "file">The filename of the shortcut</param>
+            /// <param name = "maxPath">The max path.</param>
+            /// <param name = "data">The data to get</param>
+            /// <param name = "flags">The options to specify the path is retrieved.</param>
             void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, out Win32FindData data, int flags);
 
             /// <summary>Retrieves the list of item identifiers for a Shell link object</summary>
-            /// <param name="indentifer">The indentifer list.</param>
+            /// <param name = "indentifer">The indentifer list.</param>
             void GetIDList(out IntPtr indentifer);
 
             /// <summary>Sets the pointer to an item identifier list (PIDL) for a Shell link object.</summary>
-            /// <param name="indentifer">The indentifer list</param>
+            /// <param name = "indentifer">The indentifer list</param>
             void SetIDList(IntPtr indentifer);
 
             /// <summary>Retrieves the description string for a Shell link object</summary>
-            /// <param name="description">The description.</param>
-            /// <param name="maxName">Name of the max.</param>
+            /// <param name = "description">The description.</param>
+            /// <param name = "maxName">Name of the max.</param>
             void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder description, int maxName);
 
             /// <summary>Sets the description for a Shell link object. The description can be any application-defined string</summary>
-            /// <param name="description">The description.</param>
+            /// <param name = "description">The description.</param>
             void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string description);
 
             /// <summary>Retrieves the name of the working directory for a Shell link object</summary>
-            /// <param name="dir">The working directory.</param>
-            /// <param name="maxPath">The max path.</param>
+            /// <param name = "dir">The working directory.</param>
+            /// <param name = "maxPath">The max path.</param>
             void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder dir, int maxPath);
 
             /// <summary>Sets the name of the working directory for a Shell link object</summary>
-            /// <param name="dir">The working directory.</param>
+            /// <param name = "dir">The working directory.</param>
             void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string dir);
 
             /// <summary>Retrieves the command-line arguments associated with a Shell link object</summary>
-            /// <param name="args">The arguments for the shortcut</param>
-            /// <param name="maxPath">The max path.</param>
+            /// <param name = "args">The arguments for the shortcut</param>
+            /// <param name = "maxPath">The max path.</param>
             void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder args, int maxPath);
 
             /// <summary>Sets the command-line arguments for a Shell link object</summary>
-            /// <param name="args">The arguments for the shortcut</param>
+            /// <param name = "args">The arguments for the shortcut</param>
             void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string args);
 
             /// <summary>Retrieves the hot key for a Shell link object</summary>
-            /// <param name="hotkey">The hotkey.</param>
+            /// <param name = "hotkey">The hotkey.</param>
             void GetHotkey(out short hotkey);
 
             /// <summary>Sets a hot key for a Shell link object</summary>
-            /// <param name="hotkey">The hotkey.</param>
+            /// <param name = "hotkey">The hotkey.</param>
             void SetHotkey(short hotkey);
 
             /// <summary>Retrieves the show command for a Shell link object</summary>
-            /// <param name="showCmd">The show CMD.</param>
+            /// <param name = "showCmd">The show CMD.</param>
             void GetShowCmd(out int showCmd);
 
             /// <summary>Sets the show command for a Shell link object. The show command sets the initial show state of the window.</summary>
-            /// <param name="showCmd">The show CMD.</param>
+            /// <param name = "showCmd">The show CMD.</param>
             void SetShowCmd(int showCmd);
 
             /// <summary>Retrieves the location (path and index) of the icon for a Shell link object</summary>
-            /// <param name="iconPath">The icon path.</param>
-            /// <param name="iconPathLength">Length of the icon path.</param>
-            /// <param name="iconIndex">Index of the icon.</param>
+            /// <param name = "iconPath">The icon path.</param>
+            /// <param name = "iconPathLength">Length of the icon path.</param>
+            /// <param name = "iconIndex">Index of the icon.</param>
             void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder iconPath, int iconPathLength, out int iconIndex);
 
             /// <summary>Sets the location (path and index) of the icon for a Shell link object</summary>
-            /// <param name="iconPath">The icon path.</param>
-            /// <param name="iconIndex">Index of the icon.</param>
+            /// <param name = "iconPath">The icon path.</param>
+            /// <param name = "iconIndex">Index of the icon.</param>
             void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string iconPath, int iconIndex);
 
             /// <summary>Sets the relative path to the Shell link object</summary>
-            /// <param name="relativePath">The relative path.</param>
-            /// <param name="reserved">The reserved.</param>
+            /// <param name = "relativePath">The relative path.</param>
+            /// <param name = "reserved">The reserved.</param>
             void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string relativePath, int reserved);
 
             /// <summary>Sets the path and file name of a Shell link object</summary>
-            /// <param name="file">The file to set the path</param>
+            /// <param name = "file">The file to set the path</param>
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string file);
         }
 
@@ -284,7 +300,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the action to perform on the <see cref = "Shortcut" /></summary>
         /// <value>The action.</value>
         [ProtoMember(3), DataMember]
-        
         public ShortcutAction Action
         {
             get
@@ -304,7 +319,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the command line arguments for the shortcut</summary>
         /// <value>The arguments of the shortcut</value>
         [ProtoMember(4, IsRequired = false), DataMember]
-        
         public string Arguments
         {
             get
@@ -321,30 +335,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection of localized shortcut descriptions</summary>
+        /// <summary>Gets the collection of localized shortcut descriptions</summary>
         /// <value>The localized descriptions for the shortcut</value>
         [ProtoMember(5, IsRequired = false), DataMember]
-        
         public ObservableCollection<LocaleString> Description
         {
             get
             {
                 return this.description;
             }
-
-            set
-            {
-                this.description = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Description");
-            }
         }
 
         /// <summary>Gets or sets the icon resource for the shortcut</summary>
         /// <value>The icon for the shortcut</value>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string Icon
         {
             get
@@ -364,7 +368,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the physical location of the shortcut lnk file</summary>
         /// <value>The shortcut location</value>
         [ProtoMember(2), DataMember]
-        
         public string Location
         {
             get
@@ -381,30 +384,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection of localized shortcut names</summary>
+        /// <summary>Gets the collection of localized shortcut names</summary>
         /// <value>The localized names for the shortcut</value>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<LocaleString> Name
         {
             get
             {
                 return this.name;
             }
-
-            set
-            {
-                this.name = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Name");
-            }
         }
 
         /// <summary>Gets or sets the file or folder that is executed by the shortcut</summary>
         /// <value>The target for the shortcut</value>
         [ProtoMember(7, IsRequired = false), DataMember]
-        
         public string Target
         {
             get
@@ -426,7 +419,7 @@ namespace SevenUpdate
         #region Public Methods
 
         /// <summary>Gets data associated with a shortcut</summary>
-        /// <param name="shortcutName">The full path to the shortcut lnk file</param>
+        /// <param name = "shortcutName">The full path to the shortcut lnk file</param>
         /// <returns>The data for the shortcut</returns>
         public static Shortcut GetShortcutData(string shortcutName)
         {
@@ -436,17 +429,14 @@ namespace SevenUpdate
             var sb = new StringBuilder(MaxPath);
             var ls = new LocaleString
                 {
-                    Lang = Utilities.Locale,
-                    Value = Path.GetFileNameWithoutExtension(shortcutName)
+                    Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(shortcutName)
                 };
             var shortcut = new Shortcut
                 {
                     Target = GetMsiTargetPath(shortcutName),
-                    Name = new ObservableCollection<LocaleString>
-                        {
-                            ls
-                        },
                 };
+
+            shortcut.Name.Add(ls);
 
             var shellLink = link as IShellLink;
             if (shellLink == null)
@@ -465,7 +455,6 @@ namespace SevenUpdate
             shortcut.Arguments = sb.ToString();
 
             shellLink.GetDescription(sb, sb.Capacity);
-            shortcut.Description = new ObservableCollection<LocaleString>();
             ls.Value = sb.ToString();
             shortcut.Description.Add(ls);
 
@@ -491,7 +480,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Gets the target path from a Msi shortcut</summary>
-        /// <param name="shortcutPath">The path to the shortcut lnk file</param>
+        /// <param name = "shortcutPath">The path to the shortcut lnk file</param>
         /// <returns>The resolved path to the shortcut</returns>
         private static string GetMsiTargetPath(string shortcutPath)
         {
@@ -513,8 +502,8 @@ namespace SevenUpdate
             return installState == InstallState.Source ? path.ToString() : null;
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="propertyName">The name of the property.</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;
@@ -566,7 +555,6 @@ namespace SevenUpdate
 
         /// <summary>The Shell link class</summary>
         [ComImport, Guid("00021401-0000-0000-C000-000000000046")]
-        
         internal class ShellLink
         {
         }

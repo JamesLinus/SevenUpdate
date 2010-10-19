@@ -726,7 +726,7 @@
     <comment>TextBlock.Text</comment>
   </data>
   <data name="ShortcutIconToolTip" xml:space="preserve">
-    <value>A path pointing to an ico to use as the shortcut icon</value>
+    <value>A path pointing to a icon file or assembly to use as the shortcut icon</value>
     <comment>TextBlock.ToolTip</comment>
   </data>
   <data name="ShortcutDescription" xml:space="preserve">
@@ -741,7 +741,7 @@
     <value>Shortcut arguments:</value>
     <comment>TextBlock.Text</comment>
   </data>
-  <data name="ShortcutArguementsToolTip" xml:space="preserve">
+  <data name="ShortcutArgumentsToolTip" xml:space="preserve">
     <value>The command line arguments for the shortcut</value>
     <comment>TextBlock.ToolTip</comment>
   </data>

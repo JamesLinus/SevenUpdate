@@ -31,16 +31,29 @@ namespace SevenUpdate
 
     /// <summary>The collection of updates and the application info.</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
-    
     public sealed class Sui : INotifyPropertyChanged
     {
         #region Constants and Fields
 
+        /// <summary>A collection of updates for the application</summary>
+        private readonly ObservableCollection<Update> updates;
+
         /// <summary>The application information</summary>
         private Sua appInfo;
 
-        /// <summary>A collection of updates for the application</summary>
-        private ObservableCollection<Update> updates;
+        /// <summary>Initializes a new instance of the <see cref = "Sui" /> class</summary>
+        /// <param name = "updates">The collection of updates for the application</param>
+        public Sui(ObservableCollection<Update> updates)
+        {
+            this.updates = updates;
+
+            if (this.updates != null)
+            {
+                return;
+            }
+
+            this.updates = new ObservableCollection<Update>();
+        }
 
         #endregion
 
@@ -55,7 +68,6 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the  software information for the application updates.</summary>
         [ProtoMember(2), DataMember]
-        
         public Sua AppInfo
         {
             get
@@ -72,22 +84,13 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the collection of updates for the application</summary>
+        /// <summary>Gets the collection of updates for the application</summary>
         [ProtoMember(1), DataMember]
-        
         public ObservableCollection<Update> Updates
         {
             get
             {
                 return this.updates;
-            }
-
-            set
-            {
-                this.updates = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Updates");
             }
         }
 
@@ -95,8 +98,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

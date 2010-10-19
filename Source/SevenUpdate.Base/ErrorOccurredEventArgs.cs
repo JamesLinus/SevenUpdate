@@ -30,51 +30,43 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Indicates a type of error that can occur</summary>
-    [ProtoContract, DataContract, DefaultValue(GeneralErrorNonFatal)]
-    
+    [ProtoContract, DataContract, DefaultValue(GeneralError)]
     public enum ErrorType
     {
         /// <summary>An error that occurred while trying to download updates</summary>
         [ProtoEnum, EnumMember]
-        
         DownloadError,
 
         /// <summary>An error that occurred while trying to install updates</summary>
         [ProtoEnum, EnumMember]
-        
         InstallationError,
 
         /// <summary>A general network connection error</summary>
         [ProtoEnum, EnumMember]
-        
         FatalNetworkError,
 
         /// <summary>An unspecified error, non fatal</summary>
         [ProtoEnum, EnumMember]
-        
-        GeneralErrorNonFatal,
+        GeneralError,
 
         /// <summary>An unspecified error that prevents Seven Update from continuing</summary>
         [ProtoEnum, EnumMember]
-        
         FatalError,
 
         /// <summary>An error that occurs while searching for updates</summary>
         [ProtoEnum, EnumMember]
-        
         SearchError
     }
 
     /// <summary>Provides event data for the ErrorOccurred event</summary>
     [ProtoContract, DataContract]
-    
     public sealed class ErrorOccurredEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs"/> class.</summary>
-        /// <param name="exception">the exception that occurred</param>
-        /// <param name="type">the type of error that occurred</param>
+        /// <summary>Initializes a new instance of the <see cref = "ErrorOccurredEventArgs" /> class.</summary>
+        /// <param name = "exception">the exception that occurred</param>
+        /// <param name = "type">the type of error that occurred</param>
         public ErrorOccurredEventArgs(string exception, ErrorType type)
         {
             this.Exception = exception;

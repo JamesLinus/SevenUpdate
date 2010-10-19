@@ -30,58 +30,47 @@ namespace SevenUpdate
 
     /// <summary>The action to perform on the file</summary>
     [ProtoContract, DataContract, DefaultValue(Update)]
-    
     public enum FileAction
     {
         /// <summary>Updates a file</summary>
         [ProtoEnum, EnumMember]
-        
         Update = 0,
 
         /// <summary>Updates a file, only if it exist</summary>
         [ProtoEnum, EnumMember]
-        
         UpdateIfExist = 1,
 
         /// <summary>Updates a file, then registers the dll</summary>
         [ProtoEnum, EnumMember]
-        
         UpdateThenRegister = 2,
 
         /// <summary>Updates a file, then executes it</summary>
         [ProtoEnum, EnumMember]
-        
         UpdateThenExecute = 3,
 
         /// <summary>Compares a file, but does not update it</summary>
         [ProtoEnum, EnumMember]
-        
         CompareOnly = 4,
 
         /// <summary>Executes a file, can be on system or be downloaded</summary>
         [ProtoEnum, EnumMember]
-        
         Execute = 5,
 
         /// <summary>Deletes a file</summary>
         [ProtoEnum, EnumMember]
-        
         Delete = 6,
 
         /// <summary>Executes a file, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        
         ExecuteThenDelete = 7,
 
         /// <summary>Unregisters a dll, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        
         UnregisterThenDelete = 8,
     }
 
     /// <summary>Information about a file within an update</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(FileAction))]
-    
     public sealed class UpdateFile : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -118,7 +107,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the action to perform on the <see cref = "UpdateFile" /></summary>
         /// <value>The action.</value>
         [ProtoMember(1), DataMember]
-        
         public FileAction Action
         {
             get
@@ -138,7 +126,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the command line arguments to execute with the file</summary>
         /// <value>The arguments</value>
         [ProtoMember(6, IsRequired = false), DataMember]
-        
         public string Args
         {
             get
@@ -158,7 +145,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the location where the file will be installed</summary>
         /// <value>The destination.</value>
         [ProtoMember(3), DataMember]
-        
         public string Destination
         {
             get
@@ -178,7 +164,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the size of the file in bytes</summary>
         /// <value>The size of the file.</value>
         [ProtoMember(5), DataMember]
-        
         public ulong FileSize
         {
             get
@@ -198,7 +183,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the SHA-2 hash of the file</summary>
         /// <value>The SHA-2 hash of the file.</value>
         [ProtoMember(4), DataMember]
-        
         public string Hash
         {
             get
@@ -218,7 +202,6 @@ namespace SevenUpdate
         /// <summary>Gets or sets the download location for the file</summary>
         /// <value>The download location of the file</value>
         [ProtoMember(2), DataMember]
-        
         public string Source
         {
             get
@@ -239,8 +222,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
+        /// <param name = "name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

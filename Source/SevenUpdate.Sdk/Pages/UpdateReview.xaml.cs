@@ -55,7 +55,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Saves the project.</summary>
-        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
+        /// <param name = "export"><see langword = "true" /> to export the sui/sua files, <see langword = "false" /> otherwise</param>
         private static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -101,8 +101,13 @@ namespace SevenUpdate.Sdk.Pages
             var project = new Project
                 {
                     ApplicationName = appName,
-                    UpdateNames = updateNames
                 };
+
+            foreach (var t in updateNames)
+            {
+                project.UpdateNames.Add(t);
+            }
+
             Core.Projects.Add(project);
             Utilities.Serialize(Core.Projects, Core.ProjectsFile);
 
@@ -145,24 +150,24 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Saves and exports the Project</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
             SaveProject(true);
         }
 
         /// <summary>Saves the Project</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
             SaveProject();
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="AeroGlass.DwmCompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name = "sender">The source of the event.</param>
+        /// <param name = "e">The <see cref = "AeroGlass.DwmCompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
