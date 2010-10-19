@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="EventArgs.cs"
+// <copyright file="BitsInterfaceNotificationEventArgs.cs"
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"
@@ -12,39 +12,7 @@
 // ***********************************************************************
 namespace SharpBits.Base
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
-
-    /// <summary>The event data for the JobNotification event</summary>
-    public class JobNotificationEventArgs : EventArgs
-    {
-    }
-
-    /// <summary>The event data for the ErrorNotification event</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "EventArgs")]
-    public class ErrorNotificationEventArgs : NotificationEventArgs
-    {
-        #region Constructors and Destructors
-
-        /// <summary>Initializes a new instance of the <see cref="ErrorNotificationEventArgs"/> class.</summary>
-        /// <param name="job">The job the notification is for</param>
-        /// <param name="error">The error that occurred</param>
-        internal ErrorNotificationEventArgs(BitsJob job, BitsError error) : base(job)
-        {
-            this.Error = error;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>Gets the error.</summary>
-        /// <value>The error that occurred</value>
-        public BitsError Error { get; private set; }
-
-        #endregion
-    }
 
     /// <summary>The event data for the interface notification event</summary>
     public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
@@ -58,10 +26,10 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs"/> class.</summary>
-        /// <param name="job">The job the notification is for</param>
-        /// <param name="exception">The exception.</param>
-        /// <param name="description">The description.</param>
+        /// <summary>Initializes a new instance of the <see cref = "BitsInterfaceNotificationEventArgs" /> class.</summary>
+        /// <param name = "job">The job the notification is for</param>
+        /// <param name = "exception">The exception.</param>
+        /// <param name = "description">The description.</param>
         internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description) : base(job)
         {
             this.Description = description;
