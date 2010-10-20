@@ -70,6 +70,16 @@ namespace System.Windows.Controls
         /// <typeparameter name="T">The type of element</typeparameter>
         public static void RemoveAdorners<T>(this AdornerLayer adr, UIElement elem)
         {
+            if (adr == null)
+            {
+                throw new ArgumentNullException("adr");
+            }
+
+            if (elem == null)
+            {
+                throw new ArgumentNullException("adr");
+            }
+
             var adorners = adr.GetAdorners(elem);
 
             if (adorners == null)
@@ -91,22 +101,25 @@ namespace System.Windows.Controls
         /// <param name="elem">The element</param>
         public static void RemoveAll(this AdornerLayer adr, UIElement elem)
         {
-            try
+            if (adr == null)
             {
-                var adorners = adr.GetAdorners(elem);
-
-                if (adorners == null)
-                {
-                    return;
-                }
-
-                foreach (var toRemove in adorners)
-                {
-                    adr.Remove(toRemove);
-                }
+                throw new ArgumentNullException("adr");
             }
-            catch (Exception)
+
+            if (elem == null)
             {
+                throw new ArgumentNullException("elem");
+            }
+
+            var adorners = adr.GetAdorners(elem);
+            if (adorners == null)
+            {
+                return;
+            }
+
+            foreach (var toRemove in adorners)
+            {
+                adr.Remove(toRemove);
             }
         }
 

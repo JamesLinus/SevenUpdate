@@ -31,7 +31,8 @@ namespace WPFLocalizeExtension.Engine
             }
             catch (Exception)
             {
-                return "No localized ErrorMessage founded for Error: " + errorNo;
+                throw;
+                return "No localized ErrorMessage found for Error: " + errorNo;
             }
         }
 
@@ -65,7 +66,8 @@ namespace WPFLocalizeExtension.Engine
             }
             catch (Exception)
             {
-                return "No localized GuiMessage founded for key '" + key + "'";
+                throw;
+                return "No localized GuiMessage found for key '" + key + "'";
             }
         }
 
@@ -90,7 +92,8 @@ namespace WPFLocalizeExtension.Engine
             }
             catch (Exception)
             {
-                return "No localized HelpMessage founded for key '" + key + "'";
+                throw;
+                return "No localized HelpMessage found for key '" + key + "'";
             }
         }
 
@@ -115,7 +118,8 @@ namespace WPFLocalizeExtension.Engine
             }
             catch (Exception)
             {
-                return "No localized MaintenanceMessage founded for key '" + key + "'";
+                throw;
+                return "No localized MaintenanceMessage found for key '" + key + "'";
             }
         }
 
@@ -140,7 +144,8 @@ namespace WPFLocalizeExtension.Engine
             }
             catch (Exception)
             {
-                return "No localized UpdateAgentMessage founded for key '" + key + "'";
+                throw;
+                return "No localized UpdateAgentMessage found for key '" + key + "'";
             }
         }
 

@@ -123,7 +123,9 @@
     <Compile Include="Extensions\LocTextLowerExtension.cs" />
     <Compile Include="Extensions\LocTextUpperExtension.cs" />
     <Compile Include="Extensions\LocThicknessExtension.cs" />
+    <Compile Include="Extensions\NativeMethods.cs" />
     <Compile Include="Extensions\OddsFormatExtension.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

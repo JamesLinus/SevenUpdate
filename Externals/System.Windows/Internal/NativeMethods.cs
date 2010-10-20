@@ -28,10 +28,121 @@ namespace System.Windows.Internal
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    /// Wrappers for Native Methods and Structs.
-    ///   This type is intended for internal use only
-    /// </summary>
+    /// <summary>The blur behind flags/options</summary>
+    [Flags]
+    public enum DwmBlurBehindFlag : uint
+    {
+        /// <summary>Enables blur behind</summary>
+        DwmBlurBehindEnable = 0x00000001,
+
+        /// <summary>The blur behind region</summary>
+        DwmBlurBehindRegion = 0x00000002,
+
+        /// <summary>True to show effects with maximizing</summary>
+        DwmTransitionOnMaximized = 0x00000004
+    }
+
+    /// <summary>Defines the margins of windows that have visual styles applied.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Margins
+    {
+        /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
+        /// <param name="fullWindow">if set to <see langword="true"/> the margin is set to the full window.</param>
+        public Margins(bool fullWindow) : this()
+        {
+            this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
+        }
+
+        /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
+        /// <param name="left">Width of the left border that retains its size.</param>
+        /// <param name="top">Height of the top border that retains its size.</param>
+        /// <param name="right">Width of the right border that retains its size.</param>
+        /// <param name="bottom">Height of the bottom border that retains its size.</param>
+        public Margins(int left, int top, int right, int bottom) : this()
+        {
+            this.LeftWidth = left;
+            this.RightWidth = right;
+            this.TopHeight = top;
+            this.BottomHeight = bottom;
+        }
+
+        /// <summary>Gets the width of the left border that retains its size.</summary>
+        public int LeftWidth { get; private set; }
+
+        /// <summary>Gets the width of the right border that retains its size.</summary>
+        public int RightWidth { get; private set; }
+
+        /// <summary>Gets the height of the top border that retains its size.</summary>
+        public int TopHeight { get; private set; }
+
+        /// <summary>Gets the height of the bottom border that retains its size.</summary>
+        public int BottomHeight { get; private set; }
+    }
+
+    /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Rect
+    {
+        /// <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
+        public int Left;
+
+        /// <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
+        public int Top;
+
+        /// <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
+        public int Right;
+
+        /// <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
+        public int Bottom;
+    }
+
+    /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct DwmBlurBehind
+    {
+        /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
+        public DwmBlurBehindFlag Flags;
+
+        /// <summary><see langword = "true" /> to register the window handle to DWM blur behind; <see langword = "false" /> to unregister the window handle from DWM blur behind.</summary>
+        public bool Enable;
+
+        /// <summary>The region within the client area to apply the blur behind. A <see langword = "null" /> value will apply the blur behind the entire client area.</summary>
+        public IntPtr RegionBlur;
+
+        /// <summary><see langword = "true" /> if the window's colorization should transition to match the maximized windows; otherwise, <see langword = "false" />.</summary>
+        public bool TransitionOnMaximized;
+    }
+
+    /// <summary>Data used to create the activation context.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct ActivationContext
+    {
+        /// <summary>Identifies the type of processor used. Specifies the system's processor architecture.</summary>
+        public ushort ProcessorArchitecture;
+
+        /// <summary>Specifies the language manifest that should be used. The default is the current user's current UI language.</summary>
+        public ushort LangId;
+
+        /// <summary>Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.</summary>
+        public string ResourceName;
+
+        /// <summary>The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.</summary>
+        public string ApplicationName;
+
+        /// <summary>The size, in bytes, of this structure. This is used to determine the version of this structure.</summary>
+        public int Size;
+
+        /// <summary>Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.</summary>
+        public uint Flags;
+
+        /// <summary>Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.</summary>
+        public string Source;
+
+        /// <summary>The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.</summary>
+        public string AssemblyDirectory;
+    }
+
+    /// <summary>Wrappers for Native Methods and Structs. This type is intended for internal use only</summary>
     public static class NativeMethods
     {
         #region Constants
@@ -68,23 +179,6 @@ namespace System.Windows.Internal
 
         #endregion
 
-        #region Enums
-
-        /// <summary>The blur behind flags/options</summary>
-        internal enum DwmBlurBehindFlag : uint
-        {
-            /// <summary>Enables blur behind</summary>
-            DwmBlurBehindEnable = 0x00000001,
-
-            /// <summary>The blur behind region</summary>
-            DwmBlurBehindRegion = 0x00000002,
-
-            /// <summary>True to show effects with maximizing</summary>
-            DwmTransitionOnMaximized = 0x00000004
-        }
-
-        #endregion
-
         /// <summary>Gets a value indicating whether if the current logged in user is an admin</summary>
         public static bool IsUserAdmin
         {
@@ -102,6 +196,7 @@ namespace System.Windows.Internal
         /// <param name="cookie">Pointer to a ULONG_PTR that functions as a cookie, uniquely identifying a specific, activated activation context.</param>
         /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
         [DllImport(@"Kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ActivateActCtx(IntPtr activationContext, out IntPtr cookie);
 
         /// <summary>Creates an activation context.</summary>
@@ -115,6 +210,7 @@ namespace System.Windows.Internal
         /// <param name="cookie">The ULONG_PTR that was passed into the call to <see cref="ActivateActCtx"/>. This value is used as a cookie to identify a specific activated activation context.</param>
         /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
         [DllImport(@"Kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DeactivateActCtx(uint flags, IntPtr cookie);
 
         /// <summary>
@@ -140,6 +236,7 @@ namespace System.Windows.Internal
         /// <param name="bb">A pointer to a <see cref="DwmBlurBehind"/> structure that provides blur behind data.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
         [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.U1)]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
 
         /// <summary>Extends glass into the client area</summary>
@@ -147,17 +244,20 @@ namespace System.Windows.Internal
         /// <param name="margins">A pointer to a Margins structure that describes the margins to use when extending the frame into the client area.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code..</returns>
         [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.U1)]
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
 
         /// <summary>Gets a value that indicates whether Desktop Window Manager (DWM) composition is enabled. Applications can listen for composition state changes by handling the WM_DWMCOMPOSITIONCHANGED notification.</summary>
         /// <returns><see langword="true"/> if composition is enabled; otherwise, <see langword="false"/></returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DwmIsCompositionEnabled();
 
         /// <summary>Enables or disables Desktop Window Manager (DWM) composition.</summary>
         /// <param name="enable">if set to <see langword="true"/> DWM will be enabled</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
+        [return: MarshalAs(UnmanagedType.U1)]
         internal static extern int DwmEnableComposition(bool enable);
 
         /// <summary>Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>
@@ -179,120 +279,7 @@ namespace System.Windows.Internal
         /// <summary>Gets a value indicating whether the current user is a member of the Administrator's group.</summary>
         /// <returns><see langword="true"/> if the user is a member of the Administrator's group; otherwise, <see langword="false"/>.</returns>
         [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IsUserAnAdmin();
-
-        /// <summary>Defines the margins of windows that have visual styles applied.</summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct Margins
-        {
-            /// <summary>Width of the left border that retains its size.</summary>
-            public int LeftWidth;
-
-            /// <summary>Width of the right border that retains its size.</summary>
-            public int RightWidth;
-
-            /// <summary>Height of the top border that retains its size.</summary>
-            public int TopHeight;
-
-            /// <summary>Height of the bottom border that retains its size.</summary>
-            public int BottomHeight;
-
-            /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
-            /// <param name="fullWindow">if set to <see langword="true"/> the margin is set to the full window.</param>
-            public Margins(bool fullWindow)
-            {
-                this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
-            }
-
-            /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
-            /// <param name="left">Width of the left border that retains its size.</param>
-            /// <param name="top">Height of the top border that retains its size.</param>
-            /// <param name="right">Width of the right border that retains its size.</param>
-            /// <param name="bottom">Height of the bottom border that retains its size.</param>
-            public Margins(int left, int top, int right, int bottom)
-            {
-                this.LeftWidth = left;
-                this.RightWidth = right;
-                this.TopHeight = top;
-                this.BottomHeight = bottom;
-            }
-        }
-
-        /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct Rect
-        {
-            /// <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
-            public int Left;
-
-            /// <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
-            public int Top;
-
-            /// <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
-            public int Right;
-
-            /// <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
-            public int Bottom;
-        }
-
-        /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct DwmBlurBehind
-        {
-            /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
-            public DwmBlurBehindFlag Flags;
-
-            /// <summary><see langword = "true" /> to register the window handle to DWM blur behind; <see langword = "false" /> to unregister the window handle from DWM blur behind.</summary>
-            public bool Enable;
-
-            /// <summary>The region within the client area to apply the blur behind. A <see langword = "null" /> value will apply the blur behind the entire client area.</summary>
-            public IntPtr RegionBlur;
-
-            /// <summary><see langword = "true" /> if the window's colorization should transition to match the maximized windows; otherwise, <see langword = "false" />.</summary>
-            public bool TransitionOnMaximized;
-        }
-
-        /// <summary>Data used to create the activation context.</summary>
-        [StructLayout(LayoutKind.Sequential)]
-        internal struct ActivationContext
-        {
-            /// <summary>Identifies the type of processor used. Specifies the system's processor architecture.</summary>
-            public readonly ushort ProcessorArchitecture;
-
-            /// <summary>Specifies the language manifest that should be used. The default is the current user's current UI language.</summary>
-            public readonly ushort LangId;
-
-            /// <summary>Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.</summary>
-            public readonly string ResourceName;
-
-            /// <summary>The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.</summary>
-            public readonly string ApplicationName;
-
-            /// <summary>The size, in bytes, of this structure. This is used to determine the version of this structure.</summary>
-            public int Size;
-
-            /// <summary>Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.</summary>
-            public uint Flags;
-
-            /// <summary>Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.</summary>
-            public string Source;
-
-            /// <summary>The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.</summary>
-            public string AssemblyDirectory;
-        }
-
-        /// <summary>The DWM messages</summary>
-        internal static class DwmMessages
-        {
-            #region Constants and Fields
-
-            /// <summary>Dwm has been enabled or Disabled</summary>
-            internal const int DwmCompositionChanged = 0x031E;
-
-            /// <summary>Dwn rendering has changed</summary>
-            internal const int DwmRenderingChanged = 0x031F;
-
-            #endregion
-        }
     }
 }

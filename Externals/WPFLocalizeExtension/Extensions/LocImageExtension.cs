@@ -14,7 +14,6 @@ namespace WPFLocalizeExtension.Extensions
     using System;
     using System.Drawing;
     using System.Globalization;
-    using System.Runtime.InteropServices;
     using System.Windows;
     using System.Windows.Interop;
     using System.Windows.Markup;
@@ -45,9 +44,9 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Provides the Value for the first Binding as <see cref="System.Windows.Media.Imaging.BitmapSource"/></summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
         /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of <see cref="System.Drawing.Bitmap"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of <see cref="System.Drawing.Bitmap"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -92,7 +91,7 @@ namespace WPFLocalizeExtension.Extensions
             bitmapSource.Freeze();
 
             // free memory
-            DeleteObject(bmpPt);
+            NativeMethods.DeleteObject(bmpPt);
 
             // return bitmapSource
             return bitmapSource;
@@ -101,15 +100,9 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>see <c>BaseLocalizeExtension</c></summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        /// <summary>Frees memory of a pointer.</summary>
-        /// <param name="o">Object to remove from memory.</param>
-        /// <returns>0 if the removing was success, otherwise another number.</returns>
-        [DllImport(@"gdi32.dll")]
-        private static extern int DeleteObject(IntPtr o);
 
         #endregion
     }

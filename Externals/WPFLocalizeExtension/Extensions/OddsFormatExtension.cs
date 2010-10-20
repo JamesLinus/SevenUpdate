@@ -217,7 +217,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Provides the Value for the first Binding</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/>.</param>
-        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded.</returns>
+        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found.</returns>
         /// <remarks>
         /// This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
         ///   to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.
@@ -228,6 +228,11 @@ namespace WPFLocalizeExtension.Extensions
         /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/>.</exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException("serviceProvider");
+            }
+
             // try to cast the passed serviceProvider to a IProvideValueTarget
             var service = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
 

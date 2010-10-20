@@ -210,9 +210,9 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Provides the Value for the first Binding as <see cref="System.String"/></summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
         /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of <see cref="System.String"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of <see cref="System.String"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -251,7 +251,7 @@ namespace WPFLocalizeExtension.Extensions
             else
             {
                 // load a fresh localized text, if the passed string is null
-                input = input ?? Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
+                input = input ?? Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);
             }
 
             // get the main text as string xor string.empty

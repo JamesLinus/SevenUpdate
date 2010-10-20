@@ -11,7 +11,6 @@
 namespace System.Windows.Dialogs.TaskDialogs
 {
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
     using System.Security.Permissions;
@@ -870,7 +869,7 @@ namespace System.Windows.Dialogs.TaskDialogs
             }
 
             // It's okay to let the dialog close.
-            return (int)Result.OK;
+            return (int)Result.Ok;
         }
 
         /// <summary>Raises the help invoked event.</summary>
@@ -1186,21 +1185,20 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="settings">The settings.</param>
         private void ApplySupplementalSettings(NativeTaskDialogSettings settings)
         {
-            if (this.progressBar != null)
+            if (this.progressBar == null)
             {
-                if (this.progressBar.State != TaskDialogProgressBarState.Marquee)
-                {
-                    settings.ProgressBarMinimum = this.progressBar.Minimum;
-                    settings.ProgressBarMaximum = this.progressBar.Maximum;
-                    settings.ProgressBarValue = this.progressBar.Value;
-                    settings.ProgressBarState = this.progressBar.State;
-                }
+                return;
             }
 
-            if (this.HelpInvoked != null)
+            if (this.progressBar.State == TaskDialogProgressBarState.Marquee)
             {
-                settings.InvokeHelp = true;
+                return;
             }
+
+            settings.ProgressBarMinimum = this.progressBar.Minimum;
+            settings.ProgressBarMaximum = this.progressBar.Maximum;
+            settings.ProgressBarValue = this.progressBar.Value;
+            settings.ProgressBarState = this.progressBar.State;
         }
 
         /// <summary>Sets important text properties.</summary>
@@ -1410,62 +1408,6 @@ namespace System.Windows.Dialogs.TaskDialogs
 
         #endregion
 
-        /// <summary>Defines event data associated with a <see cref="HyperlinkClick"/> event.</summary>
-        public class HyperlinkClickedEventArgs : EventArgs
-        {
-            #region Constructors and Destructors
 
-            /// <summary>Initializes a new instance of the <see cref="HyperlinkClickedEventArgs"/> class.</summary>
-            /// <param name="link">The text of the hyperlink that was clicked.</param>
-            public HyperlinkClickedEventArgs(string link)
-            {
-                this.LinkText = link;
-            }
-
-            #endregion
-
-            #region Properties
-
-            /// <summary>Gets or sets the text of the hyperlink that was clicked.</summary>
-            public string LinkText { get; set; }
-
-            #endregion
-        }
-
-        /// <summary>Data associated with <see cref="TaskDialog.Closing"/> event.</summary>
-        public class TaskDialogClosingEventArgs : CancelEventArgs
-        {
-            #region Properties
-
-            /// <summary>Gets or sets the text of the custom button that was clicked.</summary>
-            public string CustomButton { get; set; }
-
-            /// <summary>Gets or sets the standard button that was clicked.</summary>
-            public TaskDialogResult TaskDialogResult { get; set; }
-
-            #endregion
-        }
-
-        /// <summary>The event data for a TaskDialogTick event.</summary>
-        public class TaskDialogTickEventArgs : EventArgs
-        {
-            #region Constructors and Destructors
-
-            /// <summary>Initializes a new instance of the <see cref="TaskDialogTickEventArgs"/> class.</summary>
-            /// <param name="totalTicks">The total number of ticks since the control was activated.</param>
-            public TaskDialogTickEventArgs(int totalTicks)
-            {
-                this.Ticks = totalTicks;
-            }
-
-            #endregion
-
-            #region Properties
-
-            /// <summary>Gets  a value indicating whether the current number of ticks.</summary>
-            public int Ticks { get; private set; }
-
-            #endregion
-        }
     }
 }

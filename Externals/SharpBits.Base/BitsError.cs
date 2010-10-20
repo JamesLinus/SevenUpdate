@@ -17,6 +17,7 @@ namespace SharpBits.Base
     using System.Threading;
 
     /// <summary>Bits error</summary>
+    [Serializable]
     public class BitsError : Exception
     {
         #region Constants and Fields

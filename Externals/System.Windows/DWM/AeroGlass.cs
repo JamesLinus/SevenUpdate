@@ -57,6 +57,7 @@ namespace System.Windows.Dwm
                 }
                 catch
                 {
+                    throw;
                     return false;
                 }
             }
@@ -69,6 +70,7 @@ namespace System.Windows.Dwm
                 }
                 catch
                 {
+                    throw;
                 }
             }
         }
@@ -90,10 +92,10 @@ namespace System.Windows.Dwm
         /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new NativeMethods.DwmBlurBehind
+            var blur = new DwmBlurBehind
                 {
                     RegionBlur = region,
-                    Flags = NativeMethods.DwmBlurBehindFlag.DwmBlurBehindRegion
+                    Flags = DwmBlurBehindFlag.DwmBlurBehindRegion
                 };
 
             NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
@@ -102,7 +104,7 @@ namespace System.Windows.Dwm
         /// <summary>Enables Aero Glass on a WPF window</summary>
         /// <param name="window">The window to enable glass</param>
         /// <param name="margins">The region to add glass</param>
-        public static void EnableGlass(Window window, NativeMethods.Margins margins = new NativeMethods.Margins())
+        public static void EnableGlass(Window window, Margins margins)
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -111,13 +113,23 @@ namespace System.Windows.Dwm
 
             if (margins.TopHeight == 0 && margins.BottomHeight == 0 && margins.RightWidth == 0 && margins.LeftWidth == 0)
             {
-                margins = new NativeMethods.Margins(true);
+                margins = new Margins(true);
+            }
+
+            if (window == null)
+            {
+                throw new ArgumentNullException("window");
             }
 
             var windowHandle = new WindowInteropHelper(window).Handle;
 
             // add Window Proc hook to capture DWM messages
             var source = HwndSource.FromHwnd(windowHandle);
+            if (source == null)
+            {
+                throw new FormatException();
+            }
+            
             source.AddHook(WndProc);
 
             // Set the Background to transparent from Win32 perspective 
@@ -139,6 +151,16 @@ namespace System.Windows.Dwm
         /// </remarks>
         public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            if (window == null)
+            {
+                throw new ArgumentNullException("window");
+            }
+
             var handle = new WindowInteropHelper(window).Handle;
 
             if (!IsEnabled)
@@ -148,10 +170,15 @@ namespace System.Windows.Dwm
 
             // calculate total size of window non-client area
             var handleSource = PresentationSource.FromVisual(window) as HwndSource;
-            var windowRect = new NativeMethods.Rect();
-            var clientRect = new NativeMethods.Rect();
-            NativeMethods.GetWindowRect(handleSource.Handle, ref windowRect);
-            NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
+            var windowRect = new Rect();
+            var clientRect = new Rect();
+            
+            if (handleSource != null)
+            {
+                NativeMethods.GetWindowRect(handleSource.Handle, ref windowRect);
+                NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
+            }
+
             var nonClientSize = new Size(
                 (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
@@ -161,13 +188,7 @@ namespace System.Windows.Dwm
             var bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new NativeMethods.Margins
-                {
-                    LeftWidth = (int)topLeftFrame.X,
-                    RightWidth = (int)(window.ActualWidth - bottomRightFrame.X),
-                    TopHeight = (int)topLeftFrame.Y,
-                    BottomHeight = (int)(window.ActualHeight - bottomRightFrame.Y)
-                };
+            var margins = new Margins((int)topLeftFrame.X, (int)topLeftFrame.Y, (int)(window.ActualWidth - bottomRightFrame.X), (int)(window.ActualHeight - bottomRightFrame.Y));
 
             // Extend the Frame into client area
             NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins);
@@ -176,7 +197,7 @@ namespace System.Windows.Dwm
         /// <summary>Resets the Aero Glass exclusion area.</summary>
         /// <param name="margins">The margins.</param>
         /// <param name="window">The window.</param>
-        public static void ResetAeroGlass(NativeMethods.Margins margins, Window window)
+        public static void ResetAeroGlass(Margins margins, Window window)
         {
             ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
         }
@@ -184,7 +205,7 @@ namespace System.Windows.Dwm
         /// <summary>Resets the Aero Glass exclusion area.</summary>
         /// <param name="margins">The margins.</param>
         /// <param name="windowHandle">The window handle.</param>
-        public static void ResetAeroGlass(NativeMethods.Margins margins, IntPtr windowHandle)
+        public static void ResetAeroGlass(Margins margins, IntPtr windowHandle)
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -207,7 +228,7 @@ namespace System.Windows.Dwm
         /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
-            if (msg == NativeMethods.DwmMessages.DwmCompositionChanged || msg == NativeMethods.DwmMessages.DwmRenderingChanged)
+            if (msg == DwmMessages.DwmCompositionChanged || msg == DwmMessages.DwmRenderingChanged)
             {
                 if (DwmCompositionChanged != null)
                 {
@@ -221,28 +242,5 @@ namespace System.Windows.Dwm
         }
 
         #endregion
-
-        /// <summary>Event argument for The <see cref="DwmCompositionChanged"/> event</summary>
-        public class DwmCompositionChangedEventArgs : EventArgs
-        {
-            #region Constructors and Destructors
-
-            /// <summary>Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.</summary>
-            /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
-            internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
-            {
-                this.IsGlassEnabled = isGlassEnabled;
-            }
-
-            #endregion
-
-            #region Properties
-
-            /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
-            /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
-            public bool IsGlassEnabled { get; private set; }
-
-            #endregion
-        }
     }
 }

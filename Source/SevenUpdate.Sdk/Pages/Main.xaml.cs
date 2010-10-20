@@ -316,8 +316,8 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "AeroGlass.DwmCompositionChangedEventArgs" /> instance containing the event data.</param>
-        private void UpdateUI(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        /// <param name = "e">The <see cref = "DwmCompositionChangedEventArgs" /> instance containing the event data.</param>
+        private void UpdateUI(object sender, DwmCompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {

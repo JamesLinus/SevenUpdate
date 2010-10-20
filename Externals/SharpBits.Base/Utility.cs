@@ -13,9 +13,8 @@
 namespace SharpBits.Base
 {
     using System;
-    using System.Globalization;
+    using System.Diagnostics;
     using System.IO;
-    using System.Runtime.InteropServices;
     using System.Text;
 
     /// <summary>Various utility methods.</summary>
@@ -31,53 +30,14 @@ namespace SharpBits.Base
             {
                 try
                 {
-                    var fileName = Path.Combine(Environment.SystemDirectory, @"qmgr.dll");
-                    int handle;
-                    var size = NativeMethods.GetFileVersionInfoSize(fileName, out handle);
-                    if (size == 0)
-                    {
-                        return BitsVersion.BitsUndefined;
-                    }
+                    var bits = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, @"qmgr.dll"));
 
-                    var buffer = new byte[size];
-                    if (!NativeMethods.GetFileVersionInfo(fileName, handle, size, buffer))
-                    {
-                        return BitsVersion.BitsUndefined;
-                    }
 
-                    IntPtr subBlock;
-                    uint len;
-                    if (!NativeMethods.VerQueryValue(buffer, @"\VarFileInfo\Translation", out subBlock, out len))
-                    {
-                        return BitsVersion.BitsUndefined;
-                    }
 
-                    int block1 = Marshal.ReadInt16(subBlock);
-                    int block2 = Marshal.ReadInt16(subBlock, 2);
-                    var spv = string.Format(@"\StringFileInfo\{0:X4}{1:X4}\ProductVersion", block1, block2);
-
-                    IntPtr versionInfoPtr;
-                    if (!NativeMethods.VerQueryValue(buffer, spv, out versionInfoPtr, out len))
-                    {
-                        return BitsVersion.BitsUndefined;
-                    }
-
-                    var versionInfo = Marshal.PtrToStringAuto(versionInfoPtr);
-
-                    var versionNumbers = versionInfo.Split('.');
-
-                    if (versionNumbers.Length < 2)
-                    {
-                        return BitsVersion.BitsUndefined;
-                    }
-
-                    var major = int.Parse(versionNumbers[0], CultureInfo.CurrentCulture);
-                    var minor = int.Parse(versionNumbers[1], CultureInfo.CurrentCulture);
-
-                    switch (major)
+                    switch (bits.FileMajorPart)
                     {
                         case 6:
-                            switch (minor)
+                            switch (bits.FileMinorPart)
                             {
                                 case 0:
                                     return BitsVersion.Bits1;
@@ -101,6 +61,7 @@ namespace SharpBits.Base
                 }
                 catch (Exception)
                 {
+                    throw;
                     return BitsVersion.BitsUndefined;
                 }
             }

@@ -148,7 +148,7 @@ namespace SharpBits.Base
         /// <param name="sid">A pointer to a <see langword="null"/>-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-S� format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>
         /// <returns><see langword="true"/> if function succecced</returns>
-        [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
 
@@ -161,36 +161,8 @@ namespace SharpBits.Base
         /// <param name="domainNameSize">On input, specifies the size, of the <paramref name="referencedDomainName"/> buffer. If the function fails because the buffer is too small or if <paramref name="referencedDomainName"/> is zero, <paramref name="referencedDomainName"/> receives the required buffer size, including the terminating <see langword="null"/> character.</param>
         /// <param name="use">A pointer to a variable that receives a SidNameUse value that indicates the type of the account.</param>
         /// <returns><see langword="true"/> if function succecced</returns>
-        [DllImport(@"advapi32.dll", CharSet = CharSet.Auto)]
+        [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long nameSize, StringBuilder referencedDomainName, ref long domainNameSize, ref int use);
-
-        /// <summary>Retrieves version information for the specified file.</summary>
-        /// <param name="fileName">The name of the file. If a full path is not specified, the function uses the search sequence specified by the LoadLibrary function.</param>
-        /// <param name="handle">This parameter is ignored.</param>
-        /// <param name="size">The size, in bytes, of the buffer pointed to by the data parameter.</param>
-        /// <param name="infoBuffer">Pointer to a buffer that receives the file-version information. You can use this value in a subsequent call to the <see cref="VerQueryValue"/> function to retrieve data from the buffer.</param>
-        /// <returns><see langword="true"/> if function succecced</returns>
-        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
-        internal static extern bool GetFileVersionInfo(string fileName, int handle, int size, byte[] infoBuffer);
-
-        /// <summary>Determines whether the operating system can retrieve version information for a specified file. If version information is available, GetFileVersionInfoSize returns the size, in bytes, of that information.</summary>
-        /// <param name="fileName">The name of the file of interest. The function uses the search sequence specified by the LoadLibrary function.</param>
-        /// <param name="handle">A pointer to a variable that the function sets to zero.</param>
-        /// <returns>If the function succeeds, the return value is the size, in bytes, of the file's version information. If the function fails, the return value is zero.</returns>
-        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
-        internal static extern int GetFileVersionInfoSize(string fileName, out int handle);
-
-        /// <summary>Retrieves specified version information from the specified version-information resource. To retrieve the appropriate resource, before you call VerQueryValue, you must first call the <see cref="GetFileVersionInfoSize"/> function, and then the <see cref="GetFileVersionInfo"/> function.</summary>
-        /// <param name="block">The version-information resource returned by the <see cref="GetFileVersionInfo"/> function.</param>
-        /// <param name="subBlock">The version-information value to be retrieved. The string must consist of names separated by backslashes (\)</param>
-        /// <param name="valueBuffer">When this method returns, contains the address of a pointer to the requested version information in the buffer pointed to by block.</param>
-        /// <param name="length">When this method returns, contains a pointer to the size of the requested data pointed to by <paramref name="valueBuffer"/>: for version information values, the length in characters of the string stored at <paramref name="valueBuffer"/>; for translation array values, the size in bytes of the array stored at <paramref name="valueBuffer"/>; and for root block, the size in bytes of the structure.</param>
-        /// <returns>
-        /// If the specified version-information structure exists, and version information is available, the return value is nonzero. If the address of the length buffer is zero, no value is available for the specified version-information name.
-        ///   If the specified name does not exist or the specified resource is not valid, the return value is zero.
-        /// </returns>
-        [DllImport(@"version.dll", CharSet = CharSet.Auto)]
-        internal static extern bool VerQueryValue(byte[] block, string subBlock, out IntPtr valueBuffer, out uint length);
     }
 }

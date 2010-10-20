@@ -36,7 +36,7 @@ namespace System.Windows.Controls
     using System.Windows.Media;
 
     /// <summary>Sorts a <see cref="ListView"/></summary>
-    public sealed class ListViewSorter
+    public static class ListViewSorter
     {
         #region Constants and Fields
 
@@ -154,6 +154,7 @@ namespace System.Windows.Controls
             }
             catch (Exception)
             {
+                throw;
             }
 
             var currentSortedColumnHeader = GetSortedColumnHeader(listView);

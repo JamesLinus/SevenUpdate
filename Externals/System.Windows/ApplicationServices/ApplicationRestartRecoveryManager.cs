@@ -139,7 +139,7 @@ namespace System.Windows.ApplicationServices
 
             if (!ErrorHelper.Succeeded((int)hr))
             {
-                throw new Exception();
+                throw new NotSupportedException();
             }
         }
 
@@ -193,7 +193,7 @@ namespace System.Windows.ApplicationServices
 
             if (hr == Result.Fail)
             {
-                throw new Exception();
+                throw new NotSupportedException();
             }
         }
 
@@ -211,7 +211,7 @@ namespace System.Windows.ApplicationServices
 
             if (hr == Result.Fail)
             {
-                throw new Exception();
+                throw new NotSupportedException();
             }
         }
 

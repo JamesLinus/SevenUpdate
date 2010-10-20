@@ -41,9 +41,9 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Provides the Value for the first Binding as <see cref="LocFlowDirectionExtension"/></summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The founded item from the .resx directory or LeftToRight if not founded</returns>
+        /// <returns>The found item from the .resx directory or LeftToRight if not found</returns>
         /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the founded object is not type of <see cref="FlowDirection"/></exception>
+        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of <see cref="FlowDirection"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider) ?? "LeftToRight";
@@ -78,6 +78,7 @@ namespace WPFLocalizeExtension.Extensions
                 }
                 catch (Exception)
                 {
+                    throw;
                     return null;
                 }
             }
@@ -88,7 +89,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>see <c>BaseLocalizeExtension</c></summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
 

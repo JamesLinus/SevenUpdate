@@ -35,8 +35,31 @@ namespace System.Windows.Controls
     {
         #region Properties
 
-        /// <summary>Gets or sets a dictionary of SortColumns</summary>
-        protected Dictionary<string, ListSortDirection> SortColumns { get; set; }
+        /// <summary>Gets a dictionary of SortColumns</summary>
+        protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
+
+        /// <summary>Gets a List of strings from a column that needs to be sorted</summary>
+        /// <returns>A collection of columns that are sorted</returns>
+        protected IEnumerable<string> SortColumnList
+        {
+            get
+            {
+                var result = new List<string>();
+                var temp = new Stack<string>();
+
+                foreach (var col in this.SortColumns.Keys)
+                {
+                    temp.Push(col);
+                }
+
+                while (temp.Count > 0)
+                {
+                    result.Add(temp.Pop());
+                }
+
+                return result;
+            }
+        }
 
         #endregion
 
@@ -74,26 +97,6 @@ namespace System.Windows.Controls
         #endregion
 
         #region Methods
-
-        /// <summary>Gets a List of strings from a column that needs to be sorted</summary>
-        /// <returns>A collection of columns that are sorted</returns>
-        protected IEnumerable<string> GetSortColumnList()
-        {
-            var result = new List<string>();
-            var temp = new Stack<string>();
-
-            foreach (var col in this.SortColumns.Keys)
-            {
-                temp.Push(col);
-            }
-
-            while (temp.Count > 0)
-            {
-                result.Add(temp.Pop());
-            }
-
-            return result;
-        }
 
         /// <summary>Clears the sort columns</summary>
         private void ClearSort()

@@ -49,7 +49,7 @@ namespace SevenUpdate.CustomComparer
             string valueX = String.Empty, valueY = String.Empty;
             var result = 0;
 
-            foreach (var sort in this.GetSortColumnList())
+            foreach (var sort in this.SortColumnList)
             {
                 switch (sort)
                 {

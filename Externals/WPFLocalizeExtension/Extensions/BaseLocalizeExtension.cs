@@ -171,6 +171,48 @@ namespace WPFLocalizeExtension.Extensions
         protected object DesignValue { get; set; }
 
         /// <summary>
+        /// Gets the current <see cref="CultureInfo"/>, otherwise LocalizeDictionary.Culture will get returned.
+        /// </summary>
+        /// <returns>The <see cref="CultureInfo"/></returns>
+        /// <exception cref="System.ArgumentException">thrown if the parameter Culture don't defines a valid <see cref="CultureInfo"/></exception>
+        protected CultureInfo Culture
+        {
+            get
+            {
+                // define a culture info
+                CultureInfo cultureInfo = null;
+
+                // check if the forced culture is not null or empty
+                if (!string.IsNullOrEmpty(this.ForceCulture))
+                {
+                    // try to create a valid culture info, if defined
+                    try
+                    {
+                        // try to create a specific culture from the forced one
+                        cultureInfo = CultureInfo.CreateSpecificCulture(this.ForceCulture);
+                    }
+                    catch (ArgumentException)
+                    {
+                        // on error, check if design mode is on
+                        if (Localize.Instance.IsInDesignMode)
+                        {
+                            // cultureInfo will be set to the current specific culture
+                            cultureInfo = Localize.Instance.SpecificCulture;
+                        }
+                    }
+                }
+                else
+                {
+                    // take the current specific culture
+                    cultureInfo = Localize.Instance.SpecificCulture;
+                }
+
+                // return the evaluated culture info
+                return cultureInfo;
+            }
+        }
+
+        /// <summary>
         ///   Gets or sets the Name of the .resx dictionary.
         ///   If it's <see langword = "null" />, "Resources" will get returned
         /// </summary>
@@ -207,7 +249,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Provides the Value for the first Binding</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The founded item from the .resx directory or <see langword="null"/> if not founded</returns>
+        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
         /// <remarks>
         /// This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
         ///   to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.
@@ -218,6 +260,11 @@ namespace WPFLocalizeExtension.Extensions
         /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
+            if (serviceProvider == null)
+            {
+                throw new ArgumentNullException("serviceProvider");
+            }
+
             // try to cast the passed serviceProvider to a IProvideValueTarget
             var service = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
 
@@ -281,7 +328,7 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // return the new value for the DependencyProperty
-            return Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault());
+            return Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);
         }
 
         /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
@@ -291,7 +338,7 @@ namespace WPFLocalizeExtension.Extensions
         public bool ResolveLocalizedValue(out TValue resolvedValue)
         {
             // return the resolved localized value with the current or forced culture.
-            return this.ResolveLocalizedValue(out resolvedValue, this.GetForcedCultureOrDefault());
+            return this.ResolveLocalizedValue(out resolvedValue, this.Culture);
         }
 
         /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
@@ -368,7 +415,7 @@ namespace WPFLocalizeExtension.Extensions
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(targetObject), this);
 
                 // get the initial value of the dependency property
-                var output = this.FormatOutput(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault()));
+                var output = this.FormatOutput(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture));
 
                 // set the value to the dependency object
                 SetTargetValue(targetObject, targetProperty, output);
@@ -468,56 +515,11 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns the modified object</returns>
         protected abstract object FormatOutput(object input);
 
-        /// <summary>
-        /// If Culture property defines a valid <see cref="CultureInfo"/>, a <see cref="CultureInfo"/> instance will get
-        ///   created and returned, otherwise LocalizeDictionary.Culture will get returned.
-        /// </summary>
-        /// <returns>The <see cref="CultureInfo"/></returns>
-        /// <exception cref="System.ArgumentException">thrown if the parameter Culture don't defines a valid <see cref="CultureInfo"/></exception>
-        protected CultureInfo GetForcedCultureOrDefault()
-        {
-            // define a culture info
-            CultureInfo cultureInfo;
-
-            // check if the forced culture is not null or empty
-            if (!string.IsNullOrEmpty(this.ForceCulture))
-            {
-                // try to create a valid culture info, if defined
-                try
-                {
-                    // try to create a specific culture from the forced one
-                    cultureInfo = CultureInfo.CreateSpecificCulture(this.ForceCulture);
-                }
-                catch (ArgumentException ex)
-                {
-                    // on error, check if design mode is on
-                    if (Localize.Instance.IsInDesignMode)
-                    {
-                        // cultureInfo will be set to the current specific culture
-                        cultureInfo = Localize.Instance.SpecificCulture;
-                    }
-                    else
-                    {
-                        // tell the customer, that the forced culture cannot be converted properly
-                        throw new ArgumentException("Cannot create a CultureInfo with '" + this.ForceCulture + "'", ex);
-                    }
-                }
-            }
-            else
-            {
-                // take the current specific culture
-                cultureInfo = Localize.Instance.SpecificCulture;
-            }
-
-            // return the evaluated culture info
-            return cultureInfo;
-        }
-
         /// <summary>This method gets the new value for the target property and call <see cref="SetNewValue"/>.</summary>
         protected virtual void HandleNewValue()
         {
             // gets the new value and set it to the dependency property on the dependency object
-            this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.GetForcedCultureOrDefault()));
+            this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture));
         }
 
         /// <summary>
@@ -528,7 +530,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="sender">The sender.</param>
         /// <param name="e">The event argument.</param>
         /// <returns><see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.</returns>
-        protected virtual bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
+        protected bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             return ((IWeakEventListener)this).ReceiveWeakEvent(managerType, sender, e);
         }

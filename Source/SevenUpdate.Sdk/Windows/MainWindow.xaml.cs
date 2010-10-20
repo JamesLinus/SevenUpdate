@@ -72,15 +72,14 @@ namespace SevenUpdate.Sdk.Windows
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new NativeMethods.Margins(0, 32, 0, 44), this);
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 44));
             this.Background = AeroGlass.IsEnabled ? Brushes.Transparent : Brushes.White;
         }
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
         /// <param name = "sender">The Sender</param>
-        /// <param name = "e">The <see cref = "AeroGlass.DwmCompositionChangedEventArgs" /> instance containing the event data</param>
-        private void ChangeWindowChrome(object sender, AeroGlass.DwmCompositionChangedEventArgs e)
+        /// <param name = "e">The <see cref = "DwmCompositionChangedEventArgs" /> instance containing the event data</param>
+        private void ChangeWindowChrome(object sender, DwmCompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
 
@@ -89,8 +88,7 @@ namespace SevenUpdate.Sdk.Windows
                 return;
             }
 
-            AeroGlass.EnableGlass(this);
-            AeroGlass.ResetAeroGlass(new NativeMethods.Margins(0, 32, 0, 44), this);
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 44));
         }
 
         /// <summary>Enables the ability to drag the window on glass</summary>

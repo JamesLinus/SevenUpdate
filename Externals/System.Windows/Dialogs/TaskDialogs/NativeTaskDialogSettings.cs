@@ -70,10 +70,6 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <value>The elevated buttons.</value>
         public List<int> ElevatedButtons { get; set; }
 
-        /// <summary>Gets or sets a value indicating whether to invoke help</summary>
-        /// <value><see langword = "true" /> to invoke help; otherwise, <see langword = "false" />.</value>
-        public bool InvokeHelp { get; set; }
-
         /// <summary>Gets the native configuration.</summary>
         /// <value>The native configuration.</value>
         public TaskDialogNativeMethods.TaskDialogConfig NativeConfiguration { get; private set; }

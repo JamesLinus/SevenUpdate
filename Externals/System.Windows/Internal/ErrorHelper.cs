@@ -10,8 +10,6 @@
 // ***********************************************************************
 namespace System.Windows.Internal
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     /// HRESULT Wrapper
     ///   This is intended for Library Internal use only.
@@ -22,7 +20,7 @@ namespace System.Windows.Internal
         False = 0x0001,
 
         /// <summary>Returns OK</summary>
-        OK = 0x0000,
+        Ok = 0x0000,
 
         /// <summary>Returns invalid argument</summary>
         InvalidArg = 0x80070057,
@@ -43,8 +41,7 @@ namespace System.Windows.Internal
         #region Constants and Fields
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "IGNORED", Justification = "OK")]
-        public const int Ignored = (int)Result.OK;
+        public const int Ignored = (int)Result.Ok;
 
         #endregion
 

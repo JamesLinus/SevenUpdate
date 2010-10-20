@@ -26,7 +26,7 @@ namespace System.Windows
     using System.Windows.Threading;
 
     /// <summary>Enumerator used to define the awareness of an application, when dealing with subsequent instances of the application itself.</summary>
-    public enum ApplicationInstanceAwareness : byte
+    public enum ApplicationInstanceAwareness
     {
         /// <summary>The awareness is global, meaning that the first application instance is aware of any other instances running on the host.</summary>
         Host = 0x00,
@@ -120,19 +120,10 @@ namespace System.Windows
 
         #endregion
 
-        #region Delegates
-
-        /// <summary>Represents the method that handles the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
-        /// <param name="sender">The object that raised the event.</param>
-        /// <param name="e">The event data.</param>
-        public delegate void StartupNextInstanceEventHandler(object sender, StartupNextInstanceEventArgs e);
-
-        #endregion
-
         #region Events
 
-        /// <summary>Occurs when the Application.Run method of the next <see cref = "InstanceAwareApplication" /> having the same ApplicationKey is called.</summary>
-        public event StartupNextInstanceEventHandler StartupNextInstance;
+        /// <summary>Represents the method that handles the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        public event EventHandler<StartupNextInstanceEventArgs> StartupNextInstance;
 
         #endregion
 
@@ -245,6 +236,7 @@ namespace System.Windows
         /// <param name="awareness">The <see cref="ApplicationInstanceAwareness"/> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
+        [SecurityCritical]
         private static void ExtractParameters(ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
             new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
@@ -310,6 +302,7 @@ namespace System.Windows
             }
             catch (Exception)
             {
+                throw;
             }
         }
 
@@ -380,6 +373,7 @@ namespace System.Windows
             }
             catch (Exception exc)
             {
+                throw;
                 Debug.WriteLine("Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + exc, this.GetType().ToString());
                 return false;
             }
@@ -462,6 +456,7 @@ namespace System.Windows
                 }
                 catch (Exception exc)
                 {
+                    throw;
                     Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + exc, this.GetType().ToString());
                 }
                 finally
@@ -477,6 +472,7 @@ namespace System.Windows
                 }
                 catch (Exception)
                 {
+                    throw;
                 }
             }
 
@@ -497,70 +493,9 @@ namespace System.Windows
         /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
-            if (!disposing)
-            {
-                return;
-            }
-
-            this.Dispose();
-            GC.SuppressFinalize(this);
+            this.TryDisposeSynchronizationObjects();
         }
 
         #endregion
-
-        /// <summary>Class used to define the arguments of another application instance startup.</summary>
-        public sealed class StartupNextInstanceEventArgs : EventArgs
-        {
-            #region Constants and Fields
-
-            /// <summary>The application arguments.</summary>
-            private readonly string[] args;
-
-            #endregion
-
-            #region Constructors and Destructors
-
-            /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.</summary>
-            /// <param name="args">The arguments passed to the program</param>
-            public StartupNextInstanceEventArgs(string[] args) : this(args, true)
-            {
-            }
-
-            /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.</summary>
-            /// <param name="args">The arguments passed to the program</param>
-            /// <param name="bringToFront">If set to <see langword = "true" /> the application main window will be brought to front.</param>
-            public StartupNextInstanceEventArgs(string[] args, bool bringToFront)
-            {
-                if (args == null)
-                {
-                    args = new string[0];
-                }
-
-                this.args = args;
-                this.BringToForeground = bringToFront;
-            }
-
-            #endregion
-
-            #region Properties
-
-            /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
-            /// <value><see langword = "true" /> if the application window has to be brought to foreground, otherwise <see langword = "false" /></value>
-            public bool BringToForeground { get; private set; }
-
-            #endregion
-
-            #region Public Methods
-
-            /// <summary>Gets the arguments passed to the other application.</summary>
-            /// <returns>Returns the arguments passed to the application</returns>
-            /// <value>The arguments passed to the other application.</value>
-            public string[] GetArgs()
-            {
-                return this.args;
-            }
-
-            #endregion
-        }
     }
 }

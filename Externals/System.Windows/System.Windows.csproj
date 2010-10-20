@@ -87,6 +87,11 @@
     </Compile>
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\IndexToVisibilityConverter.cs" />
+    <Compile Include="Dialogs\TaskDialogs\HyperlinkClickedEventArgs.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogClosingEventArgs.cs" />
+    <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
+    <Compile Include="Dwm\DwmCompositionChangedEventArgs.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceAwareApplication.cs" />
     <Compile Include="Controls\CommandLink.cs" />
     <Compile Include="Controls\BackButton.cs" />
@@ -95,7 +100,9 @@
     <Compile Include="Controls\ListViewSorter.cs" />
     <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Controls\UacButton.cs" />
+    <Compile Include="Internal\DwmMessages.cs" />
     <Compile Include="Internal\EnableThemingInScope.cs" />
+    <Compile Include="StartupNextInstanceEventArgs.cs" />
     <Compile Include="ValidationRules\FileNameInputRule.cs" />
     <Compile Include="ValidationRules\RequiredInputRule.cs" />
     <Compile Include="ValidationRules\UrlInputRule.cs" />

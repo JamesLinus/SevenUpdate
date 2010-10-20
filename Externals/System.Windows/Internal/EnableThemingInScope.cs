@@ -28,7 +28,7 @@ namespace System.Windows.Internal
         private static bool contextCreationSucceeded;
 
         /// <summary>enable theming</summary>
-        private static NativeMethods.ActivationContext enableThemingActivationContext;
+        private static ActivationContext enableThemingActivationContext;
 
         /// <summary>The activation context</summary>
         private static IntPtr activationContext;
@@ -78,6 +78,7 @@ namespace System.Windows.Internal
         public void Dispose()
         {
             this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
@@ -88,7 +89,6 @@ namespace System.Windows.Internal
 
         /// <summary>Ensures the activation context is created</summary>
         /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
-        [SuppressUnmanagedCodeSecurity]
         private static bool EnsureActivateContextCreated()
         {
             lock (typeof(EnableThemingInScope))
@@ -117,9 +117,9 @@ namespace System.Windows.Internal
                     if (installDir != null)
                     {
                         var manifestLoc = Path.Combine(installDir, @"XPThemes.manifest");
-                        enableThemingActivationContext = new NativeMethods.ActivationContext
+                        enableThemingActivationContext = new ActivationContext
                             {
-                                Size = Marshal.SizeOf(typeof(NativeMethods.ActivationContext)),
+                                Size = Marshal.SizeOf(typeof(ActivationContext)),
                                 Source = manifestLoc,
                                 AssemblyDirectory = installDir,
                                 Flags = AssemblyDirectoryValid

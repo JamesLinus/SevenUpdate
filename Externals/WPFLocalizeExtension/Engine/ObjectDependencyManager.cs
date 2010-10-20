@@ -21,62 +21,57 @@ namespace WPFLocalizeExtension.Engine
         #region Constants and Fields
 
         /// <summary>This member holds the list of all <see cref = "WeakReference" />s and their appropriate objects.</summary>
-        private static readonly Dictionary<object, List<WeakReference>> InternalList;
+        private static readonly Dictionary<object, List<WeakReference>> InternalList = new Dictionary<object, List<WeakReference>>();
 
         #endregion
 
         #region Constructors and Destructors
-
-        /// <summary>
-        ///   Initializes static members of the <see cref = "ObjectDependencyManager" /> class. 
-        ///   Static Constructor. Creates a new instance of 
-        ///   Dictionary(object, <see cref = "WeakReference" />) and set it to the <see cref = "InternalList" />.
-        /// </summary>
-        static ObjectDependencyManager()
-        {
-            InternalList = new Dictionary<object, List<WeakReference>>();
-        }
 
         #endregion
 
         #region Public Methods
 
         /// <summary>This method adds a new object dependency</summary>
-        /// <param name="weakRef">The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="objToHold"/></param>
-        /// <param name="objToHold">The object, which should stay alive as long <paramref name="weakRef"/> is alive</param>
+        /// <param name="weakRef">The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="value"/></param>
+        /// <param name="value">The object, which should stay alive as long <paramref name="weakRef"/> is alive</param>
         /// <returns><see langword="true"/>, if the binding was successfully, otherwise <see langword="false"/></returns>
-        /// <exception cref="System.ArgumentNullException">The <paramref name="objToHold"/> cannot be <see langword="null"/></exception>
-        /// <exception cref="System.ArgumentException"><paramref name="objToHold"/> cannot be type of <see cref="WeakReference"/></exception>
-        /// <exception cref="System.InvalidOperationException">The <see cref="WeakReference"/>.Target cannot be the same as <paramref name="objToHold"/></exception>
+        /// <exception cref="System.ArgumentNullException">The <paramref name="value"/> cannot be <see langword="null"/></exception>
+        /// <exception cref="System.ArgumentException"><paramref name="value"/> cannot be type of <see cref="WeakReference"/></exception>
+        /// <exception cref="System.InvalidOperationException">The <see cref="WeakReference"/>.Target cannot be the same as <paramref name="value"/></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static bool AddObjectDependency(WeakReference weakRef, object objToHold)
+        public static bool AddObjectDependency(WeakReference weakRef, object value)
         {
             // run the clean up to ensure that only objects are watched they are really still alive
             CleanUp();
 
-            // if the objToHold is null, we cannot handle this afterwards.
-            if (objToHold == null)
+            if (weakRef == null)
             {
-                throw new ArgumentNullException("objToHold", "The objToHold cannot be null");
+                throw new ArgumentNullException("weakRef");
+            }
+
+            // if the objToHold is null, we cannot handle this afterwards.
+            if (value == null)
+            {
+                throw new ArgumentNullException("value", "The objToHold cannot be null");
             }
 
             // if the objToHold is a weak reference, we cannot handle this type afterwards.
-            if (objToHold.GetType() == typeof(WeakReference))
+            if (value.GetType() == typeof(WeakReference))
             {
-                throw new ArgumentException("objToHold cannot be type of WeakReference", "objToHold");
+                throw new ArgumentException("value cannot be type of WeakReference", "value");
             }
 
             // if the target of the weak reference is the objToHold, this would be a cycling play.
-            if (weakRef.Target == objToHold)
+            if (weakRef.Target == value)
             {
-                throw new InvalidOperationException("The WeakReference.Target cannot be the same as objToHold");
+                throw new InvalidOperationException("The WeakReference.Target cannot be the same as value");
             }
 
             // holds the status of registration of the object dependency
             var itemRegistered = false;
 
             // check if the objToHold is contained in the internalList.
-            if (!InternalList.ContainsKey(objToHold))
+            if (!InternalList.ContainsKey(value))
             {
                 // add the objToHold to the internal list.
                 var lst = new List<WeakReference>
@@ -84,14 +79,14 @@ namespace WPFLocalizeExtension.Engine
                         weakRef
                     };
 
-                InternalList.Add(objToHold, lst);
+                InternalList.Add(value, lst);
 
                 itemRegistered = true;
             }
             else
             {
                 // otherwise, check if the weakRefDp exists and add it if necessary
-                var lst = InternalList[objToHold];
+                var lst = InternalList[value];
                 if (!lst.Contains(weakRef))
                 {
                     lst.Add(weakRef);
@@ -112,17 +107,17 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects or a single object.</summary>
-        /// <param name="objToRemove">If defined, the associated object dependency will be removed instead of a full CleanUp</param>
+        /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void CleanUp(object objToRemove)
+        public static void CleanUp(object value)
         {
             // if a particular object is passed, remove it.
-            if (objToRemove != null)
+            if (value != null)
             {
                 // if the key wasn't found, throw an exception.
-                if (!InternalList.Remove(objToRemove))
+                if (!InternalList.Remove(value))
                 {
-                    throw new Exception("Key was not found!");
+                    throw new ArgumentException("Key was not found!");
                 }
 
                 // stop here

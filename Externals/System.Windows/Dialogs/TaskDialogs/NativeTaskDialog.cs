@@ -417,7 +417,7 @@ namespace System.Windows.Dialogs.TaskDialogs
                     break;
             }
 
-            return (int)Result.OK;
+            return (int)Result.Ok;
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
