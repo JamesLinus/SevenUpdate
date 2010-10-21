@@ -16,7 +16,6 @@ namespace System.Windows.Internal
     using System.Security.Permissions;
 
     /// <summary>Enables the process to access theming controls</summary>
-    [SuppressUnmanagedCodeSecurity]
     public sealed class EnableThemingInScope : IDisposable
     {
         #region Constants and Fields
@@ -96,45 +95,52 @@ namespace System.Windows.Internal
                 if (!contextCreationSucceeded)
                 {
                     // Pull manifest from the .NET Framework install directory
-                    string assemblyLoc;
+                    string assemblyLoc = null;
 
                     var filePermission = new FileIOPermission(PermissionState.None)
                         {
                             AllFiles = FileIOPermissionAccess.PathDiscovery
                         };
-                    filePermission.Assert();
                     try
                     {
+                        filePermission.Demand();
+                        filePermission.Assert();
                         assemblyLoc = typeof(object).Assembly.Location;
+                    }
+                    catch (SecurityException)
+                    {
                     }
                     finally
                     {
                         CodeAccessPermission.RevertAssert();
                     }
 
-                    var installDir = Path.GetDirectoryName(assemblyLoc);
-
-                    if (installDir != null)
+                    if (assemblyLoc != null)
                     {
-                        var manifestLoc = Path.Combine(installDir, @"XPThemes.manifest");
-                        enableThemingActivationContext = new ActivationContext
-                            {
-                                Size = Marshal.SizeOf(typeof(ActivationContext)),
-                                Source = manifestLoc,
-                                AssemblyDirectory = installDir,
-                                Flags = AssemblyDirectoryValid
-                            };
+                        var installDir = Path.GetDirectoryName(assemblyLoc);
 
-                        // Set the lpAssemblyDirectory to the install
-                        // directory to prevent Win32 Side by Side from
-                        // looking for comctl32 in the application
-                        // directory, which could cause a bogus dll to be
-                        // placed there and open a security hole.
+                        if (installDir != null)
+                        {
+                            var manifestLoc = Path.Combine(installDir, @"XPThemes.manifest");
+                            enableThemingActivationContext = new ActivationContext
+                                {
+                                    Size = Marshal.SizeOf(typeof(ActivationContext)),
+                                    Source = manifestLoc,
+                                    AssemblyDirectory = installDir,
+                                    Flags = AssemblyDirectoryValid
+                                };
 
-                        // Note this will fail gracefully if file specified
-                        // by manifestLoc doesn't exist.
-                        activationContext = NativeMethods.CreateActCtx(ref enableThemingActivationContext);
-                        contextCreationSucceeded = activationContext != (IntPtr.Size > 4 ? new IntPtr(-1L) : new IntPtr(-1));
+                            // Set the lpAssemblyDirectory to the install
+                            // directory to prevent Win32 Side by Side from
+                            // looking for comctl32 in the application
+                            // directory, which could cause a bogus dll to be
+                            // placed there and open a security hole.
+
+                            // Note this will fail gracefully if file specified
+                            // by manifestLoc doesn't exist.
+                            activationContext = NativeMethods.CreateActCtx(ref enableThemingActivationContext);
+                            contextCreationSucceeded = activationContext != (IntPtr.Size > 4 ? new IntPtr(-1L) : new IntPtr(-1));
+                        }
                     }
                 }
 

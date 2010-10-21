@@ -52,7 +52,7 @@ namespace System.Windows.Controls
         private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register("ShieldIcon", typeof(ImageSource), typeof(Button), new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
         /// <summary>Indicates if the Uac shield is needed</summary>
-        private static readonly bool ShieldNeeded;
+        private static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;
 
         /// <summary>The text for the button</summary>
         private static readonly string Text = string.Empty;
@@ -60,16 +60,6 @@ namespace System.Windows.Controls
         #endregion
 
         #region Constructors and Destructors
-
-        /// <summary>Initializes static members of the <see cref = "UacButton" /> class.</summary>
-        static UacButton()
-        {
-            if (Environment.OSVersion.Version.Major >= 6)
-            {
-                // Vista or higher
-                ShieldNeeded = !NativeMethods.IsUserAdmin; // If already an admin don't bother;
-            }
-        }
 
         /// <summary>Initializes a new instance of the <see cref = "UacButton" /> class.</summary>
         public UacButton()

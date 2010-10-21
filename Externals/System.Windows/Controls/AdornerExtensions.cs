@@ -35,17 +35,17 @@ namespace System.Windows.Controls
 
         /// <summary>Determines whether the adorner layer contains an element</summary>
         /// <typeparam name="T">The type of element to check</typeparam>
-        /// <param name="adr">The adorner.</param>
-        /// <param name="elem">The element</param>
+        /// <param name="adorner">The adorner.</param>
+        /// <param name="element">The element</param>
         /// <returns><see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.</returns>
-        public static bool Contains<T>(this AdornerLayer adr, UIElement elem)
+        public static bool Contains<T>(this AdornerLayer adorner, UIElement element)
         {
-            if (adr == null)
+            if (adorner == null)
             {
                 return false;
             }
 
-            var adorners = adr.GetAdorners(elem);
+            var adorners = adorner.GetAdorners(element);
 
             if (adorners == null)
             {
@@ -65,22 +65,22 @@ namespace System.Windows.Controls
 
         /// <summary>Removes the adorners</summary>
         /// <typeparam name="T">The adorner control to remove</typeparam>
-        /// <param name="adr">The adorner</param>
-        /// <param name="elem">The element</param>
+        /// <param name="adorner">The adorner</param>
+        /// <param name="element">The element</param>
         /// <typeparameter name="T">The type of element</typeparameter>
-        public static void RemoveAdorners<T>(this AdornerLayer adr, UIElement elem)
+        public static void RemoveAdorners<T>(this AdornerLayer adorner, UIElement element)
         {
-            if (adr == null)
+            if (adorner == null)
             {
-                throw new ArgumentNullException("adr");
+                throw new ArgumentNullException("adorner");
             }
 
-            if (elem == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("adr");
+                throw new ArgumentNullException("element");
             }
 
-            var adorners = adr.GetAdorners(elem);
+            var adorners = adorner.GetAdorners(element);
 
             if (adorners == null)
             {
@@ -91,27 +91,27 @@ namespace System.Windows.Controls
             {
                 if (adorners[i] is T)
                 {
-                    adr.Remove(adorners[i]);
+                    adorner.Remove(adorners[i]);
                 }
             }
         }
 
         /// <summary>Removes all.</summary>
-        /// <param name="adr">The adorner layer</param>
-        /// <param name="elem">The element</param>
-        public static void RemoveAll(this AdornerLayer adr, UIElement elem)
+        /// <param name="adorner">The adorner layer</param>
+        /// <param name="element">The elementent</param>
+        public static void RemoveAll(this AdornerLayer adorner, UIElement element)
         {
-            if (adr == null)
+            if (adorner == null)
             {
-                throw new ArgumentNullException("adr");
+                throw new ArgumentNullException("adorner");
             }
 
-            if (elem == null)
+            if (element == null)
             {
-                throw new ArgumentNullException("elem");
+                throw new ArgumentNullException("element");
             }
 
-            var adorners = adr.GetAdorners(elem);
+            var adorners = adorner.GetAdorners(element);
             if (adorners == null)
             {
                 return;
@@ -119,7 +119,7 @@ namespace System.Windows.Controls
 
             foreach (var toRemove in adorners)
             {
-                adr.Remove(toRemove);
+                adorner.Remove(toRemove);
             }
         }
 

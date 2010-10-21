@@ -90,7 +90,7 @@
     <Compile Include="Dialogs\TaskDialogs\HyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogClosingEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogTickEventArgs.cs" />
-    <Compile Include="Dwm\DwmCompositionChangedEventArgs.cs" />
+    <Compile Include="DwmCompositionChangedEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceAwareApplication.cs" />
     <Compile Include="Controls\CommandLink.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="ValidationRules\RequiredInputRule.cs" />
     <Compile Include="ValidationRules\UrlInputRule.cs" />
     <Compile Include="ValidationRules\DirectoryInputRule.cs" />
-    <Compile Include="Dwm\AeroGlass.cs" />
+    <Compile Include="AeroGlass.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialog.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogBar.cs" />
     <Compile Include="Dialogs\TaskDialogs\TaskDialogButton.cs" />

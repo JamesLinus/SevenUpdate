@@ -24,7 +24,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
-namespace System.Windows.Dwm
+namespace System.Windows
 {
     using System.Windows.Internal;
     using System.Windows.Interop;
@@ -39,7 +39,7 @@ namespace System.Windows.Dwm
         #region Events
 
         /// <summary>Occurs when DWM becomes enabled or disabled on the system</summary>
-        public static event EventHandler<DwmCompositionChangedEventArgs> DwmCompositionChanged;
+        public static event EventHandler<CompositionChangedEventArgs> CompositionChanged;
 
         #endregion
 
@@ -95,10 +95,13 @@ namespace System.Windows.Dwm
             var blur = new DwmBlurBehind
                 {
                     RegionBlur = region,
-                    Flags = DwmBlurBehindFlag.DwmBlurBehindRegion
+                    Flags = BlurBehindOptions.BlurBehindRegion
                 };
 
-            NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur);
+            if (NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur) != 0)
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         /// <summary>Enables Aero Glass on a WPF window</summary>
@@ -170,9 +173,8 @@ namespace System.Windows.Dwm
 
             // calculate total size of window non-client area
             var handleSource = PresentationSource.FromVisual(window) as HwndSource;
-            var windowRect = new Rect();
-            var clientRect = new Rect();
-            
+            var windowRect = new Internal.Rect();
+            var clientRect = new Internal.Rect();
             if (handleSource != null)
             {
                 NativeMethods.GetWindowRect(handleSource.Handle, ref windowRect);
@@ -191,7 +193,10 @@ namespace System.Windows.Dwm
             var margins = new Margins((int)topLeftFrame.X, (int)topLeftFrame.Y, (int)(window.ActualWidth - bottomRightFrame.X), (int)(window.ActualHeight - bottomRightFrame.Y));
 
             // Extend the Frame into client area
-            NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins);
+            if (NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins) != 0)
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         /// <summary>Resets the Aero Glass exclusion area.</summary>
@@ -209,10 +214,13 @@ namespace System.Windows.Dwm
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                return;
+                throw new PlatformNotSupportedException();
             }
 
-            NativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins);
+            if (NativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins) != 0)
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         #endregion
@@ -228,11 +236,11 @@ namespace System.Windows.Dwm
         /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
-            if (msg == DwmMessages.DwmCompositionChanged || msg == DwmMessages.DwmRenderingChanged)
+            if (msg == DwmMessages.CompositionChanged || msg == DwmMessages.RenderingChanged)
             {
-                if (DwmCompositionChanged != null)
+                if (CompositionChanged != null)
                 {
-                    DwmCompositionChanged.Invoke(null, new DwmCompositionChangedEventArgs(IsEnabled));
+                    CompositionChanged.Invoke(null, new CompositionChangedEventArgs(IsEnabled));
                 }
 
                 handled = true;

@@ -75,34 +75,69 @@ namespace System.Windows.Controls
 
         /// <summary>Sets the auto sort.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <param name="value">if set to <see langword="true"/> [value].</param>
+        /// <param name="value">if set to <see langword="true"/> auto sorting will be used</param>
         public static void SetAutoSort(DependencyObject obj, bool value)
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
             obj.SetValue(AutoSortProperty, value);
         }
 
         /// <summary>Sets the <see cref="GridViewColumn"/> sorter</summary>
         /// <param name="obj">The <see cref="DependencyObject"/> to set the sorter to</param>
-        /// <param name="value">the <see cref="IComparer"/> to set as the sorter</param>
-        public static void SetCustomSorter(DependencyObject obj, string value)
+        /// <param name="comparerName">the <see cref="IComparer"/> to set as the sorter</param>
+        public static void SetCustomSorter(DependencyObject obj, string comparerName)
         {
-            obj.SetValue(CustomSorterProperty, value);
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            if (String.IsNullOrWhiteSpace(comparerName))
+            {
+                throw new ArgumentNullException("comparerName");
+            }
+
+            obj.SetValue(CustomSorterProperty, comparerName);
         }
 
         /// <summary>Sets the name of the property.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <param name="value">The value.</param>
-        public static void SetPropertyName(DependencyObject obj, string value)
+        /// <param name="name">The value.</param>
+        public static void SetPropertyName(DependencyObject obj, string name)
         {
-            obj.SetValue(PropertyNameProperty, value);
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+
+            obj.SetValue(PropertyNameProperty, name);
         }
 
         /// <summary>Sets the sorted column header.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <param name="value">The column header</param>
-        public static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader value)
+        /// <param name="header">The column header</param>
+        public static void SetSortedColumnHeader(DependencyObject obj, GridViewColumnHeader header)
         {
-            obj.SetValue(SortedColumnHeaderProperty, value);
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            if (header == null)
+            {
+                throw new ArgumentNullException("header");
+            }
+
+            obj.SetValue(SortedColumnHeaderProperty, header);
         }
 
         #endregion
@@ -472,6 +507,11 @@ namespace System.Windows.Controls
             /// <param name="drawingContext">The drawing instructions for a specific element. This context is provided to the layout system.</param>
             protected override void OnRender(DrawingContext drawingContext)
             {
+                if (drawingContext == null)
+                {
+                    throw new ArgumentNullException("drawingContext");
+                }
+
                 base.OnRender(drawingContext);
 
                 if (this.sortGlyph != null)

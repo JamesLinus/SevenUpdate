@@ -63,6 +63,11 @@ namespace SharpBits.Base
         /// <param name="context">The context.</param>
         protected BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+
             this.disposed = (bool)info.GetValue("disposed", typeof(bool));
         }
 
@@ -84,6 +89,11 @@ namespace SharpBits.Base
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            if (info == null)
+            {
+                throw new ArgumentNullException("info");
+            }
+
             base.GetObjectData(info, context);
             info.AddValue("disposed", this.disposed);
         }

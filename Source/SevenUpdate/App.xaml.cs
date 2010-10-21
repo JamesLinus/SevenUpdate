@@ -32,7 +32,7 @@ namespace SevenUpdate
     using System.Globalization;
     using System.IO;
     using System.Windows;
-    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dialogs;
     using System.Windows.Shell;
 
     using SevenUpdate.Properties;

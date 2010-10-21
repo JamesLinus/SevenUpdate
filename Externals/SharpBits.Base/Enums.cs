@@ -28,7 +28,7 @@ namespace SharpBits.Base
     public enum JobPriority
     {
         /// <summary>Downloads without bandwidth restriction</summary>
-        ForeGround = 0,
+        Foreground = 0,
 
         /// <summary>Downloads with a 80% bandwidth use</summary>
         High = 1,
@@ -160,7 +160,7 @@ namespace SharpBits.Base
         ///   Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the 
         ///   user for authentication in a Windows network environment.
         /// </summary>
-        NTLM,
+        Ntlm,
 
         /// <summary>
         ///   Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates 
@@ -174,7 +174,7 @@ namespace SharpBits.Base
 
     /// <summary>Provides method of job notification</summary>
     [Flags]
-    public enum NotificationFlags
+    public enum NotificationOptions
     {
         /// <summary>All of the files in the job have been transferred.</summary>
         JobTransferred = 1,
@@ -191,7 +191,7 @@ namespace SharpBits.Base
 
     /// <summary>Identifies the owner and ACL information to maintain when transferring a file using SMB</summary>
     [Flags]
-    public enum FileAclFlags
+    public enum FileAclOptions
     {
         /// <summary>If set, the file's owner information is maintained. Otherwise, the job's owner becomes the owner of the file.</summary>
         CopyFileOwner = 1,
@@ -221,7 +221,7 @@ namespace SharpBits.Base
 
     /// <summary>Flags that determine if the files of the job can be cached and served to peers and if the job can download content from peers</summary>
     [Flags]
-    public enum PeerCachingFlags
+    public enum PeerCachingOptions
     {
         /// <summary>
         ///   The job can download content from peers.

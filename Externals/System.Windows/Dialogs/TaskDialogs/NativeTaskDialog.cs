@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     using System.Collections.Generic;
     using System.ComponentModel;

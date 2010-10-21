@@ -39,6 +39,19 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
+        /// <summary>Recursively searches for a given control id in the collection passed via the <paramref name="subControl"/> parameter.</summary>
+        /// <param name="subControl">A Collection of CommonFileDialogControls</param>
+        /// <param name="id">An int containing the identifier of the control being searched for.</param>
+        /// <returns>A <see cref="DialogControl"/> who's Id matches the value of the <paramref name="id"/> parameter.</returns>
+        internal static DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
+        {
+            // if subControl is null, it will throw in the foreach.
+            return subControl == null ? null : subControl.Cast<DialogControl>().FirstOrDefault(control => control.Id == id);
+
+            // Control id not found - likely an error, but the calling 
+            // function should ultimately decide.
+        }
+
         /// <summary>
         /// Recursively searches for the control who's id matches the value
         ///   passed in the <paramref name="id"/> parameter.
@@ -53,29 +66,7 @@ namespace System.Windows.Dialogs
         /// </returns>
         internal DialogControl GetControlById(int id)
         {
-            return this.GetSubControlById(this.Items, id);
-        }
-
-        /// <summary>
-        /// Recursively searches for a given control id in the
-        ///   collection passed via the <paramref name="subControl"/> parameter.
-        /// </summary>
-        /// <param name="subControl">A Collection of CommonFileDialogControls</param>
-        /// <param name="id">
-        /// An int containing the identifier of the control
-        ///   being searched for.
-        /// </param>
-        /// <returns>
-        /// A <see cref="DialogControl"/> who's Id matches the value of the
-        ///   <paramref name="id"/> parameter.
-        /// </returns>
-        internal DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
-        {
-            // if subControl is null, it will throw in the foreach.
-            return subControl == null ? null : subControl.Cast<DialogControl>().FirstOrDefault(control => control.Id == id);
-
-            // Control id not found - likely an error, but the calling 
-            // function should ultimately decide.
+            return GetSubControlById(this.Items, id);
         }
 
         /// <summary>Inserts an dialog control at the specified index.</summary>

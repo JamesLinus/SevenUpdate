@@ -32,8 +32,6 @@ namespace SharpBits.Base
                 {
                     var bits = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, @"qmgr.dll"));
 
-
-
                     switch (bits.FileMajorPart)
                     {
                         case 6:

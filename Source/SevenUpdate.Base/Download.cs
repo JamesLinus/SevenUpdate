@@ -115,7 +115,7 @@ namespace SevenUpdate
                 manager.EnumJobs(JobOwner.CurrentUser);
                 manager.EnumJobs(JobOwner.AllUsers);
             }
-            catch (BitsError)
+            catch (BitsException)
             {
             }
 
@@ -130,7 +130,7 @@ namespace SevenUpdate
                     {
                         job.Cancel();
                     }
-                    catch (BitsError)
+                    catch (BitsException)
                     {
                     }
                 }
@@ -150,10 +150,10 @@ namespace SevenUpdate
             var bitsJob = manager.CreateJob(jobName, JobType.Download);
             if (isPriority)
             {
-                bitsJob.Priority = JobPriority.ForeGround;
+                bitsJob.Priority = JobPriority.Foreground;
             }
 
-            bitsJob.NotificationFlags = NotificationFlags.JobErrorOccurred | NotificationFlags.JobModified | NotificationFlags.JobTransferred;
+            bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified | NotificationOptions.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
             for (var x = 0; x < appUpdates.Count; x++)
@@ -168,7 +168,7 @@ namespace SevenUpdate
                 {
                     bitsJob.Resume();
                 }
-                catch (BitsError e)
+                catch (BitsException e)
                 {
                     Utilities.ReportError(e, Utilities.AllUserStore);
                     return;

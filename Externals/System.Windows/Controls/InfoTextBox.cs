@@ -216,19 +216,19 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Updates the adorner.</summary>
-        /// <param name="elem">The element</param>
+        /// <param name="element">The element</param>
         /// <param name="hide">if set to <see langword="true"/> hide the adorner</param>
-        private void UpdateAdorner(FrameworkElement elem, bool hide = false)
+        private void UpdateAdorner(FrameworkElement element, bool hide = false)
         {
-            if (elem == null || this.myAdornerLayer == null)
+            if (element == null || this.myAdornerLayer == null)
             {
                 return;
             }
 
             this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
-            this.myAdornerLayer.RemoveAdorners<AdornerLabel>(elem);
+            this.myAdornerLayer.RemoveAdorners<AdornerLabel>(element);
 
-            if (!((InfoTextBox)elem).HasText && !elem.IsFocused && !hide)
+            if (!((InfoTextBox)element).HasText && !element.IsFocused && !hide)
             {
                 this.myAdornerLayer.Add(this.myAdornerLabel);
             }

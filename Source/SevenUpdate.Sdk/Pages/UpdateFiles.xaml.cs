@@ -32,8 +32,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs.TaskDialogs;
-    using System.Windows.Dwm;
+    using System.Windows.Dialogs;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
@@ -65,7 +64,7 @@ namespace SevenUpdate.Sdk.Pages
             this.listBox.ItemsSource = Core.UpdateInfo.Files;
 
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
-            AeroGlass.DwmCompositionChanged += this.UpdateUI;
+            AeroGlass.CompositionChanged += this.UpdateUI;
             if (AeroGlass.IsEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;
@@ -383,8 +382,8 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "DwmCompositionChangedEventArgs" /> instance containing the event data.</param>
-        private void UpdateUI(object sender, DwmCompositionChangedEventArgs e)
+        /// <param name = "e">The <see cref = "CompositionChangedEventArgs" /> instance containing the event data.</param>
+        private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {

@@ -51,23 +51,15 @@ namespace System.Windows.ValidationRules
         /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult"/> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            try
-            {
-                var url = value as string;
+            var url = value as string;
 
-                if (String.IsNullOrWhiteSpace(url))
-                {
-                    return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
-                }
-
-                new Uri(value.ToString());
-                return new ValidationResult(true, null);
-            }
-            catch (Exception)
+            if (String.IsNullOrWhiteSpace(url))
             {
-                throw;
-                return new ValidationResult(false, Resources.UrilInvalid);
+                return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
+
+            Uri result;
+            return Uri.TryCreate(value.ToString(), UriKind.RelativeOrAbsolute, out result) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
         }
 
         #endregion

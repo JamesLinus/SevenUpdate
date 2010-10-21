@@ -112,12 +112,13 @@
   <ItemGroup>
     <Compile Include="BGEnums.cs" />
     <Compile Include="BitsCredentials.cs" />
-    <Compile Include="BitsError.cs" />
+    <Compile Include="BitsException.cs" />
     <Compile Include="BitsFile.cs" />
     <Compile Include="BitsFilesCollection.cs" />
     <Compile Include="BitsInterfaceNotificationEventArgs.cs" />
     <Compile Include="BitsInterop.cs" />
     <Compile Include="ErrorNotificationEventArgs.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="JobErrorNotificationEventArgs.cs" />
     <Compile Include="BitsJob.cs" />
     <Compile Include="BitsJobsDictionary.cs" />

@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     /// <summary>
     /// Defines the abstract base class for task dialog buttons.

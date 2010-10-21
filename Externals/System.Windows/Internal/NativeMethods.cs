@@ -30,16 +30,16 @@ namespace System.Windows.Internal
 
     /// <summary>The blur behind flags/options</summary>
     [Flags]
-    public enum DwmBlurBehindFlag : uint
+    public enum BlurBehindOptions : uint
     {
         /// <summary>Enables blur behind</summary>
-        DwmBlurBehindEnable = 0x00000001,
+        BlurBehindEnable = 0x00000001,
 
         /// <summary>The blur behind region</summary>
-        DwmBlurBehindRegion = 0x00000002,
+        BlurBehindRegion = 0x00000002,
 
         /// <summary>True to show effects with maximizing</summary>
-        DwmTransitionOnMaximized = 0x00000004
+        TransitionOnMaximized = 0x00000004
     }
 
     /// <summary>Defines the margins of windows that have visual styles applied.</summary>
@@ -101,7 +101,7 @@ namespace System.Windows.Internal
     internal struct DwmBlurBehind
     {
         /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
-        public DwmBlurBehindFlag Flags;
+        public BlurBehindOptions Flags;
 
         /// <summary><see langword = "true" /> to register the window handle to DWM blur behind; <see langword = "false" /> to unregister the window handle from DWM blur behind.</summary>
         public bool Enable;
@@ -151,31 +151,31 @@ namespace System.Windows.Internal
         internal const int WmUser = 0x0400;
 
         /// <summary>Enable/disable non-client rendering based on window style.</summary>
-        internal const int DwmNcrUseWindowStyle = 0;
+        internal const int NcrUseWindowStyle = 0;
 
         /// <summary>Disabled non-client rendering; window style is ignored.</summary>
-        internal const int DwmNcrDisabled = 1;
+        internal const int NcrDisabled = 1;
 
         /// <summary>Enabled non-client rendering; window style is ignored.</summary>
-        internal const int DwmNcrEnabled = 2;
+        internal const int NcrEnabled = 2;
 
         /// <summary>Enable/disable non-client rendering Use DWMNCRP_* values.If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</summary>
-        internal const int DwmNcRenderingEnabled = 1;
+        internal const int NcRenderingEnabled = 1;
 
         /// <summary>Non-client rendering policy.</summary>
-        internal const int DwmNcRenderingPolicy = 2;
+        internal const int NcRenderingPolicy = 2;
 
         /// <summary>Potentially enable/forcibly disable transitions 0 or 1.</summary>
-        internal const int DwmTransitionsForceDisabled = 3;
+        internal const int TransitionsForceDisabled = 3;
 
         /// <summary>Enable blur behind</summary>
-        internal const int DwmBlurBehindEnable = 0x00000001;
+        internal const int BlurBehindEnable = 0x00000001;
 
         /// <summary>The blur region has been specified</summary>
-        internal const int DwmBlurRegion = 0x00000002;
+        internal const int BlurRegion = 0x00000002;
 
         /// <summary>TransitionOnMaximized has been specified</summary>
-        internal const int DwmTransitionOnMaximized = 0x00000004;
+        internal const int TransitionOnMaximized = 0x00000004;
 
         #endregion
 
@@ -258,7 +258,7 @@ namespace System.Windows.Internal
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.U1)]
-        internal static extern int DwmEnableComposition(bool enable);
+        internal static extern int DwmEnableComposition([MarshalAs(UnmanagedType.Bool)] bool enable);
 
         /// <summary>Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>
         /// <param name="handle">A handle to the window.</param>

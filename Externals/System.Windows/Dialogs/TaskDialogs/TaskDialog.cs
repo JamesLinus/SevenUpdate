@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -172,7 +172,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("CanCancel can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"CanCancel can't be set while dialog is showing.");
                 this.canCancel = value;
             }
         }
@@ -187,7 +187,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Dialog caption can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Dialog caption can't be set while dialog is showing.");
                 this.caption = value;
             }
         }
@@ -205,7 +205,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Collapsed control text can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Collapsed control text can't be set while dialog is showing.");
                 this.detailsCollapsedLabel = value;
             }
         }
@@ -220,7 +220,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Expanded state of the dialog can't be modified while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Expanded state of the dialog can't be modified while dialog is showing.");
                 this.detailsExpanded = value;
             }
         }
@@ -235,7 +235,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Expanded control label can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Expanded control label can't be set while dialog is showing.");
                 this.detailsExpandedLabel = value;
             }
         }
@@ -269,7 +269,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Expanded information mode can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Expanded information mode can't be set while dialog is showing.");
                 this.expansionMode = value;
             }
         }
@@ -358,7 +358,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Hyperlinks can't be enabled/disabled while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Hyperlinks can't be enabled/disabled while dialog is showing.");
                 this.hyperlinksEnabled = value;
             }
         }
@@ -411,7 +411,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Dialog owner cannot be modified while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Dialog owner cannot be modified while dialog is showing.");
                 this.ownerWindow = value;
             }
         }
@@ -430,12 +430,12 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Progress bar can't be changed while dialog is showing");
+                this.ThrowIfDialogShowing(@"Progress bar can't be changed while dialog is showing");
                 if (value != null)
                 {
                     if (value.HostingDialog != null)
                     {
-                        throw new InvalidOperationException("Progress bar cannot be hosted in multiple dialogs.");
+                        throw new InvalidOperationException(@"Progress bar cannot be hosted in multiple dialogs.");
                     }
 
                     value.HostingDialog = this;
@@ -455,7 +455,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Standard buttons can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Standard buttons can't be set while dialog is showing.");
                 this.standardButtons = value;
             }
         }
@@ -470,7 +470,7 @@ namespace System.Windows.Dialogs.TaskDialogs
 
             set
             {
-                this.ThrowIfDialogShowing("Startup location can't be changed while dialog is showing.");
+                this.ThrowIfDialogShowing(@"Startup location can't be changed while dialog is showing.");
                 this.startupLocation = value;
             }
         }
@@ -653,7 +653,9 @@ namespace System.Windows.Dialogs.TaskDialogs
             // native dialog when it actually exists.
             if (this.NativeDialogShowing)
             {
-                if (control is TaskDialogProgressBar)
+                var progressBarControl = control as TaskDialogProgressBar;
+
+                if (progressBarControl != null)
                 {
                     if (!this.progressBar.HasValidValues)
                     {
@@ -676,10 +678,14 @@ namespace System.Windows.Dialogs.TaskDialogs
                             Debug.Assert(true, "Unknown property being set");
                             break;
                     }
+
+                    return;
                 }
-                else if (control is TaskDialogButton)
+
+                var button = control as TaskDialogButton;
+
+                if (button != null)
                 {
-                    var button = (TaskDialogButton)control;
                     switch (propertyName)
                     {
                         case "ShowElevationIcon":
@@ -692,30 +698,31 @@ namespace System.Windows.Dialogs.TaskDialogs
                             Debug.Assert(true, "Unknown property being set");
                             break;
                     }
+
+                    return;
                 }
-                else if (control is TaskDialogRadioButton)
+
+                var radioButton = control as TaskDialogRadioButton;
+                if (radioButton != null)
                 {
-                    var button = (TaskDialogRadioButton)control;
                     switch (propertyName)
                     {
                         case "Enabled":
-                            this.nativeDialog.UpdateRadioButtonEnabled(button.Id, button.Enabled);
+                            this.nativeDialog.UpdateRadioButtonEnabled(radioButton.Id, radioButton.Enabled);
                             break;
                         default:
                             Debug.Assert(true, "Unknown property being set");
                             break;
                     }
-                }
-                else
-                {
-                    // Do nothing with property change - 
-                    // note that this shouldn't ever happen, we should have
-                    // either thrown on the changing event, or we handle above.
-                    Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
-                }
-            }
 
-            return;
+                    return;
+                }
+
+                // Do nothing with property change - 
+                // note that this shouldn't ever happen, we should have
+                // either thrown on the changing event, or we handle above.
+                Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
+            }
         }
 
         /// <summary>
@@ -1319,46 +1326,63 @@ namespace System.Windows.Dialogs.TaskDialogs
         {
             foreach (var control in this.Controls)
             {
-                if (control is TaskDialogButtonBase && String.IsNullOrEmpty(((TaskDialogButtonBase)control).Text))
-                {
-                    if (control is TaskDialogCommandLink && String.IsNullOrEmpty(((TaskDialogCommandLink)control).Instruction))
-                    {
-                        throw new InvalidOperationException("Button text must be non-empty");
-                    }
-                }
+                var commandLink = control as TaskDialogCommandLink;
 
                 // Loop through child controls 
                 // and sort the controls based on type.
-                if (control is TaskDialogCommandLink)
+                if (commandLink != null)
                 {
-                    this.commandLinks.Add((TaskDialogCommandLink)control);
+                    if (String.IsNullOrEmpty(commandLink.Instruction))
+                    {
+                        throw new InvalidOperationException("Button text must be non-empty");
+                    }
+
+                    this.commandLinks.Add(commandLink);
+                    continue;
                 }
-                else if (control is TaskDialogRadioButton)
+
+                var radioButton = control as TaskDialogRadioButton;
+                if (radioButton != null)
                 {
+                    if (String.IsNullOrEmpty(radioButton.Text))
+                    {
+                        throw new InvalidOperationException("Button text must be non-empty");
+                    }
+
                     if (this.radioButtons == null)
                     {
                         this.radioButtons = new List<TaskDialogButtonBase>();
                     }
 
-                    this.radioButtons.Add((TaskDialogRadioButton)control);
+                    this.radioButtons.Add(radioButton);
+                    continue;
                 }
-                else if (control is TaskDialogButtonBase)
+
+                var button = control as TaskDialogButton;
+                if (button != null)
                 {
+                    if (String.IsNullOrEmpty(button.Text))
+                    {
+                        throw new InvalidOperationException("Button text must be non-empty");
+                    }
+
                     if (this.buttons == null)
                     {
                         this.buttons = new List<TaskDialogButtonBase>();
                     }
 
-                    this.buttons.Add((TaskDialogButtonBase)control);
+                    this.buttons.Add(button);
+                    continue;
                 }
-                else if (control is TaskDialogProgressBar)
+
+                var progress = control as TaskDialogProgressBar;
+                if (progress != null)
                 {
-                    this.progressBar = (TaskDialogProgressBar)control;
+                    this.progressBar = progress;
+                    continue;
                 }
-                else
-                {
-                    throw new ArgumentException("Unknown dialog control type.");
-                }
+
+                throw new ArgumentException("Unknown dialog control type.");
             }
         }
 
@@ -1407,7 +1431,5 @@ namespace System.Windows.Dialogs.TaskDialogs
         }
 
         #endregion
-
-
     }
 }

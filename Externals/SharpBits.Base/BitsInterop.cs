@@ -973,11 +973,11 @@ namespace SharpBits.Base
 
         /// <summary>Sets the peer caching flags.</summary>
         /// <param name="flags">The flags.</param>
-        void SetPeerCachingFlags(PeerCachingFlags flags);
+        void SetPeerCachingFlags(PeerCachingOptions flags);
 
         /// <summary>Gets the peer caching flags.</summary>
         /// <param name="flags">The flags.</param>
-        void GetPeerCachingFlags([Out] out PeerCachingFlags flags);
+        void GetPeerCachingFlags([Out] out PeerCachingOptions flags);
 
         /// <summary>Gets the owner integrity level.</summary>
         /// <param name="level">The p level.</param>

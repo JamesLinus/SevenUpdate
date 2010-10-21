@@ -33,7 +33,7 @@ namespace SevenUpdate
     using System.IO;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dialogs;
     using System.Windows.Internal;
 
     using SevenUpdate.Pages;

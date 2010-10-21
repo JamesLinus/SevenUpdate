@@ -55,8 +55,10 @@ namespace SharpBits.Base
         {
             // Set threading apartment
             Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
-            NativeMethods.CoInitializeSecurity(
-                IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthenticationLevels.Connect, RpcImpersonationLevels.Impersonate, IntPtr.Zero, EoAuthenticationCapabilities.None, IntPtr.Zero);
+            if (NativeMethods.CoInitializeSecurity(IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthenticationLevels.Connect, RpcImpersonationLevels.Impersonate, IntPtr.Zero, EoAuthenticationCapabilities.None, IntPtr.Zero) != 0)
+            {
+                throw new InvalidOperationException();
+            }
 
             this.BackgroundCopyManager = new BackgroundCopyManager() as IBackgroundCopyManager;
             this.Jobs = new BitsJobsDictionary(this); // will be set correctly later after initialization
@@ -162,19 +164,19 @@ namespace SharpBits.Base
         /// <value>The collection of <see cref = "BitsJob" /></value>
         public BitsJobsDictionary Jobs { get; private set; }
 
-        /// <summary>Gets the background copy manager.</summary>
-        /// <value>The background copy manager.</value>
-        internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
-
         /// <summary>Gets the bits version.</summary>
         /// <value>The bits version.</value>
-        internal BitsVersion BitsVersion
+        internal static BitsVersion BitsVersion
         {
             get
             {
                 return Utilities.BitsVersion;
             }
         }
+
+        /// <summary>Gets the background copy manager.</summary>
+        /// <value>The background copy manager.</value>
+        internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
 
         /// <summary>Gets or sets current owner of the job</summary>
         /// <value>The current owner.</value>

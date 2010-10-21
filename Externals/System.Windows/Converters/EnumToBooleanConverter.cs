@@ -45,6 +45,11 @@ namespace System.Windows.Converters
         /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
             return value.Equals(parameter);
         }
 
@@ -56,6 +61,11 @@ namespace System.Windows.Converters
         /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+            {
+                return DependencyProperty.UnsetValue;
+            }
+
             return value.Equals(false) ? DependencyProperty.UnsetValue : parameter;
         }
 

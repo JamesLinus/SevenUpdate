@@ -29,7 +29,7 @@ namespace SharpBits.Base
         private bool disposed;
 
         /// <summary>Data about the error</summary>
-        private BitsError error;
+        private BitsException error;
 
         /// <summary>The job GUID</summary>
         private Guid guid;
@@ -193,7 +193,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the error that occurred</summary>
         /// <value>The error.</value>
-        public BitsError Error
+        public BitsException Error
         {
             get
             {
@@ -208,7 +208,7 @@ namespace SharpBits.Base
                             this.Job.GetError(out copyError);
                             if (null != copyError)
                             {
-                                this.error = new BitsError(this, copyError);
+                                this.error = new BitsException(this, copyError);
                             }
                         }
                     }
@@ -372,7 +372,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the notification flags.</summary>
         /// <value>The notification flags.</value>
-        public NotificationFlags NotificationFlags
+        public NotificationOptions NotificationOptions
         {
             get
             {
@@ -386,7 +386,7 @@ namespace SharpBits.Base
                     this.manager.PublishException(this, exception);
                 }
 
-                return (NotificationFlags)flags;
+                return (NotificationOptions)flags;
             }
 
             set
@@ -599,6 +599,11 @@ namespace SharpBits.Base
         /// <param name="files">The files.</param>
         public void AddFiles(Collection<BitsFileInfo> files)
         {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+
             var fileArray = new BGFileInfo[files.Count];
             for (var i = 0; i < files.Count; i++)
             {
@@ -1114,7 +1119,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the file acl flags.</summary>
         /// <value>The file acl flags.</value>
-        public FileAclFlags FileAclFlags
+        public FileAclOptions FileAclOptions
         {
             get
             {
@@ -1136,7 +1141,7 @@ namespace SharpBits.Base
                     this.manager.PublishException(this, exception);
                 }
 
-                return (FileAclFlags)flags;
+                return (FileAclOptions)flags;
             }
 
             set
@@ -1234,11 +1239,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the peer caching flags.</summary>
         /// <value>The peer caching flags.</value>
-        public PeerCachingFlags CachingFlags
+        public PeerCachingOptions CachingOption
         {
             get
             {
-                PeerCachingFlags peerCaching = 0;
+                PeerCachingOptions peerCaching = 0;
                 try
                 {
                     if (this.job4 != null)

@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     #region TaskDialogExpandedDetailsLocation
 
@@ -32,14 +32,14 @@ namespace System.Windows.Dialogs.TaskDialogs
     /// <summary>Sets the state of a task dialog progress bar.</summary>
     public enum TaskDialogProgressBarState
     {
-        /// <summary>Normal state.</summary>
-        Normal = TaskDialogNativeMethods.ProgressBarStatus.Normal,
+        /// <summary>Normal status</summary>
+        Normal = 0x0001,
 
-        /// <summary>An error occurred.</summary>
-        Error = TaskDialogNativeMethods.ProgressBarStatus.Error,
+        /// <summary>Red progress</summary>
+        Error = 0x0002,
 
-        /// <summary>The progress is paused.</summary>
-        Paused = TaskDialogNativeMethods.ProgressBarStatus.Paused,
+        /// <summary>Yellow progress</summary>
+        Paused = 0x0003,
 
         /// <summary>Displays marquee (indeterminate) style progress</summary>
         Marquee,

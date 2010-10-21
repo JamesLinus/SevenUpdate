@@ -115,7 +115,7 @@ namespace System.Windows
         /// <summary>Finalizes an instance of the <see cref="InstanceAwareApplication"/> class.</summary>
         ~InstanceAwareApplication()
         {
-            this.Dispose(false);
+            this.Dispose();
         }
 
         #endregion
@@ -149,7 +149,7 @@ namespace System.Windows
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            this.TryDisposeSynchronizationObjects();
             GC.SuppressFinalize(this);
         }
 
@@ -236,30 +236,35 @@ namespace System.Windows
         /// <param name="awareness">The <see cref="ApplicationInstanceAwareness"/> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
-        [SecurityCritical]
         private static void ExtractParameters(ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
-            new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
-            if (awareness == ApplicationInstanceAwareness.Host)
+            var permission = new SecurityPermission(SecurityPermissionFlag.ControlPrincipal);
+            try
             {
-                prefix = GlobalPrefix;
+                permission.Demand();
+                permission.Assert();
+                if (awareness == ApplicationInstanceAwareness.Host)
+                {
+                    prefix = GlobalPrefix;
 
-                // ReSharper disable PossibleNullReferenceException
-                identity = WindowsIdentity.GetCurrent().Groups.FirstOrDefault(reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
+                    // ReSharper disable PossibleNullReferenceException
+                    identity = WindowsIdentity.GetCurrent().Groups.FirstOrDefault(reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
+                }
+                else
+                {
+                    prefix = LocalPrefix;
+                    identity = WindowsIdentity.GetCurrent().User;
+
+                    // ReSharper restore PossibleNullReferenceException
+                }
             }
-            else
+            catch (SecurityException)
             {
-                prefix = LocalPrefix;
-                identity = WindowsIdentity.GetCurrent().User;
-
-                // ReSharper restore PossibleNullReferenceException
+                prefix = null;
+                identity = null;
             }
 
             CodeAccessPermission.RevertAssert();
-
-            if (identity == null)
-            {
-            }
         }
 
         /// <summary>Gets the application unique identifier.</summary>
@@ -269,7 +274,7 @@ namespace System.Windows
             // By default, the application is marked using the entry assembly Guid!
             var assembly = Assembly.GetEntryAssembly();
             var guidAttribute = assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute)) as GuidAttribute;
-            return guidAttribute.Value;
+            return guidAttribute != null ? guidAttribute.Value : null;
         }
 
         /// <summary>Gets the <see cref="Uri"/> of the pipe used for inter-process communication.</summary>
@@ -371,11 +376,10 @@ namespace System.Windows
                 var instance = ChannelFactory<IPriorApplicationInstance>.CreateChannel(new NetNamedPipeBinding(), new EndpointAddress(uri));
                 instance.SignalStartupNextInstance(args);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
+                Debug.WriteLine("Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + ex, this.GetType().ToString());
                 throw;
-                Debug.WriteLine("Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + exc, this.GetType().ToString());
-                return false;
             }
 
             // If the first application does not notify back that the signal has been received, just return false...
@@ -454,10 +458,10 @@ namespace System.Windows
                         this.serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
                     }
                 }
-                catch (Exception exc)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + ex, this.GetType().ToString());
                     throw;
-                    Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + exc, this.GetType().ToString());
                 }
                 finally
                 {
@@ -487,13 +491,6 @@ namespace System.Windows
 
             this.signaledToFirstInstanceSemaphore.Close();
             this.signaledToFirstInstanceSemaphore = null;
-        }
-
-        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
-        {
-            this.TryDisposeSynchronizationObjects();
         }
 
         #endregion

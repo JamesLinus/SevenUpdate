@@ -30,7 +30,6 @@ namespace SevenUpdate.Sdk.Windows
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dwm;
     using System.Windows.Input;
     using System.Windows.Internal;
     using System.Windows.Markup;
@@ -50,7 +49,7 @@ namespace SevenUpdate.Sdk.Windows
         {
             this.InitializeComponent();
             NavService = this.NavigationService;
-            AeroGlass.DwmCompositionChanged += this.ChangeWindowChrome;
+            AeroGlass.CompositionChanged += this.ChangeWindowChrome;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);
         }
@@ -78,8 +77,8 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
         /// <param name = "sender">The Sender</param>
-        /// <param name = "e">The <see cref = "DwmCompositionChangedEventArgs" /> instance containing the event data</param>
-        private void ChangeWindowChrome(object sender, DwmCompositionChangedEventArgs e)
+        /// <param name = "e">The <see cref = "CompositionChangedEventArgs" /> instance containing the event data</param>
+        private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
 

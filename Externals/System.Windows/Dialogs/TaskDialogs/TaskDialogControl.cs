@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     /// <summary>Declares the abstract base class for all custom task dialog controls.</summary>
     public abstract class TaskDialogControl : DialogControl

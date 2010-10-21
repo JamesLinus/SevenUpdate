@@ -34,11 +34,15 @@ namespace System.Windows.Controls
         #region Public Methods
 
         /// <summary>Limits resizing of a <see cref="GridViewColumn"/></summary>
-        /// <param name="e">The Thumb object of the <see cref="GridViewColumn"/> to limit it's size</param>
-        public static void LimitColumnSize(Thumb e)
+        /// <param name="control">The Thumb object of the <see cref="GridViewColumn"/> to limit it's size</param>
+        public static void LimitColumnSize(FrameworkElement control)
         {
-            var senderAsThumb = e;
-            var header = senderAsThumb.TemplatedParent as GridViewColumnHeader;
+            if (control == null)
+            {
+                return;
+            }
+
+            var header = control.TemplatedParent as GridViewColumnHeader;
             if (header == null)
             {
                 return;

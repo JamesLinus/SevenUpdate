@@ -16,10 +16,10 @@ namespace System.Windows.Internal
         #region Constants and Fields
 
         /// <summary>Dwm has been enabled or Disabled</summary>
-        internal const int DwmCompositionChanged = 0x031E;
+        internal const int CompositionChanged = 0x031E;
 
         /// <summary>Dwn rendering has changed</summary>
-        internal const int DwmRenderingChanged = 0x031F;
+        internal const int RenderingChanged = 0x031F;
 
         #endregion
     }

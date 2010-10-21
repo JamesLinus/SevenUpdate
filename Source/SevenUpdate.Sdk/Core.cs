@@ -29,7 +29,7 @@ namespace SevenUpdate.Sdk
     using System;
     using System.Collections.ObjectModel;
     using System.Windows;
-    using System.Windows.Dialogs.TaskDialogs;
+    using System.Windows.Dialogs;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Interop;

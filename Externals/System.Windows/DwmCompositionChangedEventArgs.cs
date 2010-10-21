@@ -24,16 +24,16 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
-namespace System.Windows.Dwm
+namespace System.Windows
 {
-    /// <summary>Event argument for The <see cref="DwmCompositionChanged"/> event</summary>
-    public class DwmCompositionChangedEventArgs : EventArgs
+    /// <summary>Event argument for The <see cref="CompositionChanged"/> event</summary>
+    public class CompositionChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="DwmCompositionChangedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs"/> class.</summary>
         /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
-        internal DwmCompositionChangedEventArgs(bool isGlassEnabled)
+        internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;
         }

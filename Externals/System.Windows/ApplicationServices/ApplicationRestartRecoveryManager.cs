@@ -166,6 +166,11 @@ namespace System.Windows.ApplicationServices
                 throw new PlatformNotSupportedException("Only supported on Windows Vista or newer.");
             }
 
+            if (settings == null)
+            {
+                throw new ArgumentNullException("settings");
+            }
+
             var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, settings.Restrictions);
 
             if (hr == Result.Fail)

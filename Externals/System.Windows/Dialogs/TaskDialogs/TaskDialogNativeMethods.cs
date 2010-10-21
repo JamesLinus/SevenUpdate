@@ -8,7 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
-namespace System.Windows.Dialogs.TaskDialogs
+namespace System.Windows.Dialogs
 {
     using System.Runtime.InteropServices;
     using System.Windows.Controls;
@@ -31,19 +31,6 @@ namespace System.Windows.Dialogs.TaskDialogs
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
 
         #region Enums
-
-        /// <summary>Indicates the progress bar status</summary>
-        internal enum ProgressBarStatus
-        {
-            /// <summary>Normal status</summary>
-            Normal = 0x0001,
-
-            /// <summary>Red progress</summary>
-            Error = 0x0002,
-
-            /// <summary>Yellow progress</summary>
-            Paused = 0x0003
-        }
 
         /// <summary>Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the Buttons and Buttons members, the task dialog will contain the OK button by default.</summary>
         [Flags]
@@ -285,9 +272,8 @@ namespace System.Windows.Dialogs.TaskDialogs
         /// <param name="radioButton">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
         /// <param name="verificationFlagChecked"><see langword="true"/> if the verification <see cref="CheckBox"/> was checked when the dialog was dismissed; otherwise, false</param>
         /// <returns>The result</returns>
-        [DllImport(@"comctl32.dll", CharSet = CharSet.Auto, PreserveSig = false)]
-        internal static extern Result TaskDialogIndirect(
-            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
+        [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
+        internal static extern Result TaskDialogIndirect([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
         /// <summary>Contains the data for a <see cref="TaskDialogIcon"/></summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
