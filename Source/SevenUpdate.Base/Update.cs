@@ -56,21 +56,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The collection localized update descriptions</summary>
-        private readonly ObservableCollection<LocaleString> description;
-
-        /// <summary>The collection of files to perform actions on in the update</summary>
-        private readonly ObservableCollection<UpdateFile> files;
-
-        /// <summary>The collection of localized update names</summary>
-        private readonly ObservableCollection<LocaleString> name;
-
-        /// <summary>The collection of registry keys and values to perform actions on in the update</summary>
-        private readonly ObservableCollection<RegistryItem> registryItems;
-
-        /// <summary>The collection of shortcuts to perform actions on in the update</summary>
-        private readonly ObservableCollection<Shortcut> shortcuts;
-
         /// <summary>The source main location to download files for the update</summary>
         private string downloadUrl;
 
@@ -107,35 +92,35 @@ namespace SevenUpdate
         /// <param name = "shortcuts">The collection of shortcuts to perform actions on in the update</param>
         public Update(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> description, ObservableCollection<UpdateFile> files, ObservableCollection<RegistryItem> registryItems, ObservableCollection<Shortcut> shortcuts)
         {
-            this.name = name;
-            this.description = description;
-            this.shortcuts = shortcuts;
-            this.registryItems = registryItems;
-            this.files = files;
+            this.Name = name;
+            this.Description = description;
+            this.Shortcuts = shortcuts;
+            this.RegistryItems = registryItems;
+            this.Files = files;
 
-            if (this.name == null)
+            if (this.Name == null)
             {
-                this.name = new ObservableCollection<LocaleString>();
+                this.Name = new ObservableCollection<LocaleString>();
             }
 
-            if (this.description == null)
+            if (this.Description == null)
             {
-                this.description = new ObservableCollection<LocaleString>();
+                this.Description = new ObservableCollection<LocaleString>();
             }
 
-            if (this.shortcuts == null)
+            if (this.Shortcuts == null)
             {
-                this.shortcuts = new ObservableCollection<Shortcut>();
+                this.Shortcuts = new ObservableCollection<Shortcut>();
             }
 
-            if (this.registryItems == null)
+            if (this.RegistryItems == null)
             {
-                this.registryItems = new ObservableCollection<RegistryItem>();
+                this.RegistryItems = new ObservableCollection<RegistryItem>();
             }
 
-            if (this.files == null)
+            if (this.Files == null)
             {
-                this.files = new ObservableCollection<UpdateFile>();
+                this.Files = new ObservableCollection<UpdateFile>();
             }
         }
 
@@ -158,13 +143,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized update descriptions</summary>
         /// <value>The localized description for the update</value>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description
-        {
-            get
-            {
-                return this.description;
-            }
-        }
+        public ObservableCollection<LocaleString> Description { get; private set; }
 
         /// <summary>Gets or sets the source main location to download files for the update</summary>
         /// <value>The url to download the update files.</value>
@@ -188,13 +167,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of files to perform actions on in the update</summary>
         /// <value>The files.</value>
         [ProtoMember(8, IsRequired = false), DataMember]
-        public ObservableCollection<UpdateFile> Files
-        {
-            get
-            {
-                return this.files;
-            }
-        }
+        public ObservableCollection<UpdateFile> Files { get; private set; }
 
         /// <summary>Gets or sets a value indicating whether the update is hidden</summary>
         /// <value><see langword = "true" /> if hidden; otherwise, <see langword = "false" />.</value>
@@ -275,24 +248,12 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized update names</summary>
         /// <value>The localized update names</value>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
+        public ObservableCollection<LocaleString> Name { get; private set; }
 
         /// <summary>Gets the collection of registry keys and values to perform actions on in the update</summary>
         /// <value>The registry items</value>
         [ProtoMember(9, IsRequired = false), DataMember]
-        public ObservableCollection<RegistryItem> RegistryItems
-        {
-            get
-            {
-                return this.registryItems;
-            }
-        }
+        public ObservableCollection<RegistryItem> RegistryItems { get; private set; }
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
@@ -335,13 +296,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of shortcuts to perform actions on in the update</summary>
         /// <value>The shortcuts.</value>
         [ProtoMember(10, IsRequired = false), DataMember]
-        public ObservableCollection<Shortcut> Shortcuts
-        {
-            get
-            {
-                return this.shortcuts;
-            }
-        }
+        public ObservableCollection<Shortcut> Shortcuts { get; private set; }
 
         /// <summary>Gets the total download size in bytes of the update</summary>
         /// <value>The total download size of the update</value>

@@ -36,15 +36,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The collection of localized descriptions for the application</summary>
-        private readonly ObservableCollection<LocaleString> description;
-
-        /// <summary>A collection of localized application names</summary>
-        private readonly ObservableCollection<LocaleString> name;
-
-        /// <summary>A collection of localized publisher names</summary>
-        private readonly ObservableCollection<LocaleString> publisher;
-
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
         private string appUrl;
 
@@ -76,23 +67,23 @@ namespace SevenUpdate
         /// <param name = "description">The collection of localized update descriptions</param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
-            this.name = name;
-            this.publisher = publisher;
-            this.description = description;
+            this.Name = name;
+            this.Publisher = publisher;
+            this.Description = description;
 
-            if (this.name == null)
+            if (this.Name == null)
             {
-                this.name = new ObservableCollection<LocaleString>();
+                this.Name = new ObservableCollection<LocaleString>();
             }
 
-            if (this.description == null)
+            if (this.Description == null)
             {
-                this.description = new ObservableCollection<LocaleString>();
+                this.Description = new ObservableCollection<LocaleString>();
             }
 
-            if (this.publisher == null)
+            if (this.Publisher == null)
             {
-                this.publisher = new ObservableCollection<LocaleString>();
+                this.Publisher = new ObservableCollection<LocaleString>();
             }
         }
 
@@ -101,17 +92,17 @@ namespace SevenUpdate
         /// <param name = "publisher">The collection of localized publisher names</param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher)
         {
-            this.name = name;
-            this.publisher = publisher;
+            this.Name = name;
+            this.Publisher = publisher;
 
-            if (this.name == null)
+            if (this.Name == null)
             {
-                this.name = new ObservableCollection<LocaleString>();
+                this.Name = new ObservableCollection<LocaleString>();
             }
 
-            if (this.publisher == null)
+            if (this.Publisher == null)
             {
-                this.publisher = new ObservableCollection<LocaleString>();
+                this.Publisher = new ObservableCollection<LocaleString>();
             }
         }
 
@@ -153,13 +144,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized descriptions for the application</summary>
         /// <value>The application description</value>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description
-        {
-            get
-            {
-                return this.description;
-            }
-        }
+        public ObservableCollection<LocaleString> Description { get; private set; }
 
         /// <summary>Gets or sets the directory where the application is installed</summary>
         /// <value>The install directory</value>
@@ -240,24 +225,12 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized application names</summary>
         /// <value>The name of the application localized</value>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
+        public ObservableCollection<LocaleString> Name { get; private set; }
 
         /// <summary>Gets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
         [ProtoMember(6), DataMember]
-        public ObservableCollection<LocaleString> Publisher
-        {
-            get
-            {
-                return this.publisher;
-            }
-        }
+        public ObservableCollection<LocaleString> Publisher { get; private set; }
 
         /// <summary>Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
         /// <value>The url pointing to the sui file</value>

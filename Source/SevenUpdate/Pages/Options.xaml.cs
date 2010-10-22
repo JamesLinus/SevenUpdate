@@ -26,6 +26,7 @@
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
+    using System;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Net;
@@ -70,10 +71,23 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation)));
+                if (File.Exists(App.ApplicationsFile))
+                {
+                    var apps = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation));
+                    this.LoadSul(apps);
+                }
+                else
+                {
+                    this.LoadSul();
+                }
             }
-            catch (WebException)
+            catch (Exception ex)
             {
+                if (!(ex is NullReferenceException))
+                {
+                    throw;
+                }
+
                 this.LoadSul();
             }
         }
@@ -91,10 +105,24 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
-        /// <param name = "officialApplicationList">The official application list from the server.</param>
-        private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
+        private void LoadSul()
         {
-            machineAppList = File.Exists(App.ApplicationsFile) ? Utilities.Deserialize<ObservableCollection<Sua>>(App.ApplicationsFile) : null;
+            this.LoadSul(null);
+        }
+
+        /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
+        /// <param name = "officialApplicationList">The official application list from the server.</param>
+        private void LoadSul(ObservableCollection<Sua> officialApplicationList)
+        {
+            try
+            {
+                if (File.Exists(App.ApplicationsFile))
+                    machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(App.ApplicationsFile);
+            }
+            catch (NullReferenceException)
+            {
+                machineAppList = null;
+            }
 
             if (machineAppList != null)
             {

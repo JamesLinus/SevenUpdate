@@ -28,6 +28,7 @@ namespace SevenUpdate.Sdk
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.IO;
     using System.Windows;
     using System.Windows.Dialogs;
     using System.Windows.Forms;
@@ -90,14 +91,36 @@ namespace SevenUpdate.Sdk
         internal static void EditItem()
         {
             IsNewProject = false;
-            AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
+                try
+                {
+                    AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
+                }
+                catch (Exception)
+                {
+                    AppInfo = null;
+                    UpdateInfo = null;
+                    ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sua"), TaskDialogStandardIcon.Error);
+                    return;
+                }
+
+
             if (UpdateIndex < 0)
             {
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
             }
             else
             {
-                UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
+                try
+                {
+                    UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
+                }
+                catch (Exception)
+                {
+                    AppInfo = null;
+                    UpdateInfo = null;
+                    ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sui"), TaskDialogStandardIcon.Error);
+                    return;
+                }
 
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
             }

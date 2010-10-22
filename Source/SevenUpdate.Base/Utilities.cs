@@ -41,6 +41,8 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
+    using SharpBits.Base;
+
     /// <summary>Methods that are shared between other classes</summary>
     public static class Utilities
     {
@@ -65,6 +67,7 @@ namespace SevenUpdate
 
         #region Events
 
+        /// <summary>Occurs when an error occurrs</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         #endregion
@@ -284,7 +287,6 @@ namespace SevenUpdate
         {
             try
             {
-                stream.Position = 0;
                 var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream));
                 task.Wait();
                 return task.Result;
@@ -306,13 +308,10 @@ namespace SevenUpdate
         public static Stream DownloadFile(string url)
         {
             // Get a data stream from the url
-            MemoryStream memStream;
             using (var wc = new WebClient())
             {
-                memStream = new MemoryStream(wc.DownloadData(url));
+                return new MemoryStream(wc.DownloadData(url));
             }
-
-            return memStream;
         }
 
         /// <summary>Gets the file size of a file</summary>
@@ -495,40 +494,6 @@ namespace SevenUpdate
             return sb.ToString();
         }
 
-        /// <summary>Gets data from the exception as a string</summary>
-        /// <param name = "exception">The exception to write in the log</param>
-        /// <param name="data">The exception data as a string</param>
-        /// <returns>The exception as a string</returns>
-        private static string GetExceptionAsString(Exception exception, string data)
-        {
-            data += Environment.NewLine + "==========";
-            data += DateTime.Now + ": " + exception;
-            data += Environment.NewLine + "==========";
-            data += Environment.NewLine + "Source: " + exception.Source;
-            data += Environment.NewLine + "Message: " + exception.Message;
-            data += Environment.NewLine + "StackTrace: " + exception.StackTrace;
-
-            var fileNotFoundException = exception as FileNotFoundException;
-            if (fileNotFoundException != null)
-            {
-                data += Environment.NewLine + "File not found: " + fileNotFoundException.FileName;
-            }
-
-            var webException = exception as WebException;
-            if (webException != null)
-            {
-                data += Environment.NewLine + "Download error: " + webException.Response;
-                data += Environment.NewLine + "Status: " + webException.Status;
-            }
-
-            if (exception.TargetSite != null)
-            {
-                data += Environment.NewLine + "TargetSite.Name: " + exception.TargetSite.Name;
-            }
-
-            return exception.InnerException != null ? GetExceptionAsString(exception.InnerException, data) : data;
-        }
-
         /// <summary>Reports the error that occurred to a log file</summary>
         /// <param name = "exception">The exception to write in the log</param>
         /// <param name="errorType">The type of error that ocurred</param>
@@ -541,7 +506,7 @@ namespace SevenUpdate
             
             if (ErrorOccurred != null)
             {
-                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception, null), errorType));
+                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception), errorType));
             }
         }
 
@@ -676,6 +641,26 @@ namespace SevenUpdate
         {
             stream.Position = 0;
             return Serializer.Deserialize<T>(stream);
+        }
+
+        /// <summary>Gets data from the exception as a string</summary>
+        /// <param name = "exception">The exception to write in the log</param>
+        /// <returns>The exception as a string</returns>
+        private static string GetExceptionAsString(Exception exception)
+        {
+            var data = "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
+
+            var bitsException = exception as BitsException;
+            if (bitsException != null)
+            {
+                data += Environment.NewLine + "File: " + bitsException.File;
+                data += Environment.NewLine + "Description: " + bitsException.Description;
+                data += Environment.NewLine + "ContextDescription: " + bitsException.ContextDescription;
+                data += Environment.NewLine + "ErrorContext: " + bitsException.ErrorContext;
+                data += Environment.NewLine + "ErrorCode: " + bitsException.ErrorCode;
+            }
+
+            return data;
         }
 
         /// <summary>Replaces a string within a string</summary>

@@ -93,12 +93,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The collection of localized shortcut descriptions</summary>
-        private readonly ObservableCollection<LocaleString> description;
-
-        /// <summary>The collection of localized shortcut names</summary>
-        private readonly ObservableCollection<LocaleString> name;
-
         /// <summary>The max feature length</summary>
         private const int MaxFeatureLength = 38;
 
@@ -138,17 +132,17 @@ namespace SevenUpdate
         /// <param name = "description">The collection of localized update descriptions</param>
         public Shortcut(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> description)
         {
-            this.description = description;
-            this.name = name;
+            this.Description = description;
+            this.Name = name;
 
-            if (this.description == null)
+            if (this.Description == null)
             {
-                this.description = new ObservableCollection<LocaleString>();
+                this.Description = new ObservableCollection<LocaleString>();
             }
 
-            if (this.name == null)
+            if (this.Name == null)
             {
-                this.name = new ObservableCollection<LocaleString>();
+                this.Name = new ObservableCollection<LocaleString>();
             }
         }
 
@@ -342,13 +336,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized shortcut descriptions</summary>
         /// <value>The localized descriptions for the shortcut</value>
         [ProtoMember(5, IsRequired = false), DataMember]
-        public ObservableCollection<LocaleString> Description
-        {
-            get
-            {
-                return this.description;
-            }
-        }
+        public ObservableCollection<LocaleString> Description { get; private set; }
 
         /// <summary>Gets or sets the icon resource for the shortcut</summary>
         /// <value>The icon for the shortcut</value>
@@ -391,13 +379,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized shortcut names</summary>
         /// <value>The localized names for the shortcut</value>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
+        public ObservableCollection<LocaleString> Name { get; private set; }
 
         /// <summary>Gets or sets the file or folder that is executed by the shortcut</summary>
         /// <value>The target for the shortcut</value>

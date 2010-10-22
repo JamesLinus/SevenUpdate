@@ -281,14 +281,7 @@ namespace SevenUpdate
 
             errorOccurred = true;
 
-            if (e.Job.Error.File != null)
-            {
-                Utilities.ReportError(new Exception(e.Job.Error.File.RemoteName + @" - " + e.Job.Error.Description), ErrorType.DownloadError);
-            }
-            else
-            {
-                Utilities.ReportError(new Exception(e.Job.Error.ContextDescription + @" - " + e.Job.Error.Description), ErrorType.DownloadError);
-            }
+            Utilities.ReportError(e.Job.Error, ErrorType.DownloadError);
 
             if (e.Job.State != JobState.Canceled)
             {

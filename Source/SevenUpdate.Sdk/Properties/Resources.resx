@@ -882,4 +882,7 @@
   <data name="Retry" xml:space="preserve">
     <value>_Retry</value>
   </data>
+  <data name="FileLoadError" xml:space="preserve">
+    <value>There was an error loading the file: {0}</value>
+  </data>
 </root>

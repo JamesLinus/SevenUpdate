@@ -35,9 +35,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>A collection of updates for the application</summary>
-        private readonly ObservableCollection<Update> updates;
-
         /// <summary>The application information</summary>
         private Sua appInfo;
 
@@ -45,14 +42,14 @@ namespace SevenUpdate
         /// <param name = "updates">The collection of updates for the application</param>
         public Sui(ObservableCollection<Update> updates)
         {
-            this.updates = updates;
+            this.Updates = updates;
 
-            if (this.updates != null)
+            if (this.Updates != null)
             {
                 return;
             }
 
-            this.updates = new ObservableCollection<Update>();
+            this.Updates = new ObservableCollection<Update>();
         }
 
         #endregion
@@ -70,7 +67,7 @@ namespace SevenUpdate
         public Sui(Sua appInfo, ObservableCollection<Update> updates)
         {
             this.AppInfo = appInfo;
-            this.updates = updates;
+            this.Updates = updates;
         }
 
         #endregion
@@ -104,13 +101,7 @@ namespace SevenUpdate
 
         /// <summary>Gets the collection of updates for the application</summary>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<Update> Updates
-        {
-            get
-            {
-                return this.updates;
-            }
-        }
+        public ObservableCollection<Update> Updates { get; private set; }
 
         #endregion
 

@@ -19,7 +19,7 @@ namespace SharpBits.Base
 
         /// <summary>Initializes a new instance of the <see cref="JobErrorNotificationEventArgs"/> class.</summary>
         /// <param name="error">The error.</param>
-        internal JobErrorNotificationEventArgs(BitsError error)
+        internal JobErrorNotificationEventArgs(BitsException error)
         {
             this.Error = error;
         }
@@ -30,7 +30,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the error.</summary>
         /// <value>The error that occurred</value>
-        public BitsError Error { get; private set; }
+        public BitsException Error { get; private set; }
 
         #endregion
     }

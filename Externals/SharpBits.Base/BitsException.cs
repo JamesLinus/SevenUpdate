@@ -17,7 +17,7 @@ namespace SharpBits.Base
     using System.Threading;
 
     /// <summary>Bits error</summary>
-    public class BitsError
+    public class BitsException : Exception
     {
         #region Constants and Fields
 
@@ -31,10 +31,10 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsError"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsException"/> class.</summary>
         /// <param name="job">The job the error occurred on</param>
         /// <param name="error">The error that occurred</param>
-        internal BitsError(BitsJob job, IBackgroundCopyError error)
+        internal BitsException(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
             {

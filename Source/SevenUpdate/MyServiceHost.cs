@@ -110,11 +110,10 @@ namespace SevenUpdate
                 {
                     Instance.Close();
                 }
-                catch (CommunicationObjectFaultedException)
+                catch (Exception ex)
                 {
-                }
-                catch (CommunicationObjectAbortedException)
-                {
+                    if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
+                        throw;
                 }
             }
 

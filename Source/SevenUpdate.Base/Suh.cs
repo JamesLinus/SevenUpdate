@@ -57,15 +57,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The collection of localized update descriptions</summary>
-        private readonly ObservableCollection<LocaleString> description;
-
-        /// <summary>The collection of localized update names</summary>
-        private readonly ObservableCollection<LocaleString> name;
-
-        /// <summary>The collection of localized publisher names</summary>
-        private readonly ObservableCollection<LocaleString> publisher;
-
         /// <summary>The <see cref = "Uri" /> for the application's website</summary>
         private string appUrl;
 
@@ -100,23 +91,23 @@ namespace SevenUpdate
         /// <param name = "description">The collection of localized update descriptions</param>
         public Suh(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
-            this.name = name;
-            this.description = description;
-            this.publisher = publisher;
+            this.Name = name;
+            this.Description = description;
+            this.Publisher = publisher;
 
-            if (this.name == null)
+            if (this.Name == null)
             {
-                this.name = new ObservableCollection<LocaleString>();
+                this.Name = new ObservableCollection<LocaleString>();
             }
 
-            if (this.description == null)
+            if (this.Description == null)
             {
-                this.description = new ObservableCollection<LocaleString>();
+                this.Description = new ObservableCollection<LocaleString>();
             }
 
-            if (this.publisher == null)
+            if (this.Publisher == null)
             {
-                this.publisher = new ObservableCollection<LocaleString>();
+                this.Publisher = new ObservableCollection<LocaleString>();
             }
         }
 
@@ -158,13 +149,7 @@ namespace SevenUpdate
         /// <summary>Gets the collection localized update descriptions</summary>
         /// <value>The localized description for the update</value>
         [ProtoMember(2), DataMember]
-        public ObservableCollection<LocaleString> Description
-        {
-            get
-            {
-                return this.description;
-            }
-        }
+        public ObservableCollection<LocaleString> Description { get; private set; }
 
         /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
@@ -245,24 +230,12 @@ namespace SevenUpdate
         /// <summary>Gets the collection of localized update names</summary>
         /// <value>The localized update names</value>
         [ProtoMember(1), DataMember]
-        public ObservableCollection<LocaleString> Name
-        {
-            get
-            {
-                return this.name;
-            }
-        }
+        public ObservableCollection<LocaleString> Name { get; private set; }
 
         /// <summary>Gets the collection of localized publisher names</summary>
         /// <value>The publisher.</value>
         [ProtoMember(7), DataMember]
-        public ObservableCollection<LocaleString> Publisher
-        {
-            get
-            {
-                return this.publisher;
-            }
-        }
+        public ObservableCollection<LocaleString> Publisher { get; private set; }
 
         /// <summary>Gets or sets the formatted date string depicting the release date of the update</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY</value>
