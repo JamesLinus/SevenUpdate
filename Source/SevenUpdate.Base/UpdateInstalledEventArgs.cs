@@ -1,5 +1,5 @@
-// ***********************************************************************
-// <copyright file="SerializationErrorEventArgs.cs"
+﻿// ***********************************************************************
+// <copyright file="UpdateInstalledEventArgs.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
 //            solution="SevenUpdate"
@@ -24,23 +24,25 @@
 namespace SevenUpdate
 {
     using System;
+    using System.Runtime.Serialization;
 
-    /// <summary>Provides event data for the SerializationError event</summary>
-    public sealed class SerializationErrorEventArgs : EventArgs
+    using ProtoBuf;
+
+    /// <summary>Provides event data for the InstallProgressChanged event</summary>
+    [ProtoContract, DataContract]
+    public sealed class UpdateInstalledEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "SerializationErrorEventArgs" /> class.</summary>
-        /// <param name = "exception">The exception data</param>
-        /// <param name = "file">The full path of the file</param>
-        public SerializationErrorEventArgs(Exception exception, string file)
+        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
+        /// <param name = "update">the update information that was installed</param>
+        public UpdateInstalledEventArgs(Suh update)
         {
-            this.Exception = exception;
-            this.File = file;
+            this.Update = update;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "SerializationErrorEventArgs" /> class.</summary>
-        public SerializationErrorEventArgs()
+        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
+        public UpdateInstalledEventArgs()
         {
         }
 
@@ -48,13 +50,9 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets the exception data</summary>
-        /// <value>The exception.</value>
-        public Exception Exception { get; private set; }
-
-        /// <summary>Gets the full path of the file</summary>
-        /// <value>The file that the serialization error occurred for</value>
-        public string File { get; private set; }
+        /// <summary>Gets the update information that was installed</summary>
+        [ProtoMember(1), DataMember]
+        public Suh Update { get; private set; }
 
         #endregion
     }

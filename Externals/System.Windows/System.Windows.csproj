@@ -101,7 +101,6 @@
     <Compile Include="Controls\ProgressIndicator.cs" />
     <Compile Include="Controls\UacButton.cs" />
     <Compile Include="Internal\DwmMessages.cs" />
-    <Compile Include="Internal\EnableThemingInScope.cs" />
     <Compile Include="StartupNextInstanceEventArgs.cs" />
     <Compile Include="ValidationRules\FileNameInputRule.cs" />
     <Compile Include="ValidationRules\RequiredInputRule.cs" />

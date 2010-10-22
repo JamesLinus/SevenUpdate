@@ -642,4 +642,7 @@
     <value>WPFLocalizeExtension is licensed under the</value>
     <comment>Run.Text</comment>
   </data>
+  <data name="ErrorDownloading" xml:space="preserve">
+    <value>There was an error downloading the resource: {0}</value>
+  </data>
 </root>

@@ -66,6 +66,9 @@ namespace SevenUpdate
         /// <summary>Occurs when the installation progress changed</summary>
         public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
+        /// <summary>Occurs when the installation progress changed</summary>
+        public static event EventHandler<UpdateInstalledEventArgs> UpdateInstalled;
+
         #endregion
 
         #region Properties
@@ -85,7 +88,8 @@ namespace SevenUpdate
 
         /// <summary>Installs updates</summary>
         /// <param name = "applications">The collection of applications to install updates</param>
-        public static void InstallUpdates(Collection<Sui> applications)
+        /// <param name="downloadDirectory">The directory containing the app update files</param>
+        public static void InstallUpdates(Collection<Sui> applications, string downloadDirectory)
         {
             if (applications == null)
             {
@@ -101,7 +105,7 @@ namespace SevenUpdate
             updateCount = applications.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
 
-            ReportProgress(0);
+        ReportProgress(0);
 
             for (var x = 0; x < applications.Count; x++)
             {
@@ -135,7 +139,7 @@ namespace SevenUpdate
 
                     ReportProgress(25);
 
-                    UpdateFiles(applications[x].Updates[y].Files, Utilities.AllUserStore + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(applications[x].Updates[y].Files, downloadDirectory + @"downloads\" + currentUpdateName + @"\");
 
                     ReportProgress(75);
 
@@ -154,7 +158,7 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true) && Utilities.RebootNeeded)
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
                     {
                         UpdateSevenUpdate(applications[x].Updates[y].Files);
                     }
@@ -169,11 +173,11 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                NativeMethods.MoveFileExW(Utilities.AllUserStore + "reboot.lock", null, MoveOnReboot);
+                NativeMethods.MoveFileExW(Environment.ExpandEnvironmentVariables("%tmp%") + "reboot.lock", null, MoveOnReboot);
 
-                if (Directory.Exists(Utilities.AllUserStore + "downloads"))
+                if (Directory.Exists(downloadDirectory))
                 {
-                    NativeMethods.MoveFileExW(Utilities.AllUserStore + "downloads", null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(downloadDirectory + "downloads", null, MoveOnReboot);
                 }
             }
             else
@@ -181,11 +185,11 @@ namespace SevenUpdate
                 // Delete the downloads directory if no errors were found and no reboot is needed
                 if (!errorOccurred)
                 {
-                    if (Directory.Exists(Utilities.AllUserStore + "downloads"))
+                    if (Directory.Exists(downloadDirectory))
                     {
                         try
                         {
-                            Directory.Delete(Utilities.AllUserStore + "downloads", true);
+                            Directory.Delete(downloadDirectory, true);
                         }
                         catch (IOException)
                         {
@@ -248,15 +252,15 @@ namespace SevenUpdate
         /// <param name = "failed"><see langword = "true" /> if the update failed, otherwise <see langword = "false" /></param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var history = Utilities.Deserialize<Collection<Suh>>(Utilities.HistoryFile) ?? new Collection<Suh>();
             var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
                 {
                     HelpUrl = appInfo.AppInfo.HelpUrl, AppUrl = appInfo.AppInfo.AppUrl, Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, InfoUrl = updateInfo.InfoUrl, InstallDate = DateTime.Now.ToShortDateString(), ReleaseDate = updateInfo.ReleaseDate, Importance = updateInfo.Importance,
                 };
-
-            history.Add(hist);
-
-            Utilities.Serialize(history, Utilities.HistoryFile);
+            
+            if (UpdateInstalled != null)
+            {
+                UpdateInstalled(null, new UpdateInstalledEventArgs(hist));
+            }
         }
 
         /// <summary>Reports the installation progress</summary>
@@ -311,7 +315,7 @@ namespace SevenUpdate
                         }
                         catch (UnauthorizedAccessException e)
                         {
-                            Utilities.ReportError(e, Utilities.AllUserStore);
+                            Utilities.ReportError(e, ErrorType.InstallationError);
                             errorOccurred = true;
                         }
 
@@ -329,7 +333,7 @@ namespace SevenUpdate
                         }
                         catch (UnauthorizedAccessException e)
                         {
-                            Utilities.ReportError(e, Utilities.AllUserStore);
+                            Utilities.ReportError(e, ErrorType.InstallationError);
                         }
 
                         break;
@@ -343,7 +347,7 @@ namespace SevenUpdate
                         }
                         catch (UnauthorizedAccessException e)
                         {
-                            Utilities.ReportError(e, Utilities.AllUserStore);
+                            Utilities.ReportError(e, ErrorType.InstallationError);
                         }
 
                         break;
@@ -382,7 +386,6 @@ namespace SevenUpdate
 
                 if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
                 {
-                    // ReSharper disable AssignNullToNotNullAttribute
                     if (!Directory.Exists(shortcuts[x].Location))
                     {
                         Directory.CreateDirectory(shortcuts[x].Location);
@@ -390,27 +393,26 @@ namespace SevenUpdate
 
                     File.Delete(shortcuts[x].Location + linkName + @".lnk");
 
-                    //// ReSharper restore AssignNullToNotNullAttribute
 
-                    ////var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
+                    //var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
 
-                    ////// Where the shortcut should point to
-                    ////shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                    //// Where the shortcut should point to
+                    //shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
-                    ////// Description for the shortcut
-                    ////shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
+                    //// Description for the shortcut
+                    //shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
 
-                    ////// Location for the shortcut's icon
-                    ////shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                    //// Location for the shortcut's icon
+                    //shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
-                    ////// The arguments to be used for the shortcut
-                    ////shortcut.Arguments = shortcuts[x].Arguments;
+                    //// The arguments to be used for the shortcut
+                    //shortcut.Arguments = shortcuts[x].Arguments;
 
-                    ////// The working directory to be used for the shortcut
-                    ////shortcut.WorkingDirectory = appInfo.Directory;
+                    //// The working directory to be used for the shortcut
+                    //shortcut.WorkingDirectory = appInfo.Directory;
 
-                    ////// Create the shortcut at the given path
-                    ////shortcut.Save();
+                    //// Create the shortcut at the given path
+                    //shortcut.Save();
                 }
 
                 if (shortcuts[x].Action == ShortcutAction.Delete)
@@ -468,7 +470,7 @@ namespace SevenUpdate
                     }
                     catch (FileNotFoundException e)
                     {
-                        Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
+                        Utilities.ReportError(e, ErrorType.InstallationError);
                         errorOccurred = true;
                     }
 
@@ -497,26 +499,13 @@ namespace SevenUpdate
                         }
                         catch (IOException)
                         {
-                            if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
-                            {
-                                using (var rebootFile = File.Create(Utilities.AllUserStore + @"reboot.lock"))
-                                {
-                                    rebootFile.WriteByte(0);
-                                }
-                            }
-
+                            Utilities.RebootNeeded = true;
                             NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            if (!File.Exists(Utilities.AllUserStore + @"reboot.lock"))
-                            {
-                                using (var rebootFile = File.Create(Utilities.AllUserStore + @"reboot.lock"))
-                                {
-                                    rebootFile.WriteByte(0);
-                                }
-                            }
+                            Utilities.RebootNeeded = true;
 
                             NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
                             File.Delete(file.Destination + @".bak");
@@ -524,7 +513,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        Utilities.ReportError(@"FileNotFound: " + file.Source, Utilities.AllUserStore);
+                        Utilities.ReportError(new FileNotFoundException(file.Source),ErrorType.InstallationError);
                         errorOccurred = true;
                     }
 
@@ -536,7 +525,7 @@ namespace SevenUpdate
                         }
                         catch (FileNotFoundException e)
                         {
-                            Utilities.ReportError(e + file.Source, Utilities.AllUserStore);
+                            Utilities.ReportError(e, ErrorType.InstallationError);
                             errorOccurred = true;
                         }
                     }
@@ -567,7 +556,7 @@ namespace SevenUpdate
                 }
                 catch (IOException e)
                 {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
+                    Utilities.ReportError(e, ErrorType.InstallationError);
                     errorOccurred = true;
                 }
 

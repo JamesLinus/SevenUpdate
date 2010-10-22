@@ -63,6 +63,15 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Constructors and Destructors
+
+        /// <summary>Initializes a new instance of the <see cref = "Config" /> class</summary>
+        public Config()
+        {
+        }
+
+        #endregion
+
         #region Events
 
         /// <summary>Occurs when a property value changes.</summary>

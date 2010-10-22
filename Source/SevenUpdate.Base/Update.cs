@@ -95,6 +95,10 @@ namespace SevenUpdate
         /// <summary>The total download size in bytes of the update</summary>
         private ulong size;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref = "Update" /> class</summary>
         /// <param name = "name">The collection of localized update names</param>
         /// <param name = "description">The collection localized update descriptions</param>

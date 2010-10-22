@@ -44,6 +44,9 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
+        /// <summary>Location of the SUI for Seven Update</summary>
+        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
+
         /// <summary>The static instance of the Core class</summary>
         private static Core instance;
 
@@ -72,11 +75,7 @@ namespace SevenUpdate
         {
             get
             {
-                var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
-                return t ?? new Config
-                    {
-                        AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false
-                    };
+                return File.Exists(App.ConfigFile) ? Utilities.Deserialize<Config>(App.ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -136,7 +135,43 @@ namespace SevenUpdate
         {
             get
             {
-                return Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile);
+                Collection<Sua> apps;
+                if (File.Exists(App.ApplicationsFile))
+                {
+                    apps = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
+
+                    return apps;
+                }
+
+                apps = new Collection<Sua>();
+
+                var publisher = new ObservableCollection<LocaleString>();
+                var ls = new LocaleString
+                {
+                    Value = "Seven Software",
+                    Lang = "en"
+                };
+                publisher.Add(ls);
+
+                var name = new ObservableCollection<LocaleString>();
+                ls = new LocaleString
+                {
+                    Value = "Seven Update",
+                    Lang = "en"
+                };
+                name.Add(ls);
+
+                var app = new Sua(name, publisher)
+                {
+                    AppUrl = @"http://sevenupdate.com/",
+                    Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                    HelpUrl = @"http://sevenupdate.com/support/",
+                    Is64Bit = true,
+                    IsEnabled = true,
+                    SuiUrl = SevenUpdateSui
+                };
+                apps.Add(app);
+                return apps;
             }
         }
 
@@ -164,9 +199,14 @@ namespace SevenUpdate
         /// <summary>Checks for updates</summary>
         internal static void CheckForUpdates()
         {
+            if (AppsToUpdate == null)
+            {
+                return;
+            }
+
             try
             {
-                File.Delete(Utilities.AllUserStore + @"updates.sui");
+                File.Delete(App.AllUserStore + @"updates.sui");
             }
             catch (IOException)
             {
@@ -216,30 +256,24 @@ namespace SevenUpdate
         {
             if (TaskDialog.IsPlatformSupported)
             {
-                using (new EnableThemingInScope(true))
+                using (var td = new TaskDialog())
                 {
-                    using (var td = new TaskDialog())
+                    td.Caption = Resources.SevenUpdate;
+                    td.InstructionText = instructionText;
+                    td.Text = description;
+                    td.Icon = icon;
+                    td.FooterText = footerText;
+                    td.FooterIcon = TaskDialogStandardIcon.Information;
+                    td.CanCancel = true;
+                    td.StandardButtons = standardButtons;
+
+                    if (defaultButtonText != null)
                     {
-                        td.Caption = Resources.SevenUpdate;
-                        td.InstructionText = instructionText;
-                        td.Text = description;
-                        td.Icon = icon;
-                        td.FooterText = footerText;
-                        td.FooterIcon = TaskDialogStandardIcon.Information;
-                        td.CanCancel = true;
-                        td.StandardButtons = standardButtons;
-
-                        if (defaultButtonText != null)
-                        {
-                            var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
-                                {
-                                    Default = true, ShowElevationIcon = displayShieldOnButton
-                                };
-                            td.Controls.Add(button);
-                        }
-
-                        return Application.Current.MainWindow == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                        td.Controls.Add(button);
                     }
+
+                    return Application.Current.MainWindow == null ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
                 }
             }
 

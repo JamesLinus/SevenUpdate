@@ -57,6 +57,24 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Constructors and Destructors
+
+        /// <summary>Initializes a new instance of the <see cref = "Sui" /> class.</summary>
+        public Sui()
+        {
+        }
+
+        /// <summary>Initializes a new instance of the <see cref = "Sui" /> class.</summary>
+        /// <param name="appInfo">The software information for the application updates</param>
+        /// <param name="updates">The collection of updates for the application</param>
+        public Sui(Sua appInfo, ObservableCollection<Update> updates)
+        {
+            this.AppInfo = appInfo;
+            this.updates = updates;
+        }
+
+        #endregion
+
         #region Events
 
         /// <summary>Occurs when a property has changed</summary>
@@ -66,7 +84,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the  software information for the application updates.</summary>
+        /// <summary>Gets or sets the software information for the application updates.</summary>
         [ProtoMember(2), DataMember]
         public Sua AppInfo
         {

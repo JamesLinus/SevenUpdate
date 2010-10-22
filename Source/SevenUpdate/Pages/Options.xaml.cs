@@ -43,9 +43,6 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>The Seven Update list location</summary>
-        private const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
-
         /// <summary>A collection of <see cref = "Sua" /> that Seven Update can update</summary>
         private static ObservableCollection<Sua> machineAppList;
 
@@ -73,7 +70,7 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(SulLocation), SulLocation));
+                this.LoadSul(Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation)));
             }
             catch (WebException)
             {
@@ -97,7 +94,7 @@ namespace SevenUpdate.Pages
         /// <param name = "officialApplicationList">The official application list from the server.</param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
-            machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.ApplicationsFile);
+            machineAppList = File.Exists(App.ApplicationsFile) ? Utilities.Deserialize<ObservableCollection<Sua>>(App.ApplicationsFile) : null;
 
             if (machineAppList != null)
             {

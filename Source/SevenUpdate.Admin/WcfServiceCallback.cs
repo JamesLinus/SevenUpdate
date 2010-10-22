@@ -33,6 +33,7 @@ namespace SevenUpdate.Admin
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Windows;
 
     using Microsoft.Win32;
 
@@ -46,7 +47,7 @@ namespace SevenUpdate.Admin
         /// <param name = "application">The application to add to Seven Update</param>
         public void AddApp(Sua application)
         {
-            var sul = Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile);
+            var sul = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
 
             if (sul.Any(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
             {
@@ -55,7 +56,7 @@ namespace SevenUpdate.Admin
 
             sul.Add(application);
 
-            Utilities.Serialize(sul, Utilities.ApplicationsFile);
+            Utilities.Serialize(sul, App.ApplicationsFile);
         }
 
         /// <summary>Changes the program settings</summary>
@@ -90,25 +91,25 @@ namespace SevenUpdate.Admin
                 }
             }
 
-            Utilities.Serialize(applications, Utilities.ApplicationsFile);
-            Utilities.Serialize(options, Utilities.ConfigFile);
+            Utilities.Serialize(applications, App.ApplicationsFile);
+            Utilities.Serialize(options, App.ConfigFile);
         }
 
         /// <summary>Hides a single update</summary>
         /// <param name = "hiddenUpdate">The update to hide</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
-            var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
+            var hidden = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();
             hidden.Add(hiddenUpdate);
 
-            Utilities.Serialize(hidden, Utilities.HiddenFile);
+            Utilities.Serialize(hidden, App.HiddenFile);
         }
 
         /// <summary>Hides a collection of <see cref = "Suh" /> to hide</summary>
         /// <param name = "hiddenUpdates">The collection of updates to hide</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
-            Utilities.Serialize(hiddenUpdates, Utilities.HiddenFile);
+            Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
         /// <summary>Gets a collection of <see cref = "Sui" /></summary>
@@ -117,9 +118,9 @@ namespace SevenUpdate.Admin
         {
             try
             {
-                if (File.Exists(Utilities.AllUserStore + "abort.lock"))
+                if (File.Exists(App.AllUserStore + "abort.lock"))
                 {
-                    File.Delete(Utilities.AllUserStore + "abort.lock");
+                    File.Delete(App.AllUserStore + "abort.lock");
                 }
             }
             catch (Exception e)
@@ -129,27 +130,27 @@ namespace SevenUpdate.Admin
                     throw;
                 }
 
-                Utilities.ReportError(e, Utilities.AllUserStore);
+                Utilities.ReportError(e, ErrorType.InstallationError);
             }
 
             App.Applications = applicationUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", true));
+            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", App.AllUserStore + "downloads", true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
         /// <param name = "hiddenUpdate">The hidden update to show</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
-            var show = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile) ?? new Collection<Suh>();
+            var show = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();
 
             if (show.Count == 0)
             {
-                File.Delete(Utilities.HiddenFile);
+                File.Delete(App.HiddenFile);
             }
             else
             {
                 show.Remove(hiddenUpdate);
-                Utilities.Serialize(show, Utilities.HiddenFile);
+                Utilities.Serialize(show, App.HiddenFile);
             }
         }
 
@@ -161,7 +162,7 @@ namespace SevenUpdate.Admin
                     Thread.Sleep(500);
                     if (!App.IsInstalling)
                     {
-                        Environment.Exit(0);
+                        Application.Current.Shutdown(0);
                     }
                 });
         }

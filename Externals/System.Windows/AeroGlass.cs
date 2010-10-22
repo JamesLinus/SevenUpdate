@@ -51,27 +51,12 @@ namespace System.Windows
         {
             get
             {
-                try
-                {
-                    return NativeMethods.DwmIsCompositionEnabled();
-                }
-                catch
-                {
-                    throw;
-                    return false;
-                }
+                return NativeMethods.DwmIsCompositionEnabled();
             }
 
             set
             {
-                try
-                {
-                    NativeMethods.DwmEnableComposition(value);
-                }
-                catch
-                {
-                    throw;
-                }
+                NativeMethods.DwmEnableComposition(value);
             }
         }
 

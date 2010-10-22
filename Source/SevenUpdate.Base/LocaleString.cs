@@ -42,6 +42,15 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Constructors and Destructors
+
+        /// <summary>Initializes a new instance of the <see cref = "LocaleString" /> class</summary>
+        public LocaleString()
+        {
+        }
+
+        #endregion
+
         #region Events
 
         /// <summary>Occurs when a property has changed</summary>

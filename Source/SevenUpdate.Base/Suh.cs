@@ -90,6 +90,10 @@ namespace SevenUpdate
         /// <summary>The total download size in bytes of the update</summary>
         private ulong updateSize;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref = "Suh" /> class</summary>
         /// <param name = "name">The collection of localized update names</param>
         /// <param name = "publisher">The collection of localized publisher names</param>
@@ -114,6 +118,11 @@ namespace SevenUpdate
             {
                 this.publisher = new ObservableCollection<LocaleString>();
             }
+        }
+
+        /// <summary>Initializes a new instance of the <see cref = "Suh" /> class</summary>
+        public Suh()
+        {
         }
 
         #endregion

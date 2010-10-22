@@ -66,6 +66,10 @@ namespace SevenUpdate
         /// <summary>The name of the value to the registry key that contains the application directory location</summary>
         private string valueName;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
         /// <param name = "name">The collection of localized update names</param>
         /// <param name = "publisher">The collection of localized publisher names</param>

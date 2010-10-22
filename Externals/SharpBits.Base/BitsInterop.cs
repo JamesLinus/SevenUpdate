@@ -89,10 +89,7 @@ namespace SharpBits.Base
         /// <param name="localName"><see langword="null"/>-terminated string that contains the name of the file on the server. For information on specifying the remote name, see the RemoteName member and Remarks section of the <see cref="BGFileInfo"/> structure.</param>
         void AddFile([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
-        /// <summary>
-        /// Returns an interface pointer to an enumerator
-        ///   object that you use to enumerate the files in the job
-        /// </summary>
+        /// <summary>Returns an interface pointer to an enumerator object that you use to enumerate the files in the job</summary>
         /// <param name="enum"><see cref="IEnumBackgroundCopyFiles"/> interface pointer that you use to enumerate the files in the job. Release p@enumFiles when done.</param>
         void EnumFiles([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 

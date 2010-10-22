@@ -130,7 +130,7 @@ namespace SharpBits.Base
                 }
             }
 
-            this.errorOccurred(this, new ErrorNotificationEventArgs(job, new BitsException(job, error)));
+            this.errorOccurred(this, new ErrorNotificationEventArgs(job, new BitsError(job, error)));
 
             // forward event
             if (job.NotificationTarget != null)

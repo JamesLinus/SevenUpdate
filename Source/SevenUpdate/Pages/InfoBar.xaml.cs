@@ -170,7 +170,7 @@ namespace SevenUpdate.Pages
                 {
                     try
                     {
-                        File.Delete(Utilities.AllUserStore + @"updates.sui");
+                        File.Delete(App.AllUserStore + @"updates.sui");
                     }
                     catch (IOException)
                     {
@@ -408,9 +408,9 @@ namespace SevenUpdate.Pages
             {
                 try
                 {
-                    Utilities.Serialize(Core.Applications, Utilities.AllUserStore + @"updates.sui");
-                    Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
-                    Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /r " + Environment.UserName);
+                    Utilities.Serialize(Core.Applications, App.AllUserStore + @"updates.sui");
+                    Utilities.StartProcess(@"cacls.exe", "\"" + App.AllUserStore + "updates.sui\" /c /e /g Users:F");
+                    Utilities.StartProcess(@"cacls.exe", "\"" + App.AllUserStore + "updates.sui\" /c /e /r " + Environment.UserName);
                 }
                 catch (IOException)
                 {

@@ -192,7 +192,7 @@ namespace SevenUpdate
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
-            Utilities.ReportError(e, Utilities.UserStore);
+            Utilities.ReportError(e, ErrorType.FatalError);
             if (ServiceError != null)
             {
                 ServiceError(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalError));

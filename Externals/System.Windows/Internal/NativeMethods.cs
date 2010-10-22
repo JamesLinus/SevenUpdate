@@ -189,31 +189,6 @@ namespace System.Windows.Internal
         }
 
         /// <summary>
-        /// Activates the specified activation context. It does this by pushing the specified activation context to the top of the activation stack.
-        /// The specified activation context is thus associated with the current thread and any appropriate side-by-side API functions.
-        /// </summary>
-        /// <param name="activationContext">Handle to an ACTCTX structure that contains information on the activation context that is to be made active.</param>
-        /// <param name="cookie">Pointer to a ULONG_PTR that functions as a cookie, uniquely identifying a specific, activated activation context.</param>
-        /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
-        [DllImport(@"Kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool ActivateActCtx(IntPtr activationContext, out IntPtr cookie);
-
-        /// <summary>Creates an activation context.</summary>
-        /// <param name="activationContext">Pointer to an ACTCTX structure that contains information about the activation context to be created.</param>
-        /// <returns>If the function succeeds, it returns a handle to the returned activation context. Otherwise, it returns InvalidHandleValue.</returns>
-        [DllImport(@"Kernel32.dll")]
-        internal static extern IntPtr CreateActCtx(ref ActivationContext activationContext);
-
-        /// <summary>Deactivates the activation context corresponding to the specified cookie.</summary>
-        /// <param name="flags">Flags that indicate how the deactivation is to occur.</param>
-        /// <param name="cookie">The ULONG_PTR that was passed into the call to <see cref="ActivateActCtx"/>. This value is used as a cookie to identify a specific activated activation context.</param>
-        /// <returns>If the function succeeds, it returns <see langword="true"/>. Otherwise, it returns <see langword="false"/>.</returns>
-        [DllImport(@"Kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool DeactivateActCtx(uint flags, IntPtr cookie);
-
-        /// <summary>
         /// Sends the specified message to a window or windows. The SendMessage function calls
         ///   the window procedure for the specified window and does not return until the window
         ///   procedure has processed the message.
@@ -236,7 +211,7 @@ namespace System.Windows.Internal
         /// <param name="bb">A pointer to a <see cref="DwmBlurBehind"/> structure that provides blur behind data.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
         [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.U1)]
+        [return: MarshalAs(UnmanagedType.U4)]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
 
         /// <summary>Extends glass into the client area</summary>
@@ -244,7 +219,7 @@ namespace System.Windows.Internal
         /// <param name="margins">A pointer to a Margins structure that describes the margins to use when extending the frame into the client area.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code..</returns>
         [DllImport(@"DwmApi.dll", CharSet = CharSet.Auto)]
-        [return: MarshalAs(UnmanagedType.U1)]
+        [return: MarshalAs(UnmanagedType.U4)]
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
 
         /// <summary>Gets a value that indicates whether Desktop Window Manager (DWM) composition is enabled. Applications can listen for composition state changes by handling the WM_DWMCOMPOSITIONCHANGED notification.</summary>
@@ -257,7 +232,7 @@ namespace System.Windows.Internal
         /// <param name="enable">if set to <see langword="true"/> DWM will be enabled</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result"/> error code.</returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
-        [return: MarshalAs(UnmanagedType.U1)]
+        [return: MarshalAs(UnmanagedType.U4)]
         internal static extern int DwmEnableComposition([MarshalAs(UnmanagedType.Bool)] bool enable);
 
         /// <summary>Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>

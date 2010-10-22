@@ -80,7 +80,7 @@ namespace SevenUpdate.Windows
             Settings.Default.windowWidth = this.Width;
             Settings.Default.Save();
             WcfService.Disconnect();
-            Environment.Exit(0);
+            Application.Current.Shutdown(0);
         }
 
         #endregion

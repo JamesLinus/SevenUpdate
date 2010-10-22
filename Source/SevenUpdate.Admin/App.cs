@@ -50,6 +50,21 @@ namespace SevenUpdate.Admin
     {
         #region Constants and Fields
 
+        /// <summary>The all users application data location</summary>
+        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+
+        /// <summary>The location of the list of applications Seven Update can update</summary>
+        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
+
+        /// <summary>The location of the application settings file</summary>
+        public static readonly string ConfigFile = AllUserStore + @"App.config";
+
+        /// <summary>The location of the hidden updates file</summary>
+        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
+
+        /// <summary>The location of the update history file</summary>
+        public static readonly string HistoryFile = AllUserStore + @"History.suh";
+
         /// <summary>The WCF service host</summary>
         private static ElevatedProcessCallback client;
 
@@ -103,11 +118,7 @@ namespace SevenUpdate.Admin
         {
             get
             {
-                var t = Utilities.Deserialize<Config>(Utilities.ConfigFile);
-                return t ?? new Config
-                    {
-                        AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false
-                    };
+                return File.Exists(App.ConfigFile) ? Utilities.Deserialize<Config>(App.ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -129,8 +140,8 @@ namespace SevenUpdate.Admin
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 IsInstalling = true;
-                File.Delete(Utilities.AllUserStore + "updates.sui");
-                Task.Factory.StartNew(() => Install.InstallUpdates(Applications));
+                File.Delete(AllUserStore + "updates.sui");
+                Task.Factory.StartNew(() => Install.InstallUpdates(Applications, AllUserStore + "downloads"));
             }
             else
             {
@@ -170,7 +181,7 @@ namespace SevenUpdate.Admin
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
-            File.Delete(Utilities.AllUserStore + "updates.sui");
+            File.Delete(AllUserStore + "updates.sui");
             if (isClientConnected)
             {
                 client.OnInstallCompleted(sender, e);
@@ -212,9 +223,10 @@ namespace SevenUpdate.Admin
                     Download.DownloadProgressChanged += DownloadProgressChanged;
                     Install.InstallCompleted += InstallCompleted;
                     Install.InstallProgressChanged += InstallProgressChanged;
-                    if (!Directory.Exists(Utilities.AllUserStore))
+                    Install.UpdateInstalled += AddHistory;
+                    if (!Directory.Exists(AllUserStore))
                     {
-                        Directory.CreateDirectory(Utilities.AllUserStore);
+                        Directory.CreateDirectory(AllUserStore);
                     }
                 }
             }
@@ -244,7 +256,7 @@ namespace SevenUpdate.Admin
 
                 try
                 {
-                    File.Delete(Utilities.AllUserStore + @"abort.lock");
+                    File.Delete(AllUserStore + @"abort.lock");
                 }
                 catch (IOException)
                 {
@@ -252,6 +264,13 @@ namespace SevenUpdate.Admin
             }
 
             SystemEvents.SessionEnding -= PreventClose;
+        }
+
+        private static void AddHistory(object sender, UpdateInstalledEventArgs e)
+        {
+            var history = File.Exists(HistoryFile) ? Utilities.Deserialize<Collection<Suh>>(HistoryFile) : new Collection<Suh>();
+            history.Add(e.Update);
+            Utilities.Serialize(history, HistoryFile);
         }
 
         /// <summary>Processes the command line arguments</summary>
@@ -267,7 +286,7 @@ namespace SevenUpdate.Admin
                 {
                     try
                     {
-                        using (var fs = File.Create(Utilities.AllUserStore + "abort.lock"))
+                        using (var fs = File.Create(AllUserStore + "abort.lock"))
                         {
                             fs.WriteByte(0);
                         }
@@ -279,7 +298,7 @@ namespace SevenUpdate.Admin
                             throw;
                         }
 
-                        Utilities.ReportError(e, Utilities.UserStore);
+                        Utilities.ReportError(e, ErrorType.GeneralError);
                     }
 
                     ShutdownApp();
@@ -287,11 +306,11 @@ namespace SevenUpdate.Admin
 
                 if (args[0] == "Auto")
                 {
-                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
+                    if (File.Exists(AllUserStore + @"abort.lock"))
                     {
                         try
                         {
-                            File.Delete(Utilities.AllUserStore + @"abort.lock");
+                            File.Delete(AllUserStore + @"abort.lock");
                         }
                         catch (Exception e)
                         {
@@ -300,7 +319,7 @@ namespace SevenUpdate.Admin
                                 throw;
                             }
 
-                            Utilities.ReportError(e, Utilities.UserStore);
+                            Utilities.ReportError(e, ErrorType.GeneralError);
                         }
                     }
 
@@ -310,7 +329,14 @@ namespace SevenUpdate.Admin
                     notifyIcon.Click += RunSevenUpdate;
                     notifyIcon.Visible = true;
                     Search.ErrorOccurred += ErrorOccurred;
-                    Search.SearchForUpdates(Utilities.Deserialize<Collection<Sua>>(Utilities.ApplicationsFile));
+
+                    Collection<Sua> apps = null;
+                    if (File.Exists(ApplicationsFile))
+                    {
+                        apps = Utilities.Deserialize<Collection<Sua>>(ApplicationsFile);
+                    }
+
+                    Search.SearchForUpdates(apps, AllUserStore + "downloads");
                 }
                 else
                 {
@@ -331,7 +357,7 @@ namespace SevenUpdate.Admin
                 notifyIcon = null;
             }
 
-            using (var fs = File.Create(Utilities.AllUserStore + @"abort.lock"))
+            using (var fs = File.Create(AllUserStore + @"abort.lock"))
             {
                 fs.WriteByte(0);
             }
@@ -380,9 +406,9 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
-                Utilities.Serialize(Applications, Utilities.AllUserStore + "updates.sui");
+                Utilities.Serialize(Applications, AllUserStore + "updates.sui");
 
-                Utilities.StartProcess(@"cacls.exe", "\"" + Utilities.AllUserStore + "updates.sui\" /c /e /g Users:F");
+                Utilities.StartProcess(@"cacls.exe", "\"" + AllUserStore + "updates.sui\" /c /e /g Users:F");
 
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                 {
@@ -391,7 +417,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate"));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, AllUserStore + "downloads", "SevenUpdate"));
                     IsInstalling = true;
                 }
             }
@@ -430,25 +456,19 @@ namespace SevenUpdate.Admin
 
             try
             {
-                File.Delete(Utilities.AllUserStore + @"abort.lock");
+                File.Delete(AllUserStore + @"abort.lock");
             }
             catch (IOException)
             {
             }
 
-            Environment.Exit(0);
+            Application.Current.Shutdown(0);
         }
 
         /// <summary>Starts the WCF service</summary>
         private static void StartWcfHost()
         {
-            var binding = new NetNamedPipeBinding
-                {
-                    Name = "sevenupdatebinding", Security =
-                                                     {
-                                                         Mode = NetNamedPipeSecurityMode.Transport
-                                                     }
-                };
+            var binding = new NetNamedPipeBinding { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
 
             var address = new EndpointAddress("net.pipe://localhost/sevenupdate/");
             try
@@ -471,13 +491,13 @@ namespace SevenUpdate.Admin
         {
             Task.Factory.StartNew(() =>
                 {
-                    if (File.Exists(Utilities.AllUserStore + @"abort.lock"))
+                    if (File.Exists(AllUserStore + @"abort.lock"))
                     {
                         Download.CancelDownload();
                         Install.CancelInstall();
                         try
                         {
-                            File.Delete(Utilities.AllUserStore + @"abort.lock");
+                            File.Delete(AllUserStore + @"abort.lock");
                         }
                         catch (IOException)
                         {

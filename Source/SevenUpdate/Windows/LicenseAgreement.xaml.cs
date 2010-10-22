@@ -151,9 +151,9 @@ namespace SevenUpdate.Windows
                 {
                     this.licenseText[x] = wc.DownloadString(this.licenseInformation[x].LicenseUrl);
                 }
-                catch (WebException f)
+                catch (WebException ex)
                 {
-                    Utilities.ReportError(f.Message, Utilities.UserStore);
+                    Utilities.ReportError(ex, ErrorType.DownloadError);
                     this.licenseText[x] = Properties.Resources.LicenseDownloadError;
                 }
             }

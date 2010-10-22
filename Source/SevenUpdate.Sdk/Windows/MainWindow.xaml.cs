@@ -118,7 +118,7 @@ namespace SevenUpdate.Sdk.Windows
             Settings.Default.windowHeight = this.Height;
             Settings.Default.windowWidth = this.Width;
             Settings.Default.Save();
-            Environment.Exit(0);
+            Application.Current.Shutdown(0);
         }
 
         #endregion

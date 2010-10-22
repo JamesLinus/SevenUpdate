@@ -31,6 +31,7 @@ namespace SevenUpdate
     using System.Diagnostics;
     using System.Globalization;
     using System.IO;
+    using System.Net;
     using System.Windows;
     using System.Windows.Dialogs;
     using System.Windows.Shell;
@@ -40,6 +41,31 @@ namespace SevenUpdate
     /// <summary>Interaction logic for App.xaml</summary>
     public sealed partial class App
     {
+        #region Constants and Fields
+
+        /// <summary>The all users application data location</summary>
+        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+
+        /// <summary>The location of the list of applications Seven Update can update</summary>
+        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
+
+        /// <summary>The location of the application settings file</summary>
+        public static readonly string ConfigFile = AllUserStore + @"App.config";
+
+        /// <summary>The location of the hidden updates file</summary>
+        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
+
+        /// <summary>The location of the update history file</summary>
+        public static readonly string HistoryFile = AllUserStore + @"History.suh";
+
+        /// <summary>The location of the user application data location</summary>
+        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
+
+        /// <summary>The Seven Update list location</summary>
+        internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
+
+        #endregion
+
         #region Properties
 
         /// <summary>Gets or sets the application TaskBarItemInfo</summary>
@@ -95,11 +121,21 @@ namespace SevenUpdate
                 if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
                 {
                     e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
-                    var sua = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]), e.Args[0]);
-                    var appName = Utilities.GetLocaleString(sua.Name);
+                    Sua app = null;
+                    try
+                    {
+                        app = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]));
+                    }
+                    catch (WebException)
+                    {
+                        Core.ShowMessage(String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                        Environment.Exit(0);
+                    }
+
+                    var appName = Utilities.GetLocaleString(app.Name);
                     if (Core.ShowMessage(String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), TaskDialogStandardIcon.ShieldBlue, TaskDialogStandardButtons.Cancel, String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), null, SevenUpdate.Properties.Resources.Add, true) != TaskDialogResult.Cancel)
                     {
-                        WcfService.AddSua(sua);
+                        WcfService.AddSua(app);
                     }
                     else
                     {
@@ -119,11 +155,12 @@ namespace SevenUpdate
                 MyServiceHost.StartService();
                 Args = e.Args;
                 SetJumpList();
+                Utilities.ErrorOccurred += LogError;
             }
         }
 
         /// <summary>Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.</summary>
-        /// <param name = "e">The <see cref = "InstanceAwareApplication.StartupNextInstanceEventArgs" /> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -135,8 +172,8 @@ namespace SevenUpdate
         {
             Utilities.Locale = Settings.Default.locale;
 
-            Directory.CreateDirectory(Utilities.UserStore);
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Utilities.AllUserStore + @"updates.sui"))
+            Directory.CreateDirectory(App.UserStore);
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(AllUserStore + @"updates.sui"))
             {
                 return;
             }
@@ -144,33 +181,36 @@ namespace SevenUpdate
             Core.IsReconnect = true;
         }
 
+        /// <summary>Logs an error</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The error data to log</param>
+        private static void LogError(object sender, ErrorOccurredEventArgs e)
+        {
+            using (var tw = new StreamWriter(UserStore + "error.log", true))
+            {
+                tw.Write(e.Exception);
+            }
+        }
+
         /// <summary>Sets the application jump list</summary>
         private static void SetJumpList()
         {
             var jumpList = new JumpList();
 
-            var jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 2, Title = SevenUpdate.Properties.Resources.CheckForUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-check",
-                };
+            var jumpTask = new JumpTask { ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 2, 
+                Title = SevenUpdate.Properties.Resources.CheckForUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-check", };
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 5, Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-hidden",
-                };
+            jumpTask = new JumpTask { ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 5, 
+                Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-hidden", };
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 4, Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-history",
-                };
+            jumpTask = new JumpTask { ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 4, 
+                Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-history", };
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-                {
-                    ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 3, Title = SevenUpdate.Properties.Resources.ChangeSettings, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-settings",
-                };
+            jumpTask = new JumpTask { ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe", IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll", IconResourceIndex = 3, 
+                Title = SevenUpdate.Properties.Resources.ChangeSettings, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-settings", };
 
             jumpList.JumpItems.Add(jumpTask);
 

@@ -40,7 +40,7 @@ namespace SevenUpdate.Pages
         #region Constants and Fields
 
         /// <summary>The location of the update history file</summary>
-        private static readonly string HistoryFile = Utilities.AllUserStore + @"History.suh";
+        private static readonly string HistoryFile = App.AllUserStore + @"History.suh";
 
         /// <summary>Gets or sets a collection of SUH items</summary>
         private ObservableCollection<Suh> updateHistory;

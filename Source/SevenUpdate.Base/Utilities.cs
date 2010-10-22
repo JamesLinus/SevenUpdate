@@ -46,33 +46,8 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The all users application data location</summary>
-        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
-
         /// <summary>The application directory of the current assembly</summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
-
-        /// <summary>The location of the list of applications Seven Update can update</summary>
-        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
-
-        /// <summary>The location of the application settings file</summary>
-        public static readonly string ConfigFile = AllUserStore + @"App.config";
-
-        /// <summary>The location of the hidden updates file</summary>
-        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
-
-        /// <summary>The location of the update history file</summary>
-        public static readonly string HistoryFile = AllUserStore + @"History.suh";
-
-        /// <summary>The location of the user application data location</summary>
-        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
-
-        #endregion
-
-        #region Events
-
-        /// <summary>Occurs when an error occurs while serializing or deserializing a object/file</summary>
-        public static event EventHandler<SerializationErrorEventArgs> SerializationError;
 
         #endregion
 
@@ -84,13 +59,13 @@ namespace SevenUpdate
 
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
-        public static bool RebootNeeded
-        {
-            get
-            {
-                return File.Exists(AllUserStore + @"reboot.lock");
-            }
-        }
+        public static bool RebootNeeded { get; internal set; }
+
+        #endregion
+
+        #region Events
+
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         #endregion
 
@@ -284,21 +259,45 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
-            task.Wait();
-            return task.Result;
+            try
+            {
+                var task = Task.Factory.StartNew(() => DeserializeFile<T>(fileName));
+                task.Wait();
+                return task.Result;
+            }
+            catch (AggregateException ae)
+            {
+                foreach (var e in ae.InnerExceptions.OfType<FileNotFoundException>())
+                {
+                    throw new FileNotFoundException(e.FileName, e);
+                }
+
+                throw;
+            }
         }
 
         /// <summary>DeSerializes an object</summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
-        /// <param name = "sourceUrl">The Uri to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        public static T Deserialize<T>(Stream stream, string sourceUrl) where T : class
+        public static T Deserialize<T>(Stream stream) where T : class
         {
-            var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream, sourceUrl));
-            task.Wait();
-            return task.Result;
+            try
+            {
+                stream.Position = 0;
+                var task = Task.Factory.StartNew(() => DeserializeStream<T>(stream));
+                task.Wait();
+                return task.Result;
+            }
+            catch (AggregateException ae)
+            {
+                foreach (var e in ae.InnerExceptions.OfType<FileNotFoundException>())
+                {
+                    throw new FileNotFoundException(e.FileName, e);
+                }
+
+                throw;
+            }
         }
 
         /// <summary>Downloads a file</summary>
@@ -496,65 +495,53 @@ namespace SevenUpdate
             return sb.ToString();
         }
 
-        /// <summary>Reports the error that occurred to a log file</summary>
-        /// <param name = "message">The message to write in the log</param>
-        /// <param name = "directoryStore">The directory to store the log</param>
-        public static void ReportError(string message, string directoryStore)
+        /// <summary>Gets data from the exception as a string</summary>
+        /// <param name = "exception">The exception to write in the log</param>
+        /// <param name="data">The exception data as a string</param>
+        /// <returns>The exception as a string</returns>
+        private static string GetExceptionAsString(Exception exception, string data)
         {
-            using (var tw = new StreamWriter(directoryStore + "error.log", true))
+            data += Environment.NewLine + "==========";
+            data += DateTime.Now + ": " + exception;
+            data += Environment.NewLine + "==========";
+            data += Environment.NewLine + "Source: " + exception.Source;
+            data += Environment.NewLine + "Message: " + exception.Message;
+            data += Environment.NewLine + "StackTrace: " + exception.StackTrace;
+
+            var fileNotFoundException = exception as FileNotFoundException;
+            if (fileNotFoundException != null)
             {
-                tw.WriteLine(DateTime.Now + ": " + message);
+                data += Environment.NewLine + "File not found: " + fileNotFoundException.FileName;
             }
+
+            var webException = exception as WebException;
+            if (webException != null)
+            {
+                data += Environment.NewLine + "Download error: " + webException.Response;
+                data += Environment.NewLine + "Status: " + webException.Status;
+            }
+
+            if (exception.TargetSite != null)
+            {
+                data += Environment.NewLine + "TargetSite.Name: " + exception.TargetSite.Name;
+            }
+
+            return exception.InnerException != null ? GetExceptionAsString(exception.InnerException, data) : data;
         }
 
         /// <summary>Reports the error that occurred to a log file</summary>
         /// <param name = "exception">The exception to write in the log</param>
-        /// <param name = "directoryStore">The directory to store the log</param>
-        public static void ReportError(Exception exception, string directoryStore)
+        /// <param name="errorType">The type of error that ocurred</param>
+        public static void ReportError(Exception exception, ErrorType errorType)
         {
             if (exception == null)
             {
                 return;
             }
-
-            using (var tw = new StreamWriter(directoryStore + "error.log", true))
+            
+            if (ErrorOccurred != null)
             {
-                tw.WriteLine(DateTime.Now + ": " + exception.Source);
-                tw.WriteLine(DateTime.Now + ": " + exception.Message);
-                tw.WriteLine(DateTime.Now + ": " + exception.StackTrace);
-
-                if (exception.TargetSite != null)
-                {
-                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
-                }
-
-                if (exception.InnerException == null)
-                {
-                    return;
-                }
-
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Message);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.Source);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.StackTrace);
-
-                if (exception.TargetSite != null)
-                {
-                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
-                }
-
-                if (exception.InnerException.InnerException == null)
-                {
-                    return;
-                }
-
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Message);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.Source);
-                tw.WriteLine(DateTime.Now + ": " + exception.InnerException.InnerException.StackTrace);
-
-                if (exception.TargetSite != null)
-                {
-                    tw.WriteLine(DateTime.Now + ": " + exception.TargetSite.Name);
-                }
+                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception, null), errorType));
             }
         }
 
@@ -564,8 +551,18 @@ namespace SevenUpdate
         /// <param name = "fileName">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string fileName) where T : class
         {
-            var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
-            task.Wait();
+            try
+            {
+                var task = Task.Factory.StartNew(() => SerializeFile(item, fileName));
+                task.Wait();
+            }
+            catch (AggregateException ae)
+            {
+                foreach (var e in ae.InnerExceptions)
+                {
+                    throw e;
+                }
+            }
         }
 
         /// <summary>Starts a process on the system</summary>
@@ -576,7 +573,7 @@ namespace SevenUpdate
             return StartProcess(fileName, null);
         }
 
-        /// <summary>Starts a process on the system</summary>
+        /// <summary>Starts a process hidden on the system</summary>
         /// <param name = "fileName">The file to execute</param>
         /// <param name = "arguments">The arguments to execute with the file</param>
         /// <returns><see langword = "true" /> if the process has executed successfully</returns>
@@ -585,7 +582,7 @@ namespace SevenUpdate
             return StartProcess(fileName, arguments, false);
         }
 
-        /// <summary>Starts a process on the system</summary>
+        /// <summary>Starts a process hidden on the system</summary>
         /// <param name = "fileName">The file to execute</param>
         /// <param name = "arguments">The arguments to execute with the file</param>
         /// <param name = "wait">if set to <see langword = "true" /> the calling thread will be blocked until process has exited</param>
@@ -635,7 +632,7 @@ namespace SevenUpdate
                         throw;
                     }
 
-                    ReportError(e, UserStore);
+                    ReportError(e, ErrorType.GeneralError);
                 }
             }
 
@@ -662,56 +659,23 @@ namespace SevenUpdate
         /// <returns>returns the object</returns>
         private static T DeserializeFile<T>(string fileName) where T : class
         {
-            if (File.Exists(fileName))
+            T obj;
+            using (var file = File.OpenRead(fileName))
             {
-                try
-                {
-                    T obj;
-                    using (var file = File.OpenRead(fileName))
-                    {
-                        obj = Serializer.Deserialize<T>(file);
-                    }
-
-                    return obj;
-                }
-                catch (InvalidCastException e)
-                {
-                    if (SerializationError != null)
-                    {
-                        SerializationError(null, new SerializationErrorEventArgs(e, fileName));
-                    }
-                }
+                obj = Serializer.Deserialize<T>(file);
             }
 
-            return null;
+            return obj;
         }
 
         /// <summary>DeSerializes an object</summary>
         /// <typeparam name = "T">the object to deserialize</typeparam>
         /// <param name = "stream">The Stream to deserialize</param>
-        /// <param name = "sourceUrl">The <see cref = "Uri" /> to the source stream that is being deserialized</param>
         /// <returns>returns the object</returns>
-        private static T DeserializeStream<T>(Stream stream, string sourceUrl) where T : class
+        private static T DeserializeStream<T>(Stream stream) where T : class
         {
-            try
-            {
-                return Serializer.Deserialize<T>(stream);
-            }
-            catch (Exception e)
-            {
-                if (!(e is IOException || e is ProtoException))
-                {
-                    throw;
-                }
-
-                ReportError(e, UserStore);
-                if (SerializationError != null)
-                {
-                    SerializationError(null, new SerializationErrorEventArgs(e, sourceUrl));
-                }
-            }
-
-            return null;
+            stream.Position = 0;
+            return Serializer.Deserialize<T>(stream);
         }
 
         /// <summary>Replaces a string within a string</summary>
@@ -775,34 +739,18 @@ namespace SevenUpdate
         /// <param name = "fileName">the location of a file that will be serialized</param>
         private static void SerializeFile<T>(T item, string fileName) where T : class
         {
-            try
+            if (File.Exists(fileName))
             {
-                if (File.Exists(fileName))
+                using (var file = File.Open(fileName, FileMode.Truncate))
                 {
-                    using (var file = File.Open(fileName, FileMode.Truncate))
-                    {
-                        Serializer.Serialize(file, item);
-                    }
-                }
-                else
-                {
-                    using (var file = File.Open(fileName, FileMode.CreateNew))
-                    {
-                        Serializer.Serialize(file, item);
-                    }
+                    Serializer.Serialize(file, item);
                 }
             }
-            catch (Exception e)
+            else
             {
-                if (!(e is IOException || e is ProtoException || e is UnauthorizedAccessException))
+                using (var file = File.Open(fileName, FileMode.CreateNew))
                 {
-                    throw;
-                }
-
-                ReportError(e, UserStore);
-                if (SerializationError != null)
-                {
-                    SerializationError(null, new SerializationErrorEventArgs(e, fileName));
+                    Serializer.Serialize(file, item);
                 }
             }
         }

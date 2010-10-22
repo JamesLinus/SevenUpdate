@@ -51,3 +51,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1020:AvoidNamespacesWithFewTypes", Scope = "namespace", Target = "System.Windows.ValidationRules")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Scope = "member", Target = "System.Windows.Controls.AdornerExtensions.#RemoveAdorners`1(System.Windows.Documents.AdornerLayer,System.Windows.UIElement)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Scope = "member", Target = "System.Windows.Controls.AdornerExtensions.#Contains`1(System.Windows.Documents.AdornerLayer,System.Windows.UIElement)")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "System.Windows.Dialogs.NativeTaskDialog.#SelectedRadioButtonID")]

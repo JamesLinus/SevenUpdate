@@ -73,7 +73,7 @@ namespace SevenUpdate.Pages
         /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
-            this.hiddenUpdates = Utilities.Deserialize<ObservableCollection<Suh>>(Utilities.HiddenFile);
+            this.hiddenUpdates = Utilities.Deserialize<ObservableCollection<Suh>>(App.HiddenFile);
             if (this.hiddenUpdates == null)
             {
                 return;

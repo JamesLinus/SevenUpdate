@@ -129,6 +129,10 @@ namespace SevenUpdate
         /// <summary>The file or folder that is executed by the shortcut</summary>
         private string target;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref = "Shortcut" /> class</summary>
         /// <param name = "name">The collection of localized update names</param>
         /// <param name = "description">The collection of localized update descriptions</param>

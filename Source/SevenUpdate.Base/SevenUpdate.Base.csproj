@@ -91,13 +91,13 @@
     <Compile Include="NativeMethods.cs" />
     <Compile Include="RegistryItem.cs" />
     <Compile Include="SearchCompletedEventArgs.cs" />
-    <Compile Include="SerializationErrorEventArgs.cs" />
     <Compile Include="Shortcut.cs" />
     <Compile Include="Sua.cs" />
     <Compile Include="Suh.cs" />
     <Compile Include="Sui.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="UpdateFile.cs" />
+    <Compile Include="UpdateInstalledEventArgs.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="Install.cs" />

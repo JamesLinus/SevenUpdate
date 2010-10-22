@@ -121,29 +121,6 @@ namespace SharpBits.Base
     /// <summary>Win32 native methods.</summary>
     internal static class NativeMethods
     {
-        /// <summary>Registers security and sets the default security values for the process.</summary>
-        /// <param name="securityDescriptor">The access permissions that a server will use to receive calls. This parameter is used by COM only when a server calls CoInitializeSecurity. Its value can be <see langword="null"/> or a pointer to one of three types: an AppID, an IAccessControl object, or a SecurityDescriptor, in absolute format.</param>
-        /// <param name="authServiceLength">The count of entries in the <paramref name="authServices"/> parameter. If this parameter is 0, no authentication services will be registered and the server cannot receive secure calls. A value of -1 tells COM to choose which authentication services to register, and if this is the case, the <paramref name="authServices"/> parameter must be <see langword="null"/>.</param>
-        /// <param name="authServices">An array of authentication services that a server is willing to use to receive a call. This parameter is used by COM only when a server calls CoInitializeSecurity. For more information, see SoleAuthenticationService.</param>
-        /// <param name="reserved1">This parameter is reserved and must be <see langword="null"/>.</param>
-        /// <param name="authLevel">The default authentication level for the process. COM will fail calls that arrive with a lower authentication level. By default, all proxies will use at least this authentication level. This value should contain one of the authentication level constants. By default, all calls to IUnknown are made at this level.</param>
-        /// <param name="impersonationLevel">The default impersonation level for proxies. The value of this parameter is used only when the process is a client. It should be a value from the impersonation level constants, except for RpcImpLevelDefault, which is not for use with CoInitializeSecurity.</param>
-        /// <param name="authList">A pointer to SoleAuthenticationList, which is an array of SoleAuthenticationInfo structures. This list indicates the information for each authentication service that a client can use to call a server. This parameter is only used by a client</param>
-        /// <param name="capabilities">Additional capabilities of the client or server, specified by setting one or more <see cref="EoAuthenticationCapabilities"/> values. Some of these value cannot be used simultaneously, and some cannot be set when particular authentication services are being used.</param>
-        /// <param name="reserved3">The reserved3.</param>
-        /// <returns>The result</returns>
-        [DllImport(@"ole32.dll", CharSet = CharSet.Auto)]
-        internal static extern int CoInitializeSecurity(
-            IntPtr securityDescriptor,
-            int authServiceLength,
-            IntPtr authServices,
-            IntPtr reserved1,
-            RpcAuthenticationLevels authLevel,
-            RpcImpersonationLevels impersonationLevel,
-            IntPtr authList,
-            EoAuthenticationCapabilities capabilities,
-            IntPtr reserved3);
-
         /// <summary>Converts a string-format security identifier (SID) into a valid, functional SID. You can use this function to retrieve a SID that the ConvertSidToStringSid function converted to string format.</summary>
         /// <param name="sid">A pointer to a <see langword="null"/>-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-S� format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>

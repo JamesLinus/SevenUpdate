@@ -55,10 +55,6 @@ namespace SharpBits.Base
         {
             // Set threading apartment
             Thread.CurrentThread.TrySetApartmentState(ApartmentState.STA);
-            if (NativeMethods.CoInitializeSecurity(IntPtr.Zero, -1, IntPtr.Zero, IntPtr.Zero, RpcAuthenticationLevels.Connect, RpcImpersonationLevels.Impersonate, IntPtr.Zero, EoAuthenticationCapabilities.None, IntPtr.Zero) != 0)
-            {
-                throw new InvalidOperationException();
-            }
 
             this.BackgroundCopyManager = new BackgroundCopyManager() as IBackgroundCopyManager;
             this.Jobs = new BitsJobsDictionary(this); // will be set correctly later after initialization

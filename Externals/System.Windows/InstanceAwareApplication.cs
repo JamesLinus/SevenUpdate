@@ -115,7 +115,7 @@ namespace System.Windows
         /// <summary>Finalizes an instance of the <see cref="InstanceAwareApplication"/> class.</summary>
         ~InstanceAwareApplication()
         {
-            this.Dispose();
+            this.Dispose(false);
         }
 
         #endregion
@@ -149,7 +149,7 @@ namespace System.Windows
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
-            this.TryDisposeSynchronizationObjects();
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -170,6 +170,13 @@ namespace System.Windows
         #endregion
 
         #region Methods
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">true to dispose unmanaged resources</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            this.TryDisposeSynchronizationObjects();          
+        }
 
         /// <summary>Raises the <see cref="E:System.Windows.Application.Exit"/> event.</summary>
         /// <param name="e">An <see cref="T:System.Windows.ExitEventArgs"/> that contains the event data.</param>
@@ -458,10 +465,9 @@ namespace System.Windows
                         this.serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
                     }
                 }
-                catch (Exception ex)
+                catch (CommunicationException ex)
                 {
                     Debug.WriteLine("Exception raised while closing service" + Environment.NewLine + ex, this.GetType().ToString());
-                    throw;
                 }
                 finally
                 {
@@ -469,15 +475,10 @@ namespace System.Windows
                 }
 
                 this.serviceInitializationMutex.ReleaseMutex();
-                try
-                {
-                    // Release the first application mutex!
-                    this.firstInstanceMutex.ReleaseMutex();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+
+                // Release the first application mutex!
+                this.firstInstanceMutex.WaitOne();
+                this.firstInstanceMutex.ReleaseMutex();
             }
 
             this.firstInstanceMutex.Close();

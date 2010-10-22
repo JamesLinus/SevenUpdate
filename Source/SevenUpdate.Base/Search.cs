@@ -37,9 +37,6 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>Location of the SUI for Seven Update</summary>
-        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
-
         /// <summary>The number of important updates found</summary>
         private static int importantCount;
 
@@ -48,6 +45,9 @@ namespace SevenUpdate
 
         /// <summary>The number of recommended updates found</summary>
         private static int recommendedCount;
+
+        /// <summary>The directory containing the app update files</summary>
+        private static string downloadDirectory;
 
         #endregion
 
@@ -72,8 +72,10 @@ namespace SevenUpdate
 
         /// <summary>Searches for updates while blocking the calling thread</summary>
         /// <param name = "applications">The collection of applications to check for updates</param>
-        public static void SearchForUpdates(IEnumerable<Sua> applications)
+        /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
+        public static void SearchForUpdates(IEnumerable<Sua> applications, string downloadFolder)
         {
+            downloadDirectory = downloadFolder;
             IsSearching = true;
             importantCount = 0;
             optionalCount = 0;
@@ -95,63 +97,10 @@ namespace SevenUpdate
                 return;
             }
 
-            var publisher = new ObservableCollection<LocaleString>();
-            var ls = new LocaleString
-                {
-                    Value = "Seven Software", Lang = "en"
-                };
-            publisher.Add(ls);
-
-            var name = new ObservableCollection<LocaleString>();
-            ls = new LocaleString
-                {
-                    Value = "Seven Update", Lang = "en"
-                };
-            name.Add(ls);
-
-            // Download the Seven Update SUI and load it.
-            var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(SevenUpdateSui), SevenUpdateSui);
-
-            if (app != null)
-            {
-                app.AppInfo = new Sua(name, publisher)
-                    {
-                        AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), HelpUrl = @"http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui
-                    };
-
-                // Check if there is a newer version of Seven Update
-                if (CheckForUpdates(ref app, null))
-                {
-                    // If there are updates add it to the collection
-                    applicationsFound.Add(app);
-
-                    // Search is complete!
-                    IsSearching = false;
-
-                    if (SearchCompleted != null)
-                    {
-                        SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
-                    }
-
-                    return;
-                }
-            }
-
             if (applications == null)
             {
-                // Search is complete!
-                IsSearching = false;
-
-                if (SearchCompleted != null)
-                {
-                    SearchCompleted(null, new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
-                }
-
-                return;
+                throw new ArgumentNullException("applications");
             }
-
-            // Gets the hidden updates from settings
-            var hidden = Utilities.Deserialize<Collection<Suh>>(Utilities.HiddenFile);
 
             // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
             foreach (var t in applications)
@@ -161,32 +110,24 @@ namespace SevenUpdate
                 }
                 else
                 {
+                    Sui app;
                     try
                     {
                         // Loads a SUI that was downloaded
-                        app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl), t.SuiUrl);
+                        app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
                     }
-                    catch (WebException)
+                    catch (Exception ex)
                     {
-                        Utilities.ReportError(@"Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
+                        Utilities.ReportError(ex, ErrorType.SearchError);
                         continue;
                     }
 
-                    if (app != null)
-                    {
-                        app.AppInfo = t;
+                    app.AppInfo = t;
 
-                        // Check to see if any updates are available and exclude hidden updates
-
-                        // If there is an update available, add it.
-                        if (CheckForUpdates(ref app, hidden))
-                        {
-                            applicationsFound.Add(app);
-                        }
-                    }
-                    else
+                    // Check to see if any updates are available
+                    if (CheckForUpdates(ref app))
                     {
-                        Utilities.ReportError(@"Error downloading file: " + t.SuiUrl, Utilities.AllUserStore);
+                        applicationsFound.Add(app);
                     }
                 }
             }
@@ -204,7 +145,7 @@ namespace SevenUpdate
         /// <param name = "applications">The collection of applications to check for updates</param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> applications)
         {
-            Task.Factory.StartNew(() => SearchForUpdates(applications));
+            Task.Factory.StartNew(() => SearchForUpdates(applications, downloadDirectory));
         }
 
         /// <summary>Manually sets an <see cref = "Sui" /> collection has updates found</summary>
@@ -243,9 +184,8 @@ namespace SevenUpdate
 
         /// <summary>Checks for updates</summary>
         /// <param name = "app">a collection of applications to check for updates</param>
-        /// <param name = "hidden">a collection of hidden updates</param>
         /// <returns>returns <see langword = "true" /> if found updates, otherwise <see langword = "false" /></returns>
-        private static bool CheckForUpdates(ref Sui app, IEnumerable<Suh> hidden)
+        private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory) ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit) : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
 
@@ -254,36 +194,8 @@ namespace SevenUpdate
                 return false;
             }
 
-            var isHidden = false;
             for (var y = 0; y < app.Updates.Count; y++)
             {
-                if (hidden != null)
-                {
-                    foreach (var t in hidden)
-                    {
-                        if (t.ReleaseDate == app.Updates[y].ReleaseDate && t.Name[0].Value == app.Updates[y].Name[0].Value)
-                        {
-                            isHidden = true;
-                            break;
-                        }
-
-                        isHidden = false;
-                    }
-
-                    if (isHidden)
-                    {
-                        app.Updates.Remove(app.Updates[y]);
-
-                        if (app.Updates.Count == 0)
-                        {
-                            break;
-                        }
-
-                        y--;
-                        continue;
-                    }
-                }
-
                 var updates = app.Updates[y];
 
                 var size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
@@ -364,7 +276,7 @@ namespace SevenUpdate
             for (var z = 0; z < update.Files.Count; z++)
             {
                 update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, is64Bit, valueName);
-                var downloadFile = Utilities.AllUserStore + @"downloads\" + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination);
+                var downloadFile = downloadDirectory + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination);
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                 if (File.Exists(update.Files[z].Destination))

@@ -90,7 +90,6 @@ namespace SevenUpdate.Sdk
         /// <param name = "isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            Utilities.SerializationError += Core.SerializationError;
             Utilities.Locale = Settings.Default.locale;
             base.OnStartup(e, isFirstInstance);
 
@@ -108,7 +107,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.</summary>
-        /// <param name = "e">The <see cref = "InstanceAwareApplication.StartupNextInstanceEventArgs" /> instance containing the event data.</param>
+        /// <param name = "e">The <see cref = "StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);

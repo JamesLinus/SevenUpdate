@@ -66,6 +66,9 @@ namespace SevenUpdate
 
         #endregion
 
+        /// <summary>The directory containing the app update files</summary>
+        private static string downloadDirectory;
+
         #region Public Methods
 
         /// <summary>Cancel the downloading of updates</summary>
@@ -77,17 +80,20 @@ namespace SevenUpdate
         /// <summary>Downloads the updates using BITS</summary>
         /// <param name = "appUpdates">The application updates to download</param>
         /// <param name = "downloadName">The name of the job</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName)
+        /// <param name="downloadDirectory">The directory where the files are downloaded are stored</param>
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadDirectory)
         {
-            DownloadUpdates(appUpdates, downloadName, false);
+            DownloadUpdates(appUpdates, downloadName, downloadDirectory, false);
         }
 
         /// <summary>Downloads the updates using BITS</summary>
         /// <param name = "appUpdates">The application updates to download</param>
         /// <param name = "downloadName">The name of the job</param>
+        /// <param name="downloadDirectory">The directory where the files are downloaded are stored</param>
         /// <param name = "isPriority">if set to <see langword = "true" /> the updates will download with priority</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, bool isPriority)
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadDirectory, bool isPriority)
         {
+            Download.downloadDirectory = downloadDirectory;
             jobName = downloadName;
             if (appUpdates == null)
             {
@@ -110,15 +116,9 @@ namespace SevenUpdate
             manager.OnJobModified += ReportDownloadProgress;
 
             // Load the BITS Jobs for the entire machine and current user
-            try
-            {
-                manager.EnumJobs(JobOwner.CurrentUser);
-                manager.EnumJobs(JobOwner.AllUsers);
-            }
-            catch (BitsException)
-            {
-            }
-
+            manager.EnumJobs(JobOwner.CurrentUser);
+            manager.EnumJobs(JobOwner.AllUsers);
+            
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
             foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName))
             {
@@ -126,13 +126,7 @@ namespace SevenUpdate
 
                 if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
                 {
-                    try
-                    {
-                        job.Cancel();
-                    }
-                    catch (BitsException)
-                    {
-                    }
+                    job.Cancel();
                 }
                 else
                 {
@@ -156,23 +150,15 @@ namespace SevenUpdate
             bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified | NotificationOptions.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
-            for (var x = 0; x < appUpdates.Count; x++)
+            foreach (var update in appUpdates)
             {
-                DownloadUpdates(appUpdates[x], ref bitsJob);
+                DownloadUpdates(update, ref bitsJob);
             }
 
             bitsJob.EnumerateFiles();
             if (bitsJob.Files.Count > 0)
             {
-                try
-                {
-                    bitsJob.Resume();
-                }
-                catch (BitsException e)
-                {
-                    Utilities.ReportError(e, Utilities.AllUserStore);
-                    return;
-                }
+                bitsJob.Resume();
             }
             else
             {
@@ -198,7 +184,7 @@ namespace SevenUpdate
             for (var y = 0; y < application.Updates.Count; y++)
             {
                 // Create download directory consisting of application name and update title
-                var downloadDir = Utilities.AllUserStore + @"downloads\" + application.Updates[y].Name[0].Value;
+                var downloadDir = downloadDirectory + application.Updates[y].Name[0].Value;
 
                 Directory.CreateDirectory(downloadDir);
 
@@ -297,11 +283,11 @@ namespace SevenUpdate
 
             if (e.Job.Error.File != null)
             {
-                Utilities.ReportError(e.Job.Error.File.RemoteName + @" - " + e.Job.Error.Description, Utilities.AllUserStore);
+                Utilities.ReportError(new Exception(e.Job.Error.File.RemoteName + @" - " + e.Job.Error.Description), ErrorType.DownloadError);
             }
             else
             {
-                Utilities.ReportError(e.Job.Error.ContextDescription + @" - " + e.Job.Error.Description, Utilities.AllUserStore);
+                Utilities.ReportError(new Exception(e.Job.Error.ContextDescription + @" - " + e.Job.Error.Description), ErrorType.DownloadError);
             }
 
             if (e.Job.State != JobState.Canceled)
