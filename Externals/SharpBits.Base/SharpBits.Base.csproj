@@ -112,7 +112,7 @@
   <ItemGroup>
     <Compile Include="BGEnums.cs" />
     <Compile Include="BitsCredentials.cs" />
-    <Compile Include="BitsException.cs" />
+    <Compile Include="BitsError.cs" />
     <Compile Include="BitsFile.cs" />
     <Compile Include="BitsFilesCollection.cs" />
     <Compile Include="BitsInterfaceNotificationEventArgs.cs" />

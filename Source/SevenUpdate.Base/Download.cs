@@ -281,7 +281,9 @@ namespace SevenUpdate
 
             errorOccurred = true;
 
-            Utilities.ReportError(e.Job.Error, ErrorType.DownloadError);
+            var exception = new Exception(e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " + e.Job.Error.ContextDescription);
+
+            Utilities.ReportError(exception, ErrorType.DownloadError);
 
             if (e.Job.State != JobState.Canceled)
             {

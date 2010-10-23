@@ -162,7 +162,7 @@ namespace SevenUpdate.Admin
                     Thread.Sleep(500);
                     if (!App.IsInstalling)
                     {
-                        Application.Current.Shutdown(0);
+                        Environment.Exit(0);
                     }
                 });
         }

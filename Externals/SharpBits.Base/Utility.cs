@@ -20,53 +20,6 @@ namespace SharpBits.Base
     /// <summary>Various utility methods.</summary>
     internal static class Utilities
     {
-        #region Properties
-
-        /// <summary>Gets the bits version.</summary>
-        /// <value>The bits version.</value>
-        internal static BitsVersion BitsVersion
-        {
-            get
-            {
-                try
-                {
-                    var bits = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, @"qmgr.dll"));
-
-                    switch (bits.FileMajorPart)
-                    {
-                        case 6:
-                            switch (bits.FileMinorPart)
-                            {
-                                case 0:
-                                    return BitsVersion.Bits1;
-                                case 2:
-                                    return BitsVersion.Bits1Dot2;
-                                case 5:
-                                    return BitsVersion.Bits1Dot5;
-                                case 6:
-                                    return BitsVersion.Bits2;
-                                case 7:
-                                    return BitsVersion.Bits2Dot5;
-                                default:
-                                    return BitsVersion.BitsUndefined;
-                            }
-
-                        case 7:
-                            return BitsVersion.Bits3;
-                        default:
-                            return BitsVersion.BitsUndefined;
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                    return BitsVersion.BitsUndefined;
-                }
-            }
-        }
-
-        #endregion
-
         #region Methods
 
         /// <summary>Converts a <see cref="DateTime"/> to <see cref="FileTime"/></summary>

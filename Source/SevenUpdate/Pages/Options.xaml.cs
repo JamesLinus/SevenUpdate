@@ -71,19 +71,12 @@ namespace SevenUpdate.Pages
         {
             try
             {
-                if (File.Exists(App.ApplicationsFile))
-                {
-                    var apps = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation));
-                    this.LoadSul(apps);
-                }
-                else
-                {
-                    this.LoadSul();
-                }
+                var apps = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation));
+                this.LoadSul(apps);
             }
             catch (Exception ex)
             {
-                if (!(ex is NullReferenceException))
+                if (!(ex is NullReferenceException || ex is WebException))
                 {
                     throw;
                 }

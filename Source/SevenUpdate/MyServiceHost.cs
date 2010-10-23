@@ -108,7 +108,7 @@ namespace SevenUpdate
             {
                 try
                 {
-                    Instance.Close();
+                    Instance.BeginClose(null, null);
                 }
                 catch (Exception ex)
                 {

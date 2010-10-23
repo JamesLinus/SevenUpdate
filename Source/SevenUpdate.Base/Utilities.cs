@@ -530,12 +530,12 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Starts a process on the system</summary>
+        /// <summary>Starts a process hidden on the system</summary>
         /// <param name = "fileName">The file to execute</param>
         /// <returns><see langword = "true" /> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName)
         {
-            return StartProcess(fileName, null);
+            return StartProcess(fileName, null, false, true);
         }
 
         /// <summary>Starts a process hidden on the system</summary>
@@ -544,7 +544,7 @@ namespace SevenUpdate
         /// <returns><see langword = "true" /> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments)
         {
-            return StartProcess(fileName, arguments, false);
+            return StartProcess(fileName, arguments, false, true);
         }
 
         /// <summary>Starts a process hidden on the system</summary>
@@ -554,7 +554,7 @@ namespace SevenUpdate
         /// <returns><see langword = "true" /> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments, bool wait)
         {
-            return StartProcess(fileName, arguments, wait, false);
+            return StartProcess(fileName, arguments, wait, true);
         }
 
         /// <summary>Starts a process on the system</summary>
@@ -648,19 +648,7 @@ namespace SevenUpdate
         /// <returns>The exception as a string</returns>
         private static string GetExceptionAsString(Exception exception)
         {
-            var data = "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
-
-            var bitsException = exception as BitsException;
-            if (bitsException != null)
-            {
-                data += Environment.NewLine + "File: " + bitsException.File;
-                data += Environment.NewLine + "Description: " + bitsException.Description;
-                data += Environment.NewLine + "ContextDescription: " + bitsException.ContextDescription;
-                data += Environment.NewLine + "ErrorContext: " + bitsException.ErrorContext;
-                data += Environment.NewLine + "ErrorCode: " + bitsException.ErrorCode;
-            }
-
-            return data;
+            return "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
         }
 
         /// <summary>Replaces a string within a string</summary>

@@ -29,7 +29,7 @@ namespace SharpBits.Base
         private bool disposed;
 
         /// <summary>Data about the error</summary>
-        private BitsException error;
+        private BitsError error;
 
         /// <summary>The job GUID</summary>
         private Guid guid;
@@ -193,7 +193,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets the error that occurred</summary>
         /// <value>The error.</value>
-        public BitsException Error
+        public BitsError Error
         {
             get
             {
@@ -208,7 +208,7 @@ namespace SharpBits.Base
                             this.Job.GetError(out copyError);
                             if (null != copyError)
                             {
-                                this.error = new BitsException(this, copyError);
+                                this.error = new BitsError(this, copyError);
                             }
                         }
                     }

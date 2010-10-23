@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsException.cs"
+// <copyright file="BitsError.cs"
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"
@@ -17,7 +17,7 @@ namespace SharpBits.Base
     using System.Threading;
 
     /// <summary>Bits error</summary>
-    public class BitsException : Exception
+    public class BitsError
     {
         #region Constants and Fields
 
@@ -34,7 +34,7 @@ namespace SharpBits.Base
         /// <summary>Initializes a new instance of the <see cref="BitsException"/> class.</summary>
         /// <param name="job">The job the error occurred on</param>
         /// <param name="error">The error that occurred</param>
-        internal BitsException(BitsJob job, IBackgroundCopyError error)
+        internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
             {

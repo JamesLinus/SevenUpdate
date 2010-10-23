@@ -13,6 +13,8 @@
 namespace SharpBits.Base
 {
     using System;
+    using System.Diagnostics;
+    using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading;
 
@@ -166,7 +168,40 @@ namespace SharpBits.Base
         {
             get
             {
-                return Utilities.BitsVersion;
+                try
+                {
+                    var bits = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, @"qmgr.dll"));
+
+                    switch (bits.FileMajorPart)
+                    {
+                        case 6:
+                            switch (bits.FileMinorPart)
+                            {
+                                case 0:
+                                    return BitsVersion.Bits1;
+                                case 2:
+                                    return BitsVersion.Bits1Dot2;
+                                case 5:
+                                    return BitsVersion.Bits1Dot5;
+                                case 6:
+                                    return BitsVersion.Bits2;
+                                case 7:
+                                    return BitsVersion.Bits2Dot5;
+                                default:
+                                    return BitsVersion.BitsUndefined;
+                            }
+
+                        case 7:
+                            return BitsVersion.Bits3;
+                        default:
+                            return BitsVersion.BitsUndefined;
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                    return BitsVersion.BitsUndefined;
+                }
             }
         }
 
