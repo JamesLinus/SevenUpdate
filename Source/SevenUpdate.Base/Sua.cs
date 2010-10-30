@@ -104,11 +104,20 @@ namespace SevenUpdate
             {
                 this.Publisher = new ObservableCollection<LocaleString>();
             }
+
+            this.Description = new ObservableCollection<LocaleString>();
+
+            this.Name.CollectionChanged += this.NameCollectionChanged;
+            this.Description.CollectionChanged += this.DescriptionCollectionChanged;
+            this.Publisher.CollectionChanged += this.PublisherCollectionChanged;
         }
 
         /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
         public Sua()
         {
+            this.Name = new ObservableCollection<LocaleString>();
+            this.Description = new ObservableCollection<LocaleString>();
+            this.Publisher = new ObservableCollection<LocaleString>();
         }
 
         #endregion
@@ -273,6 +282,30 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void PublisherCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Publisher");
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void DescriptionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Description");
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void NameCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Name");
+        }
 
         /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
         /// <param name = "propertyName">The name of the property.</param>

@@ -53,6 +53,13 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Events
+
+        /// <summary>Occurs when an error occurrs</summary>
+        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
+
+        #endregion
+
         #region Properties
 
         /// <summary>Gets or sets the ISO language code</summary>
@@ -62,13 +69,6 @@ namespace SevenUpdate
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
         public static bool RebootNeeded { get; internal set; }
-
-        #endregion
-
-        #region Events
-
-        /// <summary>Occurs when an error occurrs</summary>
-        public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         #endregion
 
@@ -371,11 +371,11 @@ namespace SevenUpdate
             return localeStrings[0].Value;
         }
 
-        /// <summary>Gets and converts the registry key</summary>
+        /// <summary>Converts the registry key</summary>
         /// <param name = "registryKey">The registry key</param>
         /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
         /// <returns>The parsed registry key</returns>
-        public static string GetRegistryKey(string registryKey, bool is64Bit)
+        public static string ParseRegistryKey(string registryKey, bool is64Bit)
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
@@ -399,40 +399,54 @@ namespace SevenUpdate
         /// <param name = "registryKey">The path to the registry key</param>
         /// <param name = "valueName">The value name to get the data from</param>
         /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
-        /// <returns>The value retrieved from the registry path</returns>
+        /// <returns>The value retrieved from the registry path, returns null if the registry path does not exist</returns>
         public static string GetRegistryValue(string registryKey, string valueName, bool is64Bit)
         {
-            try
+            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
-                if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+                if (!is64Bit)
                 {
-                    if (!is64Bit)
+                    if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
-                        {
-                            registryKey = registryKey.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\", true);
-                        }
+                        registryKey = registryKey.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\", true);
                     }
                 }
+            }
 
-                registryKey = registryKey.Replace("HKLM", "HKEY_LOCAL_MACHINE", true);
-                registryKey = registryKey.Replace("HKCU", "HKEY_CURRENT_USER", true);
-                registryKey = registryKey.Replace("HKCR", "HKEY_CLASSES_ROOT", true);
-                registryKey = registryKey.Replace("HKU", "HKEY_USERS", true);
+            registryKey = registryKey.Replace("HKLM", "HKEY_LOCAL_MACHINE", true);
+            registryKey = registryKey.Replace("HKCU", "HKEY_CURRENT_USER", true);
+            registryKey = registryKey.Replace("HKCR", "HKEY_CLASSES_ROOT", true);
+            registryKey = registryKey.Replace("HKU", "HKEY_USERS", true);
 
-                if (valueName == "@")
+            if (valueName == "@")
+            {
+                valueName = string.Empty;
+            }
+
+            try
+            {
+                registryKey = Registry.GetValue(registryKey, valueName, null) as string;
+            }
+            catch (Exception ex)
+            {
+                if (!(ex is UnauthorizedAccessException || ex is NullReferenceException))
                 {
-                    valueName = string.Empty;
+                    throw;
                 }
 
-                registryKey = Registry.GetValue(registryKey, valueName, null).ToString();
-            }
-            catch (UnauthorizedAccessException)
-            {
                 registryKey = null;
             }
 
             return registryKey;
+        }
+
+        /// <summary>Checks if a registry key exists</summary>
+        /// <param name = "registryKey">The path to the registry key</param>
+        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
+        public static bool CheckRegistryKey(string registryKey, bool is64Bit)
+        {
+            return GetRegistryValue(registryKey, null, is64Bit) != null;
         }
 
         /// <summary>Checks to see if path is a registry key</summary>

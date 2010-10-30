@@ -35,6 +35,9 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
+        /// <summary>The directory containing the app update files</summary>
+        private static string downloadDirectory;
+
         /// <summary>Gets a value indicating whether an error has occurred</summary>
         private static bool errorOccurred;
 
@@ -65,9 +68,6 @@ namespace SevenUpdate
         public static bool IsDownloading { get; private set; }
 
         #endregion
-
-        /// <summary>The directory containing the app update files</summary>
-        private static string downloadDirectory;
 
         #region Public Methods
 

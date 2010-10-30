@@ -29,6 +29,7 @@ namespace SevenUpdate.Sdk
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Dialogs;
     using System.Windows.Forms;
@@ -91,39 +92,38 @@ namespace SevenUpdate.Sdk
         internal static void EditItem()
         {
             IsNewProject = false;
-                try
-                {
-                    AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
-                }
-                catch (Exception)
-                {
-                    AppInfo = null;
-                    UpdateInfo = null;
-                    ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sua"), TaskDialogStandardIcon.Error);
-                    return;
-                }
 
+            if (File.Exists(App.UserStore + Projects[AppIndex].ApplicationName + @".sua"))
+            {
+                AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
+            }
+            else
+            {
+                AppInfo = null;
+                UpdateInfo = null;
+                ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sua"), TaskDialogStandardIcon.Error);
+                return;
+            }
 
             if (UpdateIndex < 0)
             {
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
+                return;
+            }
+
+            if (File.Exists(App.UserStore + Projects[AppIndex].ApplicationName + @".sui"))
+            {
+                UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
             }
             else
             {
-                try
-                {
-                    UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
-                }
-                catch (Exception)
-                {
-                    AppInfo = null;
-                    UpdateInfo = null;
-                    ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sui"), TaskDialogStandardIcon.Error);
-                    return;
-                }
-
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+                AppInfo = null;
+                UpdateInfo = null;
+                ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sui"), TaskDialogStandardIcon.Error);
+                return;
             }
+
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
         }
 
         /// <summary>The rectangle_ mouse left button down.</summary>
@@ -269,10 +269,43 @@ namespace SevenUpdate.Sdk
         /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref = "TaskDialog" />)</param>
         /// <param name = "icon">The <see cref = "TaskDialogStandardIcon" /> to display</param>
         /// <param name = "description">A description of the message, supplements the instruction text</param>
-        /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
+        internal static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
-            return ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
+            ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
+            return;
+        }
+
+        /// <summary>Updates a LocaleString collection a new value</summary>
+        /// <param name="value">The value to update the collection with</param>
+        /// <param name="localeStrings">The collection for the value</param>
+        internal static void UpdateLocaleStrings(string value, ObservableCollection<LocaleString> localeStrings)
+        {
+            if (!String.IsNullOrWhiteSpace(value))
+            {
+                var found = false;
+
+                foreach (var t in localeStrings.Where(t => t.Lang == Utilities.Locale))
+                {
+                    t.Value = value;
+                    found = true;
+                }
+
+                if (!found)
+                {
+                    var ls = new LocaleString { Lang = Utilities.Locale, Value = value };
+                    localeStrings.Add(ls);
+                }
+            }
+            else
+            {
+                for (var x = 0; x < localeStrings.Count; x++)
+                {
+                    if (localeStrings[x].Lang == Utilities.Locale)
+                    {
+                        localeStrings.RemoveAt(x);
+                    }
+                }
+            }
         }
 
         /// <summary>Shows either a <see cref = "TaskDialog" /> or a <see cref = "System.Windows.MessageBox" /> if running legacy windows.</summary>
@@ -283,8 +316,7 @@ namespace SevenUpdate.Sdk
         /// <param name = "footerText">Text to display as a footer message</param>
         /// <param name = "defaultButtonText">Text to display on the button</param>
         /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
-        /// <returns>Returns the result of the message</returns>
-        private static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
+        private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
@@ -343,7 +375,8 @@ namespace SevenUpdate.Sdk
                         td.StandardButtons = standardButtons;
                     }
 
-                    return td.ShowDialog(Application.Current.MainWindow);
+                    td.ShowDialog(Application.Current.MainWindow);
+                    return;
                 }
             }
 
@@ -387,13 +420,13 @@ namespace SevenUpdate.Sdk
             switch (result)
             {
                 case MessageBoxResult.No:
-                    return TaskDialogResult.No;
+                    return;
                 case MessageBoxResult.OK:
-                    return TaskDialogResult.Ok;
+                    return;
                 case MessageBoxResult.Yes:
-                    return TaskDialogResult.Yes;
+                    return;
                 default:
-                    return TaskDialogResult.Cancel;
+                    return;
             }
         }
 

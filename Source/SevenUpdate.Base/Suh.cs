@@ -114,6 +114,9 @@ namespace SevenUpdate
         /// <summary>Initializes a new instance of the <see cref = "Suh" /> class</summary>
         public Suh()
         {
+            this.Name = new ObservableCollection<LocaleString>();
+            this.Publisher = new ObservableCollection<LocaleString>();
+            this.Description = new ObservableCollection<LocaleString>();
         }
 
         #endregion

@@ -60,6 +60,7 @@ namespace SevenUpdate.Sdk.Pages
             var appUpdates = new Collection<Update>();
 
             var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
+
             if (Core.AppInfo.Is64Bit)
             {
                 if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -73,7 +74,11 @@ namespace SevenUpdate.Sdk.Pages
             // If SUA exists lets remove the old info
             if (Core.AppIndex > -1)
             {
-                appUpdates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui");
+                if (File.Exists(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui"))
+                {
+                    appUpdates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui");
+                }
+
                 updateNames = Core.Projects[Core.AppIndex].UpdateNames;
                 Core.Projects.RemoveAt(Core.AppIndex);
             }

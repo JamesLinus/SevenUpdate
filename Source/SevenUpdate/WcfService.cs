@@ -263,7 +263,9 @@ namespace SevenUpdate
             catch (Exception ex)
             {
                 if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
+                {
                     throw;
+                }
             }
 
             MyServiceHost.StopService();

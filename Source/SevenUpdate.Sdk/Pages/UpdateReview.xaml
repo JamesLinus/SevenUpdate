@@ -40,28 +40,28 @@
 		<TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="2">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="Number of languages supported: {0}" FallbackValue="Number of languages supported: 0">
-					<Binding Path="Name.Count" UpdateSourceTrigger="PropertyChanged" />
+					<Binding Path="Name.Count" />
 				</MultiBinding>
 			</TextBlock.Text>
 		</TextBlock>
 		<TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="3">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="Number of files: {0}" FallbackValue="Number of files: 0">
-					<Binding Path="Files.Count" UpdateSourceTrigger="PropertyChanged" />
+					<Binding Path="Files.Count" />
 				</MultiBinding>
 			</TextBlock.Text>
 		</TextBlock>
 		<TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="4">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="Number of registry items: {0}" FallbackValue="Number of registry items: 0">
-					<Binding Path="RegistryItems.Count" UpdateSourceTrigger="PropertyChanged" />
+					<Binding Path="RegistryItems.Count" />
 				</MultiBinding>
 			</TextBlock.Text>
 		</TextBlock>
 		<TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="5">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="Number of shortcuts: {0}" FallbackValue="Number of shortcuts: 0">
-					<Binding Path="Shortcuts.Count" UpdateSourceTrigger="PropertyChanged" />
+					<Binding Path="Shortcuts.Count"/>
 				</MultiBinding>
 			</TextBlock.Text>
 		</TextBlock>

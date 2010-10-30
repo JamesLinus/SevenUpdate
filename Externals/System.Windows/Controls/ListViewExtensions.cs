@@ -26,8 +26,6 @@
 // ***********************************************************************
 namespace System.Windows.Controls
 {
-    using System.Windows.Controls.Primitives;
-
     /// <summary>Contains methods that extend the <see cref="ListView"/> control</summary>
     public static class ListViewExtensions
     {

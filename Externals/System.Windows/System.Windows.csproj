@@ -75,6 +75,7 @@
     <Compile Include="Controls\AdornerExtensions.cs" />
     <Compile Include="Controls\AdornerLabel.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
+    <Compile Include="Controls\TreeViewExtensions.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Dialogs\DialogControl.cs">
       <SubType>Code</SubType>

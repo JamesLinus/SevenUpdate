@@ -56,7 +56,7 @@
 			</ListBox.ContextMenu>
 		</ListBox>
 		<!--Help text-->
-		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility},ConverterParameter=True}" HorizontalAlignment="Left">
+		<StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="9" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility},ConverterParameter=True}" HorizontalAlignment="Left">
 			<Image RenderOptions.BitmapScalingMode="HighQuality" Source="/SevenUpdate.Sdk;component/Images/LeftArrow.png" Width="45" Height="45" Stretch="None" HorizontalAlignment="Center" VerticalAlignment="Center" />
 			<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:ToGetStartedFiles}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
 		</StackPanel>
@@ -68,8 +68,8 @@
 			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="GoToMainPage" TabIndex="7" />
 		</StackPanel>
 		<!--File Action-->
-		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:FileAction}" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:FileActionToolTip}" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" SelectedIndex="0" TabIndex="1" SelectionChanged="ChangeUI">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:FileAction}" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:FileActionToolTip}" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+		<ComboBox SelectedValuePath="Tag" SelectedValue="{Binding ElementName=listBox, Path=SelectedItem.Action, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" MinWidth="75" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" VerticalAlignment="Center" SelectedIndex="0" TabIndex="1" SelectionChanged="ChangeUI">
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Update}" Tag="Update" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:UpdateIfFileExists}" Tag="UpdateIfExist" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:UpdateRegister}" Tag="UpdateThenRegister" />
@@ -80,31 +80,31 @@
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:ExecuteDelete}" Tag="ExecuteThenDelete" />
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:UnregisterDelete}" Tag="UnregisterThenDelete" />
 		</ComboBox>
-		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:DownloadUrl}" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Padding="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}" TabIndex="2" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:DownloadUrl}" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Padding="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+		<InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}" TabIndex="2" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}">
 			<InfoTextBox.Text>
-				<Binding ElementName="listBox" Path="SelectedItem.Source" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+				<Binding ElementName="listBox" Path="SelectedItem.Source" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<Helpers:AppDirectoryRule />
 					</Binding.ValidationRules>
 				</Binding>
 			</InfoTextBox.Text>
 		</InfoTextBox>
-		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:InstallLocation}" HorizontalAlignment="Left" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:InstallLocationNote}" TabIndex="3" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Name="tbxInstallLocation">
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:InstallLocation}" HorizontalAlignment="Left" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:InstallLocationNote}" TabIndex="3" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" Name="tbxInstallLocation">
 			<InfoTextBox.Text>
-				<Binding ElementName="listBox" Path="SelectedItem.Destination" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+				<Binding ElementName="listBox" Path="SelectedItem.Destination" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
 					<Binding.ValidationRules>
 						<Helpers:AppDirectoryRule />
 					</Binding.ValidationRules>
 				</Binding>
 			</InfoTextBox.Text>
 		</InfoTextBox>
-		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{LocText SevenUpdate.Sdk:Resources:LocateFileLocation}" MouseDown="UpdateFile" Cursor="Hand" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Focusable="True" />
-		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:CommandArgs}" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" ToolTip="{LocText SevenUpdate.Sdk:Resources:CommandArgsToolTip}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:ArgumentNote}" Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" TabIndex="4" Name="tbxArgs" />
-		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SHA2Hash}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" Grid.Row="8" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" />
-		<TextBlock IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}, ConverterParameter=True}" Padding="2" Foreground="#FF0066CC" MouseDown="UpdateHash" Style="{StaticResource underlineTextBlock}" Text="{Binding ElementName=listBox, Path=SelectedItem.Hash, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" ToolTip="{LocText SevenUpdate.Sdk:Resources:SHA2HashToolTip}" Cursor="Hand" Grid.Column="2" Grid.Row="8" Margin="5,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Focusable="True" />
+		<TextBlock Style="{StaticResource underlineTextBlock}" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Browse}" ToolTip="{LocText SevenUpdate.Sdk:Resources:LocateFileLocation}" MouseDown="UpdateFile" Cursor="Hand" VerticalAlignment="Center" Grid.Column="3" Grid.Row="5" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" Focusable="True" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:CommandArgs}" HorizontalAlignment="Left" Padding="2" Margin="0,10,0,0" ToolTip="{LocText SevenUpdate.Sdk:Resources:CommandArgsToolTip}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="6" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:ArgumentNote}" Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=LostFocus, Mode=TwoWay}" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" TabIndex="4" Name="tbxArgs" />
+		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SHA2Hash}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" Grid.Row="8" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+		<TextBlock IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}, ConverterParameter=True}" Padding="2" Foreground="#FF0066CC" MouseDown="UpdateHash" Style="{StaticResource underlineTextBlock}" Text="{Binding ElementName=listBox, Path=SelectedItem.Hash, UpdateSourceTrigger=LostFocus, Mode=OneWay}" ToolTip="{LocText SevenUpdate.Sdk:Resources:SHA2HashToolTip}" Cursor="Hand" Grid.Column="2" Grid.Row="8" Margin="5,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" Focusable="True" />
 		<TextBlock Style="{StaticResource glassText}" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:CalculatingHash}" Grid.Row="10" VerticalAlignment="Center" Margin="30,0,0,0" Grid.ColumnSpan="2" Name="tbHashCalculating" Visibility="Collapsed" />
 	</Grid>
 </Page>

@@ -107,7 +107,7 @@ namespace SevenUpdate.Sdk.Pages
         private bool HasErrors()
         {
             // ReSharper disable PossibleNullReferenceException
-            return Core.UpdateInfo.RegistryItems.Count != 0 && this.tbxKeyPath.GetBindingExpression(TextBox.TextProperty).HasError;
+            return Core.UpdateInfo.RegistryItems.Count != 0 && Validation.GetHasError(tbxKeyPath);
 
             // ReSharper restore PossibleNullReferenceException
         }

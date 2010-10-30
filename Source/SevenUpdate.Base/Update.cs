@@ -122,11 +122,22 @@ namespace SevenUpdate
             {
                 this.Files = new ObservableCollection<UpdateFile>();
             }
+
+            this.Name.CollectionChanged += this.NameCollectionChanged;
+            this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
         /// <summary>Initializes a new instance of the <see cref = "Update" /> class</summary>
         public Update()
         {
+            this.Name = new ObservableCollection<LocaleString>();
+            this.Description = new ObservableCollection<LocaleString>();
+            this.Files = new ObservableCollection<UpdateFile>();
+            this.RegistryItems = new ObservableCollection<RegistryItem>();
+            this.Shortcuts = new ObservableCollection<Shortcut>();
+
+            this.Name.CollectionChanged += this.NameCollectionChanged;
+            this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
         #endregion
@@ -320,6 +331,22 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void DescriptionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Description");
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void NameCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Name");
+        }
 
         /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
         /// <param name = "propertyName">The name of the property</param>

@@ -33,7 +33,7 @@
 					</ToolTip>
 					<DataTemplate x:Key="itemCheckBox">
 						<StackPanel Orientation="Horizontal">
-							<CheckBox IsChecked="{Binding Path=IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+							<CheckBox IsChecked="{Binding Path=IsEnabled, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 						</StackPanel>
 					</DataTemplate>
 					<DataTemplate x:Key="itemLink">

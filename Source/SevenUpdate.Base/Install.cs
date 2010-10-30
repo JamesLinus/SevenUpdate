@@ -286,7 +286,7 @@ namespace SevenUpdate
 
             for (var x = 0; x < regItems.Count; x++)
             {
-                var keyPath = Utilities.GetRegistryKey(regItems[x].Key, is64Bit);
+                var keyPath = Utilities.ParseRegistryKey(regItems[x].Key, is64Bit);
                 switch (keyPath)
                 {
                     case "HKEY_CLASSES_ROOT":
@@ -392,7 +392,6 @@ namespace SevenUpdate
                     }
 
                     File.Delete(shortcuts[x].Location + linkName + @".lnk");
-
 
                     //var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
 
@@ -513,7 +512,7 @@ namespace SevenUpdate
                     }
                     else
                     {
-                        Utilities.ReportError(new FileNotFoundException(file.Source),ErrorType.InstallationError);
+                        Utilities.ReportError(new FileNotFoundException(file.Source), ErrorType.InstallationError);
                         errorOccurred = true;
                     }
 

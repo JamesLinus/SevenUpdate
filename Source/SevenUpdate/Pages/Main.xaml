@@ -36,7 +36,7 @@
 		<ib:InfoBar x:Name="infoBar" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,65,0,30" Grid.ColumnSpan="2" />
 		<TextBlock Grid.Row="1" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RecentCheck}" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
 		<TextBlock Grid.Row="3" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RecentInstall}" VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
-		<TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default},  Path=lastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged, FallbackValue=Never}" />
-		<TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=lastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=PropertyChanged, FallbackValue=Never}" Margin="0,5,0,0" />
+		<TextBlock Grid.Column="3" Grid.Row="1" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default},  Path=lastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}" />
+		<TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Text="{Binding Source={x:Static Properties:Settings.Default}, Path=lastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}" Margin="0,5,0,0" />
 	</Grid>
 </Page>

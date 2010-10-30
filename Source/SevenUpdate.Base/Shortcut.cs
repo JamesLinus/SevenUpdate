@@ -144,11 +144,19 @@ namespace SevenUpdate
             {
                 this.Name = new ObservableCollection<LocaleString>();
             }
+
+            this.Name.CollectionChanged += this.NameCollectionChanged;
+            this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
         /// <summary>Initializes a new instance of the <see cref = "Shortcut" /> class</summary>
         public Shortcut()
         {
+            this.Name = new ObservableCollection<LocaleString>();
+            this.Description = new ObservableCollection<LocaleString>();
+
+            this.Name.CollectionChanged += this.NameCollectionChanged;
+            this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
         #endregion
@@ -486,6 +494,22 @@ namespace SevenUpdate
 
             var installState = NativeMethods.MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
             return installState == InstallState.Source ? path.ToString() : null;
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void DescriptionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Description");
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void NameCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Name");
         }
 
         /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>

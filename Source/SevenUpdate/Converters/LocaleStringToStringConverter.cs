@@ -54,18 +54,7 @@ namespace SevenUpdate.Converters
             var localeStrings = value as Collection<LocaleString>;
 
             // Loops through the collection of LocaleStrings
-            if (localeStrings != null)
-            {
-                foreach (var t in localeStrings.Where(t => t.Lang == Utilities.Locale))
-                {
-                    return t.Value;
-                }
-
-                // Returns an english string if the specified locale is not available
-                return localeStrings[0].Value;
-            }
-
-            return Resources.NotAvailable;
+            return localeStrings != null ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault() : Resources.NotAvailable;
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

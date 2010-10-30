@@ -78,10 +78,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <returns><see langword = "true" /> if this instance has errors; otherwise, <see langword = "false" />.</returns>
         private bool HasErrors()
         {
-            // ReSharper disable PossibleNullReferenceException
-            return this.tbxUpdateName.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).HasError || this.imgReleaseDate.Visibility == Visibility.Visible;
-
-            // ReSharper restore PossibleNullReferenceException
+            return Validation.GetHasError(tbxUpdateName) || Validation.GetHasError(tbxUpdateDetails) || Validation.GetHasError(tbxSourceLocation) || this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
         /// <summary>Loads the <see cref = "LocaleString" />'s for the <see cref = "Update" /> into the UI</summary>
@@ -186,5 +183,21 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Name);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Description);
+        }
     }
 }

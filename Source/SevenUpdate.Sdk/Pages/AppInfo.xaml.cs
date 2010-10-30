@@ -28,6 +28,7 @@ namespace SevenUpdate.Sdk.Pages
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -45,6 +46,12 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for AppInfo.xaml</summary>
     public sealed partial class AppInfo
     {
+        #region Fields
+
+       /// <summary>Indicates if the application is 64 bit</summary>
+        private static bool is64Bit;
+
+        #endregion
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref = "AppInfo" /> class.</summary>
@@ -160,15 +167,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <returns><see langword = "true" /> if this instance has errors; otherwise, <see langword = "false" />.</returns>
         private bool HasErrors()
         {
-            // ReSharper disable PossibleNullReferenceException
-            if (this.rbtnRegistry.IsChecked.GetValueOrDefault() && this.tbxValueName.GetBindingExpression(TextBox.TextProperty).HasError)
+            if (this.rbtnRegistry.IsChecked.GetValueOrDefault() && Validation.GetHasError(tbxValueName))
             {
                 return true;
             }
 
-            return this.tbxAppName.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxPublisher.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxAppUrl.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxAppDescription.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).HasError;
-
-            // ReSharper restore PossibleNullReferenceException
+            return Validation.GetHasError(tbxAppName) || Validation.GetHasError(tbxPublisher) || Validation.GetHasError(tbxAppUrl) || Validation.GetHasError(tbxHelpUrl) || Validation.GetHasError(tbxAppLocation) || Validation.GetHasError(tbxAppDescription) || Validation.GetHasError(tbxSuiUrl);
         }
 
         /// <summary>Loads the application info into the UI.</summary>
@@ -202,6 +206,8 @@ namespace SevenUpdate.Sdk.Pages
             {
                 this.tbxPublisher.Text = t.Value;
             }
+
+            is64Bit = Core.AppInfo.Is64Bit;
         }
 
         /// <summary>Loads the <see cref = "LocaleString" />'s for the <see cref = "Sua" /> into the UI</summary>
@@ -288,6 +294,7 @@ namespace SevenUpdate.Sdk.Pages
                 else
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
+                    File.Delete(App.UserStore + appName + ".sua");
                     if (Core.AppInfo.Is64Bit)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -295,6 +302,8 @@ namespace SevenUpdate.Sdk.Pages
                             appName += " (x64)";
                         }
                     }
+
+                    File.Delete(App.UserStore + appName + ".sua");
 
                     ObservableCollection<string> updateNames = null;
 
@@ -319,6 +328,12 @@ namespace SevenUpdate.Sdk.Pages
                         {
                             project.UpdateNames.Add(t);
                         }
+                    }
+
+                    if (Core.AppInfo.Is64Bit != is64Bit)
+                    {
+                        project.UpdateNames.Clear();
+                        File.Delete(App.UserStore + appName + ".sui");
                     }
 
                     Core.Projects.Add(project);
@@ -349,6 +364,30 @@ namespace SevenUpdate.Sdk.Pages
                 this.line.Visibility = Visibility.Visible;
                 this.rectangle.Visibility = Visibility.Visible;
             }
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Description);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangePublisher(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Publisher);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Name);
         }
 
         #endregion

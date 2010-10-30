@@ -18,7 +18,7 @@
 					<StackPanel Orientation="Horizontal">
 						<CheckBox Click="UpdateUIOnUpdateSelection">
 							<CheckBox.IsChecked>
-								<Binding Path="Status" Converter="{StaticResource statusToBool}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" />
+								<Binding Path="Status" Converter="{StaticResource statusToBool}" UpdateSourceTrigger="LostFocus" Mode="TwoWay" />
 							</CheckBox.IsChecked>
 						</CheckBox>
 					</StackPanel>

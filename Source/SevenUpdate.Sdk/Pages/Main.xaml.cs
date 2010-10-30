@@ -71,6 +71,8 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "e">The <see cref = "EventArgs" /> instance containing the event data.</param>
         private void ChangeUI(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            var parent = treeView.FindTreeViewItem(t => t.Items.Contains(e.NewValue));
+
             if (this.treeView.SelectedItem == null)
             {
                 // clTest.Visibility = Visibility.Collapsed;
@@ -93,7 +95,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.clEdit.Content = String.Format(CultureInfo.CurrentCulture, Properties.Resources.Edit, item.Header);
             this.clNewUpdate.Note = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AddUpdate, item.Header);
-            if (item.HasItems)
+            if (parent == null)
             {
                 Core.AppIndex = item.Tag is int ? (int)item.Tag : -1;
                 Core.UpdateIndex = -1;
@@ -142,11 +144,15 @@ namespace SevenUpdate.Sdk.Pages
                 var index = item.Tag as int[];
                 if (index != null)
                 {
-                    var updates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
+                    if (File.Exists(App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui"))
+                    {
+                        var updates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
+                        updates.RemoveAt(index[1]);
+                        Utilities.Serialize(updates, App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
+                    }
+
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
                     Utilities.Serialize(Core.Projects, Core.ProjectsFile);
-                    updates.RemoveAt(index[1]);
-                    Utilities.Serialize(updates, App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
                 }
             }
 

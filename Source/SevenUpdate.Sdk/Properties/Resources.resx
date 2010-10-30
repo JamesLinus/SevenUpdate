@@ -885,4 +885,7 @@
   <data name="FileLoadError" xml:space="preserve">
     <value>There was an error loading the file: {0}</value>
   </data>
+  <data name="PathDoesNotExist" xml:space="preserve">
+    <value>The path entered does not exist on this machine</value>
+  </data>
 </root>

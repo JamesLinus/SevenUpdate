@@ -53,8 +53,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            Uri url;
-            var result = Uri.TryCreate(input, UriKind.RelativeOrAbsolute, out url);
+            var result = Uri.IsWellFormedUriString(input, UriKind.RelativeOrAbsolute);
 
             if (!result)
             {

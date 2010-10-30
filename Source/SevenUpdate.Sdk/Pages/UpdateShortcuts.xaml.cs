@@ -161,10 +161,7 @@ namespace SevenUpdate.Sdk.Pages
                 return false;
             }
 
-            // ReSharper disable PossibleNullReferenceException
-            return this.tbxName.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxSaveLocation.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxTarget.GetBindingExpression(TextBox.TextProperty).HasError;
-
-            // ReSharper restore PossibleNullReferenceException
+            return Validation.GetHasError(tbxName) || Validation.GetHasError(tbxSaveLocation) || Validation.GetHasError(tbxTarget);
         }
 
         /// <summary>Opens a dialog to browse for the shortcut to import</summary>
@@ -354,5 +351,21 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
+        {
+            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
+        }
     }
 }

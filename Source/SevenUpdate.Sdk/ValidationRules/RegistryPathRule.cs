@@ -59,7 +59,15 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
+            if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
+            {
+                if (Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit))
+                {
+                    return new ValidationResult(true, null);
+                }
+            }
+
+            return new ValidationResult(false, Resources.FilePathInvalid);
         }
 
         #endregion

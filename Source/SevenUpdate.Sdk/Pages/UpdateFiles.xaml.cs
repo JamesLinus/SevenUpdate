@@ -108,9 +108,16 @@ namespace SevenUpdate.Sdk.Pages
             installUrl = installUrl.Replace(@"\\", @"\");
 
             var downloadUrl = fullName.Replace(installDirectory, @"%DOWNLOADURL%/", true);
-            downloadUrl = downloadUrl.Replace(@"\\", @"/");
-            downloadUrl = downloadUrl.Replace(@"\", @"/");
-            downloadUrl = downloadUrl.Replace(@"//", @"/");
+            if (downloadUrl == fullName)
+            {
+                downloadUrl = @"%DOWNLOADURL%/" + Path.GetFileName(fullName);
+            }
+            else
+            {
+                downloadUrl = downloadUrl.Replace(@"\\", @"/");
+                downloadUrl = downloadUrl.Replace(@"\", @"/");
+                downloadUrl = downloadUrl.Replace(@"//", @"/");
+            }
 
             var file = new UpdateFile
                 {
@@ -300,7 +307,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             // ReSharper disable PossibleNullReferenceException
-            return this.tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).HasError || this.tbxInstallLocation.GetBindingExpression(TextBox.TextProperty).HasError;
+            return Validation.GetHasError(tbxDownloadUrl) || Validation.GetHasError(tbxInstallLocation);
 
             // ReSharper restore PossibleNullReferenceException
         }

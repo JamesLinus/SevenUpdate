@@ -94,7 +94,7 @@ namespace SevenUpdate.Pages
             this.config = Core.Settings;
             this.DataContext = this.config;
 
-            Task.Factory.StartNew(this.DownloadSul);
+            this.DownloadSul();
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
@@ -110,7 +110,9 @@ namespace SevenUpdate.Pages
             try
             {
                 if (File.Exists(App.ApplicationsFile))
+                {
                     machineAppList = Utilities.Deserialize<ObservableCollection<Sua>>(App.ApplicationsFile);
+                }
             }
             catch (NullReferenceException)
             {

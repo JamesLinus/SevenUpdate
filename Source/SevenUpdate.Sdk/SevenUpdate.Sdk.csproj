@@ -156,7 +156,6 @@
     </Compile>
     <Compile Include="Converters\BooleanToLabelConverter.cs" />
     <Compile Include="RegParser.cs" />
-    <Compile Include="ValidationRules\LocaleStringRule.cs" />
     <Compile Include="ValidationRules\RegistryPathRule.cs" />
     <Compile Include="ValidationRules\SuiLocationRule.cs" />
     <Compile Include="ValidationRules\AppDirectoryRule.cs" />

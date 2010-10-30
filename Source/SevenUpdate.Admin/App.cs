@@ -266,6 +266,9 @@ namespace SevenUpdate.Admin
             SystemEvents.SessionEnding -= PreventClose;
         }
 
+        /// <summary>Adds an update to the history</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
         private static void AddHistory(object sender, UpdateInstalledEventArgs e)
         {
             var history = File.Exists(HistoryFile) ? Utilities.Deserialize<Collection<Suh>>(HistoryFile) : new Collection<Suh>();

@@ -70,16 +70,21 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (this.IsRegistryPath)
             {
-                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
+                if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
+                {
+                    return Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist);
+                }
             }
 
             input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit) : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
-            Uri url;
-            var result = Uri.TryCreate(input, UriKind.RelativeOrAbsolute, out url);
-
-            if (!result)
+            if (File.Exists(input) || Directory.Exists(input))
             {
-                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.FilePathInvalid);
+                return new ValidationResult(true, null);
+            }
+
+            if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
+            {
+                return new ValidationResult(true, null);
             }
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
