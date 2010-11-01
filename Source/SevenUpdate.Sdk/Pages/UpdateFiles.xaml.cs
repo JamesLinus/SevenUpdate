@@ -307,7 +307,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             // ReSharper disable PossibleNullReferenceException
-            return Validation.GetHasError(tbxDownloadUrl) || Validation.GetHasError(tbxInstallLocation);
+            return tbxDownloadUrl.HasError || tbxInstallLocation.HasError;
 
             // ReSharper restore PossibleNullReferenceException
         }

@@ -49,6 +49,15 @@ namespace SevenUpdate
         {
         }
 
+        /// <summary>Initializes a new instance of the <see cref = "LocaleString" /> class</summary>
+        /// <param name="value">The string value</param>
+        /// <param name="lang">The an ISO language code for the value</param>
+        public LocaleString(string value, string lang)
+        {
+            Lang = lang;
+            Value = value;
+        }
+
         #endregion
 
         #region Events

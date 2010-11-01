@@ -238,7 +238,6 @@ namespace SevenUpdate.Sdk
                 saveFileDialog.AddExtension = true;
                 saveFileDialog.InitialDirectory = initialDirectory;
                 saveFileDialog.ValidateNames = true;
-
                 switch (defaultExtension)
                 {
                     case @"sua":

@@ -45,6 +45,10 @@ namespace SevenUpdate.Sdk.Pages
         {
             this.InitializeComponent();
             this.DataContext = Core.UpdateInfo;
+            if (String.IsNullOrWhiteSpace(Core.UpdateInfo.ReleaseDate))
+            {
+                Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
+            }
 
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged += this.UpdateUI;
@@ -78,7 +82,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <returns><see langword = "true" /> if this instance has errors; otherwise, <see langword = "false" />.</returns>
         private bool HasErrors()
         {
-            return Validation.GetHasError(tbxUpdateName) || Validation.GetHasError(tbxUpdateDetails) || Validation.GetHasError(tbxSourceLocation) || this.imgReleaseDate.Visibility == Visibility.Visible;
+            return tbxUpdateName.HasError || tbxUpdateDetails.HasError || tbxSourceLocation.HasError || this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
         /// <summary>Loads the <see cref = "LocaleString" />'s for the <see cref = "Update" /> into the UI</summary>
@@ -127,11 +131,10 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
+            tbxUpdateName.HasError = String.IsNullOrWhiteSpace(tbxUpdateName.Text);
+            tbxUpdateDetails.HasError = String.IsNullOrWhiteSpace(tbxUpdateDetails.Text);
+
             // ReSharper disable PossibleNullReferenceException
-            this.tbxUpdateName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-
-            this.tbxUpdateDetails.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-
             this.tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
             // ReSharper restore PossibleNullReferenceException
@@ -189,7 +192,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Name);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
@@ -197,7 +202,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Description);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
     }
 }

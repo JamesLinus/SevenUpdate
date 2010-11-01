@@ -70,32 +70,32 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Adds a UpdateShortcut to the collection</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        private void AddShortcut(object sender, RoutedEventArgs e)
-        {
-            var file = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), Core.AppInfo.Name[0].Value, "lnk");
+        ///// <summary>Adds a UpdateShortcut to the collection</summary>
+        ///// <param name = "sender">The source of the event.</param>
+        ///// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        //private void AddShortcut(object sender, RoutedEventArgs e)
+        //{
+        //    var file = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), Core.AppInfo.Name[0].Value, "lnk");
 
-            if (file == null)
-            {
-                return;
-            }
+        //    if (file == null)
+        //    {
+        //        return;
+        //    }
 
-            var path = Utilities.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
-            path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
+        //    var path = Utilities.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
+        //    path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
-            var shortcut = new Shortcut
-                {
-                    Location = path, Action = ShortcutAction.Add,
-                };
-            var ls = new LocaleString
-                {
-                    Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(file)
-                };
-            shortcut.Name.Add(ls);
-            Core.UpdateInfo.Shortcuts.Add(shortcut);
-        }
+        //    var shortcut = new Shortcut
+        //        {
+        //            Location = path, Action = ShortcutAction.Add,
+        //        };
+        //    var ls = new LocaleString
+        //        {
+        //            Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(file)
+        //        };
+        //    shortcut.Name.Add(ls);
+        //    Core.UpdateInfo.Shortcuts.Add(shortcut);
+        //}
 
         /// <summary>Converts a path to system variables</summary>
         /// <param name = "sender">The source of the event.</param>
@@ -161,7 +161,7 @@ namespace SevenUpdate.Sdk.Pages
                 return false;
             }
 
-            return Validation.GetHasError(tbxName) || Validation.GetHasError(tbxSaveLocation) || Validation.GetHasError(tbxTarget);
+            return tbxName.HasError || tbxSaveLocation.HasError || tbxTarget.HasError;
         }
 
         /// <summary>Opens a dialog to browse for the shortcut to import</summary>
@@ -187,6 +187,8 @@ namespace SevenUpdate.Sdk.Pages
                 {
                     Arguments = importedShortcut.Arguments, Icon = icon, Location = path, Action = ShortcutAction.Update, Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
                 };
+
+            shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
 
             Core.UpdateInfo.Shortcuts.Add(shortcut);
             this.listBox.SelectedIndex = Core.UpdateInfo.Shortcuts.Count - 1;
@@ -357,7 +359,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
@@ -365,7 +369,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
     }
 }

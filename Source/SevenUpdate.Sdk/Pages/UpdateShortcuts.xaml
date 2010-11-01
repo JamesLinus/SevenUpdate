@@ -71,7 +71,7 @@
 		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="200" MaxWidth="260" Grid.RowSpan="14" DisplayMemberPath="Name/Value" SelectionChanged="SetSelectedShortcut" KeyDown="DeleteShortcut" TabIndex="0">
 			<ListBox.ContextMenu>
 				<ContextMenu>
-					<MenuItem Click="AddShortcut" Header="{LocText SevenUpdate.Sdk:Resources:AddShortcut}" />
+					<!--<MenuItem Click="AddShortcut" Header="{LocText SevenUpdate.Sdk:Resources:AddShortcut}" />-->
 					<MenuItem Click="ImportShortcut" Header="{LocText SevenUpdate.Sdk:Resources:ImportShortcut}" />
 					<Separator />
 					<MenuItem Header="{LocText SevenUpdate.Sdk:Resources:RemoveShortcut}" Click="RemoveAllShortcuts" Style="{StaticResource RemoveMenu}" />

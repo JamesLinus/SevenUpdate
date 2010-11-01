@@ -167,12 +167,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <returns><see langword = "true" /> if this instance has errors; otherwise, <see langword = "false" />.</returns>
         private bool HasErrors()
         {
-            if (this.rbtnRegistry.IsChecked.GetValueOrDefault() && Validation.GetHasError(tbxValueName))
+            if (this.rbtnRegistry.IsChecked.GetValueOrDefault() && tbxValueName.HasError)
             {
                 return true;
             }
 
-            return Validation.GetHasError(tbxAppName) || Validation.GetHasError(tbxPublisher) || Validation.GetHasError(tbxAppUrl) || Validation.GetHasError(tbxHelpUrl) || Validation.GetHasError(tbxAppLocation) || Validation.GetHasError(tbxAppDescription) || Validation.GetHasError(tbxSuiUrl);
+            return tbxAppName.HasError || tbxPublisher.HasError || tbxAppUrl.HasError || tbxHelpUrl.HasError || tbxAppLocation.HasError || tbxAppDescription.HasError || tbxSuiUrl.HasError;
         }
 
         /// <summary>Loads the application info into the UI.</summary>
@@ -180,10 +180,11 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
+            tbxAppName.HasError = String.IsNullOrWhiteSpace(tbxAppName.Text);
+            tbxAppDescription.HasError = String.IsNullOrWhiteSpace(tbxAppDescription.Text);
+            tbxPublisher.HasError = String.IsNullOrWhiteSpace(tbxPublisher.Text);
+            
             // ReSharper disable PossibleNullReferenceException
-            this.tbxPublisher.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxAppDescription.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxAppName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             this.tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
             this.tbxAppUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -371,7 +372,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Description);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Description);
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
@@ -379,7 +382,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Publisher);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Publisher);
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
@@ -387,7 +392,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            Core.UpdateLocaleStrings(((InfoTextBox)sender).Text, Core.AppInfo.Name);
+            var textBox = ((InfoTextBox)sender);
+            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
         }
 
         #endregion

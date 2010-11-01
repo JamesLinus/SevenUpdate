@@ -81,7 +81,7 @@
 			<ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:UnregisterDelete}" Tag="UnregisterThenDelete" />
 		</ComboBox>
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:DownloadUrl}" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Padding="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
-		<InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}" TabIndex="2" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}">
+		<InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}" TabIndex="2" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}">
 			<InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Source" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
 					<Binding.ValidationRules>
@@ -91,7 +91,7 @@
 			</InfoTextBox.Text>
 		</InfoTextBox>
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:InstallLocation}" HorizontalAlignment="Left" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:InstallLocationToolTip}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" Margin="0,10,0,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
-		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:InstallLocationNote}" TabIndex="3" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,30,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" Name="tbxInstallLocation">
+		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:InstallLocationNote}" TabIndex="3" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,5,0" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" Name="tbxInstallLocation">
 			<InfoTextBox.Text>
 				<Binding ElementName="listBox" Path="SelectedItem.Destination" UpdateSourceTrigger="LostFocus" Mode="TwoWay">
 					<Binding.ValidationRules>
