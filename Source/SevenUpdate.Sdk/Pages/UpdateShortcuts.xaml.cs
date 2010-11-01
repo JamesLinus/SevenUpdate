@@ -360,7 +360,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
@@ -370,7 +380,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
     }

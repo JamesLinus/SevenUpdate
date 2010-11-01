@@ -29,7 +29,6 @@ namespace System.Windows.ValidationRules
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
-    using System.Net;
     using System.Windows.Controls;
     using System.Windows.Properties;
 
@@ -57,18 +56,15 @@ namespace System.Windows.ValidationRules
 
             if (String.IsNullOrWhiteSpace(url))
             {
-                return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+                return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 
-            // ReSharper disable AssignNullToNotNullAttribute
             if (File.Exists(url) || Directory.Exists(url))
             {
                 return new ValidationResult(true, null);
             }
 
             return Uri.IsWellFormedUriString(url, UriKind.Absolute) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
-
-            // ReSharper restore AssignNullToNotNullAttribute
         }
 
         #endregion

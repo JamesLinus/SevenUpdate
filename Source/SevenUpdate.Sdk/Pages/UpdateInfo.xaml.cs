@@ -131,8 +131,27 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
-            tbxUpdateName.HasError = String.IsNullOrWhiteSpace(tbxUpdateName.Text);
-            tbxUpdateDetails.HasError = String.IsNullOrWhiteSpace(tbxUpdateDetails.Text);
+            if (String.IsNullOrWhiteSpace(tbxUpdateDetails.Text))
+            {
+                tbxUpdateDetails.HasError = true;
+                tbxUpdateDetails.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                tbxUpdateDetails.HasError = false;
+                tbxUpdateDetails.ToolTip = null;
+            }
+
+            if (String.IsNullOrWhiteSpace(tbxUpdateName.Text))
+            {
+                tbxUpdateName.HasError = true;
+                tbxUpdateName.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                tbxUpdateName.HasError = false;
+                tbxUpdateName.ToolTip = null;
+            }
 
             // ReSharper disable PossibleNullReferenceException
             this.tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -193,7 +212,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
         }
 
@@ -203,7 +232,18 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
     }

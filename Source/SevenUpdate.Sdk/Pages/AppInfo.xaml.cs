@@ -180,9 +180,38 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
-            tbxAppName.HasError = String.IsNullOrWhiteSpace(tbxAppName.Text);
-            tbxAppDescription.HasError = String.IsNullOrWhiteSpace(tbxAppDescription.Text);
-            tbxPublisher.HasError = String.IsNullOrWhiteSpace(tbxPublisher.Text);
+            if (String.IsNullOrWhiteSpace(tbxAppName.Text))
+            {
+                tbxAppName.HasError = true;
+                tbxAppName.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                tbxAppName.HasError = false;
+                tbxAppName.ToolTip = null;
+            }
+
+            if (String.IsNullOrWhiteSpace(tbxAppDescription.Text))
+            {
+                tbxAppDescription.HasError = true;
+                tbxAppDescription.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                tbxAppDescription.HasError = false;
+                tbxAppDescription.ToolTip = null;
+            }
+
+            if (String.IsNullOrWhiteSpace(tbxPublisher.Text))
+            {
+                tbxPublisher.HasError = true;
+                tbxPublisher.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                tbxPublisher.HasError = false;
+                tbxPublisher.ToolTip = null;
+            }
             
             // ReSharper disable PossibleNullReferenceException
             this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
@@ -373,7 +402,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Description);
         }
 
@@ -383,7 +422,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Publisher);
         }
 
@@ -393,7 +442,17 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = ((InfoTextBox)sender);
-            textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text);
+            if (String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
+            }
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
         }
 
