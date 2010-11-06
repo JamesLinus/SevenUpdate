@@ -188,37 +188,40 @@ namespace SevenUpdate
             /// <param name = "classID">The class ID.</param>
             new void GetClassID(out Guid classID);
 
-            /// <summary>Determines whether this instance is dirty.</summary>
+            /// <summary>Determines whether an object has changed since it was last saved to its current file.</summary>
             /// <returns>the error result</returns>
             [PreserveSig]
             int IsDirty();
 
-            /// <summary>Loads the specified file name.</summary>
-            /// <param name = "fileName">Name of the file.</param>
-            /// <param name = "mode">The mode how to load the file</param>
+            /// <summary>Opens the specified file and initializes an object from the file contents.</summary>
+            /// <param name = "fileName">The absolute path of the file to be opened.</param>
+            /// <param name = "mode">The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. 
+            /// The method can treat this value as a suggestion, adding more restrictive permissions if necessary. 
+            /// If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.</param>
             [PreserveSig]
             void Load([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
-            /// <summary>Saves the specified file name.</summary>
-            /// <param name = "fileName">Name of the file.</param>
-            /// <param name = "remember">if set to <see langword = "true" /> [remember].</param>
+            /// <summary>Saves a copy of the object to the specified file.</summary>
+            /// <param name = "fileName">The absolute path of the file to which the object should be saved. If fileName is null, the object should save its data to the current file, if there is one.</param>
+            /// <param name = "remember">Indicates whether the fileName parameter is to be used as the current working file. If true, fileName becomes the current file and the object should clear its dirty flag after the save.
+            /// If false, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag. If fileName is null, the implementation should ignore the remember flag.</param>
             [PreserveSig]
             void Save([In, MarshalAs(UnmanagedType.LPWStr)] string fileName, [In, MarshalAs(UnmanagedType.Bool)] bool remember);
 
-            /// <summary>Saves the shortcut</summary>
-            /// <param name = "fileName">Name of the file.</param>
+            /// <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can). The component enters NoScribble mode when it receives an IPersistFile::Save call.</summary>
+            /// <param name = "fileName">The absolute path of the file where the object was saved previously.</param>
             [PreserveSig]
             void SaveCompleted([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
-            /// <summary>Gets the shortcut from the filename</summary>
-            /// <param name = "fileName">Name of the file.</param>
+            /// <summary>Retrieves the current name of the file associated with the object. If there is no current working file, this method retrieves the default save prompt for the object.</summary>
+            /// <param name = "fileName">The path for the current file or the default file name prompt (such as *.txt). If an error occurs, fileName is set to null.</param>
             [PreserveSig]
             void GetCurFile([In, MarshalAs(UnmanagedType.LPWStr)] string fileName);
         }
 
         /// <summary>The IShellLink interface allows Shell links to be created, modified, and resolved</summary>
         [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
-        private interface IShellLink
+        private interface IShellLinkW
         {
             /// <summary>Retrieves the path and file name of a Shell link object</summary>
             /// <param name = "file">The filename of the shortcut</param>
@@ -432,7 +435,7 @@ namespace SevenUpdate
 
             shortcut.Name.Add(ls);
 
-            var shellLink = link as IShellLink;
+            var shellLink = link as IShellLinkW;
             if (shellLink == null)
             {
                 return null;
@@ -467,6 +470,24 @@ namespace SevenUpdate
             shortcut.Location = shortcutName;
 
             return shortcut;
+        }
+
+        public static void CreateShortcut(Shortcut shortcut)
+        {
+            var link = new ShellLink() as IShellLinkW;
+            if (link == null)
+            {
+                return;
+            }
+
+            link.SetArguments(shortcut.arguments);
+                link.SetDescription(Utilities.GetLocaleString(shortcut.Description));
+            var icon = shortcut.Icon.Split(new[] { ',' });
+
+            link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
+            link.SetPath(shortcut.Location);
+
+            ((IPersistFile)link).Save(Path.Combine(shortcut.Location, Utilities.GetLocaleString(shortcut.Name)), true);
         }
 
         #endregion

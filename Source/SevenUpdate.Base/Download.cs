@@ -80,20 +80,20 @@ namespace SevenUpdate
         /// <summary>Downloads the updates using BITS</summary>
         /// <param name = "appUpdates">The application updates to download</param>
         /// <param name = "downloadName">The name of the job</param>
-        /// <param name="downloadDirectory">The directory where the files are downloaded are stored</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadDirectory)
+        /// <param name="downloadLocation">The directory where the files are downloaded are stored</param>
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation)
         {
-            DownloadUpdates(appUpdates, downloadName, downloadDirectory, false);
+            DownloadUpdates(appUpdates, downloadName, downloadLocation, false);
         }
 
         /// <summary>Downloads the updates using BITS</summary>
         /// <param name = "appUpdates">The application updates to download</param>
         /// <param name = "downloadName">The name of the job</param>
-        /// <param name="downloadDirectory">The directory where the files are downloaded are stored</param>
+        /// <param name="downloadLocation">The directory where the files are downloaded are stored</param>
         /// <param name = "isPriority">if set to <see langword = "true" /> the updates will download with priority</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadDirectory, bool isPriority)
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority)
         {
-            Download.downloadDirectory = downloadDirectory;
+            downloadDirectory = downloadLocation;
             jobName = downloadName;
             if (appUpdates == null)
             {
@@ -184,7 +184,7 @@ namespace SevenUpdate
             for (var y = 0; y < application.Updates.Count; y++)
             {
                 // Create download directory consisting of application name and update title
-                var downloadDir = downloadDirectory + application.Updates[y].Name[0].Value;
+                var downloadDir = Path.Combine(downloadDirectory, application.Updates[y].Name[0].Value);
 
                 Directory.CreateDirectory(downloadDir);
 
@@ -195,20 +195,20 @@ namespace SevenUpdate
                         continue;
                     }
 
-                    if (Utilities.GetHash(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination)) == application.Updates[y].Files[z].Hash)
+                    if (Utilities.GetHash(downloadDir + Path.GetFileName(application.Updates[y].Files[z].Destination)) == application.Updates[y].Files[z].Hash)
                     {
                         continue;
                     }
 
                     try
                     {
-                        File.Delete(downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
+                        File.Delete(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
                     }
                     catch (IOException)
                     {
                     }
 
-                    bitsJob.AddFile(new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, downloadDir + @"\" + Path.GetFileName(application.Updates[y].Files[z].Destination));
+                    bitsJob.AddFile(new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
                 }
             }
         }

@@ -139,7 +139,7 @@ namespace SevenUpdate
 
                     ReportProgress(25);
 
-                    UpdateFiles(applications[x].Updates[y].Files, downloadDirectory + @"downloads\" + currentUpdateName + @"\");
+                    UpdateFiles(applications[x].Updates[y].Files, Path.Combine(downloadDirectory,  @"downloads\",  currentUpdateName) + @"\");
 
                     ReportProgress(75);
 
@@ -177,7 +177,7 @@ namespace SevenUpdate
 
                 if (Directory.Exists(downloadDirectory))
                 {
-                    NativeMethods.MoveFileExW(downloadDirectory + "downloads", null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(downloadDirectory, null, MoveOnReboot);
                 }
             }
             else
@@ -393,6 +393,8 @@ namespace SevenUpdate
 
                     File.Delete(shortcuts[x].Location + linkName + @".lnk");
 
+                    Shortcut.CreateShortcut(shortcuts[x]);
+
                     //var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
 
                     //// Where the shortcut should point to
@@ -545,7 +547,7 @@ namespace SevenUpdate
         {
             for (var x = 0; x < files.Count; x++)
             {
-                files[x].Source = downloadDirectory + Path.GetFileName(files[x].Destination);
+                files[x].Source = Path.Combine(downloadDirectory, Path.GetFileName(files[x].Destination));
                 try
                 {
                     // ReSharper disable AssignNullToNotNullAttribute

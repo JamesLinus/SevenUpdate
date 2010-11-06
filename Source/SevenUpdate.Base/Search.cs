@@ -276,7 +276,7 @@ namespace SevenUpdate
             for (var z = 0; z < update.Files.Count; z++)
             {
                 update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, is64Bit, valueName);
-                var downloadFile = downloadDirectory + update.Name[0].Value + @"\" + Path.GetFileName(update.Files[z].Destination);
+                var downloadFile = Path.Combine(downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                 if (File.Exists(update.Files[z].Destination))
