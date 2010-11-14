@@ -46,10 +46,10 @@ namespace SevenUpdate.Helper
         private const int MoveOnReboot = 5;
 
         /// <summary>The current directory the application resides in</summary>
-        private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         /// <summary>The all users app data location</summary>
-        private static readonly string AllUsersStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+        private static readonly string AllUsersStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
         #endregion
 
@@ -62,7 +62,7 @@ namespace SevenUpdate.Helper
         {
             if (args.Length > 0)
             {
-                var downloadDir = AllUsersStore + @"downloads\" + args[0] + @"\";
+                var downloadDir = Path.Combine(AllUsersStore, "downloads", args[0]);
 
                 KillProcess("SevenUpdate");
                 KillProcess("SevenUpdate.Admin");
@@ -71,7 +71,7 @@ namespace SevenUpdate.Helper
 
                 try
                 {
-                    File.Delete(AllUsersStore + "reboot.lock");
+                    File.Delete(Path.Combine(AllUsersStore, "reboot.lock"));
                 }
                 catch (Exception e)
                 {
@@ -87,7 +87,7 @@ namespace SevenUpdate.Helper
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Process.Start(AppDir + @"SevenUpdate.exe", "Auto");
+                    Process.Start(Path.Combine(AppDir, "SevenUpdate.exe"), "Auto");
                 }
                 else
                 {
@@ -148,9 +148,9 @@ namespace SevenUpdate.Helper
 
                     NativeMethods.MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
 
-                    if (!File.Exists(AllUsersStore + "reboot.lock"))
+                    if (!File.Exists(Path.Combine(AllUsersStore, "reboot.lock")))
                     {
-                        using (var file = File.Create(AllUsersStore + "reboot.lock"))
+                        using (var file = File.Create(Path.Combine(AllUsersStore, "reboot.lock")))
                         {
                             file.WriteByte(0);
                         }
@@ -158,12 +158,12 @@ namespace SevenUpdate.Helper
                 }
             }
 
-            if (!File.Exists(AllUsersStore + @"reboot.lock"))
+            if (!File.Exists(Path.Combine(AllUsersStore, "reboot.lock")))
             {
                 try
                 {
-                    Directory.Delete(AllUsersStore + folder, true);
-                    Directory.Delete(AllUsersStore + @"downloads", true);
+                    Directory.Delete(Path.Combine(AllUsersStore, folder), true);
+                    Directory.Delete(Path.Combine(AllUsersStore, "downloads"), true);
                 }
                 catch (Exception e)
                 {
@@ -175,7 +175,7 @@ namespace SevenUpdate.Helper
             }
             else
             {
-                NativeMethods.MoveFileExW(AllUsersStore + @"reboot.lock", null, MoveOnReboot);
+                NativeMethods.MoveFileExW(Path.Combine(AllUsersStore, "reboot.lock"), null, MoveOnReboot);
             }
         }
 
@@ -208,7 +208,7 @@ namespace SevenUpdate.Helper
         /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
-            Process.Start(AppDir + @"SevenUpdate.Admin.exe", "Auto");
+            Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");
         }
 
         #endregion

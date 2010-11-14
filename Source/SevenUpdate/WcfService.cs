@@ -29,6 +29,7 @@ namespace SevenUpdate
     using System;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.IO;
     using System.ServiceModel;
     using System.Threading.Tasks;
 
@@ -156,7 +157,7 @@ namespace SevenUpdate
         /// <returns><see langword = "true" /> if the install was aborted, otherwise <see langword = "false" /></returns>
         internal static bool AbortInstall()
         {
-            var abort = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe", "Abort");
+            var abort = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"), "Abort");
 
             return abort;
         }
@@ -226,7 +227,7 @@ namespace SevenUpdate
                 IsConnected = false;
                 context = null;
                 Core.Instance.IsAdmin = false;
-                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
+                var success = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"));
                 if (!success)
                 {
                     return false;
@@ -238,7 +239,7 @@ namespace SevenUpdate
                 IsConnected = false;
                 context = null;
                 Core.Instance.IsAdmin = false;
-                var success = Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Admin.exe");
+                var success = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"));
                 if (!success)
                 {
                     return false;

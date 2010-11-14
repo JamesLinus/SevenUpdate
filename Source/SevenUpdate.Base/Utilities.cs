@@ -41,15 +41,13 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    using SharpBits.Base;
-
     /// <summary>Methods that are shared between other classes</summary>
     public static class Utilities
     {
         #region Constants and Fields
 
         /// <summary>The application directory of the current assembly</summary>
-        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         #endregion
 
@@ -361,6 +359,11 @@ namespace SevenUpdate
             if (localeStrings == null)
             {
                 throw new ArgumentNullException(@"localeStrings");
+            }
+
+            if (localeStrings.Count < 1)
+            {
+                throw new ArgumentException(@"localeStrings");
             }
 
             foreach (var t in localeStrings.Where(t => t.Lang == Locale))

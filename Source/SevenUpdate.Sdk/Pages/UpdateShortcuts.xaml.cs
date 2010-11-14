@@ -70,33 +70,6 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        ///// <summary>Adds a UpdateShortcut to the collection</summary>
-        ///// <param name = "sender">The source of the event.</param>
-        ///// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
-        //private void AddShortcut(object sender, RoutedEventArgs e)
-        //{
-        //    var file = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), Core.AppInfo.Name[0].Value, "lnk");
-
-        //    if (file == null)
-        //    {
-        //        return;
-        //    }
-
-        //    var path = Utilities.ConvertPath(Path.GetDirectoryName(file), false, Core.AppInfo.Is64Bit);
-        //    path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
-
-        //    var shortcut = new Shortcut
-        //        {
-        //            Location = path, Action = ShortcutAction.Add,
-        //        };
-        //    var ls = new LocaleString
-        //        {
-        //            Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(file)
-        //        };
-        //    shortcut.Name.Add(ls);
-        //    Core.UpdateInfo.Shortcuts.Add(shortcut);
-        //}
-
         /// <summary>Converts a path to system variables</summary>
         /// <param name = "sender">The source of the event.</param>
         /// <param name = "e">The <see cref = "System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.</param>
@@ -359,7 +332,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -379,7 +352,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;

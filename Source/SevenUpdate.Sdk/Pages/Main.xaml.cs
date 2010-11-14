@@ -134,8 +134,8 @@ namespace SevenUpdate.Sdk.Pages
             if (item.HasItems)
             {
                 var index = item.Tag is int ? (int)item.Tag : 0;
-                File.Delete(App.UserStore + Core.Projects[index].ApplicationName + @".sui");
-                File.Delete(App.UserStore + Core.Projects[index].ApplicationName + @".sua");
+                File.Delete(Path.Combine(App.UserStore, Core.Projects[index].ApplicationName + ".sui"));
+                File.Delete(Path.Combine(App.UserStore, Core.Projects[index].ApplicationName + ".sua"));
                 Core.Projects.RemoveAt(index);
                 Utilities.Serialize(Core.Projects, Core.ProjectsFile);
             }
@@ -144,11 +144,11 @@ namespace SevenUpdate.Sdk.Pages
                 var index = item.Tag as int[];
                 if (index != null)
                 {
-                    if (File.Exists(App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui"))
+                    if (File.Exists(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui")))
                     {
-                        var updates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
+                        var updates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                         updates.RemoveAt(index[1]);
-                        Utilities.Serialize(updates, App.UserStore + Core.Projects[index[0]].ApplicationName + @".sui");
+                        Utilities.Serialize(updates, Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                     }
 
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
@@ -258,7 +258,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            File.Copy(App.UserStore + appName + @".sua", fileName, true);
+            File.Copy(Path.Combine(App.UserStore, appName + ".sua"), fileName, true);
         }
 
         /// <summary>Opens a dialog and saves the Sui for the selected project</summary>
@@ -275,7 +275,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            File.Copy(App.UserStore + appName + @".sui", fileName, true);
+            File.Copy(Path.Combine(App.UserStore, appName + ".sui"), fileName, true);
         }
 
         /// <summary>Selects the <see cref = "TreeViewItem" /> when right clicking on the <see cref = "TreeView" /></summary>

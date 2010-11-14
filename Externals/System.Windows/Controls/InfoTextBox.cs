@@ -47,7 +47,6 @@ namespace System.Windows.Controls
         /// <summary>Indicates if the <see cref = "InfoTextBox" /> has text</summary>
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
-
         /// <summary>The adorner label</summary>
         private AdornerLabel myAdornerLabel;
 
@@ -77,6 +76,7 @@ namespace System.Windows.Controls
 
         #region Properties
 
+        /// <summary>Gets or sets a value indicating whether the input has a validation error</summary>
         public bool HasError
         {
             get

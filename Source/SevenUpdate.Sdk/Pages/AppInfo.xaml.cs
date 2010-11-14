@@ -324,7 +324,7 @@ namespace SevenUpdate.Sdk.Pages
                 else
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
-                    File.Delete(App.UserStore + appName + ".sua");
+                    File.Delete(Path.Combine(App.UserStore, appName, ".sua"));
                     if (Core.AppInfo.Is64Bit)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -333,7 +333,7 @@ namespace SevenUpdate.Sdk.Pages
                         }
                     }
 
-                    File.Delete(App.UserStore + appName + ".sua");
+                    File.Delete(Path.Combine(App.UserStore, appName, ".sua"));
 
                     ObservableCollection<string> updateNames = null;
 
@@ -344,7 +344,7 @@ namespace SevenUpdate.Sdk.Pages
                     }
 
                     // Save the SUA file
-                    Utilities.Serialize(Core.AppInfo, App.UserStore + appName + ".sua");
+                    Utilities.Serialize(Core.AppInfo, Path.Combine(App.UserStore, appName, ".sua"));
 
                     // Save project file
                     var project = new Project
@@ -363,7 +363,7 @@ namespace SevenUpdate.Sdk.Pages
                     if (Core.AppInfo.Is64Bit != is64Bit)
                     {
                         project.UpdateNames.Clear();
-                        File.Delete(App.UserStore + appName + ".sui");
+                        File.Delete(Path.Combine(App.UserStore, appName, ".sui"));
                     }
 
                     Core.Projects.Add(project);
@@ -401,7 +401,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -421,7 +421,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -441,7 +441,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;

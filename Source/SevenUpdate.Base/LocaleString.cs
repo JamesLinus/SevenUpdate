@@ -54,8 +54,8 @@ namespace SevenUpdate
         /// <param name="lang">The an ISO language code for the value</param>
         public LocaleString(string value, string lang)
         {
-            Lang = lang;
-            Value = value;
+            this.Lang = lang;
+            this.Value = value;
         }
 
         #endregion

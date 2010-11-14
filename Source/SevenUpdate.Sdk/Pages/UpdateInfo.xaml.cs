@@ -211,7 +211,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -231,7 +231,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            var textBox = ((InfoTextBox)sender);
+            var textBox = (InfoTextBox)sender;
 
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {

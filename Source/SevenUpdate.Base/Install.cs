@@ -139,7 +139,7 @@ namespace SevenUpdate
 
                     ReportProgress(25);
 
-                    UpdateFiles(applications[x].Updates[y].Files, Path.Combine(downloadDirectory,  @"downloads\",  currentUpdateName) + @"\");
+                    UpdateFiles(applications[x].Updates[y].Files, Path.Combine(downloadDirectory,  "downloads",  currentUpdateName));
 
                     ReportProgress(75);
 
@@ -241,7 +241,7 @@ namespace SevenUpdate
                 }
             }
 
-            Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.Helper.exe", "\"" + currentUpdateName + "\"");
+            Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "\"" + currentUpdateName + "\"");
             IsInstalling = false;
             return;
         }
@@ -379,41 +379,36 @@ namespace SevenUpdate
                 shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.Is64Bit, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
-                if (!shortcuts[x].Location.EndsWith(@"\", StringComparison.CurrentCulture))
-                {
-                    shortcuts[x].Location = shortcuts[x].Location + @"\";
-                }
-
-                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(shortcuts[x].Location + linkName + @".lnk")))
+                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
                 {
                     if (!Directory.Exists(shortcuts[x].Location))
                     {
                         Directory.CreateDirectory(shortcuts[x].Location);
                     }
 
-                    File.Delete(shortcuts[x].Location + linkName + @".lnk");
+                    File.Delete(Path.Combine(shortcuts[x].Location, linkName + ".lnk"));
 
                     Shortcut.CreateShortcut(shortcuts[x]);
 
-                    //var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
+                    // var shortcut = (IWshShortcut)ws.CreateShortcut(shortcuts[x].Location + linkName + @".lnk");
 
                     //// Where the shortcut should point to
-                    //shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                    // shortcut.TargetPath = Utilities.ConvertPath(shortcuts[x].Target, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
                     //// Description for the shortcut
-                    //shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
+                    // shortcut.Description = Utilities.GetLocaleString(shortcuts[x].Description);
 
                     //// Location for the shortcut's icon
-                    //shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
+                    // shortcut.IconLocation = Utilities.ConvertPath(shortcuts[x].Icon, appInfo.Directory, appInfo.ValueName, appInfo.Is64Bit);
 
                     //// The arguments to be used for the shortcut
-                    //shortcut.Arguments = shortcuts[x].Arguments;
+                    // shortcut.Arguments = shortcuts[x].Arguments;
 
                     //// The working directory to be used for the shortcut
-                    //shortcut.WorkingDirectory = appInfo.Directory;
+                    // shortcut.WorkingDirectory = appInfo.Directory;
 
                     //// Create the shortcut at the given path
-                    //shortcut.Save();
+                    // shortcut.Save();
                 }
 
                 if (shortcuts[x].Action == ShortcutAction.Delete)

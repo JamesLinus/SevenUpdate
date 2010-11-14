@@ -51,19 +51,19 @@ namespace SevenUpdate.Admin
         #region Constants and Fields
 
         /// <summary>The all users application data location</summary>
-        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+        public static readonly string AllUserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update</summary>
-        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
+        public static readonly string ApplicationsFile = Path.Combine(AllUserStore, "Apps.sul");
 
         /// <summary>The location of the application settings file</summary>
-        public static readonly string ConfigFile = AllUserStore + @"App.config";
+        public static readonly string ConfigFile = Path.Combine(AllUserStore, "App.config");
 
         /// <summary>The location of the hidden updates file</summary>
-        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
+        public static readonly string HiddenFile = Path.Combine(AllUserStore, "Hidden.suh");
 
         /// <summary>The location of the update history file</summary>
-        public static readonly string HistoryFile = AllUserStore + @"History.suh";
+        public static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
 
         /// <summary>The WCF service host</summary>
         private static ElevatedProcessCallback client;
@@ -118,7 +118,7 @@ namespace SevenUpdate.Admin
         {
             get
             {
-                return File.Exists(App.ConfigFile) ? Utilities.Deserialize<Config>(App.ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return File.Exists(ConfigFile) ? Utilities.Deserialize<Config>(ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -140,8 +140,8 @@ namespace SevenUpdate.Admin
 
                 Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.InstallStarted);
                 IsInstalling = true;
-                File.Delete(AllUserStore + "updates.sui");
-                Task.Factory.StartNew(() => Install.InstallUpdates(Applications, AllUserStore + "downloads"));
+                File.Delete(Path.Combine(AllUserStore, "updates.sui"));
+                Task.Factory.StartNew(() => Install.InstallUpdates(Applications, Path.Combine(AllUserStore, "downloads")));
             }
             else
             {
@@ -181,7 +181,7 @@ namespace SevenUpdate.Admin
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
-            File.Delete(AllUserStore + "updates.sui");
+            File.Delete(Path.Combine(AllUserStore, "updates.sui"));
             if (isClientConnected)
             {
                 client.OnInstallCompleted(sender, e);
@@ -256,7 +256,7 @@ namespace SevenUpdate.Admin
 
                 try
                 {
-                    File.Delete(AllUserStore + @"abort.lock");
+                    File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                 }
                 catch (IOException)
                 {
@@ -289,7 +289,7 @@ namespace SevenUpdate.Admin
                 {
                     try
                     {
-                        using (var fs = File.Create(AllUserStore + "abort.lock"))
+                        using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
                         {
                             fs.WriteByte(0);
                         }
@@ -309,11 +309,11 @@ namespace SevenUpdate.Admin
 
                 if (args[0] == "Auto")
                 {
-                    if (File.Exists(AllUserStore + @"abort.lock"))
+                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
                         try
                         {
-                            File.Delete(AllUserStore + @"abort.lock");
+                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                         }
                         catch (Exception e)
                         {
@@ -339,7 +339,7 @@ namespace SevenUpdate.Admin
                         apps = Utilities.Deserialize<Collection<Sua>>(ApplicationsFile);
                     }
 
-                    Search.SearchForUpdates(apps, AllUserStore + "downloads");
+                    Search.SearchForUpdates(apps, Path.Combine(AllUserStore, "downloads"));
                 }
                 else
                 {
@@ -360,7 +360,7 @@ namespace SevenUpdate.Admin
                 notifyIcon = null;
             }
 
-            using (var fs = File.Create(AllUserStore + @"abort.lock"))
+            using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
             {
                 fs.WriteByte(0);
             }
@@ -377,11 +377,11 @@ namespace SevenUpdate.Admin
             {
                 if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
                 {
-                    Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.exe", @"Auto");
+                    Utilities.StartProcess(Path.Combine(Utilities.AppDir, "SevenUpdate.exe"), @"Auto");
                 }
                 else
                 {
-                    Utilities.StartProcess(Utilities.AppDir + @"SevenUpdate.exe", @"Reconnect");
+                    Utilities.StartProcess(Path.Combine(Utilities.AppDir, "SevenUpdate.exe"), @"Reconnect");
                 }
             }
             else
@@ -409,9 +409,9 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
-                Utilities.Serialize(Applications, AllUserStore + "updates.sui");
+                Utilities.Serialize(Applications, Path.Combine(AllUserStore, "updates.sui"));
 
-                Utilities.StartProcess(@"cacls.exe", "\"" + AllUserStore + "updates.sui\" /c /e /g Users:F");
+                Utilities.StartProcess(@"cacls.exe", "\"" + Path.Combine(AllUserStore, "updates.sui") + "\" /c /e /g Users:F");
 
                 if (Settings.AutoOption == AutoUpdateOption.Notify)
                 {
@@ -420,7 +420,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, AllUserStore + "downloads", "SevenUpdate"));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, Path.Combine(AllUserStore, "downloads"), "SevenUpdate"));
                     IsInstalling = true;
                 }
             }
@@ -459,7 +459,7 @@ namespace SevenUpdate.Admin
 
             try
             {
-                File.Delete(AllUserStore + @"abort.lock");
+                File.Delete(Path.Combine(AllUserStore, @"abort.lock"));
             }
             catch (IOException)
             {
@@ -494,13 +494,13 @@ namespace SevenUpdate.Admin
         {
             Task.Factory.StartNew(() =>
                 {
-                    if (File.Exists(AllUserStore + @"abort.lock"))
+                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
                         Download.CancelDownload();
                         Install.CancelInstall();
                         try
                         {
-                            File.Delete(AllUserStore + @"abort.lock");
+                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                         }
                         catch (IOException)
                         {
@@ -517,7 +517,7 @@ namespace SevenUpdate.Admin
                         return;
                     }
 
-                    if (Process.GetProcessesByName(@"SevenUpdate").Length > 0 || waiting)
+                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
                     {
                         return;
                     }

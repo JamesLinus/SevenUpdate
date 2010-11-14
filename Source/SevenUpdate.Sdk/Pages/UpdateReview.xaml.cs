@@ -69,14 +69,17 @@ namespace SevenUpdate.Sdk.Pages
                 }
             }
 
+            var suiFile = Path.Combine(App.UserStore, appName + ".sui");
+            var suaFile = Path.Combine(App.UserStore, appName + ".sua");
+
             var updateNames = new ObservableCollection<string>();
 
             // If SUA exists lets remove the old info
             if (Core.AppIndex > -1)
             {
-                if (File.Exists(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui"))
+                if (File.Exists(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui")))
                 {
-                    appUpdates = Utilities.Deserialize<Collection<Update>>(App.UserStore + Core.Projects[Core.AppIndex].ApplicationName + @".sui");
+                    appUpdates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui"));
                 }
 
                 updateNames = Core.Projects[Core.AppIndex].UpdateNames;
@@ -99,7 +102,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             // Save the SUI File
-            Utilities.Serialize(appUpdates, App.UserStore + appName + @".sui");
+            Utilities.Serialize(appUpdates, suiFile);
 
             // Save project file
             var project = new Project
@@ -118,7 +121,7 @@ namespace SevenUpdate.Sdk.Pages
             if (Core.IsNewProject)
             {
                 // Save the SUA file
-                Utilities.Serialize(Core.AppInfo, App.UserStore + appName + @".sua");
+                Utilities.Serialize(Core.AppInfo, suaFile);
             }
 
             if (!export)
@@ -135,7 +138,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            File.Copy(App.UserStore + appName + @".sui", fileName, true);
+            File.Copy(suiFile, fileName, true);
 
             if (Core.IsNewProject)
             {
@@ -146,7 +149,7 @@ namespace SevenUpdate.Sdk.Pages
                     return;
                 }
 
-                File.Copy(App.UserStore + appName + @".sua", fileName, true);
+                File.Copy(suaFile, fileName, true);
             }
 
             Core.IsNewProject = false;

@@ -122,9 +122,9 @@ namespace SevenUpdate.Pages
                 this.timer.Elapsed += this.CheckIfConnecting;
                 WcfService.Connect();
             }
-            else if (File.Exists(App.AllUserStore + @"updates.sui"))
+            else if (File.Exists(Path.Combine(App.AllUserStore, "updates.sui")))
             {
-                var lastCheck = File.GetLastWriteTime(App.AllUserStore + @"updates.sui");
+                var lastCheck = File.GetLastWriteTime(Path.Combine(App.AllUserStore, "updates.sui"));
 
                 var today = DateTime.Now;
 
@@ -133,9 +133,9 @@ namespace SevenUpdate.Pages
                     if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day || lastCheck.Day + 5 == today.Day)
                     {
                         WcfService.Disconnect();
-                        if (File.Exists(App.AllUserStore + @"updates.sui"))
+                        if (File.Exists(Path.Combine(App.AllUserStore, "updates.sui")))
                         {
-                            Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(App.AllUserStore + @"updates.sui")));
+                            Task.Factory.StartNew(() => Search.SetUpdatesFound(Utilities.Deserialize<Collection<Sui>>(Path.Combine(App.AllUserStore, "updates.sui"))));
                         }
                     }
                 }
@@ -143,7 +143,7 @@ namespace SevenUpdate.Pages
                 {
                     try
                     {
-                        File.Delete(App.AllUserStore + @"updates.sui");
+                        File.Delete(Path.Combine(App.AllUserStore, "updates.sui"));
                     }
                     catch (Exception ex)
                     {

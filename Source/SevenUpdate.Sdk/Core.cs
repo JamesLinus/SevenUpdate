@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
-        public static readonly string ProjectsFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update SDK\Projects.sul";
+        public static readonly string ProjectsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
 
         #endregion
 
@@ -93,15 +93,15 @@ namespace SevenUpdate.Sdk
         {
             IsNewProject = false;
 
-            if (File.Exists(App.UserStore + Projects[AppIndex].ApplicationName + @".sua"))
+            if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")))
             {
-                AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
+                AppInfo = Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             }
             else
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sua"), TaskDialogStandardIcon.Error);
+                ShowMessage(String.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")), TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -111,15 +111,15 @@ namespace SevenUpdate.Sdk
                 return;
             }
 
-            if (File.Exists(App.UserStore + Projects[AppIndex].ApplicationName + @".sui"))
+            if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + @".sui")))
             {
-                UpdateInfo = Utilities.Deserialize<Collection<Update>>(App.UserStore + Projects[AppIndex].ApplicationName + @".sui")[UpdateIndex];
+                UpdateInfo = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"))[UpdateIndex];
             }
             else
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(String.Format(Resources.FileLoadError, App.UserStore + Projects[AppIndex].ApplicationName + @".sui"), TaskDialogStandardIcon.Error);
+                ShowMessage(String.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -169,7 +169,7 @@ namespace SevenUpdate.Sdk
         internal static void NewUpdate()
         {
             IsNewProject = false;
-            AppInfo = Utilities.Deserialize<Sua>(App.UserStore + Projects[AppIndex].ApplicationName + @".sua");
+            AppInfo = Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             UpdateInfo = new Update();
 
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));

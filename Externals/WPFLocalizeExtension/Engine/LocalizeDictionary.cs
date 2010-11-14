@@ -612,10 +612,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Constructors and Destructors
 
-            /// <summary>
-            ///   Prevents a default instance of the <see cref = "WeakCultureChangedEventManager" /> class from being created. 
-            ///   Creates a new instance of WeakCultureChangedEventManager
-            /// </summary>
+            /// <summary>Prevents a default instance of the <see cref = "WeakCultureChangedEventManager" /> class from being created.</summary>
             private WeakCultureChangedEventManager()
             {
                 // creates a new list and assign it to listeners

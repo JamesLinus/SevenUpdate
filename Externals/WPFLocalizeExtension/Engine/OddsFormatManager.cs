@@ -267,10 +267,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Constructors and Destructors
 
-            /// <summary>
-            ///   Prevents a default instance of the <see cref = "WeakOddsFormatChangedEventManager" /> class from being created. 
-            ///   Creates a new instance of WeakOddsFormatChangedEventManager
-            /// </summary>
+            /// <summary>Prevents a default instance of the <see cref = "WeakOddsFormatChangedEventManager" /> class from being created.</summary>
             private WeakOddsFormatChangedEventManager()
             {
                 // creates a new list and assign it to listeners

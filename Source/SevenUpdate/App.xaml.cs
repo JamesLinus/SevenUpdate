@@ -44,22 +44,22 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The all users application data location</summary>
-        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+        public static readonly string AllUserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update</summary>
-        public static readonly string ApplicationsFile = AllUserStore + @"Apps.sul";
+        public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
 
         /// <summary>The location of the application settings file</summary>
-        public static readonly string ConfigFile = AllUserStore + @"App.config";
+        public static readonly string ConfigFile = Path.Combine(AllUserStore, @"App.config");
 
         /// <summary>The location of the hidden updates file</summary>
-        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
+        public static readonly string HiddenFile = Path.Combine(AllUserStore, @"Hidden.suh");
 
         /// <summary>The location of the update history file</summary>
-        public static readonly string HistoryFile = AllUserStore + @"History.suh";
+        public static readonly string HistoryFile = Path.Combine(AllUserStore, @"History.suh");
 
         /// <summary>The location of the user application data location</summary>
-        public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";
+        public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The Seven Update list location</summary>
         internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
@@ -144,6 +144,12 @@ namespace SevenUpdate
                 }
             }
 
+            var shortcut = new Shortcut();
+            shortcut.Name.Add(new LocaleString("TestShortcut", "en"));
+            shortcut.Target = @"c:\windows\notepad.exe";
+            shortcut.Location = @"c:\users\sevenalive\desktop\";
+            Shortcut.CreateShortcut(shortcut);
+
             base.OnStartup(e, isFirstInstance);
 
             if (!isFirstInstance)
@@ -172,8 +178,8 @@ namespace SevenUpdate
         {
             Utilities.Locale = Settings.Default.locale;
 
-            Directory.CreateDirectory(App.UserStore);
-            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(AllUserStore + @"updates.sui"))
+            Directory.CreateDirectory(UserStore);
+            if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Path.Combine(AllUserStore, "updates.sui")))
             {
                 return;
             }
@@ -186,7 +192,7 @@ namespace SevenUpdate
         /// <param name="e">The error data to log</param>
         private static void LogError(object sender, ErrorOccurredEventArgs e)
         {
-            using (var tw = new StreamWriter(UserStore + "error.log", true))
+            using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))
             {
                 tw.Write(e.Exception);
             }
@@ -199,8 +205,8 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
             {
-                ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe",
-                IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
+                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
+                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
                 IconResourceIndex = 2,
                 Title = SevenUpdate.Properties.Resources.CheckForUpdates,
                 CustomCategory = SevenUpdate.Properties.Resources.Tasks,
@@ -211,8 +217,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
             {
-                ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe",
-                IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
+                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
+                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
                 IconResourceIndex = 5,
                 Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates,
                 CustomCategory = SevenUpdate.Properties.Resources.Tasks,
@@ -223,8 +229,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
             {
-                ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe",
-                IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
+                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
+                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
                 IconResourceIndex = 4,
                 Title = SevenUpdate.Properties.Resources.ViewUpdateHistory,
                 CustomCategory = SevenUpdate.Properties.Resources.Tasks,
@@ -235,8 +241,8 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
             {
-                ApplicationPath = Utilities.AppDir + @"SevenUpdate.exe",
-                IconResourcePath = Utilities.AppDir + @"SevenUpdate.Base.dll",
+                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
+                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
                 IconResourceIndex = 3,
                 Title = SevenUpdate.Properties.Resources.ChangeSettings,
                 CustomCategory = SevenUpdate.Properties.Resources.Tasks,

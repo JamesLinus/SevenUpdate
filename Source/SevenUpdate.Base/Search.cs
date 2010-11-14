@@ -143,9 +143,10 @@ namespace SevenUpdate
 
         /// <summary>Searches for files without blocking the calling thread</summary>
         /// <param name = "applications">The collection of applications to check for updates</param>
-        public static void SearchForUpdatesAsync(IEnumerable<Sua> applications)
+        /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
+        public static void SearchForUpdatesAsync(IEnumerable<Sua> applications, string downloadFolder)
         {
-            Task.Factory.StartNew(() => SearchForUpdates(applications, downloadDirectory));
+            Task.Factory.StartNew(() => SearchForUpdates(applications, downloadFolder));
         }
 
         /// <summary>Manually sets an <see cref = "Sui" /> collection has updates found</summary>

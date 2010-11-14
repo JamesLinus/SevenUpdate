@@ -52,5 +52,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "FileNotFound", Scope = "member", Target = "SevenUpdate.Install.#UpdateFile(SevenUpdate.UpdateFile)")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sua", Scope = "type", Target = "SevenUpdate.Sua")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Suh", Scope = "type", Target = "SevenUpdate.Suh")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String,System.Boolean)")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "hideExceptions", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String,System.Boolean)")]
+[assembly: SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "0#", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String,System.Boolean)")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "hideExceptions", Scope = "member", Target = "SevenUpdate.Utilities.#DownloadFile(System.String,System.Boolean)")]

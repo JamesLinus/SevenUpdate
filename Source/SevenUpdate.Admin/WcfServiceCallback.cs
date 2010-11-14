@@ -33,7 +33,6 @@ namespace SevenUpdate.Admin
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Windows;
 
     using Microsoft.Win32;
 
@@ -83,7 +82,7 @@ namespace SevenUpdate.Admin
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Utilities.AppDir + @"SevenUpdate.Helper.exe ");
+                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
                 {
@@ -118,9 +117,9 @@ namespace SevenUpdate.Admin
         {
             try
             {
-                if (File.Exists(App.AllUserStore + "abort.lock"))
+                if (File.Exists(Path.Combine(App.AllUserStore, "abort.lock")))
                 {
-                    File.Delete(App.AllUserStore + "abort.lock");
+                    File.Delete(Path.Combine(App.AllUserStore, "abort.lock"));
                 }
             }
             catch (Exception e)
@@ -134,7 +133,7 @@ namespace SevenUpdate.Admin
             }
 
             App.Applications = applicationUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", App.AllUserStore + "downloads", true));
+            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>

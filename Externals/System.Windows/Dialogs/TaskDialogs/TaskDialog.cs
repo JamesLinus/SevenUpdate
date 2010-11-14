@@ -651,78 +651,80 @@ namespace System.Windows.Dialogs
         {
             // We only need to apply changes to the 
             // native dialog when it actually exists.
-            if (this.NativeDialogShowing)
+            if (!this.NativeDialogShowing)
             {
-                var progressBarControl = control as TaskDialogProgressBar;
-
-                if (progressBarControl != null)
-                {
-                    if (!this.progressBar.HasValidValues)
-                    {
-                        throw new ArgumentException("Progress bar must have a value between Minimum and Maximum.");
-                    }
-
-                    switch (propertyName)
-                    {
-                        case "State":
-                            this.nativeDialog.UpdateProgressBarState(this.progressBar.State);
-                            break;
-                        case "Value":
-                            this.nativeDialog.UpdateProgressBarValue(this.progressBar.Value);
-                            break;
-                        case "Minimum":
-                        case "Maximum":
-                            this.nativeDialog.UpdateProgressBarRange();
-                            break;
-                        default:
-                            Debug.Assert(true, "Unknown property being set");
-                            break;
-                    }
-
-                    return;
-                }
-
-                var button = control as TaskDialogButton;
-
-                if (button != null)
-                {
-                    switch (propertyName)
-                    {
-                        case "ShowElevationIcon":
-                            this.nativeDialog.UpdateElevationIcon(button.Id, button.ShowElevationIcon);
-                            break;
-                        case "Enabled":
-                            this.nativeDialog.UpdateButtonEnabled(button.Id, button.Enabled);
-                            break;
-                        default:
-                            Debug.Assert(true, "Unknown property being set");
-                            break;
-                    }
-
-                    return;
-                }
-
-                var radioButton = control as TaskDialogRadioButton;
-                if (radioButton != null)
-                {
-                    switch (propertyName)
-                    {
-                        case "Enabled":
-                            this.nativeDialog.UpdateRadioButtonEnabled(radioButton.Id, radioButton.Enabled);
-                            break;
-                        default:
-                            Debug.Assert(true, "Unknown property being set");
-                            break;
-                    }
-
-                    return;
-                }
-
-                // Do nothing with property change - 
-                // note that this shouldn't ever happen, we should have
-                // either thrown on the changing event, or we handle above.
-                Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
+                return;
             }
+
+            var progressBarControl = control as TaskDialogProgressBar;
+
+            if (progressBarControl != null)
+            {
+                if (!this.progressBar.HasValidValues)
+                {
+                    throw new ArgumentException("Progress bar must have a value between Minimum and Maximum.");
+                }
+
+                switch (propertyName)
+                {
+                    case "State":
+                        this.nativeDialog.UpdateProgressBarState(this.progressBar.State);
+                        break;
+                    case "Value":
+                        this.nativeDialog.UpdateProgressBarValue(this.progressBar.Value);
+                        break;
+                    case "Minimum":
+                    case "Maximum":
+                        this.nativeDialog.UpdateProgressBarRange();
+                        break;
+                    default:
+                        Debug.Assert(true, "Unknown property being set");
+                        break;
+                }
+
+                return;
+            }
+
+            var button = control as TaskDialogButton;
+
+            if (button != null)
+            {
+                switch (propertyName)
+                {
+                    case "ShowElevationIcon":
+                        this.nativeDialog.UpdateElevationIcon(button.Id, button.ShowElevationIcon);
+                        break;
+                    case "Enabled":
+                        this.nativeDialog.UpdateButtonEnabled(button.Id, button.Enabled);
+                        break;
+                    default:
+                        Debug.Assert(true, "Unknown property being set");
+                        break;
+                }
+
+                return;
+            }
+
+            var radioButton = control as TaskDialogRadioButton;
+            if (radioButton != null)
+            {
+                switch (propertyName)
+                {
+                    case "Enabled":
+                        this.nativeDialog.UpdateRadioButtonEnabled(radioButton.Id, radioButton.Enabled);
+                        break;
+                    default:
+                        Debug.Assert(true, "Unknown property being set");
+                        break;
+                }
+
+                return;
+            }
+
+            // Do nothing with property change - 
+            // note that this shouldn't ever happen, we should have
+            // either thrown on the changing event, or we handle above.
+            Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
         }
 
         /// <summary>

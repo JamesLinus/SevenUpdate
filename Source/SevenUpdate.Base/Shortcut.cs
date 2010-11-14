@@ -472,22 +472,38 @@ namespace SevenUpdate
             return shortcut;
         }
 
+        /// <summary>Creates a shortcut on the system</summary>
+        /// <param name="shortcut">The shortcut data used to create the shortcut</param>
         public static void CreateShortcut(Shortcut shortcut)
         {
-            var link = new ShellLink() as IShellLinkW;
+            if (shortcut == null)
+            {
+                throw new ArgumentNullException(@"shortcut");
+            }
+
+            var obj = Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046"), true);
+            var link = Activator.CreateInstance(obj) as IShellLinkW;
+
             if (link == null)
             {
                 return;
             }
 
             link.SetArguments(shortcut.arguments);
+            if (shortcut.Description.Count > 0)
+            {
                 link.SetDescription(Utilities.GetLocaleString(shortcut.Description));
-            var icon = shortcut.Icon.Split(new[] { ',' });
+            }
 
-            link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
-            link.SetPath(shortcut.Location);
+            if (!String.IsNullOrWhiteSpace(shortcut.Icon))
+            {
+                var icon = shortcut.Icon.Split(new[] { ',' });
+                link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
+            }
 
-            ((IPersistFile)link).Save(Path.Combine(shortcut.Location, Utilities.GetLocaleString(shortcut.Name)), true);
+            link.SetPath(shortcut.Target);
+            var linkPath = Path.Combine(shortcut.Location, Utilities.GetLocaleString(shortcut.Name) + ".lnk");
+            ((IPersistFile)link).Save(linkPath, true);
         }
 
         #endregion

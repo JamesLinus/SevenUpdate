@@ -206,7 +206,7 @@ namespace SevenUpdate
 
             try
             {
-                File.Delete(App.AllUserStore + @"updates.sui");
+                File.Delete(Path.Combine(App.AllUserStore, "updates.sui"));
             }
             catch (IOException)
             {
@@ -218,7 +218,7 @@ namespace SevenUpdate
                 {
                     Instance.UpdateAction = UpdateAction.CheckingForUpdates;
                     Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
-                    Search.SearchForUpdatesAsync(AppsToUpdate);
+                    Search.SearchForUpdatesAsync(AppsToUpdate, Path.Combine(App.AllUserStore, "downloads"));
                 }
                 else
                 {

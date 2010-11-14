@@ -28,6 +28,7 @@ namespace SevenUpdate.Pages
 {
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.IO;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
@@ -40,7 +41,7 @@ namespace SevenUpdate.Pages
         #region Constants and Fields
 
         /// <summary>The location of the update history file</summary>
-        private static readonly string HistoryFile = App.AllUserStore + @"History.suh";
+        private static readonly string HistoryFile = Path.Combine(App.AllUserStore, @"History.suh");
 
         /// <summary>Gets or sets a collection of SUH items</summary>
         private ObservableCollection<Suh> updateHistory;
