@@ -14,11 +14,9 @@ namespace System.Windows.Dialogs
     using System.Windows.Controls;
     using System.Windows.Internal;
 
-    /// <summary>
-    /// Internal class containing most native interop declarations used
-    ///   throughout the library.
-    ///   Functions that are not performance intensive belong in this class.
-    /// </summary>
+    /// <summary>Internal class containing most native interop declarations used
+    /// throughout the library.
+    /// Functions that are not performance intensive belong in this class.</summary>
     internal static class TaskDialogNativeMethods
     {
         /// <summary>The <see cref="TaskDialog"/> callback</summary>

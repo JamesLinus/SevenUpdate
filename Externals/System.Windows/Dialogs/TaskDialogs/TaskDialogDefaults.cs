@@ -28,8 +28,8 @@ namespace System.Windows.Dialogs
         internal const string MainInstruction = "";
 
         /// <summary>
-        ///   For generating control ID numbers that won't 
-        ///   collide with the standard button return IDs.
+        /// For generating control ID numbers that won't 
+        /// collide with the standard button return IDs.
         /// </summary>
         internal const int MinimumDialogControlId = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close + 1;
 

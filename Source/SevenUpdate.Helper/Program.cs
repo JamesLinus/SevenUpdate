@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -56,7 +53,7 @@ namespace SevenUpdate.Helper
         #region Methods
 
         /// <summary>The main entry point for the application.</summary>
-        /// <param name = "args">The arguments passed to the program at startup</param>
+        /// <param name="args">The arguments passed to the program at startup</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -116,7 +113,7 @@ namespace SevenUpdate.Helper
         }
 
         /// <summary>Deletes files from the specified folder</summary>
-        /// <param name = "folder">The folder to delete the files</param>
+        /// <param name="folder">The folder to delete the files</param>
         private static void DeleteFiles(string folder)
         {
             var files = new DirectoryInfo(folder).GetFiles();
@@ -180,7 +177,7 @@ namespace SevenUpdate.Helper
         }
 
         /// <summary>Stops a running process</summary>
-        /// <param name = "name">The name of the process to kill</param>
+        /// <param name="name">The name of the process to kill</param>
         private static void KillProcess(string name)
         {
             try
@@ -204,8 +201,8 @@ namespace SevenUpdate.Helper
         }
 
         /// <summary>Run Seven Update and auto check for updates</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
             Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");

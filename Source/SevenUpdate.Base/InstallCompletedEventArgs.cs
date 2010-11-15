@@ -34,9 +34,9 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "InstallCompletedEventArgs" /> class.</summary>
-        /// <param name = "updatesInstalled">the number of updates installed</param>
-        /// <param name = "updatesFailed">the number of updates that failed</param>
+        /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs"/> class.</summary>
+        /// <param name="updatesInstalled">the number of updates installed</param>
+        /// <param name="updatesFailed">the number of updates that failed</param>
         public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
         {
             this.UpdatesInstalled = updatesInstalled;

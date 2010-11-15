@@ -26,14 +26,13 @@ namespace System.Windows
 
         /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.</summary>
         /// <param name="args">The arguments passed to the program</param>
-        public StartupNextInstanceEventArgs(string[] args)
-            : this(args, true)
+        public StartupNextInstanceEventArgs(string[] args) : this(args, true)
         {
         }
 
         /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.</summary>
         /// <param name="args">The arguments passed to the program</param>
-        /// <param name="bringToFront">If set to <see langword = "true" /> the application main window will be brought to front.</param>
+        /// <param name="bringToFront">If set to <see langword="true"/> the application main window will be brought to front.</param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront)
         {
             if (args == null)

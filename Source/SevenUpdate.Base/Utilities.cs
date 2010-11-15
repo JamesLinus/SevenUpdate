@@ -73,7 +73,7 @@ namespace SevenUpdate
         #region Public Methods
 
         /// <summary>Converts bytes into the proper increments depending on size</summary>
-        /// <param name = "bytes">the fileSize in bytes</param>
+        /// <param name="bytes">the fileSize in bytes</param>
         /// <returns>the formatted string of converted bytes</returns>
         public static string ConvertFileSize(ulong bytes)
         {
@@ -101,8 +101,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
-        /// <param name = "path">a string that contains a file path</param>
-        /// <param name = "directory">a string that contains a directory</param>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="directory">a string that contains a directory</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory)
         {
@@ -110,9 +110,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
-        /// <param name = "path">a string that contains a file path</param>
-        /// <param name = "directory">a string that contains a directory</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="directory">a string that contains a directory</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, bool is64Bit)
         {
@@ -120,10 +120,10 @@ namespace SevenUpdate
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
-        /// <param name = "path">a string that contains a file path</param>
-        /// <param name = "directory">a string that contains a directory</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
-        /// <param name = "valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword = "null" /></param>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="directory">a string that contains a directory</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, bool is64Bit, string valueName)
         {
@@ -133,9 +133,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Expands the system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
-        /// <param name = "path">a string that contains a file path</param>
-        /// <param name = "expand"><see langword = "true" /> to expand system variable, <see langword = "false" /> to converts paths into system variables</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="expand"><see langword="true"/> to expand system variable, <see langword="false"/> to converts paths into system variables</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, bool is64Bit)
         {
@@ -255,8 +255,8 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "fileName">the file that contains the object to DeSerialize</param>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(string fileName) where T : class
         {
@@ -278,8 +278,8 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "stream">The Stream to deserialize</param>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="stream">The Stream to deserialize</param>
         /// <returns>returns the object</returns>
         public static T Deserialize<T>(Stream stream) where T : class
         {
@@ -301,8 +301,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Downloads a file</summary>
-        /// <param name = "url">A Uri pointing to the location of the file to download</param>
-        /// <returns>the downloaded file <see cref = "Stream" /></returns>
+        /// <param name="url">A Uri pointing to the location of the file to download</param>
+        /// <returns>the downloaded file <see cref="Stream"/></returns>
         public static Stream DownloadFile(string url)
         {
             // Get a data stream from the url
@@ -313,7 +313,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the file size of a file</summary>
-        /// <param name = "file">The full path to the file</param>
+        /// <param name="file">The full path to the file</param>
         /// <returns>A UInt64 value indicating the file size</returns>
         public static ulong GetFileSize(string file)
         {
@@ -326,7 +326,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the SHA-2 Hash of a file</summary>
-        /// <param name = "file">The full path to the file to calculate the hash</param>
+        /// <param name="file">The full path to the file to calculate the hash</param>
         /// <returns>The SHA-2 Hash of the file</returns>
         public static string GetHash(string file)
         {
@@ -352,7 +352,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the preferred localized string from a collection of localized strings</summary>
-        /// <param name = "localeStrings">A collection of <see cref = "LocaleString" />'s</param>
+        /// <param name="localeStrings">A collection of <see cref="LocaleString"/>'s</param>
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
@@ -375,8 +375,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Converts the registry key</summary>
-        /// <param name = "registryKey">The registry key</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <param name="registryKey">The registry key</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>The parsed registry key</returns>
         public static string ParseRegistryKey(string registryKey, bool is64Bit)
         {
@@ -399,9 +399,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets a string from a registry path</summary>
-        /// <param name = "registryKey">The path to the registry key</param>
-        /// <param name = "valueName">The value name to get the data from</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <param name="registryKey">The path to the registry key</param>
+        /// <param name="valueName">The value name to get the data from</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns>The value retrieved from the registry path, returns null if the registry path does not exist</returns>
         public static string GetRegistryValue(string registryKey, string valueName, bool is64Bit)
         {
@@ -444,8 +444,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Checks if a registry key exists</summary>
-        /// <param name = "registryKey">The path to the registry key</param>
-        /// <param name = "is64Bit">if set to <see langword = "true" /> the application is 64 bit</param>
+        /// <param name="registryKey">The path to the registry key</param>
+        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
         /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
         public static bool CheckRegistryKey(string registryKey, bool is64Bit)
         {
@@ -453,18 +453,18 @@ namespace SevenUpdate
         }
 
         /// <summary>Checks to see if path is a registry key</summary>
-        /// <param name = "path">The path to check</param>
-        /// <returns><see langword = "true" /> if the path is a registry key otherwise, <see langword = "false" /></returns>
+        /// <param name="path">The path to check</param>
+        /// <returns><see langword="true"/> if the path is a registry key otherwise, <see langword="false"/></returns>
         public static bool IsRegistryKey(string path)
         {
             return Regex.IsMatch(path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
         }
 
         /// <summary>Replaces a string within a string</summary>
-        /// <param name = "value">the string that will be searched</param>
-        /// <param name = "find">a string to find in the complete string</param>
-        /// <param name = "replaceValue">a string to use to replace the find string in the complete string</param>
-        /// <param name = "ignoreCase">if set to <see langword = "true" /> case is ignored</param>
+        /// <param name="value">the string that will be searched</param>
+        /// <param name="find">a string to find in the complete string</param>
+        /// <param name="replaceValue">a string to use to replace the find string in the complete string</param>
+        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
         /// <returns>The replacement string</returns>
         public static string Replace(this string value, string find, string replaceValue, bool ignoreCase)
         {
@@ -512,7 +512,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports the error that occurred to a log file</summary>
-        /// <param name = "exception">The exception to write in the log</param>
+        /// <param name="exception">The exception to write in the log</param>
         /// <param name="errorType">The type of error that ocurred</param>
         public static void ReportError(Exception exception, ErrorType errorType)
         {
@@ -520,7 +520,7 @@ namespace SevenUpdate
             {
                 return;
             }
-            
+
             if (ErrorOccurred != null)
             {
                 ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception), errorType));
@@ -528,9 +528,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name = "T">The object type to serialize</typeparam>
-        /// <param name = "item">the object to serialize</param>
-        /// <param name = "fileName">the location of a file that will be serialized</param>
+        /// <typeparam name="T">The object type to serialize</typeparam>
+        /// <param name="item">the object to serialize</param>
+        /// <param name="fileName">the location of a file that will be serialized</param>
         public static void Serialize<T>(T item, string fileName) where T : class
         {
             try
@@ -548,38 +548,38 @@ namespace SevenUpdate
         }
 
         /// <summary>Starts a process hidden on the system</summary>
-        /// <param name = "fileName">The file to execute</param>
-        /// <returns><see langword = "true" /> if the process has executed successfully</returns>
+        /// <param name="fileName">The file to execute</param>
+        /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName)
         {
             return StartProcess(fileName, null, false, true);
         }
 
         /// <summary>Starts a process hidden on the system</summary>
-        /// <param name = "fileName">The file to execute</param>
-        /// <param name = "arguments">The arguments to execute with the file</param>
-        /// <returns><see langword = "true" /> if the process has executed successfully</returns>
+        /// <param name="fileName">The file to execute</param>
+        /// <param name="arguments">The arguments to execute with the file</param>
+        /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments)
         {
             return StartProcess(fileName, arguments, false, true);
         }
 
         /// <summary>Starts a process hidden on the system</summary>
-        /// <param name = "fileName">The file to execute</param>
-        /// <param name = "arguments">The arguments to execute with the file</param>
-        /// <param name = "wait">if set to <see langword = "true" /> the calling thread will be blocked until process has exited</param>
-        /// <returns><see langword = "true" /> if the process has executed successfully</returns>
+        /// <param name="fileName">The file to execute</param>
+        /// <param name="arguments">The arguments to execute with the file</param>
+        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
+        /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments, bool wait)
         {
             return StartProcess(fileName, arguments, wait, true);
         }
 
         /// <summary>Starts a process on the system</summary>
-        /// <param name = "fileName">The file to execute</param>
-        /// <param name = "arguments">The arguments to execute with the file</param>
-        /// <param name = "wait">if set to <see langword = "true" /> the calling thread will be blocked until process has exited</param>
-        /// <param name = "hidden">if set to <see langword = "true" /> the process will execute with no UI</param>
-        /// <returns><see langword = "true" /> if the process has executed successfully</returns>
+        /// <param name="fileName">The file to execute</param>
+        /// <param name="arguments">The arguments to execute with the file</param>
+        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
+        /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
+        /// <returns><see langword="true"/> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments, bool wait, bool hidden)
         {
             using (var process = new Process())
@@ -626,18 +626,18 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Determines if a string contains another string</summary>
-        /// <param name = "original">The original string to check</param>
-        /// <param name = "value">The value to check the string for</param>
-        /// <param name = "comparisonType">Type of the comparison.</param>
-        /// <returns><see langword = "true" /> if the string contains the specified value; otherwise, <see langword = "false" />.</returns>
+        /// <param name="original">The original string to check</param>
+        /// <param name="value">The value to check the string for</param>
+        /// <param name="comparisonType">Type of the comparison.</param>
+        /// <returns><see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.</returns>
         private static bool Contains(this string original, string value, StringComparison comparisonType)
         {
             return original.IndexOf(value, comparisonType) >= 0;
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "fileName">the file that contains the object to DeSerialize</param>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="fileName">the file that contains the object to DeSerialize</param>
         /// <returns>returns the object</returns>
         private static T DeserializeFile<T>(string fileName) where T : class
         {
@@ -651,8 +651,8 @@ namespace SevenUpdate
         }
 
         /// <summary>DeSerializes an object</summary>
-        /// <typeparam name = "T">the object to deserialize</typeparam>
-        /// <param name = "stream">The Stream to deserialize</param>
+        /// <typeparam name="T">the object to deserialize</typeparam>
+        /// <param name="stream">The Stream to deserialize</param>
         /// <returns>returns the object</returns>
         private static T DeserializeStream<T>(Stream stream) where T : class
         {
@@ -661,7 +661,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets data from the exception as a string</summary>
-        /// <param name = "exception">The exception to write in the log</param>
+        /// <param name="exception">The exception to write in the log</param>
         /// <returns>The exception as a string</returns>
         private static string GetExceptionAsString(Exception exception)
         {
@@ -669,11 +669,11 @@ namespace SevenUpdate
         }
 
         /// <summary>Replaces a string within a string</summary>
-        /// <param name = "sb">The <see cref = "StringBuilder" /> object</param>
-        /// <param name = "find">a string to find in the complete string</param>
-        /// <param name = "replaceValue">a string to use to replace the find string in the complete string</param>
-        /// <param name = "ignoreCase">if set to <see langword = "true" /> case is ignored</param>
-        /// <returns>The <see cref = "StringBuilder" /> with replacements</returns>
+        /// <param name="sb">The <see cref="StringBuilder"/> object</param>
+        /// <param name="find">a string to find in the complete string</param>
+        /// <param name="replaceValue">a string to use to replace the find string in the complete string</param>
+        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
+        /// <returns>The <see cref="StringBuilder"/> with replacements</returns>
         private static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
         {
             if (sb == null || find == null)
@@ -724,9 +724,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Serializes an object into a file</summary>
-        /// <typeparam name = "T">the object type to serialize</typeparam>
-        /// <param name = "item">the object to serialize</param>
-        /// <param name = "fileName">the location of a file that will be serialized</param>
+        /// <typeparam name="T">the object type to serialize</typeparam>
+        /// <param name="item">the object to serialize</param>
+        /// <param name="fileName">the location of a file that will be serialized</param>
         private static void SerializeFile<T>(T item, string fileName) where T : class
         {
             if (File.Exists(fileName))

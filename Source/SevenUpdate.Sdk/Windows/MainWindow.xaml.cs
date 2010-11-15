@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -67,7 +64,7 @@ namespace SevenUpdate.Sdk.Windows
         #region Methods
 
         /// <summary>Enables Aero Glass on the Window</summary>
-        /// <param name = "e">The <see cref = "EventArgs" /> instance containing the event data</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -76,8 +73,8 @@ namespace SevenUpdate.Sdk.Windows
         }
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
-        /// <param name = "sender">The Sender</param>
-        /// <param name = "e">The <see cref = "CompositionChangedEventArgs" /> instance containing the event data</param>
+        /// <param name="sender">The Sender</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data</param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
@@ -91,8 +88,8 @@ namespace SevenUpdate.Sdk.Windows
         }
 
         /// <summary>Enables the ability to drag the window on glass</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsEnabled && e.LeftButton == MouseButtonState.Pressed)
@@ -102,8 +99,8 @@ namespace SevenUpdate.Sdk.Windows
         }
 
         /// <summary>Sets the Height and Width of the window from the settings</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.windowHeight;
@@ -111,8 +108,8 @@ namespace SevenUpdate.Sdk.Windows
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.ComponentModel.CancelEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.windowHeight = this.Height;

@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -63,7 +60,7 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
-        /// <summary>Loads the <see cref = "licenseInformation" /> and shows the form</summary>
+        /// <summary>Loads the <see cref="licenseInformation"/> and shows the form</summary>
         /// <returns>Returns the dialog result</returns>
         internal bool? LoadLicenses()
         {
@@ -83,8 +80,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Closes the window, declining all software licenses</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
@@ -92,8 +89,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Updates the UI with the licenses and displays the first license</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.ComponentModel.RunWorkerCompletedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
         private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
             this.rtbSLA.Cursor = Cursors.IBeam;
@@ -120,9 +117,9 @@ namespace SevenUpdate.Windows
             this.Cursor = Cursors.Arrow;
         }
 
-        /// <summary>Downloads the <see cref = "licenseInformation" /></summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>Downloads the <see cref="licenseInformation"/></summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
@@ -137,8 +134,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Downloads the license agreements of the updates</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadLicenses(object sender, DoWorkEventArgs e)
         {
             this.licenseText = new string[this.licenseInformation.Count];
@@ -185,10 +182,7 @@ namespace SevenUpdate.Windows
                         continue;
                     }
 
-                    var sla = new Eula
-                        {
-                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y
-                        };
+                    var sla = new Eula { LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
 
                     this.licenseInformation.Add(sla);
                 }
@@ -196,8 +190,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Displays the next license agreement or returns the collection of updates.</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void PerformAction(object sender, RoutedEventArgs e)
         {
             if (this.rbtnDecline.IsChecked == true)
@@ -244,7 +238,7 @@ namespace SevenUpdate.Windows
 
         #endregion
 
-        /// <summary>Data containing the <see cref = "Update" /> license agreement</summary>
+        /// <summary>Data containing the <see cref="Update"/> license agreement</summary>
         private struct Eula
         {
             #region Properties

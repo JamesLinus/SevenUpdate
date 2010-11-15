@@ -1012,11 +1012,7 @@ namespace SharpBits.Base
                 if (this.job2 != null && credentials != null)
                 {
                     // only supported from IBackgroundCopyJob2 and above
-                    var authCredentials = new BGAuthCredentials
-                        {
-                            Scheme = (BGAuthScheme)credentials.AuthenticationScheme,
-                            Target = (BGAuthTarget)credentials.AuthenticationTarget
-                        };
+                    var authCredentials = new BGAuthCredentials { Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget };
                     authCredentials.Credentials.Basic.Password = credentials.Password;
                     authCredentials.Credentials.Basic.UserName = credentials.UserName;
                     this.job2.SetCredentials(ref authCredentials);

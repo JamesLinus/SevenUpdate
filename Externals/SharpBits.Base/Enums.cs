@@ -157,14 +157,14 @@ namespace SharpBits.Base
         Digest,
 
         /// <summary>
-        ///   Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the 
-        ///   user for authentication in a Windows network environment.
+        /// Windows NT LAN Manager (NTLM) is a challenge-response scheme that uses the credentials of the 
+        /// user for authentication in a Windows network environment.
         /// </summary>
         Ntlm,
 
         /// <summary>
-        ///   Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates 
-        ///   with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol and NTLM
+        /// Simple and Protected Negotiation protocol (SNEGO) is a challenge-response scheme that negotiates 
+        /// with the server or proxy to determine which scheme to use for authentication. Examples are the Kerberos protocol and NTLM
         /// </summary>
         Negotiate,
 
@@ -197,21 +197,21 @@ namespace SharpBits.Base
         CopyFileOwner = 1,
 
         /// <summary>
-        ///   If set, the file's group information is maintained. Otherwise, 
-        ///   BITS uses the job owner's primary group to assign the group information to the file.
+        /// If set, the file's group information is maintained. Otherwise, 
+        /// BITS uses the job owner's primary group to assign the group information to the file.
         /// </summary>
         CopyFileGroup = 2,
 
         /// <summary>
-        ///   If set, BITS copies the explicit ACEs from the source file and inheritable ACEs from the destination parent folder. 
-        ///   Otherwise, BITS copies the inheritable ACEs from the destination parent folder. If the parent folder does not 
-        ///   contain inheritable ACEs, BITS uses the default DACL from the account.
+        /// If set, BITS copies the explicit ACEs from the source file and inheritable ACEs from the destination parent folder. 
+        /// Otherwise, BITS copies the inheritable ACEs from the destination parent folder. If the parent folder does not 
+        /// contain inheritable ACEs, BITS uses the default DACL from the account.
         /// </summary>
         CopyDestinationFileAcl = 4,
 
         /// <summary>
-        ///   If set, BITS copies the explicit ACEs from the source file and inheritable ACEs from the destination parent folder. 
-        ///   Otherwise, BITS copies the inheritable ACEs from the destination parent folder.
+        /// If set, BITS copies the explicit ACEs from the source file and inheritable ACEs from the destination parent folder. 
+        /// Otherwise, BITS copies the inheritable ACEs from the destination parent folder.
         /// </summary>
         CopySourceFileAcl = 8,
 
@@ -224,14 +224,14 @@ namespace SharpBits.Base
     public enum PeerCachingOptions
     {
         /// <summary>
-        ///   The job can download content from peers.
-        ///   The job will not download from a peer unless both the client computer and the job allow BITS to download files from a peer
+        /// The job can download content from peers.
+        /// The job will not download from a peer unless both the client computer and the job allow BITS to download files from a peer
         /// </summary>
         ClientPeerCaching = 0x0001,
 
         /// <summary>
-        ///   The files of the job can be cached and served to peers.
-        ///   BITS will not cache the files and serve them to peers unless both the client computer and job allow BITS to cache and serve the files.
+        /// The files of the job can be cached and served to peers.
+        /// BITS will not cache the files and serve them to peers unless both the client computer and job allow BITS to cache and serve the files.
         /// </summary>
         ServerPeerCaching = 0x0002,
     }

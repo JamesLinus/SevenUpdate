@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -127,8 +124,8 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>Reports that the download has completed and starts update installation if necessary</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "DownloadCompletedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
@@ -151,8 +148,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download progress has changed</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "DownloadProgressChangedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             IsInstalling = true;
@@ -165,8 +162,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "ErrorOccurredEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.ErrorType == ErrorType.FatalNetworkError)
@@ -176,8 +173,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports the installation has completed</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "InstallCompletedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -193,8 +190,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports when the installation progress has changed</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "InstallProgressChangedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (isClientConnected)
@@ -206,7 +203,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The main execution method</summary>
-        /// <param name = "args">The command line arguments</param>
+        /// <param name="args">The command line arguments</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -277,7 +274,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Processes the command line arguments</summary>
-        /// <param name = "args">The arguments to process</param>
+        /// <param name="args">The arguments to process</param>
         private static void ProcessArgs(IList<string> args)
         {
             if (args.Count <= 0)
@@ -349,8 +346,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
@@ -369,8 +366,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts Seven Update UI</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.EventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -396,8 +393,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "SearchCompletedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SearchCompletedEventArgs"/> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -488,8 +485,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Checks if Seven Update is running</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
             Task.Factory.StartNew(() =>
@@ -529,7 +526,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Updates the notify icon text</summary>
-        /// <param name = "text">The string to set the <see cref = "notifyIcon" /> text</param>
+        /// <param name="text">The string to set the <see cref="notifyIcon"/> text</param>
         private static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
@@ -538,8 +535,8 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Updates the <see cref = "notifyIcon" /> state</summary>
-        /// <param name = "filter">The <see cref = "NotifyType" /> to set the <see cref = "notifyIcon" /> to.</param>
+        /// <summary>Updates the <see cref="notifyIcon"/> state</summary>
+        /// <param name="filter">The <see cref="NotifyType"/> to set the <see cref="notifyIcon"/> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)

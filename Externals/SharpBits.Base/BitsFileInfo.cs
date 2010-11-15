@@ -29,11 +29,7 @@ namespace SharpBits.Base
         /// <param name="localName">Name of the local.</param>
         protected BitsFileInfo(string remoteName, string localName)
         {
-            this.BGFileInfo = new BGFileInfo
-                {
-                    RemoteName = remoteName,
-                    LocalName = localName
-                };
+            this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };
         }
 
         #endregion

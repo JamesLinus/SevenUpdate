@@ -25,6 +25,7 @@ namespace SevenUpdate
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.Collections.Specialized;
     using System.ComponentModel;
     using System.Runtime.Serialization;
 
@@ -61,10 +62,10 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
-        /// <param name = "name">The collection of localized update names</param>
-        /// <param name = "publisher">The collection of localized publisher names</param>
-        /// <param name = "description">The collection of localized update descriptions</param>
+        /// <summary>Initializes a new instance of the <see cref="Sua"/> class</summary>
+        /// <param name="name">The collection of localized update names</param>
+        /// <param name="publisher">The collection of localized publisher names</param>
+        /// <param name="description">The collection of localized update descriptions</param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
             this.Name = name;
@@ -87,9 +88,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
-        /// <param name = "name">The collection of localized update names</param>
-        /// <param name = "publisher">The collection of localized publisher names</param>
+        /// <summary>Initializes a new instance of the <see cref="Sua"/> class</summary>
+        /// <param name="name">The collection of localized update names</param>
+        /// <param name="publisher">The collection of localized publisher names</param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher)
         {
             this.Name = name;
@@ -286,7 +287,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
-        private void PublisherCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Publisher");
         }
@@ -294,7 +295,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
-        private void DescriptionCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
@@ -302,13 +303,13 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
-        private void NameCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
-        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
-        /// <param name = "propertyName">The name of the property.</param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

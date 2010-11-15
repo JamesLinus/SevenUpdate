@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -30,10 +27,8 @@ namespace System.Windows
     using System.Windows.Interop;
     using System.Windows.Media;
 
-    /// <summary>
-    /// WPF Glass Window
-    ///   Inherit from this window class to enable glass on a WPF window
-    /// </summary>
+    /// <summary>WPF Glass Window
+    /// Inherit from this window class to enable glass on a WPF window</summary>
     public static class AeroGlass
     {
         #region Events
@@ -77,11 +72,7 @@ namespace System.Windows
         /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
-            var blur = new DwmBlurBehind
-                {
-                    RegionBlur = region,
-                    Flags = BlurBehindOptions.BlurBehindRegion
-                };
+            var blur = new DwmBlurBehind { RegionBlur = region, Flags = BlurBehindOptions.BlurBehindRegion };
 
             if (NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur) != 0)
             {
@@ -117,7 +108,7 @@ namespace System.Windows
             {
                 throw new FormatException();
             }
-            
+
             source.AddHook(WndProc);
 
             // Set the Background to transparent from Win32 perspective 
@@ -132,11 +123,9 @@ namespace System.Windows
         /// <summary>Excludes a UI element from the Aero Glass frame.</summary>
         /// <param name="element">The element to exclude.</param>
         /// <param name="window">The window the element resides in</param>
-        /// <remarks>
-        /// c
-        ///   Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
-        ///   render properly on top of an Aero Glass frame.
-        /// </remarks>
+        /// <remarks>c
+        /// Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
+        /// render properly on top of an Aero Glass frame.</remarks>
         public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
             if (element == null)
@@ -166,8 +155,7 @@ namespace System.Windows
                 NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
             }
 
-            var nonClientSize = new Size(
-                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
+            var nonClientSize = new Size((windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             var transform = element.TransformToAncestor(window);

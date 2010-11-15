@@ -10,10 +10,8 @@
 // ***********************************************************************
 namespace System.Windows.Internal
 {
-    /// <summary>
-    /// HRESULT Wrapper
-    ///   This is intended for Library Internal use only.
-    /// </summary>
+    /// <summary>HRESULT Wrapper
+    /// This is intended for Library Internal use only.</summary>
     public enum Result : uint
     {
         /// <summary>Result returns false</summary>
@@ -32,10 +30,8 @@ namespace System.Windows.Internal
         Fail = 0x80004005,
     }
 
-    /// <summary>
-    /// Provide Error Message Helper Methods.
-    ///   This is intended for Library Internal use only.
-    /// </summary>
+    /// <summary>Provide Error Message Helper Methods.
+    /// This is intended for Library Internal use only.</summary>
     public static class ErrorHelper
     {
         #region Constants and Fields

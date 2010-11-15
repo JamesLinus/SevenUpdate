@@ -175,7 +175,7 @@ namespace System.Windows
         /// <param name="disposing">true to dispose unmanaged resources</param>
         protected virtual void Dispose(bool disposing)
         {
-            this.TryDisposeSynchronizationObjects();          
+            this.TryDisposeSynchronizationObjects();
         }
 
         /// <summary>Raises the <see cref="E:System.Windows.Application.Exit"/> event.</summary>
@@ -189,7 +189,7 @@ namespace System.Windows
 
         /// <summary>Raises the <see cref="E:System.Windows.Application.Exit"/> event.</summary>
         /// <param name="e">An <see cref="T:System.Windows.ExitEventArgs"/> that contains the event data.</param>
-        /// <param name="firstInstance">If set to <see langword = "true" />, the current application instance is the first one.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/>, the current application instance is the first one.</param>
         protected virtual void OnExit(ExitEventArgs e, bool firstInstance)
         {
             base.OnExit(e);
@@ -205,7 +205,7 @@ namespace System.Windows
 
         /// <summary>Raises the <see cref="Application.Startup"/> event.</summary>
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="firstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected virtual void OnStartup(StartupEventArgs e, bool firstInstance)
         {
             base.OnStartup(e);
@@ -320,7 +320,7 @@ namespace System.Windows
 
         /// <summary>Initializes the application instance.</summary>
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <returns><see langword = "true" /> if the current instance is the first application instance, otherwise <see langword = "false" />.</returns>
+        /// <returns><see langword="true"/> if the current instance is the first application instance, otherwise <see langword="false"/>.</returns>
         private bool InitializeInstance(StartupEventArgs e)
         {
             var id = GetApplicationId();
@@ -369,7 +369,7 @@ namespace System.Windows
         /// <summary>Initializes the next application instance.</summary>
         /// <param name="uri">The <see cref="Uri"/> used by the service that allows for inter-process communication.</param>
         /// <param name="args">The arguments passed to the current instance.</param>
-        /// <returns><see langword = "true" /> if the prior instance was notified about current instance startup, otherwise <see langword = "false" />.</returns>
+        /// <returns><see langword="true"/> if the prior instance was notified about current instance startup, otherwise <see langword="false"/>.</returns>
         private bool InitializeNextInstance(Uri uri, string[] args)
         {
             // Check if the service is up... wait a bit in case two applications are started simultaneously...

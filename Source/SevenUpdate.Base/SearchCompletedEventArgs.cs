@@ -35,11 +35,11 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "SearchCompletedEventArgs" /> class.</summary>
-        /// <param name = "applications">The collection of applications to update</param>
-        /// <param name = "importantCount">The number of important updates</param>
-        /// <param name = "recommendedCount">The number of recommended updates</param>
-        /// <param name = "optionalCount">The number of optional updates</param>
+        /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs"/> class.</summary>
+        /// <param name="applications">The collection of applications to update</param>
+        /// <param name="importantCount">The number of important updates</param>
+        /// <param name="recommendedCount">The number of recommended updates</param>
+        /// <param name="optionalCount">The number of optional updates</param>
         public SearchCompletedEventArgs(IEnumerable<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
         {
             this.Applications = applications;

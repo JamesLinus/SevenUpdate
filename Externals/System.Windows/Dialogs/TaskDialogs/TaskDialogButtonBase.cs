@@ -10,11 +10,9 @@
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    /// Defines the abstract base class for task dialog buttons.
-    ///   Classes that inherit from this class will inherit
-    ///   the Text property defined in this class.
-    /// </summary>
+    /// <summary>Defines the abstract base class for task dialog buttons.
+    /// Classes that inherit from this class will inherit
+    /// the Text property defined in this class.</summary>
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
         #region Constants and Fields
@@ -74,9 +72,9 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether whether the
-        ///   button is enabled. The enabled state can cannot be changed
-        ///   before the dialog is shown.
+        /// Gets or sets a value indicating whether whether the
+        /// button is enabled. The enabled state can cannot be changed
+        /// before the dialog is shown.
         /// </summary>
         public bool Enabled
         {

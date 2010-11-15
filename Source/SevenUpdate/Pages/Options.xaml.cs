@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -84,9 +81,9 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Loads the settings and <see cref = "Sua" /> list when the page is loaded</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -103,7 +100,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
-        /// <param name = "officialApplicationList">The official application list from the server.</param>
+        /// <param name="officialApplicationList">The official application list from the server.</param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList)
         {
             try
@@ -185,8 +182,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates to a Uri</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
@@ -194,17 +191,17 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>Limit the size of the <see cref = "GridViewColumn" /> when it's being resized</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.</param>
+        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
         /// <summary>Saves the settings and goes back to the Main page</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
@@ -213,7 +210,7 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the list with the <see cref = "machineAppList" /></summary>
+        /// <summary>Updates the list with the <see cref="machineAppList"/></summary>
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;

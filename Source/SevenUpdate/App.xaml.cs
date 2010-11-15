@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -79,7 +76,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Process command line args</summary>
-        /// <param name = "args">The list of arguments</param>
+        /// <param name="args">The list of arguments</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -110,9 +107,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Raises the <see cref = "InstanceAwareApplication.Startup" /> event.</summary>
-        /// <param name = "e">The <see cref = "System.Windows.StartupEventArgs" /> instance containing the event data.</param>
-        /// <param name = "isFirstInstance">If set to <see langword = "true" /> the current instance is the first application instance.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Init();
@@ -147,6 +144,8 @@ namespace SevenUpdate
             var shortcut = new Shortcut();
             shortcut.Name.Add(new LocaleString("TestShortcut", "en"));
             shortcut.Target = @"c:\windows\notepad.exe";
+            shortcut.Icon = @"c:\windows\notepad.exe,0";
+            shortcut.Description.Add(new LocaleString("This is notepad", "en"));
             shortcut.Location = @"c:\users\sevenalive\desktop\";
             Shortcut.CreateShortcut(shortcut);
 
@@ -165,8 +164,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Raises the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.</summary>
-        /// <param name = "e">The <see cref = "StartupNextInstanceEventArgs" /> instance containing the event data.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <param name="e">The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -203,51 +202,19 @@ namespace SevenUpdate
         {
             var jumpList = new JumpList();
 
-            var jumpTask = new JumpTask
-            {
-                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
-                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                IconResourceIndex = 2,
-                Title = SevenUpdate.Properties.Resources.CheckForUpdates,
-                CustomCategory = SevenUpdate.Properties.Resources.Tasks,
-                Arguments = "-check",
-            };
+            var jumpTask = new JumpTask { ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"), IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 2, Title = SevenUpdate.Properties.Resources.CheckForUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-check", };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-            {
-                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
-                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                IconResourceIndex = 5,
-                Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates,
-                CustomCategory = SevenUpdate.Properties.Resources.Tasks,
-                Arguments = "-hidden",
-            };
+            jumpTask = new JumpTask { ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"), IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 5, Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-hidden", };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-            {
-                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
-                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                IconResourceIndex = 4,
-                Title = SevenUpdate.Properties.Resources.ViewUpdateHistory,
-                CustomCategory = SevenUpdate.Properties.Resources.Tasks,
-                Arguments = "-history",
-            };
+            jumpTask = new JumpTask { ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"), IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 4, Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-history", };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask
-            {
-                ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"),
-                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                IconResourceIndex = 3,
-                Title = SevenUpdate.Properties.Resources.ChangeSettings,
-                CustomCategory = SevenUpdate.Properties.Resources.Tasks,
-                Arguments = "-settings",
-            };
+            jumpTask = new JumpTask { ApplicationPath = Path.Combine(Utilities.AppDir, @"SevenUpdate.exe"), IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 3, Title = SevenUpdate.Properties.Resources.ChangeSettings, CustomCategory = SevenUpdate.Properties.Resources.Tasks, Arguments = "-settings", };
 
             jumpList.JumpItems.Add(jumpTask);
 

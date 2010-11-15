@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -188,17 +185,13 @@ namespace System.Windows.Internal
             }
         }
 
-        /// <summary>
-        /// Sends the specified message to a window or windows. The SendMessage function calls
-        ///   the window procedure for the specified window and does not return until the window
-        ///   procedure has processed the message.
-        /// </summary>
-        /// <param name="pointer">
-        /// Handle to the window whose window procedure will receive the message.
-        ///   If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,
-        ///   including disabled or invisible unowned windows, overlapped windows, and pop-up windows;
-        ///   but the message is not sent to child windows.
-        /// </param>
+        /// <summary>Sends the specified message to a window or windows. The SendMessage function calls
+        /// the window procedure for the specified window and does not return until the window
+        /// procedure has processed the message.</summary>
+        /// <param name="pointer">Handle to the window whose window procedure will receive the message.
+        /// If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,
+        /// including disabled or invisible unowned windows, overlapped windows, and pop-up windows;
+        /// but the message is not sent to child windows.</param>
         /// <param name="msg">Specifies the message to be sent.</param>
         /// <param name="parameter">Specifies additional message-specific information.</param>
         /// <param name="parameterLength">Specifies the length of the additional message-specific information.</param>

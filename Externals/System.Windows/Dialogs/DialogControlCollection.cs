@@ -28,7 +28,8 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="DialogControlCollection&lt;T&gt;"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DialogControlCollection{T}"/> class. 
+        /// Initializes a new instance of the <see cref="DialogControlCollection&lt;T&gt;"/> class.</summary>
         /// <param name="host">The dialog control host.</param>
         internal DialogControlCollection(IDialogControlHost host)
         {
@@ -52,18 +53,11 @@ namespace System.Windows.Dialogs
             // function should ultimately decide.
         }
 
-        /// <summary>
-        /// Recursively searches for the control who's id matches the value
-        ///   passed in the <paramref name="id"/> parameter.
-        /// </summary>
-        /// <param name="id">
-        /// An integer containing the identifier of the
-        ///   control being searched for.
-        /// </param>
-        /// <returns>
-        /// A <see cref="DialogControl"/> who's id matches the value of the
-        ///   <paramref name="id"/> parameter.
-        /// </returns>
+        /// <summary>Recursively searches for the control who's id matches the value
+        /// passed in the <paramref name="id"/> parameter.</summary>
+        /// <param name="id">An integer containing the identifier of the
+        /// control being searched for.</param>
+        /// <returns>A <see cref="DialogControl"/> who's id matches the value of the<paramref name="id"/> parameter.</returns>
         internal DialogControl GetControlById(int id)
         {
             return GetSubControlById(this.Items, id);
@@ -72,12 +66,10 @@ namespace System.Windows.Dialogs
         /// <summary>Inserts an dialog control at the specified index.</summary>
         /// <param name="index">The location to insert the control.</param>
         /// <param name="control">The item to insert.</param>
-        /// <permission cref="System.InvalidOperationException">
-        /// A control with 
-        ///   the same name already exists in this collection -or- 
-        ///   the control is being hosted by another dialog -or- the associated dialog is 
-        ///   showing and cannot be modified.
-        /// </permission>
+        /// <permission cref="System.InvalidOperationException">A control with 
+        /// the same name already exists in this collection -or- 
+        /// the control is being hosted by another dialog -or- the associated dialog is 
+        /// showing and cannot be modified.</permission>
         protected override void InsertItem(int index, T control)
         {
             // Check for duplicates, lack of host, 
@@ -107,10 +99,8 @@ namespace System.Windows.Dialogs
 
         /// <summary>Removes the control at the specified index.</summary>
         /// <param name="index">The location of the control to remove.</param>
-        /// <permission cref="System.InvalidOperationException">
-        /// The associated dialog is 
-        ///   showing and cannot be modified.
-        /// </permission>
+        /// <permission cref="System.InvalidOperationException">The associated dialog is 
+        /// showing and cannot be modified.</permission>
         protected override void RemoveItem(int index)
         {
             // Notify that we're about to remove a control.

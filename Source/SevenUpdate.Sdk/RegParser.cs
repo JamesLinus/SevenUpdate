@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -76,8 +73,8 @@ namespace SevenUpdate.Sdk
 
         #region Public Methods
 
-        /// <summary>Parses a registry file into a <see cref = "RegistryItem" /></summary>
-        /// <param name = "file">The reg file</param>
+        /// <summary>Parses a registry file into a <see cref="RegistryItem"/></summary>
+        /// <param name="file">The reg file</param>
         /// <returns>String of lines to be returned</returns>
         public IEnumerable<RegistryItem> Parse(string file)
         {
@@ -135,10 +132,9 @@ namespace SevenUpdate.Sdk
         #region Methods
 
         /// <summary>Apply fixes to the line</summary>
-        /// <param name = "line">Line to apply fixes to</param>
-        /// <param name = "skipQuotesConversion">
-        ///   REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so for
-        ///   those put <see langword = "true" /> here to skip that part and only to do the double-quote and percent fixes.</param>
+        /// <param name="line">Line to apply fixes to</param>
+        /// <param name="skipQuotesConversion">REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so for
+        /// those put <see langword="true"/> here to skip that part and only to do the double-quote and percent fixes.</param>
         /// <returns>The line with the fixes applied</returns>
         private static string ApplyFixes(string line, bool skipQuotesConversion)
         {
@@ -161,7 +157,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Method for finding empty strings</summary>
-        /// <param name = "item">The reg item</param>
+        /// <param name="item">The reg item</param>
         /// <returns>A value indicating if the string is </returns>
         private static bool EmptyString(string item)
         {
@@ -169,11 +165,11 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Common processing for normal binary types</summary>
-        /// <param name = "hexType">Single char for hex type</param>
-        /// <param name = "valueNameData">Value Name for generating INF format line</param>
-        /// <param name = "valueData">ValueData to operate on</param>
-        /// <param name = "flag">INF flag for this binary type</param>
-        /// <param name = "methodResult">Instance to return result in</param>
+        /// <param name="hexType">Single char for hex type</param>
+        /// <param name="valueNameData">Value Name for generating INF format line</param>
+        /// <param name="valueData">ValueData to operate on</param>
+        /// <param name="flag">INF flag for this binary type</param>
+        /// <param name="methodResult">Instance to return result in</param>
         /// <returns>Finished INFConversionResult instance</returns>
         private static RegistryItem ProcessBinaryType(char hexType, ref string valueNameData, ref string valueData, RegistryValueKind flag, ref RegistryItem methodResult)
         {
@@ -191,7 +187,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Internal method for extracting the data part of the reg line</summary>
-        /// <param name = "line">A line in the registry file</param>
+        /// <param name="line">A line in the registry file</param>
         /// <returns>Object containing AddReg or DelReg INF format partial lines for further processing.</returns>
         private static RegistryItem ProcessRegLine(string line)
         {
@@ -343,10 +339,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Matches hex data from the key/value</summary>
-        /// <param name = "methodResult">The data from the match</param>
-        /// <param name = "valueName">The name of the value</param>
-        /// <param name = "valueData">The data for the value</param>
-        /// <returns><see langword = "true" /> if it was a match, otherwise; <see langword = "false" /></returns>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
         private static bool MatchStringHex(ref RegistryItem methodResult, string valueName, string valueData)
         {
             if (Regex.IsMatch(valueData, @"^hex\(0*1\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
@@ -396,10 +392,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Matches MutiString from the key/value</summary>
-        /// <param name = "methodResult">The data from the match</param>
-        /// <param name = "valueName">The name of the value</param>
-        /// <param name = "valueData">The data for the value</param>
-        /// <returns><see langword = "true" /> if it was a match, otherwise; <see langword = "false" /></returns>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
         private static bool MatchMutiString(ref RegistryItem methodResult, string valueName, string valueData)
         {
             if (Regex.IsMatch(valueData, @"^hex\(0*7\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
@@ -500,10 +496,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Matches ExpandString from the key/value</summary>
-        /// <param name = "methodResult">The data from the match</param>
-        /// <param name = "valueName">The name of the value</param>
-        /// <param name = "valueData">The data for the value</param>
-        /// <returns><see langword = "true" /> if it was a match, otherwise; <see langword = "false" /></returns>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
         private static bool MathExpandString(ref RegistryItem methodResult, string valueName, string valueData)
         {
             if (Regex.IsMatch(valueData, @"^hex\(0*2\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
@@ -567,10 +563,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Matches DWord from the key/value</summary>
-        /// <param name = "methodResult">The data from the match</param>
-        /// <param name = "valueName">The name of the value</param>
-        /// <param name = "valueData">The data for the value</param>
-        /// <returns><see langword = "true" /> if it was a match, otherwise; <see langword = "false" /></returns>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
         private static bool MatchDWord(ref RegistryItem methodResult, string valueName, string valueData)
         {
             if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
@@ -625,10 +621,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Matches Binary data from the key/value</summary>
-        /// <param name = "methodResult">The data from the match</param>
-        /// <param name = "valueName">The name of the value</param>
-        /// <param name = "valueData">The data for the value</param>
-        /// <returns><see langword = "true" /> if it was a match, otherwise; <see langword = "false" /></returns>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
         private static bool MatchBinary(ref RegistryItem methodResult, string valueName, string valueData)
         {
             if (Regex.IsMatch(valueData, @"^hex(\(0*3\))?:(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
@@ -650,7 +646,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF, extra commas</summary>
-        /// <param name = "valueData">ValueData string to operate on</param>
+        /// <param name="valueData">ValueData string to operate on</param>
         /// <returns>Cleaned up and fixed string</returns>
         private static string PutOnOneLineAndTrim(string valueData)
         {
@@ -658,7 +654,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Method for converting the hex byte string to a byte value</summary>
-        /// <param name = "value">The byte string.</param>
+        /// <param name="value">The byte string.</param>
         /// <returns>The byte from the parsed string</returns>
         private static byte String2Byte(string value)
         {
@@ -666,7 +662,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ?.</summary>
-        /// <param name = "value">The byte string.</param>
+        /// <param name="value">The byte string.</param>
         /// <returns>The byte from the parsed ascii string</returns>
         private static byte String2ByteForAscii(string value)
         {
@@ -680,7 +676,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ? but allows CRLF characters.</summary>
-        /// <param name = "value">The byte string.</param>
+        /// <param name="value">The byte string.</param>
         /// <returns>The byte from the parsed ascii string with crlf line endings</returns>
         private static byte String2ByteForAsciiAllowCrlf(string value)
         {
@@ -699,7 +695,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Internal method for processing extracted REG format blocks. Real processing takes place here.</summary>
-        /// <param name = "regBlock">The reg block</param>
+        /// <param name="regBlock">The reg block</param>
         private void ProcessRegBlock(string regBlock)
         {
             // Define variable for RootKey

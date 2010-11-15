@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -110,40 +107,40 @@ namespace SevenUpdate
         }
 
         /// <summary>Occurs when the download of updates has completed</summary>
-        /// <param name = "sender">The sender of the event</param>
-        /// <param name = "e">The event data</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             DownloadDone(this, e);
         }
 
         /// <summary>Occurs when the download progress has changed</summary>
-        /// <param name = "sender">The sender of the event</param>
-        /// <param name = "e">The event data</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             DownloadProgressChanged(this, e);
         }
 
         /// <summary>Occurs when a error occurs when downloading or installing updates</summary>
-        /// <param name = "sender">The sender of the event</param>
-        /// <param name = "e">The event data</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             ErrorOccurred(this, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed</summary>
-        /// <param name = "sender">The sender of the event</param>
-        /// <param name = "e">The event data</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             InstallDone(this, e);
         }
 
         /// <summary>Occurs when the install progress has changed</summary>
-        /// <param name = "sender">The sender of the event</param>
-        /// <param name = "e">The event data</param>
+        /// <param name="sender">The sender of the event</param>
+        /// <param name="e">The event data</param>
         public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             InstallProgressChanged(this, e);
@@ -154,7 +151,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Aborts the installation of updates</summary>
-        /// <returns><see langword = "true" /> if the install was aborted, otherwise <see langword = "false" /></returns>
+        /// <returns><see langword="true"/> if the install was aborted, otherwise <see langword="false"/></returns>
         internal static bool AbortInstall()
         {
             var abort = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"), "Abort");
@@ -163,7 +160,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Adds an application to Seven Update</summary>
-        /// <param name = "application">the application to add to Seven Update</param>
+        /// <param name="application">the application to add to Seven Update</param>
         internal static void AddSua(Sua application)
         {
             if (!Connect())
@@ -189,7 +186,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports an error with the admin process</summary>
-        /// <param name = "e">The exception data that caused the error</param>
+        /// <param name="e">The exception data that caused the error</param>
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
@@ -215,8 +212,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Connects to the <see cref = "SevenUpdate" />.Admin sub program</summary>
-        /// <returns><see langword = "true" /> if the connection to <see cref = "WcfService" /> was successful</returns>
+        /// <summary>Connects to the <see cref="SevenUpdate"/>.Admin sub program</summary>
+        /// <returns><see langword="true"/> if the connection to <see cref="WcfService"/> was successful</returns>
         internal static bool Connect()
         {
             MyServiceHost.StartService();
@@ -245,11 +242,12 @@ namespace SevenUpdate
                     return false;
                 }
             }
+
 #endif
             return true;
         }
 
-        /// <summary>Disconnects from <see cref = "SevenUpdate" />.Admin</summary>
+        /// <summary>Disconnects from <see cref="SevenUpdate"/>.Admin</summary>
         internal static void Disconnect()
         {
             Core.Instance.IsAdmin = false;
@@ -273,8 +271,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Hides an update</summary>
-        /// <param name = "hiddenUpdate">the update to hide</param>
-        /// <returns><see langword = "true" /> if the admin process was executed</returns>
+        /// <param name="hiddenUpdate">the update to hide</param>
+        /// <returns><see langword="true"/> if the admin process was executed</returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
@@ -304,8 +302,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Hides multiple updates</summary>
-        /// <param name = "hiddenUpdates">the list of updates to hide</param>
-        /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
+        /// <param name="hiddenUpdates">the list of updates to hide</param>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/></returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (!Connect())
@@ -331,7 +329,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Installs selected updates</summary>
-        /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/></returns>
         internal static bool Install()
         {
             if (!Connect())
@@ -360,11 +358,11 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>Save the settings and call <see cref = "SevenUpdate" />.Admin to commit them.</summary>
-        /// <param name = "autoOn"><see langword = "true" /> if auto updates are enabled, otherwise <see langword = "false" /></param>
-        /// <param name = "options">the options to save</param>
-        /// <param name = "sul">the list of application to update to save</param>
-        /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
+        /// <summary>Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.</summary>
+        /// <param name="autoOn"><see langword="true"/> if auto updates are enabled, otherwise <see langword="false"/></param>
+        /// <param name="options">the options to save</param>
+        /// <param name="sul">the list of application to update to save</param>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/></returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             if (!Connect())
@@ -398,8 +396,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Removes an update from the hidden list</summary>
-        /// <param name = "hiddenUpdate">the hidden update to show</param>
-        /// <returns><see langword = "true" /> if the admin process was executed, otherwise <see langword = "false" /></returns>
+        /// <param name="hiddenUpdate">the hidden update to show</param>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/></returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
             if (!Connect())

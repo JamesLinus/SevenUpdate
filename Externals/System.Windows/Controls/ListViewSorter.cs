@@ -10,17 +10,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -41,12 +38,10 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>Indicates if the <see cref = "ListView" /> will auto sort</summary>
-        public static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
-            "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
+        public static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached("AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
 
         /// <summary>Indicates a custom sorter that will be used</summary>
-        public static readonly DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached(
-            "CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
+        public static readonly DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached("CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort</summary>
         public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached("PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
@@ -55,16 +50,13 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty ShowSortGlyphProperty = DependencyProperty.RegisterAttached("ShowSortGlyph", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(true));
 
         /// <summary>The sort arrow up</summary>
-        public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached(
-            "SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached("SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow down</summary>
-        public static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached(
-            "SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached("SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The column header that was sorted</summary>
-        private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached(
-            "SortedColumnHeader", typeof(GridViewColumnHeader), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached("SortedColumnHeader", typeof(GridViewColumnHeader), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The current sort direction</summary>
         private static ListSortDirection currentSortDirection;
@@ -315,7 +307,8 @@ namespace System.Windows.Controls
         /// <summary>Gets the ancestor.</summary>
         /// <typeparam name="T">The type of the ancestor to get</typeparam>
         /// <typeparameter name="T">The Ancestor class</typeparameter>
-        /// <param name="reference">The reference.</param>
+        /// <param name="reference">
+        /// The reference.</param>
         /// <returns>Returns the ancestor class</returns>
         private static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
@@ -523,13 +516,7 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    drawingContext.DrawGeometry(
-                        new SolidColorBrush(Colors.LightGray)
-                            {
-                                Opacity = 0.5
-                            },
-                        new Pen(Brushes.Gray, 0.5),
-                        this.GetDefaultGlyph());
+                    drawingContext.DrawGeometry(new SolidColorBrush(Colors.LightGray) { Opacity = 0.5 }, new Pen(Brushes.Gray, 0.5), this.GetDefaultGlyph());
                 }
             }
 
@@ -550,18 +537,11 @@ namespace System.Windows.Controls
                     y2 = tmp;
                 }
 
-                var pathSegmentCollection = new PathSegmentCollection
-                    {
-                        new LineSegment(new Point(x2, y1), true),
-                        new LineSegment(new Point(x3, y2), true)
-                    };
+                var pathSegmentCollection = new PathSegmentCollection { new LineSegment(new Point(x2, y1), true), new LineSegment(new Point(x3, y2), true) };
 
                 var pathFigure = new PathFigure(new Point(x1, y1), pathSegmentCollection, true);
 
-                var pathFigureCollection = new PathFigureCollection
-                    {
-                        pathFigure
-                    };
+                var pathFigureCollection = new PathFigureCollection { pathFigure };
 
                 var pathGeometry = new PathGeometry(pathFigureCollection);
                 return pathGeometry;

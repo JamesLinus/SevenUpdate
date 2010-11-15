@@ -34,11 +34,11 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
-        /// <param name = "updateName">the name of the update currently being installed</param>
-        /// <param name = "progress">the progress percentage of the installation</param>
-        /// <param name = "updatesComplete">the number of updates that have been installed so far</param>
-        /// <param name = "totalUpdates">the total number of updates to install</param>
+        /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs"/> class.</summary>
+        /// <param name="updateName">the name of the update currently being installed</param>
+        /// <param name="progress">the progress percentage of the installation</param>
+        /// <param name="updatesComplete">the number of updates that have been installed so far</param>
+        /// <param name="totalUpdates">the total number of updates to install</param>
         public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
             this.CurrentProgress = progress;

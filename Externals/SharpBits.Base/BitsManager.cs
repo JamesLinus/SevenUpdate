@@ -18,11 +18,8 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    /// <summary>
-    /// Use the <see cref="IBackgroundCopyManager"/> interface to create transfer jobs, 
-    ///   retrieve an enumerator object that contains the jobs in the queue, 
-    ///   and to retrieve individual jobs from the queue.
-    /// </summary>
+    /// <summary>Use the <see cref="IBackgroundCopyManager"/> interface to create transfer jobs, 
+    /// retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.</summary>
     public sealed class BitsManager : IDisposable
     {
         #region Constants and Fields
@@ -222,12 +219,10 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Creates a new transfer job.</summary>
-        /// <param name="displayName">
-        /// Null-terminated string that contains a display name for the job.
-        ///   Typically, the display name is used to identify the job in a user interface.
-        ///   Note that more than one job may have the same display name. Must not be <see langword = "null" />.
-        ///   The name is limited to 256 characters, not including the <see langword="null"/> terminator.
-        /// </param>
+        /// <param name="displayName">Null-terminated string that contains a display name for the job.
+        /// Typically, the display name is used to identify the job in a user interface.
+        /// Note that more than one job may have the same display name. Must not be <see langword="null"/>.
+        /// The name is limited to 256 characters, not including the <see langword="null"/> terminator.</param>
         /// <param name="jobType">Type of transfer job, such as <see cref="JobType"/>.Download. For a list of transfer types, see the <see cref="JobType"/> enumeration</param>
         /// <returns>The <see cref="BitsJob"/> created</returns>
         public BitsJob CreateJob(string displayName, JobType jobType)

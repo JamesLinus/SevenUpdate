@@ -75,8 +75,8 @@ namespace SharpBits.Base
         Default = 0x800,
 
         /// <summary>
-        ///   Authenticates distributed reference count calls to prevent malicious users from releasing objects that are still being used. If this flag is set, which can be done only in a call to CoInitializeSecurity by the client, the authentication level (in AuthLevel) cannot be set to none.
-        ///   The server always authenticates Release calls. Setting this flag prevents an authenticated client from releasing the objects of another authenticated client. It is recommended that clients always set this flag, although performance is affected because of the overhead associated with the extra security.
+        /// Authenticates distributed reference count calls to prevent malicious users from releasing objects that are still being used. If this flag is set, which can be done only in a call to CoInitializeSecurity by the client, the authentication level (in AuthLevel) cannot be set to none.
+        /// The server always authenticates Release calls. Setting this flag prevents an authenticated client from releasing the objects of another authenticated client. It is recommended that clients always set this flag, although performance is affected because of the overhead associated with the extra security.
         /// </summary>
         SecureRefs = 0x02,
 
@@ -130,7 +130,7 @@ namespace SharpBits.Base
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
 
         /// <summary>Retrieves the name of the account for this SID and the name of the first domain on which this SID is found.</summary>
-        /// <param name="systemName">A pointer to a <see langword="null"/>-terminated character string that specifies the target computer. This string can be the name of a remote computer. If this parameter is <see langword = "null" />, the account name translation begins on the local system. If the name cannot be resolved on the local system, this function will try to resolve the name using domain controllers trusted by the local system. Generally, specify a value only when the account is in an untrusted domain and the name of a computer in that domain is known.</param>
+        /// <param name="systemName">A pointer to a <see langword="null"/>-terminated character string that specifies the target computer. This string can be the name of a remote computer. If this parameter is <see langword="null"/>, the account name translation begins on the local system. If the name cannot be resolved on the local system, this function will try to resolve the name using domain controllers trusted by the local system. Generally, specify a value only when the account is in an untrusted domain and the name of a computer in that domain is known.</param>
         /// <param name="sid">A pointer to the SID to look up.</param>
         /// <param name="name">A pointer to a buffer that receives a <see langword="null"/>-terminated string that contains the account name that corresponds to the sid parameter.</param>
         /// <param name="nameSize">On input, specifies the size, of the name buffer. If the function fails because the buffer is too small or if name is zero, name receives the required buffer size, including the terminating <see langword="null"/> character.</param>

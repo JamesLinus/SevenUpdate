@@ -34,8 +34,8 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "DownloadCompletedEventArgs" /> class.</summary>
-        /// <param name = "errorOccurred"><see langword = "true" /> is an error occurred, otherwise <see langword = "false" /></param>
+        /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs"/> class.</summary>
+        /// <param name="errorOccurred"><see langword="true"/> is an error occurred, otherwise <see langword="false"/></param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;

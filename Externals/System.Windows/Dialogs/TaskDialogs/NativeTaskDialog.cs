@@ -156,13 +156,11 @@ namespace System.Windows.Dialogs
             Debug.Assert(this.showState == DialogShowState.Showing, "Update*() methods should only be called while native dialog is showing");
         }
 
-        /// <summary>
-        /// The new task dialog does not support the existing
-        ///   Win32 functions for closing (e.g. EndDialog()); instead,
-        ///   a "click button" message is sent. In this case, we're
-        ///   abstracting out to say that the <see cref="TaskDialog"/> consumer can
-        ///   simply call "Close" and we'll "click" the cancel button.
-        /// </summary>
+        /// <summary>The new task dialog does not support the existing
+        /// Win32 functions for closing (e.g. EndDialog()); instead,
+        /// a "click button" message is sent. In this case, we're
+        /// abstracting out to say that the <see cref="TaskDialog"/> consumer can
+        /// simply call "Close" and we'll "click" the cancel button.</summary>
         /// <param name="result">The result to give when closing the dialog</param>
         internal void NativeClose(TaskDialogResult result)
         {
@@ -196,8 +194,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)",
-            Justification = "We are not currently handling globalization or localization")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
             // Applies config struct and other settings, then

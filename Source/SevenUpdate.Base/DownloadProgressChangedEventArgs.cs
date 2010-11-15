@@ -34,11 +34,11 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "DownloadProgressChangedEventArgs" /> class.</summary>
-        /// <param name = "bytesTransferred">the number of bytes transferred</param>
-        /// <param name = "bytesTotal">the total number of bytes to download</param>
-        /// <param name = "filesTransferred">the number of files transfered</param>
-        /// <param name = "filesTotal">the total number of files transfered</param>
+        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs"/> class.</summary>
+        /// <param name="bytesTransferred">the number of bytes transferred</param>
+        /// <param name="bytesTotal">the total number of bytes to download</param>
+        /// <param name="filesTransferred">the number of files transfered</param>
+        /// <param name="filesTotal">the total number of files transfered</param>
         public DownloadProgressChangedEventArgs(ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
             this.BytesTotal = bytesTotal;

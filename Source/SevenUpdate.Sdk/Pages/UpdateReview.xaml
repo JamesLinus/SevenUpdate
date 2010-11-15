@@ -61,7 +61,7 @@
 		<TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="5">
 			<TextBlock.Text>
 				<MultiBinding StringFormat="Number of shortcuts: {0}" FallbackValue="Number of shortcuts: 0">
-					<Binding Path="Shortcuts.Count"/>
+					<Binding Path="Shortcuts.Count" />
 				</MultiBinding>
 			</TextBlock.Text>
 		</TextBlock>

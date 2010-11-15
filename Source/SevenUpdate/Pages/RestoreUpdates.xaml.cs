@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -68,9 +65,9 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        /// <summary>Gets the hidden updates and loads them in the <see cref = "ListView" /></summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>Gets the hidden updates and loads them in the <see cref="ListView"/></summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
             this.hiddenUpdates = Utilities.Deserialize<ObservableCollection<Suh>>(App.HiddenFile);
@@ -83,8 +80,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Un hides one or more updates and navigates to the Main page</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
         {
             for (var x = 0; x < this.hiddenUpdates.Count; x++)
@@ -109,17 +106,17 @@ namespace SevenUpdate.Pages
             MainWindow.NavService.GoBack();
         }
 
-        /// <summary>Limit the size of the <see cref = "GridViewColumn" /> when it's being resized</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.</param>
+        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvHiddenUpdates.SelectedIndex == -1)
@@ -132,8 +129,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
@@ -141,8 +138,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the UI when an update check box is clicked</summary>
-        /// <param name = "sender">The sender.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)
         {
             var checkedCount = this.hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);

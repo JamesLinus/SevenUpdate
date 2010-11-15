@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -34,12 +31,10 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>The text to display below the main instruction text</summary>
-        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-            "Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed</summary>
-        public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
-            "UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
+        public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register("UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
 
         #endregion
 
@@ -59,10 +54,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary
-                {
-                    Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
-                };
+            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

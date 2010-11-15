@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -146,30 +143,14 @@ namespace SevenUpdate
                 apps = new Collection<Sua>();
 
                 var publisher = new ObservableCollection<LocaleString>();
-                var ls = new LocaleString
-                {
-                    Value = "Seven Software",
-                    Lang = "en"
-                };
+                var ls = new LocaleString { Value = "Seven Software", Lang = "en" };
                 publisher.Add(ls);
 
                 var name = new ObservableCollection<LocaleString>();
-                ls = new LocaleString
-                {
-                    Value = "Seven Update",
-                    Lang = "en"
-                };
+                ls = new LocaleString { Value = "Seven Update", Lang = "en" };
                 name.Add(ls);
 
-                var app = new Sua(name, publisher)
-                {
-                    AppUrl = @"http://sevenupdate.com/",
-                    Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
-                    HelpUrl = @"http://sevenupdate.com/support/",
-                    Is64Bit = true,
-                    IsEnabled = true,
-                    SuiUrl = SevenUpdateSui
-                };
+                var app = new Sua(name, publisher) { AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), HelpUrl = @"http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui };
                 apps.Add(app);
                 return apps;
             }
@@ -180,7 +161,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates</summary>
-        /// <param name = "auto"><see langword = "true" /> if it's called because of an auto update check, otherwise <see langword = "false" /></param>
+        /// <param name="auto"><see langword="true"/> if it's called because of an auto update check, otherwise <see langword="false"/></param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -236,21 +217,21 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the total size of a single update</summary>
-        /// <param name = "files">the collection of files of an update</param>
+        /// <param name="files">the collection of files of an update</param>
         /// <returns>a ulong value of the size of the update</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
-        /// <summary>Shows either a <see cref = "TaskDialog" /> or a <see cref = "MessageBox" /> if running legacy windows.</summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref = "TaskDialog" />)</param>
-        /// <param name = "icon">The icon to display</param>
-        /// <param name = "standardButtons">The standard buttons to use (with or without the custom default button text)</param>
-        /// <param name = "description">A description of the message, supplements the instruction text</param>
-        /// <param name = "footerText">Text to display as a footer message</param>
-        /// <param name = "defaultButtonText">Text to display on the button</param>
-        /// <param name = "displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The icon to display</param>
+        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name="footerText">Text to display as a footer message</param>
+        /// <param name="defaultButtonText">Text to display on the button</param>
+        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
         {
@@ -327,17 +308,17 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Shows either a <see cref = "TaskDialog" /> or a <see cref = "MessageBox" /> if running legacy windows.</summary>
-        /// <param name = "instructionText">The main text to display (Blue 14pt for <see cref = "TaskDialog" />)</param>
-        /// <param name = "icon">The icon to display</param>
-        /// <param name = "description">A description of the message, supplements the instruction text</param>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <param name="icon">The icon to display</param>
+        /// <param name="description">A description of the message, supplements the instruction text</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>When a property has changed, call the <see cref = "OnPropertyChanged" /> Event</summary>
-        /// <param name = "name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

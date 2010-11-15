@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -43,7 +40,7 @@ namespace SevenUpdate.Admin
     public class WcfServiceCallback : IElevatedProcess
     {
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name = "application">The application to add to Seven Update</param>
+        /// <param name="application">The application to add to Seven Update</param>
         public void AddApp(Sua application)
         {
             var sul = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
@@ -59,9 +56,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Changes the program settings</summary>
-        /// <param name = "applications">The applications Seven Update will check and manage updates for</param>
-        /// <param name = "options">The Seven Update settings</param>
-        /// <param name = "autoCheck">if set to <see langword = "true" /> automatic updates will be enabled</param>
+        /// <param name="applications">The applications Seven Update will check and manage updates for</param>
+        /// <param name="options">The Seven Update settings</param>
+        /// <param name="autoCheck">if set to <see langword="true"/> automatic updates will be enabled</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -95,7 +92,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a single update</summary>
-        /// <param name = "hiddenUpdate">The update to hide</param>
+        /// <param name="hiddenUpdate">The update to hide</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
             var hidden = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();
@@ -104,15 +101,15 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hidden, App.HiddenFile);
         }
 
-        /// <summary>Hides a collection of <see cref = "Suh" /> to hide</summary>
-        /// <param name = "hiddenUpdates">The collection of updates to hide</param>
+        /// <summary>Hides a collection of <see cref="Suh"/> to hide</summary>
+        /// <param name="hiddenUpdates">The collection of updates to hide</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
-        /// <summary>Gets a collection of <see cref = "Sui" /></summary>
-        /// <param name = "applicationUpdates">The collection of applications and updates to install</param>
+        /// <summary>Gets a collection of <see cref="Sui"/></summary>
+        /// <param name="applicationUpdates">The collection of applications and updates to install</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -137,7 +134,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
-        /// <param name = "hiddenUpdate">The hidden update to show</param>
+        /// <param name="hiddenUpdate">The hidden update to show</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             var show = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();

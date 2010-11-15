@@ -45,24 +45,21 @@ namespace SharpBits.Base
         Proxy = 2,
     }
 
-    /// <summary>
-    /// The BG_JOB_STATE enumeration type defines constant values for the 
-    ///   different states of a job
-    /// </summary>
+    /// <summary>The BG_JOB_STATE enumeration type defines constant values for the different states of a job</summary>
     internal enum BGJobState
     {
         /// <summary>
-        ///   Specifies that the job is in the queue and waiting to run. 
-        ///   If a user logs off while their job is transferring, the job 
-        ///   transitions to the queued state
+        /// Specifies that the job is in the queue and waiting to run. 
+        /// If a user logs off while their job is transferring, the job 
+        /// transitions to the queued state
         /// </summary>
         Queued = 0,
 
         /// <summary>
-        ///   Specifies that BITS is trying to connect to the server. If the 
-        ///   connection succeeds, the state of the job becomes 
-        ///   BG_JOB_STATE_TRANSFERRING; otherwise, the state becomes 
-        ///   BG_JOB_STATE_TRANSIENT_ERROR
+        /// Specifies that BITS is trying to connect to the server. If the 
+        /// connection succeeds, the state of the job becomes 
+        /// BG_JOB_STATE_TRANSFERRING; otherwise, the state becomes 
+        /// BG_JOB_STATE_TRANSIENT_ERROR
         /// </summary>
         Connecting = 1,
 
@@ -73,22 +70,22 @@ namespace SharpBits.Base
         Suspended = 3,
 
         /// <summary>
-        ///   Specifies that a non-recoverable error occurred (the service is 
-        ///   unable to transfer the file). When the error can be corrected, 
-        ///   such as an access-denied error, call the IBackgroundCopyJob::Resume 
-        ///   method after the error is fixed. However, if the error cannot be 
-        ///   corrected, call the IBackgroundCopyJob::Cancel method to cancel 
-        ///   the job, or call the IBackgroundCopyJob::Complete method to accept 
-        ///   the portion of a download job that transferred successfully.
+        /// Specifies that a non-recoverable error occurred (the service is 
+        /// unable to transfer the file). When the error can be corrected, 
+        /// such as an access-denied error, call the IBackgroundCopyJob::Resume 
+        /// method after the error is fixed. However, if the error cannot be 
+        /// corrected, call the IBackgroundCopyJob::Cancel method to cancel 
+        /// the job, or call the IBackgroundCopyJob::Complete method to accept 
+        /// the portion of a download job that transferred successfully.
         /// </summary>
         Error = 4,
 
         /// <summary>
-        ///   Specifies that a recoverable error occurred. The service tries to 
-        ///   recover from the transient error until the retry time value that 
-        ///   you specify using the IBackgroundCopyJob::SetNoProgressTimeout method 
-        ///   expires. If the retry time expires, the job state changes to 
-        ///   BG_JOB_STATE_ERROR
+        /// Specifies that a recoverable error occurred. The service tries to 
+        /// recover from the transient error until the retry time value that 
+        /// you specify using the IBackgroundCopyJob::SetNoProgressTimeout method 
+        /// expires. If the retry time expires, the job state changes to 
+        /// BG_JOB_STATE_ERROR
         /// </summary>
         TransientError = 5,
 
@@ -96,14 +93,14 @@ namespace SharpBits.Base
         Transferred = 6,
 
         /// <summary>
-        ///   Specifies that you called the IBackgroundCopyJob::Complete method 
-        ///   to acknowledge that your job completed successfully
+        /// Specifies that you called the IBackgroundCopyJob::Complete method 
+        /// to acknowledge that your job completed successfully
         /// </summary>
         Acknowledged = 7,
 
         /// <summary>
-        ///   Specifies that you called the IBackgroundCopyJob::Cancel method to 
-        ///   cancel the job (remove the job from the transfer queue)
+        /// Specifies that you called the IBackgroundCopyJob::Cancel method to 
+        /// cancel the job (remove the job from the transfer queue)
         /// </summary>
         Canceled = 8,
 
@@ -111,10 +108,7 @@ namespace SharpBits.Base
         Unknown = 1001, // This is not provided by BITS but is Custom
     }
 
-    /// <summary>
-    /// The BG_JOB_TYPE enumeration type defines constant values that you 
-    ///   use to specify the type of transfer job, such as download
-    /// </summary>
+    /// <summary>The BG_JOB_TYPE enumeration type defines constant values that you use to specify the type of transfer job, such as download</summary>
     internal enum BGJobType
     {
         /// <summary>Specifies that the job downloads files to the client</summary>
@@ -147,15 +141,12 @@ namespace SharpBits.Base
         BGNotifyJobModification = 0x0008,
     }
 
-    /// <summary>
-    /// The BG_JOB_PROXY_USAGE enumeration type defines constant values 
-    ///   that you use to specify which proxy to use for file transfers
-    /// </summary>
+    /// <summary>The BG_JOB_PROXY_USAGE enumeration type defines constant values that you use to specify which proxy to use for file transfers</summary>
     internal enum BGJobProxyUsage
     {
         /// <summary>
-        ///   Use the proxy and proxy bypass list settings defined by each 
-        ///   user to transfer files
+        /// Use the proxy and proxy bypass list settings defined by each 
+        /// user to transfer files
         /// </summary>
         PreConfig = 0,
 
@@ -166,44 +157,38 @@ namespace SharpBits.Base
         Override = 2,
 
         /// <summary>
-        ///   Automatically detect proxy settings. 
-        ///   BITS detects proxy settings for each file in the job
+        /// Automatically detect proxy settings. 
+        /// BITS detects proxy settings for each file in the job
         /// </summary>
         AutoDetect = 3,
     }
 
-    /// <summary>
-    /// The BG_JOB_PRIORITY enumeration type defines the constant values 
-    ///   that you use to specify the priority level of the job
-    /// </summary>
+    /// <summary>The BG_JOB_PRIORITY enumeration type defines the constant values that you use to specify the priority level of the job</summary>
     internal enum BGJobPriority
     {
         /// <summary>Transfers the job in the foreground</summary>
         Foreground = 0,
 
         /// <summary>
-        ///   Transfers the job in the background. This is the highest background 
-        ///   priority level.
+        /// Transfers the job in the background. This is the highest background 
+        /// priority level.
         /// </summary>
         High = 1,
 
         /// <summary>
-        ///   Transfers the job in the background. This is the default priority 
-        ///   level for a job
+        /// Transfers the job in the background. This is the default priority 
+        /// level for a job
         /// </summary>
         Normal = 2,
 
         /// <summary>
-        ///   Transfers the job in the background. This is the lowest background 
-        ///   priority level
+        /// Transfers the job in the background. This is the lowest background 
+        /// priority level
         /// </summary>
         Low = 3,
     }
 
-    /// <summary>
-    /// The BG_ERROR_CONTEXT enumeration type defines the constant values 
-    ///   that specify the context in which the error occurred
-    /// </summary>
+    /// <summary>The BG_ERROR_CONTEXT enumeration type defines the constant values that specify the context in which the error occurred</summary>
     internal enum BGErrorContext
     {
         /// <summary>An error has not occurred</summary>
@@ -216,26 +201,26 @@ namespace SharpBits.Base
         GeneralQueueManager = 2,
 
         /// <summary>
-        ///   The error was generated while the queue manager was 
-        ///   notifying the client of an event
+        /// The error was generated while the queue manager was 
+        /// notifying the client of an event
         /// </summary>
         QueueManagerNotification = 3,
 
         /// <summary>
-        ///   The error was related to the specified local file. For example, 
-        ///   permission was denied or the volume was unavailable
+        /// The error was related to the specified local file. For example, 
+        /// permission was denied or the volume was unavailable
         /// </summary>
         LocalFile = 4,
 
         /// <summary>
-        ///   The error was related to the specified remote file. 
-        ///   For example, the Url is not accessible
+        /// The error was related to the specified remote file. 
+        /// For example, the Url is not accessible
         /// </summary>
         RemoteFile = 5,
 
         /// <summary>
-        ///   The transport layer generated the error. These errors are general 
-        ///   transport failures; errors not specific to the remote file
+        /// The transport layer generated the error. These errors are general 
+        /// transport failures; errors not specific to the remote file
         /// </summary>
         GeneralTransport = 6,
     }
@@ -260,10 +245,7 @@ namespace SharpBits.Base
         BGCopyFileAll = 0x0015,
     }
 
-    /// <summary>
-    /// The BG_FILE_INFO structure provides the local and 
-    ///   remote names of the file to transfer
-    /// </summary>
+    /// <summary>The BG_FILE_INFO structure provides the local and remote names of the file to transfer</summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4, Size = 0)]
     internal struct BGFileInfo
     {
@@ -276,10 +258,7 @@ namespace SharpBits.Base
         public string LocalName;
     }
 
-    /// <summary>
-    /// The BG_JOB_PROGRESS structure provides job-related progress information, 
-    ///   such as the number of bytes and files transferred
-    /// </summary>
+    /// <summary>The BG_JOB_PROGRESS structure provides job-related progress information, such as the number of bytes and files transferred</summary>
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGJobProgress
     {
@@ -332,10 +311,7 @@ namespace SharpBits.Base
         public uint DWHighDateTime;
     }
 
-    /// <summary>
-    /// The BG_FILE_PROGRESS structure provides file-related progress information, 
-    ///   such as the number of bytes transferred
-    /// </summary>
+    /// <summary>The BG_FILE_PROGRESS structure provides file-related progress information, such as the number of bytes transferred</summary>
     [StructLayoutAttribute(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGFileProgress
     {
@@ -346,8 +322,8 @@ namespace SharpBits.Base
         public ulong BytesTransferred;
 
         /// <summary>
-        ///   For downloads, the value is <see langword = "true" /> if the file is available to the user; 
-        ///   otherwise, the value is <see langword = "false" />
+        /// For downloads, the value is <see langword = "true" /> if the file is available to the user; 
+        /// otherwise, the value is <see langword = "false" />
         /// </summary>
         public int Completed;
     }
@@ -376,24 +352,19 @@ namespace SharpBits.Base
 
     /// <summary>The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.</summary>
     [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop"), StructLayout(LayoutKind.Sequential, Size = 8)]
-    
     internal struct BGBasicCredentials
     {
         /// <summary>Null-terminated string that contains the user name to authenticate. The user name is limited to 300 characters, not including the <see langword = "null" /> terminator. The format of the user name depends on the authentication scheme requested. For example, for Basic, NTLM, and Negotiate authentication, the user name is of the form "domain\user name" or "user name". For Passport authentication, the user name is an e-mail address. If <see langword = "null" />, default credentials for this session context are used.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop"), MarshalAs(UnmanagedType.LPWStr)]
-        
         internal string UserName;
 
         /// <summary>Null-terminated string that contains the password in clear-text. The password is limited to 300 characters, not including the <see langword = "null" /> terminator. The password can be blank. Set to <see langword = "null" /> if <see cref = "UserName" /> is <see langword = "null" />. BITS encrypts the password before persisting the job if a network disconnect occurs or the user logs off.</summary>
         [SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Justification = "Interop"), MarshalAs(UnmanagedType.LPWStr)]
-        
         internal string Password;
     }
 
     /// <summary>The BG_AUTH_CREDENTIALS structure identifies the target (proxy or server), authentication scheme, and the user's credentials to use for user authentication requests. The structure is passed to the IBackgroundCopyJob2::SetCredentials method.</summary>
-    [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "UserName", Justification = "Interop"),
-     SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop"), StructLayout(LayoutKind.Sequential, Size = 16)]
-    
+    [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "UserName", Justification = "Interop"), SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop"), StructLayout(LayoutKind.Sequential, Size = 16)]
     internal struct BGAuthCredentials
     {
         /// <summary>Identifies whether to use the credentials for a proxy or server authentication request. For a list of values, see the BG_AUTH_TARGET enumeration.</summary>

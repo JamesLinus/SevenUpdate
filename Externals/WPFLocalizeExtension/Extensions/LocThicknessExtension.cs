@@ -83,10 +83,7 @@ namespace WPFLocalizeExtension.Extensions
             {
                 try
                 {
-                    args = new[]
-                        {
-                            this.DesignValue, new CultureInfo("en-US")
-                        };
+                    args = new[] { this.DesignValue, new CultureInfo("en-US") };
 
                     return (Thickness)method.Invoke(null, args);
                 }
@@ -97,10 +94,7 @@ namespace WPFLocalizeExtension.Extensions
                 }
             }
 
-            args = new[]
-                {
-                    input, new CultureInfo("en-US")
-                };
+            args = new[] { input, new CultureInfo("en-US") };
 
             return (Thickness)method.Invoke(null, args);
         }

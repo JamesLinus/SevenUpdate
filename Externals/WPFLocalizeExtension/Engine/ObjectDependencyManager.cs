@@ -25,10 +25,6 @@ namespace WPFLocalizeExtension.Engine
 
         #endregion
 
-        #region Constructors and Destructors
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>This method adds a new object dependency</summary>
@@ -74,10 +70,7 @@ namespace WPFLocalizeExtension.Engine
             if (!InternalList.ContainsKey(value))
             {
                 // add the objToHold to the internal list.
-                var lst = new List<WeakReference>
-                    {
-                        weakRef
-                    };
+                var lst = new List<WeakReference> { weakRef };
 
                 InternalList.Add(value, lst);
 

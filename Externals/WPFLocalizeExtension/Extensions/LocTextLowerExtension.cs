@@ -17,10 +17,8 @@ namespace WPFLocalizeExtension.Extensions
 
     using WPFLocalizeExtension.Engine;
 
-    /// <summary>
-    /// <c>BaseLocalizeExtension</c> for string objects.
-    ///   This strings will be converted to lower case.
-    /// </summary>
+    /// <summary><c>BaseLocalizeExtension</c> for string objects.
+    /// This strings will be converted to lower case.</summary>
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextLowerExtension : LocTextExtension
     {
@@ -73,10 +71,8 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>
-        /// This method formats the localized text.
-        ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
-        /// </summary>
+        /// <summary>This method formats the localized text.
+        /// If the passed target text is <see langword="null"/>, string.empty will be returned.</summary>
         /// <param name="target">The text to format.</param>
         /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
         protected override string FormatText(string target)

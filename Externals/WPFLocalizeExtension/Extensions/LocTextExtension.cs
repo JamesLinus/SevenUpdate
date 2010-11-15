@@ -53,10 +53,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Enums
 
-        /// <summary>
-        /// This enumeration is used to determine the type 
-        ///   of the return value of <see cref="GetAppendText"/>
-        /// </summary>
+        /// <summary>This enumeration is used to determine the type of the return value of <see cref="GetAppendText"/></summary>
         protected enum TextAppendType
         {
             /// <summary>The return value is used as prefix</summary>
@@ -71,9 +68,9 @@ namespace WPFLocalizeExtension.Extensions
         #region Properties
 
         /// <summary>
-        ///   Gets or sets the format segment 1.
-        ///   This will be used to replace format place holders from the localized text.
-        ///   <see cref = "LocTextLowerExtension" /> and <see cref = "LocTextUpperExtension" /> will format this segment.
+        /// Gets or sets the format segment 1.
+        /// This will be used to replace format place holders from the localized text.
+        /// <see cref = "LocTextLowerExtension" /> and <see cref = "LocTextUpperExtension" /> will format this segment.
         /// </summary>
         /// <value>The format segment 1.</value>
         public string FormatSegment1
@@ -91,9 +88,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 2.
-        ///   This will be used to replace format place holders from the localized text.
-        ///   <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
+        /// Gets or sets the format segment 2.
+        /// This will be used to replace format place holders from the localized text.
+        /// <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
         /// </summary>
         /// <value>The format segment 2.</value>
         public string FormatSegment2
@@ -111,9 +108,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 3.
-        ///   This will be used to replace format place holders from the localized text.
-        ///   <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
+        /// Gets or sets the format segment 3.
+        /// This will be used to replace format place holders from the localized text.
+        /// <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
         /// </summary>
         /// <value>The format segment 3.</value>
         public string FormatSegment3
@@ -131,9 +128,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 4.
-        ///   This will be used to replace format place holders from the localized text.
-        ///   <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
+        /// Gets or sets the format segment 4.
+        /// This will be used to replace format place holders from the localized text.
+        /// <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
         /// </summary>
         /// <value>The format segment 4.</value>
         public string FormatSegment4
@@ -151,9 +148,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 5.
-        ///   This will be used to replace format place holders from the localized text.
-        ///   <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
+        /// Gets or sets the format segment 5.
+        /// This will be used to replace format place holders from the localized text.
+        /// <see cref = "LocTextUpperExtension" /> and <see cref = "LocTextLowerExtension" /> will format this segment.
         /// </summary>
         /// <value>The format segment 5.</value>
         public string FormatSegment5
@@ -260,14 +257,7 @@ namespace WPFLocalizeExtension.Extensions
             try
             {
                 // add some format segments, in case that the main text contains format place holders like {0}
-                textMain = string.Format(
-                    Localize.Instance.SpecificCulture,
-                    textMain,
-                    this.formatSegments[0] ?? string.Empty,
-                    this.formatSegments[1] ?? string.Empty,
-                    this.formatSegments[2] ?? string.Empty,
-                    this.formatSegments[3] ?? string.Empty,
-                    this.formatSegments[4] ?? string.Empty);
+                textMain = string.Format(Localize.Instance.SpecificCulture, textMain, this.formatSegments[0] ?? string.Empty, this.formatSegments[1] ?? string.Empty, this.formatSegments[2] ?? string.Empty, this.formatSegments[3] ?? string.Empty, this.formatSegments[4] ?? string.Empty);
             }
             catch (FormatException)
             {
@@ -288,10 +278,8 @@ namespace WPFLocalizeExtension.Extensions
             return input;
         }
 
-        /// <summary>
-        /// This method formats the localized text.
-        ///   If the passed target text is <see langword="null"/>, string.empty will be returned.
-        /// </summary>
+        /// <summary>This method formats the localized text.
+        /// If the passed target text is <see langword="null"/>, string.empty will be returned.</summary>
         /// <param name="target">The text to format.</param>
         /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
         protected virtual string FormatText(string target)
@@ -305,10 +293,8 @@ namespace WPFLocalizeExtension.Extensions
             this.SetNewValue(this.FormatOutput(null));
         }
 
-        /// <summary>
-        /// Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType"/>.
-        ///   If the prefix or suffix is <see langword="null"/>, it will be returned a string.empty.
-        /// </summary>
+        /// <summary>Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType"/>.
+        /// If the prefix or suffix is <see langword="null"/>, it will be returned a string.empty.</summary>
         /// <param name="at">The <see cref="TextAppendType"/> defines the format of the return value</param>
         /// <returns>Returns the formated prefix or suffix</returns>
         private string GetAppendText(TextAppendType at)

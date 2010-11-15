@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -54,7 +51,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Saves the project.</summary>
-        /// <param name = "export"><see langword = "true" /> to export the sui/sua files, <see langword = "false" /> otherwise</param>
+        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
         private static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -105,10 +102,7 @@ namespace SevenUpdate.Sdk.Pages
             Utilities.Serialize(appUpdates, suiFile);
 
             // Save project file
-            var project = new Project
-                {
-                    ApplicationName = appName,
-                };
+            var project = new Project { ApplicationName = appName, };
 
             foreach (var t in updateNames)
             {
@@ -157,24 +151,24 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Saves and exports the Project</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
             SaveProject(true);
         }
 
         /// <summary>Saves the Project</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
             SaveProject();
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name = "sender">The source of the event.</param>
-        /// <param name = "e">The <see cref = "CompositionChangedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));

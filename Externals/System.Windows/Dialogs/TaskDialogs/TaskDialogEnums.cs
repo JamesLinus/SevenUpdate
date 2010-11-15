@@ -92,10 +92,8 @@ namespace System.Windows.Dialogs
 
     #region TaskDialogStandardButtons
 
-    /// <summary>
-    /// Identifies one of the standard buttons that 
-    ///   can be displayed via <see cref="TaskDialog"/>.
-    /// </summary>
+    /// <summary>Identifies one of the standard buttons that 
+    /// can be displayed via <see cref="TaskDialog"/>.</summary>
     [Flags]
     public enum TaskDialogStandardButtons
     {

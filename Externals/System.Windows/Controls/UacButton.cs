@@ -9,17 +9,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//
 //    Seven Update is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
 //    the Free Software Foundation, either version 3 of the License, or
 //    (at your option) any later version.
-//
 //    Seven Update is distributed in the hope that it will be useful,
 //    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //    GNU General Public License for more details.
-//
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
@@ -113,8 +110,8 @@ namespace System.Windows.Controls
         /// <summary>Gets or sets a value indicating whether the caller desires the <see cref = "ShieldIcon" /> to be displayed.  This is a dependency property.</summary>
         /// <value>A Boolean that indicates if the <see cref = "ShieldIcon" /> caller wants the <see cref = "ShieldIcon" />  displayed</value>
         /// <remarks>
-        ///   This is only an indication of desire.  If the operating system does not support UAC or the user is already
-        ///   elevated, any request to display is ignored.
+        /// This is only an indication of desire.  If the operating system does not support UAC or the user is already
+        /// elevated, any request to display is ignored.
         /// </remarks>
         public bool IsShieldNeeded
         {
@@ -232,14 +229,10 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Returns current "actual" <see cref="ToolTip"/></summary>
-        /// <returns>
-        /// If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,
-        ///   <see cref="Button.ToolTip"/> is returned.
-        ///   Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
-        ///   based on <see cref="IsShieldNeeded"/>
-        /// </returns>
-        /// <remarks>
-        /// </remarks>
+        /// <returns>If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,<see cref="Button.ToolTip"/> is returned.
+        /// Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
+        /// based on <see cref="IsShieldNeeded"/></returns>
+        /// <remarks></remarks>
         private object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)
