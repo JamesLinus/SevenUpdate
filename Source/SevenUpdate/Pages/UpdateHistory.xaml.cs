@@ -37,9 +37,6 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>The location of the update history file</summary>
-        private static readonly string HistoryFile = Path.Combine(App.AllUserStore, @"History.suh");
-
         /// <summary>Gets or sets a collection of SUH items</summary>
         private ObservableCollection<Suh> updateHistory;
 
@@ -62,7 +59,12 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHistory(object sender, RoutedEventArgs e)
         {
-            this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(HistoryFile);
+            if (!File.Exists(App.HistoryFile))
+            {
+                return;
+            }
+
+            this.updateHistory = Utilities.Deserialize<ObservableCollection<Suh>>(App.HistoryFile);
             if (this.updateHistory == null)
             {
                 return;

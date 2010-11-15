@@ -26,6 +26,7 @@ namespace SevenUpdate.Pages
     using System;
     using System.Collections.ObjectModel;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
@@ -70,6 +71,11 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
+            if (!File.Exists(App.HiddenFile))
+            {
+                return;
+            }
+
             this.hiddenUpdates = Utilities.Deserialize<ObservableCollection<Suh>>(App.HiddenFile);
             if (this.hiddenUpdates == null)
             {
