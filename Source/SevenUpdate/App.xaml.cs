@@ -148,14 +148,6 @@ namespace SevenUpdate
                 }
             }
 
-            var shortcut = new Shortcut();
-            shortcut.Name.Add(new LocaleString("TestShortcut", "en"));
-            shortcut.Target = @"c:\windows\notepad.exe";
-            shortcut.Icon = @"c:\windows\notepad.exe,0";
-            shortcut.Description.Add(new LocaleString("This is notepad", "en"));
-            shortcut.Location = @"c:\users\sevenalive\desktop\";
-            Shortcut.CreateShortcut(shortcut);
-
             base.OnStartup(e, isFirstInstance);
 
             if (!isFirstInstance)

@@ -110,35 +110,6 @@ namespace System.Windows.Internal
         public bool TransitionOnMaximized;
     }
 
-    /// <summary>Data used to create the activation context.</summary>
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct ActivationContext
-    {
-        /// <summary>Identifies the type of processor used. Specifies the system's processor architecture.</summary>
-        public ushort ProcessorArchitecture;
-
-        /// <summary>Specifies the language manifest that should be used. The default is the current user's current UI language.</summary>
-        public ushort LangId;
-
-        /// <summary>Pointer to a <see langword="null"/>-terminated string that contains the resource name to be loaded from the PE specified in hModule or Source. If the resource name is an integer, set this member using MAKEINTRESOURCE. This member is required if Source refers to an EXE or DLL.</summary>
-        public string ResourceName;
-
-        /// <summary>The name of the current application. If the value of this member is set to null, the name of the executable that launched the current process is used.</summary>
-        public string ApplicationName;
-
-        /// <summary>The size, in bytes, of this structure. This is used to determine the version of this structure.</summary>
-        public int Size;
-
-        /// <summary>Flags that indicate how the values included in this structure are to be used. Set any undefined bits in Flags to 0. If any undefined bits are not set to 0, the call to CreateActCtx that creates the activation context fails and returns an invalid parameter error code.</summary>
-        public uint Flags;
-
-        /// <summary>Null-terminated string specifying the path of the manifest file or PE image to be used to create the activation context. If this path refers to an EXE or DLL file, the <see cref="ResourceName"/> member is required.</summary>
-        public string Source;
-
-        /// <summary>The base directory in which to perform private assembly probing if assemblies in the activation context are not present in the system-wide store.</summary>
-        public string AssemblyDirectory;
-    }
-
     /// <summary>Wrappers for Native Methods and Structs. This type is intended for internal use only</summary>
     public static class NativeMethods
     {
