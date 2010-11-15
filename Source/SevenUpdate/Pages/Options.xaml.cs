@@ -54,6 +54,7 @@ namespace SevenUpdate.Pages
         public Options()
         {
             this.InitializeComponent();
+
             this.lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnSave.IsShieldNeeded = !Core.Instance.IsAdmin;
         }

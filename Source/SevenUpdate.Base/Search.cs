@@ -102,7 +102,7 @@ namespace SevenUpdate
                 throw new ArgumentNullException("applications");
             }
 
-            // If there are no updates for Seven Update, let's download and load the SUI's from the User config.
+            // let's download and load the SUI's from the User config.
             foreach (var t in applications)
             {
                 if (!t.IsEnabled)
@@ -119,6 +119,7 @@ namespace SevenUpdate
                     catch (Exception ex)
                     {
                         Utilities.ReportError(ex, ErrorType.SearchError);
+                        throw;
                         continue;
                     }
 

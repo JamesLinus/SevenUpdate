@@ -42,7 +42,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>Location of the SUI for Seven Update</summary>
-        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate-v2.sui";
+        private static string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
 
         /// <summary>The static instance of the Core class</summary>
         private static Core instance;
@@ -159,6 +159,21 @@ namespace SevenUpdate
                         IsEnabled = true,
                         SuiUrl = SevenUpdateSui
                     };
+                if (App.IsDev)
+                {
+                    app.SuiUrl += @"-dev.sui";
+                }
+
+                if (App.IsBeta)
+                {
+                    app.SuiUrl += @"-beta.sui";
+                }
+
+                if (!App.IsDev && !App.IsBeta)
+                {
+                    app.SuiUrl += @".sui";
+                }
+
                 apps.Add(app);
                 return apps;
             }

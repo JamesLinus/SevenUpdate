@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.UpdateHistory" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateHistory}" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="GetHistory">
+<Page x:Class="SevenUpdate.Pages.UpdateHistory" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="GetHistory">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />

@@ -37,6 +37,16 @@ namespace SevenUpdate.Windows
         {
             this.InitializeComponent();
 
+            if (App.IsDev)
+            {
+                Title += " - " + Properties.Resources.DevChannel;
+            }
+
+            if (App.IsBeta)
+            {
+                Title += " - " + Properties.Resources.BetaChannel;
+            }
+
             var version = Assembly.GetExecutingAssembly().GetName().Version;
 
             this.tbVersion.Text = version.ToString();

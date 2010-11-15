@@ -1,5 +1,5 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" Title="{LocText SevenUpdate:Resources:UpdateInformation}" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="AddUpdates" d:DesignHeight="500" d:DesignWidth="850">
+<Page x:Class="SevenUpdate.Pages.UpdateInfo" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Properties="clr-namespace:SevenUpdate.Properties" mc:Ignorable="d" MinWidth="850" MinHeight="500" KeepAlive="False" Loaded="AddUpdates" d:DesignHeight="500" d:DesignWidth="850">
 	<Page.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>

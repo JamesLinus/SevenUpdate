@@ -54,6 +54,16 @@ namespace SevenUpdate.Windows
         public LicenseAgreement()
         {
             this.InitializeComponent();
+
+            if (App.IsDev)
+            {
+                Title += " - " + Properties.Resources.DevChannel;
+            }
+
+            if (App.IsBeta)
+            {
+                Title += " - " + Properties.Resources.BetaChannel;
+            }
         }
 
         #endregion

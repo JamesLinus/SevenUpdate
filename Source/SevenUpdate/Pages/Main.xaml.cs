@@ -108,6 +108,17 @@ namespace SevenUpdate.Pages
                 return;
             }
 
+            if (App.IsDev)
+            {
+                tbDevNote.Visibility = Visibility.Visible;
+                Title += " - " + Properties.Resources.DevChannel;
+            }
+
+            if (App.IsBeta)
+            {
+                Title += " - " + Properties.Resources.BetaChannel;
+            }
+
             Core.Instance.UpdateAction = UpdateAction.NoUpdates;
             if (Core.IsReconnect)
             {
@@ -201,5 +212,29 @@ namespace SevenUpdate.Pages
         }
 
         #endregion
+
+        /// <summary>Opens a browser and navigates to the Uri</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        private void GoToGoogleCode(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Utilities.StartProcess(e.Uri.AbsoluteUri);
+            e.Handled = true;
+        }
+
+        /// <summary>Opens a browser and navigates to the Uri</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        private void OpenErrorLog(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            var errorLog = Path.Combine(App.UserStore, "error.log");
+
+            if (File.Exists(errorLog))
+            {
+                Utilities.StartProcess(errorLog, null, false, false);
+            }
+
+            e.Handled = true;
+        }
     }
 }

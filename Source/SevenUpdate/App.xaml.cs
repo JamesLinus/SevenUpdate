@@ -71,6 +71,12 @@ namespace SevenUpdate
         /// <summary>Gets the command line arguments passed to this instance</summary>
         internal static IList<string> Args { get; private set; }
 
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the beta channel</summary>
+        internal static bool IsBeta { get; private set; }
+
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the dev channel</summary>
+        internal static bool IsDev { get; private set; }
+
         #endregion
 
         #region Methods
@@ -95,12 +101,15 @@ namespace SevenUpdate
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
                     Core.CheckForUpdates(true);
                     break;
+
                 case "-history":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
                     break;
+
                 case "-hidden":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
                     break;
+
                 case "-settings":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
                     break;
@@ -115,36 +124,50 @@ namespace SevenUpdate
             Init();
             if (e.Args.Length > 0)
             {
-                if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
+                switch (e.Args[0])
                 {
-                    e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
-                    Sua app = null;
-                    try
-                    {
-                        app = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]));
-                    }
-                    catch (WebException)
-                    {
-                        Core.ShowMessage(String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
-                        Environment.Exit(0);
-                    }
+                    case "-dev":
+                        IsDev = true;
+                        break;
 
-                    var appName = Utilities.GetLocaleString(app.Name);
-                    if (Core.ShowMessage(
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
-                            TaskDialogStandardIcon.ShieldBlue,
-                            TaskDialogStandardButtons.Cancel,
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
-                            null,
-                            SevenUpdate.Properties.Resources.Add,
-                            true) != TaskDialogResult.Cancel)
-                    {
-                        WcfService.AddSua(app);
-                    }
-                    else
-                    {
-                        Environment.Exit(0);
-                    }
+                    case "-beta":
+                        IsBeta = true;
+                        break;
+
+                    default:
+                        if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
+                        {
+                            e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
+                            Sua app = null;
+                            try
+                            {
+                                app = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]));
+                            }
+                            catch (WebException)
+                            {
+                                Core.ShowMessage(String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                                Environment.Exit(0);
+                            }
+
+                            var appName = Utilities.GetLocaleString(app.Name);
+                            if (Core.ShowMessage(
+                                    String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
+                                    TaskDialogStandardIcon.ShieldBlue,
+                                    TaskDialogStandardButtons.Cancel,
+                                    String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
+                                    null,
+                                    SevenUpdate.Properties.Resources.Add,
+                                    true) != TaskDialogResult.Cancel)
+                            {
+                                WcfService.AddSua(app);
+                            }
+                            else
+                            {
+                                Environment.Exit(0);
+                            }
+                        }
+
+                        break;
                 }
             }
 

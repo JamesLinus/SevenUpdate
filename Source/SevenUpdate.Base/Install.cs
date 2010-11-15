@@ -118,6 +118,8 @@ namespace SevenUpdate
                     }
 
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
+
+                    // TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
                     if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Is64Bit))
                     {
                         try

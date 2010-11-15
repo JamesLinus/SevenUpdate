@@ -51,6 +51,7 @@ namespace SevenUpdate.Pages
         public RestoreUpdates()
         {
             this.InitializeComponent();
+
             this.lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnRestore.IsShieldNeeded = !Core.Instance.IsAdmin;
         }

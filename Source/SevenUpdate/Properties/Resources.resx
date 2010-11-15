@@ -645,4 +645,22 @@
   <data name="ErrorDownloading" xml:space="preserve">
     <value>There was an error downloading the resource: {0}</value>
   </data>
+  <data name="BetaChannel" xml:space="preserve">
+    <value>Beta Channel</value>
+  </data>
+  <data name="DevChannel" xml:space="preserve">
+    <value>Development Channel</value>
+  </data>
+  <data name="DevNote" xml:space="preserve">
+    <value>Please Note: This is a development version of Seven Update, it may crash, fail to work properly, or work just fine.</value>
+  </data>
+  <data name="ErrorLog" xml:space="preserve">
+    <value>error log.</value>
+  </data>
+  <data name="IncludeContents" xml:space="preserve">
+    <value>Please also include the contents of the</value>
+  </data>
+  <data name="ReportBugs" xml:space="preserve">
+    <value>Please report all bugs found or issues at:</value>
+  </data>
 </root>
