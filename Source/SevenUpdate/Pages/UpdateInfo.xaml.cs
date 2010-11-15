@@ -259,7 +259,16 @@ namespace SevenUpdate.Pages
                 return;
             }
 
-            var hnh = new Suh(update.Name, Core.Applications[appIndex].AppInfo.Publisher, update.Description) { HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl, InfoUrl = update.InfoUrl, AppUrl = Core.Applications[appIndex].AppInfo.AppUrl, ReleaseDate = update.ReleaseDate, Status = UpdateStatus.Hidden, UpdateSize = Core.GetUpdateSize(update.Files), Importance = update.Importance, };
+            var hnh = new Suh(update.Name, Core.Applications[appIndex].AppInfo.Publisher, update.Description)
+                {
+                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl,
+                    InfoUrl = update.InfoUrl,
+                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl,
+                    ReleaseDate = update.ReleaseDate,
+                    Status = UpdateStatus.Hidden,
+                    UpdateSize = Core.GetUpdateSize(update.Files),
+                    Importance = update.Importance,
+                };
 
             if (!update.Hidden)
             {

@@ -155,7 +155,8 @@ namespace System.Windows
                 NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
             }
 
-            var nonClientSize = new Size((windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
+            var nonClientSize = new Size(
+                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             var transform = element.TransformToAncestor(window);

@@ -27,7 +27,8 @@ namespace WPFLocalizeExtension.Engine
         /// Only supported at DesignTime.
         /// </summary>
         [DesignOnly(true)]
-        public static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached("DesignOddsFormat", typeof(OddsFormatType), typeof(OddsFormatManager), new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
+        public static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached(
+            "DesignOddsFormat", typeof(OddsFormatType), typeof(OddsFormatManager), new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe</summary>
         private static readonly object SyncRoot = new object();

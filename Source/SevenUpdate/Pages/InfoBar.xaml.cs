@@ -207,7 +207,8 @@ namespace SevenUpdate.Pages
                 var progress = e.BytesTransferred * 100 / e.BytesTotal;
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
-                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
+                this.tbStatus.Text = String.Format(
+                    CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
             }
             else
             {
@@ -284,7 +285,9 @@ namespace SevenUpdate.Pages
 
             if (e.UpdatesFailed <= 0)
             {
-                this.tbStatus.Text = e.UpdatesInstalled == 1 ? Properties.Resources.UpdateInstalled : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
+                this.tbStatus.Text = e.UpdatesInstalled == 1
+                                         ? Properties.Resources.UpdateInstalled
+                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.UpdatesInstalled, e.UpdatesInstalled);
                 return;
             }
 
@@ -334,7 +337,9 @@ namespace SevenUpdate.Pages
             {
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = e.CurrentProgress;
-                this.tbStatus.Text = e.TotalUpdates > 1 ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress) : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
+                this.tbStatus.Text = e.TotalUpdates > 1
+                                         ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallExtendedProgress, e.UpdateName, e.UpdatesComplete, e.TotalUpdates, e.CurrentProgress)
+                                         : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallProgress, e.UpdateName, e.CurrentProgress);
             }
         }
 
@@ -433,7 +438,8 @@ namespace SevenUpdate.Pages
 
                     if (e.ImportantCount > 0)
                     {
-                        this.tbViewImportantUpdates.Text = String.Format(CultureInfo.CurrentCulture, e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
+                        this.tbViewImportantUpdates.Text = String.Format(
+                            CultureInfo.CurrentCulture, e.ImportantCount == 1 ? Properties.Resources.ImportantUpdateAvailable : Properties.Resources.ImportantUpdatesAvailable, e.ImportantCount);
 
                         this.tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -449,7 +455,8 @@ namespace SevenUpdate.Pages
                             this.tbHeading.Text = Properties.Resources.NoImportantUpdates;
                         }
 
-                        this.tbViewOptionalUpdates.Text = String.Format(CultureInfo.CurrentCulture, e.OptionalCount == 1 ? Properties.Resources.OptionalUpdateAvailable : Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
+                        this.tbViewOptionalUpdates.Text = String.Format(
+                            CultureInfo.CurrentCulture, e.OptionalCount == 1 ? Properties.Resources.OptionalUpdateAvailable : Properties.Resources.OptionalUpdatesAvailable, e.OptionalCount);
 
                         this.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -676,7 +683,9 @@ namespace SevenUpdate.Pages
             if (e.ImportantUpdates > 0)
             {
                 this.tbViewImportantUpdates.Visibility = Visibility.Visible;
-                this.tbSelectedUpdates.Text = e.ImportantUpdates == 1 ? Properties.Resources.ImportantUpdateSelected : String.Format(CultureInfo.CurrentCulture, Properties.Resources.ImportantUpdatesSelected, e.ImportantUpdates);
+                this.tbSelectedUpdates.Text = e.ImportantUpdates == 1
+                                                  ? Properties.Resources.ImportantUpdateSelected
+                                                  : String.Format(CultureInfo.CurrentCulture, Properties.Resources.ImportantUpdatesSelected, e.ImportantUpdates);
 
                 if (e.ImportantDownloadSize > 0)
                 {
@@ -689,7 +698,9 @@ namespace SevenUpdate.Pages
                 this.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                 if (e.ImportantUpdates == 0)
                 {
-                    this.tbSelectedUpdates.Text = e.OptionalUpdates == 1 ? Properties.Resources.OptionalUpdateSelected : String.Format(CultureInfo.CurrentCulture, Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
+                    this.tbSelectedUpdates.Text = e.OptionalUpdates == 1
+                                                      ? Properties.Resources.OptionalUpdateSelected
+                                                      : String.Format(CultureInfo.CurrentCulture, Properties.Resources.OptionalUpdatesSelected, e.OptionalUpdates);
                 }
                 else
                 {

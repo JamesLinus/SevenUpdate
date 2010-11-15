@@ -489,40 +489,41 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
-            Task.Factory.StartNew(() =>
-                {
-                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+            Task.Factory.StartNew(
+                () =>
                     {
-                        Download.CancelDownload();
-                        Install.CancelInstall();
-                        try
+                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                         {
-                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            Download.CancelDownload();
+                            Install.CancelInstall();
+                            try
+                            {
+                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            }
+                            catch (IOException)
+                            {
+                            }
                         }
-                        catch (IOException)
+
+                        if (client == null)
                         {
+                            StartWcfHost();
                         }
-                    }
 
-                    if (client == null)
-                    {
-                        StartWcfHost();
-                    }
+                        if (IsInstalling)
+                        {
+                            return;
+                        }
 
-                    if (IsInstalling)
-                    {
-                        return;
-                    }
-
-                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                    {
-                        return;
-                    }
+                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                        {
+                            return;
+                        }
 
 #if (!DEBUG)
                         ShutdownApp();
 #endif
-                });
+                    });
         }
 
         /// <summary>Updates the notify icon text</summary>

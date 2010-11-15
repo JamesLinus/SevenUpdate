@@ -150,7 +150,15 @@ namespace SevenUpdate
                 ls = new LocaleString { Value = "Seven Update", Lang = "en" };
                 name.Add(ls);
 
-                var app = new Sua(name, publisher) { AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true), HelpUrl = @"http://sevenupdate.com/support/", Is64Bit = true, IsEnabled = true, SuiUrl = SevenUpdateSui };
+                var app = new Sua(name, publisher)
+                    {
+                        AppUrl = @"http://sevenupdate.com/",
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true),
+                        HelpUrl = @"http://sevenupdate.com/support/",
+                        Is64Bit = true,
+                        IsEnabled = true,
+                        SuiUrl = SevenUpdateSui
+                    };
                 apps.Add(app);
                 return apps;
             }
@@ -204,7 +212,8 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) != TaskDialogResult.Cancel)
+                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) !=
+                        TaskDialogResult.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -233,7 +242,14 @@ namespace SevenUpdate
         /// <param name="defaultButtonText">Text to display on the button</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
+        internal static TaskDialogResult ShowMessage(
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
+            bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {

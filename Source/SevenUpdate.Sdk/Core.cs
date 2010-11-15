@@ -176,7 +176,8 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
         /// <returns>A collection of the selected files</returns>
-        internal static string[] OpenFileDialog(string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
+        internal static string[] OpenFileDialog(
+            string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
         {
             string[] result;
             using (var openFileDialog = new OpenFileDialog())
@@ -309,7 +310,14 @@ namespace SevenUpdate.Sdk
         /// <param name="footerText">Text to display as a footer message</param>
         /// <param name="defaultButtonText">Text to display on the button</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
-        private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
+        private static void ShowMessage(
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
+            bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {

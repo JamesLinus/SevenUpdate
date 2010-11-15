@@ -46,7 +46,8 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
 
         /// <summary>Indicates if the progress is running</summary>
-        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
+        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register(
+            "IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The element name</summary>
         private const string ElementCanvas = "PART_Canvas";

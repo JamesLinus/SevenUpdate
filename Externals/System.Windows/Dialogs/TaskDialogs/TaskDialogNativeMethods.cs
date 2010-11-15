@@ -271,7 +271,8 @@ namespace System.Windows.Dialogs
         /// <param name="verificationFlagChecked"><see langword="true"/> if the verification <see cref="CheckBox"/> was checked when the dialog was dismissed; otherwise, false</param>
         /// <returns>The result</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        internal static extern Result TaskDialogIndirect([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
+        internal static extern Result TaskDialogIndirect(
+            [In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
         /// <summary>Contains the data for a <see cref="TaskDialogIcon"/></summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]

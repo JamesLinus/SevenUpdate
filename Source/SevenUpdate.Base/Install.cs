@@ -252,7 +252,16 @@ namespace SevenUpdate
         /// <param name="failed"><see langword="true"/> if the update failed, otherwise <see langword="false"/></param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description) { HelpUrl = appInfo.AppInfo.HelpUrl, AppUrl = appInfo.AppInfo.AppUrl, Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, InfoUrl = updateInfo.InfoUrl, InstallDate = DateTime.Now.ToShortDateString(), ReleaseDate = updateInfo.ReleaseDate, Importance = updateInfo.Importance, };
+            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
+                {
+                    HelpUrl = appInfo.AppInfo.HelpUrl,
+                    AppUrl = appInfo.AppInfo.AppUrl,
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
+                    InfoUrl = updateInfo.InfoUrl,
+                    InstallDate = DateTime.Now.ToShortDateString(),
+                    ReleaseDate = updateInfo.ReleaseDate,
+                    Importance = updateInfo.Importance,
+                };
 
             if (UpdateInstalled != null)
             {
@@ -555,16 +564,17 @@ namespace SevenUpdate
 
                 var x1 = x;
                 var x2 = x;
-                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
-                    {
-                        var installProgress = (x2 * 100) / files.Count;
-                        if (installProgress > 70)
+                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
+                    delegate
                         {
-                            installProgress -= 15;
-                        }
+                            var installProgress = (x2 * 100) / files.Count;
+                            if (installProgress > 70)
+                            {
+                                installProgress -= 15;
+                            }
 
-                        ReportProgress(installProgress);
-                    });
+                            ReportProgress(installProgress);
+                        });
             }
         }
 

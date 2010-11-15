@@ -57,7 +57,6 @@ namespace System.Windows.Dialogs
         #region Properties
 
         /// <summary>Gets or sets the maximum value for the control.</summary>
-        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Justification = "Value is standard for progress bar's current value property")]
         public int Maximum
         {
             get
@@ -81,7 +80,6 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets or sets the minimum value for the control.</summary>
-        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Justification = "Value is standard for progress bar's current value property")]
         public int Minimum
         {
             get
@@ -111,7 +109,6 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets or sets the current value for the control.</summary>
-        [SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Justification = "Value is standard for progress bar's current value property")]
         public int Value
         {
             get

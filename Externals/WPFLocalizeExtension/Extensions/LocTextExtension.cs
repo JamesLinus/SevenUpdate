@@ -257,7 +257,14 @@ namespace WPFLocalizeExtension.Extensions
             try
             {
                 // add some format segments, in case that the main text contains format place holders like {0}
-                textMain = string.Format(Localize.Instance.SpecificCulture, textMain, this.formatSegments[0] ?? string.Empty, this.formatSegments[1] ?? string.Empty, this.formatSegments[2] ?? string.Empty, this.formatSegments[3] ?? string.Empty, this.formatSegments[4] ?? string.Empty);
+                textMain = string.Format(
+                    Localize.Instance.SpecificCulture,
+                    textMain,
+                    this.formatSegments[0] ?? string.Empty,
+                    this.formatSegments[1] ?? string.Empty,
+                    this.formatSegments[2] ?? string.Empty,
+                    this.formatSegments[3] ?? string.Empty,
+                    this.formatSegments[4] ?? string.Empty);
             }
             catch (FormatException)
             {

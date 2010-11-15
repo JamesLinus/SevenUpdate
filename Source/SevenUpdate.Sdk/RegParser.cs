@@ -46,19 +46,25 @@ namespace SevenUpdate.Sdk
         private const string RegV5Signature = "Windows Registry Editor Version 5.00\r\n";
 
         /// <summary>The regex that splits lines</summary>
-        private static readonly Regex LineSplitter = new Regex(@"^[^\r\n\v\t]*[\t\x20]*=[\t\x20]*((\\[\x20\t]*\s*)|[^\r\n])*", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
+        private static readonly Regex LineSplitter = new Regex(
+            @"^[^\r\n\v\t]*[\t\x20]*=[\t\x20]*((\\[\x20\t]*\s*)|[^\r\n])*", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches values</summary>
-        private static readonly Regex RegexOtherValueMatcher = new Regex(@"^(@|""(?<Value>.*)"")\s*=\s*(?<Data>[^"";]*)([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+        private static readonly Regex RegexOtherValueMatcher = new Regex(
+            @"^(@|""(?<Value>.*)"")\s*=\s*(?<Data>[^"";]*)([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches the root key</summary>
-        private static readonly Regex RegexRootKey = new Regex(@"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        private static readonly Regex RegexRootKey = new Regex(
+            @"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches a string value</summary>
-        private static readonly Regex RegexStringValueMatcher = new Regex(@"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+        private static readonly Regex RegexStringValueMatcher = new Regex(
+            @"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches a sub key</summary>
-        private static readonly Regex RegexSubKey = new Regex(@"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        private static readonly Regex RegexSubKey = new Regex(
+            @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]",
+            RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches the split token</summary>
         private static readonly string SplitToken = @"_!Split" + new Random().Next(99) + "!_";
@@ -333,7 +339,9 @@ namespace SevenUpdate.Sdk
             }
 
             // hex(0):  |  REG_NONE
-            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline) ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult) : methodResult;
+            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline)
+                       ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult)
+                       : methodResult;
 
             // Fallback in case nothing matches
         }

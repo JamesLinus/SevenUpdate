@@ -150,13 +150,23 @@ namespace System.Windows.Controls
             var focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, typeof(FrameworkElement));
             if (focusProp != null)
             {
-                focusProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                focusProp.AddValueChanged(
+                    this,
+                    delegate
+                        {
+                            this.UpdateAdorner(this);
+                        });
             }
 
             var containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, typeof(InfoTextBox));
             if (containsTextProp != null)
             {
-                containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                containsTextProp.AddValueChanged(
+                    this,
+                    delegate
+                        {
+                            this.UpdateAdorner(this);
+                        });
             }
         }
 

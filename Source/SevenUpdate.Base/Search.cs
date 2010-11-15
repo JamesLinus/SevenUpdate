@@ -188,7 +188,9 @@ namespace SevenUpdate
         /// <returns>returns <see langword="true"/> if found updates, otherwise <see langword="false"/></returns>
         private static bool CheckForUpdates(ref Sui app)
         {
-            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory) ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit) : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
+            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
+                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit)
+                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {

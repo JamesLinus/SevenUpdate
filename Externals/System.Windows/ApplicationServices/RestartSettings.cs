@@ -59,7 +59,8 @@ namespace System.Windows.ApplicationServices
         /// <returns>A <see cref="System.String"/> that displays 
         /// the command line arguments 
         /// and restrictions for restarting the application.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)", Justification = "We are not currently handling globalization or localization")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object)",
+            Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
             return String.Format(CultureInfo.CurrentCulture, "command: {0} restrictions: {1}", this.Command, this.Restrictions);

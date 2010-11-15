@@ -222,7 +222,7 @@ namespace SevenUpdate
 
         /// <summary>The IShellLink interface allows Shell links to be created, modified, and resolved</summary>
         [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("000214F9-0000-0000-C000-000000000046")]
-        private interface IShellLinkW
+        private interface IShellLink
         {
             /// <summary>Retrieves the path and file name of a Shell link object</summary>
             /// <param name="file">The filename of the shortcut</param>
@@ -430,7 +430,7 @@ namespace SevenUpdate
 
             shortcut.Name.Add(ls);
 
-            var shellLink = link as IShellLinkW;
+            var shellLink = link as IShellLink;
             if (shellLink == null)
             {
                 return null;
@@ -476,15 +476,14 @@ namespace SevenUpdate
                 throw new ArgumentNullException(@"shortcut");
             }
 
-            var obj = Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046"), true);
-            var link = Activator.CreateInstance(obj) as IShellLinkW;
+            var link = Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046"), true)) as IShellLink;
 
             if (link == null)
             {
                 return;
             }
 
-            link.SetPath(shortcut.Target);
+            link.SetPath("c:\\");
             link.SetArguments(shortcut.arguments);
             if (shortcut.Description.Count > 0)
             {

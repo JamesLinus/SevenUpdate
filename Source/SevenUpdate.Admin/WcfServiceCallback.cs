@@ -153,14 +153,15 @@ namespace SevenUpdate.Admin
         /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort</summary>
         public void Shutdown()
         {
-            Task.Factory.StartNew(() =>
-                {
-                    Thread.Sleep(500);
-                    if (!App.IsInstalling)
+            Task.Factory.StartNew(
+                () =>
                     {
-                        Environment.Exit(0);
-                    }
-                });
+                        Thread.Sleep(500);
+                        if (!App.IsInstalling)
+                        {
+                            Environment.Exit(0);
+                        }
+                    });
         }
     }
 }

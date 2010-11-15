@@ -190,7 +190,8 @@ namespace SevenUpdate
 
                 for (var z = 0; z < application.Updates[y].Files.Count; z++)
                 {
-                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete || application.Updates[y].Files[z].Action == FileAction.CompareOnly)
+                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
+                        application.Updates[y].Files[z].Action == FileAction.CompareOnly)
                     {
                         continue;
                     }

@@ -31,10 +31,12 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>The text to display below the main instruction text</summary>
-        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
+            "Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed</summary>
-        public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register("UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
+        public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
+            "UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
 
         #endregion
 

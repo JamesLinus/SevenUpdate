@@ -34,7 +34,8 @@ namespace WPFLocalizeExtension.Engine
         /// Only supported at DesignTime.
         /// </summary>
         [DesignOnly(true)]
-        public static readonly DependencyProperty DesignCultureProperty = DependencyProperty.RegisterAttached("DesignCulture", typeof(string), typeof(Localize), new PropertyMetadata(SetCultureFromDependencyProperty));
+        public static readonly DependencyProperty DesignCultureProperty = DependencyProperty.RegisterAttached(
+            "DesignCulture", typeof(string), typeof(Localize), new PropertyMetadata(SetCultureFromDependencyProperty));
 
         /// <summary>Holds the binding flags for the reflection to find the resource files.</summary>
         private const BindingFlags ResourceBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
@@ -375,7 +376,9 @@ namespace WPFLocalizeExtension.Engine
             // if the retVal is null, throw exception, if in runtime
             if (retVal == null && !this.IsInDesignMode)
             {
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
+                throw new ArgumentException(
+                    string.Format(
+                        CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
             }
 
             // finally, return the searched object as type of the generic type
@@ -507,7 +510,11 @@ namespace WPFLocalizeExtension.Engine
             {
                 // if the assembly cannot be loaded, throw an exception
                 // go through every assembly loaded in the app domain
-                foreach (var assemblyInAppDomain in from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies() where assemblyInAppDomain.FullName != null let assemblyName = new AssemblyName(assemblyInAppDomain.FullName) where assemblyName.Name == resourceAssembly select assemblyInAppDomain)
+                foreach (var assemblyInAppDomain in from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies()
+                                                    where assemblyInAppDomain.FullName != null
+                                                    let assemblyName = new AssemblyName(assemblyInAppDomain.FullName)
+                                                    where assemblyName.Name == resourceAssembly
+                                                    select assemblyInAppDomain)
                 {
                     // assigned the assembly
                     assembly = assemblyInAppDomain;
@@ -527,7 +534,8 @@ namespace WPFLocalizeExtension.Engine
                 availableResources = assembly.GetManifestResourceNames();
 
                 // search for the best fitting resource file. pattern: ".{NAME}.resources"
-                foreach (var t in availableResources.Where(t => t.StartsWith(resourceAssembly + ".", StringComparison.OrdinalIgnoreCase) && t.EndsWith(resManagerNameToSearch, StringComparison.OrdinalIgnoreCase)))
+                foreach (var t in
+                    availableResources.Where(t => t.StartsWith(resourceAssembly + ".", StringComparison.OrdinalIgnoreCase) && t.EndsWith(resManagerNameToSearch, StringComparison.OrdinalIgnoreCase)))
                 {
                     // take the first occurrence and break
                     foundResource = t;
@@ -537,7 +545,9 @@ namespace WPFLocalizeExtension.Engine
                 // if no one was found, exception
                 if (foundResource == null)
                 {
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
+                    throw new ArgumentException(
+                        string.Format(
+                            CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
                 }
 
                 // remove ".resources" from the end

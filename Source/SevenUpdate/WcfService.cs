@@ -168,21 +168,22 @@ namespace SevenUpdate
                 return;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.AddApp(application);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                    }
-                    catch (TimeoutException)
-                    {
-                    }
-                });
+                        try
+                        {
+                            context.AddApp(application);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                        }
+                        catch (TimeoutException)
+                        {
+                        }
+                    });
         }
 
         /// <summary>Reports an error with the admin process</summary>
@@ -280,23 +281,24 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.HideUpdate(hiddenUpdate);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                    catch (TimeoutException)
-                    {
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                });
+                        try
+                        {
+                            context.HideUpdate(hiddenUpdate);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (TimeoutException)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                    });
 
             return true;
         }
@@ -312,19 +314,20 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.HideUpdates(hiddenUpdates);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                });
+                        try
+                        {
+                            context.HideUpdates(hiddenUpdates);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                    });
             return true;
         }
 
@@ -337,23 +340,24 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.InstallUpdates(Core.Applications);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                    catch (TimeoutException)
-                    {
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                });
+                        try
+                        {
+                            context.InstallUpdates(Core.Applications);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (TimeoutException)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                    });
 
             return true;
         }
@@ -370,27 +374,28 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.ChangeSettings(sul, options, autoOn);
-                        if (SettingsChanged != null)
+                        try
                         {
-                            SettingsChanged(null, new EventArgs());
+                            context.ChangeSettings(sul, options, autoOn);
+                            if (SettingsChanged != null)
+                            {
+                                SettingsChanged(null, new EventArgs());
+                            }
                         }
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                    catch (TimeoutException)
-                    {
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                });
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (TimeoutException)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                    });
 
             return true;
         }
@@ -405,23 +410,24 @@ namespace SevenUpdate
                 return false;
             }
 
-            Task.Factory.StartNew(WaitForAdmin).ContinueWith(delegate
-                {
-                    try
+            Task.Factory.StartNew(WaitForAdmin).ContinueWith(
+                delegate
                     {
-                        context.ShowUpdate(hiddenUpdate);
-                    }
-                    catch (CommunicationObjectAbortedException)
-                    {
-                        context = null;
-                        IsConnected = false;
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                    catch (TimeoutException)
-                    {
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                    }
-                });
+                        try
+                        {
+                            context.ShowUpdate(hiddenUpdate);
+                        }
+                        catch (CommunicationObjectAbortedException)
+                        {
+                            context = null;
+                            IsConnected = false;
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (TimeoutException)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                    });
 
             return true;
         }
@@ -429,12 +435,13 @@ namespace SevenUpdate
         /// <summary>Waits for the admin process to connect</summary>
         private static void WaitForAdmin()
         {
-            var task = Task.Factory.StartNew(() =>
-                {
-                    while (!IsConnected)
+            var task = Task.Factory.StartNew(
+                () =>
                     {
-                    }
-                });
+                        while (!IsConnected)
+                        {
+                        }
+                    });
             task.Wait(30000);
         }
 

@@ -194,7 +194,8 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)",
+            Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
             // Applies config struct and other settings, then

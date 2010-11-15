@@ -124,7 +124,8 @@ namespace SevenUpdate.Pages
 
                 if (lastCheck.Month == today.Month && lastCheck.Year == today.Year)
                 {
-                    if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day || lastCheck.Day + 5 == today.Day)
+                    if (lastCheck.Day == today.Day || lastCheck.Day + 1 == today.Day || lastCheck.Day + 2 == today.Day || lastCheck.Day + 3 == today.Day || lastCheck.Day + 4 == today.Day ||
+                        lastCheck.Day + 5 == today.Day)
                     {
                         WcfService.Disconnect();
                         if (File.Exists(Path.Combine(App.AllUserStore, "updates.sui")))

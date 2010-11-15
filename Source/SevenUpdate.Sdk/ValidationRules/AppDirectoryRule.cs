@@ -73,7 +73,9 @@ namespace SevenUpdate.Sdk.ValidationRules
                 }
             }
 
-            input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit) : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
+            input = Core.AppInfo.Directory == null
+                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit)
+                        : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
             if (File.Exists(input) || Directory.Exists(input))
             {
                 return new ValidationResult(true, null);

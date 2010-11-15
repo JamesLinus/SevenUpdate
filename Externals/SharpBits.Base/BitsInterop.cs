@@ -572,7 +572,8 @@ namespace SharpBits.Base
         /// <param name="localName">Name of the local.</param>
         /// <param name="rangeCount">The range count.</param>
         /// <param name="ranges">The ranges.</param>
-        void AddFileWithRanges([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
+        void AddFileWithRanges(
+            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>
         /// <param name="flags">The flags.</param>
@@ -782,7 +783,8 @@ namespace SharpBits.Base
         /// <param name="localName">Name of the local.</param>
         /// <param name="rangeCount">The range count.</param>
         /// <param name="ranges">The ranges.</param>
-        void AddFileWithRanges([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
+        void AddFileWithRanges(
+            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>
         /// <param name="flags">The flags.</param>

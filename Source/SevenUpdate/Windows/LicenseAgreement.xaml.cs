@@ -182,7 +182,10 @@ namespace SevenUpdate.Windows
                         continue;
                     }
 
-                    var sla = new Eula { LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
+                    var sla = new Eula
+                        {
+                           LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y 
+                        };
 
                     this.licenseInformation.Add(sla);
                 }

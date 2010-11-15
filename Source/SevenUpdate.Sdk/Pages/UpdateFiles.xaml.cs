@@ -87,17 +87,20 @@ namespace SevenUpdate.Sdk.Pages
         {
             var updateFile = file;
 
-            Task.Factory.StartNew(() =>
-                {
-                    updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
-                });
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                    });
         }
 
         /// <summary>Adds a file to the list</summary>
         /// <param name="fullName">The full path to the file</param>
         private void AddFile(string fullName)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -144,7 +147,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
-            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
             using (var folderBrowserDialog = new FolderBrowserDialog())
             {
                 folderBrowserDialog.SelectedPath = directory;
@@ -161,7 +166,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
-            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit) : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
+            var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Is64Bit)
+                                : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit);
 
             var files = Core.OpenFileDialog(directory, null, true);
             if (files == null)
@@ -181,10 +188,11 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = file;
             this.tbHashCalculating.Visibility = Visibility.Visible;
             this.hashesGenerating++;
-            Task.Factory.StartNew(() =>
-                {
-                    updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
-                }).ContinueWith(_ => this.CheckHashGenerating(), context);
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName));
+                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
         /// <summary>Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/></summary>
@@ -248,7 +256,9 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
@@ -342,7 +352,9 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
 
