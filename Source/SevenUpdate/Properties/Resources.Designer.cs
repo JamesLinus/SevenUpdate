@@ -322,7 +322,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please Note: This is a development version of Seven Update, it may crash, fail to work properly, or work just fine..
+        ///   Looks up a localized string similar to Please Note: This is a development version of Seven Update, it may crash, fail to work properly, or work just fine. By using this program, you agree not to hold Seven Software, it&apos;s developers, or it&apos;s partners responsible for any data loss or corruption..
         /// </summary>
         public static string DevNote {
             get {

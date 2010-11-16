@@ -229,6 +229,9 @@ FunctionEnd
 !macroend
 
 Section "Main Section" SEC01
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
   SetOutPath $INSTDIR
   SetShellVarContext all
   SetOverwrite on
@@ -261,10 +264,15 @@ Section "Main Section" SEC01
   Call RefreshShellIcons
   
   DetailPrint "Optimizing .Net framework..."
-  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" update'
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" install "$INSTDIR\SevenUpdate.Sdk.exe" /queue:1 /nologo /silent'
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" update /queue:2 /nologo /silent'
 SectionEnd
 
 Section -Post
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
+  
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\SevenUpdate.Sdk.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
@@ -289,6 +297,15 @@ FunctionEnd
 
 Section Uninstall
   SetShellVarContext all
+  
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
+  
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" uninstall "$INSTDIR\SevenUpdate.exe" /nologo /silent'
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" uninstall "$INSTDIR\SevenUpdate.Admin.exe" /nologo /silent'
+  nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" uninstall "$INSTDIR\SevenUpdate.Helper.exe" /nologo /silent'
+  
   nsExec::Exec '"FTYPE" SevenUpdate.SUI="$INSTDIR\SevenUpdate.Sdk.exe" %1 %*"'
   nsExec::Exec '"ASSOC" .sui=SevenUpdate.SUI"'
   

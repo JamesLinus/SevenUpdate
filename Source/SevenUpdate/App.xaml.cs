@@ -33,6 +33,8 @@ namespace SevenUpdate
     using System.Windows.Dialogs;
     using System.Windows.Shell;
 
+    using Microsoft.Win32;
+
     using SevenUpdate.Properties;
 
     /// <summary>Interaction logic for App.xaml</summary>
@@ -124,50 +126,37 @@ namespace SevenUpdate
             Init();
             if (e.Args.Length > 0)
             {
-                switch (e.Args[0])
+                if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
                 {
-                    case "-dev":
-                        IsDev = true;
-                        break;
+                    e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
+                    Sua app = null;
+                    try
+                    {
+                        app = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]));
+                    }
+                    catch (WebException)
+                    {
+                        Core.ShowMessage(
+                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                        Environment.Exit(0);
+                    }
 
-                    case "-beta":
-                        IsBeta = true;
-                        break;
-
-                    default:
-                        if (e.Args[0].EndsWith(@".sua", StringComparison.OrdinalIgnoreCase))
-                        {
-                            e.Args[0] = e.Args[0].Replace(@"sevenupdate://", null);
-                            Sua app = null;
-                            try
-                            {
-                                app = Utilities.Deserialize<Sua>(Utilities.DownloadFile(e.Args[0]));
-                            }
-                            catch (WebException)
-                            {
-                                Core.ShowMessage(String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
-                                Environment.Exit(0);
-                            }
-
-                            var appName = Utilities.GetLocaleString(app.Name);
-                            if (Core.ShowMessage(
-                                    String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
-                                    TaskDialogStandardIcon.ShieldBlue,
-                                    TaskDialogStandardButtons.Cancel,
-                                    String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
-                                    null,
-                                    SevenUpdate.Properties.Resources.Add,
-                                    true) != TaskDialogResult.Cancel)
-                            {
-                                WcfService.AddSua(app);
-                            }
-                            else
-                            {
-                                Environment.Exit(0);
-                            }
-                        }
-
-                        break;
+                    var appName = Utilities.GetLocaleString(app.Name);
+                    if (Core.ShowMessage(
+                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
+                            TaskDialogStandardIcon.ShieldBlue,
+                            TaskDialogStandardButtons.Cancel,
+                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
+                            null,
+                            SevenUpdate.Properties.Resources.Add,
+                            true) != TaskDialogResult.Cancel)
+                    {
+                        WcfService.AddSua(app);
+                    }
+                    else
+                    {
+                        Environment.Exit(0);
+                    }
                 }
             }
 
@@ -200,6 +189,26 @@ namespace SevenUpdate
             Utilities.Locale = Settings.Default.locale;
 
             Directory.CreateDirectory(UserStore);
+
+            try
+            {
+                var channel = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Software\Seven Update", "channel", null).ToString();
+
+                if (channel == "dev")
+                {
+                    IsDev = true;
+                }
+
+                if (channel == "beta")
+                {
+                    IsBeta = true;
+                }
+            }
+            catch (NullReferenceException)
+            {
+            }
+
+
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Path.Combine(AllUserStore, "updates.sui")))
             {
                 return;

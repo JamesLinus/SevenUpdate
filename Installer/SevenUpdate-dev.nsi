@@ -1,5 +1,5 @@
-!define PRODUCT_NAME "Seven Update"
-!define PRODUCT_VERSION "1.2.1.1"
+!define PRODUCT_NAME "Seven Update - Dev Channel"
+!define PRODUCT_VERSION "1.2.1.2"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe"
@@ -14,7 +14,7 @@
 
 ; MUI Settings
 !define MUI_ABORTWARNING
-!define MUI_ICON "..\Source\SevenUpdate\icon.ico"
+!define MUI_ICON "su-dev.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
 
@@ -38,7 +38,7 @@
 ; MUI end ------
 
 Name "${PRODUCT_NAME}"
-OutFile "Seven Update Setup.exe"
+OutFile "Seven Update Setup - Dev Channel.exe"
 InstallDir "$PROGRAMFILES64\Seven Software\Seven Update"
 ShowInstDetails show
 ShowUnInstDetails show
@@ -253,6 +253,9 @@ FunctionEnd
 !macroend
 
 Section "Main Section" SEC01
+  MessageBox MB_YESNO|MB_ICONSTOP "You are about to install the Development Channel of Seven Update. It may contain bugs, crash, or do worse. This is intended for bug testers and developers who want to check out any new features and test any changes. By installing this dev channel, you agree to not hold Seven Software, Robert Baker, or any of it's developers or partners responsible for data corruption, data loss, or other failures resulting in installing this software. Are you sure you would like to install the dev channel?" IDYES +2
+  Quit
+
   SetOutPath $INSTDIR
   SetShellVarContext all
   SetOverwrite on
@@ -265,16 +268,16 @@ Section "Main Section" SEC01
   RMDir /r $INSTDIR
   
   DetailPrint "Downloading $(^Name)..."
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/System.Windows.dll" "$INSTDIR\System.Windows.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
 	  
   ${If} ${AtMostWinXP}
 	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe'
@@ -282,8 +285,8 @@ Section "Main Section" SEC01
   ${Else}
   	DetailPrint "Installing $(^Name) service..."
   
-    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml"
-    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml"
+    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.xml" "$TEMP\SevenUpdate.xml"
+    !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml"
 	  
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update" /F"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "Seven Update.Admin" /F"'
@@ -295,19 +298,20 @@ Section "Main Section" SEC01
   
   Delete "$APPDATA\Seven Software\Seven Update\updates.sui"
   
-  ${If} ${RunningX64}
-	SetRegView 64
-  ${EndIf}
-  
-  WriteRegStr HKLM "SOFTWARE\Seven Software\Seven Update" "channel" "stable"
-  
   DetailPrint "Creating shortcuts..."
   SetShellVarContext current
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   SetShellVarContext all
   CreateDirectory "$APPDATA\Seven Software\Seven Update"
   CreateDirectory "$SMPROGRAMS\Seven Software"
-  CreateShortCut "$SMPROGRAMS\Seven Software\$(^Name).lnk" "$INSTDIR\SevenUpdate.exe"
+  CreateShortCut "$SMPROGRAMS\Seven Software\Seven Update.lnk" "$INSTDIR\SevenUpdate.exe"
+  
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
+  
+  DetailPrint "Enabling the Dev Channel"
+  WriteRegStr HKLM "SOFTWARE\Seven Software\Seven Update" "channel" "dev"
   
   DetailPrint "Registering file types..."
   WriteRegStr HKCR "sevenupdate" "" "URL:Seven Update Protocol"
@@ -330,6 +334,10 @@ Section "Main Section" SEC01
 SectionEnd
 
 Section -Post
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
+  
   WriteUninstaller "$INSTDIR\uninst.exe"
   WriteRegStr HKLM "${PRODUCT_DIR_REGKEY}" "" "$INSTDIR\SevenUpdate.exe"
   WriteRegStr ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}" "DisplayName" "$(^Name)"
@@ -365,7 +373,7 @@ Section Uninstall
   nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" uninstall "$INSTDIR\SevenUpdate.Admin.exe" /nologo /silent'
   nsExec::Exec '"C:\Windows\Microsoft.NET\Framework\v4.0.30319\ngen.exe" uninstall "$INSTDIR\SevenUpdate.Helper.exe" /nologo /silent'
   
-  Delete "$SMPROGRAMS\Seven Software\$(^Name).lnk"
+  Delete "$SMPROGRAMS\Seven Software\Seven Update.lnk"
 
   RMDir "$SMPROGRAMS\Seven Software"
   RMDir /r /REBOOTOK $INSTDIR

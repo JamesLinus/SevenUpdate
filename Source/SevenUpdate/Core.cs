@@ -42,7 +42,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>Location of the SUI for Seven Update</summary>
-        private static string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
+        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
 
         /// <summary>The static instance of the Core class</summary>
         private static Core instance;
@@ -132,15 +132,11 @@ namespace SevenUpdate
         {
             get
             {
-                Collection<Sua> apps;
+                var apps = new Collection<Sua>();
                 if (File.Exists(App.ApplicationsFile))
                 {
                     apps = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
-
-                    return apps;
                 }
-
-                apps = new Collection<Sua>();
 
                 var publisher = new ObservableCollection<LocaleString>();
                 var ls = new LocaleString { Value = "Seven Software", Lang = "en" };

@@ -17,15 +17,15 @@
 			<RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False" />
 		</StackPanel>
 		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
-			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" IsEnabled="False" ButtonText="{LocText SevenUpdate:Resources:Finish}">
+			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" ButtonText="{LocText SevenUpdate:Resources:Finish}">
 				<UacButton.Style>
-					<Style>
+					<Style TargetType="UacButton">
 						<Style.Triggers>
-							<Trigger Property="UacButton.ButtonText" Value="{LocText SevenUpdate:Resources:Finish}">
-								<Setter Property="UacButton.IsEnabled" Value="False" />
+							<Trigger Property="ButtonText" Value="{LocText SevenUpdate:Resources:Finish}">
+								<Setter Property="IsEnabled" Value="False" />
 							</Trigger>
 							<DataTrigger Binding="{Binding ElementName=rbtnAccept, Path=IsChecked}" Value="True">
-								<Setter Property="UacButton.IsEnabled" Value="True" />
+								<Setter Property="IsEnabled" Value="True" />
 							</DataTrigger>
 						</Style.Triggers>
 					</Style>
