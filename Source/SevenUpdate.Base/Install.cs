@@ -231,6 +231,7 @@ namespace SevenUpdate
                         {
                             if (!(e is UnauthorizedAccessException || e is InvalidOperationException))
                             {
+                                Utilities.ReportError(e, ErrorType.FatalError);
                                 throw;
                             }
 

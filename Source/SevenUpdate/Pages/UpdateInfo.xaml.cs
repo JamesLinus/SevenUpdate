@@ -165,18 +165,8 @@ namespace SevenUpdate.Pages
                 for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
                     updIndex++;
-                    var item = (ListViewItem)this.lvUpdates.ItemContainerGenerator.ContainerFromItem(this.lvUpdates.Items[updIndex]);
-                    if (item.Tag != null)
-                    {
-                        if (!(bool)item.Tag)
-                        {
-                            Core.Applications[x].Updates.RemoveAt(y);
-                            y--;
-                            continue;
-                        }
-                    }
 
-                    if (!Core.Applications[x].Updates[y].Selected)
+                    if (!((Update)lvUpdates.Items[updIndex]).Selected)
                     {
                         continue;
                     }
@@ -207,14 +197,6 @@ namespace SevenUpdate.Pages
                             break;
                     }
                 }
-
-                if (Core.Applications[x].Updates.Count != 0)
-                {
-                    continue;
-                }
-
-                Core.Applications.RemoveAt(x);
-                x--;
             }
 
             if (UpdateSelectionChanged != null)
@@ -327,6 +309,16 @@ namespace SevenUpdate.Pages
             internal int OptionalUpdates { get; private set; }
 
             #endregion
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }

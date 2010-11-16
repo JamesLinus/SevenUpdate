@@ -155,6 +155,7 @@ namespace SevenUpdate.Pages
                     {
                         if (!(ex is IOException || ex is UnauthorizedAccessException))
                         {
+                            Utilities.ReportError(ex, ErrorType.FatalError);
                             throw;
                         }
                     }

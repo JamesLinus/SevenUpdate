@@ -66,10 +66,8 @@ namespace SevenUpdate
             else
             {
                 // make sure setting is turned ON
-                if (!debug.IncludeExceptionDetailInFaults)
-                {
-                    debug.IncludeExceptionDetailInFaults = true;
-                }
+                debug.IncludeExceptionDetailInFaults = true;
+                
             }
 
 #endif
@@ -103,6 +101,7 @@ namespace SevenUpdate
                 {
                     if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
                     {
+                        Utilities.ReportError(ex, ErrorType.FatalError);
                         throw;
                     }
                 }

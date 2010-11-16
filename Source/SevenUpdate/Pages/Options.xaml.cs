@@ -75,6 +75,7 @@ namespace SevenUpdate.Pages
             {
                 if (!(ex is NullReferenceException || ex is WebException))
                 {
+                    Utilities.ReportError(ex, ErrorType.FatalError);
                     throw;
                 }
 

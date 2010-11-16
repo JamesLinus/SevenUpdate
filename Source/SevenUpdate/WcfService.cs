@@ -180,8 +180,10 @@ namespace SevenUpdate
                             context = null;
                             IsConnected = false;
                         }
-                        catch (TimeoutException)
+                        catch (Exception e)
                         {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
                         }
                     });
         }
@@ -204,11 +206,13 @@ namespace SevenUpdate
                 {
                     t.Kill();
                 }
-                catch (UnauthorizedAccessException)
+                catch (Exception ex)
                 {
-                }
-                catch (AccessViolationException)
-                {
+                    if (!(ex is UnauthorizedAccessException || ex is AccessViolationException))
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(ex), ErrorType.FatalError));
+                        throw;
+                    }
                 }
             }
         }
@@ -262,8 +266,9 @@ namespace SevenUpdate
             }
             catch (Exception ex)
             {
-                if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
+                if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException || ex is FaultException))
                 {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(ex), ErrorType.FatalError));
                     throw;
                 }
             }
@@ -298,6 +303,11 @@ namespace SevenUpdate
                         {
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
                         }
+                        catch (Exception e)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
+                        }
                     });
 
             return true;
@@ -326,6 +336,11 @@ namespace SevenUpdate
                             context = null;
                             IsConnected = false;
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
                         }
                     });
             return true;
@@ -356,6 +371,11 @@ namespace SevenUpdate
                         catch (TimeoutException)
                         {
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        }
+                        catch (Exception e)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
                         }
                     });
 
@@ -395,6 +415,11 @@ namespace SevenUpdate
                         {
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
                         }
+                        catch (Exception e)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
+                        }
                     });
 
             return true;
@@ -427,6 +452,11 @@ namespace SevenUpdate
                         {
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
                         }
+                        catch (Exception e)
+                        {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
+                            throw;
+                        }
                     });
 
             return true;
@@ -438,7 +468,7 @@ namespace SevenUpdate
             var task = Task.Factory.StartNew(
                 () =>
                     {
-                        while (!IsConnected)
+                        while (!IsConnected && context == null)
                         {
                         }
                     });

@@ -184,7 +184,7 @@ namespace System.Windows.Controls
                     view.SortDescriptions.Add(new SortDescription(propertyName, currentSortDirection));
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw;
             }

@@ -255,8 +255,9 @@ namespace SevenUpdate.Admin
                 {
                     File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                 }
-                catch (IOException)
+                catch (IOException e)
                 {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                 }
             }
 
@@ -295,6 +296,7 @@ namespace SevenUpdate.Admin
                     {
                         if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
                         {
+                            ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
 
@@ -316,6 +318,7 @@ namespace SevenUpdate.Admin
                         {
                             if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
                             {
+                                ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                                 throw;
                             }
 

@@ -270,9 +270,11 @@ namespace SevenUpdate
             {
                 foreach (var e in ae.InnerExceptions.OfType<FileNotFoundException>())
                 {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(e), ErrorType.FatalError));
                     throw new FileNotFoundException(e.FileName, e);
                 }
 
+                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(ae), ErrorType.FatalError));
                 throw;
             }
         }
@@ -293,9 +295,11 @@ namespace SevenUpdate
             {
                 foreach (var e in ae.InnerExceptions.OfType<FileNotFoundException>())
                 {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(e), ErrorType.FatalError));
                     throw new FileNotFoundException(e.FileName, e);
                 }
 
+                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(ae), ErrorType.FatalError));
                 throw;
             }
         }
@@ -310,6 +314,14 @@ namespace SevenUpdate
             {
                 return new MemoryStream(wc.DownloadData(url));
             }
+        }
+
+        /// <summary>Gets data from the exception as a string</summary>
+        /// <param name="exception">The exception to write in the log</param>
+        /// <returns>The exception as a string</returns>
+        public static string GetExceptionAsString(Exception exception)
+        {
+            return "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
         }
 
         /// <summary>Gets the file size of a file</summary>
@@ -434,6 +446,7 @@ namespace SevenUpdate
             {
                 if (!(ex is UnauthorizedAccessException || ex is NullReferenceException))
                 {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(ex), ErrorType.FatalError));
                     throw;
                 }
 
@@ -611,6 +624,7 @@ namespace SevenUpdate
                 {
                     if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(e), ErrorType.FatalError));
                         throw;
                     }
 
@@ -658,14 +672,6 @@ namespace SevenUpdate
         {
             stream.Position = 0;
             return Serializer.Deserialize<T>(stream);
-        }
-
-        /// <summary>Gets data from the exception as a string</summary>
-        /// <param name="exception">The exception to write in the log</param>
-        /// <returns>The exception as a string</returns>
-        private static string GetExceptionAsString(Exception exception)
-        {
-            return "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
         }
 
         /// <summary>Replaces a string within a string</summary>

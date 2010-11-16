@@ -43,7 +43,16 @@ namespace SevenUpdate.Admin
         /// <param name="application">The application to add to Seven Update</param>
         public void AddApp(Sua application)
         {
-            var sul = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
+            Collection<Sua> sul = null;
+            if (File.Exists(App.ApplicationsFile))
+            {
+                sul = Utilities.Deserialize<Collection<Sua>>(App.ApplicationsFile);
+            }
+
+            if (sul == null)
+            {
+                sul = new Collection<Sua>();
+            }
 
             if (sul.Any(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
             {
@@ -95,7 +104,8 @@ namespace SevenUpdate.Admin
         /// <param name="hiddenUpdate">The update to hide</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
-            var hidden = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();
+            var hidden = (File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>()) ?? new Collection<Suh>();
+
             hidden.Add(hiddenUpdate);
 
             Utilities.Serialize(hidden, App.HiddenFile);
@@ -105,6 +115,18 @@ namespace SevenUpdate.Admin
         /// <param name="hiddenUpdates">The collection of updates to hide</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
+            if (hiddenUpdates == null)
+            {
+                File.Delete(App.HiddenFile);
+                return;
+            }
+
+            if (hiddenUpdates.Count < 1)
+            {
+                File.Delete(App.HiddenFile);
+                return;
+            }
+
             Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
@@ -123,6 +145,7 @@ namespace SevenUpdate.Admin
             {
                 if (!(e is UnauthorizedAccessException || e is InvalidOperationException))
                 {
+                    Utilities.ReportError(e, ErrorType.FatalError);
                     throw;
                 }
 
@@ -137,7 +160,23 @@ namespace SevenUpdate.Admin
         /// <param name="hiddenUpdate">The hidden update to show</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
-            var show = Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) ?? new Collection<Suh>();
+            var show = File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>();
+
+            if (show == null)
+            {
+                File.Delete(App.HiddenFile);
+                return;
+            }
+
+            for (int x = 0; x < show.Count; x++)
+            {
+                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status && show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
+                    show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl && show[x].Description[0].Value == hiddenUpdate.Description[0].Value &&
+                    show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
+                {
+                    show.RemoveAt(x);
+                }
+            }
 
             if (show.Count == 0)
             {
@@ -145,7 +184,6 @@ namespace SevenUpdate.Admin
             }
             else
             {
-                show.Remove(hiddenUpdate);
                 Utilities.Serialize(show, App.HiddenFile);
             }
         }
