@@ -42,7 +42,7 @@
 		<Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
 		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
 			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="RestoreUpdate" Padding="5,1" ButtonText="{LocText SevenUpdate:Resources:Restore}" IsEnabled="False" Name="btnRestore" TabIndex="1" />
-			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" Command="NavigationCommands.BrowseBack" TabIndex="2" />
+			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Padding="5,1" TabIndex="2" Click="NavigateToMainPage" />
 		</StackPanel>
 		<TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:TotalSelectedUpdates, FormatSegment1=0}" VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />
 		<Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2" X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />

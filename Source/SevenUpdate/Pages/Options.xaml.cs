@@ -212,7 +212,7 @@ namespace SevenUpdate.Pages
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
             {
-                MainWindow.NavService.GoBack();
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
             }
         }
 
@@ -227,5 +227,13 @@ namespace SevenUpdate.Pages
         }
 
         #endregion
+
+        /// <summary>Goes back to the Main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+        }
     }
 }

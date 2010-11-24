@@ -65,7 +65,7 @@
 		<!--Navigation Buttons-->
 		<StackPanel Grid.Row="15" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3" Grid.Column="1">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="10" />
-			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="GoToMainPage" TabIndex="11" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="NavigateToMainPage" TabIndex="11" />
 		</StackPanel>
 
 		<ListBox BorderBrush="LightGray" Margin="10" Name="listBox" SelectedIndex="0" Grid.Row="1" MinWidth="200" MaxWidth="260" Grid.RowSpan="14" DisplayMemberPath="Name/Value" SelectionChanged="SetSelectedShortcut" KeyDown="DeleteShortcut" TabIndex="0">

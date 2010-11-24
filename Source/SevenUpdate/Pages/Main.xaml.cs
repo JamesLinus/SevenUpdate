@@ -217,7 +217,7 @@ namespace SevenUpdate.Pages
         /// <summary>Opens a browser and navigates to the Uri</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-        private void GoToGoogleCode(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void NavigateToGoogleCode(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;

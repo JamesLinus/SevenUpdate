@@ -296,7 +296,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Navigates to the main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void GoToMainPage(object sender, RoutedEventArgs e)
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
         }

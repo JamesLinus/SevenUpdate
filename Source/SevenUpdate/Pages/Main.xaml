@@ -43,7 +43,7 @@
             <Run Text="{LocText SevenUpdate:Resources:DevNote}" />
             <LineBreak />
             <Run Text="{LocText SevenUpdate:Resources:ReportBugs}" />
-            <Hyperlink NavigateUri="http://code.google.com/p/sevenupdate/issues/list" RequestNavigate="GoToGoogleCode">http://code.google.com/p/sevenupdate/issues/list</Hyperlink>
+            <Hyperlink NavigateUri="http://code.google.com/p/sevenupdate/issues/list" RequestNavigate="NavigateToGoogleCode">http://code.google.com/p/sevenupdate/issues/list</Hyperlink>
             <LineBreak />
             <Run Text="{LocText SevenUpdate:Resources:IncludeContents}" />
             <Hyperlink NavigateUri="http://code.google.com/p/sevenupdate/issues/list" RequestNavigate="OpenErrorLog"><Run Text="{LocText SevenUpdate:Resources:ErrorLog}" /></Hyperlink>

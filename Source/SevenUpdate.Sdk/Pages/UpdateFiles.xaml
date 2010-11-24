@@ -65,7 +65,7 @@
 		<Rectangle Grid.ColumnSpan="5" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
 		<StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="6" />
-			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="GoToMainPage" TabIndex="7" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="NavigateToMainPage" TabIndex="7" />
 		</StackPanel>
 		<!--File Action-->
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:FileAction}" Padding="2" ToolTip="{LocText SevenUpdate.Sdk:Resources:FileActionToolTip}" Grid.Column="1" Grid.Row="1" Margin="0,10" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />

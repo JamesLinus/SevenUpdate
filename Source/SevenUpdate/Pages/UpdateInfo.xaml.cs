@@ -130,9 +130,9 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates back to the Main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void Cancel(object sender, RoutedEventArgs e)
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.GoBack();
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         /// <summary>Launches the Help <c>Url</c> of the update</summary>
@@ -204,7 +204,7 @@ namespace SevenUpdate.Pages
                 UpdateSelectionChanged(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
             }
 
-            MainWindow.NavService.GoBack();
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
         }
 
         /// <summary>Expands the group expander based on the which link was clicked from the main page</summary>

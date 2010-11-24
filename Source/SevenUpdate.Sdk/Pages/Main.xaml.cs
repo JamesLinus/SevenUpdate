@@ -167,7 +167,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Opens a browser and opens the support page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void GoToSupport(object sender, MouseButtonEventArgs e)
+        private void NavigateToSupport(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(@"http://sevenupdate.com/support");
         }
