@@ -98,7 +98,7 @@ namespace SevenUpdate.Sdk
             {
                 Args = e.Args;
                 Directory.CreateDirectory(UserStore);
-                Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
+                Core.Projects = File.Exists(Core.ProjectsFile) ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile) : null;
                 SetJumpList();
             }
         }

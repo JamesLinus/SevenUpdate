@@ -175,7 +175,8 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Loads the projects.</summary>
         private void LoadProjects()
         {
-            Core.Projects = Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile);
+            Core.Projects = File.Exists(Core.ProjectsFile) ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile) : null;
+
             this.treeView.Items.Clear();
             if (Core.Projects == null)
             {
