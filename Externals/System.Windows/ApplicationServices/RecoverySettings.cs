@@ -29,7 +29,7 @@ namespace System.Windows.ApplicationServices
         /// callback method must invoke <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> to
         /// prevent WER from terminating the application.</param>
         /// <seealso cref="ApplicationRestartRecoveryManager"/>
-        protected RecoverySettings(RecoveryData data, uint interval)
+        public RecoverySettings(RecoveryData data, uint interval)
         {
             this.RecoveryData = data;
             this.PingInterval = interval;

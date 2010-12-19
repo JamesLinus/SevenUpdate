@@ -45,7 +45,7 @@
 
 		<StackPanel Grid.Column="2" Grid.Row="18" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0" Grid.ColumnSpan="3">
 			<Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="10" Name="btnNext" />
-			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="SaveProject" TabIndex="11" Name="btnCancel" />
+			<Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True" Click="SaveSua" TabIndex="11" Name="btnCancel" />
 		</StackPanel>
 
 		<ComboBox Grid.Column="3" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80" SelectedIndex="0" SelectionChanged="LoadLocaleStrings" Margin="0,5" TabIndex="12">

@@ -50,112 +50,12 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Saves the project.</summary>
-        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
-        private static void SaveProject(bool export = false)
-        {
-            var appUpdates = new Collection<Update>();
-
-            var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
-
-            if (Core.AppInfo.Is64Bit)
-            {
-                if (!appName.Contains("x64") && !appName.Contains("X64"))
-                {
-                    appName += " (x64)";
-                }
-            }
-
-            var suiFile = Path.Combine(App.UserStore, appName + ".sui");
-            var suaFile = Path.Combine(App.UserStore, appName + ".sua");
-
-            var updateNames = new ObservableCollection<string>();
-
-            // If SUA exists lets remove the old info
-            if (Core.AppIndex > -1)
-            {
-                if (File.Exists(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui")))
-                {
-                    appUpdates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui"));
-                }
-
-                updateNames = Core.Projects[Core.AppIndex].UpdateNames;
-                Core.Projects.RemoveAt(Core.AppIndex);
-            }
-
-            // If we are just updating the SUA, lets add it
-            if (appUpdates.Count == 0 || Core.UpdateIndex == -1)
-            {
-                updateNames.Add(Utilities.GetLocaleString(Core.UpdateInfo.Name));
-                appUpdates.Add(Core.UpdateInfo);
-            }
-            else
-            {
-                // If we are updating the update, lets remove the old info and add the new.
-                updateNames.RemoveAt(Core.UpdateIndex);
-                appUpdates.RemoveAt(Core.UpdateIndex);
-                appUpdates.Add(Core.UpdateInfo);
-                updateNames.Add(Utilities.GetLocaleString(Core.UpdateInfo.Name));
-            }
-
-            // Save the SUI File
-            Utilities.Serialize(appUpdates, suiFile);
-
-            // Save project file
-            var project = new Project { ApplicationName = appName, };
-
-            foreach (var t in updateNames)
-            {
-                project.UpdateNames.Add(t);
-            }
-
-            Core.Projects.Add(project);
-            Utilities.Serialize(Core.Projects, Core.ProjectsFile);
-
-            if (Core.IsNewProject)
-            {
-                // Save the SUA file
-                Utilities.Serialize(Core.AppInfo, suaFile);
-            }
-
-            if (!export)
-            {
-                Core.IsNewProject = false;
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
-                return;
-            }
-
-            var fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sui");
-
-            if (fileName == null)
-            {
-                return;
-            }
-
-            File.Copy(suiFile, fileName, true);
-
-            if (Core.IsNewProject)
-            {
-                fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sua");
-
-                if (fileName == null)
-                {
-                    return;
-                }
-
-                File.Copy(suaFile, fileName, true);
-            }
-
-            Core.IsNewProject = false;
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
-        }
-
         /// <summary>Saves and exports the Project</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
-            SaveProject(true);
+            Core.SaveProject(true);
         }
 
         /// <summary>Saves the Project</summary>
@@ -163,7 +63,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
-            SaveProject();
+            Core.SaveProject();
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>

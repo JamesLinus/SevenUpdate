@@ -29,7 +29,7 @@ namespace System.Windows.ApplicationServices
         /// <param name="restrict">A bitwise combination of the <see cref="RestartRestrictions"/>
         /// values that specify
         /// when the application should not be restarted.</param>
-        protected RestartSettings(string commandLine, RestartRestrictions restrict)
+        public RestartSettings(string commandLine, RestartRestrictions restrict)
         {
             this.Command = commandLine;
             this.Restrictions = restrict;

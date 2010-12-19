@@ -30,6 +30,7 @@ namespace SevenUpdate
     using System.IO;
     using System.Net;
     using System.Windows;
+    using System.Windows.ApplicationServices;
     using System.Windows.Dialogs;
     using System.Windows.Shell;
 
@@ -142,7 +143,8 @@ namespace SevenUpdate
                     }
 
                     var appName = Utilities.GetLocaleString(app.Name);
-                    if (Core.ShowMessage(
+                    if (
+                        Core.ShowMessage(
                             String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
                             TaskDialogStandardIcon.ShieldBlue,
                             TaskDialogStandardButtons.Cancel,
@@ -168,11 +170,23 @@ namespace SevenUpdate
             }
             else
             {
+                RegisterApplicationRecoveryAndRestart();
                 MyServiceHost.StartService();
                 Args = e.Args;
                 SetJumpList();
                 Utilities.ErrorOccurred += LogError;
             }
+        }
+
+        /// <summary>
+        /// Raises the Application.Exit event.
+        /// </summary>
+        /// <param name="e">An ExitEventArgs that contains the event data.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        protected override void OnExit(ExitEventArgs e, bool firstInstance)
+        {
+            UnregisterApplicationRecoveryAndRestart();
+            base.OnExit(e, firstInstance);
         }
 
         /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
@@ -207,7 +221,9 @@ namespace SevenUpdate
             catch (NullReferenceException)
             {
             }
-
+            catch (AccessViolationException)
+            {
+            }
 
             if (Process.GetProcessesByName("SevenUpdate.Admin").Length <= 0 || File.Exists(Path.Combine(AllUserStore, "updates.sui")))
             {
@@ -226,6 +242,29 @@ namespace SevenUpdate
             {
                 tw.Write(e.Exception);
             }
+        }
+
+        /// <summary>Registers the application to use the Recovery Manager</summary>
+        private static void RegisterApplicationRecoveryAndRestart()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            // register for Application Restart
+            ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
+        }
+
+        /// <summary>The unregister application recovery and restart.</summary>
+        private static void UnregisterApplicationRecoveryAndRestart()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
         }
 
         /// <summary>Sets the application jump list</summary>

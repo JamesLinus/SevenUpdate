@@ -61,7 +61,7 @@
     <CoreCompileDependsOn>$(CoreCompileDependsOn);CompileWin32RCFile</CoreCompileDependsOn>
   </PropertyGroup>
   <PropertyGroup>
-    <Win32Resource>D:\Documents\Visual Studio 2010\Projects\SevenUpdate\Source\SevenUpdate.Base\Properties\SevenUpdate.Base.res</Win32Resource>
+    <Win32Resource>SevenUpdate.Base.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -116,9 +116,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\SevenUpdate.Base.rc" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -306,7 +306,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Saves the project and goes back to the main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void SaveProject(object sender, RoutedEventArgs e)
+        private void SaveSua(object sender, RoutedEventArgs e)
         {
             if (this.btnNext.Visibility != Visibility.Visible)
             {
@@ -317,7 +317,7 @@ namespace SevenUpdate.Sdk.Pages
                 else
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
-                    File.Delete(Path.Combine(App.UserStore, appName, ".sua"));
+                    File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
                     if (Core.AppInfo.Is64Bit)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -326,7 +326,7 @@ namespace SevenUpdate.Sdk.Pages
                         }
                     }
 
-                    File.Delete(Path.Combine(App.UserStore, appName, ".sua"));
+                    File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
 
                     ObservableCollection<string> updateNames = null;
 
@@ -337,7 +337,7 @@ namespace SevenUpdate.Sdk.Pages
                     }
 
                     // Save the SUA file
-                    Utilities.Serialize(Core.AppInfo, Path.Combine(App.UserStore, appName, ".sua"));
+                    Utilities.Serialize(Core.AppInfo, Path.Combine(App.UserStore, appName + ".sua"));
 
                     // Save project file
                     var project = new Project { ApplicationName = appName, };
@@ -353,7 +353,7 @@ namespace SevenUpdate.Sdk.Pages
                     if (Core.AppInfo.Is64Bit != is64Bit)
                     {
                         project.UpdateNames.Clear();
-                        File.Delete(Path.Combine(App.UserStore, appName, ".sui"));
+                        File.Delete(Path.Combine(App.UserStore, appName + ".sui"));
                     }
 
                     Core.Projects.Add(project);

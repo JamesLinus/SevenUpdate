@@ -31,7 +31,7 @@ namespace System.Windows.ApplicationServices
         /// <summary>Initializes a new instance of the <see cref="RecoveryData"/> class.</summary>
         /// <param name="callback">The callback delegate.</param>
         /// <param name="state">The current state of the application.</param>
-        protected RecoveryData(RecoveryCallback callback, object state)
+        public RecoveryData(RecoveryCallback callback, object state)
         {
             this.Callback = callback;
             this.State = state;

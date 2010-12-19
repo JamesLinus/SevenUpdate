@@ -29,6 +29,7 @@ namespace SevenUpdate.Sdk
     using System.Globalization;
     using System.IO;
     using System.Windows;
+    using System.Windows.ApplicationServices;
     using System.Windows.Shell;
 
     using SevenUpdate.Sdk.Properties;
@@ -96,6 +97,7 @@ namespace SevenUpdate.Sdk
             }
             else
             {
+                RegisterApplicationRecoveryAndRestart();
                 Args = e.Args;
                 Directory.CreateDirectory(UserStore);
                 Core.Projects = File.Exists(Core.ProjectsFile) ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile) : null;
@@ -109,6 +111,67 @@ namespace SevenUpdate.Sdk
         {
             base.OnStartupNextInstance(e);
             ProcessArgs(e.GetArgs());
+        }
+
+
+        /// <summary>
+        /// Raises the Application.Exit event.
+        /// </summary>
+        /// <param name="e">An ExitEventArgs that contains the event data.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        protected override void OnExit(ExitEventArgs e, bool firstInstance)
+        {
+            UnregisterApplicationRecoveryAndRestart();
+            base.OnExit(e, firstInstance);
+        }
+
+        /// <summary>Performs recovery by saving the state</summary>
+        /// <param name="parameter">This parameter is not used.</param>
+        /// <returns>Return value is not used.</returns>
+        private static int PerformRecovery(object parameter)
+        {
+            try
+            {
+                ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress();
+                Core.SaveProject();
+
+                // Save your work here for recovery
+                ApplicationRestartRecoveryManager.ApplicationRecoveryFinished(true);
+            }
+            catch
+            {
+                ApplicationRestartRecoveryManager.ApplicationRecoveryFinished(false);
+            }
+
+            return 0;
+        }
+
+        /// <summary>Registers the application to use the Recovery Manager</summary>
+        private static void RegisterApplicationRecoveryAndRestart()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            // register for Application Restart
+            ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
+
+            // register for Application Recovery
+            var recoverySettings = new RecoverySettings(new RecoveryData(PerformRecovery, null), 4000);
+            ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(recoverySettings);
+        }
+
+        /// <summary>The unregister application recovery and restart.</summary>
+        private static void UnregisterApplicationRecoveryAndRestart()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
+            ApplicationRestartRecoveryManager.UnregisterApplicationRecovery();
         }
 
         /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>

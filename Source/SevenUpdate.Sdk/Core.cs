@@ -85,6 +85,106 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
+        /// <summary>Saves the project.</summary>
+        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
+        internal static void SaveProject(bool export = false)
+        {
+            var appUpdates = new Collection<Update>();
+
+            var appName = Utilities.GetLocaleString(AppInfo.Name);
+
+            if (AppInfo.Is64Bit)
+            {
+                if (!appName.Contains("x64") && !appName.Contains("X64"))
+                {
+                    appName += " (x64)";
+                }
+            }
+
+            var suiFile = Path.Combine(App.UserStore, appName + ".sui");
+            var suaFile = Path.Combine(App.UserStore, appName + ".sua");
+
+            var updateNames = new ObservableCollection<string>();
+
+            // If SUA exists lets remove the old info
+            if (AppIndex > -1)
+            {
+                if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")))
+                {
+                    appUpdates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"));
+                }
+
+                updateNames = Projects[AppIndex].UpdateNames;
+                Projects.RemoveAt(AppIndex);
+            }
+
+            // If we are just updating the SUA, lets add it
+            if (appUpdates.Count == 0 || UpdateIndex == -1)
+            {
+                updateNames.Add(Utilities.GetLocaleString(UpdateInfo.Name));
+                appUpdates.Add(UpdateInfo);
+            }
+            else
+            {
+                // If we are updating the update, lets remove the old info and add the new.
+                updateNames.RemoveAt(UpdateIndex);
+                appUpdates.RemoveAt(UpdateIndex);
+                appUpdates.Add(UpdateInfo);
+                updateNames.Add(Utilities.GetLocaleString(UpdateInfo.Name));
+            }
+
+            // Save the SUI File
+            Utilities.Serialize(appUpdates, suiFile);
+
+            // Save project file
+            var project = new Project { ApplicationName = appName, };
+
+            foreach (var t in updateNames)
+            {
+                project.UpdateNames.Add(t);
+            }
+
+            Projects.Add(project);
+            Utilities.Serialize(Projects, ProjectsFile);
+
+            if (IsNewProject)
+            {
+                // Save the SUA file
+                Utilities.Serialize(AppInfo, suaFile);
+            }
+
+            if (!export)
+            {
+                IsNewProject = false;
+                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+                return;
+            }
+
+            var fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sui");
+
+            if (fileName == null)
+            {
+                return;
+            }
+
+            File.Copy(suiFile, fileName, true);
+
+            if (IsNewProject)
+            {
+                fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sua");
+
+                if (fileName == null)
+                {
+                    return;
+                }
+
+                File.Copy(suaFile, fileName, true);
+            }
+
+            IsNewProject = false;
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+        }
+
         /// <summary>Edit the selected project or update</summary>
         internal static void EditItem()
         {

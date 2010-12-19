@@ -10,3 +10,5 @@ glob:Source/StyleCop.Cache
 glob:Source/SevenUpdate.crdata
 glob:Source/SevenUpdate/StyleCop.Cache
 glob:StyleCop.Cache
+glob:Source/SevenUpdate.Base/SevenUpdate.Base.aps
+glob:Source/SevenUpdate.Sdk.Tools
