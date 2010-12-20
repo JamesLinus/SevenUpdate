@@ -141,7 +141,7 @@ namespace SevenUpdate
 
                     ReportProgress(25);
 
-                    UpdateFiles(applications[x].Updates[y].Files, Path.Combine(downloadDirectory, "downloads", currentUpdateName));
+                    UpdateFiles(applications[x].Updates[y].Files, Path.Combine(downloadDirectory, currentUpdateName));
 
                     ReportProgress(75);
 

@@ -557,6 +557,9 @@ namespace SharpBits.Base
                 {
                     this.manager.PublishException(this, exception);
                 }
+                catch (UnauthorizedAccessException)
+                {
+                }
             }
         }
 
