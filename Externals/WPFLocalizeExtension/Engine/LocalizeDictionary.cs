@@ -674,6 +674,7 @@ namespace WPFLocalizeExtension.Engine
                     return;
                 }
 
+                Instance.OnCultureChanged -= this.Instance_OnCultureChanged;
                 Instance.OnCultureChanged += this.Instance_OnCultureChanged;
                 this.isListening = true;
             }

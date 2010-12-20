@@ -34,7 +34,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Media;
 
     using SevenUpdate.Converters;
-    using SevenUpdate.Windows;
 
     /// <summary>Interaction logic for Update_Info.xaml</summary>
     public sealed partial class UpdateInfo
@@ -117,11 +116,11 @@ namespace SevenUpdate.Pages
             }
 
             this.lvUpdates.ItemsSource = selectedUpdates;
-            var myView = (CollectionView)CollectionViewSource.GetDefaultView(this.lvUpdates.ItemsSource);
+            var view = (CollectionView)CollectionViewSource.GetDefaultView(this.lvUpdates.ItemsSource);
             var groupDescription = new PropertyGroupDescription("Importance", new ImportanceToStringConverter());
-            if (myView.GroupDescriptions != null)
+            if (view.GroupDescriptions != null)
             {
-                myView.GroupDescriptions.Add(groupDescription);
+                view.GroupDescriptions.Add(groupDescription);
             }
 
             this.lvUpdates.SelectedIndex = 0;
@@ -132,7 +131,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
 
         /// <summary>Launches the Help <c>Url</c> of the update</summary>
@@ -166,7 +165,7 @@ namespace SevenUpdate.Pages
                 {
                     updIndex++;
 
-                    if (!((Update)lvUpdates.Items[updIndex]).Selected)
+                    if (!((Update)this.lvUpdates.Items[updIndex]).Selected)
                     {
                         continue;
                     }
@@ -204,7 +203,7 @@ namespace SevenUpdate.Pages
                 UpdateSelectionChanged(this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
             }
 
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
 
         /// <summary>Expands the group expander based on the which link was clicked from the main page</summary>
@@ -309,16 +308,6 @@ namespace SevenUpdate.Pages
             internal int OptionalUpdates { get; private set; }
 
             #endregion
-        }
-
-        private void CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void CheckBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-
         }
     }
 }

@@ -30,11 +30,53 @@ namespace SevenUpdate
     using System.IO;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Dialogs;
     using System.Windows.Internal;
 
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;
+    using SevenUpdate.Windows;
+
+    /// <summary>The layout for the Info Panel</summary>
+    public enum UpdateAction
+    {
+        /// <summary>Canceled Updates</summary>
+        Canceled,
+
+        /// <summary>Check for updates</summary>
+        CheckForUpdates,
+
+        /// <summary>Checking for updates</summary>
+        CheckingForUpdates,
+
+        /// <summary>When connecting to the admin service</summary>
+        ConnectingToService,
+
+        /// <summary>When downloading of updates has been completed</summary>
+        DownloadCompleted,
+
+        /// <summary>Downloading updates</summary>
+        Downloading,
+
+        /// <summary>An Error Occurred when downloading/installing updates</summary>
+        ErrorOccurred,
+
+        /// <summary>When installation of updates have completed</summary>
+        InstallationCompleted,
+
+        /// <summary>Installing Updates</summary>
+        Installing,
+
+        /// <summary>No updates have been found</summary>
+        NoUpdates,
+
+        /// <summary>A reboot is needed to finish installing updates</summary>
+        RebootNeeded,
+
+        /// <summary>Updates have been found</summary>
+        UpdatesFound,
+    }
 
     /// <summary>Contains properties and methods that are essential</summary>
     internal sealed class Core : INotifyPropertyChanged
@@ -43,6 +85,9 @@ namespace SevenUpdate
 
         /// <summary>Location of the SUI for Seven Update</summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
+
+        /// <summary>The main page for Seven Update</summary>
+        private static readonly Page MainPage = new Main();
 
         /// <summary>The static instance of the Core class</summary>
         private static Core instance;
@@ -178,6 +223,12 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
+
+        /// <summary>Goes back to the Main page</summary>
+        internal static void NavigateToMainPage()
+        {
+            MainWindow.NavService.Navigate(MainPage);
+        }
 
         /// <summary>Checks for updates</summary>
         /// <param name="auto"><see langword="true"/> if it's called because of an auto update check, otherwise <see langword="false"/></param>

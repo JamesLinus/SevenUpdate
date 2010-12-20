@@ -146,6 +146,8 @@ namespace SevenUpdate
                 this.Name = new ObservableCollection<LocaleString>();
             }
 
+            this.Name.CollectionChanged -= this.NameCollectionChanged;
+            this.Description.CollectionChanged -= this.DescriptionCollectionChanged;
             this.Name.CollectionChanged += this.NameCollectionChanged;
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
@@ -156,6 +158,8 @@ namespace SevenUpdate
             this.Name = new ObservableCollection<LocaleString>();
             this.Description = new ObservableCollection<LocaleString>();
 
+            this.Name.CollectionChanged -= this.NameCollectionChanged;
+            this.Description.CollectionChanged -= this.DescriptionCollectionChanged;
             this.Name.CollectionChanged += this.NameCollectionChanged;
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }

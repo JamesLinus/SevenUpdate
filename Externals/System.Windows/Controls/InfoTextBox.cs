@@ -198,6 +198,11 @@ namespace System.Windows.Controls
         {
             this.HasText = !(this.Text != null && String.IsNullOrEmpty(this.Text));
 
+            if (this.HasText)
+            {
+                this.UpdateAdorner(this, true);
+            }
+
             base.OnTextChanged(e);
         }
 

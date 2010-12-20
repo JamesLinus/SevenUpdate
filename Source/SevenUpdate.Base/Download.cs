@@ -111,6 +111,9 @@ namespace SevenUpdate
             manager = new BitsManager();
 
             // Assign the event handlers
+            manager.OnJobTransferred -= ReportDownloadComplete;
+            manager.OnJobError -= ReportDownloadError;
+            manager.OnJobModified -= ReportDownloadProgress;
             manager.OnJobTransferred += ReportDownloadComplete;
             manager.OnJobError += ReportDownloadError;
             manager.OnJobModified += ReportDownloadProgress;

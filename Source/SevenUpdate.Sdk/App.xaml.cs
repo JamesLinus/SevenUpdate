@@ -113,10 +113,7 @@ namespace SevenUpdate.Sdk
             ProcessArgs(e.GetArgs());
         }
 
-
-        /// <summary>
-        /// Raises the Application.Exit event.
-        /// </summary>
+        /// <summary>Raises the Application.Exit event.</summary>
         /// <param name="e">An ExitEventArgs that contains the event data.</param>
         /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected override void OnExit(ExitEventArgs e, bool firstInstance)

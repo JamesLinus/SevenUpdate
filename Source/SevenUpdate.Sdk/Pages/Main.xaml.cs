@@ -43,7 +43,9 @@ namespace SevenUpdate.Sdk.Pages
         public Main()
         {
             this.InitializeComponent();
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
             if (AeroGlass.IsEnabled)
             {

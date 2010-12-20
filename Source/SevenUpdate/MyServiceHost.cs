@@ -67,7 +67,6 @@ namespace SevenUpdate
             {
                 // make sure setting is turned ON
                 debug.IncludeExceptionDetailInFaults = true;
-                
             }
 
 #endif

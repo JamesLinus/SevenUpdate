@@ -69,8 +69,11 @@ namespace SevenUpdate.Sdk.Pages
                 this.btnNext.Visibility = Visibility.Visible;
             }
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
+
             if (AeroGlass.IsEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;

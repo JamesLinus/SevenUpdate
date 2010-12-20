@@ -101,7 +101,7 @@ namespace SevenUpdate
             switch (args[0])
             {
                 case "-check":
-                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Main.xaml", UriKind.Relative));
+                    Core.NavigateToMainPage();
                     Core.CheckForUpdates(true);
                     break;
 
@@ -178,9 +178,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        /// Raises the Application.Exit event.
-        /// </summary>
+        /// <summary>Raises the Application.Exit event.</summary>
         /// <param name="e">An ExitEventArgs that contains the event data.</param>
         /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected override void OnExit(ExitEventArgs e, bool firstInstance)

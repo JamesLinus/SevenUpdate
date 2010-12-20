@@ -10,8 +10,6 @@
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {

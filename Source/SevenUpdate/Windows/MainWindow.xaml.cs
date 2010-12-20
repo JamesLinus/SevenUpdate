@@ -44,17 +44,19 @@ namespace SevenUpdate.Windows
 
             if (App.IsDev)
             {
-                Title += " - " + Properties.Resources.DevChannel;
+                this.Title += " - " + Properties.Resources.DevChannel;
             }
 
             if (App.IsBeta)
             {
-                Title += " - " + Properties.Resources.BetaChannel;
+                this.Title += " - " + Properties.Resources.BetaChannel;
             }
 
             App.TaskBar = this.taskBar;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);
+
+            Core.NavigateToMainPage();
         }
 
         #endregion

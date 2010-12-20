@@ -70,8 +70,10 @@ namespace System.Windows.Controls
         /// <summary>Initializes a new instance of the <see cref = "UacButton" /> class.</summary>
         public UacButton()
         {
+            this.Loaded -= this.OnLoaded;
             this.Loaded += this.OnLoaded;
-            this.IsEnabledChanged += (o, args) => this.ChangeUacIcon(args);
+            this.IsEnabledChanged -= this.ChangeUacIcon;
+            this.IsEnabledChanged += this.ChangeUacIcon;
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
             var imgShield = new Image { Source = this.IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };
@@ -219,8 +221,9 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Changes the UAC icon</summary>
+        /// <param name="sender">The object that raised the event</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-        private void ChangeUacIcon(DependencyPropertyChangedEventArgs e)
+        private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsShieldDisplayed)
             {

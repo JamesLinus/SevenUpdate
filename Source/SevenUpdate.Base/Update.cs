@@ -52,7 +52,8 @@ namespace SevenUpdate
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut))
+    , KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -129,6 +130,9 @@ namespace SevenUpdate
                 this.Files = new ObservableCollection<UpdateFile>();
             }
 
+            this.Name.CollectionChanged -= this.NameCollectionChanged;
+            this.Description.CollectionChanged -= this.DescriptionCollectionChanged;
+
             this.Name.CollectionChanged += this.NameCollectionChanged;
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
@@ -142,6 +146,8 @@ namespace SevenUpdate
             this.RegistryItems = new ObservableCollection<RegistryItem>();
             this.Shortcuts = new ObservableCollection<Shortcut>();
 
+            this.Name.CollectionChanged -= this.NameCollectionChanged;
+            this.Description.CollectionChanged -= this.DescriptionCollectionChanged;
             this.Name.CollectionChanged += this.NameCollectionChanged;
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }

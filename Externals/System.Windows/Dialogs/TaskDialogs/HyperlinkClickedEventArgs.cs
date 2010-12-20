@@ -10,7 +10,7 @@
 // ***********************************************************************
 namespace System.Windows.Dialogs
 {
-    /// <summary>Defines event data associated with a <see cref="HyperlinkClick"/> event.</summary>
+    /// <summary>Defines event data associated with a HyperlinkClicked event.</summary>
     public class HyperlinkClickedEventArgs : EventArgs
     {
         #region Constructors and Destructors

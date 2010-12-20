@@ -46,6 +46,7 @@ namespace SevenUpdate.Sdk.Windows
         {
             this.InitializeComponent();
             NavService = this.NavigationService;
+            AeroGlass.CompositionChanged -= this.ChangeWindowChrome;
             AeroGlass.CompositionChanged += this.ChangeWindowChrome;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);

@@ -108,6 +108,10 @@ namespace SevenUpdate
 
             this.Description = new ObservableCollection<LocaleString>();
 
+            this.Name.CollectionChanged -= this.NameCollectionChanged;
+            this.Description.CollectionChanged -= this.DescriptionCollectionChanged;
+            this.Publisher.CollectionChanged -= this.PublisherCollectionChanged;
+
             this.Name.CollectionChanged += this.NameCollectionChanged;
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
             this.Publisher.CollectionChanged += this.PublisherCollectionChanged;

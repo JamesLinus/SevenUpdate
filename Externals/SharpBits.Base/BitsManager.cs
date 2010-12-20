@@ -58,6 +58,11 @@ namespace SharpBits.Base
             this.BackgroundCopyManager = new BackgroundCopyManager() as IBackgroundCopyManager;
             this.Jobs = new BitsJobsDictionary(this); // will be set correctly later after initialization
             this.NotificationHandler = new BitsNotification(this);
+
+            this.NotificationHandler.OnJobErrorEvent -= this.NotificationHandlerOnJobErrorEvent;
+            this.NotificationHandler.OnJobModifiedEvent -= this.NotificationHandlerOnJobModifiedEvent;
+            this.NotificationHandler.OnJobTransferredEvent -= this.NotificationHandlerOnJobTransferredEvent;
+
             this.NotificationHandler.OnJobErrorEvent += this.NotificationHandlerOnJobErrorEvent;
             this.NotificationHandler.OnJobModifiedEvent += this.NotificationHandlerOnJobModifiedEvent;
             this.NotificationHandler.OnJobTransferredEvent += this.NotificationHandlerOnJobTransferredEvent;

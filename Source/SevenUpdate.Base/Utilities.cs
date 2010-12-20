@@ -735,19 +735,25 @@ namespace SevenUpdate
         /// <param name="fileName">the location of a file that will be serialized</param>
         private static void SerializeFile<T>(T item, string fileName) where T : class
         {
-            if (File.Exists(fileName))
+            try
             {
-                using (var file = File.Open(fileName, FileMode.Truncate))
+                if (File.Exists(fileName))
                 {
-                    Serializer.Serialize(file, item);
+                    using (var file = File.Open(fileName, FileMode.Truncate))
+                    {
+                        Serializer.Serialize(file, item);
+                    }
+                }
+                else
+                {
+                    using (var file = File.Open(fileName, FileMode.CreateNew))
+                    {
+                        Serializer.Serialize(file, item);
+                    }
                 }
             }
-            else
+            catch (UnauthorizedAccessException)
             {
-                using (var file = File.Open(fileName, FileMode.CreateNew))
-                {
-                    Serializer.Serialize(file, item);
-                }
             }
         }
 

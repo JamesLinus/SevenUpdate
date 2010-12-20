@@ -47,6 +47,9 @@ namespace SevenUpdate.Sdk.Pages
 
             this.listBox.ItemsSource = Core.UpdateInfo.Shortcuts;
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged += this.UpdateUI;
             if (AeroGlass.IsEnabled)

@@ -23,7 +23,6 @@
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.IO;
@@ -72,16 +71,16 @@ namespace SevenUpdate.Pages
             }
 
             this.lvUpdateHistory.ItemsSource = this.updateHistory;
+            this.updateHistory.CollectionChanged -= this.RefreshDataView;
             this.updateHistory.CollectionChanged += this.RefreshDataView;
         }
-
 
         /// <summary>Goes back to the Main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
 
         /// <summary>Updates the <see cref="CollectionView"/> when the collection changes</summary>

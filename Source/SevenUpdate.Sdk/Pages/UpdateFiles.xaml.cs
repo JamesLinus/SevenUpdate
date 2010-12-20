@@ -60,7 +60,9 @@ namespace SevenUpdate.Sdk.Pages
 
             this.listBox.ItemsSource = Core.UpdateInfo.Files;
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
             if (AeroGlass.IsEnabled)
             {

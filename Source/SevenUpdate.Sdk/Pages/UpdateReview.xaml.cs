@@ -23,13 +23,8 @@
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
-    using System;
-    using System.Collections.ObjectModel;
-    using System.IO;
     using System.Windows;
     using System.Windows.Media;
-
-    using SevenUpdate.Sdk.Windows;
 
     /// <summary>Interaction logic for UpdateRegistry.xaml</summary>
     public sealed partial class UpdateReview
@@ -41,6 +36,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             this.InitializeComponent();
             this.DataContext = Core.UpdateInfo;
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged += this.UpdateUI;
             this.tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));

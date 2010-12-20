@@ -331,6 +331,9 @@ namespace WPFLocalizeExtension.Engine
                     return;
                 }
 
+                Instance.OnOddsFormatChanged -= this.Instance_OnOddsFormatChanged;
+                Localize.Instance.OnCultureChanged -= this.Instance_OnCultureChanged;
+
                 Instance.OnOddsFormatChanged += this.Instance_OnOddsFormatChanged;
                 Localize.Instance.OnCultureChanged += this.Instance_OnCultureChanged;
                 this.isListening = true;

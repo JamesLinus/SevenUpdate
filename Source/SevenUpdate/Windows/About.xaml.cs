@@ -39,12 +39,12 @@ namespace SevenUpdate.Windows
 
             if (App.IsDev)
             {
-                Title += " - " + Properties.Resources.DevChannel;
+                this.Title += " - " + Properties.Resources.DevChannel;
             }
 
             if (App.IsBeta)
             {
-                Title += " - " + Properties.Resources.BetaChannel;
+                this.Title += " - " + Properties.Resources.BetaChannel;
             }
 
             var version = Assembly.GetExecutingAssembly().GetName().Version;

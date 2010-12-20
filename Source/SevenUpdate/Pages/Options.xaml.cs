@@ -27,13 +27,12 @@ namespace SevenUpdate.Pages
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Net;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Navigation;
-
-    using SevenUpdate.Windows;
 
     /// <summary>Interaction logic for Options.xaml</summary>
     public partial class Options
@@ -92,7 +91,7 @@ namespace SevenUpdate.Pages
             this.config = Core.Settings;
             this.DataContext = this.config;
 
-            this.DownloadSul();
+            Task.Factory.StartNew(this.DownloadSul);
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
@@ -121,7 +120,9 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
+                    if (
+                        Directory.Exists(
+                            Utilities.IsRegistryKey(machineAppList[x].Directory)
                                 ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
                                 : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                     {
@@ -138,7 +139,9 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
-                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                    if (
+                        !Directory.Exists(
+                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
                     {
@@ -212,7 +215,7 @@ namespace SevenUpdate.Pages
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+                Core.NavigateToMainPage();
             }
         }
 
@@ -226,14 +229,14 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #endregion
-
         /// <summary>Goes back to the Main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
+
+        #endregion
     }
 }

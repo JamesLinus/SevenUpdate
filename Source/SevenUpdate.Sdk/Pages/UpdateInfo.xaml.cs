@@ -47,7 +47,9 @@ namespace SevenUpdate.Sdk.Pages
                 Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
             }
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
+            AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
             if (AeroGlass.IsEnabled)
             {

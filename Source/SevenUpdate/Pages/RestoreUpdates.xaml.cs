@@ -110,7 +110,7 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
 
         /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
@@ -155,14 +155,14 @@ namespace SevenUpdate.Pages
             this.btnRestore.IsEnabled = checkedCount > 0;
         }
 
-        #endregion
-
         /// <summary>Goes back to the Main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Main.xaml", UriKind.Relative));
+            Core.NavigateToMainPage();
         }
+
+        #endregion
     }
 }

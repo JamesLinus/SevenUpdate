@@ -238,6 +238,7 @@ namespace System.Windows.Controls
         /// <summary>Starts this instance.</summary>
         private void Start()
         {
+            this.dispatcherTimer.Tick -= this.Animate;
             this.dispatcherTimer.Tick += this.Animate;
             this.dispatcherTimer.Start();
         }

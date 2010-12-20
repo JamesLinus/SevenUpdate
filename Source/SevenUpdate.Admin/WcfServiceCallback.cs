@@ -168,7 +168,7 @@ namespace SevenUpdate.Admin
                 return;
             }
 
-            for (int x = 0; x < show.Count; x++)
+            for (var x = 0; x < show.Count; x++)
             {
                 if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status && show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
                     show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl && show[x].Description[0].Value == hiddenUpdate.Description[0].Value &&
