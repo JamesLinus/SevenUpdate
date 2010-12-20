@@ -106,6 +106,9 @@ namespace SevenUpdate.Sdk
 
             var updateNames = new ObservableCollection<string>();
 
+            var suiFileName = Projects[AppIndex].ExportedSuiFileName;
+            var suaFileName = Projects[AppIndex].ExportedSuaFileName;
+
             // If SUA exists lets remove the old info
             if (AppIndex > -1)
             {
@@ -144,9 +147,6 @@ namespace SevenUpdate.Sdk
                 project.UpdateNames.Add(t);
             }
 
-            Projects.Add(project);
-            Utilities.Serialize(Projects, ProjectsFile);
-
             if (IsNewProject)
             {
                 // Save the SUA file
@@ -155,31 +155,46 @@ namespace SevenUpdate.Sdk
 
             if (!export)
             {
+                Projects.Add(project);
+                Utilities.Serialize(Projects, ProjectsFile);
+
                 IsNewProject = false;
                 MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
                 return;
             }
 
-            var fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sui");
-
+            project.ExportedSuiFileName = suiFileName ?? appName;
+            var fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), project.ExportedSuiFileName, @"sui");
+            
             if (fileName == null)
             {
+                Projects.Add(project);
+                Utilities.Serialize(Projects, ProjectsFile);
                 return;
             }
 
+            project.ExportedSuiFileName = Path.GetFileNameWithoutExtension(fileName);
             File.Copy(suiFile, fileName, true);
 
             if (IsNewProject)
             {
-                fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sua");
+                project.ExportedSuaFileName = suaFileName ?? appName;
+                fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), project.ExportedSuaFileName, @"sua");
+                
 
                 if (fileName == null)
                 {
+                    Projects.Add(project);
+                    Utilities.Serialize(Projects, ProjectsFile);
                     return;
                 }
 
+                project.ExportedSuaFileName = Path.GetFileNameWithoutExtension(fileName);
                 File.Copy(suaFile, fileName, true);
             }
+
+            Projects.Add(project);
+            Utilities.Serialize(Projects, ProjectsFile);
 
             IsNewProject = false;
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));

@@ -3,7 +3,7 @@
 	<!-- Grid-->
 	<Grid>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" MaxWidth="350" />
+			<ColumnDefinition Width="236*" MaxWidth="350" />
 			<ColumnDefinition Width="606*" />
 			<ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="24" />

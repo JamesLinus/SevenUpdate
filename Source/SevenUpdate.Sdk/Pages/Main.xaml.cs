@@ -241,15 +241,19 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
-            var fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sua");
+            var fileName = Core.Projects[Core.AppIndex].ExportedSuaFileName ?? Core.Projects[Core.AppIndex].ApplicationName;
+            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sua");
 
             if (fileName == null)
             {
                 return;
             }
 
-            File.Copy(Path.Combine(App.UserStore, appName + ".sua"), fileName, true);
+            Core.Projects[Core.AppIndex].ExportedSuaFileName = Path.GetFileNameWithoutExtension(fileName);
+
+            Utilities.Serialize(Core.Projects, Core.ProjectsFile);
+
+            File.Copy(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sua"), fileName, true);
         }
 
         /// <summary>Opens a dialog and saves the Sui for the selected project</summary>
@@ -257,16 +261,20 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ReleaseSui(object sender, RoutedEventArgs e)
         {
-            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+            var fileName = Core.Projects[Core.AppIndex].ExportedSuiFileName ?? Core.Projects[Core.AppIndex].ApplicationName;
 
-            var fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), appName, @"sui");
+            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sui");
 
             if (fileName == null)
             {
                 return;
             }
 
-            File.Copy(Path.Combine(App.UserStore, appName + ".sui"), fileName, true);
+            Core.Projects[Core.AppIndex].ExportedSuiFileName = Path.GetFileNameWithoutExtension(fileName);
+
+            Utilities.Serialize(Core.Projects, Core.ProjectsFile);
+
+            File.Copy(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui"), fileName, true);
         }
 
         /// <summary>Selects the <see cref="TreeViewItem"/> when right clicking on the <see cref="TreeView"/></summary>
