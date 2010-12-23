@@ -74,7 +74,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(Core.UpdateRegistryPage);
+            MainWindow.NavService.Navigate(Core.MainPage);
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
