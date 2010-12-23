@@ -41,7 +41,6 @@ namespace SevenUpdate.Windows
         public MainWindow()
         {
             this.InitializeComponent();
-
             if (App.IsDev)
             {
                 this.Title += " - " + Properties.Resources.DevChannel;
@@ -55,7 +54,6 @@ namespace SevenUpdate.Windows
             App.TaskBar = this.taskBar;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);
-
             Core.NavigateToMainPage();
         }
 

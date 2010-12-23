@@ -300,7 +300,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(Core.MainPage);
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
@@ -325,7 +325,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (!this.HasErrors())
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateRegistry.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(Core.UpdateRegistryPage);
             }
             else
             {

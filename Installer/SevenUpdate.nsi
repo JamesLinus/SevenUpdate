@@ -204,10 +204,10 @@ Section "Main Section" SEC01
   RMDir /r $INSTDIR
   
   DetailPrint "Downloading $(^Name)..."
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe"
+  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll"
   !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll"

@@ -34,6 +34,7 @@ namespace SevenUpdate.Sdk
     using System.Windows.Interop;
     using System.Windows.Media;
 
+    using SevenUpdate.Sdk.Pages;
     using SevenUpdate.Sdk.Properties;
     using SevenUpdate.Sdk.Windows;
 
@@ -48,6 +49,27 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
         public static readonly string ProjectsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
+
+        /// <summary>The application information page</summary>
+        private static AppInfo appInfoPage;
+
+        /// <summary>The main page</summary>
+        private static Main mainPage;
+
+        /// <summary>The update files page</summary>
+        private static UpdateFiles updateFilesPage;
+
+        /// <summary>The update information page</summary>
+        private static UpdateInfo updateInfoPage;
+
+        /// <summary>The update registry page</summary>
+        private static UpdateRegistry updateRegistryPage;
+
+        /// <summary>The update review page</summary>
+        private static UpdateReview updateReviewPage;
+
+        /// <summary>The update shortcuts page</summary>
+        private static UpdateShortcuts updateShortcutsPage;
 
         #endregion
 
@@ -80,6 +102,104 @@ namespace SevenUpdate.Sdk
         /// <summary>Gets the current update being edited</summary>
         /// <value>The update info.</value>
         internal static Update UpdateInfo { get; private set; }
+
+        /// <summary>Gets the AppInfo page</summary>
+        internal static AppInfo AppInfoPage
+        {
+            get
+            {
+                return appInfoPage ?? (appInfoPage = new AppInfo());
+            }
+
+            private set
+            {
+                appInfoPage = value;
+            }
+        }
+
+        /// <summary>Gets the Main page</summary>
+        internal static Main MainPage
+        {
+            get
+            {
+                return mainPage ?? (mainPage = new Main());
+            }
+
+            private set
+            {
+                mainPage = value;
+            }
+        }
+
+        /// <summary>Gets the UpdateFiles page</summary>
+        internal static UpdateFiles UpdateFilesPage
+        {
+            get
+            {
+                return updateFilesPage ?? (updateFilesPage = new UpdateFiles());
+            }
+
+            private set
+            {
+                updateFilesPage = value;
+            }
+        }
+
+        /// <summary>Gets the UpdateInfo page</summary>
+        internal static UpdateInfo UpdateInfoPage
+        {
+            get
+            {
+                return updateInfoPage ?? (updateInfoPage = new UpdateInfo());
+            }
+
+            private set
+            {
+                updateInfoPage = value;
+            }
+        }
+
+        /// <summary>Gets the UpdateRegistry page</summary>
+        internal static UpdateRegistry UpdateRegistryPage
+        {
+            get
+            {
+                return updateRegistryPage ?? (updateRegistryPage = new UpdateRegistry());
+            }
+
+            private set
+            {
+                updateRegistryPage = value;
+            }
+        }
+
+        /// <summary>Gets the UpdateReview page</summary>
+        internal static UpdateReview UpdateReviewPage
+        {
+            get
+            {
+                return updateReviewPage ?? (updateReviewPage = new UpdateReview());
+            }
+
+            private set
+            {
+                updateReviewPage = value;
+            }
+        }
+
+        /// <summary>Gets the UpdateShortcuts page</summary>
+        internal static UpdateShortcuts UpdateShortcutsPage
+        {
+            get
+            {
+                return updateShortcutsPage ?? (updateShortcutsPage = new UpdateShortcuts());
+            }
+
+            private set
+            {
+                updateShortcutsPage = value;
+            }
+        }
 
         #endregion
 
@@ -155,11 +275,11 @@ namespace SevenUpdate.Sdk
 
             if (!export)
             {
-                Projects.Add(project);
+                Projects.Insert(0, project);
                 Utilities.Serialize(Projects, ProjectsFile);
 
                 IsNewProject = false;
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(MainPage);
                 return;
             }
 
@@ -168,23 +288,21 @@ namespace SevenUpdate.Sdk
             
             if (fileName == null)
             {
-                Projects.Add(project);
+                Projects.Insert(0, project);
                 Utilities.Serialize(Projects, ProjectsFile);
                 return;
             }
 
             project.ExportedSuiFileName = Path.GetFileNameWithoutExtension(fileName);
             File.Copy(suiFile, fileName, true);
-
             if (IsNewProject)
             {
                 project.ExportedSuaFileName = suaFileName ?? appName;
                 fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), project.ExportedSuaFileName, @"sua");
                 
-
                 if (fileName == null)
                 {
-                    Projects.Add(project);
+                    Projects.Insert(0, project);
                     Utilities.Serialize(Projects, ProjectsFile);
                     return;
                 }
@@ -193,16 +311,17 @@ namespace SevenUpdate.Sdk
                 File.Copy(suaFile, fileName, true);
             }
 
-            Projects.Add(project);
+            Projects.Insert(0, project);
             Utilities.Serialize(Projects, ProjectsFile);
 
             IsNewProject = false;
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(MainPage);
         }
 
         /// <summary>Edit the selected project or update</summary>
         internal static void EditItem()
         {
+            ResetPages();
             IsNewProject = false;
 
             if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")))
@@ -219,7 +338,7 @@ namespace SevenUpdate.Sdk
 
             if (UpdateIndex < 0)
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(AppInfoPage);
                 return;
             }
 
@@ -235,43 +354,19 @@ namespace SevenUpdate.Sdk
                 return;
             }
 
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
-        }
-
-        /// <summary>The rectangle_ mouse left button down.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The arguments generated by the event</param>
-        internal static void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
-
-        /// <summary>Gets the IWin32 window.</summary>
-        /// <param name="visual">The visual object</param>
-        /// <returns>The Win32 Window</returns>
-        internal static IWin32Window GetIWin32Window(this Visual visual)
-        {
-            var source = PresentationSource.FromVisual(visual) as HwndSource;
-            if (source != null)
-            {
-                var win = new Win32Window(source.Handle);
-                var window = win;
-                win.Dispose();
-                return window;
-            }
-
-            return null;
+            MainWindow.NavService.Navigate(UpdateInfoPage);
         }
 
         /// <summary>Creates a new project</summary>
         internal static void NewProject()
         {
+            ResetPages();
             IsNewProject = true;
             AppIndex = -1;
             UpdateIndex = -1;
             AppInfo = new Sua();
             UpdateInfo = new Update { ReleaseDate = DateTime.Now.ToShortDateString() };
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/AppInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(AppInfoPage);
         }
 
         /// <summary>Creates a new update for the selected project</summary>
@@ -281,7 +376,7 @@ namespace SevenUpdate.Sdk
             AppInfo = Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             UpdateInfo = new Update();
 
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+            MainWindow.NavService.Navigate(UpdateInfoPage);
         }
 
         /// <summary>Opens a OpenFileDialog</summary>
@@ -417,6 +512,31 @@ namespace SevenUpdate.Sdk
             }
         }
 
+        /// <summary>The rectangle_ mouse left button down.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The arguments generated by the event</param>
+        internal static void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        /// <summary>Gets the IWin32 window.</summary>
+        /// <param name="visual">The visual object</param>
+        /// <returns>The Win32 Window</returns>
+        internal static IWin32Window GetIWin32Window(this Visual visual)
+        {
+            var source = PresentationSource.FromVisual(visual) as HwndSource;
+            if (source != null)
+            {
+                var win = new Win32Window(source.Handle);
+                var window = win;
+                win.Dispose();
+                return window;
+            }
+
+            return null;
+        }
+
         /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>
         /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name="icon">The icon to use</param>
@@ -529,6 +649,19 @@ namespace SevenUpdate.Sdk
                 default:
                     return;
             }
+        }
+
+        /// <summary>
+        /// Resets the pages to default status
+        /// </summary>
+        private static void ResetPages()
+        {
+            AppInfoPage = null; // new AppInfo();
+            UpdateInfoPage = null; // new UpdateInfo();
+            UpdateFilesPage = null; // new UpdateFiles();
+            UpdateRegistryPage = null; // new UpdateRegistry();
+            UpdateShortcutsPage = null; // new UpdateShortcuts();
+            UpdateReviewPage = null;
         }
 
         #endregion

@@ -298,7 +298,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (!this.HasErrors())
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/UpdateInfo.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(Core.UpdateInfoPage);
             }
             else
             {
@@ -359,14 +359,14 @@ namespace SevenUpdate.Sdk.Pages
                         File.Delete(Path.Combine(App.UserStore, appName + ".sui"));
                     }
 
-                    Core.Projects.Add(project);
+                    Core.Projects.Insert(0, project);
                     Utilities.Serialize(Core.Projects, Core.ProjectsFile);
-                    MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+                    MainWindow.NavService.Navigate(Core.MainPage);
                 }
             }
             else
             {
-                MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate.Sdk;component/Pages/Main.xaml", UriKind.Relative));
+                MainWindow.NavService.Navigate(Core.MainPage);
             }
         }
 

@@ -87,7 +87,7 @@ namespace SevenUpdate
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
 
         /// <summary>The main page for Seven Update</summary>
-        private static readonly Page MainPage = new Main();
+        private static readonly Main MainPage = new Main();
 
         /// <summary>The static instance of the Core class</summary>
         private static Core instance;
