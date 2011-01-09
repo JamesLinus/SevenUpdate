@@ -111,7 +111,7 @@
 					</Style>
 				</Rectangle.Style>
 			</Rectangle>
-			<TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" HorizontalAlignment="Left" Name="tbHeading" Text="{LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,0,0" />
+			<TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" Name="tbHeading" Text="{LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,4,0" />
 			<Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48" Grid.Column="1" Grid.RowSpan="2">
 				<Rectangle.Style>
 					<Style TargetType="Rectangle">

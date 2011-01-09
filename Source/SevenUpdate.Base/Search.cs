@@ -87,14 +87,19 @@ namespace SevenUpdate
                 var client = new TcpClient(@"sevenupdate.com", 80);
                 client.Close();
             }
-            catch (WebException e)
+            catch (Exception ex)
             {
-                if (ErrorOccurred != null)
+                if (!(ex is SocketException || ex is WebException))
                 {
-                    ErrorOccurred(null, new ErrorOccurredEventArgs(e.Message, ErrorType.FatalNetworkError));
+                    throw;
                 }
 
-                return;
+                if (ErrorOccurred != null)
+                    {
+                        ErrorOccurred(null, new ErrorOccurredEventArgs(ex.Message, ErrorType.FatalNetworkError));
+                    }
+
+                    return;
             }
 
             if (applications == null)
